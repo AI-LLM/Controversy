@@ -6,4 +6,5 @@
 
 | 日期 | 主题 | 文件 |
 | --- | --- | --- |
-| 2026-05-11 | Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |
+| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |
+| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |
