@@ -67,6 +67,32 @@
 - 用户原话优先保留，**不要美化或软化他的语气**——这个库的名字叫 Controversy，不是 Balanced View
 - 代码片段保留原始格式，不要为了美观重排
 
+### 引用规范（IEEE 风格）
+
+- 行内：`[N]` 数字方括号；并列 `[N], [M]`。
+- **正文中的 `[N]` 一律渲染为指向出处 URL 的超链接**，格式 `[[N]](URL)`；URL 取自参考文献条目里 `Available: <URL>` 的部分。无 URL 的条目（书籍、纸刊未上网者）正文里保留纯 `[N]`。
+- **一个段落多个论点时，每个论点至少配一条引用**，不要堆一行 `[N]` 在末尾。
+- 每章引用编号**独立从 `[1]` 开始**，章内严格递增，不重新洗牌。
+- 找不到直接证据时：用相邻领域类比并显式声明：
+
+  > ⚠ **声明**：本节判断是从 X 类比推断，仍需面向 Y 做实证评估。
+
+- 条目格式：
+  ```
+  [N] Authors, "Title," *Venue*, vol., no., pp., Month Year. [Online]. Available: <URL>
+  ```
+- arXiv：
+  ```
+  [N] X. Y et al., "Title," *arXiv preprint*, arXiv:NNNN.NNNNN, MMM YEAR. [Online]. Available: <https://arxiv.org/abs/NNNN.NNNNN>
+  ```
+- 当引用支撑了**具体数字**，把数字写进条目末尾的括号注释（方便读者抽查）：
+  ```
+  [18] Xia et al., "...", IEEE TSE 2018. (7 projects, 79 devs, 3244 hours; ~58% time on comprehension.) [Online]. Available: <...>
+  ```
+- **经典文献引用原文**（Brooks, Conway, Lehman, Parnas, Gray, Mitnick, Miller, Cowan, Hofstadter…），不要引二手综述。
+- **当代论点配近 1–2 年 arXiv / 顶会 / 顶级博客**（Karpathy, Mollick, Chollet, Anthropic / OpenAI 官方等）。
+- **数据来源** 以行业垂直网站、主流财经平台为主。
+
 ## 关键陷阱（来自此前的失败）
 
 - 模型/产品的**发布日期 ≠ 评测公布日期 ≠ 新闻报道日期**，三者要分别核对（曾把 4 月发布的 Mythos Preview 误写成"今天同步发布"）
