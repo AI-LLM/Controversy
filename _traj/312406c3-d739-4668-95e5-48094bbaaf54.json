@@ -6641,19 +6641,118 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 76,
+      "timestamp": "2026-05-13T09:53:32.282Z",
+      "source": "user",
+      "message": "跟传统的工业机器人有何不同？",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 77,
+      "timestamp": "2026-05-13T09:53:50.548Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 92716,
+        "completion_tokens": 2636,
+        "cached_tokens": 92710,
+        "extra": {
+          "cache_creation_input_tokens": 822,
+          "cache_read_input_tokens": 92710,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 822,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 2636,
+              "cache_read_input_tokens": 92710,
+              "cache_creation_input_tokens": 822,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 822
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 78,
+      "timestamp": "2026-05-13T09:54:16.678Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "直接说几个最关键的维度。人形机器人和传统工业机器人不是\"同一个东西的两种形态\"，**几乎是两个产业**——目标用户、技术栈、经济模型都不同。\n\n## 核心差异\n\n| 维度 | 传统工业机器人 | 人形机器人 |\n| --- | --- | --- |\n| **典型形态** | 6 轴机械臂，固定在底座/导轨上 | 双足 + 双臂 + 头，全身 30–50 自由度 |\n| **工作空间** | 围栏隔离的固定工作单元（cell） | 进入人类共享开放空间 |\n| **控制范式** | 预编程确定轨迹（teach pendant / 离线编程） | MPC + WBC + RL/VLA 学习策略 |\n| **重复定位精度** | ±0.02–0.1 mm | cm 级（双足接触不确定 + 关节回差） |\n| **载荷/速度** | 几十 kg 到 2 吨，高速 | 几 kg，慢 |\n| **任务模型** | 单一固定任务，重复几十万次 | 通用任务，每个任务样本少 |\n| **安全标准** | ISO 10218（围栏强制隔离）/ ISO 15066（协作限速限力） | **没有成熟标准**——这是 GD01 这类载人机型最大的合规空白 |\n| **能源** | 插电固定供电 | 电池受限，续航是死穴 |\n| **典型 ROI 周期** | 18–36 个月，模型成熟 | 不明，多数靠\"潜在劳动力替代\"叙事撑估值 |\n| **年出货量级（2024–25）** | 50+ 万台（IFR） | ~1.5 万台 |\n\n## 决定性的三个区别\n\n**1. 不是\"造一只手\"，是\"造一个能从未知场景里学习的身体\"**\n\n工业机器人的价值前提是**环境完全已知**：物料的位置、夹具、节拍、容差，全部预先设计。一旦环境结构化得够好，剩下的就是高速重复——所以传统工业机器人本质上是\"高精度执行器\"，AI 含量极低（确定的运动学/动力学就够了）。\n\n人形机器人的存在前提是**环境无法重新设计**——它要进入人类已经布置好的工厂、仓库、家。这意味着感知、决策、控制的不确定性陡增，**所以人形必然依赖 ML，而工业机器人到今天大部分还可以不用**。VLA / foundation model 这一波突破之所以重要，正是因为它第一次让\"非结构化环境里的操作\"看起来有解。\n\n**2. 经济模型不同——工业机器人卖能力，人形机器人卖\"人形\"本身**\n\n工业机器人买家不在乎机器长什么样，只在乎 ROI。50 年下来已经形成了\"焊接 / 喷涂 / 码垛 / 装配\"等几个稳定的工作 envelope，单台几万到几十万美元，几年回本。\n\n人形机器人卖 $16k–$650k 的机型，目前**真正用于工厂生产的极少**（Figure 在 BMW、Agility 在 GXO 算公开案例的头部）。\"为什么要做人形\"——技术上没有强论证（叉车、AGV、机械臂分别更适合每个具体任务），强论证是经济叙事：**只有人形能直接替代按人头计费的劳动力市场**。所以这是个\"押注 TAM\"而非\"按 ROI 卖\"的产业。\n\n**3. 安全标准存在巨大空白**\n\nISO 10218 / 15066 是 30 年沉淀下来的工业机器人安全标准，决定了围栏、急停、限速、限力的工程细节。**人形进入人类空间这件事没有等价标准**——既没有跌倒能量上限规定，也没有\"通用具身 AI 失控\"的等价测试。GD01 这种载人机甲更是空白的空白：500 kg 双足载具属于机器人还是车辆？没人能给个标准答案。\n\n## 反过来：相同的部分\n\n- 关节执行器、减速器、伺服驱动器很大程度是**同一条供应链**——这正是 [人形机器人产量近两年为何爆发 (2026-05-13)](../chat/人形机器人产量近两年为何爆发%20(2026-05-13).md) 里提到的\"中国 EV/工业机器人供应链外溢\"的物理基础\n- 部分制造商两边都做（ABB、Fanuc 在观望，国内绿的谐波、汇川等同时供两边）\n\n---\n\n要不要我把这段写成 `chat/` 下一个调研笔记，从 GD01 笔记链接过去？如果写，按你新加的 IEEE 引用规范，需要给\"工业机器人 2024 年安装 ~54 万台（IFR）\"、\"工业机器人重复精度 ±0.02mm\"、\"ISO 10218 / 15066\"这些数字配一手信源（IFR World Robotics 年报、ISO 标准页），会涉及几次搜索。",
+      "metrics": {
+        "prompt_tokens": 92716,
+        "completion_tokens": 2636,
+        "cached_tokens": 92710,
+        "extra": {
+          "cache_creation_input_tokens": 822,
+          "cache_read_input_tokens": 92710,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 822,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 2636,
+              "cache_read_input_tokens": 92710,
+              "cache_creation_input_tokens": 822,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 822
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 3410769,
-    "total_completion_tokens": 91918,
-    "total_cached_tokens": 3405885,
-    "total_steps": 75,
+    "total_prompt_tokens": 3596201,
+    "total_completion_tokens": 97190,
+    "total_cached_tokens": 3591305,
+    "total_steps": 78,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 192987,
-      "total_cache_read_input_tokens": 3405885
+      "total_cache_creation_input_tokens": 194631,
+      "total_cache_read_input_tokens": 3591305
     }
   }
 }
