@@ -1,0 +1,1217 @@
+{
+  "schema_version": "ATIF-v1.5",
+  "session_id": "312406c3-d739-4668-95e5-48094bbaaf54",
+  "agent": {
+    "name": "claude-code",
+    "version": "2.1.140",
+    "model_name": "claude-opus-4-7",
+    "extra": {
+      "cwds": [
+        "/Users/luwei/work/Controversy"
+      ],
+      "git_branches": [
+        "agent/45314016-fbe2-4333-a806-7b6bb85e60a1"
+      ]
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-05-13T08:39:07.067Z",
+      "source": "user",
+      "message": "阅读 https://www.reddit.com/r/robotics/comments/1taqqk8/unitree_launches_worlds_first_massproduced_manned/ 分析技术难点在哪",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-05-13T08:39:10.690Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 16793,
+        "completion_tokens": 175,
+        "cached_tokens": 16787,
+        "extra": {
+          "cache_creation_input_tokens": 10032,
+          "cache_read_input_tokens": 16787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 10032,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 175,
+              "cache_read_input_tokens": 16787,
+              "cache_creation_input_tokens": 10032,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 10032
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 3,
+      "timestamp": "2026-05-13T08:39:10.817Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed ToolSearch toolu_01EPbvBwwrVVvDpntKzVHyNC",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01EPbvBwwrVVvDpntKzVHyNC",
+          "function_name": "ToolSearch",
+          "arguments": {
+            "query": "select:WebFetch,WebSearch",
+            "max_results": 2
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01EPbvBwwrVVvDpntKzVHyNC",
+            "content": "{\"type\": \"tool_reference\", \"tool_name\": \"WebFetch\"}\n\n{\"type\": \"tool_reference\", \"tool_name\": \"WebSearch\"}\n\n[metadata] {\"matches\": [\"WebFetch\", \"WebSearch\"], \"query\": \"select:WebFetch,WebSearch\", \"total_deferred_tools\": 28}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16793,
+        "completion_tokens": 175,
+        "cached_tokens": 16787,
+        "extra": {
+          "cache_creation_input_tokens": 10032,
+          "cache_read_input_tokens": 16787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 10032,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 175,
+              "cache_read_input_tokens": 16787,
+              "cache_creation_input_tokens": 10032,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 10032
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "ToolSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "matches": [
+              "WebFetch",
+              "WebSearch"
+            ],
+            "query": "select:WebFetch,WebSearch",
+            "total_deferred_tools": 28
+          },
+          "raw_tool_result": {
+            "type": "tool_result",
+            "tool_use_id": "toolu_01EPbvBwwrVVvDpntKzVHyNC",
+            "content": [
+              {
+                "type": "tool_reference",
+                "tool_name": "WebFetch"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "WebSearch"
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "matches": [
+              "WebFetch",
+              "WebSearch"
+            ],
+            "query": "select:WebFetch,WebSearch",
+            "total_deferred_tools": 28
+          },
+          "raw_tool_result": {
+            "type": "tool_result",
+            "tool_use_id": "toolu_01EPbvBwwrVVvDpntKzVHyNC",
+            "content": [
+              {
+                "type": "tool_reference",
+                "tool_name": "WebFetch"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "WebSearch"
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "query": "select:WebFetch,WebSearch",
+          "max_results": 2
+        }
+      }
+    },
+    {
+      "step_id": 4,
+      "timestamp": "2026-05-13T08:39:14.300Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 16886,
+        "completion_tokens": 236,
+        "cached_tokens": 16880,
+        "extra": {
+          "cache_creation_input_tokens": 11596,
+          "cache_read_input_tokens": 16880,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 11596,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 236,
+              "cache_read_input_tokens": 16880,
+              "cache_creation_input_tokens": 11596,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 11596
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 5,
+      "timestamp": "2026-05-13T08:39:15.905Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed WebFetch toolu_01JqnBH2qobgd8YgSW73eq9p",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01JqnBH2qobgd8YgSW73eq9p",
+          "function_name": "WebFetch",
+          "arguments": {
+            "url": "https://www.reddit.com/r/robotics/comments/1taqqk8/unitree_launches_worlds_first_massproduced_manned/",
+            "prompt": "提取这个 Reddit 帖子的完整内容：标题、正文、所有评论（特别是关于技术难点的讨论），以及任何提到的产品参数、视频链接、官方信源。"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01JqnBH2qobgd8YgSW73eq9p",
+            "content": "Claude Code is unable to fetch from www.reddit.com\n\n[error] tool reported failure"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16886,
+        "completion_tokens": 236,
+        "cached_tokens": 16880,
+        "extra": {
+          "cache_creation_input_tokens": 11596,
+          "cache_read_input_tokens": 16880,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 11596,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 236,
+              "cache_read_input_tokens": 16880,
+              "cache_creation_input_tokens": 11596,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 11596
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebFetch",
+        "tool_result_metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Claude Code is unable to fetch from www.reddit.com",
+            "is_error": true,
+            "tool_use_id": "toolu_01JqnBH2qobgd8YgSW73eq9p"
+          }
+        },
+        "tool_result_is_error": true,
+        "metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Claude Code is unable to fetch from www.reddit.com",
+            "is_error": true,
+            "tool_use_id": "toolu_01JqnBH2qobgd8YgSW73eq9p"
+          }
+        },
+        "raw_arguments": {
+          "url": "https://www.reddit.com/r/robotics/comments/1taqqk8/unitree_launches_worlds_first_massproduced_manned/",
+          "prompt": "提取这个 Reddit 帖子的完整内容：标题、正文、所有评论（特别是关于技术难点的讨论），以及任何提到的产品参数、视频链接、官方信源。"
+        }
+      }
+    },
+    {
+      "step_id": 6,
+      "timestamp": "2026-05-13T08:39:25.650Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed WebSearch toolu_014uPdhN5jArYKaXTquZ6AHA",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_014uPdhN5jArYKaXTquZ6AHA",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Unitree world's first mass-produced manned robot launch 2026"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_014uPdhN5jArYKaXTquZ6AHA",
+            "content": "Web search results for query: \"Unitree world's first mass-produced manned robot launch 2026\"\n\nLinks: [{\"title\":\"Unitree unveils world's first mass-produced manned mecha GD01 - CnEVPost\",\"url\":\"https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/\"},{\"title\":\"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\",\"url\":\"https://www.globaltimes.cn/page/202605/1360822.shtml\"},{\"title\":\"Real-Life Transformers: China's Unitree Debuts 'Mecha' Robot That Shifts Reality | The Coders Blog | Home\",\"url\":\"https://thecodersblog.com/china-s-unitree-mecha-robot-2026/\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Real-life Transformers: China’s Unitree debuts ‘mecha’ robot that shifts from 2 legs to 4 | South China Morning Post\",\"url\":\"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"},{\"title\":\"From Sci-Fi to Showroom: China’s Unitree Debuts the World’s First Mass-Produced Manned Mecha - Technology | China Daily Brief | China Daily Brief - Professional News Curation\",\"url\":\"https://chinadailybrief.com/article/6a02ffaf81ad73ba8cce373e\"},{\"title\":\"Unitree unveils world's first mass-produced manned mecha from 3.9 million yuan\",\"url\":\"https://www.thestandard.com.hk/innovation/article/331845/Unitree-unveils-worlds-first-mass-produced-manned-mecha-from-39-million-yuan\"},{\"title\":\"Unitree Robotics GD01 Mech Suit Launch & IPO Filing 2026\",\"url\":\"https://chinabizinsider.com/unitree-robotics-unveils-worlds-first-mass-production-manned-mech-suit-at-rmb-3-9m/\"},{\"title\":\"Studioglobal\",\"url\":\"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"},{\"title\":\"China’s Unitree GD01 Is a Real Drivable Transforming Mech You Can Actually Buy -\",\"url\":\"https://mikeshouts.com/unitree-gd01-manned-transforming-mech/\"}]\n\nBased on the search results, here's what I found:\n\n## Unitree's World's First Mass-Produced Manned Robot Launch\n\nUnitree Robotics launched the GD01 on May 12, which was billed as the world's first mass-produced manned mecha, starting at 3.9 million yuan (approximately $537,000-$574,000 depending on exchange rates).\n\n### Key Features\n\nThe GD01 is a civilian transport mecha weighing about 500 kilograms with a pilot on board and stands far taller than their previous machines, featuring two arms and two legs for free walking, with a driver's seat in its hollow torso.\n\nIt can switch from an upright humanoid form to four-legged mode within seconds by lowering its body, folding its legs and adjusting its center of gravity to handle complex terrains.\n\n### The Demonstration\n\nUnitree founder Wang Xingxing entered the cockpit to personally demonstrate the mecha moving smoothly forward, and the mecha then punched down a brick wall, showing its strength and accuracy.\n\n### Market Context\n\nThe Chinese robotics firm simultaneously advances a landmark listing on Shanghai's STAR Market, aiming to become the first humanoid robotics company to list publicly in China. According to an Omdia report, Chinese companies dominated the market, with Unitree ranking second globally by shipping about 4,200 units of humanoid robots in 2025.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Unitree world's first mass-produced manned robot launch 2026\", \"results\": [{\"tool_use_id\": \"srvtoolu_01T2nYVWUpkRGJ17Fcdm418N\", \"content\": [{\"title\": \"Unitree unveils world's first mass-produced manned mecha GD01 - CnEVPost\", \"url\": \"https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/\"}, {\"title\": \"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\", \"url\": \"https://www.globaltimes.cn/page/202605/1360822.shtml\"}, {\"title\": \"Real-Life Transformers: China's Unitree Debuts 'Mecha' Robot That Shifts Reality | The Coders Blog | Home\", \"url\": \"https://thecodersblog.com/china-s-unitree-mecha-robot-2026/\"}, {\"title\": \"Unitree GD01: China's $537k rideable transformer robot is now in production\", \"url\": \"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"}, {\"title\": \"Real-life Transformers: China’s Unitree debuts ‘mecha’ robot that shifts from 2 legs to 4 | South China Morning Post\", \"url\": \"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"}, {\"title\": \"From Sci-Fi to Showroom: China’s Unitree Debuts the World’s First Mass-Produced Manned Mecha - Technology | China Daily Brief | China Daily Brief - Professional News Curation\", \"url\": \"https://chinadailybrief.com/article/6a02ffaf81ad73ba8cce373e\"}, {\"title\": \"Unitree unveils world's first mass-produced manned mecha from 3.9 million yuan\", \"url\": \"https://www.thestandard.com.hk/innovation/article/331845/Unitree-unveils-worlds-first-mass-produced-manned-mecha-from-39-million-yuan\"}, {\"title\": \"Unitree Robotics GD01 Mech Suit Launch & IPO Filing 2026\", \"url\": \"https://chinabizinsider.com/unitree-robotics-unveils-worlds-first-mass-production-manned-mech-suit-at-rmb-3-9m/\"}, {\"title\": \"Studioglobal\", \"url\": \"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"}, {\"title\": \"China’s Unitree GD01 Is a Real Drivable Transforming Mech You Can Actually Buy -\", \"url\": \"https://mikeshouts.com/unitree-gd01-manned-transforming-mech/\"}]}, \"Based on the search results, here's what I found:\\n\\n## Unitree's World's First Mass-Produced Manned Robot Launch\\n\\nUnitree Robotics launched the GD01 on May 12, which was billed as the world's first mass-produced manned mecha, starting at 3.9 million yuan (approximately $537,000-$574,000 depending on exchange rates).\\n\\n### Key Features\\n\\nThe GD01 is a civilian transport mecha weighing about 500 kilograms with a pilot on board and stands far taller than their previous machines, featuring two arms and two legs for free walking, with a driver's seat in its hollow torso.\\n\\nIt can switch from an upright humanoid form to four-legged mode within seconds by lowering its body, folding its legs and adjusting its center of gravity to handle complex terrains.\\n\\n### The Demonstration\\n\\nUnitree founder Wang Xingxing entered the cockpit to personally demonstrate the mecha moving smoothly forward, and the mecha then punched down a brick wall, showing its strength and accuracy.\\n\\n### Market Context\\n\\nThe Chinese robotics firm simultaneously advances a landmark listing on Shanghai's STAR Market, aiming to become the first humanoid robotics company to list publicly in China. According to an Omdia report, Chinese companies dominated the market, with Unitree ranking second globally by shipping about 4,200 units of humanoid robots in 2025.\"], \"durationSeconds\": 6.859705583000003}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 28477,
+        "completion_tokens": 85,
+        "cached_tokens": 28476,
+        "extra": {
+          "cache_creation_input_tokens": 281,
+          "cache_read_input_tokens": 28476,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 281,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 85,
+              "cache_read_input_tokens": 28476,
+              "cache_creation_input_tokens": 281,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 281
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Unitree world's first mass-produced manned robot launch 2026",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01T2nYVWUpkRGJ17Fcdm418N",
+                "content": [
+                  {
+                    "title": "Unitree unveils world's first mass-produced manned mecha GD01 - CnEVPost",
+                    "url": "https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/"
+                  },
+                  {
+                    "title": "Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times",
+                    "url": "https://www.globaltimes.cn/page/202605/1360822.shtml"
+                  },
+                  {
+                    "title": "Real-Life Transformers: China's Unitree Debuts 'Mecha' Robot That Shifts Reality | The Coders Blog | Home",
+                    "url": "https://thecodersblog.com/china-s-unitree-mecha-robot-2026/"
+                  },
+                  {
+                    "title": "Unitree GD01: China's $537k rideable transformer robot is now in production",
+                    "url": "https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/"
+                  },
+                  {
+                    "title": "Real-life Transformers: China’s Unitree debuts ‘mecha’ robot that shifts from 2 legs to 4 | South China Morning Post",
+                    "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4"
+                  },
+                  {
+                    "title": "From Sci-Fi to Showroom: China’s Unitree Debuts the World’s First Mass-Produced Manned Mecha - Technology | China Daily Brief | China Daily Brief - Professional News Curation",
+                    "url": "https://chinadailybrief.com/article/6a02ffaf81ad73ba8cce373e"
+                  },
+                  {
+                    "title": "Unitree unveils world's first mass-produced manned mecha from 3.9 million yuan",
+                    "url": "https://www.thestandard.com.hk/innovation/article/331845/Unitree-unveils-worlds-first-mass-produced-manned-mecha-from-39-million-yuan"
+                  },
+                  {
+                    "title": "Unitree Robotics GD01 Mech Suit Launch & IPO Filing 2026",
+                    "url": "https://chinabizinsider.com/unitree-robotics-unveils-worlds-first-mass-production-manned-mech-suit-at-rmb-3-9m/"
+                  },
+                  {
+                    "title": "Studioglobal",
+                    "url": "https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9"
+                  },
+                  {
+                    "title": "China’s Unitree GD01 Is a Real Drivable Transforming Mech You Can Actually Buy -",
+                    "url": "https://mikeshouts.com/unitree-gd01-manned-transforming-mech/"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found:\n\n## Unitree's World's First Mass-Produced Manned Robot Launch\n\nUnitree Robotics launched the GD01 on May 12, which was billed as the world's first mass-produced manned mecha, starting at 3.9 million yuan (approximately $537,000-$574,000 depending on exchange rates).\n\n### Key Features\n\nThe GD01 is a civilian transport mecha weighing about 500 kilograms with a pilot on board and stands far taller than their previous machines, featuring two arms and two legs for free walking, with a driver's seat in its hollow torso.\n\nIt can switch from an upright humanoid form to four-legged mode within seconds by lowering its body, folding its legs and adjusting its center of gravity to handle complex terrains.\n\n### The Demonstration\n\nUnitree founder Wang Xingxing entered the cockpit to personally demonstrate the mecha moving smoothly forward, and the mecha then punched down a brick wall, showing its strength and accuracy.\n\n### Market Context\n\nThe Chinese robotics firm simultaneously advances a landmark listing on Shanghai's STAR Market, aiming to become the first humanoid robotics company to list publicly in China. According to an Omdia report, Chinese companies dominated the market, with Unitree ranking second globally by shipping about 4,200 units of humanoid robots in 2025."
+            ],
+            "durationSeconds": 6.859705583000003
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014uPdhN5jArYKaXTquZ6AHA",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Unitree world's first mass-produced manned robot launch 2026\"\n\nLinks: [{\"title\":\"Unitree unveils world's first mass-produced manned mecha GD01 - CnEVPost\",\"url\":\"https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/\"},{\"title\":\"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\",\"url\":\"https://www.globaltimes.cn/page/202605/1360822.shtml\"},{\"title\":\"Real-Life Transformers: China's Unitree Debuts 'Mecha' Robot That Shifts Reality | The Coders Blog | Home\",\"url\":\"https://thecodersblog.com/china-s-unitree-mecha-robot-2026/\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Real-life Transformers: China’s Unitree debuts ‘mecha’ robot that shifts from 2 legs to 4 | South China Morning Post\",\"url\":\"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"},{\"title\":\"From Sci-Fi to Showroom: China’s Unitree Debuts the World’s First Mass-Produced Manned Mecha - Technology | China Daily Brief | China Daily Brief - Professional News Curation\",\"url\":\"https://chinadailybrief.com/article/6a02ffaf81ad73ba8cce373e\"},{\"title\":\"Unitree unveils world's first mass-produced manned mecha from 3.9 million yuan\",\"url\":\"https://www.thestandard.com.hk/innovation/article/331845/Unitree-unveils-worlds-first-mass-produced-manned-mecha-from-39-million-yuan\"},{\"title\":\"Unitree Robotics GD01 Mech Suit Launch & IPO Filing 2026\",\"url\":\"https://chinabizinsider.com/unitree-robotics-unveils-worlds-first-mass-production-manned-mech-suit-at-rmb-3-9m/\"},{\"title\":\"Studioglobal\",\"url\":\"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"},{\"title\":\"China’s Unitree GD01 Is a Real Drivable Transforming Mech You Can Actually Buy -\",\"url\":\"https://mikeshouts.com/unitree-gd01-manned-transforming-mech/\"}]\n\nBased on the search results, here's what I found:\n\n## Unitree's World's First Mass-Produced Manned Robot Launch\n\nUnitree Robotics launched the GD01 on May 12, which was billed as the world's first mass-produced manned mecha, starting at 3.9 million yuan (approximately $537,000-$574,000 depending on exchange rates).\n\n### Key Features\n\nThe GD01 is a civilian transport mecha weighing about 500 kilograms with a pilot on board and stands far taller than their previous machines, featuring two arms and two legs for free walking, with a driver's seat in its hollow torso.\n\nIt can switch from an upright humanoid form to four-legged mode within seconds by lowering its body, folding its legs and adjusting its center of gravity to handle complex terrains.\n\n### The Demonstration\n\nUnitree founder Wang Xingxing entered the cockpit to personally demonstrate the mecha moving smoothly forward, and the mecha then punched down a brick wall, showing its strength and accuracy.\n\n### Market Context\n\nThe Chinese robotics firm simultaneously advances a landmark listing on Shanghai's STAR Market, aiming to become the first humanoid robotics company to list publicly in China. According to an Omdia report, Chinese companies dominated the market, with Unitree ranking second globally by shipping about 4,200 units of humanoid robots in 2025.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Unitree world's first mass-produced manned robot launch 2026",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01T2nYVWUpkRGJ17Fcdm418N",
+                "content": [
+                  {
+                    "title": "Unitree unveils world's first mass-produced manned mecha GD01 - CnEVPost",
+                    "url": "https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/"
+                  },
+                  {
+                    "title": "Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times",
+                    "url": "https://www.globaltimes.cn/page/202605/1360822.shtml"
+                  },
+                  {
+                    "title": "Real-Life Transformers: China's Unitree Debuts 'Mecha' Robot That Shifts Reality | The Coders Blog | Home",
+                    "url": "https://thecodersblog.com/china-s-unitree-mecha-robot-2026/"
+                  },
+                  {
+                    "title": "Unitree GD01: China's $537k rideable transformer robot is now in production",
+                    "url": "https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/"
+                  },
+                  {
+                    "title": "Real-life Transformers: China’s Unitree debuts ‘mecha’ robot that shifts from 2 legs to 4 | South China Morning Post",
+                    "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4"
+                  },
+                  {
+                    "title": "From Sci-Fi to Showroom: China’s Unitree Debuts the World’s First Mass-Produced Manned Mecha - Technology | China Daily Brief | China Daily Brief - Professional News Curation",
+                    "url": "https://chinadailybrief.com/article/6a02ffaf81ad73ba8cce373e"
+                  },
+                  {
+                    "title": "Unitree unveils world's first mass-produced manned mecha from 3.9 million yuan",
+                    "url": "https://www.thestandard.com.hk/innovation/article/331845/Unitree-unveils-worlds-first-mass-produced-manned-mecha-from-39-million-yuan"
+                  },
+                  {
+                    "title": "Unitree Robotics GD01 Mech Suit Launch & IPO Filing 2026",
+                    "url": "https://chinabizinsider.com/unitree-robotics-unveils-worlds-first-mass-production-manned-mech-suit-at-rmb-3-9m/"
+                  },
+                  {
+                    "title": "Studioglobal",
+                    "url": "https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9"
+                  },
+                  {
+                    "title": "China’s Unitree GD01 Is a Real Drivable Transforming Mech You Can Actually Buy -",
+                    "url": "https://mikeshouts.com/unitree-gd01-manned-transforming-mech/"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found:\n\n## Unitree's World's First Mass-Produced Manned Robot Launch\n\nUnitree Robotics launched the GD01 on May 12, which was billed as the world's first mass-produced manned mecha, starting at 3.9 million yuan (approximately $537,000-$574,000 depending on exchange rates).\n\n### Key Features\n\nThe GD01 is a civilian transport mecha weighing about 500 kilograms with a pilot on board and stands far taller than their previous machines, featuring two arms and two legs for free walking, with a driver's seat in its hollow torso.\n\nIt can switch from an upright humanoid form to four-legged mode within seconds by lowering its body, folding its legs and adjusting its center of gravity to handle complex terrains.\n\n### The Demonstration\n\nUnitree founder Wang Xingxing entered the cockpit to personally demonstrate the mecha moving smoothly forward, and the mecha then punched down a brick wall, showing its strength and accuracy.\n\n### Market Context\n\nThe Chinese robotics firm simultaneously advances a landmark listing on Shanghai's STAR Market, aiming to become the first humanoid robotics company to list publicly in China. According to an Omdia report, Chinese companies dominated the market, with Unitree ranking second globally by shipping about 4,200 units of humanoid robots in 2025."
+            ],
+            "durationSeconds": 6.859705583000003
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014uPdhN5jArYKaXTquZ6AHA",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Unitree world's first mass-produced manned robot launch 2026\"\n\nLinks: [{\"title\":\"Unitree unveils world's first mass-produced manned mecha GD01 - CnEVPost\",\"url\":\"https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/\"},{\"title\":\"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\",\"url\":\"https://www.globaltimes.cn/page/202605/1360822.shtml\"},{\"title\":\"Real-Life Transformers: China's Unitree Debuts 'Mecha' Robot That Shifts Reality | The Coders Blog | Home\",\"url\":\"https://thecodersblog.com/china-s-unitree-mecha-robot-2026/\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Real-life Transformers: China’s Unitree debuts ‘mecha’ robot that shifts from 2 legs to 4 | South China Morning Post\",\"url\":\"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"},{\"title\":\"From Sci-Fi to Showroom: China’s Unitree Debuts the World’s First Mass-Produced Manned Mecha - Technology | China Daily Brief | China Daily Brief - Professional News Curation\",\"url\":\"https://chinadailybrief.com/article/6a02ffaf81ad73ba8cce373e\"},{\"title\":\"Unitree unveils world's first mass-produced manned mecha from 3.9 million yuan\",\"url\":\"https://www.thestandard.com.hk/innovation/article/331845/Unitree-unveils-worlds-first-mass-produced-manned-mecha-from-39-million-yuan\"},{\"title\":\"Unitree Robotics GD01 Mech Suit Launch & IPO Filing 2026\",\"url\":\"https://chinabizinsider.com/unitree-robotics-unveils-worlds-first-mass-production-manned-mech-suit-at-rmb-3-9m/\"},{\"title\":\"Studioglobal\",\"url\":\"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"},{\"title\":\"China’s Unitree GD01 Is a Real Drivable Transforming Mech You Can Actually Buy -\",\"url\":\"https://mikeshouts.com/unitree-gd01-manned-transforming-mech/\"}]\n\nBased on the search results, here's what I found:\n\n## Unitree's World's First Mass-Produced Manned Robot Launch\n\nUnitree Robotics launched the GD01 on May 12, which was billed as the world's first mass-produced manned mecha, starting at 3.9 million yuan (approximately $537,000-$574,000 depending on exchange rates).\n\n### Key Features\n\nThe GD01 is a civilian transport mecha weighing about 500 kilograms with a pilot on board and stands far taller than their previous machines, featuring two arms and two legs for free walking, with a driver's seat in its hollow torso.\n\nIt can switch from an upright humanoid form to four-legged mode within seconds by lowering its body, folding its legs and adjusting its center of gravity to handle complex terrains.\n\n### The Demonstration\n\nUnitree founder Wang Xingxing entered the cockpit to personally demonstrate the mecha moving smoothly forward, and the mecha then punched down a brick wall, showing its strength and accuracy.\n\n### Market Context\n\nThe Chinese robotics firm simultaneously advances a landmark listing on Shanghai's STAR Market, aiming to become the first humanoid robotics company to list publicly in China. According to an Omdia report, Chinese companies dominated the market, with Unitree ranking second globally by shipping about 4,200 units of humanoid robots in 2025.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Unitree world's first mass-produced manned robot launch 2026"
+        }
+      }
+    },
+    {
+      "step_id": 7,
+      "timestamp": "2026-05-13T08:39:37.005Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed WebFetch toolu_01PvsNUUMe46uaxX4U1CNGSm",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01PvsNUUMe46uaxX4U1CNGSm",
+          "function_name": "WebFetch",
+          "arguments": {
+            "url": "https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/",
+            "prompt": "提取 Unitree GD01 的所有技术规格：尺寸、重量、有效载荷、关节数量、电池、续航、驱动方式（电机/液压）、最高速度、转换机制、控制系统、传感器。也提取任何关于研发难点或工程挑战的说明。"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01PvsNUUMe46uaxX4U1CNGSm",
+            "content": "# Unitree GD01 技术规格提取\n\n基于提供的文章内容，以下是可获得的技术信息：\n\n## 已确认的规格\n\n**重量：** \"其总重约500公斤（含乘客）\"\n\n**分类：** 该产品被明确定义为可变形民用车辆\n\n## 未披露的技术细节\n\n文章明确指出，Unitree未公布详细技术规格。具体来说，文章提到\"Unitree did not disclose further details about the product\"（Unitree未披露该产品的进一步细节）。\n\n## 已确认的功能特性\n\n根据演示视频显示：\n- 可向前行走\n- 具备变形能力（可向后倾斜并转换为四足形态）\n- 支持破坏性演示（摧毁砖块堆）\n\n## 缺失的工程细节\n\n文章未提供尺寸、续航里程、电池规格、驱动方式、速度、传感器配置或研发挑战的相关信息。Unitree选择仅通过一段一分钟的视频和基本规格进行产品发布。\n\n[metadata] {\"bytes\": 14119, \"code\": 200, \"codeText\": \"OK\", \"result\": \"# Unitree GD01 技术规格提取\\n\\n基于提供的文章内容，以下是可获得的技术信息：\\n\\n## 已确认的规格\\n\\n**重量：** \\\"其总重约500公斤（含乘客）\\\"\\n\\n**分类：** 该产品被明确定义为可变形民用车辆\\n\\n## 未披露的技术细节\\n\\n文章明确指出，Unitree未公布详细技术规格。具体来说，文章提到\\\"Unitree did not disclose further details about the product\\\"（Unitree未披露该产品的进一步细节）。\\n\\n## 已确认的功能特性\\n\\n根据演示视频显示：\\n- 可向前行走\\n- 具备变形能力（可向后倾斜并转换为四足形态）\\n- 支持破坏性演示（摧毁砖块堆）\\n\\n## 缺失的工程细节\\n\\n文章未提供尺寸、续航里程、电池规格、驱动方式、速度、传感器配置或研发挑战的相关信息。Unitree选择仅通过一段一分钟的视频和基本规格进行产品发布。\", \"durationMs\": 5112, \"url\": \"https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/\"}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 28758,
+        "completion_tokens": 219,
+        "cached_tokens": 28757,
+        "extra": {
+          "cache_creation_input_tokens": 1534,
+          "cache_read_input_tokens": 28757,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1534,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 219,
+              "cache_read_input_tokens": 28757,
+              "cache_creation_input_tokens": 1534,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1534
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebFetch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "bytes": 14119,
+            "code": 200,
+            "codeText": "OK",
+            "result": "# Unitree GD01 技术规格提取\n\n基于提供的文章内容，以下是可获得的技术信息：\n\n## 已确认的规格\n\n**重量：** \"其总重约500公斤（含乘客）\"\n\n**分类：** 该产品被明确定义为可变形民用车辆\n\n## 未披露的技术细节\n\n文章明确指出，Unitree未公布详细技术规格。具体来说，文章提到\"Unitree did not disclose further details about the product\"（Unitree未披露该产品的进一步细节）。\n\n## 已确认的功能特性\n\n根据演示视频显示：\n- 可向前行走\n- 具备变形能力（可向后倾斜并转换为四足形态）\n- 支持破坏性演示（摧毁砖块堆）\n\n## 缺失的工程细节\n\n文章未提供尺寸、续航里程、电池规格、驱动方式、速度、传感器配置或研发挑战的相关信息。Unitree选择仅通过一段一分钟的视频和基本规格进行产品发布。",
+            "durationMs": 5112,
+            "url": "https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01PvsNUUMe46uaxX4U1CNGSm",
+            "type": "tool_result",
+            "content": "# Unitree GD01 技术规格提取\n\n基于提供的文章内容，以下是可获得的技术信息：\n\n## 已确认的规格\n\n**重量：** \"其总重约500公斤（含乘客）\"\n\n**分类：** 该产品被明确定义为可变形民用车辆\n\n## 未披露的技术细节\n\n文章明确指出，Unitree未公布详细技术规格。具体来说，文章提到\"Unitree did not disclose further details about the product\"（Unitree未披露该产品的进一步细节）。\n\n## 已确认的功能特性\n\n根据演示视频显示：\n- 可向前行走\n- 具备变形能力（可向后倾斜并转换为四足形态）\n- 支持破坏性演示（摧毁砖块堆）\n\n## 缺失的工程细节\n\n文章未提供尺寸、续航里程、电池规格、驱动方式、速度、传感器配置或研发挑战的相关信息。Unitree选择仅通过一段一分钟的视频和基本规格进行产品发布。"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "bytes": 14119,
+            "code": 200,
+            "codeText": "OK",
+            "result": "# Unitree GD01 技术规格提取\n\n基于提供的文章内容，以下是可获得的技术信息：\n\n## 已确认的规格\n\n**重量：** \"其总重约500公斤（含乘客）\"\n\n**分类：** 该产品被明确定义为可变形民用车辆\n\n## 未披露的技术细节\n\n文章明确指出，Unitree未公布详细技术规格。具体来说，文章提到\"Unitree did not disclose further details about the product\"（Unitree未披露该产品的进一步细节）。\n\n## 已确认的功能特性\n\n根据演示视频显示：\n- 可向前行走\n- 具备变形能力（可向后倾斜并转换为四足形态）\n- 支持破坏性演示（摧毁砖块堆）\n\n## 缺失的工程细节\n\n文章未提供尺寸、续航里程、电池规格、驱动方式、速度、传感器配置或研发挑战的相关信息。Unitree选择仅通过一段一分钟的视频和基本规格进行产品发布。",
+            "durationMs": 5112,
+            "url": "https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01PvsNUUMe46uaxX4U1CNGSm",
+            "type": "tool_result",
+            "content": "# Unitree GD01 技术规格提取\n\n基于提供的文章内容，以下是可获得的技术信息：\n\n## 已确认的规格\n\n**重量：** \"其总重约500公斤（含乘客）\"\n\n**分类：** 该产品被明确定义为可变形民用车辆\n\n## 未披露的技术细节\n\n文章明确指出，Unitree未公布详细技术规格。具体来说，文章提到\"Unitree did not disclose further details about the product\"（Unitree未披露该产品的进一步细节）。\n\n## 已确认的功能特性\n\n根据演示视频显示：\n- 可向前行走\n- 具备变形能力（可向后倾斜并转换为四足形态）\n- 支持破坏性演示（摧毁砖块堆）\n\n## 缺失的工程细节\n\n文章未提供尺寸、续航里程、电池规格、驱动方式、速度、传感器配置或研发挑战的相关信息。Unitree选择仅通过一段一分钟的视频和基本规格进行产品发布。"
+          }
+        },
+        "raw_arguments": {
+          "url": "https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/",
+          "prompt": "提取 Unitree GD01 的所有技术规格：尺寸、重量、有效载荷、关节数量、电池、续航、驱动方式（电机/液压）、最高速度、转换机制、控制系统、传感器。也提取任何关于研发难点或工程挑战的说明。"
+        }
+      }
+    },
+    {
+      "step_id": 8,
+      "timestamp": "2026-05-13T08:39:58.546Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed WebFetch toolu_016jSmPsyBBGcdZMQYDo9aHL",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_016jSmPsyBBGcdZMQYDo9aHL",
+          "function_name": "WebFetch",
+          "arguments": {
+            "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4",
+            "prompt": "提取 Unitree GD01 mecha 的所有技术信息和工程细节：双足/四足切换机制、动力系统、平衡控制、负载、用途。同时摘录任何专家或评论员关于这台机器技术挑战或不足之处的评价。"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_016jSmPsyBBGcdZMQYDo9aHL",
+            "content": "# Unitree GD01 技术信息摘要\n\n## 技术规格\n根据提供的文章内容，GD01的技术细节有限：\n\n**基本参数：**\n- 重量：500kg（含驾驶员）\n- 材料：\"高强度合金\"\n- 价格：390万元人民币（约573,674美元）\n\n**运动模式：**\n文章提及该机器人\"在双足行走和四足爬行模式之间转换\"，演示视频展示了它\"像人形机器人一样行走，用手推倒砖墙，然后重新配置底盘进入四足爬行\"。\n\n## 缺失的工程细节\n\n文章**未提供**以下信息：\n- 具体的动力系统/电源规格\n- 平衡控制算法或传感器配置\n- 切换机制的技术实现方式\n- 精确的负载容量\n- 应用场景详情\n\n## 专家评论\n\n文章中**没有包含**任何专家或评论员对GD01技术挑战或不足之处的评价。文章仅陈述事实信息和Unitree公司自身的描述。\n\n---\n\n**注：** 该文章重点关注市场地位而非技术细节，更详细的工程信息需要查阅其他专业技术来源。\n\n[metadata] {\"bytes\": 1057352, \"code\": 200, \"codeText\": \"OK\", \"result\": \"# Unitree GD01 技术信息摘要\\n\\n## 技术规格\\n根据提供的文章内容，GD01的技术细节有限：\\n\\n**基本参数：**\\n- 重量：500kg（含驾驶员）\\n- 材料：\\\"高强度合金\\\"\\n- 价格：390万元人民币（约573,674美元）\\n\\n**运动模式：**\\n文章提及该机器人\\\"在双足行走和四足爬行模式之间转换\\\"，演示视频展示了它\\\"像人形机器人一样行走，用手推倒砖墙，然后重新配置底盘进入四足爬行\\\"。\\n\\n## 缺失的工程细节\\n\\n文章**未提供**以下信息：\\n- 具体的动力系统/电源规格\\n- 平衡控制算法或传感器配置\\n- 切换机制的技术实现方式\\n- 精确的负载容量\\n- 应用场景详情\\n\\n## 专家评论\\n\\n文章中**没有包含**任何专家或评论员对GD01技术挑战或不足之处的评价。文章仅陈述事实信息和Unitree公司自身的描述。\\n\\n---\\n\\n**注：** 该文章重点关注市场地位而非技术细节，更详细的工程信息需要查阅其他专业技术来源。\", \"durationMs\": 4418, \"url\": \"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 30292,
+        "completion_tokens": 236,
+        "cached_tokens": 30291,
+        "extra": {
+          "cache_creation_input_tokens": 566,
+          "cache_read_input_tokens": 30291,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 566,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 236,
+              "cache_read_input_tokens": 30291,
+              "cache_creation_input_tokens": 566,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 566
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebFetch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "bytes": 1057352,
+            "code": 200,
+            "codeText": "OK",
+            "result": "# Unitree GD01 技术信息摘要\n\n## 技术规格\n根据提供的文章内容，GD01的技术细节有限：\n\n**基本参数：**\n- 重量：500kg（含驾驶员）\n- 材料：\"高强度合金\"\n- 价格：390万元人民币（约573,674美元）\n\n**运动模式：**\n文章提及该机器人\"在双足行走和四足爬行模式之间转换\"，演示视频展示了它\"像人形机器人一样行走，用手推倒砖墙，然后重新配置底盘进入四足爬行\"。\n\n## 缺失的工程细节\n\n文章**未提供**以下信息：\n- 具体的动力系统/电源规格\n- 平衡控制算法或传感器配置\n- 切换机制的技术实现方式\n- 精确的负载容量\n- 应用场景详情\n\n## 专家评论\n\n文章中**没有包含**任何专家或评论员对GD01技术挑战或不足之处的评价。文章仅陈述事实信息和Unitree公司自身的描述。\n\n---\n\n**注：** 该文章重点关注市场地位而非技术细节，更详细的工程信息需要查阅其他专业技术来源。",
+            "durationMs": 4418,
+            "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_016jSmPsyBBGcdZMQYDo9aHL",
+            "type": "tool_result",
+            "content": "# Unitree GD01 技术信息摘要\n\n## 技术规格\n根据提供的文章内容，GD01的技术细节有限：\n\n**基本参数：**\n- 重量：500kg（含驾驶员）\n- 材料：\"高强度合金\"\n- 价格：390万元人民币（约573,674美元）\n\n**运动模式：**\n文章提及该机器人\"在双足行走和四足爬行模式之间转换\"，演示视频展示了它\"像人形机器人一样行走，用手推倒砖墙，然后重新配置底盘进入四足爬行\"。\n\n## 缺失的工程细节\n\n文章**未提供**以下信息：\n- 具体的动力系统/电源规格\n- 平衡控制算法或传感器配置\n- 切换机制的技术实现方式\n- 精确的负载容量\n- 应用场景详情\n\n## 专家评论\n\n文章中**没有包含**任何专家或评论员对GD01技术挑战或不足之处的评价。文章仅陈述事实信息和Unitree公司自身的描述。\n\n---\n\n**注：** 该文章重点关注市场地位而非技术细节，更详细的工程信息需要查阅其他专业技术来源。"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "bytes": 1057352,
+            "code": 200,
+            "codeText": "OK",
+            "result": "# Unitree GD01 技术信息摘要\n\n## 技术规格\n根据提供的文章内容，GD01的技术细节有限：\n\n**基本参数：**\n- 重量：500kg（含驾驶员）\n- 材料：\"高强度合金\"\n- 价格：390万元人民币（约573,674美元）\n\n**运动模式：**\n文章提及该机器人\"在双足行走和四足爬行模式之间转换\"，演示视频展示了它\"像人形机器人一样行走，用手推倒砖墙，然后重新配置底盘进入四足爬行\"。\n\n## 缺失的工程细节\n\n文章**未提供**以下信息：\n- 具体的动力系统/电源规格\n- 平衡控制算法或传感器配置\n- 切换机制的技术实现方式\n- 精确的负载容量\n- 应用场景详情\n\n## 专家评论\n\n文章中**没有包含**任何专家或评论员对GD01技术挑战或不足之处的评价。文章仅陈述事实信息和Unitree公司自身的描述。\n\n---\n\n**注：** 该文章重点关注市场地位而非技术细节，更详细的工程信息需要查阅其他专业技术来源。",
+            "durationMs": 4418,
+            "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_016jSmPsyBBGcdZMQYDo9aHL",
+            "type": "tool_result",
+            "content": "# Unitree GD01 技术信息摘要\n\n## 技术规格\n根据提供的文章内容，GD01的技术细节有限：\n\n**基本参数：**\n- 重量：500kg（含驾驶员）\n- 材料：\"高强度合金\"\n- 价格：390万元人民币（约573,674美元）\n\n**运动模式：**\n文章提及该机器人\"在双足行走和四足爬行模式之间转换\"，演示视频展示了它\"像人形机器人一样行走，用手推倒砖墙，然后重新配置底盘进入四足爬行\"。\n\n## 缺失的工程细节\n\n文章**未提供**以下信息：\n- 具体的动力系统/电源规格\n- 平衡控制算法或传感器配置\n- 切换机制的技术实现方式\n- 精确的负载容量\n- 应用场景详情\n\n## 专家评论\n\n文章中**没有包含**任何专家或评论员对GD01技术挑战或不足之处的评价。文章仅陈述事实信息和Unitree公司自身的描述。\n\n---\n\n**注：** 该文章重点关注市场地位而非技术细节，更详细的工程信息需要查阅其他专业技术来源。"
+          }
+        },
+        "raw_arguments": {
+          "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4",
+          "prompt": "提取 Unitree GD01 mecha 的所有技术信息和工程细节：双足/四足切换机制、动力系统、平衡控制、负载、用途。同时摘录任何专家或评论员关于这台机器技术挑战或不足之处的评价。"
+        }
+      }
+    },
+    {
+      "step_id": 9,
+      "timestamp": "2026-05-13T08:40:10.977Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 30858,
+        "completion_tokens": 226,
+        "cached_tokens": 30857,
+        "extra": {
+          "cache_creation_input_tokens": 637,
+          "cache_read_input_tokens": 30857,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 637,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 226,
+              "cache_read_input_tokens": 30857,
+              "cache_creation_input_tokens": 637,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 637
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 10,
+      "timestamp": "2026-05-13T08:40:11.729Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed WebSearch toolu_01AdnsgrNMfsU6N44kFC9e8a",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01AdnsgrNMfsU6N44kFC9e8a",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01AdnsgrNMfsU6N44kFC9e8a",
+            "content": "Web search results for query: \"Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert\"\n\nLinks: [{\"title\":\"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\",\"url\":\"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"},{\"title\":\"Unitree Brings a Pilotable Giant Robot to Market with the GD01 - TechEBlog\",\"url\":\"https://www.techeblog.com/unitree-manned-robot-mech-gd01-price-specs/\"},{\"title\":\"Unitree unveils world's first manned transformable robotic vehicle-Xinhua\",\"url\":\"https://english.news.cn/20260512/715d3be8a90e4bc29ea081a2954bf9b0/c.html\"},{\"title\":\"China's Unitree debuts 'mecha' robot that shifts from 2 legs ...\",\"url\":\"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"},{\"title\":\"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"},{\"title\":\"Studioglobal\",\"url\":\"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Unitree unveils optionally manned transformer robot GD01\",\"url\":\"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"},{\"title\":\"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\",\"url\":\"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"},{\"title\":\"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\",\"url\":\"https://www.globaltimes.cn/page/202605/1360822.shtml\"}]\n\nBased on the search results, here's a comprehensive overview of the Unitree GD01 mecha and its technical capabilities:\n\n## Overview\nUnitree has unveiled the GD01, a manned transformable mecha starting at $650,000. The manned \"mecha\" is capable of transitioning between bipedal walking and four-legged mode.\n\n## Technical Specifications\nThe robot weighs about 500 kg (1,100 lbs) with an occupant inside and switches between bipedal humanoid walking and a stable quadrupedal all-fours mode for complex or rough terrain. When standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n## Key Capabilities\nIt demonstrates stable bipedal walking, high force output capable of toppling a brick wall, and can fold its legs, adjust its center of gravity, and transition into a quadruped form within seconds, continuing movement without external assistance across uneven terrain.\n\n## Technical Trade-offs\nAccording to robotics industry analysis, bipedal robots offer showy mobility but typically require complex balance control, while quadrupedal designs prioritize static stability at the cost of a more utilitarian appearance. Bipedal mode mimics a walking gait; quad mode adds stability on uneven ground.\n\n## Current Limitations\nFull technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Additionally, weaknesses are mainly related to real-world usability, including difficulties getting in and out of the machine, battery-life concerns, limited comfort, regulatory uncertainty and maintenance complexity.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert\", \"results\": [{\"tool_use_id\": \"srvtoolu_016zN9Ms1CYWG6LBQojhFNbw\", \"content\": [{\"title\": \"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\", \"url\": \"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"}, {\"title\": \"Unitree Brings a Pilotable Giant Robot to Market with the GD01 - TechEBlog\", \"url\": \"https://www.techeblog.com/unitree-manned-robot-mech-gd01-price-specs/\"}, {\"title\": \"Unitree unveils world's first manned transformable robotic vehicle-Xinhua\", \"url\": \"https://english.news.cn/20260512/715d3be8a90e4bc29ea081a2954bf9b0/c.html\"}, {\"title\": \"China's Unitree debuts 'mecha' robot that shifts from 2 legs ...\", \"url\": \"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"}, {\"title\": \"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\", \"url\": \"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"}, {\"title\": \"Studioglobal\", \"url\": \"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"}, {\"title\": \"Unitree GD01: China's $537k rideable transformer robot is now in production\", \"url\": \"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"}, {\"title\": \"Unitree unveils optionally manned transformer robot GD01\", \"url\": \"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"}, {\"title\": \"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\", \"url\": \"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"}, {\"title\": \"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\", \"url\": \"https://www.globaltimes.cn/page/202605/1360822.shtml\"}]}, \"Based on the search results, here's a comprehensive overview of the Unitree GD01 mecha and its technical capabilities:\\n\\n## Overview\\nUnitree has unveiled the GD01, a manned transformable mecha starting at $650,000. The manned \\\"mecha\\\" is capable of transitioning between bipedal walking and four-legged mode.\\n\\n## Technical Specifications\\nThe robot weighs about 500 kg (1,100 lbs) with an occupant inside and switches between bipedal humanoid walking and a stable quadrupedal all-fours mode for complex or rough terrain. When standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\\n\\n## Key Capabilities\\nIt demonstrates stable bipedal walking, high force output capable of toppling a brick wall, and can fold its legs, adjust its center of gravity, and transition into a quadruped form within seconds, continuing movement without external assistance across uneven terrain.\\n\\n## Technical Trade-offs\\nAccording to robotics industry analysis, bipedal robots offer showy mobility but typically require complex balance control, while quadrupedal designs prioritize static stability at the cost of a more utilitarian appearance. Bipedal mode mimics a walking gait; quad mode adds stability on uneven ground.\\n\\n## Current Limitations\\nFull technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Additionally, weaknesses are mainly related to real-world usability, including difficulties getting in and out of the machine, battery-life concerns, limited comfort, regulatory uncertainty and maintenance complexity.\"], \"durationSeconds\": 7.10914175000001}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 30858,
+        "completion_tokens": 226,
+        "cached_tokens": 30857,
+        "extra": {
+          "cache_creation_input_tokens": 637,
+          "cache_read_input_tokens": 30857,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 637,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 226,
+              "cache_read_input_tokens": 30857,
+              "cache_creation_input_tokens": 637,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 637
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_016zN9Ms1CYWG6LBQojhFNbw",
+                "content": [
+                  {
+                    "title": "The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy",
+                    "url": "https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy"
+                  },
+                  {
+                    "title": "Unitree Brings a Pilotable Giant Robot to Market with the GD01 - TechEBlog",
+                    "url": "https://www.techeblog.com/unitree-manned-robot-mech-gd01-price-specs/"
+                  },
+                  {
+                    "title": "Unitree unveils world's first manned transformable robotic vehicle-Xinhua",
+                    "url": "https://english.news.cn/20260512/715d3be8a90e4bc29ea081a2954bf9b0/c.html"
+                  },
+                  {
+                    "title": "China's Unitree debuts 'mecha' robot that shifts from 2 legs ...",
+                    "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4"
+                  },
+                  {
+                    "title": "Unitree debuts $650,000 GD01 personal mech | Let's Data Science",
+                    "url": "https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba"
+                  },
+                  {
+                    "title": "Studioglobal",
+                    "url": "https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9"
+                  },
+                  {
+                    "title": "Unitree GD01: China's $537k rideable transformer robot is now in production",
+                    "url": "https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/"
+                  },
+                  {
+                    "title": "Unitree unveils optionally manned transformer robot GD01",
+                    "url": "https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot"
+                  },
+                  {
+                    "title": "Unitree’s GD01 Transformable Mecha Robot | Mike Kalil",
+                    "url": "https://mikekalil.com/blog/unitree-gd01-mecha-robot/"
+                  },
+                  {
+                    "title": "Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times",
+                    "url": "https://www.globaltimes.cn/page/202605/1360822.shtml"
+                  }
+                ]
+              },
+              "Based on the search results, here's a comprehensive overview of the Unitree GD01 mecha and its technical capabilities:\n\n## Overview\nUnitree has unveiled the GD01, a manned transformable mecha starting at $650,000. The manned \"mecha\" is capable of transitioning between bipedal walking and four-legged mode.\n\n## Technical Specifications\nThe robot weighs about 500 kg (1,100 lbs) with an occupant inside and switches between bipedal humanoid walking and a stable quadrupedal all-fours mode for complex or rough terrain. When standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n## Key Capabilities\nIt demonstrates stable bipedal walking, high force output capable of toppling a brick wall, and can fold its legs, adjust its center of gravity, and transition into a quadruped form within seconds, continuing movement without external assistance across uneven terrain.\n\n## Technical Trade-offs\nAccording to robotics industry analysis, bipedal robots offer showy mobility but typically require complex balance control, while quadrupedal designs prioritize static stability at the cost of a more utilitarian appearance. Bipedal mode mimics a walking gait; quad mode adds stability on uneven ground.\n\n## Current Limitations\nFull technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Additionally, weaknesses are mainly related to real-world usability, including difficulties getting in and out of the machine, battery-life concerns, limited comfort, regulatory uncertainty and maintenance complexity."
+            ],
+            "durationSeconds": 7.10914175000001
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AdnsgrNMfsU6N44kFC9e8a",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert\"\n\nLinks: [{\"title\":\"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\",\"url\":\"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"},{\"title\":\"Unitree Brings a Pilotable Giant Robot to Market with the GD01 - TechEBlog\",\"url\":\"https://www.techeblog.com/unitree-manned-robot-mech-gd01-price-specs/\"},{\"title\":\"Unitree unveils world's first manned transformable robotic vehicle-Xinhua\",\"url\":\"https://english.news.cn/20260512/715d3be8a90e4bc29ea081a2954bf9b0/c.html\"},{\"title\":\"China's Unitree debuts 'mecha' robot that shifts from 2 legs ...\",\"url\":\"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"},{\"title\":\"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"},{\"title\":\"Studioglobal\",\"url\":\"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Unitree unveils optionally manned transformer robot GD01\",\"url\":\"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"},{\"title\":\"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\",\"url\":\"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"},{\"title\":\"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\",\"url\":\"https://www.globaltimes.cn/page/202605/1360822.shtml\"}]\n\nBased on the search results, here's a comprehensive overview of the Unitree GD01 mecha and its technical capabilities:\n\n## Overview\nUnitree has unveiled the GD01, a manned transformable mecha starting at $650,000. The manned \"mecha\" is capable of transitioning between bipedal walking and four-legged mode.\n\n## Technical Specifications\nThe robot weighs about 500 kg (1,100 lbs) with an occupant inside and switches between bipedal humanoid walking and a stable quadrupedal all-fours mode for complex or rough terrain. When standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n## Key Capabilities\nIt demonstrates stable bipedal walking, high force output capable of toppling a brick wall, and can fold its legs, adjust its center of gravity, and transition into a quadruped form within seconds, continuing movement without external assistance across uneven terrain.\n\n## Technical Trade-offs\nAccording to robotics industry analysis, bipedal robots offer showy mobility but typically require complex balance control, while quadrupedal designs prioritize static stability at the cost of a more utilitarian appearance. Bipedal mode mimics a walking gait; quad mode adds stability on uneven ground.\n\n## Current Limitations\nFull technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Additionally, weaknesses are mainly related to real-world usability, including difficulties getting in and out of the machine, battery-life concerns, limited comfort, regulatory uncertainty and maintenance complexity.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_016zN9Ms1CYWG6LBQojhFNbw",
+                "content": [
+                  {
+                    "title": "The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy",
+                    "url": "https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy"
+                  },
+                  {
+                    "title": "Unitree Brings a Pilotable Giant Robot to Market with the GD01 - TechEBlog",
+                    "url": "https://www.techeblog.com/unitree-manned-robot-mech-gd01-price-specs/"
+                  },
+                  {
+                    "title": "Unitree unveils world's first manned transformable robotic vehicle-Xinhua",
+                    "url": "https://english.news.cn/20260512/715d3be8a90e4bc29ea081a2954bf9b0/c.html"
+                  },
+                  {
+                    "title": "China's Unitree debuts 'mecha' robot that shifts from 2 legs ...",
+                    "url": "https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4"
+                  },
+                  {
+                    "title": "Unitree debuts $650,000 GD01 personal mech | Let's Data Science",
+                    "url": "https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba"
+                  },
+                  {
+                    "title": "Studioglobal",
+                    "url": "https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9"
+                  },
+                  {
+                    "title": "Unitree GD01: China's $537k rideable transformer robot is now in production",
+                    "url": "https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/"
+                  },
+                  {
+                    "title": "Unitree unveils optionally manned transformer robot GD01",
+                    "url": "https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot"
+                  },
+                  {
+                    "title": "Unitree’s GD01 Transformable Mecha Robot | Mike Kalil",
+                    "url": "https://mikekalil.com/blog/unitree-gd01-mecha-robot/"
+                  },
+                  {
+                    "title": "Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times",
+                    "url": "https://www.globaltimes.cn/page/202605/1360822.shtml"
+                  }
+                ]
+              },
+              "Based on the search results, here's a comprehensive overview of the Unitree GD01 mecha and its technical capabilities:\n\n## Overview\nUnitree has unveiled the GD01, a manned transformable mecha starting at $650,000. The manned \"mecha\" is capable of transitioning between bipedal walking and four-legged mode.\n\n## Technical Specifications\nThe robot weighs about 500 kg (1,100 lbs) with an occupant inside and switches between bipedal humanoid walking and a stable quadrupedal all-fours mode for complex or rough terrain. When standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n## Key Capabilities\nIt demonstrates stable bipedal walking, high force output capable of toppling a brick wall, and can fold its legs, adjust its center of gravity, and transition into a quadruped form within seconds, continuing movement without external assistance across uneven terrain.\n\n## Technical Trade-offs\nAccording to robotics industry analysis, bipedal robots offer showy mobility but typically require complex balance control, while quadrupedal designs prioritize static stability at the cost of a more utilitarian appearance. Bipedal mode mimics a walking gait; quad mode adds stability on uneven ground.\n\n## Current Limitations\nFull technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Additionally, weaknesses are mainly related to real-world usability, including difficulties getting in and out of the machine, battery-life concerns, limited comfort, regulatory uncertainty and maintenance complexity."
+            ],
+            "durationSeconds": 7.10914175000001
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AdnsgrNMfsU6N44kFC9e8a",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert\"\n\nLinks: [{\"title\":\"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\",\"url\":\"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"},{\"title\":\"Unitree Brings a Pilotable Giant Robot to Market with the GD01 - TechEBlog\",\"url\":\"https://www.techeblog.com/unitree-manned-robot-mech-gd01-price-specs/\"},{\"title\":\"Unitree unveils world's first manned transformable robotic vehicle-Xinhua\",\"url\":\"https://english.news.cn/20260512/715d3be8a90e4bc29ea081a2954bf9b0/c.html\"},{\"title\":\"China's Unitree debuts 'mecha' robot that shifts from 2 legs ...\",\"url\":\"https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4\"},{\"title\":\"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"},{\"title\":\"Studioglobal\",\"url\":\"https://www.studioglobal.ai/discover/answers/what-is-unitree-robotics-new-gd01-rideable-6a03080b60cae25072bc36b9\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Unitree unveils optionally manned transformer robot GD01\",\"url\":\"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"},{\"title\":\"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\",\"url\":\"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"},{\"title\":\"Science fiction becomes reality: Unitree Robotics unveils world’s first production-ready manned mecha - Global Times\",\"url\":\"https://www.globaltimes.cn/page/202605/1360822.shtml\"}]\n\nBased on the search results, here's a comprehensive overview of the Unitree GD01 mecha and its technical capabilities:\n\n## Overview\nUnitree has unveiled the GD01, a manned transformable mecha starting at $650,000. The manned \"mecha\" is capable of transitioning between bipedal walking and four-legged mode.\n\n## Technical Specifications\nThe robot weighs about 500 kg (1,100 lbs) with an occupant inside and switches between bipedal humanoid walking and a stable quadrupedal all-fours mode for complex or rough terrain. When standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n## Key Capabilities\nIt demonstrates stable bipedal walking, high force output capable of toppling a brick wall, and can fold its legs, adjust its center of gravity, and transition into a quadruped form within seconds, continuing movement without external assistance across uneven terrain.\n\n## Technical Trade-offs\nAccording to robotics industry analysis, bipedal robots offer showy mobility but typically require complex balance control, while quadrupedal designs prioritize static stability at the cost of a more utilitarian appearance. Bipedal mode mimics a walking gait; quad mode adds stability on uneven ground.\n\n## Current Limitations\nFull technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Additionally, weaknesses are mainly related to real-world usability, including difficulties getting in and out of the machine, battery-life concerns, limited comfort, regulatory uncertainty and maintenance complexity.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Unitree GD01 mecha technical analysis bipedal quadrupedal transformation challenges robotics expert"
+        }
+      }
+    },
+    {
+      "step_id": 11,
+      "timestamp": "2026-05-13T08:40:12.386Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed WebSearch toolu_011eKdTkPLNXuDDkfrbBmvs9",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_011eKdTkPLNXuDDkfrbBmvs9",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Unitree GD01 specs payload actuators degrees of freedom battery"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_011eKdTkPLNXuDDkfrbBmvs9",
+            "content": "Web search results for query: \"Unitree GD01 specs payload actuators degrees of freedom battery\"\n\nLinks: [{\"title\":\"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\",\"url\":\"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"},{\"title\":\"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"},{\"title\":\"China's Robot Juggernaut Unitree Debuts a $650,000 Personal Gundam\",\"url\":\"https://gizmodo.com/chinas-robot-juggernaut-unitree-debuts-a-650000-personal-gundam-2000757574\"},{\"title\":\"Unitree Unveils GD01: World's First Mass-Produced Human-Carrying Transforming Mecha at 3.9M RMB - Pandaily\",\"url\":\"https://pandaily.com/unitree-gd01-human-carrying-transforming-mecha\"},{\"title\":\"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\",\"url\":\"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Unitree G1 EDU Ultimate Technical Specifications – RoboStore\",\"url\":\"https://robostore.com/blogs/news/unitree-g1-edu-ultimate-technical-specifications\"},{\"title\":\"Unitree's GD01 Mecha Puts a Pilot Inside a Walking Robot for $650,000 — Glitchwire\",\"url\":\"https://glitchwire.com/news/unitrees-gd01-mecha-puts-a-pilot-inside-a-walking-robot-for-650000/\"},{\"title\":\"Unitree unveils optionally manned transformer robot GD01\",\"url\":\"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"},{\"title\":\"Unitree G1 Price & Review [2026]\",\"url\":\"https://blog.robozaps.com/b/unitree-g1-review\"}]\n\nBased on the search results, here's what I found about the Unitree GD01 specifications:\n\n## Key Specifications Found:\n\n**Size & Weight:**\nThe GD01 stands about ten feet tall, weighs roughly a half-ton, and can switch between bipedal and quadrupedal modes. More precisely, when standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n**Capabilities:**\nThe 500kg robot can walk upright, punch through brick walls, and transform into a quadruped form in seconds.\n\n**Price:**\nUnitree announced the GD01 on May 12, with a starting price of 3.9 million yuan, or roughly $574,000, though the company's own marketing uses a rounder $650,000 figure.\n\n## Unavailable Specifications:\n\nUnfortunately, full technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Key specs — battery runtime, autonomous range, payload per limb — haven't been published, so the performance picture is still incomplete.\n\nThe GD01 is currently only available in China, with distribution limited to China and no regulatory pathway for the US or Europe announced.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Unitree GD01 specs payload actuators degrees of freedom battery\", \"results\": [{\"tool_use_id\": \"srvtoolu_01BLt1DSChgBAyuvEZDanevD\", \"content\": [{\"title\": \"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\", \"url\": \"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"}, {\"title\": \"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\", \"url\": \"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"}, {\"title\": \"China's Robot Juggernaut Unitree Debuts a $650,000 Personal Gundam\", \"url\": \"https://gizmodo.com/chinas-robot-juggernaut-unitree-debuts-a-650000-personal-gundam-2000757574\"}, {\"title\": \"Unitree Unveils GD01: World's First Mass-Produced Human-Carrying Transforming Mecha at 3.9M RMB - Pandaily\", \"url\": \"https://pandaily.com/unitree-gd01-human-carrying-transforming-mecha\"}, {\"title\": \"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\", \"url\": \"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"}, {\"title\": \"Unitree GD01: China's $537k rideable transformer robot is now in production\", \"url\": \"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"}, {\"title\": \"Unitree G1 EDU Ultimate Technical Specifications – RoboStore\", \"url\": \"https://robostore.com/blogs/news/unitree-g1-edu-ultimate-technical-specifications\"}, {\"title\": \"Unitree's GD01 Mecha Puts a Pilot Inside a Walking Robot for $650,000 — Glitchwire\", \"url\": \"https://glitchwire.com/news/unitrees-gd01-mecha-puts-a-pilot-inside-a-walking-robot-for-650000/\"}, {\"title\": \"Unitree unveils optionally manned transformer robot GD01\", \"url\": \"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"}, {\"title\": \"Unitree G1 Price & Review [2026]\", \"url\": \"https://blog.robozaps.com/b/unitree-g1-review\"}]}, \"Based on the search results, here's what I found about the Unitree GD01 specifications:\\n\\n## Key Specifications Found:\\n\\n**Size & Weight:**\\nThe GD01 stands about ten feet tall, weighs roughly a half-ton, and can switch between bipedal and quadrupedal modes. More precisely, when standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\\n\\n**Capabilities:**\\nThe 500kg robot can walk upright, punch through brick walls, and transform into a quadruped form in seconds.\\n\\n**Price:**\\nUnitree announced the GD01 on May 12, with a starting price of 3.9 million yuan, or roughly $574,000, though the company's own marketing uses a rounder $650,000 figure.\\n\\n## Unavailable Specifications:\\n\\nUnfortunately, full technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Key specs — battery runtime, autonomous range, payload per limb — haven't been published, so the performance picture is still incomplete.\\n\\nThe GD01 is currently only available in China, with distribution limited to China and no regulatory pathway for the US or Europe announced.\"], \"durationSeconds\": 6.517570000000007}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 30858,
+        "completion_tokens": 226,
+        "cached_tokens": 30857,
+        "extra": {
+          "cache_creation_input_tokens": 637,
+          "cache_read_input_tokens": 30857,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 637,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 226,
+              "cache_read_input_tokens": 30857,
+              "cache_creation_input_tokens": 637,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 637
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Unitree GD01 specs payload actuators degrees of freedom battery",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01BLt1DSChgBAyuvEZDanevD",
+                "content": [
+                  {
+                    "title": "The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy",
+                    "url": "https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy"
+                  },
+                  {
+                    "title": "Unitree debuts $650,000 GD01 personal mech | Let's Data Science",
+                    "url": "https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba"
+                  },
+                  {
+                    "title": "China's Robot Juggernaut Unitree Debuts a $650,000 Personal Gundam",
+                    "url": "https://gizmodo.com/chinas-robot-juggernaut-unitree-debuts-a-650000-personal-gundam-2000757574"
+                  },
+                  {
+                    "title": "Unitree Unveils GD01: World's First Mass-Produced Human-Carrying Transforming Mecha at 3.9M RMB - Pandaily",
+                    "url": "https://pandaily.com/unitree-gd01-human-carrying-transforming-mecha"
+                  },
+                  {
+                    "title": "Unitree’s GD01 Transformable Mecha Robot | Mike Kalil",
+                    "url": "https://mikekalil.com/blog/unitree-gd01-mecha-robot/"
+                  },
+                  {
+                    "title": "Unitree GD01: China's $537k rideable transformer robot is now in production",
+                    "url": "https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/"
+                  },
+                  {
+                    "title": "Unitree G1 EDU Ultimate Technical Specifications – RoboStore",
+                    "url": "https://robostore.com/blogs/news/unitree-g1-edu-ultimate-technical-specifications"
+                  },
+                  {
+                    "title": "Unitree's GD01 Mecha Puts a Pilot Inside a Walking Robot for $650,000 — Glitchwire",
+                    "url": "https://glitchwire.com/news/unitrees-gd01-mecha-puts-a-pilot-inside-a-walking-robot-for-650000/"
+                  },
+                  {
+                    "title": "Unitree unveils optionally manned transformer robot GD01",
+                    "url": "https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot"
+                  },
+                  {
+                    "title": "Unitree G1 Price & Review [2026]",
+                    "url": "https://blog.robozaps.com/b/unitree-g1-review"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about the Unitree GD01 specifications:\n\n## Key Specifications Found:\n\n**Size & Weight:**\nThe GD01 stands about ten feet tall, weighs roughly a half-ton, and can switch between bipedal and quadrupedal modes. More precisely, when standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n**Capabilities:**\nThe 500kg robot can walk upright, punch through brick walls, and transform into a quadruped form in seconds.\n\n**Price:**\nUnitree announced the GD01 on May 12, with a starting price of 3.9 million yuan, or roughly $574,000, though the company's own marketing uses a rounder $650,000 figure.\n\n## Unavailable Specifications:\n\nUnfortunately, full technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Key specs — battery runtime, autonomous range, payload per limb — haven't been published, so the performance picture is still incomplete.\n\nThe GD01 is currently only available in China, with distribution limited to China and no regulatory pathway for the US or Europe announced."
+            ],
+            "durationSeconds": 6.517570000000007
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_011eKdTkPLNXuDDkfrbBmvs9",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Unitree GD01 specs payload actuators degrees of freedom battery\"\n\nLinks: [{\"title\":\"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\",\"url\":\"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"},{\"title\":\"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"},{\"title\":\"China's Robot Juggernaut Unitree Debuts a $650,000 Personal Gundam\",\"url\":\"https://gizmodo.com/chinas-robot-juggernaut-unitree-debuts-a-650000-personal-gundam-2000757574\"},{\"title\":\"Unitree Unveils GD01: World's First Mass-Produced Human-Carrying Transforming Mecha at 3.9M RMB - Pandaily\",\"url\":\"https://pandaily.com/unitree-gd01-human-carrying-transforming-mecha\"},{\"title\":\"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\",\"url\":\"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Unitree G1 EDU Ultimate Technical Specifications – RoboStore\",\"url\":\"https://robostore.com/blogs/news/unitree-g1-edu-ultimate-technical-specifications\"},{\"title\":\"Unitree's GD01 Mecha Puts a Pilot Inside a Walking Robot for $650,000 — Glitchwire\",\"url\":\"https://glitchwire.com/news/unitrees-gd01-mecha-puts-a-pilot-inside-a-walking-robot-for-650000/\"},{\"title\":\"Unitree unveils optionally manned transformer robot GD01\",\"url\":\"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"},{\"title\":\"Unitree G1 Price & Review [2026]\",\"url\":\"https://blog.robozaps.com/b/unitree-g1-review\"}]\n\nBased on the search results, here's what I found about the Unitree GD01 specifications:\n\n## Key Specifications Found:\n\n**Size & Weight:**\nThe GD01 stands about ten feet tall, weighs roughly a half-ton, and can switch between bipedal and quadrupedal modes. More precisely, when standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n**Capabilities:**\nThe 500kg robot can walk upright, punch through brick walls, and transform into a quadruped form in seconds.\n\n**Price:**\nUnitree announced the GD01 on May 12, with a starting price of 3.9 million yuan, or roughly $574,000, though the company's own marketing uses a rounder $650,000 figure.\n\n## Unavailable Specifications:\n\nUnfortunately, full technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Key specs — battery runtime, autonomous range, payload per limb — haven't been published, so the performance picture is still incomplete.\n\nThe GD01 is currently only available in China, with distribution limited to China and no regulatory pathway for the US or Europe announced.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Unitree GD01 specs payload actuators degrees of freedom battery",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01BLt1DSChgBAyuvEZDanevD",
+                "content": [
+                  {
+                    "title": "The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy",
+                    "url": "https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy"
+                  },
+                  {
+                    "title": "Unitree debuts $650,000 GD01 personal mech | Let's Data Science",
+                    "url": "https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba"
+                  },
+                  {
+                    "title": "China's Robot Juggernaut Unitree Debuts a $650,000 Personal Gundam",
+                    "url": "https://gizmodo.com/chinas-robot-juggernaut-unitree-debuts-a-650000-personal-gundam-2000757574"
+                  },
+                  {
+                    "title": "Unitree Unveils GD01: World's First Mass-Produced Human-Carrying Transforming Mecha at 3.9M RMB - Pandaily",
+                    "url": "https://pandaily.com/unitree-gd01-human-carrying-transforming-mecha"
+                  },
+                  {
+                    "title": "Unitree’s GD01 Transformable Mecha Robot | Mike Kalil",
+                    "url": "https://mikekalil.com/blog/unitree-gd01-mecha-robot/"
+                  },
+                  {
+                    "title": "Unitree GD01: China's $537k rideable transformer robot is now in production",
+                    "url": "https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/"
+                  },
+                  {
+                    "title": "Unitree G1 EDU Ultimate Technical Specifications – RoboStore",
+                    "url": "https://robostore.com/blogs/news/unitree-g1-edu-ultimate-technical-specifications"
+                  },
+                  {
+                    "title": "Unitree's GD01 Mecha Puts a Pilot Inside a Walking Robot for $650,000 — Glitchwire",
+                    "url": "https://glitchwire.com/news/unitrees-gd01-mecha-puts-a-pilot-inside-a-walking-robot-for-650000/"
+                  },
+                  {
+                    "title": "Unitree unveils optionally manned transformer robot GD01",
+                    "url": "https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot"
+                  },
+                  {
+                    "title": "Unitree G1 Price & Review [2026]",
+                    "url": "https://blog.robozaps.com/b/unitree-g1-review"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about the Unitree GD01 specifications:\n\n## Key Specifications Found:\n\n**Size & Weight:**\nThe GD01 stands about ten feet tall, weighs roughly a half-ton, and can switch between bipedal and quadrupedal modes. More precisely, when standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n**Capabilities:**\nThe 500kg robot can walk upright, punch through brick walls, and transform into a quadruped form in seconds.\n\n**Price:**\nUnitree announced the GD01 on May 12, with a starting price of 3.9 million yuan, or roughly $574,000, though the company's own marketing uses a rounder $650,000 figure.\n\n## Unavailable Specifications:\n\nUnfortunately, full technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Key specs — battery runtime, autonomous range, payload per limb — haven't been published, so the performance picture is still incomplete.\n\nThe GD01 is currently only available in China, with distribution limited to China and no regulatory pathway for the US or Europe announced."
+            ],
+            "durationSeconds": 6.517570000000007
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_011eKdTkPLNXuDDkfrbBmvs9",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Unitree GD01 specs payload actuators degrees of freedom battery\"\n\nLinks: [{\"title\":\"The Unitree GD01 Is a Giant Mecha Robot You Can Actually Buy\",\"url\":\"https://www.techbuzz.ai/articles/the-unitree-gd01-is-a-giant-mecha-robot-you-can-actually-buy\"},{\"title\":\"Unitree debuts $650,000 GD01 personal mech | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/unitree-debuts-650000-gd01-personal-mech-81aa43ba\"},{\"title\":\"China's Robot Juggernaut Unitree Debuts a $650,000 Personal Gundam\",\"url\":\"https://gizmodo.com/chinas-robot-juggernaut-unitree-debuts-a-650000-personal-gundam-2000757574\"},{\"title\":\"Unitree Unveils GD01: World's First Mass-Produced Human-Carrying Transforming Mecha at 3.9M RMB - Pandaily\",\"url\":\"https://pandaily.com/unitree-gd01-human-carrying-transforming-mecha\"},{\"title\":\"Unitree’s GD01 Transformable Mecha Robot | Mike Kalil\",\"url\":\"https://mikekalil.com/blog/unitree-gd01-mecha-robot/\"},{\"title\":\"Unitree GD01: China's $537k rideable transformer robot is now in production\",\"url\":\"https://gagadget.com/en/709729-unitree-gd01-chinas-537k-rideable-transformer-robot-is-now-in-production/\"},{\"title\":\"Unitree G1 EDU Ultimate Technical Specifications – RoboStore\",\"url\":\"https://robostore.com/blogs/news/unitree-g1-edu-ultimate-technical-specifications\"},{\"title\":\"Unitree's GD01 Mecha Puts a Pilot Inside a Walking Robot for $650,000 — Glitchwire\",\"url\":\"https://glitchwire.com/news/unitrees-gd01-mecha-puts-a-pilot-inside-a-walking-robot-for-650000/\"},{\"title\":\"Unitree unveils optionally manned transformer robot GD01\",\"url\":\"https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot\"},{\"title\":\"Unitree G1 Price & Review [2026]\",\"url\":\"https://blog.robozaps.com/b/unitree-g1-review\"}]\n\nBased on the search results, here's what I found about the Unitree GD01 specifications:\n\n## Key Specifications Found:\n\n**Size & Weight:**\nThe GD01 stands about ten feet tall, weighs roughly a half-ton, and can switch between bipedal and quadrupedal modes. More precisely, when standing upright, the GD01 reaches about 2.8 meters (around 9 feet).\n\n**Capabilities:**\nThe 500kg robot can walk upright, punch through brick walls, and transform into a quadruped form in seconds.\n\n**Price:**\nUnitree announced the GD01 on May 12, with a starting price of 3.9 million yuan, or roughly $574,000, though the company's own marketing uses a rounder $650,000 figure.\n\n## Unavailable Specifications:\n\nUnfortunately, full technical specifications like battery life, maximum speed, exact degrees of freedom, payload capacity, and power systems have not yet been publicly released. Key specs — battery runtime, autonomous range, payload per limb — haven't been published, so the performance picture is still incomplete.\n\nThe GD01 is currently only available in China, with distribution limited to China and no regulatory pathway for the US or Europe announced.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Unitree GD01 specs payload actuators degrees of freedom battery"
+        }
+      }
+    },
+    {
+      "step_id": 12,
+      "timestamp": "2026-05-13T08:40:38.585Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 31495,
+        "completion_tokens": 3394,
+        "cached_tokens": 31494,
+        "extra": {
+          "cache_creation_input_tokens": 3012,
+          "cache_read_input_tokens": 31494,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3012,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3394,
+              "cache_read_input_tokens": 31494,
+              "cache_creation_input_tokens": 3012,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3012
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-05-13T08:41:14.792Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Reddit 链接被屏蔽抓不到，我用 SCMP、CnEVPost、Interesting Engineering、Gizmodo、Pandaily 几个二手报道交叉核对了基本事实。先把已知规格摆出来，再分析技术难点。\n\n## 已确认的事实（多源一致）\n\n- **发布日**：2026-05-12，Unitree 在杭州发布 GD01\n- **形态**：可载人，双足↔四足两种步态切换\n- **尺寸/重量**：直立约 2.8 m；含驾驶员 ≈ 500 kg\n- **演示动作**：驾驶员（王兴兴本人）入舱前进 → 一拳砸塌砖墙 → 折腿降重心切换四足\n- **价格**：人民币 390 万起（厂方对外英文宣传用 $650k）\n- **未公开**：电池、续航、最高速度、各关节自由度数和扭矩、有效载荷、控制系统架构、安全冗余\n\n注意：所有公开素材就是**一段约 1 分钟的演示视频 + 一份价格单**，没有第三方拆机或长时间评测。下面的\"难点\"分析是从机器人学常识 + 已公开形态推出的，不是 Unitree 自己说的。\n\n## 技术难点\n\n### 1. 载人状态下的双足平衡——这是最硬的一块\n\n- Atlas / Digit / G1 / H1 都没载人。载人意味着**驾驶员的姿态变化（侧身、伸手、紧张僵直）会实时改变系统质心**，而控制器很难预测人体下一秒会怎么动\n- 2.8 m × 500 kg 是个**很高、很重的倒立摆**：转动惯量大、失稳后挽救时间窗口短，跌倒一次的损坏成本远高于无人机型\n- Unitree 现有双足平台（H1 约 47 kg、G1 约 35 kg）和 GD01 不在同一个量级，控制策略和执行器选型基本要重做\n\n### 2. 双足↔四足切换的混合动力学\n\n- 切换瞬间**支撑接触从 2 点变 4 点**，属于 hybrid system 中的接触模式切换问题，控制不连续\n- 关节要复用：同一组关节，站立时是髋/膝/踝伸直承重，趴下后变成四肢小步幅前进——**扭矩需求曲线和热管理曲线被强行叠加**\n- 切换过程中**驾驶舱姿态**怎么处理：直接跟着躯干一起前倾倒？还是有解耦的座椅悬挂？视频里看不出来\n\n### 3. 关节扭矩与抗冲击\n\n- 砸砖墙的镜头是宣传重点，但代价是肩/肘关节减速器要承受**反向冲击载荷**。谐波减速器在重复冲击下寿命会断崖式下降，这通常用行星减速器 + 串联弹性致动器（SEA）解决，但功率密度会掉\n- 单腿要支撑 500 kg + 步行时的动态载荷（峰值往往 2–3 倍体重），髋膝执行器持续扭矩需求估算下来已经接近现有协作机器人电机的极限\n\n### 4. 能量与续航——电动 mecha 的死穴\n\n- 电机驱动 vs 液压驱动是个老问题：电池能量密度（约 250 Wh/kg）远低于柴油（12000 Wh/kg）\n- 500 kg 载人双足步行的功率消耗，参考估算大概在**几 kW 到 10+ kW 量级**，意味着 10 kWh 电池只能撑 1 小时上下——和 Spot（90 min, 30 kg）完全不是一回事\n- Unitree 不公布续航是个强信号，**多半很短**\n\n### 5. 载人安全\n\n- 没看到任何关于跌倒保护、紧急逃生、防滚架、约束系统的公开说明\n- 500 kg 从 2.8 m 摔下来，驾驶员舱体如果只是钣金壳，事故能量远超汽车碰撞标准\n- \"驾驶员既是负载又是控制者\"——如果是体感操控（重心转移驱动），人的反应延迟 200–300 ms 会和控制环路打架\n\n### 6. 感知与人机接口\n\n- 驾驶员坐在躯干里，**自然视野严重受限**，肯定要外置摄像头 + HUD/屏幕\n- 双足平台的本体感知（IMU + 关节编码器 + 力/力矩传感器）控制环路通常要 1 kHz+，量产一致性是工程难点\n\n### 7. \"量产\"声明的虚实\n\n- 视频是**单台、平地、单驾驶员、单镜头**。砸砖墙那一下也很可能是预编排动作而非实时反应\n- \"mass-produced\"目前没有产能、订单、交付时间表佐证。结合同期 Unitree 申报科创板上市，这次发布更像**资本市场叙事**而非产品成熟度声明\n\n## 一句话\n\n技术上 GD01 真正难、真正没被现有公开机器人解决过的是 **\"载人 + 双足 + 高重心 + 双四足切换\"四件事叠加**；公开材料完全没有触及电池、安全、控制架构这些决定可用性的关键环节，所以现在能下的判断只有\"能站着走、能切换形态、能做预设动作\"——离\"可日常驾驶的机甲\"距离很大。\n\n要不要我把这条整理成 `news/2026-05-13-unitree-gd01.md` 入库？\n\n信源：\n- [SCMP — Real-life Transformers](https://www.scmp.com/tech/tech-trends/article/3353262/real-life-transformers-chinas-unitree-debuts-mecha-robot-shifts-2-legs-4)\n- [CnEVPost — Unitree unveils manned mecha GD01](https://cnevpost.com/2026/05/12/unitree-unveils-manned-mecha-gd01/)\n- [Interesting Engineering — Unitree launches the world's first production-ready manned mecha](https://interestingengineering.com/ai-robotics/video-unitree-launches-the-worlds-first-production-ready-manned-mecha-robot)\n- [Gizmodo — China's Robot Juggernaut Unitree Debuts a $650,000 Personal Gundam](https://gizmodo.com/chinas-robot-juggernaut-unitree-debuts-a-650000-personal-gundam-2000757574)\n- [Pandaily — Unitree Unveils GD01](https://pandaily.com/unitree-gd01-human-carrying-transforming-mecha)",
+      "metrics": {
+        "prompt_tokens": 31495,
+        "completion_tokens": 3394,
+        "cached_tokens": 31494,
+        "extra": {
+          "cache_creation_input_tokens": 3012,
+          "cache_read_input_tokens": 31494,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3012,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3394,
+              "cache_read_input_tokens": 31494,
+              "cache_creation_input_tokens": 3012,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3012
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 310449,
+    "total_completion_tokens": 8828,
+    "total_cached_tokens": 310417,
+    "total_steps": 13,
+    "extra": {
+      "service_tiers": [
+        "standard"
+      ],
+      "total_cache_creation_input_tokens": 53572,
+      "total_cache_read_input_tokens": 310417
+    }
+  }
+}
