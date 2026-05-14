@@ -33,7 +33,7 @@ CI 的容量规划假设——"工作日 9–18 点峰值，按峰值买 runner"
 
 ### 2.3 build 失败被 agent 主动消费
 
-传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述："picking up review feedback and CI results to get each PR approved and merged" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）。
+传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述："picking up review feedback and CI results to get each PR approved and merged" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）（⚠ **解读**：从 Devin / Cursor background agent 的"读 CI → 再 push"循环模式外推，未见一手统计；GitLab Duo Root Cause Analysis 的 GA 也是同一信号的间接证据 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)）。
 
 这把 CI 从"验证关卡"变成了 "agent 的反馈传感器"——CI 必须**毫秒级返回结构化失败信号**（不是 30 分钟后给一段日志）。GitLab Duo 的 Root Cause Analysis（GA since GitLab 17.3）已开始把 CI 日志解析成结构化失败原因供 agent 消费 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)。
 
@@ -77,7 +77,7 @@ nsc expose kubernetes --service my-service
 
 ### 定价模型
 
-Namespace 公开价格 [[15]](https://namespace.so/pricing)：
+Namespace 公开价格 [[28]](https://namespace.so/pricing)：
 
 | 形态 | 价格 |
 |---|---|

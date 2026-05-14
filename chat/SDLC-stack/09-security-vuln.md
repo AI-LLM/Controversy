@@ -125,3 +125,9 @@ Pre-Coding-Agent 时代，安全是 SDLC 里"最容易省略的一环"——年�
 [32] R. Lemos, "SBOMs in 2026: Some Love, Some Hate, Much Ambivalence," *Dark Reading*. (SLSA 1.2 build/source track; AI BOM 概念；behavioral integrity 未解.) [Online]. Available: <https://www.darkreading.com/application-security/sboms-in-2026-some-love-some-hate-much-ambivalence>
 
 [33] Anthropic, "Security – Claude Code Docs." (Strict read-only by default, explicit permission.) [Online]. Available: <https://code.claude.com/docs/en/security>
+
+[34] CISA, "BOD 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities," Nov. 2021. (KEV 列入后默认 14 天修复时限，部分早期条目最长 6 个月.) [Online]. Available: <https://www.cisa.gov/news-events/directives/bod-22-01-reducing-significant-risk-known-exploited-vulnerabilities>
+
+[35] Snyk, "Snyk Unveils the AI Security Fabric: An Adaptive System to Unleash AI Innovators Securely," Feb. 3, 2026. (AI Security Fabric 覆盖代码 / 模型 / Agent.) [Online]. Available: <https://snyk.io/news/snyk-ai-security-fabric/>
+
+[36] Aikido Security, "AutoTriage and the Swiss Cheese Model of Security Noise Reduction." (AutoTriage 降噪 95%：去重 + reachability + 上下文关联.) [Online]. Available: <https://www.aikido.dev/blog/autotriage-and-the-swiss-cheese-model-of-security-noise-reduction>

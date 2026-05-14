@@ -19,7 +19,7 @@ Pre-Agent 栈里，开发者获取"和我现在改的代码相关的其它代码
 
 把 LLM 当编辑器副驾驶起，三个硬约束同时被踩到：
 
-1. **Context window 装不下整个 codebase**。即使 Claude / GPT 类模型今天能上 200K–1M token，一个真实的中型企业代码库（Augment 给出的口径是 400,000+ 文件）也是 10⁸–10⁹ token 量级 [[2]](https://www.augmentcode.com/guides/why-400k-file-codebases-break-traditional-ai)。线性塞不进去，强行长上下文也会"context rot"——模型注意力在长尾衰减。
+1. **Context window 装不下整个 codebase**。即使 Claude / GPT 类模型今天能上 200K–1M token（Claude Opus 4.6/Sonnet 4.6 于 2026-03-13 起 1M GA [[22]](https://platform.claude.com/docs/en/build-with-claude/context-windows)，GPT-5.5 于 2026-04-23 起 1M API [[23]](https://openai.com/index/introducing-gpt-5-5/)），一个真实的中型企业代码库（Augment 给出的口径是 400,000+ 文件）也是 10⁸–10⁹ token 量级（⚠ 作者估算：400k 文件 × 平均 250 行 × 4 token/行 ≈ 4×10⁸ token）[[2]](https://www.augmentcode.com/guides/why-400k-file-codebases-break-traditional-ai)。线性塞不进去，强行长上下文也会"context rot"——模型注意力在长尾衰减。
 2. **Agent 不能每次都全文 grep**。Agent 比人慢：每个工具调用一次往返、一次推理。开放 `bash + ripgrep` 给 agent 是可行兜底，但任何能预先 narrow 的检索都能省下数量级的 token 和 latency。
 3. **行为可控性需要"知道相关代码"**。让 agent 改一个函数前，**得让它先看到所有 call site**，否则改 API 就是制造 regression。这是工程纪律，不是性能优化。
 
@@ -34,7 +34,7 @@ Pre-Agent 栈里，开发者获取"和我现在改的代码相关的其它代码
 - 自研 Context Engine。语义向量索引 + 依赖图，号称跨 400,000+ 文件级 codebase 仍可用 [[4]](https://www.augmentcode.com/context-engine)。
 - **Real-time delta ingestion**：增量重建，180k 行 TS monorepo 首次索引 ≈ 4 分钟，增量更新 ≈ 40 秒 [[2]](https://www.augmentcode.com/guides/why-400k-file-codebases-break-traditional-ai)。
 - 200K token 的 agent context window，但**关键不是窗口大，是"只塞需要的片段进去"**——这一点 Augment 自己反复强调："context > token count" [[5]](https://www.augmentcode.com/guides/mastering-ai-context-and-why-it-matters-more-than-token-count)。
-- 多文件重构准确率自报 89%、ISO/IEC 42001 认证、面向企业大 codebase 销售。
+- 多文件重构准确率自报 89% [[24]](https://www.augmentcode.com/tools/enterprise-multi-file-refactoring-why-ai-breaks-at-scale)、ISO/IEC 42001 认证（首家 AI 编码助手获此认证）[[24]](https://www.augmentcode.com/tools/enterprise-multi-file-refactoring-why-ai-breaks-at-scale)、面向企业大 codebase 销售。
 
 **Sourcegraph Cody**：
 

@@ -153,3 +153,7 @@ claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
 [31] Honeycomb, "Agent Timeline — AI Agent Observability." [Online]. Available: <https://www.honeycomb.io/platform/agent-timeline>
 
 [32] LangChain, "8 LLM Observability Tools to Monitor & Evaluate AI Agents." [Online]. Available: <https://www.langchain.com/articles/llm-observability-tools>
+
+[33] Panto AI, "GitHub Copilot Statistics 2026 — Users, Revenue & Adoption," 2026. (Copilot 用户 ~55% 任务提速、46% 代码由 Copilot 生成、PR 时长由 9.6 天降至 2.4 天；本文用作 "10–100x" 上限推断的底线信源。) [Online]. Available: <https://www.getpanto.ai/blog/github-copilot-statistics>
+
+[34] incident.io, "Alert fatigue solutions for DevOps teams in 2025: What works," 2025. (incident.io 2024 调研 500+ on-call 工程师，人均周中位 42 次寻呼；Catchpoint 2024 SRE 调研 70% 团队列入前三痛点、41% 考虑离职。) [Online]. Available: <https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works>

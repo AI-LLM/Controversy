@@ -178,3 +178,11 @@ Tricentis 2025–2026 公开测评中把 Claude 3.7 列为复杂 UI 处理与企
 [22] Autonoma, "AI E2E Testing: What It Actually Means in 2026." (E2E AI 平台四象限：低代码、自然语言 spec、运行时探索、codebase-first。) [Online]. Available: <https://getautonoma.com/blog/ai-e2e-testing>
 
 [23] Vendr, "QA Wolf Software Pricing & Plans 2026." (\$8,000/月起，200 tests 起步；含创建、运行、24h triage、修复。) [Online]. Available: <https://www.vendr.com/marketplace/qa-wolf>
+
+[24] METR, "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity," METR Blog, Jul. 10, 2025. (16 名开源资深开发者 RCT：AI 工具使任务慢 19%，但开发者自评快 20%。) [Online]. Available: <https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/>
+
+[25] J. Becker et al., "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity," *arXiv preprint*, arXiv:2507.09089, Jul. 2025. (METR RCT 论文版；246 issues，主要工具 Cursor Pro + Claude 3.5/3.7 Sonnet。) [Online]. Available: <https://arxiv.org/abs/2507.09089>
+
+[26] ytyng, "Playwright CLI vs agent-browser vs Claude in Chrome — AI browser automation token benchmark," 2026. (Playwright CLI 比 browser-use CLI 快 2–26×；后者 screenshot 200ms，DOM 操作 2s+。) [Online]. Available: <https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026>
+
+[27] NxCode, "Stagehand vs Browser Use vs Playwright: AI Browser Automation Compared," 2026. (10k 次/天抓取：Stagehand LLM 费用 \$50–200/天，Playwright 仅计算成本；AI 工具新任务成功率 70–85%。) [Online]. Available: <https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026>

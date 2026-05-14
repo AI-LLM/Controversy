@@ -6,13 +6,13 @@
 
 ## 1. Pre-Agent 时代：文档与 IDP 的四个老痛点
 
-第一个痛点是**文档总是滞后于代码**。手写 Markdown 与代码同处一个仓库时，PR 作者 90% 不会同步更新 docs；docs 站点（Confluence / Notion / GitBook）甚至和代码不在一个 repo，更新成本接近写一篇新文。Swimm 在 2019 年用"code-coupled docs"切入这个痛点的核心定义：文档应当与具体代码 snippet 强绑定，snippet 一旦漂移，文档自动失效 [[1]](https://swimm.io/)。
+第一个痛点是**文档总是滞后于代码**。手写 Markdown 与代码同处一个仓库时，PR 作者绝大多数不会同步更新 docs（⚠ 解读：估算值，缺乏公开 benchmark；依据是 Swimm 等厂商把"docs lag code"列为产品立项的核心痛点 [[1]](https://swimm.io/blog/sync-dont-sink-why-we-built-swimm-for-dev-teams)）；docs 站点（Confluence / Notion / GitBook）甚至和代码不在一个 repo，更新成本接近写一篇新文。Swimm 自 2019 年成立起即以"code-coupled docs"切入这个痛点的核心定义：文档应当与具体代码 snippet 强绑定，snippet 一旦漂移，文档自动失效 [[1]](https://swimm.io/blog/sync-dont-sink-why-we-built-swimm-for-dev-teams), [[27]](https://techcrunch.com/2021/11/08/swimm-nabs-27-6m-series-a-to-include-up-to-date-documentation-in-every-release/)。
 
 第二个痛点是 **no one reads it**。文档站点的内部搜索体验普遍糟糕（Confluence 的全文搜索曾被开发者公开调侃），开发者宁可问同事或跑去读源码，也不愿打开 Wiki。这是 2010 年代后期 Mintlify、Fern、ReadMe 共同押注"漂亮的开发者门户 + better search"的市场前提。
 
 第三个痛点是 **service catalog 维护成本**。Backstage 自 2020 年开源后席卷大厂，但其 `catalog-info.yaml` 元数据必须由人工或脚本维护，owner 字段过时、依赖关系腐烂是常态 [[2]](https://backstage.io/docs/features/software-catalog/descriptor-format/)。Cortex、OpsLevel、Roadie 等托管 IDP 出现的商业理由，部分就是替企业承担"让 catalog 不烂"的运营负担。
 
-第四个痛点是 **DevEx 难量化**。"开发者体验"长期靠每年一次的 SPACE / DevEx 问卷估算，缺乏在产品里的连续信号。DORA 四指标（部署频率、变更前置时间、变更失败率、恢复时间）解决了交付效能的量化，但对"工具是否真的被用"几乎沉默。
+第四个痛点是 **DevEx 难量化**。"开发者体验"长期靠每年一次的 SPACE / DevEx 问卷估算，缺乏在产品里的连续信号。DORA 四指标（部署频率、变更前置时间、变更失败率、恢复时间）[[28]](https://dora.dev/guides/dora-metrics-four-keys/) 解决了交付效能的量化，但对"工具是否真的被用"几乎沉默（⚠ 解读）。
 
 ## 2. Post-Agent 时代的根本变化：文档的主要读者不再是人
 
