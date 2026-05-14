@@ -1,18 +1,18 @@
 # 2026-05-14：SDLC 栈 / AI 代码评审 (D5') 层深度研究
 
-本篇是「Pre-Coding-Agent vs Post-Coding-Agent 软件开发栈」系列的 D5' 层——**AI 代码评审**。和 D6（代码托管 / VCS）拆开成文，是因为 2025–2026 两层产品逻辑已彻底分叉：托管在做"分发权 + 合规底座"的零和博弈；D5' 在做的事**不是流量调度，而是信号生产**——把 Agent 写出的密集 diff 流压缩成人或组织敢落章的离散判断单元。本篇 lens：**signable signal generation（可签字信号生产）**。
+本篇 lens：**signable signal generation（可签字信号生产）**——AI 代码评审层卖的不是 diff 吞吐，而是把 Agent 写出的密集 diff 流压缩成组织敢落章的离散判断单元。
 
 ---
 
-## 一、PR review 的本质：人之间的同步会议，卖的是"可签字的信号"
+## 一、AI 评审卖的是"可签字的信号"
 
-PR 这个抽象的隐含假设：写代码的成本高 → PR 稀疏；reviewer 工时贵 → turnaround 是瓶颈。具体数字：
+PR approve 这一票之所以稀缺，不是因为读 diff 慢，而是因为它**是组织对外可签字的最小信号**：出 bug、出合规问题、出 incident 时，approve 是责任链回溯的第一个 hop。AI 评审层的产品本质——**为每个 diff 生产一个能被签字的判断**。
+
+底层流量与延迟基线：
 
 - **PR 流量**：精英团队人均每周 5+ PR [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)；Google 内部中位每周 3 changes、80 分位 7 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)；Lyst 公开中位 3 PR/周 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)。
 - **Review turnaround**：2024 大公司中位工程师 merge 一个 PR 约 13 小时，绝大多数时间在等 review [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；行业基线 time-to-first-review 中位 7–12h、time-to-merge 中位 24–48h [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；Google 内部 review 平均 4h [[3]](https://www.michaelagreiler.com/code-reviews-at-google/)。
 - **占工时**：Meta 内部数据显示评审是 change lead time 中**最大的延迟来源** [[4]](https://engineering.fb.com/2022/11/16/culture/meta-code-review-time-improving/)。
-
-⚠ **关键判断**（作者）：在这些数字里，PR review 看上去像是"同步会议"——但会议的输出物不是讨论本身，**而是 reviewer 那一票 approve**。这一票之所以稀缺，不是因为读 diff 慢，而是因为它**是组织对外可签字的最小信号**：出 bug、出合规问题、出 incident 时，approve 是责任链回溯的第一个 hop。L06b 的本质——无论 Pre-Agent 还是 Post-Agent——**不是吞吐多少 diff，而是为每个 diff 生产一个能被签字的判断**。这也是为什么 throughput 指标（PR / 周）和精度 / 召回指标都解释不了这个市场——它们解释了"读多少 / 抓多少"，没解释"谁敢点 approve"。
 
 一周 5 PR、一审 7h、一改 1–2 轮，全公司能扛住的不只是流量，是**每个判断单元的颗粒度恰好匹配人的注意力 budget**（⚠ 解读，综合 [[1]][[2]] 中位数复述）。
 

@@ -1,13 +1,12 @@
 # 2026-05-14：SDLC 栈 / 测试 Agent 层深度研究
 
-> 系列子报告 · D2 层 · 测试 Agent
-> 视角：**作者-验证者分离 (author/verifier separation)** ——软工经典原则在 Agent 时代的回归
+视角：**作者-验证者分离 (author/verifier separation)** ——软工经典原则在 Agent 时代的回归。
 
-## 一、Pre-Agent 测试经济学：作者-验证者**未分离**的代价
+## 一、测试这一层的核心是作者-验证者分离
 
-讨论 AI 怎么改测试之前，先把"Pre-Coding-Agent 时代"的测试经济学摆清楚。这一层从来没"健康"过，它是被工程师默默牺牲掉的那个变量——而**牺牲的本质，是作者-验证者长期未分离**：写代码的人同时写测试，自己用自己的实现给自己打分。
+测试 Agent 这一层的真正主线，不是"用真实流量"或"用 LLM 生成测试"，而是 **oracle 必须物理上独立于代码作者**。"真实流量"只是分离的一种实现路径——还可以来自形式化规格（Diffblue），也可以来自托管 QA 团队（QA Wolf）。以"作者-验证者分离"为坐标轴，这一层就同时覆盖三种正路径，并把 Qodo / Copilot 单测 / Browser Agent 归入**伪分离**。
 
-**为什么 L08 的本质不是"真实流量"。**乍看 L08 的核心解法是"用真实用户 session 当 oracle"（Meticulous 范式），但"真实流量"只是**分离**的一种实现路径，不是本质。本质是 **oracle 必须独立于代码作者**——可以来自真实流量，也可以来自形式化规格（Diffblue），还可以来自托管 QA 团队（QA Wolf）。把这一层套成"流量驱动测试"会漏掉 legacy 系统与冷启动产品；套成"作者-验证者分离"才同时覆盖三种路径，并解释为什么 Qodo / Copilot 单测 / Browser Agent 都属于**伪分离**。
+Pre-Coding-Agent 时代的测试经济学从来没"健康"过——它是被工程师默默牺牲掉的那个变量。牺牲的本质，是作者-验证者长期未分离：写代码的人同时写测试，自己用自己的实现给自己打分。
 
 **工时分布。**Stripe 的 *Developer Coefficient* 研究指出，开发者每周约 17 小时（约占工时 42%）耗在技术债与维护上 [[1]](https://stripe.com/files/reports/the-developer-coefficient.pdf)；Sonar 与多家 DX 调研把工时拆得更细：维护 19%、测试 12%、安全 4%，三者合计约 35% [[2]](https://www.sonarsource.com/blog/how-much-time-do-developers-spend-actually-writing-code)。换句话说，**测试只拿到了开发者约 1/10 的真实带宽**——但它名义上要为发布质量背书。⚠ 解读：从 [[2]] 中 12% 测试工时直接换算，"1/10"是修辞性近似。
 

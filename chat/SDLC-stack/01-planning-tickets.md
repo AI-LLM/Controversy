@@ -1,14 +1,12 @@
 # 2026-05-14：SDLC 栈 / 规划与工单 层深度研究
 
-> 系列说明：namespace.so 是 CI/CD 层的样本，把"任务流量"作分析角度——因为 CI 的核心变量是 throughput。其他层有更自然的角度。**本篇的角度是"消费者切换 (consumer switch)"**——工单产品的读者从人脑切换为 LLM。由此推论意图保真度成为新瓶颈、代理拓扑被重画、seat 经济学反转。"工单流量爆炸"是上述变化的下游症状，不是本质。
+## 1. 工单层的核心变量：消费者切换
 
-## 1. 视角：为什么 L01 的本质不是流量
+工单层的核心变量是**消费者（读者）是谁**——而不是工单总数或并行度。工单总数虽然涨（agent 切碎了原本的大 ticket），但这不是工单产品价值的主导变量。Pre-Agent 时代，Jira 卷的也不是"能存多少条"，而是**如何把意图喂进人脑**。
 
-CI/CD 的核心变量是 throughput——build 数量、并行度、cache 命中。工单层的核心变量不是这个：
-
-- 工单总数虽然涨（agent 切碎了原本的大 ticket），但这不是工单产品价值的主导变量。Pre-Agent 时代，Jira 卷的也不是"能存多少条"，而是**如何把意图喂进人脑**。
 - 真正的变量是**工单的消费者**：Pre-Agent 是人类工程师；Post-Agent 越来越多是 AI Agent——Devin、Claude Code、GitHub Copilot coding agent、Cursor agent。
 - 一旦消费者变了，工单的 UI、字段、schema、approval、定价**全部假设**都得重审。
+- 由此推论：意图保真度成为新瓶颈、代理拓扑被重画、seat 经济学反转。工单流量爆炸只是下游症状。
 
 Linear CEO Karri Saarinen 2026-03 说 "issue tracking is dead" [[11]](https://buttondown.com/verified/archive/the-death-of-the-ticket-why-linear-is-pivoting/) [[12]](https://www.tbpndigest.com/story/2026-03-26/linear-ceo-karri-saarinen-declares-issue-tracking-is-dead-and-reveals-linears-ai-era-pivot)——不是说没人开 ticket 了，而是说"为人类阅读设计的工单"这个产品形态死了。
 
@@ -123,9 +121,9 @@ Atlassian 把 Rovo 折成单独 credit 包：
 
 > **解读**：市场不是说 Jira 没人用了，而是说"在 agent-native 时代，Jira 这种为 human seat 设计的工具，单位 seat 价值会缩水"。Linear 已经在产品层用"agent 不占 seat 费"对冲——愿意让 agent 边际成本接近零，换 workflow 锁定。Atlassian Rovo 走 usage credit 路线，方向相反。两条路 2-3 年内会有清晰胜负。
 
-## 6. 流量症状：消费者切换已经发生的旁证
+## 6. 消费者切换已经发生：流量旁证
 
-虽然流量不是 L01 的核心 lens，但症状本身值得记下来——它们证实"消费者切换"已经发生：
+以下数据点证实"消费者切换"已经发生：
 
 - **Devin（Cognition）一年内 PR merge 率 34% → 67%，问题解决速度 4×，资源消耗 1/2**，累计 merge "数十万张" [[4]](https://cognition.ai/blog/devin-annual-performance-review-2025)
 - **Cursor agent 用户 1 年增 15×，2026 年初已是 Tab 用户的 2 倍；Cursor 自身 35% merged PR 由 agent 在云 VM 中自主开出** [[5]](https://devgraphiq.com/cursor-statistics/)
@@ -134,7 +132,7 @@ Atlassian 把 Rovo 折成单独 credit 包：
 - **Linear 自报 75% 企业 workspace 已装至少一个 coding agent，3 个月 agent-driven 工作量增长 5×** [[11]](https://buttondown.com/verified/archive/the-death-of-the-ticket-why-linear-is-pivoting/)
 - **Linear AI 功能拉动 25 000+ 组织规模**：OpenAI 3000 seats、Ramp 5→1000+ [[20]](https://sacra.com/c/linear/) [[21]](https://getlatka.com/companies/linear.app)
 
-这些数据指向同一件事：**工单消费方已经从"主要是人类"变成"人 + agent 混合"，agent 比例还在快速上升**。但**消费者切换是因，流量变化只是果**——所以前 5 节才是 L01 的本体，本节只是症状记录。
+这些数据指向同一件事：**工单消费方已经从"主要是人类"变成"人 + agent 混合"，agent 比例还在快速上升**。消费者切换是因，流量变化只是果。
 
 ## 7. 几条本质判断
 

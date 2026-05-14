@@ -1,17 +1,16 @@
-# 2026-05-14：SDLC 栈 / 设计与 Vibe coding 层深度研究
+# SDLC 栈 / 设计与 Vibe coding 层深度研究
 
-> 系列说明：namespace.so 是 CI/CD 层的样本，把"任务流量"作分析角度——因为 CI 的核心变量是 throughput。其他层有更自然的角度。**本篇的角度是"创造门槛崩塌 (creation threshold collapse)"**——能造软件这件事，在 2024–2026 之间同时丢掉了能力门槛、成本门槛、时间门槛。由此推论：新创造者出现（非工程师）、新盘子打开（投资人 demo、个人软件、单人 SaaS），而不是"流量增长"。"每天 10 万项目"这类数字是症状，不是本质。复杂度天花板（甜区 / 雷区）是这次崩塌的上限约束，作为副框架。
+L02 涵盖"从一句话到可部署 SaaS"这一段：设计稿、Vibe coding 工具（Lovable / Bolt / v0 / Replit Agent）、以及围绕它们的部署 / 数据库 / 认证集成。
 
-## 1. 视角：为什么 L02 的本质不是流量
+## 1. 创造门槛崩塌：能力、成本、时间三重
 
-工单层（L01）的本质是消费者切换，CI/CD 是 throughput——而 L02 设计 + Vibe coding 层的本质是**门槛**：
+L02 这一层的核心变量是**门槛**——造一个可部署 SaaS 需要什么，在 2024–2026 之间同时丢掉了能力门槛、成本门槛、时间门槛：
 
-- **流量** 解释不了为什么 Lovable 18 个人 6 个月就到 $50M ARR、零传统营销 [[1]](https://aifundingtracker.com/lovable-vibe-coding-revenue/) [[2]](https://getlatka.com/companies/lovable.dev/team)。流量增长是结果，不是原因。
-- **真正变了的是"造一个可部署 SaaS 需要什么"**：
-  - 能力门槛：从"会写 React + 接 DB + 部 Vercel"塌成"会写一段中文 prompt"；
-  - 成本门槛：从外包基本款 MVP 的 **$15K–$50K**[[3]](https://www.creolestudios.com/mvp-development-cost/) 塌到 **$25–$50/月** 订阅；
-  - 时间门槛：从"两个月外包档期 + 来回沟通"塌到 **<5 分钟** 一次 prompt 出可部署项目 [[4]](https://lovable.dev/video/building-a-saas-with-lovable-supabase-and-stripe)。
-- 三重门槛同时崩塌时，**进来的人**和**进来的盘子**都不在原来的曲线上——这是"扩张"也解释不了的，因为扩张只说"谁"，崩塌说清"为什么现在能"。
+- **能力门槛**：从"会写 React + 接 DB + 部 Vercel"塌成"会写一段中文 prompt"；
+- **成本门槛**：从外包基本款 MVP 的 **$15K–$50K**[[3]](https://www.creolestudios.com/mvp-development-cost/) 塌到 **$25–$50/月** 订阅；
+- **时间门槛**：从"两个月外包档期 + 来回沟通"塌到 **<5 分钟** 一次 prompt 出可部署项目 [[4]](https://lovable.dev/video/building-a-saas-with-lovable-supabase-and-stripe)。
+
+三重门槛同时崩塌时，**进来的人**和**进来的盘子**都不在原来的曲线上。Lovable 18 个人 6 个月做到 $50M ARR、零传统营销 [[1]](https://aifundingtracker.com/lovable-vibe-coding-revenue/) [[2]](https://getlatka.com/companies/lovable.dev/team) 这种数字，只能用"门槛塌掉、需求自来"解释，不能用"销售执行优秀"或"流量增长"解释。
 
 Karpathy 2025-02-02 在 X 上一条 shower-of-thoughts 推文里命名了 "vibe coding"——"There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget that the code even exists" [[5]](https://x.com/karpathy/status/1886192184808149383)。这条推文出现的前提是上面三重门槛已经塌过一轮，不是反过来。
 

@@ -1,12 +1,14 @@
 # 2026-05-14：SDLC 栈 / 安全与漏洞 (D3) 层深度研究
 
-D3 层（漏洞 / 供应链 / 密钥）跟 SDLC 其他层不一样：它的扩张不靠 PR 流量本身，而是靠**两件被 Coding Agent 同时触发的事**——AI 代码内生漏洞密度上涨（攻击面 a 段），AI 供应链 + prompt injection 外源攻击（攻击面 b 段）。这两条曲线同向放大，决定市场总盘。而厂商的赢家归属，看一条**信任移交阶梯**：信任从"人类 reviewer"逐级让渡给"AI reviewer → 工具调用沙盒 → behavioral integrity"，谁卡到正确的台阶，谁就吃到那一段红利。本报告以这两个 lens 串起 Snyk、Socket、GitGuardian、Semgrep、Endor Labs、Aikido、Veracode、Anthropic Claude Code Security、CodeQL/GitHub 的现状。
+D3 层（漏洞 / 供应链 / 密钥）的市场盘子不取决于 PR 数量，而取决于两件事：攻击面的形态如何被 Coding Agent 重塑，信任结构如何在人类 reviewer、AI reviewer、工具调用沙盒、运行时行为证明之间迁移。本报告用两个 lens 串起 Snyk、Socket、GitGuardian、Semgrep、Endor Labs、Aikido、Veracode、Anthropic Claude Code Security、CodeQL/GitHub 的现状：一是**攻击面双扩张**（内生漏洞密度 + 外源供应链），二是**信任移交四级阶梯**。
 
-## 1. Pre-Agent 基线：为什么 L09 的本质不是流量
+## 1. 这一层的核心是信噪比 + MTTR
 
-L09 这个层在 Pre-Coding-Agent 时代被噪声和迟滞双轴拖死。**信噪比轴**：默认配置下的 SAST 误报到了令人发指的程度——NIST 测过 Java SAST 工具误报率高达 78% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；2024 年 Tolly 报告显示 Checkmarx 在基准应用上误报 36.3% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；SonarQube 在 Java/TypeScript 默认配置下 40–60% 的发现被判定为非问题（⚠ 作者综合估算：SonarQube 官方自报"已审阅 issue"误报率 3.2%，与一线团队普遍体感存在落差；此处 40–60% 取行业从业者经验，非官方披露）；行业经验是"未调优 60–90%，调优后 10–20%" [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)。**MTTR 轴**：Dark Reading 引用的数据是平均 MTTR 270 天 [[2]](https://www.darkreading.com/cyberattacks-data-breaches/mttr-most-important-security-metric)；Edgescan 给出 Critical 级 MTTR 约 65 天 [[3]](https://info.edgescan.com/vulnerability-statistics-li23)。CISA BOD 22-01 把 KEV 修复时限压到 14 天 [[34]](https://www.cisa.gov/news-events/directives/bod-22-01-reducing-significant-risk-known-exploited-vulnerabilities)，是事实上的"上限红线"，多数私营公司远达不到。
+D3 层的价值由两个轴定义：**信噪比**——一次扫描里有多少是真阳性、值得人类 triage；**MTTR**——从发现到修复的时间。两者共同决定"扫描行为是否产生业务价值"，与 PR 数量无关。
 
-为什么"L09 的本质不是流量"？因为信噪比 40–78% 误报的工具，即便 PR 频次涨 10×，输出的也只是 10× 的噪声——人类 triage 队列直接溢出，没有任何业务价值。而 MTTR 270 天对 14 天 KEV 红线意味着即便扫得到也修不掉。⚠ 解读：在 Pre-Agent 时代，"多扫一次"并不等于"多一次有效检查"，所以 D3 厂商的 ARR 与 PR 流量解耦——他们卖的是"合规打勾位"，不是"每次 PR 的安全决策"。这正是 L09 与 L07/L08 等"按 PR/build 计量"的层不同的地方：增长由**攻击面形态的变化**与**信任结构的迁移**驱动，不是由 PR 计数器驱动。Per-PR 必经的扫描位次确实存在，但那是这两件事的结果，不是原因。
+**信噪比轴**：默认配置下的 SAST 误报极高——NIST 测过 Java SAST 工具误报率高达 78% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；2024 年 Tolly 报告显示 Checkmarx 在基准应用上误报 36.3% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；SonarQube 在 Java/TypeScript 默认配置下 40–60% 的发现被判定为非问题（⚠ 作者综合估算：SonarQube 官方自报"已审阅 issue"误报率 3.2%，与一线团队普遍体感存在落差；此处 40–60% 取行业从业者经验，非官方披露）；行业经验是"未调优 60–90%，调优后 10–20%" [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)。**MTTR 轴**：Dark Reading 引用的数据是平均 MTTR 270 天 [[2]](https://www.darkreading.com/cyberattacks-data-breaches/mttr-most-important-security-metric)；Edgescan 给出 Critical 级 MTTR 约 65 天 [[3]](https://info.edgescan.com/vulnerability-statistics-li23)。CISA BOD 22-01 把 KEV 修复时限压到 14 天 [[34]](https://www.cisa.gov/news-events/directives/bod-22-01-reducing-significant-risk-known-exploited-vulnerabilities)，是事实上的"上限红线"，多数私营公司远达不到。
+
+⚠ 解读：40–78% 误报的工具即使运行 10× 频次也只产出 10× 噪声；270 天 MTTR 对 14 天 KEV 红线意味着扫得到也修不掉。这两个轴决定了 D3 厂商的 ARR 与 PR 流量本质上解耦——增长由**攻击面形态的变化**与**信任结构的迁移**驱动，per-PR 扫描位次是这两件事的结果，不是原因。后续两节分别展开这两个驱动。
 
 ## 2. 攻击面双扩张：内生 + 外源两条曲线
 

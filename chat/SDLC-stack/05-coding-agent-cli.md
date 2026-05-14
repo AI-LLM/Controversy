@@ -1,7 +1,5 @@
 # 2026-05-14：SDLC 栈 / 终端与自治 Coding Agent 层深度研究
 
-软件开发栈 Pre-Coding-Agent vs Post-Coding-Agent 系列，第 5 篇，对应 D6.4 + D6.5。
-
 ## 1. lens：CLI agent = 可被 cron / CI / SSH / 另一个 agent 拉起的 unix 进程
 
 这一层与上一层（IDE 内 Copilot / Cursor）的根本分野，不是"模型更强"也不是"能力更大"，而是**形态**：CLI agent 是一个**普通的 unix 可执行文件**。
@@ -12,7 +10,7 @@
 - **有自己的进程地址空间和文件系统视图** → 可以塞进 Docker / Bubblewrap / Firecracker / 一次性 VM 做强 sandbox，每个任务一个隔离环境；
 - **没有 GUI session 依赖** → headless、可 SSH、可批量、可并行 N 份同时跑。
 
-Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在"有人坐在编辑器前"时活着。CLI agent 把这条绑定砍断，agent 因此第一次成为可被**任何 unix 主体**拉起的工作单元。**"agent-as-unix-process" 是机制；"执行环境自由度（cron / CI / SSH / 远端 VM / 另一个 agent）"是结果**。本文以下所有讨论——形态光谱、任务量爆炸、Copilot 失位、Anthropic 的护城河——都是这条 lens 的下游推论。
+Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在"有人坐在编辑器前"时活着。CLI agent 把这条绑定砍断，agent 因此第一次成为可被**任何 unix 主体**拉起的工作单元。**"agent-as-unix-process" 是机制；"执行环境自由度（cron / CI / SSH / 远端 VM / 另一个 agent）"是结果**。
 
 第一次满足这条形态的产品是 Anthropic 2024 年 10 月发布的 Claude Code beta [[1]](https://www.anthropic.com/news/claude-3-5-sonnet)，2025 年 4 月 OpenAI Codex CLI 跟进 [[2]](https://github.com/openai/codex)。到 2026 年 5 月，它已成为高级工程师的默认工作面。
 
@@ -24,7 +22,7 @@ Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在
 2. **shell script + cron**：shell 脚本是**完美的 unix 进程**，但**缺语义层**。`sed -i 's/React.FC/FunctionComponent/g'` 跑得动，"读自然语言 ticket → 决定改哪几个文件" 跑不动。cron 调得动 bash，调不动"理解"。
 3. **codemod / jscodeshift / OpenRewrite**：AST 级批量改造工具是 unix 进程、能进 CI、能批量，**但每条迁移规则要单独写 AST visitor**。Airbnb 2017 把 React class component 迁到 hooks 走的就是这条路 [[3]](https://github.com/reactjs/react-codemod)。codemod 缺的是**通用性**——一规则一脚本，不能"读 ticket 然后判断怎么改"。
 
-把这三条横着对齐，缺的恰好是同一件东西的不同侧面：**一个既具备语义理解、又具备 unix 进程身份的工作单元**。Copilot 有语义没进程身份；shell + codemod 有进程身份没通用语义。**CLI agent 是这两条第一次合流的产物**。这就是为什么"agent-as-unix-process" 是机制而不是修辞——它字面上指明了缺口在哪儿。
+把这三条横着对齐，缺的恰好是同一件东西的不同侧面：**一个既具备语义理解、又具备 unix 进程身份的工作单元**。Copilot 有语义没进程身份；shell + codemod 有进程身份没通用语义。**CLI agent 是这两条第一次合流的产物**。
 
 ## 3. 形态光谱：按"进程化深度"排序
 
@@ -51,7 +49,7 @@ Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在
 - 2025-11-18 公开预览、Gemini 3 同步发布、"agent-first IDE"。Mission Control 视图能并行调度 5 个 agent；支持 Gemini 3.1 Pro / Flash、Claude Sonnet/Opus 4.6、GPT-OSS-120B。深度浏览器集成（agent 自己开 Chromium 跑 e2e）[[13]](https://developers.googleblog.com/build-with-google-antigravity-our-new-agentic-development-platform/)。
 - 形态上是 IDE 包 agent，所以 agent 的可被调用性弱于纯 CLI——它仍然假设有 IDE session 存在。这正好印证 lens：**离 unix 进程越远，越退回 Copilot 的窠臼**。
 
-光谱两头的差距由此清楚：进程化越深，越往 SaaS worker 演化；越浅，越退化为"带 agent 的 IDE"。**这条排序的标尺不是哪个产品分数高，而是 lens 本身。**
+光谱两头的差距由此清楚：进程化越深，越往 SaaS worker 演化；越浅，越退化为"带 agent 的 IDE"。
 
 ## 4. "进程化"的下游压力：任务形状变了
 
@@ -155,7 +153,7 @@ Copilot 的失位是 lens 最有力的反证案例。Copilot 不缺资源、不�
 
 GitHub 2025 才急着推 Copilot Workspace + coding agent，被 Claude Code 抢先一年。9 个月内 Claude Code 在 senior agent 使用者里拿到 46% 偏好，对手是有多年先发的 Copilot [[19]](https://tianpan.co/forum/t/claude-code-became-market-leader-in-9-months-github-copilot-had-a-multi-year-head-start-what-changed/2840)。
 
-这条反证的结论不是"Copilot 不努力"，而是**形态决定结构**——当 agent 必须是 unix 进程时，IDE 厂家的全部积累都成了枷锁。这也是为什么 lens 必须立在第一节而不是结尾：所有后续判断都建立在"形态是因，能力 / 市场 / 飞轮是果"之上。
+这条反证的结论不是"Copilot 不努力"，而是**形态决定结构**——当 agent 必须是 unix 进程时，IDE 厂家的全部积累都成了枷锁。形态是因，能力 / 市场 / 飞轮是果。
 
 ## 7. 几条本质判断
 

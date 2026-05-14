@@ -1,10 +1,10 @@
 # 2026-05-14：SDLC 栈 / IDE 与 AI 编辑器 层深度研究
 
-本篇覆盖 D8（IDE）与 D7'（AI 编辑器）两层。问题不是"AI 把补全做得更准了"，也不是"谁的 MAU 最高"——把 L04 当流量层来看会错过这一年真正发生的事。**这一层在做三段位移**：(1) **宿主权**：fork 派全部跑在微软的渲染器上，扩展点设计成了真护城河；(2) **控制台化**：Cursor 2.0 把叙事从"更好的编辑器"切到"管理多 agent 的控制台"；(3) **agent 上移**：Claude Code / Codex CLI / Devin 从终端和 web 釜底抽薪，把"IDE"这个壳本身的并购估值打塌。Cursor 三年从 0 做到 20 亿美元 ARR [[1]](https://thenextweb.com/news/cursor-anysphere-2-billion-funding-50-billion-valuation-ai-coding) 是结果，但这层的真正问题是：**形态在重写**，而 fork、控制台、CLI 是这场重写的三个时间切片。
+L04 覆盖 D8（IDE）与 D7'（AI 编辑器）两层。**这一层正在经历三段位移**：(1) **宿主权**：fork 派全部跑在微软的渲染器上，扩展点设计构成真护城河；(2) **控制台化**：Cursor 2.0 把产品形态从"更好的编辑器"切到"管理多 agent 的控制台"；(3) **agent 上移**：Claude Code / Codex CLI / Devin 从终端和 web 釜底抽薪，把"IDE"这个壳本身的并购估值打塌。Cursor 三年从 0 做到 20 亿美元 ARR [[1]](https://thenextweb.com/news/cursor-anysphere-2-billion-funding-50-billion-valuation-ai-coding) 是结果，但这层的核心动力是**形态在重写**——fork、控制台、CLI 是这场重写的三个时间切片。
 
 ## 一、宿主权悖论：fork 派全部跑在微软的渲染器上
 
-L04 的本质不是流量。微软自己公布 Visual Studio + VS Code 合计 5000 万 MAU、VS Code 单独约 1400 万 MAU [[2]](https://www.thurrott.com/dev/321070/visual-studio-and-visual-studio-code-have-50-million-maus)；JetBrains 2024 年底披露全家桶 1140 万 recurring active users，财富全球 100 强中 88 家是客户 [[3]](https://finance.yahoo.com/news/jetbrains-presents-2024-annual-highlights-170000221.html)，第三方对其 ARR 的估算在 ~2.52 亿美元（保守口径）到 ~5.9 亿美元（含永久许可）之间 [[4]](https://getlatka.com/companies/jetbrains.com)。这些数字告诉你的是市场规模，**告诉不了你的是为什么 Cursor 三年走到 $50B 估值**——后者跟流量基本无关。
+L04 的核心是**宿主权**——谁掌控编辑器的渲染管线、扩展宿主、文件系统钩子，谁就掌控 AI 编辑器能呈现的形态。流量数据本身只标注市场规模：微软自己公布 Visual Studio + VS Code 合计 5000 万 MAU、VS Code 单独约 1400 万 MAU [[2]](https://www.thurrott.com/dev/321070/visual-studio-and-visual-studio-code-have-50-million-maus)；JetBrains 2024 年底披露全家桶 1140 万 recurring active users，财富全球 100 强中 88 家是客户 [[3]](https://finance.yahoo.com/news/jetbrains-presents-2024-annual-highlights-170000221.html)，第三方对其 ARR 的估算在 ~2.52 亿美元（保守口径）到 ~5.9 亿美元（含永久许可）之间 [[4]](https://getlatka.com/companies/jetbrains.com)。但 Cursor 三年走到 $50B 估值靠的不是流量，而是**对宿主形态的改写权**。
 
 真正的悖论在于：所有挑战者都 fork 自微软。Cursor、Windsurf 都是从 VS Code OSS 完整 fork，**不是 extension**——这一点决定了它们能做、Copilot 做不到的事（见 §2）。结果是：微软真正的资产不是 Copilot，而是"几乎所有 AI 编辑器都跑在我开源的渲染器上"。一个 fork 派每多卖一份 license，VS Code 内核的中心地位就被加固一分。这就是 L04 第一阶段的护城河——**不是流量的护城河，是扩展点设计的护城河**。
 

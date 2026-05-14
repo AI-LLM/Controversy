@@ -1,27 +1,26 @@
 # 2026-05-14：SDLC 栈 / 知识与答疑 层深度研究
 
-> 系列说明：本系列每一层用一个最贴合的 lens 切入。L01 的 lens 是"消费者切换"（工单的读者从人脑切到 LLM）。**本篇（L03 知识 / 答疑）的 lens 是"询问对象切换 (interlocutor switch)"**——开发者遇到问题时，提问的对象从"人类社区"切换为"模型权重 + 工具调用"。流量塌方（SO 新问题量 −77%、Phind −91%）是这个切换的**下游症状**，不是本质。次级 lens："**知识载体迁移**"——可调用的工程知识从分布在 UGC web 上的帖子，迁移到训练进 LLM 权重里的语料 + 通过 MCP 暴露的工具端点。llms.txt / Context7 是新载体的接口层，不是新需求。
+L03 的核心机制是双 lens 叠加：
 
-## 1. 视角：为什么 L03 的本质不是流量
+- **询问对象切换 (interlocutor switch)**：开发者遇到问题时，提问的对象从"人类社区"切换为"模型权重 + 工具调用"。
+- **知识载体迁移**：可调用的工程知识从分布在 UGC web 上的帖子，迁移到训练进 LLM 权重里的语料 + 通过 MCP 暴露的工具端点。
 
-L03 表面上是一个 "流量被掏空" 的故事——Stack Overflow 月新问题从 200,000 跌到接近 0、自 ChatGPT 发布以来 −77% [[1]](https://developers.slashdot.org/story/26/01/05/1431212/stack-overflow-went-from-200000-monthly-questions-to-nearly-zero) [[2]](https://devclass.com/2026/01/05/dramatic-drop-in-stack-overflow-questions-as-devs-look-elsewhere-for-help/)；Phind 月搜索 27,000 后两年跌 91%、2026-01-16 关停 [[3]](https://intelligenttools.co/blog/improved-phind-shutdown-post) [[4]](https://x.com/edzitron/status/2010932551511122050)。但如果只看流量曲线，会得出"用户换了一个搜索引擎"的结论——这就是 Phind 押错的位置。
+## 1. 询问对象的三态：人问人 / 人问模型 / agent 问工具
 
-真正发生的是**询问对象的更换**：
+开发者卡住时的两条提问路径：
 
 - **Pre-Agent**：开发者卡住 → 描述问题 → 向**人类社区**（Stack Overflow / Reddit / Discord / Slack）提问 → 等人答 / 搜旧贴 → 把答案翻译成自己 codebase 的语境。
 - **Post-Agent**：开发者卡住 → 把问题（连同当前 buffer / repo 上下文）丢给**模型权重 + 工具**（ChatGPT / Claude Code / Cursor agent）→ 模型直接吐答案，或调 MCP tool（Context7、docs server）查到最新文档后再答。
 
 询问对象一换，三件事同时发生：
 
-1. **生产侧激励瓦解**。没人答了，因为没人问了；没人问了，因为没人看了。Stack Overflow 答题者过去的奖励是声望积分 + 被全网开发者 google 到的"教师价值"。当全网开发者改问 LLM，这两个奖励同时归零。Pragmatic Engineer 的 Data Explorer 截图：2025 年 4 月新帖比 2020 年峰值跌 90%+，2025 年 5 月月新问题已回到 2009 年刚上线的水平 [[5]](https://blog.pragmaticengineer.com/stack-overflow-is-almost-dead/)。
+1. **生产侧激励瓦解**。Stack Overflow 答题者过去的奖励是声望积分 + 被全网开发者 google 到的"教师价值"。当全网开发者改问 LLM，这两个奖励同时归零。月新问题从 200,000 跌至接近 0、自 ChatGPT 发布以来 −77% [[1]](https://developers.slashdot.org/story/26/01/05/1431212/stack-overflow-went-from-200000-monthly-questions-to-nearly-zero) [[2]](https://devclass.com/2026/01/05/dramatic-drop-in-stack-overflow-questions-as-devs-look-elsewhere-for-help/)；Pragmatic Engineer 的 Data Explorer 截图：2025 年 4 月新帖比 2020 年峰值跌 90%+，2025 年 5 月月新问题已回到 2009 年刚上线的水平 [[5]](https://blog.pragmaticengineer.com/stack-overflow-is-almost-dead/)。
 2. **载体迁移**。可被检索的工程知识从"分布在 UGC web 上的人类对话"迁移到"训练进权重的 + 通过 tool call 实时取的"。llms.txt / Context7 / IDE 内置 docs MCP 都是新载体的**接口层**——给新询问对象提供更省 token、更结构化的访问路径。
-3. **流量是副产物**。SO 的流量塌方、文档站 PV 即将进入下行通道、Phind 的速死，都是询问对象切换之后的自然结果。任何还假设"用户会主动来读/搜"的产品都要重审。
+3. **流量是副产物**。SO 的流量塌方、文档站 PV 即将进入下行通道、Phind 月搜索 27,000 后两年跌 91% 并于 2026-01-16 关停 [[3]](https://intelligenttools.co/blog/improved-phind-shutdown-post) [[4]](https://x.com/edzitron/status/2010932551511122050)，都是询问对象切换之后的自然结果。任何还假设"用户会主动来读/搜"的产品都要重审。
 
-> ⚠ **解读**：以下章节把"询问对象切换"作为主轴，流量数据作为佐证。这与原版（namespace.so 的"流量框架"）的差别在于：流量框架只能描述"塌了多少"，无法解释"为什么内容生产同步停摆"和"为什么 MCP/llms.txt 是新基建"。切换框架直接给出机制。
+## 2. 三态对照
 
-## 2. 询问对象的三态
-
-把三种询问对象并列对照，可以看出 L03 不是单向替代，而是**状态分裂**：
+L03 不是单向替代，而是**状态分裂**——三种询问对象并存，权重重排：
 
 | 询问对象 | 代表产品 | 渠道 | 生产侧奖励 | 2025-26 状态 |
 |---|---|---|---|---|
@@ -41,7 +40,7 @@ L03 表面上是一个 "流量被掏空" 的故事——Stack Overflow 月新问
 
 AI 工具整体渗透率从 2023 年的 70%、2024 年的 76% 增长到 2025 年的 **84%** [[6]](https://survey.stackoverflow.co/2025/ai/)。51% 的专业开发者每日使用，23% 经常使用 agent，进一步把询问对象从"人问模型"推到"agent 问工具" [[8]](https://thenewstack.io/23-of-devs-regularly-use-ai-agents-per-stack-overflow-survey/)。
 
-需要注意：通用搜索本身没有崩。Google 2024 年全球搜索量同比增 21.6%、约 14 billion/day、是 ChatGPT 的 373 倍 [[9]](https://sparktoro.com/blog/new-research-google-search-grew-20-in-2024-receives-373x-more-searches-than-chatgpt/)。被掏空的是"开发者问 Google 找 SO"这条**特定的人问人路径**，而非整个 Web 搜索。这点 §4（Phind）会回来。
+需要注意：通用搜索本身没有崩。Google 2024 年全球搜索量同比增 21.6%、约 14 billion/day、是 ChatGPT 的 373 倍 [[9]](https://sparktoro.com/blog/new-research-google-search-grew-20-in-2024-receives-373x-more-searches-than-chatgpt/)。被掏空的是"开发者问 Google 找 SO"这条**特定的人问人路径**，而非整个 Web 搜索。
 
 ## 3. SO 自救：旧载体资产的清算
 

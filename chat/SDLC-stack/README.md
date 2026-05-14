@@ -2,40 +2,36 @@
 
 ## 起源
 
-这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。**用户要求把每一层用 subagent 并行深度研究，挖到流量/任务量模式突变 → 新需求 → 解决方案 → 案例代码 这一层的本质**。范本是 namespace.so（CI/CD 那一层）。
+这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到流量/任务量模式突变 → 新需求 → 解决方案 → 案例代码 这一层的本质。namespace.so（CI/CD 那一层）是范本。
 
-16 个 subagent 并行后台执行（最初 17 个独立层；5/14 补充层 L13 经合并后并入 L10b，形成综合的"Agent 集成接口"层）。
-
-**重要修订（5/14 二轮）**：用户指出 namespace.so 的"任务流量"是 CI/CD 这一层的**自然** lens，但其他层的本质变量不是 throughput。第一轮报告硬套了流量框架的层（L01、L02、L03、L06a、L06b、L09、L10b、L11b 等）经诊断后全部**按本层自然 lens 重写**。L07 保留流量 lens（namespace.so 本尊所在层）。各层重写后的 lens 见下方"各层 lens 总表"。
+每层使用其**自然 lens**——本质变量是什么就用什么。只有 L07 CI/CD 以"任务流量"为 lens（namespace.so 本尊所在层），其他层不套流量框架。各层 lens 见下方"各层 lens 总表"。
 
 ## 与主文件附录 III C 表的层级对应
 
-主文件 C 表 **18 行 → 本目录 16 个文件**。两处保持有意合并（**L04** 和 **L05** 的产品本身跨界，强行拆开 70% 内容重复）；其余 3 处合并（原 L06/L10/L11）已按用户要求拆开。**D6.6 Dev MCP servers 行的范围已扩充**——5/14 补充的"GUI → Agent 化（产品供给侧）"内容并入此层，形成综合的"Agent 集成接口"层。
+主文件 C 表 **18 行 → 本目录 16 个文件**。**L04** 和 **L05** 的产品本身跨界，合并处理（强行拆开 70% 内容重复）；其余 3 处（原 L06/L10/L11）按子层拆开。D6.6 Dev MCP servers 与"GUI → Agent 化（产品供给侧）"同层，统一作"Agent 集成接口"层处理。
 
 | 主文件 C 表行 | 本目录文件 | 备注 |
 |---|---|---|
 | D11 工单 | [`01-planning-tickets.md`](01-planning-tickets.md) | 1:1 |
 | D10 设计 | [`02-design-vibe-coding.md`](02-design-vibe-coding.md) | 含 Vibe coding 子层（C 表未单列） |
 | D9 知识 / 答疑 | [`03-knowledge-qa.md`](03-knowledge-qa.md) | 1:1 |
-| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | **有意合并**：Cursor 既是 IDE fork 又是 AI 编辑器，拆开重复 70% |
-| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | **有意合并**：Claude Code 跨终端 / Devin 跨自治，边界模糊 |
-| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | 已从原 L06 拆出 |
-| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | 已从原 L06 拆出 |
+| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | Cursor 既是 IDE fork 又是 AI 编辑器，合并处理 |
+| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | Claude Code 跨终端 / Devin 跨自治，边界模糊，合并处理 |
+| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | |
+| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | |
 | D4 CI/CD（含 C5 部署） | [`07-ci-build.md`](07-ci-build.md) | 含 C5（C 表未列） |
 | D3 安全扫描 | [`09-security-vuln.md`](09-security-vuln.md) | 1:1 |
 | D2 测试 | [`08-test-agents.md`](08-test-agents.md) | 1:1 |
-| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | 已从原 L10 拆出 |
-| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | **5/14 扩充**：原 L10 拆分后，10b 范围扩充到含 CLI / MCP / 浏览器 Agent 三条供给路径（吸收原 L13） |
-| O5 可观测 | [`11a-observability.md`](11a-observability.md) | 已从原 L11 拆出 |
-| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | 已从原 L11 拆出 |
-| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | 已从原 L11 拆出 |
+| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | |
+| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | 含 CLI / MCP / 浏览器 Agent 三条供给路径 |
+| O5 可观测 | [`11a-observability.md`](11a-observability.md) | |
+| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | |
+| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | |
 | M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |
-
-**总文件数 16 = 18 行 C 表 − 2 处有意合并**。原 5/14 补充的 L13"GUI → Agent 化（产品供给侧）"由于与 D6.6 Dev MCP servers 同层，已合并入 10b-agent-interfaces.md。
 
 ## 文件统计
 
-合计正文约 **6.3 万字**，~410 条 IEEE 引用，全部用 WebSearch / WebFetch 拉的 2025–2026 一手数据。所有引用经独立审计 round 修正：能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。
+合计正文约 **6.3 万字**，~410 条 IEEE 引用，2025–2026 一手数据。能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。
 
 | # | 层 | 文件 | 字数 | 关键代表公司 |
 |---|---|---|---|---|
@@ -56,9 +52,9 @@
 | L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |
 | L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |
 
-## 各层 lens 总表（5/14 二轮重写后的最终 lens）
+## 各层 lens 总表
 
-每一层都按其**自然 lens** 重写，而非套 namespace.so 的 CI/CD 流量框架。流量数据在多数层降级为"症状/旁证"。
+每一层都按其**自然 lens** 组织。只有 L07（CI/CD）使用任务流量 lens；其他层流量数据降级为"症状/旁证"。
 
 | 层 | 自然 lens | 一句话锐度 |
 |---|---|---|
@@ -104,7 +100,7 @@
 
 ### 1. 流量/任务量模式突变是源头，不是"AI 写代码更快"
 
-每一层都先看流量模式怎么变。这是用户给的 namespace.so 范式的核心。关键数字：
+每一层都先看流量模式怎么变。关键数字：
 - **PR 合并量**：高 AI 采用团队 +98%（Faros 2026-04，L07）
 - **单工程师日 build 量**：5 → 30-80（Cursor 2.0 8 并行 + Devin 2.0 multi-instance，L07）
 - **夜间 build 占比**：<10% → ~35%（agent 不睡，L07）

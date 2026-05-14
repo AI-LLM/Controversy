@@ -1,10 +1,6 @@
 # 2026-05-14：SDLC 栈 / 代码索引与 RAG-for-code (D8.5) 层深度研究
 
-> 系列子报告：软件开发栈 Pre-Coding-Agent vs Post-Coding-Agent。本篇仅覆盖 D8.5（代码索引 / RAG-for-code）。MCP（D6.6）单独成文，见 `10b-mcp.md`。范本：namespace.so 范式——挖本质，不堆现象。
-
-**这一层的本质不是"上下文工程"，更不是"流量分发"**。当 Claude Opus 4.6 / GPT-5.5 这类模型本体已经在 API 层被任何 agent 厂商等价调用、并且 1M 上下文也都开放（Anthropic 自 2026-03-13 GA [[1]](https://platform.claude.com/docs/en/build-with-claude/context-windows)、OpenAI 自 2026-04-23 GA [[2]](https://openai.com/index/introducing-gpt-5-5/)），唯一还能拉开下游解题率的，是"**embedding / 注入之前先把代码翻译成什么**"这件事。这是一场**结构化抽取竞赛 (structured-extraction race over code corpus)**：同样的源码语料，五家给出了五种"中间表示"，下游召回质量与同模型 Δ 直接由此决定。
-
-把它叫"上下文工程"虽然方向对，但是把焦点稀释——上下文工程涵盖 prompt 缓存、记忆、多轮策略、压缩、注意力调度等横向问题；本层的硬核只在垂直一点：**代码这种 token 序列，要不要在进 embedding 之前先转成 AST chunk、docstring、符号图、数据流图，还是干脆不转**。
+代码索引层的核心是**embedding / 注入之前先把代码翻译成什么**。当 Claude Opus 4.6 / GPT-5.5 这类模型本体已经在 API 层被任何 agent 厂商等价调用、并且 1M 上下文也都开放（Anthropic 自 2026-03-13 GA [[1]](https://platform.claude.com/docs/en/build-with-claude/context-windows)、OpenAI 自 2026-04-23 GA [[2]](https://openai.com/index/introducing-gpt-5-5/)），下游解题率的拉开来自同一份源码语料的**结构化抽取竞赛 (structured-extraction race over code corpus)**：五家给出了五种"中间表示"——AST chunk、docstring、符号图、数据流图，或者干脆不抽取——下游召回质量与同模型 Δ 直接由此决定。
 
 ## 1. Pre-Agent 时代 vs Agent 时代的语料形态变化
 
@@ -23,7 +19,7 @@ Agent 时代踩到三个硬约束，迫使"语料形态"从人脑迁移到了 pr
 2. **Agent 不能每次都全文 grep**。Agent 比人慢：每次工具调用一次往返、一次推理。开放 `bash + ripgrep` 给 agent 是可行兜底（Claude Code / Cline 走此路 [[7]](https://cline.bot/blog/why-cline-doesnt-index-your-codebase-and-why-thats-a-good-thing)），但任何能预先 narrow 的检索都能省下数量级 token 与 latency。
 3. **行为可控性需要"知道相关代码"**。让 agent 改一个函数前，**必须先看到所有 call site**，否则改 API 就是制造 regression。这是工程纪律，不是性能优化。
 
-**为什么 L10a 的本质不是流量**：这一层 GTM 上没有面向终端用户的"日活"或"DAU"指标，被服务对象始终是 agent 本身——它服务的是 prompt 而不是用户屏幕。Sourcegraph 2025-06-25 停止 Cody Free/Pro 新注册、2025-07-23 关闭 Free/Pro/Enterprise Starter 的 Cody 访问、All-in 推 Amp 与 Cody Enterprise [[8]](https://sourcegraph.com/blog/changes-to-cody-free-pro-and-enterprise-starter-plans) [[9]](https://ampcode.com/) 正是承认："个人代码搜索流量"已经被 Cursor / Claude Code 端到端吞掉，L10a 唯一的护城河不在 C 端流量，而在企业语料的结构化能力 + 合规位。
+被服务对象是 agent 本身——这一层服务的是 prompt 而不是用户屏幕。Sourcegraph 2025-06-25 停止 Cody Free/Pro 新注册、2025-07-23 关闭 Free/Pro/Enterprise Starter 的 Cody 访问、All-in 推 Amp 与 Cody Enterprise [[8]](https://sourcegraph.com/blog/changes-to-cody-free-pro-and-enterprise-starter-plans) [[9]](https://ampcode.com/)：个人代码搜索市场已被 Cursor / Claude Code 端到端吞掉，护城河落在企业语料的结构化能力 + 合规位。
 
 ## 2. 结构化抽取的五条路线
 
