@@ -12,7 +12,7 @@ PR 这个抽象的隐含假设是：写代码的成本高，所以 PR 数量稀�
 - **Review turnaround**：2024 大公司中位工程师 merge 一个 PR 大约要 13 小时，其中绝大多数时间在等 review [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)。LinearB / Sleuth 行业基线 time-to-first-review 中位数 7–12 小时，time-to-merge 中位数 24–48 小时 [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)。Google 平均 review 4 小时 [[3]](https://www.michaelagreiler.com/code-reviews-at-google/)。
 - **时间占比**：精英团队每周 review 15+ PR，merge 90%+ PR 在 24 小时内 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)。Meta 内部数据：评审是 change lead time 中最大的延迟来源 [[4]](https://engineering.fb.com/2022/11/16/culture/meta-code-review-time-improving/)。
 
-在这个数量级里，PR 是「写完—贴出—等人—评论—改—合并」的同步会议。一周 5 PR、一审 7 小时、一改 1–2 轮，全公司能扛得住。
+在这个数量级里，PR 是「写完—贴出—等人—评论—改—合并」的同步会议。一周 5 PR、一审 7 小时、一改 1–2 轮，全公司能扛得住（⚠ 解读：综合上文 [[1]][[2]] 中位数复述，"1–2 轮改"为作者依据 Pre-Agent 时代工程师日常的经验描述，未对应单一来源）。
 
 ## 二、Post-Agent 流量突变：Agent 写得快，人审不动了
 
@@ -110,13 +110,13 @@ GitHub 的位置不可替代，因为 Microsoft 同时占 **GitHub（仓库）+ 
 - **Copilot Workspace**：55,000+ 开发者用过、10,000+ PR 已合并；加了 build-and-repair agent、brainstorming 模式、VS Code 集成 [[28]](https://github.blog/changelog/2025-01-06-copilot-workspace-changelog-january-6-2025/)。
 - **GitHub Spark**：自然语言到部署应用（Claude Sonnet 4 驱动），2025-07 起对 Copilot Pro+ 开放、2025-09 对 Copilot Enterprise 开放；可直接生成带 Actions / Dependabot 的 repo，并衔接 Copilot Coding Agent 在 codespace 继续迭代 [[29]](https://github.blog/changelog/2025-07-23-github-spark-in-public-preview-for-copilot-pro-subscribers/), [[30]](https://github.blog/changelog/2025-09-30-github-spark-in-public-preview-for-copilot-enterprise-subscribers/)。
 
-反脆弱的关键不是单点最强，而是**任意一层被 best-of-breed 拆掉，其它三层仍在分发流量**——GitHub 是写入端，VS Code 是编辑端，Azure 是底座，Copilot 在四端拉通。CodeRabbit / Greptile 越火，GitHub Marketplace 越值钱。
+反脆弱的关键不是单点最强，而是**任意一层被 best-of-breed 拆掉，其它三层仍在分发流量**——GitHub 是写入端，VS Code 是编辑端，Azure 是底座，Copilot 在四端拉通。CodeRabbit / Greptile 越火，GitHub Marketplace 越值钱（⚠ 作者综合估算：本段"60% 的胜率"是作者基于「默认弹窗 + 安装摩擦」直觉给的数量级估算，无公开 A/B 数据支撑，仅作产品策略判断使用）。
 
 ## 九、新需求：流量爆炸时代的次生市场
 
 PR 流量从「人发的稀疏事件」变成「Agent 发的密集流」之后，长出几条新需求线：
 
-1. **AI-generated PR 标记**：reviewer 需要立刻知道 diff 是 Agent 写的还是人写的，以决定关注力分配。GitHub 已在 PR metadata 暴露 Copilot Coding Agent 来源。
+1. **AI-generated PR 标记**：reviewer 需要立刻知道 diff 是 Agent 写的还是人写的，以决定关注力分配。GitHub 已在 PR metadata 暴露 Copilot Coding Agent 来源——Coding Agent 开的 PR 作者 / commit author 直接显示为 Copilot 账户，commit trailer 可加 `Co-authored-by: Copilot <copilot@github.com>` [[35]](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent), [[36]](https://github.com/orgs/community/discussions/179983)。
 2. **Trust Score per PR**：在 PR 上叠加一个 0–10 的可信度评分，综合静态分析、测试覆盖、依赖影响、Agent 来源、过往 revert 概率。Credo AI / Fiddler / Tumeryk 等 trust-score 框架已在通用 LLM 安全侧落地 [[31]](https://www.credo.ai/model-trust-scores-ai-evaluation), [[32]](https://docs.fiddler.ai/reference/glossary/trust-score)，PR 层等同 schema 即将出现。
 3. **回归风险评估**：Greptile 的跨文件 graph 本质就是干这件事——「这个 diff 对远端 contract 的破坏概率」。
 4. **合规审计**：SOC 2 CC8.1 明确要求**所有代码变更（含 AI 生成）部署前必须有人审批**，且要留 change request、approver signature、测试证据 [[33]](https://www.augmentcode.com/tools/ai-coding-tools-soc2-compliance-enterprise-security-guide), [[34]](https://www.codeant.ai/blogs/github-ai-code-review-tools-soc2-compliance)。CC6.1 把这个延伸到生产合并。这条监管事实直接锁死了「全自动 Agent 合并」的天花板——人不能完全退出。

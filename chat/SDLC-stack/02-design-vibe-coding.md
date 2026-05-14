@@ -10,17 +10,17 @@
 
 **反推 Pre-Agent 状态**：1 个开发者每周在"读设计稿、对像素、查规范、复制 token"上花 ≥ 90 分钟，说明设计稿到代码这一段在 2024 年仍是显式人力 bottleneck。Figma 自己的 2026 数据也承认"三分之二的 Figma 用户已经不是设计师"[[3]](https://medium.com/@Workpage.dev/why-two-thirds-of-figma-users-are-not-designers-and-what-it-breaks-about-handoff-7a5700ea183b)——也就是说 Figma 文件正在被 PM、研究员、运营当成"半结构化需求文档"在用，handoff 的失败率天然就高。
 
-**原型 → 生产代码转化率**：传统流程下，Figma 高保真原型大多数被废弃，只留下页面截图当 spec；Builder.io 等 Figma-to-Code 插件存在多年但渗透率有限。这是 Vibe coding 工具切入的入口——它们直接跳过"画静态稿 → 标注 → 写代码"三步，把 prompt 当 spec。
+**原型 → 生产代码转化率**（⚠ 解读）：传统流程下，Figma 高保真原型大多数被废弃，只留下页面截图当 spec；Builder.io 的 Visual Copilot 插件累计被近 100 万 Figma 用户安装[[35]](https://www.builder.io/blog/best-figma-to-code-plugin)，但相对全球 Figma 数千万级月活用户来说，"设计稿直转生产代码"仍是边缘工作流。这是 Vibe coding 工具切入的入口——它们直接跳过"画静态稿 → 标注 → 写代码"三步，把 prompt 当 spec。
 
 ---
 
 ## 2. Vibe coding 工具普及后：用户画像与流量
 
-Vibe coding 一词 2025 年初由 Karpathy 推热，到 2026 年已是独立赛道。关键数据：
+Vibe coding 一词由 Karpathy 于 2025-02-02 在 X 上一条"shower-of-thoughts"推文中提出[[36]](https://x.com/karpathy/status/1886192184808149383)，到 2026 年已是独立赛道。关键数据：
 
 - **63% 的活跃 vibe coding 用户是非开发者**（PM、创始人、市场、运营），其中 44% 在生成 UI、20% 在生成全栈应用、11% 在生成"个人软件"[[4]](https://www.secondtalent.com/resources/vibe-coding-statistics/)。
 - 市场规模 2025 年 47 亿美元，预计 2027 年 123 亿美元（CAGR ≈ 62%）[[4]](https://www.secondtalent.com/resources/vibe-coding-statistics/)。
-- 全球开发者 2025 年共 28.7M 人[[5]](https://keyholesoftware.com/software-development-statistics-2026-market-size-developer-trends-technology-adoption/)；而 Replit 一家就在 2026 年 3 月报 50M+ 用户[[6]](https://www.saastr.com/by-late-2025-replit-got-really-good-imagine-if-it-could-run-24x7/)、Lovable 接近 8M 用户[[7]](https://techcrunch.com/2025/11/10/lovable-says-its-nearing-8-million-users-as-the-year-old-ai-coding-startup-eyes-more-corporate-employees/)、v0 累计 >4M 用户[[8]](https://www.getpanto.ai/blog/v0-ai-platform-statistics)。仅这三家覆盖的用户数（>60M）就已经超过全球专业开发者总量两倍。
+- 全球开发者 2025 年共 28.7M 人[[5]](https://keyholesoftware.com/software-development-statistics-2026-market-size-developer-trends-technology-adoption/)；而 Replit 一家就在 2026 年 3 月报 50M+ 用户[[6]](https://www.saastr.com/by-late-2025-replit-got-really-good-imagine-if-it-could-run-24x7/)、Lovable 接近 8M 用户[[7]](https://techcrunch.com/2025/11/10/lovable-says-its-nearing-8-million-users-as-the-year-old-ai-coding-startup-eyes-more-corporate-employees/)、v0 累计 >4M 用户[[8]](https://www.getpanto.ai/blog/v0-ai-platform-statistics)。仅这三家覆盖的用户数（>60M，⚠ 简单相加，未去重）就已经超过全球专业开发者总量两倍。
 
 **解读**：这说明 vibe coding 主要在做**用户基数扩张**——把"想做软件但没工程能力"的人群拉进来——而不是从传统 28.7M 开发者预算池里切。增量证据见 §8。
 
@@ -32,15 +32,15 @@ Vibe coding 一词 2025 年初由 Karpathy 推热，到 2026 年已是独立赛�
 
 ### Lovable（瑞典）
 
-Anton Osika 2024 年 11 月底发布 vibe coder。已披露的 ARR 节点：$1M → $10M（2 个月）→ $17M（第 3 个月）→ **$50M（第 6 个月，即 2025-05）** → $100M（第 8 个月）→ $200M（2025-11）→ $400M（2026-03）[[11]](https://aifundingtracker.com/lovable-vibe-coding-revenue/), [[12]](https://www.bloomberg.com/news/articles/2026-03-12/vibe-coding-startup-lovable-hits-400-million-recurring-revenue)。融资节点：2025-02 $15M[[13]](https://techcrunch.com/2025/02/25/swedens-lovable-an-app-building-ai-platform-rakes-in-16m-after-spectacular-growth/)、2025-07 $150M @ $2B[[14]](https://techcrunch.com/2025/07/02/lovable-on-track-to-raise-150m-at-2b-valuation/)、2025-12 $330M Series B @ $6.6B[[15]](https://techcrunch.com/2025/12/18/vibe-coding-startup-lovable-raises-330m-at-a-6-6b-valuation/)。$50M ARR 时只有 18 人，零传统营销。典型用例：MVP、投资人 demo、单人 SaaS（"Lovable 一个 app 48 小时赚 $3M"是真实社区案例）[[16]](https://www.linkedin.com/posts/antonosika_lovable-built-app-just-made-3m-in-48h-probably-activity-7338217572556795905-aD3O)。
+Anton Osika 2024 年 11 月底发布 vibe coder。已披露的 ARR 节点：$1M → $10M（2 个月）→ $17M（第 3 个月）→ **$50M（第 6 个月，即 2025-05）** → $100M（第 8 个月）→ $200M（2025-11）→ $400M（2026-03）[[11]](https://aifundingtracker.com/lovable-vibe-coding-revenue/), [[12]](https://www.bloomberg.com/news/articles/2026-03-12/vibe-coding-startup-lovable-hits-400-million-recurring-revenue)。融资节点：2025-02 $15M[[13]](https://techcrunch.com/2025/02/25/swedens-lovable-an-app-building-ai-platform-rakes-in-16m-after-spectacular-growth/)、2025-07 $150M @ $2B[[14]](https://techcrunch.com/2025/07/02/lovable-on-track-to-raise-150m-at-2b-valuation/)、2025-12 $330M Series B @ $6.6B[[15]](https://techcrunch.com/2025/12/18/vibe-coding-startup-lovable-raises-330m-at-a-6-6b-valuation/)。$50M ARR 时只有 18 人[[37]](https://getlatka.com/companies/lovable.dev/team)，零传统营销（⚠ 解读：基于 Osika 公开访谈中"no marketing budget"的表述）。典型用例（⚠ 解读）：MVP、投资人 demo、单人 SaaS（"Lovable 一个 app 48 小时赚 $3M"是真实社区案例）[[16]](https://www.linkedin.com/posts/antonosika_lovable-built-app-just-made-3m-in-48h-probably-activity-7338217572556795905-aD3O)。
 
 ### Bolt.new（StackBlitz）
 
-2024 年 10 月发布。30 天内做到 $4M ARR、12 月 $20M、2025 年 3 月 **$40M ARR、5M 注册、1M DAU**[[17]](https://newsletter.posthog.com/p/from-0-to-40m-arr-inside-the-tech)。StackBlitz 累计融资 $135M，2025-08 估值 $700M。分析师预计 2025 年底 $80–100M ARR[[17]](https://newsletter.posthog.com/p/from-0-to-40m-arr-inside-the-tech)。用户画像：偏开发者向（因 Bolt 让"代码可改"），但也吸引 indie hacker、设计师。
+2024 年 10 月发布。30 天内做到 $4M ARR、12 月 $20M、2025 年 3 月 **$40M ARR、5M 注册、1M DAU**[[17]](https://newsletter.posthog.com/p/from-0-to-40m-arr-inside-the-tech)。StackBlitz 累计融资 $135M，2025-01 Series B 后估值约 $700M[[38]](https://sacra.com/c/bolt-new/), [[39]](https://www.bloomberg.com/news/articles/2025-01-21/ai-speech-to-code-startup-stackblitz-is-in-talks-for-a-700-million-valuation)。分析师预计 2025 年底 $80–100M ARR[[17]](https://newsletter.posthog.com/p/from-0-to-40m-arr-inside-the-tech)。用户画像（⚠ 解读）：偏开发者向（因 Bolt 让"代码可改"），但也吸引 indie hacker、设计师。
 
 ### v0（Vercel）
 
-2023-10 推出，2024 年底 GA，到 2025-09 累计 3.5M+ 用户，后报 >4M 用户[[8]](https://www.getpanto.ai/blog/v0-ai-platform-statistics)。Teams & Enterprise 占 v0 营收 >50%。Vercel 公司整体 ARR 中期约 $200M、2026 年 Series F 估值 $9.3B[[8]](https://www.getpanto.ai/blog/v0-ai-platform-statistics)。用户画像：Next.js 工程师 + 设计师，因为输出是 React + Tailwind + shadcn/ui 组件文件，必须有人懂如何接进现有项目。
+2023-10 推出，2024 年底 GA，到 2025-09 累计 3.5M+ 用户、Teams & Enterprise 占 v0 营收 >50%（来自 Vercel Series F 公告）[[40]](https://vercel.com/blog/series-f)，后报 >4M 用户[[8]](https://www.getpanto.ai/blog/v0-ai-platform-statistics)。Vercel 2025-09-30 收 $300M Series F、估值 $9.3B[[40]](https://vercel.com/blog/series-f)。用户画像（⚠ 解读）：Next.js 工程师 + 设计师，因为输出是 React + Tailwind + shadcn/ui 组件文件，必须有人懂如何接进现有项目。
 
 ### Replit Agent
 

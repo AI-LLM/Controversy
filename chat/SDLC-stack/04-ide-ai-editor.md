@@ -6,7 +6,7 @@
 
 VS Code 早在 2024-2025 即是事实标准。Microsoft 在 2025 年 5 月公布 Visual Studio + VS Code 合计 5000 万 MAU，其中 VS Code 单独约 1400 万 MAU [[2]](https://www.thurrott.com/dev/321070/visual-studio-and-visual-studio-code-have-50-million-maus)；JetBrains 2024 年底披露全家桶 1140 万 recurring active users，财富全球 100 强中 88 家是其客户 [[3]](https://finance.yahoo.com/news/jetbrains-presents-2024-annual-highlights-170000221.html)。JetBrains 是私有公司、不披露准确 ARR，第三方估算 2024 年 ARR 约 2.52 亿美元（保守口径）或更高的 ~5.9 亿美元（含一次性永久许可）[[4]](https://getlatka.com/companies/jetbrains.com)。
 
-老一代补全的接受率天花板在 30% 以下。Kite 自述用户在 Python 场景下"平均提升 18% 生产力"（2019 营销口径，未独立复核）；Codota 主打 Java/Kotlin 学习式补全，从未公布严肃数据。这一代工具的共同特征：**基于规则 / 浅层 ML、单 token 预测、补全长度 1-3 个 token**。Kite 2021 年关闭，Codota 2022 年并入 Tabnine——LLM 一来，这一代直接被腰斩。
+老一代补全的接受率天花板在 30% 以下。Kite 自述用户在 Python 场景下"平均提升 18% 生产力"（2019 营销口径，未独立复核）（⚠ 作者综合估算 / 解读：18% 这一数字来自 Kite 早期博客的营销宣传，未见独立学术评估）；Codota 主打 Java/Kotlin 学习式补全，从未公布严肃数据。这一代工具的共同特征：**基于规则 / 浅层 ML、单 token 预测、补全长度 1-3 个 token**。Kite 于 **2022 年 11 月**关闭并将代码开源 [[26]](https://devclass.com/2022/11/21/kite-ai-coding-pulled-down-to-earth-because-our-500k-developers-would-not-pay-to-use-it-now-open-source/)；Codota 实际上在 **2019 年 12 月**收购了 Tabnine，并于 2021 年 5 月将公司更名为 Tabnine [[27]](https://en.wikipedia.org/wiki/Tabnine)——LLM 一来，这一代直接被腰斩。
 
 ## 二、AI 编辑器普及后的使用密度变化
 
@@ -34,7 +34,7 @@ Cursor 是 Anysphere（MIT 四人创立）从 VS Code OSS 完整 fork，**不是
 
 1. **Cursor Tab**（专有补全模型）。自研稀疏 LM，训练在数十亿条编辑序列上；不只是预测下一个 token，还预测"光标下一跳"（jump suggestion）。配合 Fireworks 的"speculative edits"（推测式编辑解码），把 apply 速率推到 ~1000 token/s [[12]](https://fireworks.ai/blog/cursor)。
 2. **Composer Agent**（多文件编辑）。2025 年 10 月 29 日 Cursor 2.0 发布自研 Composer 模型——MoE + RL + MXFP8 量化，号称同等智力下比通用模型快 4×，大部分回合 < 30 秒 [[13]](https://cursor.com/blog/2-0)。
-3. **Background Agent / 多 agent 接口**。允许同时跑最多 **8 个 agent**，各自占一个 git worktree 或远端 VM，分别开 PR；2.4 之后引入 subagent，可树状递归。
+3. **Background Agent / 多 agent 接口**。允许同时跑最多 **8 个 agent**，各自占一个 git worktree 或远端 VM，分别开 PR；2.4 之后引入 subagent，可树状递归（自定义 subagent 继承父 agent 的 Task tool 即可继续派生）[[28]](https://cursor.com/changelog)（⚠ 解读："树状递归"系作者从官方 changelog + 论坛讨论综合推断，官方未明确使用该措辞）。
 4. **Context Engine**。Tree-sitter 按函数/类边界切片，向量索引整库；客户端将相关切片**加密**后发到 backend，backend 在 enclave 内解密再喂模型。Privacy Mode 下保证 zero data retention（与 OpenAI / Anthropic 等供应商签的 ZDR 合同）[[14]](https://cursor.com/security)。
 
 `.cursorrules`（项目根，legacy）和 `.cursor/rules/*.mdc`（新结构）是注入 system prompt 的机制。一个最小 MDC 文件：
@@ -169,3 +169,9 @@ Zed 走的是相反方向。2026 年 4 月 29 日发布 1.0，**用 Rust 重写�
 [24] Open Source Alternatives, "9 Best Open Source AI Coding Assistants in 2026." (OpenHands 68k★, Cline 58k★, Aider 41k★, Tabby 33k★, Continue 31k★.) [Online]. Available: <https://www.opensourcealternatives.to/blog/best-open-source-ai-coding-assistants>
 
 [25] Cursor Docs, "Model Context Protocol (MCP)." (~5000+ 社区 MCP server.) [Online]. Available: <https://cursor.com/docs/mcp>
+
+[26] T. Anderson, "Kite AI coding pulled down to earth because 'our 500k developers would not pay to use it,' now open source," *DevClass*, Nov. 21, 2022. (Kite 2022-11 关闭并开源；500k 用户未付费.) [Online]. Available: <https://devclass.com/2022/11/21/kite-ai-coding-pulled-down-to-earth-because-our-500k-developers-would-not-pay-to-use-it-now-open-source/>
+
+[27] Wikipedia, "Tabnine." (Codota 于 2019-12 收购 Tabnine；2021-05 公司更名为 Tabnine.) [Online]. Available: <https://en.wikipedia.org/wiki/Tabnine>
+
+[28] Cursor, "What's New in Cursor — Latest Updates & Release Notes." (Cursor 2.4 Subagents，2026-01；自定义 subagent 可继承 Task tool 继续派生.) [Online]. Available: <https://cursor.com/changelog>

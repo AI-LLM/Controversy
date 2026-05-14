@@ -25,7 +25,7 @@ CLI agent 把"agent 本体"从 GUI 进程里拆出来变成普通的可执行文
 
 由此第一次成立的用例：
 
-- **跨百仓批量改造**：把同一段 prompt 在 300 个 microservice repo 上分发执行（Stripe / Shopify / Block 已在跑），传统 codemod 写不出来。
+- **跨百仓批量改造**：把同一段 prompt 在 300 个 microservice repo 上分发执行（⚠ 作者综合估算；Stripe / Shopify / Block 等大型组织已公开使用 Claude Code 做迁移与批量改造，但"300 个 repo"是数量级示意，非官方数字；Shopify 2026-04-09 开源 Shopify AI Toolkit，含 Claude Code plugin，可印证规模化使用 [[21]](https://weaverse.io/blogs/shopify-ai-toolkit-dev-mcp-hydrogen-2026)），传统 codemod 写不出来。
 - **依赖升级 PR 工厂**：Renovate + agent。检测到 lockfile 漂移，agent 自己读 changelog、改调用点、跑测试、提 PR。
 - **incident-driven 修复**：PagerDuty webhook → 启动 agent → 读日志 → 定位 → 提 hotfix PR。Factory.ai 的 incident droid 就是这条线 [[4]](https://factory.ai/)。
 - **codebase migration**：Python 2→3、React class→hooks、CommonJS→ESM 类大型迁移可以让 agent 一仓一仓跑。
@@ -39,8 +39,8 @@ Post-Agent：让 agent 跑一晚生成 10 000 行 → 100 个 PR / 早晨醒来�
 
 这给下游基础设施带来三道连锁压力：
 
-1. **CI 计算量爆炸**：一个工程师过去一天触发 3–5 次 CI，现在 agent 在后台触发 50–100 次。GitHub Actions 账单变成 OpenAI tokens 之外另一个新支出大头。
-2. **Code review 瓶颈**：人审 PR 速度没变，但 PR 量 10x。一线团队的应对是"agent 写 agent 审"——专门跑一个 reviewer subagent 先过一遍，把噪音 PR 卡住。
+1. **CI 计算量爆炸**：一个工程师过去一天触发 3–5 次 CI，现在 agent 在后台触发 50–100 次（⚠ 作者综合估算；依据是 agent 异步触发模式 + 一线团队反馈，非官方计量）。GitHub Actions 账单变成 OpenAI tokens 之外另一个新支出大头。
+2. **Code review 瓶颈**：人审 PR 速度没变，但 PR 量 10x（⚠ 作者综合估算）。一线团队的应对是"agent 写 agent 审"——专门跑一个 reviewer subagent 先过一遍，把噪音 PR 卡住。
 3. **Observability 压力**：100 个 agent 并行在 100 个分支上写代码，谁动了什么必须可追溯。Honeycomb、Datadog 都在加 agent run 维度。
 
 数据上：Claude Code 用户群 2026 年 71% 的 agentic dev 工作量来自这个工具，"senior 工程师最爱"占比 46%，远超 Cursor (19%) 和 GitHub Copilot (9%) [[5]](https://blog.jetbrains.com/research/2026/04/which-ai-coding-tools-do-developers-actually-use-at-work/)。
@@ -118,7 +118,7 @@ Cognition Devin 与 Claude Code 走的不是一条路。Claude Code 是**让工�
 
 ## 6. OpenAI Codex CLI、Aider 的差异
 
-**OpenAI Codex CLI**（2025-04-16 发布，**不是** 2021 那个 Codex 模型；同名复用）：Rust 写的开源终端 agent，npm/Homebrew 分发。绑 ChatGPT 订阅（Plus / Pro / Business / Enterprise）即用，跑 o3 / o4-mini 后端 [[12]](https://developers.openai.com/codex/cli)。2026 年 4 月：75K GitHub stars、1450 万 npm 月下载、300 万周活跃。在 Terminal-Bench 2.0 上以 **77.3%** 领先 Claude Code 的 **65.4%**（但调校过的 "Claude Mythos" harness 能打到 92.1%）[[13]](https://www.tbench.ai/leaderboard/terminal-bench/2.0)。
+**OpenAI Codex CLI**（2025-04-16 发布，**不是** 2021 那个 Codex 模型；同名复用）：Rust 写的开源终端 agent，npm/Homebrew 分发。绑 ChatGPT 订阅（Plus / Pro / Business / Enterprise）即用，跑 o3 / o4-mini 后端 [[12]](https://developers.openai.com/codex/cli)。2026 年 4 月：75K+ GitHub stars、1453 万 npm 月下载（2026-03）、300 万周活跃（Sam Altman 2026-04-08 披露）[[22]](https://www.gradually.ai/en/codex-statistics/)。在 Terminal-Bench 2.0 上以 **77.3%** 领先 Claude Code 的 **65.4%**（但调校过的 "Claude Mythos" harness 能打到 92.1%）[[13]](https://www.tbench.ai/leaderboard/terminal-bench/2.0)。
 
 **Aider**：开源 CLI agent，**最重要的差异**是 git-aware diff 模式——不让模型重写整文件，而是要求模型输出 search/replace diff block；这种 edit format 显著降低 token 消耗，也降低"误删无关代码"的概率 [[14]](https://github.com/Aider-AI/aider-swe-bench)。每次成功编辑自动 `git commit`，message 自动写。Aider Polyglot benchmark（225 道 Exercism 题，6 语言）是社区里被广泛引用的多语言尺子，2026 年榜首是 Claude Opus 4.6。Aider 的定位：**BYOK + 任意模型 + 重 git 集成**，对成本敏感、模型不锁定的团队是首选。
 

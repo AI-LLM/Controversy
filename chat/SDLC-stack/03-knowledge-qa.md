@@ -23,7 +23,7 @@ Stack Overflow 2025 年的开发者调查（85,000+ 受访者）显示，AI 工�
 - 据 2026 年 1 月 Slashdot/DevClass 综合数据，月新问题已从峰值 200,000 跌至 **接近 0**（约 300 量级） [[1]](https://developers.slashdot.org/story/26/01/05/1431212/stack-overflow-went-from-200000-monthly-questions-to-nearly-zero), [[6]](https://devclass.com/2026/01/05/dramatic-drop-in-stack-overflow-questions-as-devs-look-elsewhere-for-help/)
 - Similarweb 数据：2026 年 3 月 stackoverflow.com 流量环比下降 **10.28%**，全球排名从 1,501 跌至 1,962 [[7]](https://www.similarweb.com/website/stackoverflow.com/)
 
-15 年的内容积累 + 6 亿月 PV 的中枢地位，被一个 chatbot 在 30 个月内基本归零。
+15 年的内容积累 + 6 亿月 PV 的中枢地位（⚠ 解读：依据 [[3]](https://highscalability.com/stackoverflow-update-560m-pageviews-a-month-25-servers-and-i/) 的 560M PV 与 2008-2023 时间跨度推断），被一个 chatbot 在 30 个月内基本归零。
 
 ### 1.3 流量去哪了：分流图
 
@@ -49,9 +49,9 @@ Stack Overflow 2025 年的开发者调查（85,000+ 受访者）显示，AI 工�
 
 - 2023 年 5 月：裁员 **10%** [[10]](https://www.infoworld.com/article/2338488/developer-focused-portal-stack-overflow-lays-off-10-of-staff.html)
 - 2023 年 10 月：裁员 **28%**（约 100+ 人），CEO Prashanth Chandrasekar 以"宏观经济和回归盈利路径"为由 [[11]](https://techcrunch.com/2023/10/17/stack-overflow-cuts-28-of-its-staff/)
-- 2024 年又有一轮 **10% 量级** 的裁员 [[10]](https://www.infoworld.com/article/2338488/developer-focused-portal-stack-overflow-lays-off-10-of-staff.html)
+- 2024 年又有一轮 **10% 量级** 的裁员（⚠ 作者综合估算：公开报道中未见 2024 年单独的裁员公告，可能与 2023-10 那轮 28% 被部分二手媒体重复报道有关；待进一步核实，本文按"已有不止两轮"的保守说法处理）
 
-公司从约 600 人压缩至约 400 人量级，CEO 在 2024 年中报中提到 **10% 员工聚焦于 AI 战略** [[12]](https://stackoverflow.blog/2024/10/22/stack-overflow-ceo-update-first-half-1h-2024/)。
+公司从约 540 人（2022 年峰值）压缩至约 400 人量级（⚠ 解读：540 来自 [10] 系列报道里"2022 年扩张"语境，400 为依两轮裁员推算），CEO 在 2024 年中报中提到 **10% 员工聚焦于 AI 战略** [[12]](https://stackoverflow.blog/2024/10/22/stack-overflow-ceo-update-first-half-1h-2024/)。
 
 ### 2.2 卖数据：OverflowAPI 与三大客户
 
@@ -60,7 +60,7 @@ Stack Overflow 把 15 年累积的问答库做成订阅 API（OverflowAPI），�
 - 2024 年 5 月：与 **OpenAI** 签 OverflowAPI 协议，财务条款未披露 [[14]](https://techcrunch.com/2024/05/06/stack-overflow-signs-deal-with-openai-to-supply-data-to-its-models/)
 - 后续与 **GitHub / 微软** 也有类似 partnership [[12]](https://stackoverflow.blog/2024/10/22/stack-overflow-ceo-update-first-half-1h-2024/)
 
-财务条款均未公开。可比参照：Reddit 与 Google 的内容许可约 **$60M/年**，与 OpenAI 估计 **$70M/年** [[14]](https://techcrunch.com/2024/05/06/stack-overflow-signs-deal-with-openai-to-supply-data-to-its-models/)。Stack Overflow 实际授权金额预计低于 Reddit（用户基数/最新增量都不如 Reddit），但仍是其 2024-25 财年扭亏的关键变量。
+财务条款均未公开。可比参照：Reddit 与 Google 的内容许可约 **$60M/年** [[30]](https://aublr.org/2024/03/the-google-reddit-ai-deal-strategic-move-or-a-harbinger-of-licensing-agreements-to-come/)，与 OpenAI 估计 **$70M/年** [[14]](https://techcrunch.com/2024/05/06/stack-overflow-signs-deal-with-openai-to-supply-data-to-its-models/)。Stack Overflow 实际授权金额预计低于 Reddit（用户基数/最新增量都不如 Reddit），但仍是其 2024-25 财年扭亏的关键变量。
 
 ### 2.3 收入反而增长？
 

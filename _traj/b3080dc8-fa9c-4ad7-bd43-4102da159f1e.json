@@ -18383,19 +18383,2015 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 184,
+      "timestamp": "2026-05-14T09:06:56.257Z",
+      "source": "user",
+      "message": "比如07-ci-build.md的一、Pre-Agent 时代的 CI 流量模式 中的数据没有出处。修正SDLC-stack下所有文件的这类问题",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 185,
+      "timestamp": "2026-05-14T09:07:04.380Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 219326,
+        "completion_tokens": 571,
+        "cached_tokens": 219320,
+        "extra": {
+          "cache_creation_input_tokens": 1034,
+          "cache_read_input_tokens": 219320,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1034,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 571,
+              "cache_read_input_tokens": 219320,
+              "cache_creation_input_tokens": 1034,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1034
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 186,
+      "timestamp": "2026-05-14T09:07:05.398Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "先看 07-ci-build.md 第一节确认问题，再设计修复策略。",
+      "metrics": {
+        "prompt_tokens": 219326,
+        "completion_tokens": 571,
+        "cached_tokens": 219320,
+        "extra": {
+          "cache_creation_input_tokens": 1034,
+          "cache_read_input_tokens": 219320,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1034,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 571,
+              "cache_read_input_tokens": 219320,
+              "cache_creation_input_tokens": 1034,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1034
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 187,
+      "timestamp": "2026-05-14T09:07:05.861Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Read toolu_01VuggK4YvcwFVbFLddzqtUU",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01VuggK4YvcwFVbFLddzqtUU",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md",
+            "offset": 1,
+            "limit": 80
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01VuggK4YvcwFVbFLddzqtUU",
+            "content": "1\t# 2026-05-14：SDLC 栈 / CI-CD 与构建 层深度研究\n2\t\n3\t附录 III 把 D4（构建 / CI）和 C5（部署 / CD）压成一行表格，结论只写了 \"GitHub Actions、Buildkite + AI 受益；CircleCI 被挤压\"。但这一层在 2025–2026 发生的事远比 \"加个 AI 排查失败原因\" 剧烈——**流量模式本身被 Coding Agent 改写了**：PR 的产生方不再是人，build 的触发频率与并发度不再服从办公时间分布，cache 的命中策略也不再是 \"同一开发者多次 push\"。这一节单独深挖。\n4\t\n5\t## 一、Pre-Agent 时代的 CI 流量模式（2010–2023）\n6\t\n7\t**典型负载剖面**（中型 SaaS，~200 工程师）：\n8\t\n9\t- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零\n10\t- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天\n11\t- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟\n12\t- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB，传输 ~145 MiB/s，命中 60–75% 是好成绩 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)\n13\t- **并发上限**：免费 GHA 默认 20 个 concurrent job，企业版 1000；CircleCI 按合同并发数计费\n14\t- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%\n15\t\n16\t钱的逻辑是 **per-minute 计 build runtime**——GitHub Actions Linux x64 标准价 $0.008/min，Windows 1.6×，macOS 8×，2025 年 GitHub 全平台跑掉 **115 亿分钟** [[2]](https://github.com/resources/insights/2026-pricing-changes-for-github-actions)。\n17\t\n18\tCI 平台的护城河是 **生态（marketplace action）+ 与 SCM 的集成**，性能差异不大，因为 build runtime 的瓶颈在用户自己的脚本（`npm install`、`docker build`、`pytest`），不在调度。这是 Jenkins / CircleCI / GitHub Actions 多年共存的原因。\n19\t\n20\t## 二、Post-Agent 流量模式：四个本质变化\n21\t\n22\t### 2.1 PR 数量爆炸\n23\t\n24\tFaros AI 在 2026-04 发布的 *AI Productivity Paradox* 研究：**高 AI 采用率团队完成任务多 21%，合并 PR 多 98%**，但 PR review time 也涨 91% [[3]](https://www.faros.ai/blog/ai-software-engineering)。Cursor 2026-02 ARR $2B 时已有 1M+ 日活、5 万企业客户 [[4]](https://www.getpanto.ai/blog/cursor-ai-statistics)；Cursor 2.0（2025-10）支持单开发者 **同时跑 8 个并行 agent**，每个 agent 占独立 workspace clone [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f)。Devin 2.0 同样支持 **multi-instance parallel**，一名工程师把当天 4 个任务各分配一个 Devin 实例 [[6]](https://www.deployhq.com/guides/devin)。\n25\t\n26\t后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人。\n27\t\n28\t### 2.2 触发分布扁平化\n29\t\n30\tAgent 不睡觉。Cursor 的 background agent 跑在 AWS 隔离 VM 上，\"machine that kicked it off goes offline\" 之后 agent 继续运行 [[7]](https://docs.cursor.com/en/background-agent)。Devin 接受 issue → 异步排队、跑通 CI、贴回 PR；夜里 02:00 触发的 build 比例从 < 10% 涨到 ~35%（基于 Faros 数据外推，**解读**）。\n31\t\n32\tCI 的容量规划假设——\"工作日 9–18 点峰值，按峰值买 runner\"——被破坏。**弹性需求从 5× 倍峰谷比变成几乎无峰谷**，预付固定 self-hosted 容量的模型立刻变得低效。\n33\t\n34\t### 2.3 build 失败被 agent 主动消费\n35\t\n36\t传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述：\"picking up review feedback and CI results to get each PR approved and merged\" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）。\n37\t\n38\t这把 CI 从\"验证关卡\"变成了 \"agent 的反馈传感器\"——CI 必须**毫秒级返回结构化失败信号**（不是 30 分钟后给一段日志）。GitLab Duo 的 Root Cause Analysis（GA since GitLab 17.3）已开始把 CI 日志解析成结构化失败原因供 agent 消费 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)。\n39\t\n40\t### 2.4 每个 agent 需要一个隔离环境\n41\t\n42\tCursor background agent、Devin、Replit Agent 都要求**独立 sandbox**：不能共享主机，否则 npm install 互相污染、端口冲突、密钥泄漏。Cursor 一次\"easy PR\" 的成本实测 $4.63 [[9]](https://www.morphllm.com/cursor-background-agents)，里面环境启动占非平凡比例。\n43\t\n44\t新需求一句话总结：**亚秒级冷启动 + 单租户隔离 + 整盘共享 cache + 按秒计费**。这套需求传统 CI runner（Jenkins agent / GitHub Actions runner pool）的架构完全做不到——它们假设 runner 长期复用、cache 走网络、隔离靠 Docker 容器。\n45\t\n46\t## 三、namespace.so：把 CI runner 重新当作\"compute platform\"建\n47\t\n48\tNamespace Labs 创始人 Hugo Santos（前 Google，参与 Search/Photos/Assistant 微服务平台基础设施），2020 年成立公司，2026-03 完成 Series A 共 $23M 融资 [[10]](https://www.crunchbase.com/organization/namespace-labs)。核心产品三件套：\n49\t\n50\t1. **Ephemeral Clusters**——按需启动的 k3s Kubernetes 集群，**秒级**就绪 [[11]](https://namespace.so/)\n51\t2. **CI Runners（GHA / GitLab）**——GitHub Actions 和 GitLab CI 的 drop-in 替换\n52\t3. **Devbox / Agent Sandbox**——为 Coding Agent 提供独立云环境，\"agent 在 Devbox 里干活，不阻塞本地机器\" [[11]](https://namespace.so/)\n53\t\n54\t### 关键架构创新\n55\t\n56\t**自有机柜，不租公有云**：Namespace 自建多数据中心机柜，\"full-stack solutions encompassing compute, network, and storage\" [[12]](https://betterstack.com/community/comparisons/namespace-alternatives/)。第三方基准里 Namespace **x64 单线程跑分领先所有第三方 GHA runner 提供商，arm64 也领先** [[13]](https://runs-on.com/benchmarks/github-actions-cpu-performance/)。\n57\t\n58\t**本地高性能存储 + 内置 cache**：Bazel、Turborepo 等工具的 cache 后端直接打通到 runner 本地 NVMe，cache 命中不走公网。对比 GitHub 内置 cache 的 145 MiB/s，Depot 实测 1,000 MiB/s（~7×）[[14]](https://depot.dev/blog/comparing-github-actions-and-depot-runners-for-2x-faster-builds)。Namespace 走同一思路但绑定自己的存储层。\n59\t\n60\t**nsc CLI——把\"开 sandbox\"做成一行命令**：\n61\t\n62\t```bash\n63\t# 起一台 2 vCPU / 8GB ARM64 Linux 实例（秒级）\n64\tnsc create --shape linux/arm64/2x8\n65\t\n66\t# 在 ephemeral 环境里直接跑容器\n67\tnsc run --image ghcr.io/myorg/agent:latest --port 8080\n68\t\n69\t# 把 Docker 上下文指向 ephemeral 环境（本地 docker build 实则跑在远端）\n70\tnsc docker attach-context\n71\t\n72\t# Kubernetes 服务暴露公网 ingress\n73\tnsc expose kubernetes --service my-service\n74\t```\n75\t\n76\t四个命令覆盖：**实例创建（D4）→ 运行容器（C4）→ 远端 Docker（D4）→ K8s 暴露（C5）**——D4 和 C5 两层的边界被一根 CLI 抹掉。这是和老一代（Jenkins YAML / CircleCI YAML / GHA workflow）最本质的不同：**老 CI 假设 build 跑在\"作业槽\"里，namespace 假设 build 跑在\"一次性云\"里**。\n77\t\n78\t### 定价模型\n79\t\n80\tNamespace 公开价格 [[15]](https://namespace.so/pricing)：\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md\", \"content\": \"# 2026-05-14：SDLC 栈 / CI-CD 与构建 层深度研究\\n\\n附录 III 把 D4（构建 / CI）和 C5（部署 / CD）压成一行表格，结论只写了 \\\"GitHub Actions、Buildkite + AI 受益；CircleCI 被挤压\\\"。但这一层在 2025–2026 发生的事远比 \\\"加个 AI 排查失败原因\\\" 剧烈——**流量模式本身被 Coding Agent 改写了**：PR 的产生方不再是人，build 的触发频率与并发度不再服从办公时间分布，cache 的命中策略也不再是 \\\"同一开发者多次 push\\\"。这一节单独深挖。\\n\\n## 一、Pre-Agent 时代的 CI 流量模式（2010–2023）\\n\\n**典型负载剖面**（中型 SaaS，~200 工程师）：\\n\\n- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零\\n- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天\\n- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟\\n- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB，传输 ~145 MiB/s，命中 60–75% 是好成绩 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)\\n- **并发上限**：免费 GHA 默认 20 个 concurrent job，企业版 1000；CircleCI 按合同并发数计费\\n- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%\\n\\n钱的逻辑是 **per-minute 计 build runtime**——GitHub Actions Linux x64 标准价 $0.008/min，Windows 1.6×，macOS 8×，2025 年 GitHub 全平台跑掉 **115 亿分钟** [[2]](https://github.com/resources/insights/2026-pricing-changes-for-github-actions)。\\n\\nCI 平台的护城河是 **生态（marketplace action）+ 与 SCM 的集成**，性能差异不大，因为 build runtime 的瓶颈在用户自己的脚本（`npm install`、`docker build`、`pytest`），不在调度。这是 Jenkins / CircleCI / GitHub Actions 多年共存的原因。\\n\\n## 二、Post-Agent 流量模式：四个本质变化\\n\\n### 2.1 PR 数量爆炸\\n\\nFaros AI 在 2026-04 发布的 *AI Productivity Paradox* 研究：**高 AI 采用率团队完成任务多 21%，合并 PR 多 98%**，但 PR review time 也涨 91% [[3]](https://www.faros.ai/blog/ai-software-engineering)。Cursor 2026-02 ARR $2B 时已有 1M+ 日活、5 万企业客户 [[4]](https://www.getpanto.ai/blog/cursor-ai-statistics)；Cursor 2.0（2025-10）支持单开发者 **同时跑 8 个并行 agent**，每个 agent 占独立 workspace clone [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f)。Devin 2.0 同样支持 **multi-instance parallel**，一名工程师把当天 4 个任务各分配一个 Devin 实例 [[6]](https://www.deployhq.com/guides/devin)。\\n\\n后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人。\\n\\n### 2.2 触发分布扁平化\\n\\nAgent 不睡觉。Cursor 的 background agent 跑在 AWS 隔离 VM 上，\\\"machine that kicked it off goes offline\\\" 之后 agent 继续运行 [[7]](https://docs.cursor.com/en/background-agent)。Devin 接受 issue → 异步排队、跑通 CI、贴回 PR；夜里 02:00 触发的 build 比例从 < 10% 涨到 ~35%（基于 Faros 数据外推，**解读**）。\\n\\nCI 的容量规划假设——\\\"工作日 9–18 点峰值，按峰值买 runner\\\"——被破坏。**弹性需求从 5× 倍峰谷比变成几乎无峰谷**，预付固定 self-hosted 容量的模型立刻变得低效。\\n\\n### 2.3 build 失败被 agent 主动消费\\n\\n传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述：\\\"picking up review feedback and CI results to get each PR approved and merged\\\" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）。\\n\\n这把 CI 从\\\"验证关卡\\\"变成了 \\\"agent 的反馈传感器\\\"——CI 必须**毫秒级返回结构化失败信号**（不是 30 分钟后给一段日志）。GitLab Duo 的 Root Cause Analysis（GA since GitLab 17.3）已开始把 CI 日志解析成结构化失败原因供 agent 消费 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)。\\n\\n### 2.4 每个 agent 需要一个隔离环境\\n\\nCursor background agent、Devin、Replit Agent 都要求**独立 sandbox**：不能共享主机，否则 npm install 互相污染、端口冲突、密钥泄漏。Cursor 一次\\\"easy PR\\\" 的成本实测 $4.63 [[9]](https://www.morphllm.com/cursor-background-agents)，里面环境启动占非平凡比例。\\n\\n新需求一句话总结：**亚秒级冷启动 + 单租户隔离 + 整盘共享 cache + 按秒计费**。这套需求传统 CI runner（Jenkins agent / GitHub Actions runner pool）的架构完全做不到——它们假设 runner 长期复用、cache 走网络、隔离靠 Docker 容器。\\n\\n## 三、namespace.so：把 CI runner 重新当作\\\"compute platform\\\"建\\n\\nNamespace Labs 创始人 Hugo Santos（前 Google，参与 Search/Photos/Assistant 微服务平台基础设施），2020 年成立公司，2026-03 完成 Series A 共 $23M 融资 [[10]](https://www.crunchbase.com/organization/namespace-labs)。核心产品三件套：\\n\\n1. **Ephemeral Clusters**——按需启动的 k3s Kubernetes 集群，**秒级**就绪 [[11]](https://namespace.so/)\\n2. **CI Runners（GHA / GitLab）**——GitHub Actions 和 GitLab CI 的 drop-in 替换\\n3. **Devbox / Agent Sandbox**——为 Coding Agent 提供独立云环境，\\\"agent 在 Devbox 里干活，不阻塞本地机器\\\" [[11]](https://namespace.so/)\\n\\n### 关键架构创新\\n\\n**自有机柜，不租公有云**：Namespace 自建多数据中心机柜，\\\"full-stack solutions encompassing compute, network, and storage\\\" [[12]](https://betterstack.com/community/comparisons/namespace-alternatives/)。第三方基准里 Namespace **x64 单线程跑分领先所有第三方 GHA runner 提供商，arm64 也领先** [[13]](https://runs-on.com/benchmarks/github-actions-cpu-performance/)。\\n\\n**本地高性能存储 + 内置 cache**：Bazel、Turborepo 等工具的 cache 后端直接打通到 runner 本地 NVMe，cache 命中不走公网。对比 GitHub 内置 cache 的 145 MiB/s，Depot 实测 1,000 MiB/s（~7×）[[14]](https://depot.dev/blog/comparing-github-actions-and-depot-runners-for-2x-faster-builds)。Namespace 走同一思路但绑定自己的存储层。\\n\\n**nsc CLI——把\\\"开 sandbox\\\"做成一行命令**：\\n\\n```bash\\n# 起一台 2 vCPU / 8GB ARM64 Linux 实例（秒级）\\nnsc create --shape linux/arm64/2x8\\n\\n# 在 ephemeral 环境里直接跑容器\\nnsc run --image ghcr.io/myorg/agent:latest --port 8080\\n\\n# 把 Docker 上下文指向 ephemeral 环境（本地 docker build 实则跑在远端）\\nnsc docker attach-context\\n\\n# Kubernetes 服务暴露公网 ingress\\nnsc expose kubernetes --service my-service\\n```\\n\\n四个命令覆盖：**实例创建（D4）→ 运行容器（C4）→ 远端 Docker（D4）→ K8s 暴露（C5）**——D4 和 C5 两层的边界被一根 CLI 抹掉。这是和老一代（Jenkins YAML / CircleCI YAML / GHA workflow）最本质的不同：**老 CI 假设 build 跑在\\\"作业槽\\\"里，namespace 假设 build 跑在\\\"一次性云\\\"里**。\\n\\n### 定价模型\\n\\nNamespace 公开价格 [[15]](https://namespace.so/pricing)：\", \"numLines\": 80, \"startLine\": 1, \"totalLines\": 200}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 219326,
+        "completion_tokens": 571,
+        "cached_tokens": 219320,
+        "extra": {
+          "cache_creation_input_tokens": 1034,
+          "cache_read_input_tokens": 219320,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1034,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 571,
+              "cache_read_input_tokens": 219320,
+              "cache_creation_input_tokens": 1034,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1034
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md",
+              "content": "# 2026-05-14：SDLC 栈 / CI-CD 与构建 层深度研究\n\n附录 III 把 D4（构建 / CI）和 C5（部署 / CD）压成一行表格，结论只写了 \"GitHub Actions、Buildkite + AI 受益；CircleCI 被挤压\"。但这一层在 2025–2026 发生的事远比 \"加个 AI 排查失败原因\" 剧烈——**流量模式本身被 Coding Agent 改写了**：PR 的产生方不再是人，build 的触发频率与并发度不再服从办公时间分布，cache 的命中策略也不再是 \"同一开发者多次 push\"。这一节单独深挖。\n\n## 一、Pre-Agent 时代的 CI 流量模式（2010–2023）\n\n**典型负载剖面**（中型 SaaS，~200 工程师）：\n\n- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零\n- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天\n- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟\n- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB，传输 ~145 MiB/s，命中 60–75% 是好成绩 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)\n- **并发上限**：免费 GHA 默认 20 个 concurrent job，企业版 1000；CircleCI 按合同并发数计费\n- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%\n\n钱的逻辑是 **per-minute 计 build runtime**——GitHub Actions Linux x64 标准价 $0.008/min，Windows 1.6×，macOS 8×，2025 年 GitHub 全平台跑掉 **115 亿分钟** [[2]](https://github.com/resources/insights/2026-pricing-changes-for-github-actions)。\n\nCI 平台的护城河是 **生态（marketplace action）+ 与 SCM 的集成**，性能差异不大，因为 build runtime 的瓶颈在用户自己的脚本（`npm install`、`docker build`、`pytest`），不在调度。这是 Jenkins / CircleCI / GitHub Actions 多年共存的原因。\n\n## 二、Post-Agent 流量模式：四个本质变化\n\n### 2.1 PR 数量爆炸\n\nFaros AI 在 2026-04 发布的 *AI Productivity Paradox* 研究：**高 AI 采用率团队完成任务多 21%，合并 PR 多 98%**，但 PR review time 也涨 91% [[3]](https://www.faros.ai/blog/ai-software-engineering)。Cursor 2026-02 ARR $2B 时已有 1M+ 日活、5 万企业客户 [[4]](https://www.getpanto.ai/blog/cursor-ai-statistics)；Cursor 2.0（2025-10）支持单开发者 **同时跑 8 个并行 agent**，每个 agent 占独立 workspace clone [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f)。Devin 2.0 同样支持 **multi-instance parallel**，一名工程师把当天 4 个任务各分配一个 Devin 实例 [[6]](https://www.deployhq.com/guides/devin)。\n\n后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人。\n\n### 2.2 触发分布扁平化\n\nAgent 不睡觉。Cursor 的 background agent 跑在 AWS 隔离 VM 上，\"machine that kicked it off goes offline\" 之后 agent 继续运行 [[7]](https://docs.cursor.com/en/background-agent)。Devin 接受 issue → 异步排队、跑通 CI、贴回 PR；夜里 02:00 触发的 build 比例从 < 10% 涨到 ~35%（基于 Faros 数据外推，**解读**）。\n\nCI 的容量规划假设——\"工作日 9–18 点峰值，按峰值买 runner\"——被破坏。**弹性需求从 5× 倍峰谷比变成几乎无峰谷**，预付固定 self-hosted 容量的模型立刻变得低效。\n\n### 2.3 build 失败被 agent 主动消费\n\n传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述：\"picking up review feedback and CI results to get each PR approved and merged\" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）。\n\n这把 CI 从\"验证关卡\"变成了 \"agent 的反馈传感器\"——CI 必须**毫秒级返回结构化失败信号**（不是 30 分钟后给一段日志）。GitLab Duo 的 Root Cause Analysis（GA since GitLab 17.3）已开始把 CI 日志解析成结构化失败原因供 agent 消费 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)。\n\n### 2.4 每个 agent 需要一个隔离环境\n\nCursor background agent、Devin、Replit Agent 都要求**独立 sandbox**：不能共享主机，否则 npm install 互相污染、端口冲突、密钥泄漏。Cursor 一次\"easy PR\" 的成本实测 $4.63 [[9]](https://www.morphllm.com/cursor-background-agents)，里面环境启动占非平凡比例。\n\n新需求一句话总结：**亚秒级冷启动 + 单租户隔离 + 整盘共享 cache + 按秒计费**。这套需求传统 CI runner（Jenkins agent / GitHub Actions runner pool）的架构完全做不到——它们假设 runner 长期复用、cache 走网络、隔离靠 Docker 容器。\n\n## 三、namespace.so：把 CI runner 重新当作\"compute platform\"建\n\nNamespace Labs 创始人 Hugo Santos（前 Google，参与 Search/Photos/Assistant 微服务平台基础设施），2020 年成立公司，2026-03 完成 Series A 共 $23M 融资 [[10]](https://www.crunchbase.com/organization/namespace-labs)。核心产品三件套：\n\n1. **Ephemeral Clusters**——按需启动的 k3s Kubernetes 集群，**秒级**就绪 [[11]](https://namespace.so/)\n2. **CI Runners（GHA / GitLab）**——GitHub Actions 和 GitLab CI 的 drop-in 替换\n3. **Devbox / Agent Sandbox**——为 Coding Agent 提供独立云环境，\"agent 在 Devbox 里干活，不阻塞本地机器\" [[11]](https://namespace.so/)\n\n### 关键架构创新\n\n**自有机柜，不租公有云**：Namespace 自建多数据中心机柜，\"full-stack solutions encompassing compute, network, and storage\" [[12]](https://betterstack.com/community/comparisons/namespace-alternatives/)。第三方基准里 Namespace **x64 单线程跑分领先所有第三方 GHA runner 提供商，arm64 也领先** [[13]](https://runs-on.com/benchmarks/github-actions-cpu-performance/)。\n\n**本地高性能存储 + 内置 cache**：Bazel、Turborepo 等工具的 cache 后端直接打通到 runner 本地 NVMe，cache 命中不走公网。对比 GitHub 内置 cache 的 145 MiB/s，Depot 实测 1,000 MiB/s（~7×）[[14]](https://depot.dev/blog/comparing-github-actions-and-depot-runners-for-2x-faster-builds)。Namespace 走同一思路但绑定自己的存储层。\n\n**nsc CLI——把\"开 sandbox\"做成一行命令**：\n\n```bash\n# 起一台 2 vCPU / 8GB ARM64 Linux 实例（秒级）\nnsc create --shape linux/arm64/2x8\n\n# 在 ephemeral 环境里直接跑容器\nnsc run --image ghcr.io/myorg/agent:latest --port 8080\n\n# 把 Docker 上下文指向 ephemeral 环境（本地 docker build 实则跑在远端）\nnsc docker attach-context\n\n# Kubernetes 服务暴露公网 ingress\nnsc expose kubernetes --service my-service\n```\n\n四个命令覆盖：**实例创建（D4）→ 运行容器（C4）→ 远端 Docker（D4）→ K8s 暴露（C5）**——D4 和 C5 两层的边界被一根 CLI 抹掉。这是和老一代（Jenkins YAML / CircleCI YAML / GHA workflow）最本质的不同：**老 CI 假设 build 跑在\"作业槽\"里，namespace 假设 build 跑在\"一次性云\"里**。\n\n### 定价模型\n\nNamespace 公开价格 [[15]](https://namespace.so/pricing)：",
+              "numLines": 80,
+              "startLine": 1,
+              "totalLines": 200
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VuggK4YvcwFVbFLddzqtUU",
+            "type": "tool_result",
+            "content": "1\t# 2026-05-14：SDLC 栈 / CI-CD 与构建 层深度研究\n2\t\n3\t附录 III 把 D4（构建 / CI）和 C5（部署 / CD）压成一行表格，结论只写了 \"GitHub Actions、Buildkite + AI 受益；CircleCI 被挤压\"。但这一层在 2025–2026 发生的事远比 \"加个 AI 排查失败原因\" 剧烈——**流量模式本身被 Coding Agent 改写了**：PR 的产生方不再是人，build 的触发频率与并发度不再服从办公时间分布，cache 的命中策略也不再是 \"同一开发者多次 push\"。这一节单独深挖。\n4\t\n5\t## 一、Pre-Agent 时代的 CI 流量模式（2010–2023）\n6\t\n7\t**典型负载剖面**（中型 SaaS，~200 工程师）：\n8\t\n9\t- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零\n10\t- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天\n11\t- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟\n12\t- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB，传输 ~145 MiB/s，命中 60–75% 是好成绩 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)\n13\t- **并发上限**：免费 GHA 默认 20 个 concurrent job，企业版 1000；CircleCI 按合同并发数计费\n14\t- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%\n15\t\n16\t钱的逻辑是 **per-minute 计 build runtime**——GitHub Actions Linux x64 标准价 $0.008/min，Windows 1.6×，macOS 8×，2025 年 GitHub 全平台跑掉 **115 亿分钟** [[2]](https://github.com/resources/insights/2026-pricing-changes-for-github-actions)。\n17\t\n18\tCI 平台的护城河是 **生态（marketplace action）+ 与 SCM 的集成**，性能差异不大，因为 build runtime 的瓶颈在用户自己的脚本（`npm install`、`docker build`、`pytest`），不在调度。这是 Jenkins / CircleCI / GitHub Actions 多年共存的原因。\n19\t\n20\t## 二、Post-Agent 流量模式：四个本质变化\n21\t\n22\t### 2.1 PR 数量爆炸\n23\t\n24\tFaros AI 在 2026-04 发布的 *AI Productivity Paradox* 研究：**高 AI 采用率团队完成任务多 21%，合并 PR 多 98%**，但 PR review time 也涨 91% [[3]](https://www.faros.ai/blog/ai-software-engineering)。Cursor 2026-02 ARR $2B 时已有 1M+ 日活、5 万企业客户 [[4]](https://www.getpanto.ai/blog/cursor-ai-statistics)；Cursor 2.0（2025-10）支持单开发者 **同时跑 8 个并行 agent**，每个 agent 占独立 workspace clone [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f)。Devin 2.0 同样支持 **multi-instance parallel**，一名工程师把当天 4 个任务各分配一个 Devin 实例 [[6]](https://www.deployhq.com/guides/devin)。\n25\t\n26\t后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人。\n27\t\n28\t### 2.2 触发分布扁平化\n29\t\n30\tAgent 不睡觉。Cursor 的 background agent 跑在 AWS 隔离 VM 上，\"machine that kicked it off goes offline\" 之后 agent 继续运行 [[7]](https://docs.cursor.com/en/background-agent)。Devin 接受 issue → 异步排队、跑通 CI、贴回 PR；夜里 02:00 触发的 build 比例从 < 10% 涨到 ~35%（基于 Faros 数据外推，**解读**）。\n31\t\n32\tCI 的容量规划假设——\"工作日 9–18 点峰值，按峰值买 runner\"——被破坏。**弹性需求从 5× 倍峰谷比变成几乎无峰谷**，预付固定 self-hosted 容量的模型立刻变得低效。\n33\t\n34\t### 2.3 build 失败被 agent 主动消费\n35\t\n36\t传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述：\"picking up review feedback and CI results to get each PR approved and merged\" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）。\n37\t\n38\t这把 CI 从\"验证关卡\"变成了 \"agent 的反馈传感器\"——CI 必须**毫秒级返回结构化失败信号**（不是 30 分钟后给一段日志）。GitLab Duo 的 Root Cause Analysis（GA since GitLab 17.3）已开始把 CI 日志解析成结构化失败原因供 agent 消费 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)。\n39\t\n40\t### 2.4 每个 agent 需要一个隔离环境\n41\t\n42\tCursor background agent、Devin、Replit Agent 都要求**独立 sandbox**：不能共享主机，否则 npm install 互相污染、端口冲突、密钥泄漏。Cursor 一次\"easy PR\" 的成本实测 $4.63 [[9]](https://www.morphllm.com/cursor-background-agents)，里面环境启动占非平凡比例。\n43\t\n44\t新需求一句话总结：**亚秒级冷启动 + 单租户隔离 + 整盘共享 cache + 按秒计费**。这套需求传统 CI runner（Jenkins agent / GitHub Actions runner pool）的架构完全做不到——它们假设 runner 长期复用、cache 走网络、隔离靠 Docker 容器。\n45\t\n46\t## 三、namespace.so：把 CI runner 重新当作\"compute platform\"建\n47\t\n48\tNamespace Labs 创始人 Hugo Santos（前 Google，参与 Search/Photos/Assistant 微服务平台基础设施），2020 年成立公司，2026-03 完成 Series A 共 $23M 融资 [[10]](https://www.crunchbase.com/organization/namespace-labs)。核心产品三件套：\n49\t\n50\t1. **Ephemeral Clusters**——按需启动的 k3s Kubernetes 集群，**秒级**就绪 [[11]](https://namespace.so/)\n51\t2. **CI Runners（GHA / GitLab）**——GitHub Actions 和 GitLab CI 的 drop-in 替换\n52\t3. **Devbox / Agent Sandbox**——为 Coding Agent 提供独立云环境，\"agent 在 Devbox 里干活，不阻塞本地机器\" [[11]](https://namespace.so/)\n53\t\n54\t### 关键架构创新\n55\t\n56\t**自有机柜，不租公有云**：Namespace 自建多数据中心机柜，\"full-stack solutions encompassing compute, network, and storage\" [[12]](https://betterstack.com/community/comparisons/namespace-alternatives/)。第三方基准里 Namespace **x64 单线程跑分领先所有第三方 GHA runner 提供商，arm64 也领先** [[13]](https://runs-on.com/benchmarks/github-actions-cpu-performance/)。\n57\t\n58\t**本地高性能存储 + 内置 cache**：Bazel、Turborepo 等工具的 cache 后端直接打通到 runner 本地 NVMe，cache 命中不走公网。对比 GitHub 内置 cache 的 145 MiB/s，Depot 实测 1,000 MiB/s（~7×）[[14]](https://depot.dev/blog/comparing-github-actions-and-depot-runners-for-2x-faster-builds)。Namespace 走同一思路但绑定自己的存储层。\n59\t\n60\t**nsc CLI——把\"开 sandbox\"做成一行命令**：\n61\t\n62\t```bash\n63\t# 起一台 2 vCPU / 8GB ARM64 Linux 实例（秒级）\n64\tnsc create --shape linux/arm64/2x8\n65\t\n66\t# 在 ephemeral 环境里直接跑容器\n67\tnsc run --image ghcr.io/myorg/agent:latest --port 8080\n68\t\n69\t# 把 Docker 上下文指向 ephemeral 环境（本地 docker build 实则跑在远端）\n70\tnsc docker attach-context\n71\t\n72\t# Kubernetes 服务暴露公网 ingress\n73\tnsc expose kubernetes --service my-service\n74\t```\n75\t\n76\t四个命令覆盖：**实例创建（D4）→ 运行容器（C4）→ 远端 Docker（D4）→ K8s 暴露（C5）**——D4 和 C5 两层的边界被一根 CLI 抹掉。这是和老一代（Jenkins YAML / CircleCI YAML / GHA workflow）最本质的不同：**老 CI 假设 build 跑在\"作业槽\"里，namespace 假设 build 跑在\"一次性云\"里**。\n77\t\n78\t### 定价模型\n79\t\n80\tNamespace 公开价格 [[15]](https://namespace.so/pricing)："
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md",
+              "content": "# 2026-05-14：SDLC 栈 / CI-CD 与构建 层深度研究\n\n附录 III 把 D4（构建 / CI）和 C5（部署 / CD）压成一行表格，结论只写了 \"GitHub Actions、Buildkite + AI 受益；CircleCI 被挤压\"。但这一层在 2025–2026 发生的事远比 \"加个 AI 排查失败原因\" 剧烈——**流量模式本身被 Coding Agent 改写了**：PR 的产生方不再是人，build 的触发频率与并发度不再服从办公时间分布，cache 的命中策略也不再是 \"同一开发者多次 push\"。这一节单独深挖。\n\n## 一、Pre-Agent 时代的 CI 流量模式（2010–2023）\n\n**典型负载剖面**（中型 SaaS，~200 工程师）：\n\n- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零\n- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天\n- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟\n- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB，传输 ~145 MiB/s，命中 60–75% 是好成绩 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)\n- **并发上限**：免费 GHA 默认 20 个 concurrent job，企业版 1000；CircleCI 按合同并发数计费\n- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%\n\n钱的逻辑是 **per-minute 计 build runtime**——GitHub Actions Linux x64 标准价 $0.008/min，Windows 1.6×，macOS 8×，2025 年 GitHub 全平台跑掉 **115 亿分钟** [[2]](https://github.com/resources/insights/2026-pricing-changes-for-github-actions)。\n\nCI 平台的护城河是 **生态（marketplace action）+ 与 SCM 的集成**，性能差异不大，因为 build runtime 的瓶颈在用户自己的脚本（`npm install`、`docker build`、`pytest`），不在调度。这是 Jenkins / CircleCI / GitHub Actions 多年共存的原因。\n\n## 二、Post-Agent 流量模式：四个本质变化\n\n### 2.1 PR 数量爆炸\n\nFaros AI 在 2026-04 发布的 *AI Productivity Paradox* 研究：**高 AI 采用率团队完成任务多 21%，合并 PR 多 98%**，但 PR review time 也涨 91% [[3]](https://www.faros.ai/blog/ai-software-engineering)。Cursor 2026-02 ARR $2B 时已有 1M+ 日活、5 万企业客户 [[4]](https://www.getpanto.ai/blog/cursor-ai-statistics)；Cursor 2.0（2025-10）支持单开发者 **同时跑 8 个并行 agent**，每个 agent 占独立 workspace clone [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f)。Devin 2.0 同样支持 **multi-instance parallel**，一名工程师把当天 4 个任务各分配一个 Devin 实例 [[6]](https://www.deployhq.com/guides/devin)。\n\n后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人。\n\n### 2.2 触发分布扁平化\n\nAgent 不睡觉。Cursor 的 background agent 跑在 AWS 隔离 VM 上，\"machine that kicked it off goes offline\" 之后 agent 继续运行 [[7]](https://docs.cursor.com/en/background-agent)。Devin 接受 issue → 异步排队、跑通 CI、贴回 PR；夜里 02:00 触发的 build 比例从 < 10% 涨到 ~35%（基于 Faros 数据外推，**解读**）。\n\nCI 的容量规划假设——\"工作日 9–18 点峰值，按峰值买 runner\"——被破坏。**弹性需求从 5× 倍峰谷比变成几乎无峰谷**，预付固定 self-hosted 容量的模型立刻变得低效。\n\n### 2.3 build 失败被 agent 主动消费\n\n传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述：\"picking up review feedback and CI results to get each PR approved and merged\" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）。\n\n这把 CI 从\"验证关卡\"变成了 \"agent 的反馈传感器\"——CI 必须**毫秒级返回结构化失败信号**（不是 30 分钟后给一段日志）。GitLab Duo 的 Root Cause Analysis（GA since GitLab 17.3）已开始把 CI 日志解析成结构化失败原因供 agent 消费 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)。\n\n### 2.4 每个 agent 需要一个隔离环境\n\nCursor background agent、Devin、Replit Agent 都要求**独立 sandbox**：不能共享主机，否则 npm install 互相污染、端口冲突、密钥泄漏。Cursor 一次\"easy PR\" 的成本实测 $4.63 [[9]](https://www.morphllm.com/cursor-background-agents)，里面环境启动占非平凡比例。\n\n新需求一句话总结：**亚秒级冷启动 + 单租户隔离 + 整盘共享 cache + 按秒计费**。这套需求传统 CI runner（Jenkins agent / GitHub Actions runner pool）的架构完全做不到——它们假设 runner 长期复用、cache 走网络、隔离靠 Docker 容器。\n\n## 三、namespace.so：把 CI runner 重新当作\"compute platform\"建\n\nNamespace Labs 创始人 Hugo Santos（前 Google，参与 Search/Photos/Assistant 微服务平台基础设施），2020 年成立公司，2026-03 完成 Series A 共 $23M 融资 [[10]](https://www.crunchbase.com/organization/namespace-labs)。核心产品三件套：\n\n1. **Ephemeral Clusters**——按需启动的 k3s Kubernetes 集群，**秒级**就绪 [[11]](https://namespace.so/)\n2. **CI Runners（GHA / GitLab）**——GitHub Actions 和 GitLab CI 的 drop-in 替换\n3. **Devbox / Agent Sandbox**——为 Coding Agent 提供独立云环境，\"agent 在 Devbox 里干活，不阻塞本地机器\" [[11]](https://namespace.so/)\n\n### 关键架构创新\n\n**自有机柜，不租公有云**：Namespace 自建多数据中心机柜，\"full-stack solutions encompassing compute, network, and storage\" [[12]](https://betterstack.com/community/comparisons/namespace-alternatives/)。第三方基准里 Namespace **x64 单线程跑分领先所有第三方 GHA runner 提供商，arm64 也领先** [[13]](https://runs-on.com/benchmarks/github-actions-cpu-performance/)。\n\n**本地高性能存储 + 内置 cache**：Bazel、Turborepo 等工具的 cache 后端直接打通到 runner 本地 NVMe，cache 命中不走公网。对比 GitHub 内置 cache 的 145 MiB/s，Depot 实测 1,000 MiB/s（~7×）[[14]](https://depot.dev/blog/comparing-github-actions-and-depot-runners-for-2x-faster-builds)。Namespace 走同一思路但绑定自己的存储层。\n\n**nsc CLI——把\"开 sandbox\"做成一行命令**：\n\n```bash\n# 起一台 2 vCPU / 8GB ARM64 Linux 实例（秒级）\nnsc create --shape linux/arm64/2x8\n\n# 在 ephemeral 环境里直接跑容器\nnsc run --image ghcr.io/myorg/agent:latest --port 8080\n\n# 把 Docker 上下文指向 ephemeral 环境（本地 docker build 实则跑在远端）\nnsc docker attach-context\n\n# Kubernetes 服务暴露公网 ingress\nnsc expose kubernetes --service my-service\n```\n\n四个命令覆盖：**实例创建（D4）→ 运行容器（C4）→ 远端 Docker（D4）→ K8s 暴露（C5）**——D4 和 C5 两层的边界被一根 CLI 抹掉。这是和老一代（Jenkins YAML / CircleCI YAML / GHA workflow）最本质的不同：**老 CI 假设 build 跑在\"作业槽\"里，namespace 假设 build 跑在\"一次性云\"里**。\n\n### 定价模型\n\nNamespace 公开价格 [[15]](https://namespace.so/pricing)：",
+              "numLines": 80,
+              "startLine": 1,
+              "totalLines": 200
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VuggK4YvcwFVbFLddzqtUU",
+            "type": "tool_result",
+            "content": "1\t# 2026-05-14：SDLC 栈 / CI-CD 与构建 层深度研究\n2\t\n3\t附录 III 把 D4（构建 / CI）和 C5（部署 / CD）压成一行表格，结论只写了 \"GitHub Actions、Buildkite + AI 受益；CircleCI 被挤压\"。但这一层在 2025–2026 发生的事远比 \"加个 AI 排查失败原因\" 剧烈——**流量模式本身被 Coding Agent 改写了**：PR 的产生方不再是人，build 的触发频率与并发度不再服从办公时间分布，cache 的命中策略也不再是 \"同一开发者多次 push\"。这一节单独深挖。\n4\t\n5\t## 一、Pre-Agent 时代的 CI 流量模式（2010–2023）\n6\t\n7\t**典型负载剖面**（中型 SaaS，~200 工程师）：\n8\t\n9\t- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零\n10\t- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天\n11\t- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟\n12\t- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB，传输 ~145 MiB/s，命中 60–75% 是好成绩 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)\n13\t- **并发上限**：免费 GHA 默认 20 个 concurrent job，企业版 1000；CircleCI 按合同并发数计费\n14\t- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%\n15\t\n16\t钱的逻辑是 **per-minute 计 build runtime**——GitHub Actions Linux x64 标准价 $0.008/min，Windows 1.6×，macOS 8×，2025 年 GitHub 全平台跑掉 **115 亿分钟** [[2]](https://github.com/resources/insights/2026-pricing-changes-for-github-actions)。\n17\t\n18\tCI 平台的护城河是 **生态（marketplace action）+ 与 SCM 的集成**，性能差异不大，因为 build runtime 的瓶颈在用户自己的脚本（`npm install`、`docker build`、`pytest`），不在调度。这是 Jenkins / CircleCI / GitHub Actions 多年共存的原因。\n19\t\n20\t## 二、Post-Agent 流量模式：四个本质变化\n21\t\n22\t### 2.1 PR 数量爆炸\n23\t\n24\tFaros AI 在 2026-04 发布的 *AI Productivity Paradox* 研究：**高 AI 采用率团队完成任务多 21%，合并 PR 多 98%**，但 PR review time 也涨 91% [[3]](https://www.faros.ai/blog/ai-software-engineering)。Cursor 2026-02 ARR $2B 时已有 1M+ 日活、5 万企业客户 [[4]](https://www.getpanto.ai/blog/cursor-ai-statistics)；Cursor 2.0（2025-10）支持单开发者 **同时跑 8 个并行 agent**，每个 agent 占独立 workspace clone [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f)。Devin 2.0 同样支持 **multi-instance parallel**，一名工程师把当天 4 个任务各分配一个 Devin 实例 [[6]](https://www.deployhq.com/guides/devin)。\n25\t\n26\t后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人。\n27\t\n28\t### 2.2 触发分布扁平化\n29\t\n30\tAgent 不睡觉。Cursor 的 background agent 跑在 AWS 隔离 VM 上，\"machine that kicked it off goes offline\" 之后 agent 继续运行 [[7]](https://docs.cursor.com/en/background-agent)。Devin 接受 issue → 异步排队、跑通 CI、贴回 PR；夜里 02:00 触发的 build 比例从 < 10% 涨到 ~35%（基于 Faros 数据外推，**解读**）。\n31\t\n32\tCI 的容量规划假设——\"工作日 9–18 点峰值，按峰值买 runner\"——被破坏。**弹性需求从 5× 倍峰谷比变成几乎无峰谷**，预付固定 self-hosted 容量的模型立刻变得低效。\n33\t\n34\t### 2.3 build 失败被 agent 主动消费\n35\t\n36\t传统 CI 失败 → 等人看 → 修。Agent 的 loop 是 build 失败 → agent 读日志 → 再 push → 再 build。Devin 的官方描述：\"picking up review feedback and CI results to get each PR approved and merged\" [[6]](https://www.deployhq.com/guides/devin)。**每个 PR 的 build 次数从 ~3 上升到 ~8–15**（agent 多轮自修复直到绿）。\n37\t\n38\t这把 CI 从\"验证关卡\"变成了 \"agent 的反馈传感器\"——CI 必须**毫秒级返回结构化失败信号**（不是 30 分钟后给一段日志）。GitLab Duo 的 Root Cause Analysis（GA since GitLab 17.3）已开始把 CI 日志解析成结构化失败原因供 agent 消费 [[8]](https://www.buildmvpfast.com/alternatives/buildkite)。\n39\t\n40\t### 2.4 每个 agent 需要一个隔离环境\n41\t\n42\tCursor background agent、Devin、Replit Agent 都要求**独立 sandbox**：不能共享主机，否则 npm install 互相污染、端口冲突、密钥泄漏。Cursor 一次\"easy PR\" 的成本实测 $4.63 [[9]](https://www.morphllm.com/cursor-background-agents)，里面环境启动占非平凡比例。\n43\t\n44\t新需求一句话总结：**亚秒级冷启动 + 单租户隔离 + 整盘共享 cache + 按秒计费**。这套需求传统 CI runner（Jenkins agent / GitHub Actions runner pool）的架构完全做不到——它们假设 runner 长期复用、cache 走网络、隔离靠 Docker 容器。\n45\t\n46\t## 三、namespace.so：把 CI runner 重新当作\"compute platform\"建\n47\t\n48\tNamespace Labs 创始人 Hugo Santos（前 Google，参与 Search/Photos/Assistant 微服务平台基础设施），2020 年成立公司，2026-03 完成 Series A 共 $23M 融资 [[10]](https://www.crunchbase.com/organization/namespace-labs)。核心产品三件套：\n49\t\n50\t1. **Ephemeral Clusters**——按需启动的 k3s Kubernetes 集群，**秒级**就绪 [[11]](https://namespace.so/)\n51\t2. **CI Runners（GHA / GitLab）**——GitHub Actions 和 GitLab CI 的 drop-in 替换\n52\t3. **Devbox / Agent Sandbox**——为 Coding Agent 提供独立云环境，\"agent 在 Devbox 里干活，不阻塞本地机器\" [[11]](https://namespace.so/)\n53\t\n54\t### 关键架构创新\n55\t\n56\t**自有机柜，不租公有云**：Namespace 自建多数据中心机柜，\"full-stack solutions encompassing compute, network, and storage\" [[12]](https://betterstack.com/community/comparisons/namespace-alternatives/)。第三方基准里 Namespace **x64 单线程跑分领先所有第三方 GHA runner 提供商，arm64 也领先** [[13]](https://runs-on.com/benchmarks/github-actions-cpu-performance/)。\n57\t\n58\t**本地高性能存储 + 内置 cache**：Bazel、Turborepo 等工具的 cache 后端直接打通到 runner 本地 NVMe，cache 命中不走公网。对比 GitHub 内置 cache 的 145 MiB/s，Depot 实测 1,000 MiB/s（~7×）[[14]](https://depot.dev/blog/comparing-github-actions-and-depot-runners-for-2x-faster-builds)。Namespace 走同一思路但绑定自己的存储层。\n59\t\n60\t**nsc CLI——把\"开 sandbox\"做成一行命令**：\n61\t\n62\t```bash\n63\t# 起一台 2 vCPU / 8GB ARM64 Linux 实例（秒级）\n64\tnsc create --shape linux/arm64/2x8\n65\t\n66\t# 在 ephemeral 环境里直接跑容器\n67\tnsc run --image ghcr.io/myorg/agent:latest --port 8080\n68\t\n69\t# 把 Docker 上下文指向 ephemeral 环境（本地 docker build 实则跑在远端）\n70\tnsc docker attach-context\n71\t\n72\t# Kubernetes 服务暴露公网 ingress\n73\tnsc expose kubernetes --service my-service\n74\t```\n75\t\n76\t四个命令覆盖：**实例创建（D4）→ 运行容器（C4）→ 远端 Docker（D4）→ K8s 暴露（C5）**——D4 和 C5 两层的边界被一根 CLI 抹掉。这是和老一代（Jenkins YAML / CircleCI YAML / GHA workflow）最本质的不同：**老 CI 假设 build 跑在\"作业槽\"里，namespace 假设 build 跑在\"一次性云\"里**。\n77\t\n78\t### 定价模型\n79\t\n80\tNamespace 公开价格 [[15]](https://namespace.so/pricing)："
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md",
+          "offset": 1,
+          "limit": 80
+        }
+      }
+    },
+    {
+      "step_id": 188,
+      "timestamp": "2026-05-14T09:07:50.160Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 220355,
+        "completion_tokens": 3214,
+        "cached_tokens": 220354,
+        "extra": {
+          "cache_creation_input_tokens": 4076,
+          "cache_read_input_tokens": 220354,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4076,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3214,
+              "cache_read_input_tokens": 220354,
+              "cache_creation_input_tokens": 4076,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4076
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 189,
+      "timestamp": "2026-05-14T09:07:53.224Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "确认问题——07-ci-build.md 第 9-15 行那批\"典型负载剖面\"数字没出处（每工程师 1.5 PR/天、build/PR 3 次、JS monorepo 8-12 分钟等），写得像事实但没引用。这种\"行业经验值伪装成事实\"的问题，大概率 12 个文件都有。\n\n我用 12 个并行 subagent 审计修正：每个 agent 读一个文件，逐句逐数字核查，**有出处加 `[[N]]`，找不到强制标 `⚠ 作者估算/经验值` 并写明依据**。",
+      "metrics": {
+        "prompt_tokens": 220355,
+        "completion_tokens": 3214,
+        "cached_tokens": 220354,
+        "extra": {
+          "cache_creation_input_tokens": 4076,
+          "cache_read_input_tokens": 220354,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4076,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3214,
+              "cache_read_input_tokens": 220354,
+              "cache_creation_input_tokens": 4076,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4076
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 190,
+      "timestamp": "2026-05-14T09:07:55.345Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed TaskCreate toolu_014fCxNzELyJm5krjLfBpN1e",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_014fCxNzELyJm5krjLfBpN1e",
+          "function_name": "TaskCreate",
+          "arguments": {
+            "subject": "SDLC-stack 12 文件引用完整性审计与修正",
+            "description": "12 并行 subagent 逐文件审计未引用的数字/事实声明，能找到出处的补 [[N]] 引用，找不到的强制标 ⚠ 估算/经验值 + 依据",
+            "activeForm": "审计修正中"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_014fCxNzELyJm5krjLfBpN1e",
+            "content": "Task #14 created successfully: SDLC-stack 12 文件引用完整性审计与修正\n\n[metadata] {\"task\": {\"id\": \"14\", \"subject\": \"SDLC-stack 12 文件引用完整性审计与修正\"}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 220355,
+        "completion_tokens": 3214,
+        "cached_tokens": 220354,
+        "extra": {
+          "cache_creation_input_tokens": 4076,
+          "cache_read_input_tokens": 220354,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4076,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3214,
+              "cache_read_input_tokens": 220354,
+              "cache_creation_input_tokens": 4076,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4076
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "TaskCreate",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "task": {
+              "id": "14",
+              "subject": "SDLC-stack 12 文件引用完整性审计与修正"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014fCxNzELyJm5krjLfBpN1e",
+            "type": "tool_result",
+            "content": "Task #14 created successfully: SDLC-stack 12 文件引用完整性审计与修正"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "task": {
+              "id": "14",
+              "subject": "SDLC-stack 12 文件引用完整性审计与修正"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014fCxNzELyJm5krjLfBpN1e",
+            "type": "tool_result",
+            "content": "Task #14 created successfully: SDLC-stack 12 文件引用完整性审计与修正"
+          }
+        },
+        "raw_arguments": {
+          "subject": "SDLC-stack 12 文件引用完整性审计与修正",
+          "description": "12 并行 subagent 逐文件审计未引用的数字/事实声明，能找到出处的补 [[N]] 引用，找不到的强制标 ⚠ 估算/经验值 + 依据",
+          "activeForm": "审计修正中"
+        }
+      }
+    },
+    {
+      "step_id": 191,
+      "timestamp": "2026-05-14T09:07:55.454Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed TaskUpdate toolu_01Q6xbf769eFvk71QARg9RzR",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Q6xbf769eFvk71QARg9RzR",
+          "function_name": "TaskUpdate",
+          "arguments": {
+            "taskId": "14",
+            "status": "in_progress"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Q6xbf769eFvk71QARg9RzR",
+            "content": "Updated task #14 status\n\n[metadata] {\"success\": true, \"taskId\": \"14\", \"updatedFields\": [\"status\"], \"statusChange\": {\"from\": \"pending\", \"to\": \"in_progress\"}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 220355,
+        "completion_tokens": 3214,
+        "cached_tokens": 220354,
+        "extra": {
+          "cache_creation_input_tokens": 4076,
+          "cache_read_input_tokens": 220354,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4076,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3214,
+              "cache_read_input_tokens": 220354,
+              "cache_creation_input_tokens": 4076,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4076
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "TaskUpdate",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "success": true,
+            "taskId": "14",
+            "updatedFields": [
+              "status"
+            ],
+            "statusChange": {
+              "from": "pending",
+              "to": "in_progress"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Q6xbf769eFvk71QARg9RzR",
+            "type": "tool_result",
+            "content": "Updated task #14 status"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "success": true,
+            "taskId": "14",
+            "updatedFields": [
+              "status"
+            ],
+            "statusChange": {
+              "from": "pending",
+              "to": "in_progress"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Q6xbf769eFvk71QARg9RzR",
+            "type": "tool_result",
+            "content": "Updated task #14 status"
+          }
+        },
+        "raw_arguments": {
+          "taskId": "14",
+          "status": "in_progress"
+        }
+      }
+    },
+    {
+      "step_id": 192,
+      "timestamp": "2026-05-14T09:08:10.337Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01MZHVPsBcJnDL5LbNPNnDHr",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01MZHVPsBcJnDL5LbNPNnDHr",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 01-planning-tickets.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户审阅时指出，某文件（07-ci-build.md）\"Pre-Agent 时代的 CI 流量模式\"一节把\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000\"这些行业经验数字写得像事实，但**没有引用出处**。用户的 CLAUDE.md 明确要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/01-planning-tickets.md`，**逐句逐数字**核查：每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后？\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Stack Overflow Developer Survey、Faros AI 报告、Linear / Atlassian 官方博客 / 财报 / 产品页、Gartner、IDC、arXiv 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，并加一句 **依据**（如\"基于 DORA 2024 报告 + Atlassian 公开访谈外推\"）。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"Pre-Agent 基线\"、\"典型负载\"、\"用户结构\"、\"PR review 中位 X 天\"** 这类段落最容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。\n- 已经标 \"**解读**\"、\"**估算**\"、\"⚠\"、\"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 不要删除论点，找不到出处时优先加 ⚠ 声明而不是删除数字（除非数字明显失真）。\n\n完成后回复一段 ≤250 字的修正报告，列出：(a) 找到了多少新引用（列出新引用编号），(b) 标注了多少 ⚠ 声明（列出位置），(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01MZHVPsBcJnDL5LbNPNnDHr",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: aa36fa0c23d598a2f (internal ID - do not mention to user. Use SendMessage with to: 'aa36fa0c23d598a2f' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa36fa0c23d598a2f.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"aa36fa0c23d598a2f\", \"description\": \"审计 01-planning-tickets.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户审阅时指出，某文件（07-ci-build.md）\\\"Pre-Agent 时代的 CI 流量模式\\\"一节把\\\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000\\\"这些行业经验数字写得像事实，但**没有引用出处**。用户的 CLAUDE.md 明确要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/01-planning-tickets.md`，**逐句逐数字**核查：每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后？\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Stack Overflow Developer Survey、Faros AI 报告、Linear / Atlassian 官方博客 / 财报 / 产品页、Gartner、IDC、arXiv 等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\\\"信源\\\"加对应 IEEE 格式条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，并加一句 **依据**（如\\\"基于 DORA 2024 报告 + Atlassian 公开访谈外推\\\"）。**严禁**让没出处的数字看起来像事实。\\n\\n特别注意：\\n- **\\\"Pre-Agent 基线\\\"、\\\"典型负载\\\"、\\\"用户结构\\\"、\\\"PR review 中位 X 天\\\"** 这类段落最容易出问题。\\n- 已经有 `[[N]](URL)` 的**不动**。\\n- 已经标 \\\"**解读**\\\"、\\\"**估算**\\\"、\\\"⚠\\\"、\\\"未核\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\\n- 不要删除论点，找不到出处时优先加 ⚠ 声明而不是删除数字（除非数字明显失真）。\\n\\n完成后回复一段 ≤250 字的修正报告，列出：(a) 找到了多少新引用（列出新引用编号），(b) 标注了多少 ⚠ 声明（列出位置），(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa36fa0c23d598a2f.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 224431,
+        "completion_tokens": 5609,
+        "cached_tokens": 224430,
+        "extra": {
+          "cache_creation_input_tokens": 3323,
+          "cache_read_input_tokens": 224430,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3323,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5609,
+              "cache_read_input_tokens": 224430,
+              "cache_creation_input_tokens": 3323,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3323
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "aa36fa0c23d598a2f",
+            "description": "审计 01-planning-tickets.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户审阅时指出，某文件（07-ci-build.md）\"Pre-Agent 时代的 CI 流量模式\"一节把\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000\"这些行业经验数字写得像事实，但**没有引用出处**。用户的 CLAUDE.md 明确要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/01-planning-tickets.md`，**逐句逐数字**核查：每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后？\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Stack Overflow Developer Survey、Faros AI 报告、Linear / Atlassian 官方博客 / 财报 / 产品页、Gartner、IDC、arXiv 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，并加一句 **依据**（如\"基于 DORA 2024 报告 + Atlassian 公开访谈外推\"）。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"Pre-Agent 基线\"、\"典型负载\"、\"用户结构\"、\"PR review 中位 X 天\"** 这类段落最容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。\n- 已经标 \"**解读**\"、\"**估算**\"、\"⚠\"、\"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 不要删除论点，找不到出处时优先加 ⚠ 声明而不是删除数字（除非数字明显失真）。\n\n完成后回复一段 ≤250 字的修正报告，列出：(a) 找到了多少新引用（列出新引用编号），(b) 标注了多少 ⚠ 声明（列出位置），(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa36fa0c23d598a2f.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01MZHVPsBcJnDL5LbNPNnDHr",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: aa36fa0c23d598a2f (internal ID - do not mention to user. Use SendMessage with to: 'aa36fa0c23d598a2f' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa36fa0c23d598a2f.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "aa36fa0c23d598a2f",
+            "description": "审计 01-planning-tickets.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户审阅时指出，某文件（07-ci-build.md）\"Pre-Agent 时代的 CI 流量模式\"一节把\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000\"这些行业经验数字写得像事实，但**没有引用出处**。用户的 CLAUDE.md 明确要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/01-planning-tickets.md`，**逐句逐数字**核查：每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后？\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Stack Overflow Developer Survey、Faros AI 报告、Linear / Atlassian 官方博客 / 财报 / 产品页、Gartner、IDC、arXiv 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，并加一句 **依据**（如\"基于 DORA 2024 报告 + Atlassian 公开访谈外推\"）。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"Pre-Agent 基线\"、\"典型负载\"、\"用户结构\"、\"PR review 中位 X 天\"** 这类段落最容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。\n- 已经标 \"**解读**\"、\"**估算**\"、\"⚠\"、\"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 不要删除论点，找不到出处时优先加 ⚠ 声明而不是删除数字（除非数字明显失真）。\n\n完成后回复一段 ≤250 字的修正报告，列出：(a) 找到了多少新引用（列出新引用编号），(b) 标注了多少 ⚠ 声明（列出位置），(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa36fa0c23d598a2f.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01MZHVPsBcJnDL5LbNPNnDHr",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: aa36fa0c23d598a2f (internal ID - do not mention to user. Use SendMessage with to: 'aa36fa0c23d598a2f' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa36fa0c23d598a2f.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 01-planning-tickets.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户审阅时指出，某文件（07-ci-build.md）\"Pre-Agent 时代的 CI 流量模式\"一节把\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000\"这些行业经验数字写得像事实，但**没有引用出处**。用户的 CLAUDE.md 明确要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/01-planning-tickets.md`，**逐句逐数字**核查：每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后？\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Stack Overflow Developer Survey、Faros AI 报告、Linear / Atlassian 官方博客 / 财报 / 产品页、Gartner、IDC、arXiv 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，并加一句 **依据**（如\"基于 DORA 2024 报告 + Atlassian 公开访谈外推\"）。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"Pre-Agent 基线\"、\"典型负载\"、\"用户结构\"、\"PR review 中位 X 天\"** 这类段落最容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。\n- 已经标 \"**解读**\"、\"**估算**\"、\"⚠\"、\"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 不要删除论点，找不到出处时优先加 ⚠ 声明而不是删除数字（除非数字明显失真）。\n\n完成后回复一段 ≤250 字的修正报告，列出：(a) 找到了多少新引用（列出新引用编号），(b) 标注了多少 ⚠ 声明（列出位置），(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 193,
+      "timestamp": "2026-05-14T09:08:19.236Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01Br9benrC83SyBB7gJRJNgc",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Br9benrC83SyBB7gJRJNgc",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 02-design-vibe-coding.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出某些文件存在\"行业经验数字伪装成事实\"的问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/02-design-vibe-coding.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Lovable / Bolt.new / v0 / Replit / StackBlitz 官方博客、Vercel 财报 / 招股书、TechCrunch、The Information、Sacra、PostHog 文章、用户调研报告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，并加一句**依据**。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"用户结构 63% 非开发者\"、\"全球开发者 28.7M\"、\"MVP 甜区\"、\"边界场景\"** 这类声明容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"**解读**\" / \"估算\" / \"⚠\" / \"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 找不到出处时**优先加 ⚠ 声明而不是删除数字**（除非明显失真）。\n\n完成后回复一段 ≤250 字的修正报告：(a) 新引用编号及条目数，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Br9benrC83SyBB7gJRJNgc",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a42aee761702bf273 (internal ID - do not mention to user. Use SendMessage with to: 'a42aee761702bf273' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a42aee761702bf273.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a42aee761702bf273\", \"description\": \"审计 02-design-vibe-coding.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出某些文件存在\\\"行业经验数字伪装成事实\\\"的问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/02-design-vibe-coding.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Lovable / Bolt.new / v0 / Replit / StackBlitz 官方博客、Vercel 财报 / 招股书、TechCrunch、The Information、Sacra、PostHog 文章、用户调研报告等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\\\"信源\\\"加对应 IEEE 格式条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，并加一句**依据**。**严禁**让没出处的数字看起来像事实。\\n\\n特别注意：\\n- **\\\"用户结构 63% 非开发者\\\"、\\\"全球开发者 28.7M\\\"、\\\"MVP 甜区\\\"、\\\"边界场景\\\"** 这类声明容易出问题。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"**解读**\\\" / \\\"估算\\\" / \\\"⚠\\\" / \\\"未核\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\\n- 找不到出处时**优先加 ⚠ 声明而不是删除数字**（除非明显失真）。\\n\\n完成后回复一段 ≤250 字的修正报告：(a) 新引用编号及条目数，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a42aee761702bf273.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 224431,
+        "completion_tokens": 5609,
+        "cached_tokens": 224430,
+        "extra": {
+          "cache_creation_input_tokens": 3323,
+          "cache_read_input_tokens": 224430,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3323,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5609,
+              "cache_read_input_tokens": 224430,
+              "cache_creation_input_tokens": 3323,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3323
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a42aee761702bf273",
+            "description": "审计 02-design-vibe-coding.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出某些文件存在\"行业经验数字伪装成事实\"的问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/02-design-vibe-coding.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Lovable / Bolt.new / v0 / Replit / StackBlitz 官方博客、Vercel 财报 / 招股书、TechCrunch、The Information、Sacra、PostHog 文章、用户调研报告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，并加一句**依据**。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"用户结构 63% 非开发者\"、\"全球开发者 28.7M\"、\"MVP 甜区\"、\"边界场景\"** 这类声明容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"**解读**\" / \"估算\" / \"⚠\" / \"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 找不到出处时**优先加 ⚠ 声明而不是删除数字**（除非明显失真）。\n\n完成后回复一段 ≤250 字的修正报告：(a) 新引用编号及条目数，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a42aee761702bf273.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Br9benrC83SyBB7gJRJNgc",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a42aee761702bf273 (internal ID - do not mention to user. Use SendMessage with to: 'a42aee761702bf273' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a42aee761702bf273.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a42aee761702bf273",
+            "description": "审计 02-design-vibe-coding.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出某些文件存在\"行业经验数字伪装成事实\"的问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/02-design-vibe-coding.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Lovable / Bolt.new / v0 / Replit / StackBlitz 官方博客、Vercel 财报 / 招股书、TechCrunch、The Information、Sacra、PostHog 文章、用户调研报告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，并加一句**依据**。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"用户结构 63% 非开发者\"、\"全球开发者 28.7M\"、\"MVP 甜区\"、\"边界场景\"** 这类声明容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"**解读**\" / \"估算\" / \"⚠\" / \"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 找不到出处时**优先加 ⚠ 声明而不是删除数字**（除非明显失真）。\n\n完成后回复一段 ≤250 字的修正报告：(a) 新引用编号及条目数，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a42aee761702bf273.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Br9benrC83SyBB7gJRJNgc",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a42aee761702bf273 (internal ID - do not mention to user. Use SendMessage with to: 'a42aee761702bf273' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a42aee761702bf273.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 02-design-vibe-coding.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出某些文件存在\"行业经验数字伪装成事实\"的问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/02-design-vibe-coding.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Lovable / Bolt.new / v0 / Replit / StackBlitz 官方博客、Vercel 财报 / 招股书、TechCrunch、The Information、Sacra、PostHog 文章、用户调研报告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用文件原有编号或递增，文末\"信源\"加对应 IEEE 格式条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，并加一句**依据**。**严禁**让没出处的数字看起来像事实。\n\n特别注意：\n- **\"用户结构 63% 非开发者\"、\"全球开发者 28.7M\"、\"MVP 甜区\"、\"边界场景\"** 这类声明容易出问题。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"**解读**\" / \"估算\" / \"⚠\" / \"未核\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告，只精确修正这一类问题**。\n- 找不到出处时**优先加 ⚠ 声明而不是删除数字**（除非明显失真）。\n\n完成后回复一段 ≤250 字的修正报告：(a) 新引用编号及条目数，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 194,
+      "timestamp": "2026-05-14T09:08:26.416Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01Bfwke7dRrtaHFMD4Cij4dU",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Bfwke7dRrtaHFMD4Cij4dU",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 03-knowledge-qa.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/03-knowledge-qa.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey、Stack Overflow 官方裁员公告 / 财报、Reddit-Google/OpenAI 数据授权报道、Phind 关停公告、Sourcegraph Cody 关停公告、llms.txt 原始提案、Context7 GitHub stars / 文档、Pragmatic Engineer 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Bfwke7dRrtaHFMD4Cij4dU",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a74703f08e136f4ca (internal ID - do not mention to user. Use SendMessage with to: 'a74703f08e136f4ca' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a74703f08e136f4ca.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a74703f08e136f4ca\", \"description\": \"审计 03-knowledge-qa.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/03-knowledge-qa.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey、Stack Overflow 官方裁员公告 / 财报、Reddit-Google/OpenAI 数据授权报道、Phind 关停公告、Sourcegraph Cody 关停公告、llms.txt 原始提案、Context7 GitHub stars / 文档、Pragmatic Engineer 等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加对应 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\\n\\n特别注意：\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n- 找不到时**优先加 ⚠ 而不是删除**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a74703f08e136f4ca.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 224431,
+        "completion_tokens": 5609,
+        "cached_tokens": 224430,
+        "extra": {
+          "cache_creation_input_tokens": 3323,
+          "cache_read_input_tokens": 224430,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3323,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5609,
+              "cache_read_input_tokens": 224430,
+              "cache_creation_input_tokens": 3323,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3323
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a74703f08e136f4ca",
+            "description": "审计 03-knowledge-qa.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/03-knowledge-qa.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey、Stack Overflow 官方裁员公告 / 财报、Reddit-Google/OpenAI 数据授权报道、Phind 关停公告、Sourcegraph Cody 关停公告、llms.txt 原始提案、Context7 GitHub stars / 文档、Pragmatic Engineer 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a74703f08e136f4ca.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Bfwke7dRrtaHFMD4Cij4dU",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a74703f08e136f4ca (internal ID - do not mention to user. Use SendMessage with to: 'a74703f08e136f4ca' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a74703f08e136f4ca.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a74703f08e136f4ca",
+            "description": "审计 03-knowledge-qa.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/03-knowledge-qa.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey、Stack Overflow 官方裁员公告 / 财报、Reddit-Google/OpenAI 数据授权报道、Phind 关停公告、Sourcegraph Cody 关停公告、llms.txt 原始提案、Context7 GitHub stars / 文档、Pragmatic Engineer 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a74703f08e136f4ca.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Bfwke7dRrtaHFMD4Cij4dU",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a74703f08e136f4ca (internal ID - do not mention to user. Use SendMessage with to: 'a74703f08e136f4ca' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a74703f08e136f4ca.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 03-knowledge-qa.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/03-knowledge-qa.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey、Stack Overflow 官方裁员公告 / 财报、Reddit-Google/OpenAI 数据授权报道、Phind 关停公告、Sourcegraph Cody 关停公告、llms.txt 原始提案、Context7 GitHub stars / 文档、Pragmatic Engineer 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 195,
+      "timestamp": "2026-05-14T09:08:34.039Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01FLoTUStWszap2CiVySrdua",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01FLoTUStWszap2CiVySrdua",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 04-ide-ai-editor.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/04-ide-ai-editor.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Cursor / Anysphere 官方博客 / 招聘页、Microsoft 财报 / Build 大会、GitHub Octoverse、JetBrains 官方调研、Zed 1.0 发布公告、Windsurf 收购报道 TechCrunch、Stack Overflow Developer Survey 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- **\"VS Code 14M MAU\"、\"Copilot 4.7M 付费\"、\"Google 新代码 75% AI\"、\"Cursor 70% Fortune 1000\"、\"Cursor Tab ~1000 token/s apply\"** 这些都需逐一查证。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01FLoTUStWszap2CiVySrdua",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a1df5937531973652 (internal ID - do not mention to user. Use SendMessage with to: 'a1df5937531973652' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a1df5937531973652.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a1df5937531973652\", \"description\": \"审计 04-ide-ai-editor.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/04-ide-ai-editor.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Cursor / Anysphere 官方博客 / 招聘页、Microsoft 财报 / Build 大会、GitHub Octoverse、JetBrains 官方调研、Zed 1.0 发布公告、Windsurf 收购报道 TechCrunch、Stack Overflow Developer Survey 等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加对应 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\\n\\n特别注意：\\n- **\\\"VS Code 14M MAU\\\"、\\\"Copilot 4.7M 付费\\\"、\\\"Google 新代码 75% AI\\\"、\\\"Cursor 70% Fortune 1000\\\"、\\\"Cursor Tab ~1000 token/s apply\\\"** 这些都需逐一查证。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n- 找不到时**优先加 ⚠ 而不是删除**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a1df5937531973652.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 224431,
+        "completion_tokens": 5609,
+        "cached_tokens": 224430,
+        "extra": {
+          "cache_creation_input_tokens": 3323,
+          "cache_read_input_tokens": 224430,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3323,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5609,
+              "cache_read_input_tokens": 224430,
+              "cache_creation_input_tokens": 3323,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3323
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a1df5937531973652",
+            "description": "审计 04-ide-ai-editor.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/04-ide-ai-editor.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Cursor / Anysphere 官方博客 / 招聘页、Microsoft 财报 / Build 大会、GitHub Octoverse、JetBrains 官方调研、Zed 1.0 发布公告、Windsurf 收购报道 TechCrunch、Stack Overflow Developer Survey 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- **\"VS Code 14M MAU\"、\"Copilot 4.7M 付费\"、\"Google 新代码 75% AI\"、\"Cursor 70% Fortune 1000\"、\"Cursor Tab ~1000 token/s apply\"** 这些都需逐一查证。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a1df5937531973652.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01FLoTUStWszap2CiVySrdua",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a1df5937531973652 (internal ID - do not mention to user. Use SendMessage with to: 'a1df5937531973652' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a1df5937531973652.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a1df5937531973652",
+            "description": "审计 04-ide-ai-editor.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/04-ide-ai-editor.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Cursor / Anysphere 官方博客 / 招聘页、Microsoft 财报 / Build 大会、GitHub Octoverse、JetBrains 官方调研、Zed 1.0 发布公告、Windsurf 收购报道 TechCrunch、Stack Overflow Developer Survey 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- **\"VS Code 14M MAU\"、\"Copilot 4.7M 付费\"、\"Google 新代码 75% AI\"、\"Cursor 70% Fortune 1000\"、\"Cursor Tab ~1000 token/s apply\"** 这些都需逐一查证。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a1df5937531973652.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01FLoTUStWszap2CiVySrdua",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a1df5937531973652 (internal ID - do not mention to user. Use SendMessage with to: 'a1df5937531973652' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a1df5937531973652.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 04-ide-ai-editor.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/04-ide-ai-editor.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Cursor / Anysphere 官方博客 / 招聘页、Microsoft 财报 / Build 大会、GitHub Octoverse、JetBrains 官方调研、Zed 1.0 发布公告、Windsurf 收购报道 TechCrunch、Stack Overflow Developer Survey 等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加对应 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加一句**依据**。\n\n特别注意：\n- **\"VS Code 14M MAU\"、\"Copilot 4.7M 付费\"、\"Google 新代码 75% AI\"、\"Cursor 70% Fortune 1000\"、\"Cursor Tab ~1000 token/s apply\"** 这些都需逐一查证。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 196,
+      "timestamp": "2026-05-14T09:08:41.149Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_016gqFQBepQXAuDvGDsdy25d",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_016gqFQBepQXAuDvGDsdy25d",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 05-coding-agent-cli.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/05-coding-agent-cli.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic Claude Code 文档 / 博客、Cognition Devin 博客 / 招股书、OpenAI Codex CLI 文档、Aider GitHub 仓库、SWE-bench leaderboard、Terminal-Bench 评测原文、ACU 定价页等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"Claude Code ARR ~$2.5B\"、\"Devin 13.86% SWE-bench\"、\"Terminal-Bench 2.0 77.3%\"、\"ACU 定价\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_016gqFQBepQXAuDvGDsdy25d",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: aa7b297af0d388508 (internal ID - do not mention to user. Use SendMessage with to: 'aa7b297af0d388508' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa7b297af0d388508.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"aa7b297af0d388508\", \"description\": \"审计 05-coding-agent-cli.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/05-coding-agent-cli.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic Claude Code 文档 / 博客、Cognition Devin 博客 / 招股书、OpenAI Codex CLI 文档、Aider GitHub 仓库、SWE-bench leaderboard、Terminal-Bench 评测原文、ACU 定价页等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\\n\\n特别注意：\\n- **\\\"Claude Code ARR ~$2.5B\\\"、\\\"Devin 13.86% SWE-bench\\\"、\\\"Terminal-Bench 2.0 77.3%\\\"、\\\"ACU 定价\\\"** 都需逐一核查。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n- 找不到时**优先加 ⚠ 而不是删除**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa7b297af0d388508.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 224431,
+        "completion_tokens": 5609,
+        "cached_tokens": 224430,
+        "extra": {
+          "cache_creation_input_tokens": 3323,
+          "cache_read_input_tokens": 224430,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3323,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5609,
+              "cache_read_input_tokens": 224430,
+              "cache_creation_input_tokens": 3323,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3323
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "aa7b297af0d388508",
+            "description": "审计 05-coding-agent-cli.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/05-coding-agent-cli.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic Claude Code 文档 / 博客、Cognition Devin 博客 / 招股书、OpenAI Codex CLI 文档、Aider GitHub 仓库、SWE-bench leaderboard、Terminal-Bench 评测原文、ACU 定价页等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"Claude Code ARR ~$2.5B\"、\"Devin 13.86% SWE-bench\"、\"Terminal-Bench 2.0 77.3%\"、\"ACU 定价\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa7b297af0d388508.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_016gqFQBepQXAuDvGDsdy25d",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: aa7b297af0d388508 (internal ID - do not mention to user. Use SendMessage with to: 'aa7b297af0d388508' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa7b297af0d388508.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "aa7b297af0d388508",
+            "description": "审计 05-coding-agent-cli.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/05-coding-agent-cli.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic Claude Code 文档 / 博客、Cognition Devin 博客 / 招股书、OpenAI Codex CLI 文档、Aider GitHub 仓库、SWE-bench leaderboard、Terminal-Bench 评测原文、ACU 定价页等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"Claude Code ARR ~$2.5B\"、\"Devin 13.86% SWE-bench\"、\"Terminal-Bench 2.0 77.3%\"、\"ACU 定价\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa7b297af0d388508.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_016gqFQBepQXAuDvGDsdy25d",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: aa7b297af0d388508 (internal ID - do not mention to user. Use SendMessage with to: 'aa7b297af0d388508' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/aa7b297af0d388508.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 05-coding-agent-cli.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/05-coding-agent-cli.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic Claude Code 文档 / 博客、Cognition Devin 博客 / 招股书、OpenAI Codex CLI 文档、Aider GitHub 仓库、SWE-bench leaderboard、Terminal-Bench 评测原文、ACU 定价页等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"Claude Code ARR ~$2.5B\"、\"Devin 13.86% SWE-bench\"、\"Terminal-Bench 2.0 77.3%\"、\"ACU 定价\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 197,
+      "timestamp": "2026-05-14T09:08:48.429Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_016hRXoU2xeiu18jJEnaHkWf",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_016hRXoU2xeiu18jJEnaHkWf",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 06-vcs-review.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/06-vcs-review.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、CodeRabbit 官方博客 / 估值报道、Greptile benchmark、Graphite 博客、GitLab 财报、GitHub Octoverse、Microsoft 财报、SOC 2 控制清单等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"人均 3-5 PR/周\"、\"review 中位 7-12h\"、\"merge 中位 13h\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Cursor +39% 合并 PR\"、\"Devin 34%→67%\"、\"CodeRabbit $550M 估值\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_016hRXoU2xeiu18jJEnaHkWf",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a5795b3320b9f1f44 (internal ID - do not mention to user. Use SendMessage with to: 'a5795b3320b9f1f44' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a5795b3320b9f1f44.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a5795b3320b9f1f44\", \"description\": \"审计 06-vcs-review.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/06-vcs-review.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、CodeRabbit 官方博客 / 估值报道、Greptile benchmark、Graphite 博客、GitLab 财报、GitHub Octoverse、Microsoft 财报、SOC 2 控制清单等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\\n\\n特别注意：\\n- **\\\"人均 3-5 PR/周\\\"、\\\"review 中位 7-12h\\\"、\\\"merge 中位 13h\\\"** 这类基线必须有引用或 ⚠ 声明。\\n- **\\\"Cursor +39% 合并 PR\\\"、\\\"Devin 34%→67%\\\"、\\\"CodeRabbit $550M 估值\\\"** 都需逐一核查。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a5795b3320b9f1f44.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 224431,
+        "completion_tokens": 5609,
+        "cached_tokens": 224430,
+        "extra": {
+          "cache_creation_input_tokens": 3323,
+          "cache_read_input_tokens": 224430,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3323,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5609,
+              "cache_read_input_tokens": 224430,
+              "cache_creation_input_tokens": 3323,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3323
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a5795b3320b9f1f44",
+            "description": "审计 06-vcs-review.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/06-vcs-review.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、CodeRabbit 官方博客 / 估值报道、Greptile benchmark、Graphite 博客、GitLab 财报、GitHub Octoverse、Microsoft 财报、SOC 2 控制清单等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"人均 3-5 PR/周\"、\"review 中位 7-12h\"、\"merge 中位 13h\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Cursor +39% 合并 PR\"、\"Devin 34%→67%\"、\"CodeRabbit $550M 估值\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a5795b3320b9f1f44.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_016hRXoU2xeiu18jJEnaHkWf",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a5795b3320b9f1f44 (internal ID - do not mention to user. Use SendMessage with to: 'a5795b3320b9f1f44' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a5795b3320b9f1f44.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a5795b3320b9f1f44",
+            "description": "审计 06-vcs-review.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/06-vcs-review.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、CodeRabbit 官方博客 / 估值报道、Greptile benchmark、Graphite 博客、GitLab 财报、GitHub Octoverse、Microsoft 财报、SOC 2 控制清单等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"人均 3-5 PR/周\"、\"review 中位 7-12h\"、\"merge 中位 13h\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Cursor +39% 合并 PR\"、\"Devin 34%→67%\"、\"CodeRabbit $550M 估值\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a5795b3320b9f1f44.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_016hRXoU2xeiu18jJEnaHkWf",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a5795b3320b9f1f44 (internal ID - do not mention to user. Use SendMessage with to: 'a5795b3320b9f1f44' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a5795b3320b9f1f44.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 06-vcs-review.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/06-vcs-review.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、CodeRabbit 官方博客 / 估值报道、Greptile benchmark、Graphite 博客、GitLab 财报、GitHub Octoverse、Microsoft 财报、SOC 2 控制清单等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"人均 3-5 PR/周\"、\"review 中位 7-12h\"、\"merge 中位 13h\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Cursor +39% 合并 PR\"、\"Devin 34%→67%\"、\"CodeRabbit $550M 估值\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 198,
+      "timestamp": "2026-05-14T09:08:53.468Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "前 6 个审计 agent 已起（01–06），起后 6 个（07–12）：",
+      "metrics": {
+        "prompt_tokens": 227754,
+        "completion_tokens": 5864,
+        "cached_tokens": 227753,
+        "extra": {
+          "cache_creation_input_tokens": 7597,
+          "cache_read_input_tokens": 227753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7597,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5864,
+              "cache_read_input_tokens": 227753,
+              "cache_creation_input_tokens": 7597,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7597
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 199,
+      "timestamp": "2026-05-14T09:09:11.186Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01Nxcx43EAG9RCAuTvVrKpa9",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Nxcx43EAG9RCAuTvVrKpa9",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 07-ci-build.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：这个文件就是用户点名的样本——第一节\"Pre-Agent 时代的 CI 流量模式\"里\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000、夜间 <10%\"全无引用，写得像事实但没出处。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、GitHub Octoverse、Stack Overflow Developer Survey、CircleCI State of Software Delivery、namespace.so / Depot / Blacksmith / Buildkite 官方博客 / 定价 / benchmark、GitHub Actions 文档 / 定价、各财报 / 招股书等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句（如\"基于 DORA 2024 + Faros 2026-04 外推\"）。**严禁**让没出处的数字看起来像事实。\n\n**重点关注（用户点名的段落）**：\n\n- 第一节\"Pre-Agent CI 流量模式\"的所有数字：PR/天、build/PR、build runtime、cache hit、并发上限、触发分布\n- \"夜间 build 占比 <10% 涨到 ~35%（基于 Faros 数据外推，**解读**）\"——这已标\"解读\"，保留\n- \"每个 PR build 次数从 3 上升到 8-15\"——核查是否有出处\n- 各家厂商定价 / benchmark 数字\n- namespace.so $23M Series A、Hugo Santos 前 Google 背景\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Nxcx43EAG9RCAuTvVrKpa9",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a3076f00c653679d2 (internal ID - do not mention to user. Use SendMessage with to: 'a3076f00c653679d2' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a3076f00c653679d2.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a3076f00c653679d2\", \"description\": \"审计 07-ci-build.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：这个文件就是用户点名的样本——第一节\\\"Pre-Agent 时代的 CI 流量模式\\\"里\\\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000、夜间 <10%\\\"全无引用，写得像事实但没出处。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、GitHub Octoverse、Stack Overflow Developer Survey、CircleCI State of Software Delivery、namespace.so / Depot / Blacksmith / Buildkite 官方博客 / 定价 / benchmark、GitHub Actions 文档 / 定价、各财报 / 招股书等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句（如\\\"基于 DORA 2024 + Faros 2026-04 外推\\\"）。**严禁**让没出处的数字看起来像事实。\\n\\n**重点关注（用户点名的段落）**：\\n\\n- 第一节\\\"Pre-Agent CI 流量模式\\\"的所有数字：PR/天、build/PR、build runtime、cache hit、并发上限、触发分布\\n- \\\"夜间 build 占比 <10% 涨到 ~35%（基于 Faros 数据外推，**解读**）\\\"——这已标\\\"解读\\\"，保留\\n- \\\"每个 PR build 次数从 3 上升到 8-15\\\"——核查是否有出处\\n- 各家厂商定价 / benchmark 数字\\n- namespace.so $23M Series A、Hugo Santos 前 Google 背景\\n\\n特别注意：\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n- 找不到时**优先加 ⚠ 而不是删除**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a3076f00c653679d2.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 227754,
+        "completion_tokens": 5864,
+        "cached_tokens": 227753,
+        "extra": {
+          "cache_creation_input_tokens": 7597,
+          "cache_read_input_tokens": 227753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7597,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5864,
+              "cache_read_input_tokens": 227753,
+              "cache_creation_input_tokens": 7597,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7597
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a3076f00c653679d2",
+            "description": "审计 07-ci-build.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：这个文件就是用户点名的样本——第一节\"Pre-Agent 时代的 CI 流量模式\"里\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000、夜间 <10%\"全无引用，写得像事实但没出处。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、GitHub Octoverse、Stack Overflow Developer Survey、CircleCI State of Software Delivery、namespace.so / Depot / Blacksmith / Buildkite 官方博客 / 定价 / benchmark、GitHub Actions 文档 / 定价、各财报 / 招股书等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句（如\"基于 DORA 2024 + Faros 2026-04 外推\"）。**严禁**让没出处的数字看起来像事实。\n\n**重点关注（用户点名的段落）**：\n\n- 第一节\"Pre-Agent CI 流量模式\"的所有数字：PR/天、build/PR、build runtime、cache hit、并发上限、触发分布\n- \"夜间 build 占比 <10% 涨到 ~35%（基于 Faros 数据外推，**解读**）\"——这已标\"解读\"，保留\n- \"每个 PR build 次数从 3 上升到 8-15\"——核查是否有出处\n- 各家厂商定价 / benchmark 数字\n- namespace.so $23M Series A、Hugo Santos 前 Google 背景\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a3076f00c653679d2.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Nxcx43EAG9RCAuTvVrKpa9",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a3076f00c653679d2 (internal ID - do not mention to user. Use SendMessage with to: 'a3076f00c653679d2' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a3076f00c653679d2.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a3076f00c653679d2",
+            "description": "审计 07-ci-build.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：这个文件就是用户点名的样本——第一节\"Pre-Agent 时代的 CI 流量模式\"里\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000、夜间 <10%\"全无引用，写得像事实但没出处。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、GitHub Octoverse、Stack Overflow Developer Survey、CircleCI State of Software Delivery、namespace.so / Depot / Blacksmith / Buildkite 官方博客 / 定价 / benchmark、GitHub Actions 文档 / 定价、各财报 / 招股书等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句（如\"基于 DORA 2024 + Faros 2026-04 外推\"）。**严禁**让没出处的数字看起来像事实。\n\n**重点关注（用户点名的段落）**：\n\n- 第一节\"Pre-Agent CI 流量模式\"的所有数字：PR/天、build/PR、build runtime、cache hit、并发上限、触发分布\n- \"夜间 build 占比 <10% 涨到 ~35%（基于 Faros 数据外推，**解读**）\"——这已标\"解读\"，保留\n- \"每个 PR build 次数从 3 上升到 8-15\"——核查是否有出处\n- 各家厂商定价 / benchmark 数字\n- namespace.so $23M Series A、Hugo Santos 前 Google 背景\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a3076f00c653679d2.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Nxcx43EAG9RCAuTvVrKpa9",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a3076f00c653679d2 (internal ID - do not mention to user. Use SendMessage with to: 'a3076f00c653679d2' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a3076f00c653679d2.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 07-ci-build.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：这个文件就是用户点名的样本——第一节\"Pre-Agent 时代的 CI 流量模式\"里\"每工程师 1.5 PR/天、build/PR ~3 次、JS monorepo 8-12 分钟、命中 60-75%、并发 20/1000、夜间 <10%\"全无引用，写得像事实但没出处。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/07-ci-build.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例 / 排名是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、Faros AI、GitHub Octoverse、Stack Overflow Developer Survey、CircleCI State of Software Delivery、namespace.so / Depot / Blacksmith / Buildkite 官方博客 / 定价 / benchmark、GitHub Actions 文档 / 定价、各财报 / 招股书等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 行业经验值，作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句（如\"基于 DORA 2024 + Faros 2026-04 外推\"）。**严禁**让没出处的数字看起来像事实。\n\n**重点关注（用户点名的段落）**：\n\n- 第一节\"Pre-Agent CI 流量模式\"的所有数字：PR/天、build/PR、build runtime、cache hit、并发上限、触发分布\n- \"夜间 build 占比 <10% 涨到 ~35%（基于 Faros 数据外推，**解读**）\"——这已标\"解读\"，保留\n- \"每个 PR build 次数从 3 上升到 8-15\"——核查是否有出处\n- 各家厂商定价 / benchmark 数字\n- namespace.so $23M Series A、Hugo Santos 前 Google 背景\n\n特别注意：\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n- 找不到时**优先加 ⚠ 而不是删除**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 200,
+      "timestamp": "2026-05-14T09:09:20.195Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01CWniUG3fuTguRgeBpDJ5vZ",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01CWniUG3fuTguRgeBpDJ5vZ",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 08-test-agents.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/08-test-agents.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey 2024/2025 testing 部分、Software Engineering Daily、ACM/IEEE 论文、Meticulous / Qodo / Diffblue / QA Wolf / Mabl 官方博客 / benchmark、Browserbase / Anthropic Computer Use 文档等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"开发者 12% 工时在测试\"、\"coverage 实际 74-76%\"、\"flaky team 比例 3 年从 10%→26%\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Diffblue 99% vs Copilot 65%\"、\"Meticulous 录制 session 当 oracle\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01CWniUG3fuTguRgeBpDJ5vZ",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: adc24a25ef4b7dbbf (internal ID - do not mention to user. Use SendMessage with to: 'adc24a25ef4b7dbbf' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/adc24a25ef4b7dbbf.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"adc24a25ef4b7dbbf\", \"description\": \"审计 08-test-agents.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/08-test-agents.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey 2024/2025 testing 部分、Software Engineering Daily、ACM/IEEE 论文、Meticulous / Qodo / Diffblue / QA Wolf / Mabl 官方博客 / benchmark、Browserbase / Anthropic Computer Use 文档等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\\n\\n特别注意：\\n- **\\\"开发者 12% 工时在测试\\\"、\\\"coverage 实际 74-76%\\\"、\\\"flaky team 比例 3 年从 10%→26%\\\"** 这类基线必须有引用或 ⚠ 声明。\\n- **\\\"Diffblue 99% vs Copilot 65%\\\"、\\\"Meticulous 录制 session 当 oracle\\\"** 都需逐一核查。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/adc24a25ef4b7dbbf.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 227754,
+        "completion_tokens": 5864,
+        "cached_tokens": 227753,
+        "extra": {
+          "cache_creation_input_tokens": 7597,
+          "cache_read_input_tokens": 227753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7597,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5864,
+              "cache_read_input_tokens": 227753,
+              "cache_creation_input_tokens": 7597,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7597
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "adc24a25ef4b7dbbf",
+            "description": "审计 08-test-agents.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/08-test-agents.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey 2024/2025 testing 部分、Software Engineering Daily、ACM/IEEE 论文、Meticulous / Qodo / Diffblue / QA Wolf / Mabl 官方博客 / benchmark、Browserbase / Anthropic Computer Use 文档等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"开发者 12% 工时在测试\"、\"coverage 实际 74-76%\"、\"flaky team 比例 3 年从 10%→26%\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Diffblue 99% vs Copilot 65%\"、\"Meticulous 录制 session 当 oracle\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/adc24a25ef4b7dbbf.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01CWniUG3fuTguRgeBpDJ5vZ",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: adc24a25ef4b7dbbf (internal ID - do not mention to user. Use SendMessage with to: 'adc24a25ef4b7dbbf' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/adc24a25ef4b7dbbf.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "adc24a25ef4b7dbbf",
+            "description": "审计 08-test-agents.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/08-test-agents.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey 2024/2025 testing 部分、Software Engineering Daily、ACM/IEEE 论文、Meticulous / Qodo / Diffblue / QA Wolf / Mabl 官方博客 / benchmark、Browserbase / Anthropic Computer Use 文档等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"开发者 12% 工时在测试\"、\"coverage 实际 74-76%\"、\"flaky team 比例 3 年从 10%→26%\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Diffblue 99% vs Copilot 65%\"、\"Meticulous 录制 session 当 oracle\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/adc24a25ef4b7dbbf.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01CWniUG3fuTguRgeBpDJ5vZ",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: adc24a25ef4b7dbbf (internal ID - do not mention to user. Use SendMessage with to: 'adc24a25ef4b7dbbf' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/adc24a25ef4b7dbbf.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 08-test-agents.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/08-test-agents.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Stack Overflow Developer Survey 2024/2025 testing 部分、Software Engineering Daily、ACM/IEEE 论文、Meticulous / Qodo / Diffblue / QA Wolf / Mabl 官方博客 / benchmark、Browserbase / Anthropic Computer Use 文档等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"开发者 12% 工时在测试\"、\"coverage 实际 74-76%\"、\"flaky team 比例 3 年从 10%→26%\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"Diffblue 99% vs Copilot 65%\"、\"Meticulous 录制 session 当 oracle\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 201,
+      "timestamp": "2026-05-14T09:09:28.810Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_014VDzobXgfKhxtMpQRBrVnJ",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_014VDzobXgfKhxtMpQRBrVnJ",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 09-security-vuln.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/09-security-vuln.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Veracode State of Software Security、Snyk / Socket / GitGuardian / Semgrep / Endor Labs 官方博客 / threat reports、SLSA 规范、Shai-Hulud npm 蠕虫报道、GitHub Copilot Autofix 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"SAST 误报 40-78%\"、\"MTTR 270 天 / Critical 65 天\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"AI 代码漏洞 +36%\"、\"slopsquatting 19.7%\"、\"AI-service secret +81%\"、\"Snyk Agent Fix 80%\"、\"Semgrep AI 96%\"、\"Endor 砍 90%+ 噪声\"、\"Copilot Autofix XSS 7×/SQLi 12×\"、\"Claude Code Security 500+ 历史漏洞\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_014VDzobXgfKhxtMpQRBrVnJ",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: af88d4d8e35e505a3 (internal ID - do not mention to user. Use SendMessage with to: 'af88d4d8e35e505a3' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/af88d4d8e35e505a3.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"af88d4d8e35e505a3\", \"description\": \"审计 09-security-vuln.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/09-security-vuln.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Veracode State of Software Security、Snyk / Socket / GitGuardian / Semgrep / Endor Labs 官方博客 / threat reports、SLSA 规范、Shai-Hulud npm 蠕虫报道、GitHub Copilot Autofix 数据等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\\n\\n特别注意：\\n- **\\\"SAST 误报 40-78%\\\"、\\\"MTTR 270 天 / Critical 65 天\\\"** 这类基线必须有引用或 ⚠ 声明。\\n- **\\\"AI 代码漏洞 +36%\\\"、\\\"slopsquatting 19.7%\\\"、\\\"AI-service secret +81%\\\"、\\\"Snyk Agent Fix 80%\\\"、\\\"Semgrep AI 96%\\\"、\\\"Endor 砍 90%+ 噪声\\\"、\\\"Copilot Autofix XSS 7×/SQLi 12×\\\"、\\\"Claude Code Security 500+ 历史漏洞\\\"** 都需逐一核查。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/af88d4d8e35e505a3.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 227754,
+        "completion_tokens": 5864,
+        "cached_tokens": 227753,
+        "extra": {
+          "cache_creation_input_tokens": 7597,
+          "cache_read_input_tokens": 227753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7597,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5864,
+              "cache_read_input_tokens": 227753,
+              "cache_creation_input_tokens": 7597,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7597
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "af88d4d8e35e505a3",
+            "description": "审计 09-security-vuln.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/09-security-vuln.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Veracode State of Software Security、Snyk / Socket / GitGuardian / Semgrep / Endor Labs 官方博客 / threat reports、SLSA 规范、Shai-Hulud npm 蠕虫报道、GitHub Copilot Autofix 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"SAST 误报 40-78%\"、\"MTTR 270 天 / Critical 65 天\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"AI 代码漏洞 +36%\"、\"slopsquatting 19.7%\"、\"AI-service secret +81%\"、\"Snyk Agent Fix 80%\"、\"Semgrep AI 96%\"、\"Endor 砍 90%+ 噪声\"、\"Copilot Autofix XSS 7×/SQLi 12×\"、\"Claude Code Security 500+ 历史漏洞\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/af88d4d8e35e505a3.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014VDzobXgfKhxtMpQRBrVnJ",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: af88d4d8e35e505a3 (internal ID - do not mention to user. Use SendMessage with to: 'af88d4d8e35e505a3' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/af88d4d8e35e505a3.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "af88d4d8e35e505a3",
+            "description": "审计 09-security-vuln.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/09-security-vuln.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Veracode State of Software Security、Snyk / Socket / GitGuardian / Semgrep / Endor Labs 官方博客 / threat reports、SLSA 规范、Shai-Hulud npm 蠕虫报道、GitHub Copilot Autofix 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"SAST 误报 40-78%\"、\"MTTR 270 天 / Critical 65 天\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"AI 代码漏洞 +36%\"、\"slopsquatting 19.7%\"、\"AI-service secret +81%\"、\"Snyk Agent Fix 80%\"、\"Semgrep AI 96%\"、\"Endor 砍 90%+ 噪声\"、\"Copilot Autofix XSS 7×/SQLi 12×\"、\"Claude Code Security 500+ 历史漏洞\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/af88d4d8e35e505a3.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014VDzobXgfKhxtMpQRBrVnJ",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: af88d4d8e35e505a3 (internal ID - do not mention to user. Use SendMessage with to: 'af88d4d8e35e505a3' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/af88d4d8e35e505a3.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 09-security-vuln.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/09-security-vuln.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Veracode State of Software Security、Snyk / Socket / GitGuardian / Semgrep / Endor Labs 官方博客 / threat reports、SLSA 规范、Shai-Hulud npm 蠕虫报道、GitHub Copilot Autofix 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"SAST 误报 40-78%\"、\"MTTR 270 天 / Critical 65 天\"** 这类基线必须有引用或 ⚠ 声明。\n- **\"AI 代码漏洞 +36%\"、\"slopsquatting 19.7%\"、\"AI-service secret +81%\"、\"Snyk Agent Fix 80%\"、\"Semgrep AI 96%\"、\"Endor 砍 90%+ 噪声\"、\"Copilot Autofix XSS 7×/SQLi 12×\"、\"Claude Code Security 500+ 历史漏洞\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 202,
+      "timestamp": "2026-05-14T09:09:35.977Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01HtAwFVLSESo25t79gpYDoF",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01HtAwFVLSESo25t79gpYDoF",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 10-code-index-mcp.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/10-code-index-mcp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic MCP 官方文档 / 规范、MCP server registry、Sourcegraph 官方博客 / 财报、Augment $250M 融资报道、Context7 GitHub、Composio / Apify 文档、OAuth 2.1 / RFC 8707 原文、SAP Joule Gateway 公告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"50k / 400k 文件分界线\"、\"9400+ MCP server\"、\"双 UI 失血叙事\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01HtAwFVLSESo25t79gpYDoF",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: afeb59527e63208c6 (internal ID - do not mention to user. Use SendMessage with to: 'afeb59527e63208c6' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/afeb59527e63208c6.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"afeb59527e63208c6\", \"description\": \"审计 10-code-index-mcp.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/10-code-index-mcp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic MCP 官方文档 / 规范、MCP server registry、Sourcegraph 官方博客 / 财报、Augment $250M 融资报道、Context7 GitHub、Composio / Apify 文档、OAuth 2.1 / RFC 8707 原文、SAP Joule Gateway 公告等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\\n\\n特别注意：\\n- **\\\"50k / 400k 文件分界线\\\"、\\\"9400+ MCP server\\\"、\\\"双 UI 失血叙事\\\"** 都需逐一核查。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/afeb59527e63208c6.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 227754,
+        "completion_tokens": 5864,
+        "cached_tokens": 227753,
+        "extra": {
+          "cache_creation_input_tokens": 7597,
+          "cache_read_input_tokens": 227753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7597,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5864,
+              "cache_read_input_tokens": 227753,
+              "cache_creation_input_tokens": 7597,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7597
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "afeb59527e63208c6",
+            "description": "审计 10-code-index-mcp.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/10-code-index-mcp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic MCP 官方文档 / 规范、MCP server registry、Sourcegraph 官方博客 / 财报、Augment $250M 融资报道、Context7 GitHub、Composio / Apify 文档、OAuth 2.1 / RFC 8707 原文、SAP Joule Gateway 公告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"50k / 400k 文件分界线\"、\"9400+ MCP server\"、\"双 UI 失血叙事\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/afeb59527e63208c6.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01HtAwFVLSESo25t79gpYDoF",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: afeb59527e63208c6 (internal ID - do not mention to user. Use SendMessage with to: 'afeb59527e63208c6' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/afeb59527e63208c6.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "afeb59527e63208c6",
+            "description": "审计 10-code-index-mcp.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/10-code-index-mcp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic MCP 官方文档 / 规范、MCP server registry、Sourcegraph 官方博客 / 财报、Augment $250M 融资报道、Context7 GitHub、Composio / Apify 文档、OAuth 2.1 / RFC 8707 原文、SAP Joule Gateway 公告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"50k / 400k 文件分界线\"、\"9400+ MCP server\"、\"双 UI 失血叙事\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/afeb59527e63208c6.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01HtAwFVLSESo25t79gpYDoF",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: afeb59527e63208c6 (internal ID - do not mention to user. Use SendMessage with to: 'afeb59527e63208c6' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/afeb59527e63208c6.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 10-code-index-mcp.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/10-code-index-mcp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Anthropic MCP 官方文档 / 规范、MCP server registry、Sourcegraph 官方博客 / 财报、Augment $250M 融资报道、Context7 GitHub、Composio / Apify 文档、OAuth 2.1 / RFC 8707 原文、SAP Joule Gateway 公告等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"50k / 400k 文件分界线\"、\"9400+ MCP server\"、\"双 UI 失血叙事\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 203,
+      "timestamp": "2026-05-14T09:09:43.578Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01R5ss6jouZa6YY345aqfyAX",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01R5ss6jouZa6YY345aqfyAX",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 11-observability-incident.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/11-observability-incident.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、IDC Global DataSphere、Datadog 财报 / Bits AI 官方博客、Sentry Seer 官方博客、Honeycomb 官方博客 / MCP 公告、Resolve.ai / Cleric / Parity 融资报道、PagerDuty AIOps 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"PagerDuty AIOps 91% 噪声削减\"、\"IDC 180 ZB\"、\"Datadog Q1 2026 $1.006B +32%\"、\"Sentry Seer LlmNoRegionsToRunError 42 000 错误 / 6 行修复\"、\"on-call 60 天后 -70~95%\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01R5ss6jouZa6YY345aqfyAX",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a0a154af86862cf41 (internal ID - do not mention to user. Use SendMessage with to: 'a0a154af86862cf41' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a0a154af86862cf41.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a0a154af86862cf41\", \"description\": \"审计 11-observability-incident.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/11-observability-incident.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、IDC Global DataSphere、Datadog 财报 / Bits AI 官方博客、Sentry Seer 官方博客、Honeycomb 官方博客 / MCP 公告、Resolve.ai / Cleric / Parity 融资报道、PagerDuty AIOps 数据等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\\n\\n特别注意：\\n- **\\\"PagerDuty AIOps 91% 噪声削减\\\"、\\\"IDC 180 ZB\\\"、\\\"Datadog Q1 2026 $1.006B +32%\\\"、\\\"Sentry Seer LlmNoRegionsToRunError 42 000 错误 / 6 行修复\\\"、\\\"on-call 60 天后 -70~95%\\\"** 都需逐一核查。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a0a154af86862cf41.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 227754,
+        "completion_tokens": 5864,
+        "cached_tokens": 227753,
+        "extra": {
+          "cache_creation_input_tokens": 7597,
+          "cache_read_input_tokens": 227753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7597,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5864,
+              "cache_read_input_tokens": 227753,
+              "cache_creation_input_tokens": 7597,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7597
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a0a154af86862cf41",
+            "description": "审计 11-observability-incident.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/11-observability-incident.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、IDC Global DataSphere、Datadog 财报 / Bits AI 官方博客、Sentry Seer 官方博客、Honeycomb 官方博客 / MCP 公告、Resolve.ai / Cleric / Parity 融资报道、PagerDuty AIOps 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"PagerDuty AIOps 91% 噪声削减\"、\"IDC 180 ZB\"、\"Datadog Q1 2026 $1.006B +32%\"、\"Sentry Seer LlmNoRegionsToRunError 42 000 错误 / 6 行修复\"、\"on-call 60 天后 -70~95%\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a0a154af86862cf41.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01R5ss6jouZa6YY345aqfyAX",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a0a154af86862cf41 (internal ID - do not mention to user. Use SendMessage with to: 'a0a154af86862cf41' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a0a154af86862cf41.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a0a154af86862cf41",
+            "description": "审计 11-observability-incident.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/11-observability-incident.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、IDC Global DataSphere、Datadog 财报 / Bits AI 官方博客、Sentry Seer 官方博客、Honeycomb 官方博客 / MCP 公告、Resolve.ai / Cleric / Parity 融资报道、PagerDuty AIOps 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"PagerDuty AIOps 91% 噪声削减\"、\"IDC 180 ZB\"、\"Datadog Q1 2026 $1.006B +32%\"、\"Sentry Seer LlmNoRegionsToRunError 42 000 错误 / 6 行修复\"、\"on-call 60 天后 -70~95%\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a0a154af86862cf41.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01R5ss6jouZa6YY345aqfyAX",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a0a154af86862cf41 (internal ID - do not mention to user. Use SendMessage with to: 'a0a154af86862cf41' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a0a154af86862cf41.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 11-observability-incident.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/11-observability-incident.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（DORA Accelerate State of DevOps、IDC Global DataSphere、Datadog 财报 / Bits AI 官方博客、Sentry Seer 官方博客、Honeycomb 官方博客 / MCP 公告、Resolve.ai / Cleric / Parity 融资报道、PagerDuty AIOps 数据等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- **\"PagerDuty AIOps 91% 噪声削减\"、\"IDC 180 ZB\"、\"Datadog Q1 2026 $1.006B +32%\"、\"Sentry Seer LlmNoRegionsToRunError 42 000 错误 / 6 行修复\"、\"on-call 60 天后 -70~95%\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 204,
+      "timestamp": "2026-05-14T09:09:51.957Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_013fgW8AqMGESpqNNV9ghqRn",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_013fgW8AqMGESpqNNV9ghqRn",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "审计 12-docs-idp.md",
+            "subagent_type": "general-purpose",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/12-docs-idp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Mintlify / Swimm / Fern / ReadMe / Backstage / Cortex / Roadie / OpsLevel / Port / Humanitec 官方博客 / 客户案例、DORA 2024/2025 报告、Postman 收购 Fern 公告、Backstage AIContext RFC、llms.txt 规范等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- \"文档总是滞后\"、\"no one reads it\"、\"DevEx 度量从问卷过渡到 Agent telemetry\" 这类**定性描述**不一定需要引用，但**定量数字必须有出处或 ⚠**。\n- **\"Backstage AIContext RFC #33575\"、\"DORA 新指标\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_013fgW8AqMGESpqNNV9ghqRn",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a89dfd73480f23af9 (internal ID - do not mention to user. Use SendMessage with to: 'a89dfd73480f23af9' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a89dfd73480f23af9.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a89dfd73480f23af9\", \"description\": \"审计 12-docs-idp.md\", \"prompt\": \"你为一份\\\"SDLC 工具栈分层深度研究\\\"系列做**引用完整性审计与修正**。\\n\\n**今天日期**：2026-05-14\\n\\n**问题背景**：用户指出文件存在\\\"行业经验数字伪装成事实\\\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\\\"数字要精确\\\"且\\\"区分**事实**（带信源）和**解读**（自己或用户的分析）\\\"。\\n\\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/12-docs-idp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\\n\\n对每个无引用的事实性数字 / 命名声明：\\n\\n1. **先用 WebSearch / WebFetch 找一手来源**（Mintlify / Swimm / Fern / ReadMe / Backstage / Cortex / Roadie / OpsLevel / Port / Humanitec 官方博客 / 客户案例、DORA 2024/2025 报告、Postman 收购 Fern 公告、Backstage AIContext RFC、llms.txt 规范等）。\\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\\\"信源\\\"加 IEEE 条目。\\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\\n\\n特别注意：\\n- \\\"文档总是滞后\\\"、\\\"no one reads it\\\"、\\\"DevEx 度量从问卷过渡到 Agent telemetry\\\" 这类**定性描述**不一定需要引用，但**定量数字必须有出处或 ⚠**。\\n- **\\\"Backstage AIContext RFC #33575\\\"、\\\"DORA 新指标\\\"** 都需逐一核查。\\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \\\"解读\\\" / \\\"估算\\\" / \\\"⚠\\\" 的**不动**。\\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\\n\\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a89dfd73480f23af9.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 227754,
+        "completion_tokens": 5864,
+        "cached_tokens": 227753,
+        "extra": {
+          "cache_creation_input_tokens": 7597,
+          "cache_read_input_tokens": 227753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7597,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 5864,
+              "cache_read_input_tokens": 227753,
+              "cache_creation_input_tokens": 7597,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7597
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a89dfd73480f23af9",
+            "description": "审计 12-docs-idp.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/12-docs-idp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Mintlify / Swimm / Fern / ReadMe / Backstage / Cortex / Roadie / OpsLevel / Port / Humanitec 官方博客 / 客户案例、DORA 2024/2025 报告、Postman 收购 Fern 公告、Backstage AIContext RFC、llms.txt 规范等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- \"文档总是滞后\"、\"no one reads it\"、\"DevEx 度量从问卷过渡到 Agent telemetry\" 这类**定性描述**不一定需要引用，但**定量数字必须有出处或 ⚠**。\n- **\"Backstage AIContext RFC #33575\"、\"DORA 新指标\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a89dfd73480f23af9.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013fgW8AqMGESpqNNV9ghqRn",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a89dfd73480f23af9 (internal ID - do not mention to user. Use SendMessage with to: 'a89dfd73480f23af9' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a89dfd73480f23af9.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a89dfd73480f23af9",
+            "description": "审计 12-docs-idp.md",
+            "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/12-docs-idp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Mintlify / Swimm / Fern / ReadMe / Backstage / Cortex / Roadie / OpsLevel / Port / Humanitec 官方博客 / 客户案例、DORA 2024/2025 报告、Postman 收购 Fern 公告、Backstage AIContext RFC、llms.txt 规范等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- \"文档总是滞后\"、\"no one reads it\"、\"DevEx 度量从问卷过渡到 Agent telemetry\" 这类**定性描述**不一定需要引用，但**定量数字必须有出处或 ⚠**。\n- **\"Backstage AIContext RFC #33575\"、\"DORA 新指标\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a89dfd73480f23af9.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013fgW8AqMGESpqNNV9ghqRn",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a89dfd73480f23af9 (internal ID - do not mention to user. Use SendMessage with to: 'a89dfd73480f23af9' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a89dfd73480f23af9.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "审计 12-docs-idp.md",
+          "subagent_type": "general-purpose",
+          "prompt": "你为一份\"SDLC 工具栈分层深度研究\"系列做**引用完整性审计与修正**。\n\n**今天日期**：2026-05-14\n\n**问题背景**：用户指出文件存在\"行业经验数字伪装成事实\"问题（无 `[[N]]` 引用）。CLAUDE.md 要求\"数字要精确\"且\"区分**事实**（带信源）和**解读**（自己或用户的分析）\"。\n\n**任务**：审计 `/Users/luwei/work/Controversy/chat/SDLC-stack/12-docs-idp.md`，**逐句逐数字**核查每个数字 / 命名实体 / 时间点 / 比例是否有 `[[N]](URL)` 引用紧随其后。\n\n对每个无引用的事实性数字 / 命名声明：\n\n1. **先用 WebSearch / WebFetch 找一手来源**（Mintlify / Swimm / Fern / ReadMe / Backstage / Cortex / Roadie / OpsLevel / Port / Humanitec 官方博客 / 客户案例、DORA 2024/2025 报告、Postman 收购 Fern 公告、Backstage AIContext RFC、llms.txt 规范等）。\n2. **找到** → 在该数字后加 `[[N]](URL)`，N 沿用编号或递增，文末\"信源\"加 IEEE 条目。\n3. **找不到** → 必须**显式标注**：`（⚠ 作者综合估算）` 或 `（⚠ 解读）`，加**依据**一句。\n\n特别注意：\n- \"文档总是滞后\"、\"no one reads it\"、\"DevEx 度量从问卷过渡到 Agent telemetry\" 这类**定性描述**不一定需要引用，但**定量数字必须有出处或 ⚠**。\n- **\"Backstage AIContext RFC #33575\"、\"DORA 新指标\"** 都需逐一核查。\n- 已经有 `[[N]](URL)` 的**不动**。已经标 \"解读\" / \"估算\" / \"⚠\" 的**不动**。\n- 文件总体结构、章节顺序、IEEE 信源编号体系**保持**。**不要重写报告**。\n\n完成后回复 ≤250 字修正报告：(a) 新引用数及编号，(b) ⚠ 声明数量及位置，(c) 文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 205,
+      "timestamp": "2026-05-14T09:09:57.883Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 235356,
+        "completion_tokens": 288,
+        "cached_tokens": 235350,
+        "extra": {
+          "cache_creation_input_tokens": 8921,
+          "cache_read_input_tokens": 235350,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 8921,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 288,
+              "cache_read_input_tokens": 235350,
+              "cache_creation_input_tokens": 8921,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 8921
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 206,
+      "timestamp": "2026-05-14T09:09:59.239Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "**L04 IDE 审计完成**：新增 3 条引用 [26]–[28]、2 处 ⚠ 声明、顺带修正 2 个事实错误（Kite 关闭 2021→2022-11；Codota/Tabnine 收购 2022→2019-12）。\n\n1/12 审计完成，剩 11 个后台跑。",
+      "metrics": {
+        "prompt_tokens": 235356,
+        "completion_tokens": 288,
+        "cached_tokens": 235350,
+        "extra": {
+          "cache_creation_input_tokens": 8921,
+          "cache_read_input_tokens": 235350,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 8921,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 288,
+              "cache_read_input_tokens": 235350,
+              "cache_creation_input_tokens": 8921,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 8921
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 21753108,
-    "total_completion_tokens": 422199,
-    "total_cached_tokens": 21741916,
-    "total_steps": 183,
+    "total_prompt_tokens": 26704082,
+    "total_completion_tokens": 512046,
+    "total_cached_tokens": 26692843,
+    "total_steps": 206,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 1691385,
-      "total_cache_read_input_tokens": 21741916
+      "total_cache_creation_input_tokens": 1801750,
+      "total_cache_read_input_tokens": 26692843
     }
   }
 }
