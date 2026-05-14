@@ -157,3 +157,9 @@ DORA 2025 报告引入显式的"AI measurement layer"，建议跟踪 *AI-assiste
 [25] InfoQ, "New DORA Report Claims Strong Engineering Foundations Drive AI Return on Investment," May 2026. [Online]. Available: <https://www.infoq.com/news/2026/05/dora-roi-ai-assisted-dev-report/>
 
 [26] Spotify, "AI Gateway — Spotify Plugins for Backstage," 2026. [Online]. Available: <https://backstage.spotify.com/docs/portal/core-features-and-plugins/ai-gateway/>
+
+[27] R. Miller, "Swimm nabs $27.6M Series A to include up-to-date documentation throughout coding process," *TechCrunch*, Nov. 2021. (Swimm 创立于 2019 年，定位 code-coupled docs。) [Online]. Available: <https://techcrunch.com/2021/11/08/swimm-nabs-27-6m-series-a-to-include-up-to-date-documentation-in-every-release/>
+
+[28] DORA, "DORA's software delivery metrics: the four keys," *dora.dev*, 2024. (部署频率、变更前置时间、变更失败率、服务恢复时间。) [Online]. Available: <https://dora.dev/guides/dora-metrics-four-keys/>
+
+[29] Second Talent, "GitHub Copilot Statistics & Adoption Trends [2026]," 2026. (Copilot acceptance rate 约 30–38%；Cursor/Supermaven inline autocomplete 报告值 42–72%。) [Online]. Available: <https://www.secondtalent.com/resources/github-copilot-statistics/>
