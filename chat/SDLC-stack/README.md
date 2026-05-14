@@ -59,7 +59,7 @@
 | L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |
 | L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |
 | L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |
-| **L13** | **GUI → Agent 化（产品供给侧）** | [13-agent-interfaces.md](13-agent-interfaces.md) | ~3500 | Stripe Agent Toolkit、Cloudflare MCP、Computer Use、Operator、Browserbase、Manus AI、Skyvern、browser-use |
+| **L13** | **GUI → Agent 化（产品供给侧）** | [13-agent-interfaces.md](13-agent-interfaces.md) | ~3800 | Stripe Agent Toolkit、Cloudflare MCP、Computer Use、Operator、Browserbase、Manus AI、Skyvern、browser-use、**OpenCLI、CLI-Anything、Vercel agent-browser** |
 
 ## 17 层一句话本质
 
@@ -81,7 +81,7 @@
 | **L11b 错误追踪** | Sentry Seer 是 "error → root cause → fix PR" 闭环范本；error tracking 工具变成 agent 的修复入口 |
 | **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|
 | **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |
-| **L13 GUI → Agent 化** | 2025 自动化流量首次过半（Imperva 51%、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY），SaaS 必须三选一：CLI / MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变成收入中心 |
+| **L13 GUI → Agent 化** | 2025 自动化流量首次过半（Imperva 51%、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY），SaaS 必须三选一：CLI / MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变成收入中心；OpenCLI（CLI 的 OpenAPI）+ CLI-Anything（21K stars，第三方把 GUI 应用强制 CLI 化）让 CLI 路径绕开"产品方做不做"的决策权 |
 
 ## 跨层主线（6 条贯穿整个 dev 栈的规律）
 

@@ -38,8 +38,10 @@ Pre-Agent CLI 服务开发者；Agent 时代 CLI 同时服务 Coding Agent。Cla
 - **Stripe Agent Toolkit**（2024-11 发布，2026-02 已到 0.7.0）：在 Stripe CLI 之上加一层 LangChain / Vercel AI SDK / CrewAI / OpenAI Agents SDK 适配，把 PaymentIntent / Customer / Invoice / Subscription / Payment Link / Refund 包装成可被 function call 的工具；强制要求 Restricted API Key (`rk_*`) 而非 secret key，做粒度授权 [[10]](https://stripe.dev/blog/adding-payments-to-your-agentic-workflows) [[11]](https://thelettertwo.com/2024/11/15/stripe-releases-sdk-enabling-payment-and-billing-capabilities-for-ai-agents/)。
 - **Vercel AI SDK 5**（2025-07-31）增强 tool 能力：dynamic tools、provider-executed functions、lifecycle hooks、`stopWhen` / `prepareStep` 控制 agentic loop [[12]](https://vercel.com/blog/ai-sdk-5)。**AI SDK 6 beta**（2025-10 Vercel Ship AI）引入 `ToolLoopAgent` 抽象与 `needsApproval: true` 的 human-in-the-loop 审批 gate [[13]](https://vercel.com/blog/ai-sdk-6) [[14]](https://www.infoq.com/news/2025/10/vercel-ship-ai/)。
 - Bubble Tea / Gum / Charm 生态的扩张让 TUI 同时服务人和 agent——agent 通过子进程 stdio 调用，人通过键盘交互，**同一个二进制双 UI**。
+- **OpenCLI Specification (OCS)**：CLI 世界的"OpenAPI"——平台/语言无关的 JSON / YAML schema，描述 CLI 工具的命令、参数、子命令，让 agent 不需要读 man page 或 `--help` 就能调用任意 CLI [[52]](https://github.com/spectreconsole/open-cli) [[53]](https://opencli.org/)。Pre-Agent 时代的 CLI 是"开发者用 help / 文档摸索"，Agent 时代的 CLI 必须**机器可读**才能被流水化调用，OCS 正在填补这层。**官方 CLI = 人可用；CLI + OCS = 人 + agent 都可用**——这把"补 CLI"的边际工作量降到几乎为零。
+- **CLI-Anything**（HKUDS，2025，约 21K GitHub stars）：直接挑战上面 ⚠ 里的"后来者直接做 MCP 更划算"——它走另一条路：**把任意 GUI 应用（GIMP / Blender / LibreOffice / OBS / Audacity ...）封装成结构化 CLI**，agent 一行命令驱动整个应用，无需 GUI 自动化、无需 API、无需厂商配合 [[54]](https://github.com/HKUDS/CLI-Anything) [[55]](https://clianything.cc/)。配套 **CLI-Hub** 是 agent-friendly CLI registry（类似 npm 之于 Node），用 `pip install cli-anything-hub` 一行搜索 / 安装 / 卸载 CLI harness。这是"产品方什么都不做、社区把它做成 agent-native"的极端范式。和浏览器 Agent 路径竞争——同样不需要产品方动手，但延迟与可靠性都显著优于截屏识别。
 
-⚠ **解读**：CLI 路径门槛最低（很多 SaaS 已经有）、对存量改造最小，但暴露的能力面也最窄（只能跑 SaaS 想暴露的子集）。CLI 路径的赢家是已经有官方 CLI 的厂商；后来者直接做 MCP 而非补 CLI 更划算。
+⚠ **解读**：CLI 路径门槛最低（很多 SaaS 已经有）、对存量改造最小。原本"暴露能力面窄"的弱点正在被 **OpenCLI 标准化 + CLI-Anything 社区力量** 双向补偿：协议化让 CLI 变得 agent 可解析，universal wrapper 让没有 CLI 的 GUI 应用也能被强制 CLI 化。CLI 路径的赢家不只是已有官方 CLI 的厂商，**还有第三方 wrapper（CLI-Anything 这类）**——它们绕开了产品方"做不做 MCP" 的决策权。
 
 ### 3.2 MCP 路径——产品方主动暴露 server
 
@@ -70,6 +72,7 @@ L10b 已经覆盖了 MCP 协议本体与 dev 工具 server。本篇视角不同�
 - **Browserbase**：headless 浏览器即服务。2025-04 Series B $40M，估值 $300M（约前轮 4x），累计 $67.5M [[31]](https://www.upstartsmedia.com/p/browserbase-raises-40m-and-launches-director) [[32]](https://www.builtinsf.com/articles/browserbase-announces-40m-series-b-funding-20250618)。
 - **Stagehand**（Browserbase 开源 SDK，MIT licensed）：natural language + code 混合写 browser agent，对抗 page 改版 [[33]](https://github.com/browserbase/stagehand)。多语言 SDK：TypeScript / Python / Go / Ruby / C# .NET。
 - **browser-use**（开源 Python lib，2025-Q1 YC W25 批次）：2025-03 Seed $17M，领投 Felicis 的 Astasia Myers，参投 Paul Graham / A Capital / Nexus Venture Partners [[34]](https://techcrunch.com/2025/03/23/browser-use-the-tool-making-it-easier-for-ai-agents-to-navigate-websites-raises-17m/)。YC 描述其"近 3 个月获得 40k stars，最大的开源 web agent 项目" [[35]](https://www.ycombinator.com/companies/industry/open-source)。
+- **agent-browser**（Vercel Labs，Rust CLI）：把浏览器自动化做成 **跨 agent 的 CLI 子集**——Claude Code / Codex CLI / Cursor / Gemini CLI / GitHub Copilot / Goose / OpenCode / Windsurf 都能通过相同命令调用浏览器；默认引擎 Chrome for Testing，`--engine` 切到 lightpanda（Zig 写的轻量级浏览器）[[56]](https://github.com/vercel-labs/agent-browser)。这是 CLI 路径和浏览器 Agent 路径的桥梁：**用 CLI 接口包装浏览器能力**，每个 Coding Agent 不需要各自集成 Playwright / Puppeteer。社区另一个同名 `abhinav-nigam/agent-browser` 走 MCP 路线，74 个 browser tool 通过 MCP server 暴露 [[57]](https://github.com/abhinav-nigam/agent-browser)——两条路径殊途同归。
 
 **应用层 / 替代 RPA：**
 
@@ -257,3 +260,15 @@ agent 直接打开 Chromium、截图、点击、填表，**Linear 完全不知�
 [50] Cloudflare, "Build and deploy Remote Model Context Protocol (MCP) servers to Cloudflare," *Cloudflare Blog*, Apr. 2025. [Online]. Available: <https://blog.cloudflare.com/remote-model-context-protocol-servers-mcp/>
 
 [51] Cloudflare, "The next step for content creators in working with AI bots: Introducing AI Crawl Control," *Cloudflare Blog*, 2025. [Online]. Available: <https://blog.cloudflare.com/introducing-ai-crawl-control/>
+
+[52] Spectre Console, "OpenCLI Specification (OCS) draft," *GitHub*, 2025. (平台/语言无关的 CLI schema 规范，灵感来自 OpenAPI；JSON/YAML 文档描述 CLI 命令树) [Online]. Available: <https://github.com/spectreconsole/open-cli>
+
+[53] OpenCLI, "OpenCLI Specification," *opencli.org*, 2025. (官方主页与多版本规范) [Online]. Available: <https://opencli.org/>
+
+[54] HKUDS, "CLI-Anything: Making ALL Software Agent-Native," *GitHub*, 2025. (开源把 GIMP / Blender / LibreOffice / OBS / Audacity 等 GUI 应用封装成结构化 CLI；约 21K stars) [Online]. Available: <https://github.com/HKUDS/CLI-Anything>
+
+[55] CLI Anything Hub, "Agent-friendly CLI registry," *clianything.cc*, 2025. (CLI-Hub 包管理器：`pip install cli-anything-hub` 一行搜索 / 安装 / 卸载 CLI harness) [Online]. Available: <https://clianything.cc/>
+
+[56] Vercel Labs, "agent-browser: Browser automation CLI for AI agents," *GitHub*, 2025. (Rust CLI，跨 Claude Code / Codex / Cursor / Gemini CLI / Copilot / Goose / OpenCode / Windsurf 调用浏览器；默认引擎 Chrome for Testing，`--engine` 切 lightpanda) [Online]. Available: <https://github.com/vercel-labs/agent-browser>
+
+[57] A. Nigam, "agent-browser: 74 browser automation tools via MCP," *GitHub*, 2025. (同名社区项目，走 MCP 路线，74 个 browser tool) [Online]. Available: <https://github.com/abhinav-nigam/agent-browser>
