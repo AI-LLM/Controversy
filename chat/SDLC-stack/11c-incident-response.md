@@ -1,24 +1,24 @@
 # 2026-05-14：SDLC 栈 / 事故响应与 AI SRE (O1') 层深度研究
 
-事故响应（O1'）是 SDLC 栈里被 Coding Agent 时代倒逼最猛的一层，但它不能用"流量"这个 lens 来读。监控（O5）按 volume 计费、错误追踪（O4）按 issue 计费，那两层确实是流量层；O1' 不是——alert 多寡、降噪比、人均寻呼数都只是**输入参数**，真正决定这一层市场结构的是两根正交主轴：
+事故响应（O1'）这一层的市场结构由两根正交主轴决定：
 
 - **Tier 1 自治闭环（处置侧）**：无人介入即可关单的事故占比，乘以"不引入新事故"的安全边界。这一根轴解释了为什么计费单位从席位重构成 per-fix / per-incident，也解释了为什么 PagerDuty 把 AIOps 与 SRE Agent 拆成两层产品。
 - **runbook 即资产（沉淀侧）**：runbook / skill bundle 沉淀深度构成的切换成本。这一根轴解释了为什么 Resolve、Cleric、Honeycomb Canvas、Anthropic Skills 都在卷"团队默会知识可消费化"——护城河不在 LLM、不在集成数，而在客户私有 runbook 资产的厚度。
 
-"角色重分配"——on-call 从夜班变白日 review——是这两根轴交叉后的**结果**，不是 lens 本身。本篇按 namespace.so 范式拆这一层。
+"角色重分配"——on-call 从夜班变白日 review——是这两根轴交叉后的**结果**，不是 lens 本身。
 
-## 一、Pre-Agent 基线：寻呼带宽、降噪上限、人是瓶颈
+## 一、事故响应的核心：Tier 1 自治闭环 + runbook 即资产
 
-L11c 的本质不是流量。要看清这一点，先把 2024 这条 baseline 摆出来：
+事故响应这一层的产品形态由"自治关单率"与"私有知识沉淀深度"共同决定。把 2024 这条 baseline 摆出来，可以看清两根主轴各自要承接什么样的负载：
 
 - **人均寻呼数**：incident.io 2024 对 500+ on-call 工程师调研，**人均每周中位 42 次寻呼** [[1]](https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works)。
 - **疲劳与离职**：Catchpoint 2024 SRE 调研显示 **70% 团队**把"告警疲劳"列入前三大运维痛点；**41% 工程师**因 on-call 压力考虑离职 [[1]](https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works)。Catchpoint 2025 SRE Report 进一步把**操作 toil 占比从 25% 推到 30%**，五年来首次回升 [[2]](https://www.catchpoint.com/learn/sre-report-2025)——工具增量并未抵消负载增量。
 - **MTTR / MTTA 阶梯**：DORA Elite 团队故障恢复 < 1 小时、High < 1 天、Low > 1 个月 [[3]](https://www.atlassian.com/incident-management/kpis/common-metrics)；SRE 行业内卷 MTTA < 45 秒以免"检测延迟吃掉修复预算" [[4]](https://www.harness.io/blog/what-is-mttr-dora-metric)。
-- **降噪的旧上限**：PagerDuty AIOps 在 LLM 之前能做到的极限是 87–91% 告警噪声削减 [[5]](https://www.pagerduty.com/platform/aiops/)。这一代 AIOps 解决的是"事件聚类、相关性、抑制"，**不解决"自己上手修"**——降噪的下游仍然是人。
+- **降噪上限**：PagerDuty AIOps 在 LLM 之前能做到的极限是 87–91% 告警噪声削减 [[5]](https://www.pagerduty.com/platform/aiops/)。这一代 AIOps 解决的是"事件聚类、相关性、抑制"，**不解决"自己上手修"**——降噪的下游仍然是人。
 
-把这四条放在一起看：42 pages/wk 是流量、降噪率是流量的衰减系数、MTTR 是人作业速度的天花板、离职率是人作业意愿的天花板。**Pre-Agent 时代 L11c 的瓶颈是"人均带宽 × 留任率"，流量只是把人压到这两条天花板的施力**。改流量（再降噪）边际收益已经趋零——PagerDuty AIOps 把 87% 噪声砍掉之后剩下的告警每一条都重要，**降噪不再是 lens**。
+PagerDuty AIOps 把 87% 噪声砍掉之后剩下的告警每一条都重要：人均 42 寻呼里的剩余部分构成 Tier 1 自治闭环主轴的目标负载；41% 离职率与 30% toil 占比构成 runbook 资产主轴的目标负载（私有知识必须从离职者头脑里搬到 agent 可调用的结构里）。两根主轴承接的是同一组 baseline，但解决方向正交。
 
-⚠ **解读**：把 §1 写成"流量基线"是错的诊断角度。这一节的功能是说明"为什么单靠继续降噪解决不了 L11c"，从而引出双主轴。incident.io 的 42 pages/wk、Catchpoint 的 41% 离职率，是用来证伪"流量 lens"的反面证据，不是 L11c 估值的锚。
+⚠ **解读**：incident.io 的 42 pages/wk、Catchpoint 的 41% 离职率，是用来锚定双主轴负载量级的基线，不是 O1' 估值的直接锚。
 
 ## 二、双主轴突变：Tier 1 闭环率上探 + runbook 从 wiki 变 skill 资产
 
@@ -63,7 +63,7 @@ L11c 的本质不是流量。要看清这一点，先把 2024 这条 baseline �
 2. **护城河从集成数切到私有 runbook 资产**。早期 AI SRE 比拼"接了多少家可观测厂、多少家云、多少家 CI/CD"，集成数是显性变量；当多数玩家都接了 14+ 家之后，**真正的切换成本变成"客户在你这里沉淀了多少私有 runbook / skill bundle / 运营记忆"**。Anthropic Skills、Honeycomb Canvas、Cleric 的 operational memory——三家做同一件事：把客户默会知识固化在 agent 可消费的结构里，让客户搬家时不得不重新教一遍。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。Resolve.ai 14 个月估值 $1B → $1.5B 押的不是 LLM，是 vendor-neutral 通道里沉淀的客户 workflow 与 runbook——这条假设如果成立，Resolve 会成为新一代 PagerDuty；不成立，会被大厂吃掉。**贵的不是模型，是私有 runbook 沉淀深度**。
 3. **岗位从夜班切到白日 review**。⚠ **解读**：on-call 工程师工作的"夜间属性"将在 24 个月内基本消失（窗口为外推，基础是 Resolve / Bits AI / AWS DevOps Agent 当前部署节奏 + Anthropic 自家 SRE 已"先 reach for Claude" [[22]](https://www.theregister.com/2026/03/19/anthropic_claude_sre)）。Tier 1 由 agent 在分钟内闭环、人在白天 review；只有 Sev-0 / 架构问题保留人值守。**41% 工程师考虑因 on-call 离职**这一基线 [[1]](https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works) 将被结构性消解——但前提是 false-fix 率足够低。岗位重分配是双主轴的**结果**而非 lens：自治闭环率上探把人从 Tier 1 顶出来、runbook 资产化把人的角色固化在"教 agent + review agent"上。**SRE 不会消失，但夜班会**。
 
-补一句配套观察：**AIOps 与 SRE Agent 是两件事**。AIOps 解决"alert 太多"，SRE Agent 解决"alert 接下来怎么办"——PagerDuty 自己把它们拆成两层产品就是承认这一点。incident.io 等老 IM 厂的 AI SRE，必须先解决降噪、再叠 agent，不能跳步。把降噪 lens 与处置 lens 混在一起谈，是 §1 容易掉进的旧惯性，本篇明确把它分开。
+补一句配套观察：**AIOps 与 SRE Agent 是两件事**。AIOps 解决"alert 太多"，SRE Agent 解决"alert 接下来怎么办"——PagerDuty 自己把它们拆成两层产品就是承认这一点。
 
 ## 信源
 
@@ -113,4 +113,4 @@ L11c 的本质不是流量。要看清这一点，先把 2024 这条 baseline �
 
 [23] robusta-dev/holmesgpt, GitHub repository. (CNCF Sandbox 2025-10；iterative ReAct loop；K8s / VM / 云 / DB / SaaS.) [Online]. Available: <https://github.com/robusta-dev/holmesgpt>
 
-[24] Panto AI, "GitHub Copilot Statistics 2026 — Users, Revenue & Adoption," 2026. (Copilot ~55% 任务提速、46% 代码由 Copilot 生成；用作上游 Coding Agent 产出规模的参考底线，本篇不再以此外推 L11c 流量。) [Online]. Available: <https://www.getpanto.ai/blog/github-copilot-statistics>
+[24] Panto AI, "GitHub Copilot Statistics 2026 — Users, Revenue & Adoption," 2026. (Copilot ~55% 任务提速、46% 代码由 Copilot 生成；用作上游 Coding Agent 产出规模的参考底线。) [Online]. Available: <https://www.getpanto.ai/blog/github-copilot-statistics>

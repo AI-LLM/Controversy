@@ -1,22 +1,22 @@
 # 2026-05-14：SDLC 栈 / 文档与 IDP (M1) 层深度研究
 
-文档（M1）与内部开发者平台（M3，IDP）在 2024 年以前都被归类为"开发者体验"的卫星问题——文档归技术写作者管，IDP 归平台工程小队管，预算来自"DevEx 满意度"。到 2026 年中，这两层都发生了**本体论级别的转换**：docs 与 service catalog 不再是"被读对象"，而是变成 **Agent 的工具集**——通过 MCP 端点被 LLM 主动调用、检索、甚至修改。这与 L01（搜索 / 入口层）"读者从人变成 Agent"的流量级转换同源，但 L12 多一层 L01 没有的东西：**docs / catalog 自身就是工具，不只是被读的内容**。
+文档（M1）与内部开发者平台（M3，IDP）在 2024 年以前都被归类为"开发者体验"的卫星问题——文档归技术写作者管，IDP 归平台工程小队管，预算来自"DevEx 满意度"。到 2026 年中，这两层都发生了**本体论级别的转换**：docs 与 service catalog 不再是"被读对象"，而是变成 **Agent 的工具集**——通过 MCP 端点被 LLM 主动调用、检索、甚至修改。
 
 理解这一层错位最干净的视角是一个复合变量：**agent-consumable context fidelity = (catalog 数据真实性 × docs 与代码同步延迟 × machine-readable artifact 覆盖率 × MCP endpoint 可达性)**。四个因子任一接近 0，Agent 就会生成错代码、调错服务、踩错 owner，整条 Coding Agent 流水线被这一层掐死。
 
-## 1. 旧痛点压缩：为什么 L12 的本质不是"流量"
+## 1. Catalog / Docs 即 Agent 工具集：context-as-tool
 
-Pre-Agent 时代 docs / IDP 有四个老痛点：(a) **文档滞后于代码**——PR 作者绝大多数不会同步更新 docs（⚠ 解读：估算值，缺乏公开 benchmark；依据是 Swimm 等厂商把"docs lag code"列为产品立项的核心痛点 [[1]](https://swimm.io/blog/sync-dont-sink-why-we-built-swimm-for-dev-teams)），Swimm 自 2019 年起即以"code-coupled docs"切入这一问题 [[1]](https://swimm.io/blog/sync-dont-sink-why-we-built-swimm-for-dev-teams), [[27]](https://techcrunch.com/2021/11/08/swimm-nabs-27-6m-series-a-to-include-up-to-date-documentation-in-every-release/)；(b) **no one reads it**，Confluence / Notion 搜索体验差；(c) **service catalog 维护成本**，Backstage `catalog-info.yaml` 必须人工维护、owner 字段过时是常态 [[2]](https://backstage.io/docs/features/software-catalog/descriptor-format/)；(d) **DevEx 难量化**，DORA 四指标 [[28]](https://dora.dev/guides/dora-metrics-four-keys/) 覆盖交付效能，却对"工具是否真的被用"沉默（⚠ 解读）。
+L12 这一层的核心立论：**docs 与 service catalog 是 Agent 的工具集**——它们不再是供人浏览的页面，而是注册到 LLM 工具栏、按需被调用的 endpoint。资产形态本身在变——从 page 变成 tool，从 document 变成 endpoint。
 
-L01（搜索 / 入口）的转换是**流量级的**：Agent 接管检索后，Google / Stack Overflow 的人类点击下降，docs 站点的访问被 LLM 后台调用替代——这是"读者切换"叙事的核心。但 L12 不仅仅如此。**L01 的资产形态没有变**——网页仍然是网页，只不过被另一种读者抓。L12 的资产形态本身在变：
+三个具体形态：
 
 - Mintlify 的 docs 站点同时是 **MCP server**——Agent 不"打开"它，而是"调用"它 [[11]](https://www.mintlify.com/docs/ai/model-context-protocol)。
 - Backstage RFC #33575 提议把 docs / rules / skills 升级为 Catalog 里的 **`AIContext` 实体**——它不是给人看的页面，而是给 Agent 取用的结构化对象 [[17]](https://github.com/backstage/backstage/issues/33575)。
 - Roadie 的 Decorator 允许 LLM **反向修改** Catalog entity [[18]](https://roadie.io/blog/ai-cometh/)——这已经不是"读"，是"写"。
 
-L01 是"同一份网页被换了读者"，L12 是"同一份知识被换了存在形式"——从 page 变成 tool，从 document 变成 endpoint。这是为什么"读者切换"虽然方向对，但太浅：它只描述了表层现象，没有触及 docs / catalog 作为 agent tool 的本体论转换。本报告以下四节即围绕这一转换展开。
+Pre-Agent 时代 docs / IDP 的四个老痛点为这一转换提供了反衬：(a) **文档滞后于代码**——PR 作者绝大多数不会同步更新 docs（⚠ 解读：估算值，缺乏公开 benchmark；依据是 Swimm 等厂商把"docs lag code"列为产品立项的核心痛点 [[1]](https://swimm.io/blog/sync-dont-sink-why-we-built-swimm-for-dev-teams)），Swimm 自 2019 年起即以"code-coupled docs"切入这一问题 [[1]](https://swimm.io/blog/sync-dont-sink-why-we-built-swimm-for-dev-teams), [[27]](https://techcrunch.com/2021/11/08/swimm-nabs-27-6m-series-a-to-include-up-to-date-documentation-in-every-release/)；(b) **no one reads it**，Confluence / Notion 搜索体验差；(c) **service catalog 维护成本**，Backstage `catalog-info.yaml` 必须人工维护、owner 字段过时是常态 [[2]](https://backstage.io/docs/features/software-catalog/descriptor-format/)；(d) **DevEx 难量化**，DORA 四指标 [[28]](https://dora.dev/guides/dora-metrics-four-keys/) 覆盖交付效能，却对"工具是否真的被用"沉默（⚠ 解读）。这些痛点在 page 形态下只是"维护卫生"问题；一旦 docs / catalog 变成 Agent 工具，它们立刻升级为 fidelity 危机。
 
-## 2. 从"被读"到"被调用"：docs / catalog 作为 agent tool 的本体论转换
+## 2. 从"被读"到"被调用"：context-as-tool 的具体形态
 
 Coding Agent（Cursor、Claude Code、Windsurf、Copilot Workspace、Devin）在 2025 年下半年完成了一件关键事：**在每次生成代码之前主动检索 docs / catalog**，并把命中片段塞进 prompt。Mintlify 把这一现实总结为一句话：*Documentation is your AI interface* [[3]](https://www.mintlify.com/blog/docs-as-ai-interface)。但更精确的表述是：documentation **becomes** an AI tool——它不再被打开，而是被注册到 Agent 的工具栏。
 
@@ -41,7 +41,7 @@ Coding Agent（Cursor、Claude Code、Windsurf、Copilot Workspace、Devin）在
 - [Changelog](https://...): 可选，上下文紧时可跳过
 ```
 
-配套 `llms-full.txt` 把全站正文拼成长 Markdown，方便整段塞进上下文窗口。Anthropic 自家 docs 同时提供 `llms.txt`（约 8.4K tokens）与 `llms-full.txt`（约 48 万 tokens）[[6]](https://searchengineland.com/llms-txt-proposed-standard-453676)。BuiltWith 截至 2025 年 10 月统计已有 **84.4 万站点** 部署 `llms.txt`，但同样存在批评："没有一家主流 LLM 厂商公开声明会读这个文件" [[7]](https://medium.com/@kaispriestersbach/the-llms-txt-is-dead-more-precisely-a-dud-ab7bee4f469c)。
+配套 `llms-full.txt` 把全站正文拼成长 Markdown，方便整段塞进上下文窗口。Anthropic 自家 docs 同时提供 `llms.txt`（约 8.4K tokens）与 `llms-full.txt`（约 481K tokens）[[6]](https://searchengineland.com/llms-txt-proposed-standard-453676)。BuiltWith 截至 2025 年 10 月统计已有 **84.4 万站点** 部署 `llms.txt`，但同样存在批评："没有一家主流 LLM 厂商公开声明会读这个文件" [[7]](https://medium.com/@kaispriestersbach/the-llms-txt-is-dead-more-precisely-a-dud-ab7bee4f469c)。
 
 ⚠ 解读：`llms.txt` 是 docs 工具化的**弱形式**（静态、只读、爬虫消费），MCP server 是**强形式**（stateful、可执行、session 内被反复调用）。两个机制并行冗余，但 MCP 的赢面更大——它就是工具，`llms.txt` 顶多算工具的产品说明书。
 
@@ -87,7 +87,7 @@ Scorecard 在 Pre-Agent 时代考核"服务健康"——SLO、test coverage、on
 
 ## 6. 本质判断
 
-第一，**L12 的本质是 docs / catalog 从 page 变成 tool**——这是比 L01"读者切换"更深的一层转换，资产形态本身在变，不只是流量方向在变。
+第一，**L12 的本质是 docs / catalog 从 page 变成 tool**——资产形态本身在变，docs 与 catalog 成为 Agent 工具栏里的 endpoint，而非供人浏览的页面。
 
 第二，**agent-consumable context fidelity 四因子任一接近 0，整条 Coding Agent 流水线被掐死**——这是为什么 $300/月 的 Mintlify Pro 卖得动、为什么 Postman 砸钱收购 Fern、为什么 Backstage 要发明 `AIContext` 实体。
 
