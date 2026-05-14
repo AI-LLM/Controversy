@@ -85,7 +85,7 @@ claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
 1. **可观测层是 Coding Agent 时代少数显著扩张的中间层**。Coding Agent 把代码量推高 10–100x（⚠ 解读：同前节假设 [[33]](https://www.getpanto.ai/blog/github-copilot-statistics)），下游 telemetry 体量被线性甚至超线性放大；同时高基数 + 幻觉 bug 让"无 LLM 协助则不可解"的事故占比上升。两条曲线叠加，让按量计费 SaaS（DDOG、Splunk、Honeycomb）和按 fix 收费 SaaS（Resolve、Cleric）同时受益。
 2. **DDOG 跑赢是平台数据广度 × LLM 入口的双杀**——别人只有部分数据，Bits AI 拿全栈；别人 LLM 工具是 add-on，Datadog 用 Bits AI 把 dashboard 替换成自然语言入口，**锁定下一代用户的肌肉记忆**。Q1 +30% 是市场对这个论点的定价，不是周期。
 3. **下一代 monitoring = metrics / logs / traces / agent traces 四元组**。前三元组是 Charity Majors 时代的口号，第四元组让"什么人/什么 agent 做了什么"变成可审计、可计费、可治理的一级对象。三大厂（Datadog / New Relic / Splunk）+ AI-native（Langfuse / Arize）+ AI gateway（Helicone / Portkey）正在抢这个第四元组的标准位。
-4. **闭环已经成型**：Sentry Seer → Claude Code → GitHub PR；Datadog Bits AI SRE → Bits AI Dev → PR。**fix PR 从"工程师写"变成"agent 写、agent 审、人 merge"**。on-call 这个职位将在 24 个月内重新定义——从"夜里被叫醒去查 log"变成"早上来 review 一堆 agent 已经修好的 PR"。
+4. **闭环已经成型**：Sentry Seer → Claude Code → GitHub PR；Datadog Bits AI SRE → Bits AI Dev → PR。**fix PR 从"工程师写"变成"agent 写、agent 审、人 merge"**。on-call 这个职位将在 24 个月内重新定义——从"夜里被叫醒去查 log"变成"早上来 review 一堆 agent 已经修好的 PR"（⚠ 解读：24 个月是作者基于 Bits AI / Seer / Resolve 当前部署节奏的外推，无单一信源支撑）。
 5. **真正的护城河不是 LLM，是数据 + 工具 + workflow 的整合**。Resolve.ai 拿 OTel 之父做 founder、押的是"跨平台数据整合 + Agent 决策" ——它赌的是垂直 SRE 公司能在大厂 LLM 同质化之前把客户挂在自己的 workflow 上。
 
 ## 信源

@@ -102,7 +102,7 @@ browser-tester agent:
 Tricentis 2025–2026 公开测评中把 Claude 3.7 列为复杂 UI 处理与企业图标识别的最强 baseline，"reducing human interaction in tested flows down to zero"是其口径 [[21]](https://www.tricentis.com/blog/we-bet-on-anthropic-and-were-right)。
 
 **这是终态吗？不是。**Browser Agent 现阶段的瓶颈有三：
-- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。
+- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。基准数据：Playwright CLI 比 browser-use CLI 快 **2–26×**（screenshot 200ms vs DOM 操作 2s 起）[[26]](https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026)；同等抓取量下 Stagehand 等 AI agent 工具 LLM 费用 **\$50–200/天**，Playwright 仅消耗计算资源 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。AI 浏览器工具新任务成功率约 **70–85%**，但 UI 变更下不易破坏 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。
 - **决定论缺失。**LLM 决策非确定，同一 PR 跑两次结果可能不同——CI gate 不能接受。
 - **oracle 仍由人定。**Agent 会"完成任务"，但"任务成功的判定"还得有人写出来。
 

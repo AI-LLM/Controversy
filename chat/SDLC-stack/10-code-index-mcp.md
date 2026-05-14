@@ -10,7 +10,7 @@ Pre-Agent 栈里，开发者获取"和我现在改的代码相关的其它代码
 
 - **grep / ripgrep**：字面量、正则。准、但召回低、不懂语义（找 `getUser` 找不到 `fetchUser`）。
 - **IDE find references / go-to-definition**：靠语言服务（LSP / SCIP），精确但只对**已建过索引的语言**有效，跨仓库瓶颈明显。
-- **Sourcegraph 早期 code search**（2013 年起）：本质是把 grep 和 LSP-类符号图扩到**组织级跨仓库**的产品 [[1]](https://sourcegraph.com/blog/anatomy-of-a-coding-assistant)。
+- **Sourcegraph 早期 code search**（2013 年起 [[21]](https://en.wikipedia.org/wiki/Sourcegraph)）：本质是把 grep 和 LSP-类符号图扩到**组织级跨仓库**的产品 [[1]](https://sourcegraph.com/blog/anatomy-of-a-coding-assistant)。
 - **ctags / cscope**：90 年代留下的符号索引，至今仍在内核开发圈用。
 
 这套体系的设定是"**人是检索者，工具是过滤器**"。人脑判断"哪个搜索结果相关"，工具只负责快。所有这一层的成功度量是"开发者每天 grep 几次"，没人会问"grep 把 token 分配得好不好"——因为没有 token。

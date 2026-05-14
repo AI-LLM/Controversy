@@ -196,3 +196,23 @@ Bolt 产出 Nuxt 项目骨架、`nuxt.config.ts`、`content/` markdown 集合、
 [33] Red Hat Developer, "The uncomfortable truth about vibe coding," 2026-02-17. [Online]. Available: <https://developers.redhat.com/articles/2026/02/17/uncomfortable-truth-about-vibe-coding>
 
 [34] Stack Overflow Blog, "A new worst coder has entered the chat: vibe coding without code knowledge," 2026-01-02. [Online]. Available: <https://stackoverflow.blog/2026/01/02/a-new-worst-coder-has-entered-the-chat-vibe-coding-without-code-knowledge/>
+
+[35] Builder.io, "Visual Copilot — The Best Figma to Code Plugin," 2025-2026. (Nearly 1M Figma users have installed the plugin.) [Online]. Available: <https://www.builder.io/blog/best-figma-to-code-plugin>
+
+[36] A. Karpathy, X (Twitter) post: "There's a new kind of coding I call 'vibe coding'…", 2025-02-02. [Online]. Available: <https://x.com/karpathy/status/1886192184808149383>
+
+[37] Latka, "How Lovable hit $50M revenue with an 18 person team in 2025," GetLatka company page. [Online]. Available: <https://getlatka.com/companies/lovable.dev/team>
+
+[38] Sacra, "Bolt.new revenue, funding & news," 2025-2026. (StackBlitz total funding $135M incl. $105.5M Series B Jan 2025.) [Online]. Available: <https://sacra.com/c/bolt-new/>
+
+[39] Bloomberg, "AI Text-to-Code Startup StackBlitz in Talks for $700M Valuation," 2025-01-21. [Online]. Available: <https://www.bloomberg.com/news/articles/2025-01-21/ai-speech-to-code-startup-stackblitz-is-in-talks-for-a-700-million-valuation>
+
+[40] Vercel, "Towards the AI Cloud: Our Series F," 2025-09-30. (3.5M+ v0 users; Teams & Enterprise >50% of v0 revenue; $300M Series F at $9.3B post.) [Online]. Available: <https://vercel.com/blog/series-f>
+
+[41] StackBlitz Blog, "npm, yarn and pnpm are now supported natively in WebContainers," 2024. (Up to 5–10× faster installs than local.) [Online]. Available: <https://blog.stackblitz.com/posts/announcing-native-package-manager-support/>
+
+[42] Security Boulevard, "Amazon Lost 6.3 Million Orders to Vibe Coding. Your SOC Is Next.," 2026-03. (March 5 2026 6-hour outage; 6.3M lost orders.) [Online]. Available: <https://securityboulevard.com/2026/03/amazon-lost-6-3-million-orders-to-vibe-coding-your-soc-is-next/>
+
+[43] Autonoma, "Amazon Vibe Coding Failures: 4 Sev-1s in 90 Days," 2026. (Kiro 80% weekly-use mandate; 4 Sev-1 incidents Dec 2025 – Mar 2026.) [Online]. Available: <https://getautonoma.com/blog/amazon-vibe-coding-lessons>
+
+[44] Creole Studios, "MVP Development Cost: Startup Budget & Pricing Guide," 2026. (Basic MVPs $15K–$50K; outsourced agency MVPs $10K–$35K.) [Online]. Available: <https://www.creolestudios.com/mvp-development-cost/>
