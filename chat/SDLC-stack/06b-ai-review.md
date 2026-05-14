@@ -1,56 +1,42 @@
 # 2026-05-14：SDLC 栈 / AI 代码评审 (D5') 层深度研究
 
-本篇是「Pre-Coding-Agent vs Post-Coding-Agent 软件开发栈」系列的 D5' 层——**AI 代码评审**。和 D6（代码托管平台 / VCS 本身）拆开单独成文，是因为 2025–2026 两层的产品逻辑已彻底分叉：托管在做"分发权 + 合规底座"的零和博弈，AI 评审在做"流量爆发后的新基础设施"的增量博弈。
-
-范本沿用 namespace.so 范式：不写功能罗列，挖**流量/任务量模式突变 → 新需求 → 解决方案 → 架构 → 本质判断**。
+本篇是「Pre-Coding-Agent vs Post-Coding-Agent 软件开发栈」系列的 D5' 层——**AI 代码评审**。和 D6（代码托管 / VCS）拆开成文，是因为 2025–2026 两层产品逻辑已彻底分叉：托管在做"分发权 + 合规底座"的零和博弈；D5' 在做的事**不是流量调度，而是信号生产**——把 Agent 写出的密集 diff 流压缩成人或组织敢落章的离散判断单元。本篇 lens：**signable signal generation（可签字信号生产）**。
 
 ---
 
-## 一、Pre-Agent 时代：PR review 是"人之间的同步会议"
+## 一、PR review 的本质：人之间的同步会议，卖的是"可签字的信号"
 
-PR review 这个抽象的隐含假设：写代码的成本高 → PR 稀疏；reviewer 工时贵 → turnaround 是瓶颈。具体数字：
+PR 这个抽象的隐含假设：写代码的成本高 → PR 稀疏；reviewer 工时贵 → turnaround 是瓶颈。具体数字：
 
-- **PR 流量**：精英团队人均每周 5+ PR [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)；Google 内部中位每周提交 3 changes、80 分位 7 changes [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)；Lyst 公开中位 3 PR/周、80 分位 ≤5 PR [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)。
-- **Review turnaround**：2024 大公司中位工程师 merge 一个 PR 约 13 小时，绝大多数时间在等 review [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；LinearB / Sleuth 行业基线 time-to-first-review 中位 7–12 小时、time-to-merge 中位 24–48 小时 [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；Google 内部 review 平均 4 小时 [[3]](https://www.michaelagreiler.com/code-reviews-at-google/)。
-- **review 占工程师工时**：Meta 内部数据显示，评审是 change lead time 中**最大的延迟来源** [[4]](https://engineering.fb.com/2022/11/16/culture/meta-code-review-time-improving/)。
+- **PR 流量**：精英团队人均每周 5+ PR [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)；Google 内部中位每周 3 changes、80 分位 7 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)；Lyst 公开中位 3 PR/周 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer)。
+- **Review turnaround**：2024 大公司中位工程师 merge 一个 PR 约 13 小时，绝大多数时间在等 review [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；行业基线 time-to-first-review 中位 7–12h、time-to-merge 中位 24–48h [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；Google 内部 review 平均 4h [[3]](https://www.michaelagreiler.com/code-reviews-at-google/)。
+- **占工时**：Meta 内部数据显示评审是 change lead time 中**最大的延迟来源** [[4]](https://engineering.fb.com/2022/11/16/culture/meta-code-review-time-improving/)。
 
-在这个数量级里，PR 是"写完—贴出—等人—评论—改—合并"的同步会议。一周 5 PR、一审 7 小时、一改 1–2 轮，全公司能扛得住（⚠ 解读：综合 [[1]][[2]] 中位数复述；"1–2 轮改"是作者对 Pre-Agent 时代日常的经验性描述，未对应单一来源）。
+⚠ **关键判断**（作者）：在这些数字里，PR review 看上去像是"同步会议"——但会议的输出物不是讨论本身，**而是 reviewer 那一票 approve**。这一票之所以稀缺，不是因为读 diff 慢，而是因为它**是组织对外可签字的最小信号**：出 bug、出合规问题、出 incident 时，approve 是责任链回溯的第一个 hop。L06b 的本质——无论 Pre-Agent 还是 Post-Agent——**不是吞吐多少 diff，而是为每个 diff 生产一个能被签字的判断**。这也是为什么 throughput 指标（PR / 周）和精度 / 召回指标都解释不了这个市场——它们解释了"读多少 / 抓多少"，没解释"谁敢点 approve"。
 
-## 二、Post-Agent 流量突变：人审 bottleneck 被压成一根线
+一周 5 PR、一审 7h、一改 1–2 轮，全公司能扛住的不只是流量，是**每个判断单元的颗粒度恰好匹配人的注意力 budget**（⚠ 解读，综合 [[1]][[2]] 中位数复述）。
 
-Cursor 团队 2025 公开的因果推断研究：把 Background Agent 设为默认工作流的公司，**周合并 PR 数比对照组高 39%**，覆盖 24 组实验 / 8 组对照、约 1,000 组织、数万开发者，未观察到 revert rate 显著上升 [[5]](https://leaddev.com/ai/cursor-claims-its-tools-are-a-massive-productivity-hack-for-devs)。Devin 在 2025 年期间 PR merge 率从 **34% 提升到 67%** [[6]](https://docs.devin.ai/release-notes/2026)——三分之二自治 Agent 的 PR 最终进主分支，单个 Agent 实例可 24×7 不停发 PR。
+## 二、流量突变：写端单价掉两个数量级，信号生产成为唯一瓶颈
 
-DORA 2024–2025 报告抓到了另一面：当 AI 把代码产出抬高约 30% 而 review 容量不变时，PR 体积变大、review 时间延长、问题漏检概率上升 [[7]](https://www.faros.ai/blog/key-takeaways-from-the-dora-report-2025)。
+Cursor 2025 公开的因果推断研究：把 Background Agent 设为默认工作流的公司，**周合并 PR 比对照组高 39%**（24 组实验 / 8 组对照、约 1,000 组织），未观察到 revert rate 显著上升 [[5]](https://leaddev.com/ai/cursor-claims-its-tools-are-a-massive-productivity-hack-for-devs)。Devin 2025 期间 PR merge 率从 **34% → 67%** [[6]](https://docs.devin.ai/release-notes/2026)，单实例可 24×7 不停发 PR。DORA 2024–2025：AI 把代码产出抬高约 30% 而 review 容量不变时，PR 体积变大、review 时间延长、漏检概率上升 [[7]](https://www.faros.ai/blog/key-takeaways-from-the-dora-report-2025)。
 
-⚠ **流量本质变化**（作者解读，依据 [[5]][[6]][[7]]）：
+把这些数字收敛成**一句论点**（作者解读，依据 [[5]][[6]][[7]]）：
 
-- 写端的边际成本从「工程师小时」掉到「LLM tokens」——单价掉两个数量级；
-- 审端依旧是「工程师小时」——单价没动；
-- PR 是连接两端的协议，一边在指数膨胀，一边在线性配额，**夹在中间的人 review 必然成为瓶颈**。
+> **写端的边际成本从「工程师小时」掉到「LLM tokens」——单价掉两个数量级；审端的判断仍只能由"能签字的主体"产出，单价没动。** PR 是连接两端的协议，一边指数膨胀，一边线性配额。
 
-新范式必须做两件事：(a) 让 Agent 审 Agent 写的 PR；(b) 把人从"行级评论"拉到"策略级把关"。这是 D5' 层 2025–2026 所有产品的共同前提。
+⚠ 这条**不是流量瓶颈**问题，而是**信号生产瓶颈**问题——单位时间能生产多少"可签字判断"，是 D5' 全部产品的真正约束。所有后续技术分叉，都是在回答"如何在 diff 单价掉两个量级后，仍然产出形状合适的信号"。
 
-## 三、新需求：流量爆炸时代的次生市场
+## 三、信号形状的五条分叉：召回型 / 精度型 / 颗粒型 / 窄域型 / 多维型
 
-从"人发的稀疏事件"到"Agent 发的密集流"，长出几条新需求线：
+D5' 厂商不在同一道题上竞争。他们在生产**不同形状的信号**，每种形状服务一类下游签字者（reviewer / 安全官 / merge queue / on-call）。把代表公司按信号形状重排：
 
-1. **AI-generated PR 标记**：reviewer 需要立刻知道 diff 是 Agent 写的还是人写的，决定关注力分配。GitHub 已在 PR metadata 暴露 Copilot Coding Agent 来源：PR 作者 / commit author 直接显示为 Copilot bot，commit trailer 可加 `Co-authored-by: Copilot <copilot@github.com>` [[8]](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent), [[9]](https://github.com/orgs/community/discussions/179983)。学术界 2026 年用行为指纹做归因——XGBoost 分类器在 33,580 个 PR 上对五大 Agent 的归属判定达到 97.2% F1 [[10]](https://arxiv.org/html/2601.17406v1)；同时欧盟 AI Act 第 113 条要求 2026-08-02 起所有"职业发布的 AI 生成内容"需带 C2PA 元数据（Provider Name / System Version / Creation Timestamp / Unique Identifier）[[11]](https://weventure.de/en/blog/ai-labeling)——这条法规会反向倒逼 PR 层加结构化标记。
-2. **回归风险评估 / Trust Score per PR**：给 PR 叠加 0–10 的可信度评分，综合静态分析、测试覆盖、依赖影响、Agent 来源、过往 revert 概率。Credo AI / Fiddler 等 trust-score 框架已在通用 LLM 安全侧落地 [[12]](https://www.credo.ai/model-trust-scores-ai-evaluation), [[13]](https://docs.fiddler.ai/reference/glossary/trust-score)，PR 层等同 schema 即将出现（⚠ 解读：截至 2026-05 尚无主流评审厂商公开发布"PR Trust Score"独立 schema，作者把它列为"将出现"的次生市场而非现状）。
-3. **合规人最终批准**：SOC 2 CC8.1 明确要求**所有代码变更（含 AI 生成）部署前必须有人审批**，且要留 change request、approver signature、测试证据 [[14]](https://www.augmentcode.com/tools/ai-coding-tools-soc2-compliance-enterprise-security-guide), [[15]](https://www.codeant.ai/blogs/github-ai-code-review-tools-soc2-compliance)；CC6.1 把这条延伸到生产合并。这条监管事实直接锁死了"全自动 Agent 合并"的天花板——人不能完全退出。CodeRabbit 2025 完成 SOC 2 Type II 第三方审计（年度续审），数据存储同时符合 GDPR / HIPAA；仓库代码在内存中 clone 完成评审后立即丢弃，可选缓存 ≤7 天或完全关闭，Enterprise（≥500 seats）可全自托管 [[16]](https://trust.coderabbit.ai/compliance), [[17]](https://coderabbit.ai/changelog/coderabbit-is-now-soc-2-type-ii-compliant)。
+### 3.1 高精度低噪音信号 — CodeRabbit
 
-## 四、代表公司技术架构
+CodeRabbit 2026 初已接入 **2M+ 仓库、处理 13M+ PR、8,000+ 付费客户**，含 Chegg、Groupon、Life360、Mercury；2025-09 Series B $60M、估值 $550M、累计 $88M [[18]](https://www.coderabbit.ai/blog/coderabbit-series-b-60-million-quality-gates-for-code-reviews)。第三方 OpenSSF CVE Benchmark：CodeRabbit 准确率 59.39% / F1 36.19%，漏检约 41% 真实漏洞 [[25]](https://www.codeant.ai/blogs/ai-code-review-benchmark-results-from-200-000-real-pull-requests)；Greptile 自家 benchmark 中 CodeRabbit 44% catch、仅 2 false positives [[24]](https://www.greptile.com/benchmarks)。
 
-### 4.1 CodeRabbit：Astute Review + Code Graph + Context Engineering
+**信号形状**：每条评论都倾向于"reviewer 看了不删"——靠**低 FP** 换取 reviewer 在 LGTM 前对该 bot 的注意力 budget。技术架构三层 [[19]](https://www.infoworld.com/article/4025088/how-coderabbit-brings-ai-to-code-reviews.html), [[20]](https://www.coderabbit.ai/blog/the-art-and-science-of-context-engineering)：static analysis（CodeQL、ast-grep）作 prompt context；Code Graph 跨文件追踪契约破坏；Context Engineering 维持 **1:1 code-to-context 比例**，diff 旁塞 Jira ticket、past PR、linter 输出、chat learning [[20]](https://www.coderabbit.ai/blog/the-art-and-science-of-context-engineering)。底层 LanceDB 毫秒级语义检索数万张 PR / 依赖表 [[21]](https://www.lancedb.com/blog/case-study-coderabbit)。
 
-流量证据：2026 初已接入 **2M+ 仓库、处理 13M+ PR、8,000+ 付费客户**，客户含 Chegg、Groupon、Life360、Mercury；2025-09 完成 Series B $60M，估值 $550M，累计 $88M [[18]](https://www.coderabbit.ai/blog/coderabbit-series-b-60-million-quality-gates-for-code-reviews)。
-
-技术架构三层 [[19]](https://www.infoworld.com/article/4025088/how-coderabbit-brings-ai-to-code-reviews.html), [[20]](https://www.coderabbit.ai/blog/the-art-and-science-of-context-engineering)：
-
-1. **Static analysis 子层**：内置数十种 linter、CodeQL、ast-grep 规则，结构化结果作为 prompt 上下文喂给 LLM。
-2. **Code Graph 子层**：解析整个仓库构造依赖图，跨文件追踪函数引用——这是"astute review"的关键，让 LLM 看到 diff 在远端文件触发的 contract 破坏。
-3. **Context Engineering**：自称 prompt 里维持 **1:1 的 code-to-context 比例**——diff 旁边塞 Jira ticket、past PR、code graph、linter 输出、过往 chat learning [[20]](https://www.coderabbit.ai/blog/the-art-and-science-of-context-engineering)。底层用 LanceDB 做毫秒级语义检索，索引数万张 PR / issue / 依赖表 [[21]](https://www.lancedb.com/blog/case-study-coderabbit)。
-
-**配置示例**（`.coderabbit.yaml`）[[22]](https://docs.coderabbit.ai/guides/review-instructions)：
+**配置示例**（`.coderabbit.yaml`）[[22]](https://docs.coderabbit.ai/guides/review-instructions) ——profile / path_instructions 是"信号刻度"的可调参数：
 
 ```yaml
 language: en-US
@@ -84,60 +70,69 @@ integrations:
     team_keys: ["CORE"]
 ```
 
-定价（2026）[[23]](https://www.coderabbit.ai/pricing)：Lite $12 / Pro $24 / Pro+ $48 per dev/月（年付）；月付分别 $30 / $60。**仅对实际开 PR 的开发者计费**——周内没开 PR 的座位不收钱，这是 Agent 时代"按实际触发"的计价创新。
+定价 [[23]](https://www.coderabbit.ai/pricing)：Lite $12 / Pro $24 / Pro+ $48 per dev/月（年付）；**仅对实际开 PR 的开发者计费**——这条 SKU 设计直接对应"按签字单价计价"的逻辑。
 
-### 4.2 Greptile：跨文件深审，召回优先
+### 3.2 高召回宽噪音信号 — Greptile
 
-Greptile 的差异化是"先把整个 repo 索引成图，再审 PR"——更适合 monorepo 和跨文件破坏。公开 benchmark：50 个真实 bug 测试集，**Greptile 82% catch / CodeRabbit 44% catch**，但 Greptile 误报 11 条、CodeRabbit 仅 2 条 [[24]](https://www.greptile.com/benchmarks)。第三方 OpenSSF CVE Benchmark 复测显示 CodeRabbit 准确率 59.39% / F1 36.19%，仍漏掉约 41% 真实漏洞 [[25]](https://www.codeant.ai/blogs/ai-code-review-benchmark-results-from-200-000-real-pull-requests)。这是一道明确的产品哲学分叉：**召回优先 vs 精度优先**。
+Greptile 公开 benchmark：50 个真实 bug 测试集，**Greptile 82% catch / CodeRabbit 44% catch**，Greptile 误报 11 条、CodeRabbit 仅 2 条 [[24]](https://www.greptile.com/benchmarks)。
 
-定价采用 API 计量 [[26]](https://docs.greptile.com/pricing)：`POST /query` 1 unit = $0.15；`genius=true`（更大模型）3 units；PR Review Bot **$0.45 / file changed**，封顶 $50/dev/月，超过封顶部分免费；新用户赠 150 units。
+**信号形状**：故意拉高召回，让人 reviewer **接受"我会看到噪音"作为代价**——服务的下游不是 LGTM 而是安全官 / 合规审。先把整个 repo 索引成图再审 PR，更适合 monorepo 跨文件破坏。定价按用量计 [[26]](https://docs.greptile.com/pricing)：`POST /query` 1 unit = $0.15；`genius=true` 3 units；PR Review Bot **$0.45 / file changed**，封顶 $50/dev/月，新用户赠 150 units——**按 file changed 计价 = 按"信号生产量"计价**，与 CodeRabbit 的"按签字者计价"形成对照。部署 [[27]](https://www.greptile.com/docs/self-hosting/overview)：Docker Compose / K8s 自托管，覆盖 AWS / GCP / Azure / air-gapped；LLM provider 可换；Hosted API base URL `https://api.greptile.com/v2/`。这条 air-gapped 路线服务金融 / 政府 / 国防客户——这些客户的签字主体本来就习惯翻噪音。
 
-部署形态 [[27]](https://www.greptile.com/docs/self-hosting/overview)：支持 Docker Compose / Kubernetes 自托管，覆盖 AWS / GCP / Azure / 完全 air-gapped；LLM provider 可换（OpenAI / Anthropic / 自托管模型）。Hosted API base URL `https://api.greptile.com/v2/`。这条"自托管 + air-gapped"路线针对金融 / 政府 / 国防客户。
+### 3.3 小颗粒可审信号 — Graphite Diamond / Agent
 
-判据：复杂代码库、跨文件破坏频发、宁可多看噪音也不愿漏 bug 的团队选 Greptile；signal-to-noise 至上的团队选 CodeRabbit。
+Graphite 2025-03 推 Diamond 时明确"AI will never replace human code review"[[28]](https://www.devclass.com/ai-ml/2025/03/19/graphite-debuts-diamond-ai-code-reviewer-insists-ai-will-never-replace-human-code-review/1626959)；2025-10-08 把 Diamond 并入 **Graphite Agent**，统一 AI 评审与 stacked PR 工作流 [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing)；Series B $52M [[30]](https://graphite.com/blog/series-b-diamond-launch)。核心论点：**大 PR 不可审，必须 stack 成小 PR**。
 
-### 4.3 Graphite Diamond / Agent：协议层修复——把 PR 拆小
+**信号形状**：Graphite 不是改 LLM 怎么评，而是**改信号本身的颗粒度**——把"一个无法签字的大 PR"拆成"五个能签字的小 PR"。这是把 D5' 的瓶颈在**协议层**解决，而不是在 LLM 层。2026 定价 [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing)：Free / Starter $20 / Team $40 / Enterprise。客户证据：Shopify stacked PR 后**人均 merge PR +33%**；Asana 工程师每周省 7h、产出 +21% [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing)（⚠ 厂商自报，未见第三方独立复核）。
 
-Graphite 2025-03 推出 Diamond 独立产品，宣示"AI 永远不会替代人 review"[[28]](https://www.devclass.com/ai-ml/2025/03/19/graphite-debuts-diamond-ai-code-reviewer-insists-ai-will-never-replace-human-code-review/1626959)；2025-10-08 把 Diamond 并入 **Graphite Agent**，统一 AI 评审与 stacked PR 工作流 [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing)。核心论点：**大 PR 不可审，必须 stack 成小 PR**——把"PR 体积膨胀"这个 Agent-after 顽症在**协议层**解掉，而不是靠 reviewer 加班。Series B $52M [[30]](https://graphite.com/blog/series-b-diamond-launch)。
+### 3.4 窄域高确定性信号 — Cursor Bugbot
 
-2026 定价 [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing)：Free（Hobby，含 CLI、VS Code 扩展、有限 Agent 配额）/ Starter $20/user/月（年付，全仓库 + insights）/ Team $40/user/月（年付，无限 Agent + 无限 AI review + merge queue）/ Enterprise 定制。
+Cursor Bugbot 2026 早期**月处理 2M+ PR、累计 review 1M+ PR、标记 1.5M issue，70%+ flag 在 merge 前被解决** [[34]](https://cursor.com/bugbot)。
 
-客户证据：Shopify 采用 Graphite stacked PR 后**人均 merge PR +33%**；Asana 工程师每周省 7 小时、产出 +21% [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing)（⚠ 厂商自报数据，未见第三方独立验证）。
+**信号形状**：故意做窄。只抓 logic bug / 安全漏洞 / race condition / null deref / 错误处理；**主动忽略**格式 / 风格 / 低优——每条 flag 自带"这不是 nit，是 bug"的语义承诺。2026-02 Bugbot Autofix：云端 VM spawn agent 修自己抓到的问题；Bugbot 还从 reviewer 反应（downvote / 回复 / 同 PR 人审评论）学习规则，累积成 active rule，负反馈过多自动退役 [[34]](https://cursor.com/bugbot)。定价 $40/user/月、按 contributor seat 计——20 人团队仅 Bugbot 一项 $800/月 [[34]](https://cursor.com/bugbot)。Cursor 在自己产品矩阵内闭环"Agent 写 → Agent 审"。
 
-### 4.4 Qodo（前 CodiumAI）：多 Agent 并行 + 开源底座
+### 3.5 多维度并行信号 — Qodo
 
-Qodo 由原 CodiumAI 在 2024 年改名而来 [[31]](https://en.wikipedia.org/wiki/Qodo)。2026-02 发布 **Qodo 2.0**，把单次 LLM 评审拆成多 Agent 并行架构——一个 Agent 抓 bug、一个查代码质量、一个做安全分析、一个看测试覆盖；benchmark F1 达 **60.1%**、recall 56.7%，在 7 家厂商对比中最高 [[32]](https://aicodereview.cc/blog/qodo-review/)。差异化卖点：
+Qodo 由 CodiumAI 2024 更名而来 [[31]](https://en.wikipedia.org/wiki/Qodo)。2026-02 **Qodo 2.0** 把单次 LLM 评审拆成多 Agent 并行：一个抓 bug、一个查质量、一个做安全、一个看测试覆盖；benchmark F1 **60.1%**、recall 56.7%，在 7 厂对比中最高 [[32]](https://aicodereview.cc/blog/qodo-review/)。
 
-- **开源核心**：评审引擎 PR-Agent 是 GitHub 开源项目，支持 GitHub / GitLab / Bitbucket / Azure DevOps / CodeCommit / Gitea，可自托管、可 air-gapped、可审计 prompt [[33]](https://github.com/qodo-ai/pr-agent)。
-- **测试生成**：从 CodiumAI 时代继承，分析未测路径自动生成 unit test（不是 stub，带断言和边界用例）[[31]](https://en.wikipedia.org/wiki/Qodo)。
+**信号形状**：在同一个 PR 上**同时产出多种维度的判断**，下游签字者按维度分流（安全维度走 AppSec、覆盖率维度走 QA、bug 维度走 reviewer）。开源核心 PR-Agent 支持 GitHub / GitLab / Bitbucket / Azure DevOps / CodeCommit / Gitea，可自托管 / air-gapped / 审计 prompt [[33]](https://github.com/qodo-ai/pr-agent)；从 CodiumAI 时代继承的测试生成能力（带断言和边界用例的 unit test，不是 stub）也作为"测试维度信号"嵌入 [[31]](https://en.wikipedia.org/wiki/Qodo)。
 
-### 4.5 Cursor Bugbot：窄域、Autofix、行为学习
+### 3.6 自动修复信号 — Pixee（信号即 patch）
 
-Cursor 在 2025 推出 Bugbot，2026 早期已**月处理 2M+ PR、累计 review 1M+ PR、标记 1.5M issue，70%+ flag 在 merge 前被解决** [[34]](https://cursor.com/bugbot)。差异化是**故意做窄**：只抓 logic bug、安全漏洞、race condition、空指针、错误处理——**主动忽略**格式 / 风格 / 低优问题。2026-02 发布 **Bugbot Autofix**：在云端虚拟机里 spawn agent 修 Bugbot 自己抓到的问题；Bugbot 还会**从 reviewer 反应（downvote / 回复 / 同 PR 的人审评论）学习规则**，累积信号变成 active rule，负反馈过多则退役 [[34]](https://cursor.com/bugbot)。
+Pixee 安全侧 PR remediation：100,000+ PR 实测达到 **76% developer merge rate**，scanner-alert-to-merge 中位时间从行业平均 252 天压到 < 48h；声称消除 95%+ 误报 [[37]](https://www.pixee.ai/), [[38]](https://www.pixee.ai/blog/pixee-wins-2026-devies-award-appsecops)。
 
-定价 $40/user/月，仓库**每个 contributor 都要一个 seat**，与 Cursor IDE 许可分开——20 人团队仅 Bugbot 一项就 $800/月 [[34]](https://cursor.com/bugbot)。这是 Cursor 把"Agent 写 → Agent 审"在自己产品矩阵内闭环的尝试。
+**信号形状**：信号不是评论，**是一个直接可 merge 的 patch**——把"需要 reviewer 签字的判断单元"压缩成"reviewer 只需 approve 一个一键 patch"。在五种形状里最激进：它假设下游签字者真正稀缺的不是判断，是**写补丁的工时**。
 
-### 4.6 其它玩家速览
+### 3.7 边缘玩家速览（信号形状未独立成型）
 
-- **Korbit AI**：GitHub/GitLab/Bitbucket 三端 PR review bot，10 种语言；Korbit Pro $24/user/月，开源免费；卖点"senior 级反馈、保证不拿你的代码训练" [[35]](https://onlinetoolstack.com/korbit-ai)。
-- **Aviator / Mergify**：merge queue 起家。Aviator $12/user/月、支持 monorepo 并行队列、flaky test 容忍策略（`optimistic_validation_failure_depth`）；Mergify $21/user/月、merge queue + CI Insights + Merge Protections 全捆绑 [[36]](https://www.aviator.co/aviator-mergequeue-mergify)。它们是"PR 流量爆发后的合并层"防线。
-- **Pixee**：安全侧的 PR remediation。Pixee 在 100,000+ PR 实测达到 **76% developer merge rate**，把扫描器报警到 merge 的中位时间从行业平均 252 天压到 < 48 小时；声称消除 95%+ 误报 [[37]](https://www.pixee.ai/), [[38]](https://www.pixee.ai/blog/pixee-wins-2026-devies-award-appsecops)。
-- **GitHub Copilot Code Review**：2025-10 Public Preview，把 LLM 检测 + tool calling + ESLint / CodeQL 混合，建议可"一键传给 Copilot Coding Agent"自动开 PR 修 [[39]](https://github.blog/changelog/2025-10-28-new-public-preview-features-in-copilot-code-review-ai-reviews-that-see-the-full-picture/)。Copilot Autofix 2025 全年修复 1M+ 漏洞 [[39]](https://github.blog/changelog/2025-10-28-new-public-preview-features-in-copilot-code-review-ai-reviews-that-see-the-full-picture/)。
-- **GitLab Duo Code Review**：非 agentic 版本在 GitLab 18.1 GA；自托管模型版在 18.4 GA；**agentic 版本（Code Review Flow）**18.7 beta、**18.8 GA**（2026-01）；18.10 起对 GitLab.com Free tier 开放（消耗 GitLab Credits）[[40]](https://docs.gitlab.com/user/gitlab_duo/code_review/), [[41]](https://docs.gitlab.com/user/duo_agent_platform/flows/foundational_flows/code_review/)。
+- **Korbit AI** [[35]](https://onlinetoolstack.com/korbit-ai)：GitHub/GitLab/Bitbucket 三端 PR review bot；Korbit Pro $24/user/月、开源免费；卖点"senior 级反馈、不拿代码训练"。
+- **Aviator / Mergify** [[36]](https://www.aviator.co/aviator-mergequeue-mergify)：merge queue 起家；Aviator $12/user/月、monorepo 并行队列、`optimistic_validation_failure_depth` 容忍 flaky test；Mergify $21/user/月、merge queue + CI Insights + Merge Protections 捆绑。**这两家不是信号生产者，而是"信号消费协议层"**——后文 §4 展开。
+- **GitHub Copilot Code Review** [[39]](https://github.blog/changelog/2025-10-28-new-public-preview-features-in-copilot-code-review-ai-reviews-that-see-the-full-picture/)：2025-10 Public Preview，LLM + tool calling + ESLint / CodeQL 混合，建议可一键传给 Copilot Coding Agent 修；Copilot Autofix 2025 全年修复 1M+ 漏洞。
+- **GitLab Duo Code Review** [[40]](https://docs.gitlab.com/user/gitlab_duo/code_review/), [[41]](https://docs.gitlab.com/user/duo_agent_platform/flows/foundational_flows/code_review/)：非 agentic 在 18.1 GA；agentic Code Review Flow 18.7 beta、**18.8 GA**（2026-01）；18.10 Free tier 开放。
+
+## 四、信号如何被消费：合规签字、协议层吸收、人审策略化
+
+§3 是"生产端"，本节是"消费端"。三种信号下游消费模式：
+
+**(1) 合规签字 — 给信号盖章的法律必要性**。SOC 2 CC8.1 明确要求**所有代码变更（含 AI 生成）部署前必须有人审批**，并留 change request、approver signature、测试证据 [[14]](https://www.augmentcode.com/tools/ai-coding-tools-soc2-compliance-enterprise-security-guide), [[15]](https://www.codeant.ai/blogs/github-ai-code-review-tools-soc2-compliance)；CC6.1 把这条延伸到生产合并。这条监管事实直接锁死"全自动 Agent 直合"的天花板——人不能完全退出。CodeRabbit 2025 完成 SOC 2 Type II 第三方审计（年度续审），仓库代码在内存中 clone 完成评审后立即丢弃，可选缓存 ≤7 天或完全关闭；Enterprise（≥500 seats）可全自托管；存储同时符合 GDPR / HIPAA [[16]](https://trust.coderabbit.ai/compliance), [[17]](https://coderabbit.ai/changelog/coderabbit-is-now-soc-2-type-ii-compliant)。⚠ **合规不是 D5' 的卖点，是 D5' 信号的最终落地约束**——所有信号最终都得能塞进 SOC 2 审计的 change ticket。
+
+**(2) 协议层吸收 — merge queue 把信号转 commit**。Aviator / Mergify 的角色不是生产信号，是**消费一束信号后产生 commit**：merge queue 把"通过 CI + 通过 CodeRabbit + 通过 Bugbot + 通过 reviewer LGTM"折叠成单一"可入主"决策 [[36]](https://www.aviator.co/aviator-mergequeue-mergify)。当 D5' 信号源数量增加，merge queue 是把它们重新串成一根决策线的必要协议层。
+
+**(3) 人审策略化 — AI-PR 标记 + Trust Score**。reviewer 不再读 diff，而是读"这条信号信吗"。两条配套基础设施在 2026 显形：
+
+- **AI 来源标记**：GitHub 在 PR metadata 暴露 Copilot Coding Agent 来源——PR author / commit author 显示为 Copilot bot，commit trailer 加 `Co-authored-by: Copilot <copilot@github.com>` [[8]](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent), [[9]](https://github.com/orgs/community/discussions/179983)。学术界 2026 用行为指纹做归因——XGBoost 在 33,580 个 PR 上对五大 Agent 的归属判定达到 97.2% F1 [[10]](https://arxiv.org/html/2601.17406v1)。欧盟 AI Act 第 113 条 **2026-08-02 起**所有"职业发布的 AI 生成内容"需带 C2PA 元数据（Provider Name / System Version / Creation Timestamp / Unique Identifier）[[11]](https://weventure.de/en/blog/ai-labeling)——这条法规会反向倒逼 PR 层加结构化标记。
+- **Trust Score**：给 PR 叠 0–10 可信度评分，综合静态分析、测试覆盖、依赖影响、Agent 来源、过往 revert 概率。Credo AI / Fiddler 等 trust-score 框架已在通用 LLM 安全侧落地 [[12]](https://www.credo.ai/model-trust-scores-ai-evaluation), [[13]](https://docs.fiddler.ai/reference/glossary/trust-score)；PR 层等同 schema 即将出现（⚠ 截至 2026-05 尚无主流 D5' 厂商公开发布独立 "PR Trust Score" schema，作者将其列为次生市场而非现状）。
 
 ## 五、几条本质判断
 
-**(1) PR 抽象不会消失，但语义在迁移**。Pre-Agent：PR = "人提交的工作单元"；Post-Agent：PR = "待审的 diff 包，作者可以是 Agent"。语义从"沟通载体"滑向"策略闸门"。
+**(1) PR 抽象不会消失，但语义在迁移**。Pre-Agent：PR = "人提交的工作单元"；Post-Agent：PR = "待审的 diff 包，作者可以是 Agent"。语义从"沟通载体"滑向"策略闸门"——闸门控制的不是流量，是**信号信任度的分桶**。
 
-**(2) Agent 写 → Agent 审在技术上已经成立，但在合规上不成立**。CodeRabbit 13M PR 吞吐 [[18]](https://www.coderabbit.ai/blog/coderabbit-series-b-60-million-quality-gates-for-code-reviews) 证明 LLM 评审能扛流量；Greptile 82% 召回 [[24]](https://www.greptile.com/benchmarks) 证明能抓 bug；Qodo 60.1% F1 [[32]](https://aicodereview.cc/blog/qodo-review/) 证明多 Agent 架构在精度/召回平衡上还能继续抬。但 SOC 2 / ISO 27001 / 欧盟 AI Act 第 113 条 [[11]](https://weventure.de/en/blog/ai-labeling)[[14]](https://www.augmentcode.com/tools/ai-coding-tools-soc2-compliance-enterprise-security-guide) 都把人锁定为 final approver。未来形态是 **Agent 写 → Agent 审 → 人按策略批一批**，而不是"全自动直合"。人退到"批量决策 + 异常处理"。
+**(2) 召回 vs 精度不是技术问题，是信号形状问题**。Greptile（82% / 11 FP）服务"漏一个 bug 死人"的安全签字者；CodeRabbit（44% / 2 FP）服务"reviewer 注意力 budget"的工程 LGTM 签字者。两者下游是不同人。Qodo 多 Agent 路线试图在同一个 PR 上**同时产多种形状的信号**，每个 Agent 服务不同签字者；但多 Agent 意味着每 PR 多次 LLM 调用 = 单次评审成本上升（⚠ Qodo 未公开多 Agent 推理成本，作者从架构推断，无价格证据）。
 
-**(3) 召回 vs 精度是产品哲学分叉，不会有"全能赢家"**。Greptile（82% / 11 FP）与 CodeRabbit（44% / 2 FP）走的是不同 user persona——前者服务"漏一个 bug 死人"的金融/医疗/安全，后者服务"reviewer 注意力是稀缺品"的创业团队。Qodo 多 Agent 路线试图同时拉高两端，但多 Agent 意味着每 PR 多次 LLM 调用 = 单次评审成本上升（⚠ 解读：Qodo 未公开多 Agent 推理成本，作者从架构推断，无价格证据）。
+**(3) Stacked PR 是迄今最务实的协议层修复**。Graphite 在做的事不是让 AI 更聪明，而是让**每个信号单元再次回到人类可签字的颗粒度**——把流量爆炸前置切成可审小块。Shopify +33% / Asana +21% 数据 [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing) 若在第三方独立测试中复现，stacked PR 将成下一轮 D5'+D6 强制协议层。
 
-**(4) Stacked PR 是协议层修复方案**。Graphite 在做的事不是"让 AI 更聪明"，而是"让 PR 更小"——把流量爆炸前置切成可审小块，符合 Pre-Agent 时代的 human-review 节奏。这是迄今最务实的桥接。Shopify +33% / Asana +21% 数据 [[29]](https://graphite.com/blog/introducing-graphite-agent-and-pricing) 若能在第三方独立测试中复现，stacked PR 将成为下一轮 D5'+D6 产品的强制协议层。
+**(4) 计价模型在重写——按"信号"还是按"签字者"**。CodeRabbit "只对实际开 PR 的开发者计费" [[23]](https://www.coderabbit.ai/pricing)；Greptile 按 file changed 计量 [[26]](https://docs.greptile.com/pricing)；Bugbot 按 contributor seat [[34]](https://cursor.com/bugbot)。背后是三种"用户"定义：CodeRabbit = "活跃签字者"，Greptile = "被处理的信号量"，Bugbot = "所有 contributor"。⚠ 作者预判：按 PR 数 / file 数 / token 数等使用量计价会胜出，因为它和 Agent 触发频率成正比，也和"信号生产量"对齐。
 
-**(5) 计价模型在重写**。CodeRabbit "只对实际开 PR 的开发者计费" [[23]](https://www.coderabbit.ai/pricing)；Greptile 按 file changed 计量 [[26]](https://docs.greptile.com/pricing)；Bugbot 按 contributor seat 计费 [[34]](https://cursor.com/bugbot)。三种模式背后是同一道选择题：**Agent 时代的"用户"到底是不是开发者？**——CodeRabbit 说"活跃开发者"，Greptile 说"被处理的 diff"，Bugbot 说"所有 contributor"。这条 SKU 设计博弈到 2026 末会大幅收敛——⚠ 作者预判：按"PR 数 / file 数 / token 数"等使用量计价的模型会胜出，因为它和 Agent 触发频率成正比。
-
-**(6) "AI-generated PR 标记" 会被法规强推成标配**。欧盟 AI Act 第 113 条 2026-08-02 生效 [[11]](https://weventure.de/en/blog/ai-labeling) 加上学术界的指纹归因方法（97.2% F1）[[10]](https://arxiv.org/html/2601.17406v1)，会把"PR metadata 中标注 AI 来源"从可选最佳实践推成 enterprise 强制项。GitHub 已抢跑，CodeRabbit / Greptile / Graphite 谁先把"AI 来源 + Trust Score"做成结构化 schema，谁就拿到下一轮评审协议的话语权。
+**(5) AI-generated PR 标记会被法规推成标配**。欧盟 AI Act 第 113 条 2026-08-02 生效 [[11]](https://weventure.de/en/blog/ai-labeling) 加上学术界指纹归因（97.2% F1）[[10]](https://arxiv.org/html/2601.17406v1)，会把"PR metadata 中标注 AI 来源"从可选最佳实践推成 enterprise 强制项。GitHub 已抢跑，CodeRabbit / Greptile / Graphite 谁先把"AI 来源 + Trust Score"做成结构化 schema，谁就拿到下一轮评审协议的话语权——**这条 schema 就是"可签字信号"的标准包装**。
 
 ---
 
