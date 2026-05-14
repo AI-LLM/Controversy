@@ -89,15 +89,11 @@ claude mcp add --transport http sentry https://mcp.sentry.dev/mcp
 
 ## 五、Unlimited 定价 = 感官层不能节流
 
-最后一节回到"为什么不是流量"的反面——量纲判断要收束在感官层这条 lens 上。
-
-Seer 2026-01 把定价改成 **$40/active contributor/月 unlimited**，刻意打"按事件计费让人不敢开 AI" 的反向心智 [[15]](https://sentry.io/about/press-releases/sentry-expands-seer-ai-debugging-agent/)。这条定价在"流量"叙事里讲不通——按事件收费才对应高吞吐。但在"感官"叙事里它逻辑自洽：
+Seer 2026-01 把定价改成 **$40/active contributor/月 unlimited** [[15]](https://sentry.io/about/press-releases/sentry-expands-seer-ai-debugging-agent/)。这条定价在感官层逻辑下自洽：
 
 - **感官不能节流**。如果 agent 每次想看 production error 都要计费，agent 会**减少看的频率**，感官就退化回 dashboard——人类版的低频查询。Sentry 必须把单次调用成本对 agent 的认知压成零，才能保证 agent 在每个 PR、每次 build、每次 IDE 提问都顺手调一次。
 - **价值锚切换到 contributor**。从"事件数 × 单价"切到"贡献者数 × 包月"，等于把价值锚从"出多少 bug"移到"多少人/agent 在 SDLC 里活动"。这跟 GitHub Copilot 的 per-seat 模型同构——感官层的定价单位是**主体头数**，不是事件吞吐。
-- **量纲未来 24 个月仍翻**。AI 代码漏洞密度 2.7x、5 轮迭代后 critical vuln +37.6%、Vibe Radar 月度 CVE 同比 ~19x [[5]](https://sqmagazine.co.uk/ai-coding-security-vulnerability-statistics/), [[7]](https://arxiv.org/html/2506.11022v2), [[8]](https://labs.cloudsecurityalliance.org/research/csa-research-note-ai-generated-code-vulnerability-surge-2026/)——这意味着 O4 上层流量被"代码生成速度 × 漏洞密度"双乘锁定，方向只能往上。但 Sentry 敢推 unlimited 的底气不是"我能扛住流量"，而是"**让流量随便涨，反正定价锚不在那里**"。
-
-⚠ 解读：本节的因果链是——感官位逻辑 → 单次调用必须对 agent 零摩擦 → 不能按事件计费 → 切到 per-contributor unlimited → 流量做大反而是合理副产物。把这条逻辑倒过来——"流量大，所以不得不 unlimited"——也讲得通，但解释不了 PR review 扩展与 rules 文件读取这两件事。感官位框架同时解释三件事，这是它比"闭环"框架更深一层的地方："闭环"只说明 agent 能修 bug，不解释为何感官接口要插进 IDE、为何要读 rules、为何要 unlimited——这三件都是"感官层"的产品推论。
+- **量纲未来 24 个月仍翻**。AI 代码漏洞密度 2.7x、5 轮迭代后 critical vuln +37.6%、Vibe Radar 月度 CVE 同比 ~19x [[5]](https://sqmagazine.co.uk/ai-coding-security-vulnerability-statistics/), [[7]](https://arxiv.org/html/2506.11022v2), [[8]](https://labs.cloudsecurityalliance.org/research/csa-research-note-ai-generated-code-vulnerability-surge-2026/)——O4 上层流量被"代码生成速度 × 漏洞密度"双乘锁定，方向只能往上。Sentry 推 unlimited 的底气是把定价锚从事件吞吐挪开，让流量做大成为合理副产物。
 
 ## 信源
 

@@ -48,7 +48,7 @@ claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
 
 [[27]](https://docs.honeycomb.io/integrations/mcp/concepts)。暴露的 tool 包括 `run_query`（跑遥测查询）、`run_bubbleup`（在已有 query 上找异常 cohort）、`find_columns`（用自然语言找字段）、`get_trace`（拉完整 trace）[[27]](https://docs.honeycomb.io/integrations/mcp/concepts), [[28]](https://github.com/honeycombio/honeycomb-mcp)。Honeycomb 自己也用这套 MCP 评估 Claude Code 的 ROI 与采纳率 [[29]](https://www.honeycomb.io/blog/measuring-claude-code-roi-adoption-honeycomb)。
 
-本质：**Honeycomb 把 BubbleUp 这种"高基数下找异常 cohort"的核心能力做成 LLM tool**——这恰好是 LLM 自己干不了、但人类 SRE 又最依赖的步骤。Datadog 是平台数据广度赢，Honeycomb 是 trace 深度 + tool 化赢；二者在 2026 表现出明显的差异化共存而非正面替代。如果 lens 是"入口转移"，这俩应当此消彼长；事实上是两条护城河——广度护城河给 Datadog 留 enterprise 横向心智，深度 / 协议护城河给 Honeycomb 留 trace-heavy 团队的工具调用心智。
+本质：**Honeycomb 把 BubbleUp 这种"高基数下找异常 cohort"的核心能力做成 LLM tool**——这恰好是 LLM 自己干不了、但人类 SRE 又最依赖的步骤。Datadog 是平台数据广度赢，Honeycomb 是 trace 深度 + tool 化赢；两条护城河差异化共存——广度护城河给 Datadog 留 enterprise 横向心智，深度 / 协议护城河给 Honeycomb 留 trace-heavy 团队的工具调用心智。
 
 ## 四、协议位次：OTel GenAI + MCP 把消费侧外包给 IDE
 
@@ -74,7 +74,7 @@ claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
 2. **只押 dashboard UI 的**。MCP 把消费侧外包给 IDE 之后，"做一个更好看的故障墙"不再是护城河。dashboard 仍有价值（人类排障的兜底界面），但**它不再是用户与平台之间的唯一接口**。重押 UI 而轻视 tool / MCP 接入的厂商，会发现自己的产品被 coding agent"绕过"——agent 走 MCP 直接读底层数据，把 dashboard 跳过。
 3. **只押降噪的**。Pre-Agent 的 AIOps 把"91% 噪声削减"当核心 KPI [[43]](https://www.pagerduty.com/platform/aiops/)；进入 Agent 时代，降噪只是入场券。真正的弹性来自"自动分诊 + 自动修复 + 写回 PR"的闭环——MTTR -77%、TTR -95% 这类口径已经是新一代产品的及格线 [[44]](https://aws.amazon.com/blogs/devops/), [[25]](https://www.datadoghq.com/product/ai/bits-ai-sre/)。卡在只降噪的产品，被两侧挤压：一边是按量计费平台用全栈数据吃掉相关性聚类，另一边是 fix-loop 产品用 GitHub PR 吃掉操作面。
 
-收尾的本质判断：**O5 层的护城河不是 LLM 本身，而是 (a) 已有客户的数据广度（DDOG）/ (b) trace 深度 + 工具语义化（Honeycomb）/ (c) 协议位次（OTel + MCP）三选一或叠加**。Q1 2026 +30% 单日是市场对这条三选一的定价，不是周期，也不是"入口转移"的单点叙事——后者只能解释 Bits AI，无法解释 Honeycomb 同步跑赢、Grafana / Langfuse 估值上行。
+收尾的本质判断：**O5 层的护城河是 (a) 已有客户的数据广度（DDOG）/ (b) trace 深度 + 工具语义化（Honeycomb）/ (c) 协议位次（OTel + MCP）三选一或叠加**。Q1 2026 +30% 单日是市场对这条三选一的重新定价，覆盖 Datadog、Honeycomb、Grafana、Langfuse 同步走强这一组事实。
 
 ## 信源
 
