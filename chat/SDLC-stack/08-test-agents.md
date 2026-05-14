@@ -8,7 +8,7 @@
 
 Pre-Coding-Agent 时代的测试经济学从来没"健康"过——它是被工程师默默牺牲掉的那个变量。牺牲的本质，是作者-验证者长期未分离：写代码的人同时写测试，自己用自己的实现给自己打分。
 
-**工时分布。**Stripe 的 *Developer Coefficient* 研究指出，开发者每周约 17 小时（约占工时 42%）耗在技术债与维护上 [[1]](https://stripe.com/files/reports/the-developer-coefficient.pdf)；Sonar 与多家 DX 调研把工时拆得更细：维护 19%、测试 12%、安全 4%，三者合计约 35% [[2]](https://www.sonarsource.com/blog/how-much-time-do-developers-spend-actually-writing-code)。换句话说，**测试只拿到了开发者约 1/10 的真实带宽**——但它名义上要为发布质量背书。⚠ 解读：从 [[2]] 中 12% 测试工时直接换算，"1/10"是修辞性近似。
+**工时分布。**Stripe 的 *Developer Coefficient* 研究指出，开发者每周约 17 小时（约占工时 42%）耗在技术债与维护上 [[1]](https://stripe.com/files/reports/the-developer-coefficient.pdf)；Sonar 与多家 DX 调研把工时拆得更细：维护 19%、测试 12%、安全 4%，三者合计约 35% [[2]](https://www.sonarsource.com/blog/how-much-time-do-developers-spend-actually-writing-code)。换句话说，**测试只拿到了开发者约 1/10 的真实带宽**——但它名义上要为发布质量背书。⚠ 解读：从 [[2]](https://www.sonarsource.com/blog/how-much-time-do-developers-spend-actually-writing-code) 中 12% 测试工时直接换算，"1/10"是修辞性近似。
 
 **Coverage 目标 vs 实际。**业界常喊的"金标准"是 80%，Industrial Logic 的工业调查把它直接命名为"corporate gating standard" [[3]](https://www.qt.io/quality-assurance/blog/is-70-80-90-or-100-code-coverage-good-enough)；但一份跨 7 种语言、47 个项目的实证研究显示，**真实平均只有 74–76%** [[3]](https://www.qt.io/quality-assurance/blog/is-70-80-90-or-100-code-coverage-good-enough)。差距来自一个常识：超过 70–80% 之后，每多覆盖一个 branch 的边际成本陡升、缺陷捕获率反而下降，所以大多数团队默契地停在那里。⚠ 解读：边际成本与缺陷捕获曲线为行业经验，未配实证图表，此处为作者综合判断。
 

@@ -70,7 +70,7 @@ Pre-Agent 传统开发栈赚的钱集中在企业应用、电商、to-B 系统�
 
 ### 3.3 增量预算来源（⚠ 解读）
 
-⚠ **声明**：以下资金池分解为作者综合推断，仅 (c) 项有 [[7]] 直接证据。
+⚠ **声明**：以下资金池分解为作者综合推断，仅 (c) 项有 [[7]](https://www.secondtalent.com/resources/vibe-coding-statistics/) 直接证据。
 
 $4.7B (2025) → $12.3B (2027) 的 vibe coding 市场规模 [[7]](https://www.secondtalent.com/resources/vibe-coding-statistics/) 主要来自三处：
 

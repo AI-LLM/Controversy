@@ -14,13 +14,13 @@ PR approve 这一票之所以稀缺，不是因为读 diff 慢，而是因为它
 - **Review turnaround**：2024 大公司中位工程师 merge 一个 PR 约 13 小时，绝大多数时间在等 review [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；行业基线 time-to-first-review 中位 7–12h、time-to-merge 中位 24–48h [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；Google 内部 review 平均 4h [[3]](https://www.michaelagreiler.com/code-reviews-at-google/)。
 - **占工时**：Meta 内部数据显示评审是 change lead time 中**最大的延迟来源** [[4]](https://engineering.fb.com/2022/11/16/culture/meta-code-review-time-improving/)。
 
-一周 5 PR、一审 7h、一改 1–2 轮，全公司能扛住的不只是流量，是**每个判断单元的颗粒度恰好匹配人的注意力 budget**（⚠ 解读，综合 [[1]][[2]] 中位数复述）。
+一周 5 PR、一审 7h、一改 1–2 轮，全公司能扛住的不只是流量，是**每个判断单元的颗粒度恰好匹配人的注意力 budget**（⚠ 解读，综合 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer), [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround) 中位数复述）。
 
 ## 二、流量突变：写端单价掉两个数量级，信号生产成为唯一瓶颈
 
 Cursor 2025 公开的因果推断研究：把 Background Agent 设为默认工作流的公司，**周合并 PR 比对照组高 39%**（24 组实验 / 8 组对照、约 1,000 组织），未观察到 revert rate 显著上升 [[5]](https://leaddev.com/ai/cursor-claims-its-tools-are-a-massive-productivity-hack-for-devs)。Devin 2025 期间 PR merge 率从 **34% → 67%** [[6]](https://docs.devin.ai/release-notes/2026)，单实例可 24×7 不停发 PR。DORA 2024–2025：AI 把代码产出抬高约 30% 而 review 容量不变时，PR 体积变大、review 时间延长、漏检概率上升 [[7]](https://www.faros.ai/blog/key-takeaways-from-the-dora-report-2025)。
 
-把这些数字收敛成**一句论点**（作者解读，依据 [[5]][[6]][[7]]）：
+把这些数字收敛成**一句论点**（作者解读，依据 [[5]](https://leaddev.com/ai/cursor-claims-its-tools-are-a-massive-productivity-hack-for-devs), [[6]](https://docs.devin.ai/release-notes/2026), [[7]](https://www.faros.ai/blog/key-takeaways-from-the-dora-report-2025)）：
 
 > **写端的边际成本从「工程师小时」掉到「LLM tokens」——单价掉两个数量级；审端的判断仍只能由"能签字的主体"产出，单价没动。** PR 是连接两端的协议，一边指数膨胀，一边线性配额。
 
