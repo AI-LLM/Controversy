@@ -1,0 +1,1032 @@
+{
+  "schema_version": "ATIF-v1.5",
+  "session_id": "9e2ad28a-05c1-4224-adc3-1631ff120cc5",
+  "agent": {
+    "name": "claude-code",
+    "version": "2.1.141",
+    "model_name": "claude-opus-4-7",
+    "extra": {
+      "cwds": [
+        "/Users/luwei/work/Controversy"
+      ],
+      "git_branches": [
+        "agent/b3080dc8-fa9c-4ad7-bd43-4102da159f1e"
+      ]
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-05-14T16:16:39.911Z",
+      "source": "user",
+      "message": "在chat/AISW-stack/README.md中列出从GPU驱动程序到最终用户使用的Agent应用的整个软件栈，越详细越好。每层的代表软件至少3个。",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-05-14T16:16:43.835Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 16793,
+        "completion_tokens": 268,
+        "cached_tokens": 16787,
+        "extra": {
+          "cache_creation_input_tokens": 11048,
+          "cache_read_input_tokens": 16787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 11048,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 268,
+              "cache_read_input_tokens": 16787,
+              "cache_creation_input_tokens": 11048,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 11048
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 3,
+      "timestamp": "2026-05-14T16:16:46.858Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01S5PEoxPSS3ixr2HeJDgLKM",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01S5PEoxPSS3ixr2HeJDgLKM",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "ls /Users/luwei/work/Controversy/chat/ 2>/dev/null && echo \"---\" && ls /Users/luwei/work/Controversy/chat/AISW-stack/ 2>/dev/null",
+            "description": "Check directory structure"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01S5PEoxPSS3ixr2HeJDgLKM",
+            "content": "Exit code 1\nMETR Time Horizons基准任务详解 (2026-05-11)-2.md\nSDLC-stack\n美股软件股近期重挫 (2026-05-13).md\n人形机器人产量近两年为何爆发 (2026-05-13).md\n---\n\n[error] tool reported failure"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16793,
+        "completion_tokens": 268,
+        "cached_tokens": 16787,
+        "extra": {
+          "cache_creation_input_tokens": 11048,
+          "cache_read_input_tokens": 16787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 11048,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 268,
+              "cache_read_input_tokens": 16787,
+              "cache_creation_input_tokens": 11048,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 11048
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Exit code 1\nMETR Time Horizons基准任务详解 (2026-05-11)-2.md\nSDLC-stack\n美股软件股近期重挫 (2026-05-13).md\n人形机器人产量近两年为何爆发 (2026-05-13).md\n---",
+            "is_error": true,
+            "tool_use_id": "toolu_01S5PEoxPSS3ixr2HeJDgLKM"
+          }
+        },
+        "tool_result_is_error": true,
+        "metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Exit code 1\nMETR Time Horizons基准任务详解 (2026-05-11)-2.md\nSDLC-stack\n美股软件股近期重挫 (2026-05-13).md\n人形机器人产量近两年为何爆发 (2026-05-13).md\n---",
+            "is_error": true,
+            "tool_use_id": "toolu_01S5PEoxPSS3ixr2HeJDgLKM"
+          }
+        },
+        "raw_arguments": {
+          "command": "ls /Users/luwei/work/Controversy/chat/ 2>/dev/null && echo \"---\" && ls /Users/luwei/work/Controversy/chat/AISW-stack/ 2>/dev/null",
+          "description": "Check directory structure"
+        }
+      }
+    },
+    {
+      "step_id": 4,
+      "timestamp": "2026-05-14T16:16:50.462Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01BkW7gHiXE6xHN6CB7g6aSz",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01BkW7gHiXE6xHN6CB7g6aSz",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "ls /Users/luwei/work/Controversy/chat/SDLC-stack/ && echo \"---README:---\" && head -100 /Users/luwei/work/Controversy/chat/SDLC-stack/README.md",
+            "description": "Check SDLC-stack as reference"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01BkW7gHiXE6xHN6CB7g6aSz",
+            "content": "01-planning-tickets.md\n02-design-vibe-coding.md\n03-knowledge-qa.md\n04-ide-ai-editor.md\n05-coding-agent-cli.md\n06a-vcs-hosting.md\n06b-ai-review.md\n07-ci-build.md\n08-test-agents.md\n09-security-vuln.md\n10a-code-index.md\n10b-agent-interfaces.md\n11a-observability.md\n11b-error-tracking.md\n11c-incident-response.md\n12-docs-idp.md\nREADME.md\n---README:---\n# 2026-05-14：SDLC 工具栈 — Coding Agent 接入前后的逐层深度研究（索引）\n\n## 起源\n\n这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。\n\n每层使用其**自然视角**——本层的核心变量是什么就用什么。各层分析视角见下方\"各层分析视角总表\"。\n\n## 与主文件附录 III C 表的层级对应\n\n主文件 C 表 **18 行 → 本目录 16 个文件**。**L04** 和 **L05** 的产品本身跨界，合并处理（强行拆开 70% 内容重复）；其余 3 处（原 L06/L10/L11）按子层拆开。D6.6 Dev MCP servers 与\"GUI → Agent 化（产品供给侧）\"同层，统一作\"Agent 集成接口\"层处理。\n\n| 主文件 C 表行 | 本目录文件 | 备注 |\n|---|---|---|\n| D11 工单 | [`01-planning-tickets.md`](01-planning-tickets.md) | 1:1 |\n| D10 设计 | [`02-design-vibe-coding.md`](02-design-vibe-coding.md) | 含 Vibe coding 子层（C 表未单列） |\n| D9 知识 / 答疑 | [`03-knowledge-qa.md`](03-knowledge-qa.md) | 1:1 |\n| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | Cursor 既是 IDE fork 又是 AI 编辑器，合并处理 |\n| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | Claude Code 跨终端 / Devin 跨自治，边界模糊，合并处理 |\n| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | |\n| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | |\n| D4 CI/CD（含 C5 部署） | [`07-ci-build.md`](07-ci-build.md) | 含 C5（C 表未列） |\n| D3 安全扫描 | [`09-security-vuln.md`](09-security-vuln.md) | 1:1 |\n| D2 测试 | [`08-test-agents.md`](08-test-agents.md) | 1:1 |\n| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | |\n| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | 含 CLI / MCP / 浏览器 Agent 三条供给路径 |\n| O5 可观测 | [`11a-observability.md`](11a-observability.md) | |\n| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | |\n| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | |\n| M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |\n\n## 文件统计\n\n合计正文约 **6.3 万字**，~410 条 IEEE 引用，2025–2026 一手数据。能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。\n\n| # | 层 | 文件 | 字数 | 关键代表公司 |\n|---|---|---|---|---|\n| L01 | 规划 / 工单 | [01-planning-tickets.md](01-planning-tickets.md) | ~3300 | Linear、Atlassian Jira |\n| L02 | 设计 + Vibe coding | [02-design-vibe-coding.md](02-design-vibe-coding.md) | ~3400 | Lovable、Bolt.new、v0、Replit Agent |\n| L03 | 知识 / 答疑 | [03-knowledge-qa.md](03-knowledge-qa.md) | ~3500 | Stack Overflow、Context7、llms.txt |\n| L04 | IDE + AI 编辑器 | [04-ide-ai-editor.md](04-ide-ai-editor.md) | ~3000 | Cursor、Copilot、Windsurf、Zed、JetBrains |\n| L05 | 终端 / 自治 Coding Agent | [05-coding-agent-cli.md](05-coding-agent-cli.md) | ~3000 | Claude Code、Devin、Codex CLI、Aider |\n| L06a | 代码托管 | [06a-vcs-hosting.md](06a-vcs-hosting.md) | ~2800 | GitHub、GitLab、Bitbucket、Forgejo、Codeberg |\n| L06b | AI 代码评审 | [06b-ai-review.md](06b-ai-review.md) | ~2700 | CodeRabbit、Greptile、Graphite、Qodo、Pixee |\n| L07 | CI/CD + 构建 | [07-ci-build.md](07-ci-build.md) | ~3300 | namespace.so、Depot、Blacksmith、Buildkite、Dagger |\n| L08 | 测试 Agent | [08-test-agents.md](08-test-agents.md) | ~4500 | Meticulous、Qodo、Diffblue、Browserbase |\n| L09 | 安全 / 漏洞 | [09-security-vuln.md](09-security-vuln.md) | ~2800 | Socket、Snyk、Semgrep、Endor Labs、GitGuardian |\n| L10a | 代码索引 / RAG-for-code | [10a-code-index.md](10a-code-index.md) | ~2600 | Sourcegraph、Augment、Greptile、Continue、Aider |\n| L10b | **Agent 集成接口与产品供给侧改造**（MCP 协议 + CLI / MCP / 浏览器 Agent 三路径） | [10b-agent-interfaces.md](10b-agent-interfaces.md) | ~6000 | Anthropic MCP、Composio、Cloudflare AI Gateway、SAP Joule Gateway、Stripe Agent Toolkit、Anthropic Agent Skills、Computer Use、Operator、Browserbase、browser-use、Manus、Skyvern、OpenCLI、CLI-Anything、Vercel agent-browser |\n| L11a | 可观测 / 监控 | [11a-observability.md](11a-observability.md) | ~2800 | Datadog Bits AI、Honeycomb、New Relic、Splunk、Langfuse |\n| L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |\n| L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |\n| L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |\n\n## 各层分析视角总表\n\n每一层都按其**自然视角** 组织。只有 L07（CI/CD）使用任务流量分析视角；其他层流量数据降级为\"症状/旁证\"。\n\n| 层 | 自然视角 | 一句话锐度 |\n|---|---|---|\n| L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |\n| L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |\n| L03 知识答疑 | **询问对象切换 (interlocutor switch)** | 人不再问人/SO，而是问模型 + MCP 工具；新载体接口层即 llms.txt / Context7 |\n| L04 IDE + AI 编辑器 | **宿主权 → 控制台 → agent 上移 三段位移** | Cursor fork VS Code 演化为多 agent 控制台；Claude Code 从 CLI 釜底抽薪 |\n| L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |\n| L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |\n| L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |\n| L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |\n| L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |\n| L09 安全 | **攻击面双扩张 + 信任移交双视角** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |\n| L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |\n| L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |\n| L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |\n| L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是\"感官不能节流\"的产品推论 |\n| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是分析视角 |\n| L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |\n\n## 16 层一句话本质\n\n| 层 | 一句话本质 |\n|---|---|\n| **L01 工单** | 工单系统的目标函数从\"让 ticket 不丢\"换成\"让 agent 不跑偏\"；产品主索引从 UI 转向 API/schema |\n| **L02 Vibe coding** | 不切 Cursor / Copilot 的盘子，把\"以前请不起工程师的人\"变成新用户；$4.7B → $12.3B 全是增量市场 |\n| **L03 知识答疑** | 用户行为整体跳过的第一案例（不是被替代，是动作消失）——Zendesk / Intercom / Confluence / Notion 命运预演 |\n| **L04 IDE + AI 编辑器** | VS Code 是宿主级护城河；Cursor 的 $50B 押的是企业 control plane 而非补全；IDE 正被 agent 从上方釜底抽薪 |\n| **L05 终端 / 自治 Agent** | CLI agent = \"unix 进程化的开发者\"——可 headless、可 SSH/CI/cron 才是真正护城河；Copilot 在这层失去全部飞轮 |\n| **L06a 代码托管** | GitHub 四占（仓库 + Copilot + VS Code + Azure）反脆弱；GitLab 一站式叙事被 best-of-breed 解构（GTLB −33%）|\n| **L06b AI 评审** | \"PR\" 抽象语义正在迁移；人退到策略层；trust score / AI-PR 标记将被 EU AI Act 推上合规层 |\n| **L07 CI/CD** | 流量模式重写——PR 合并 +98%、单工程师日 build 5→30-80、夜间 build 占比 10%→35%；价值向 merge queue + ephemeral compute 外溢 |\n| **L08 测试** | 单测层会被 Coding Agent 吃掉；护城河 = 拥有与代码作者独立的 oracle（用户流量、形式化规格、业务知识基线）|\n| **L09 安全** | D3 是 SaaSpocalypse 中**结构性增长板块**；安全从年度审计变 per-PR 必经；behavioral integrity 是下一个未解问题 |\n| **L10a 代码索引** | 大上下文 (Augment) vs 经典 IR+embedding (Sourcegraph) 双路线，分界线 50k / 400k 文件；Sourcegraph 2025-07 砍 Cody Free/Pro 转推 Amp 是行业转向信号 |\n| **L10b Agent 集成接口** | MCP 把\"集成\"商品化；2025 自动化流量首次过半（Imperva 51%、HUMAN agentic AI +7851% YoY），SaaS 三选一：CLI / 产品 MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变收入中心；**双轨制**——vendor 主动（Stripe Agent Toolkit、Anthropic Skills、SAP Joule Gateway）vs 第三方社区强 wrap（OpenCLI、CLI-Anything 21K stars、Vercel agent-browser）|\n| **L11a 可观测** | Coding Agent 时代少数显著扩张的中间层；下一代 monitoring 四元组 = metrics/logs/traces/**agent traces** |\n| **L11b 错误追踪** | Sentry Seer 是 \"error → root cause → fix PR\" 闭环范本；error tracking 工具变成 agent 的修复入口 |\n| **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|\n| **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |\n\n## 跨层主线（6 条贯穿整个 dev 栈的规律）\n\n[stdout]\n01-planning-tickets.md\n02-design-vibe-coding.md\n03-knowledge-qa.md\n04-ide-ai-editor.md\n05-coding-agent-cli.md\n06a-vcs-hosting.md\n06b-ai-review.md\n07-ci-build.md\n08-test-agents.md\n09-security-vuln.md\n10a-code-index.md\n10b-agent-interfaces.md\n11a-observability.md\n11b-error-tracking.md\n11c-incident-response.md\n12-docs-idp.md\nREADME.md\n---README:---\n# 2026-05-14：SDLC 工具栈 — Coding Agent 接入前后的逐层深度研究（索引）\n\n## 起源\n\n这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。\n\n每层使用其**自然视角**——本层的核心变量是什么就用什么。各层分析视角见下方\"各层分析视角总表\"。\n\n## 与主文件附录 III C 表的层级对应\n\n主文件 C 表 **18 行 → 本目录 16 个文件**。**L04** 和 **L05** 的产品本身跨界，合并处理（强行拆开 70% 内容重复）；其余 3 处（原 L06/L10/L11）按子层拆开。D6.6 Dev MCP servers 与\"GUI → Agent 化（产品供给侧）\"同层，统一作\"Agent 集成接口\"层处理。\n\n| 主文件 C 表行 | 本目录文件 | 备注 |\n|---|---|---|\n| D11 工单 | [`01-planning-tickets.md`](01-planning-tickets.md) | 1:1 |\n| D10 设计 | [`02-design-vibe-coding.md`](02-design-vibe-coding.md) | 含 Vibe coding 子层（C 表未单列） |\n| D9 知识 / 答疑 | [`03-knowledge-qa.md`](03-knowledge-qa.md) | 1:1 |\n| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | Cursor 既是 IDE fork 又是 AI 编辑器，合并处理 |\n| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | Claude Code 跨终端 / Devin 跨自治，边界模糊，合并处理 |\n| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | |\n| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | |\n| D4 CI/CD（含 C5 部署） | [`07-ci-build.md`](07-ci-build.md) | 含 C5（C 表未列） |\n| D3 安全扫描 | [`09-security-vuln.md`](09-security-vuln.md) | 1:1 |\n| D2 测试 | [`08-test-agents.md`](08-test-agents.md) | 1:1 |\n| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | |\n| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | 含 CLI / MCP / 浏览器 Agent 三条供给路径 |\n| O5 可观测 | [`11a-observability.md`](11a-observability.md) | |\n| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | |\n| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | |\n| M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |\n\n## 文件统计\n\n合计正文约 **6.3 万字**，~410 条 IEEE 引用，2025–2026 一手数据。能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。\n\n| # | 层 | 文件 | 字数 | 关键代表公司 |\n|---|---|---|---|---|\n| L01 | 规划 / 工单 | [01-planning-tickets.md](01-planning-tickets.md) | ~3300 | Linear、Atlassian Jira |\n| L02 | 设计 + Vibe coding | [02-design-vibe-coding.md](02-design-vibe-coding.md) | ~3400 | Lovable、Bolt.new、v0、Replit Agent |\n| L03 | 知识 / 答疑 | [03-knowledge-qa.md](03-knowledge-qa.md) | ~3500 | Stack Overflow、Context7、llms.txt |\n| L04 | IDE + AI 编辑器 | [04-ide-ai-editor.md](04-ide-ai-editor.md) | ~3000 | Cursor、Copilot、Windsurf、Zed、JetBrains |\n| L05 | 终端 / 自治 Coding Agent | [05-coding-agent-cli.md](05-coding-agent-cli.md) | ~3000 | Claude Code、Devin、Codex CLI、Aider |\n| L06a | 代码托管 | [06a-vcs-hosting.md](06a-vcs-hosting.md) | ~2800 | GitHub、GitLab、Bitbucket、Forgejo、Codeberg |\n| L06b | AI 代码评审 | [06b-ai-review.md](06b-ai-review.md) | ~2700 | CodeRabbit、Greptile、Graphite、Qodo、Pixee |\n| L07 | CI/CD + 构建 | [07-ci-build.md](07-ci-build.md) | ~3300 | namespace.so、Depot、Blacksmith、Buildkite、Dagger |\n| L08 | 测试 Agent | [08-test-agents.md](08-test-agents.md) | ~4500 | Meticulous、Qodo、Diffblue、Browserbase |\n| L09 | 安全 / 漏洞 | [09-security-vuln.md](09-security-vuln.md) | ~2800 | Socket、Snyk、Semgrep、Endor Labs、GitGuardian |\n| L10a | 代码索引 / RAG-for-code | [10a-code-index.md](10a-code-index.md) | ~2600 | Sourcegraph、Augment、Greptile、Continue、Aider |\n| L10b | **Agent 集成接口与产品供给侧改造**（MCP 协议 + CLI / MCP / 浏览器 Agent 三路径） | [10b-agent-interfaces.md](10b-agent-interfaces.md) | ~6000 | Anthropic MCP、Composio、Cloudflare AI Gateway、SAP Joule Gateway、Stripe Agent Toolkit、Anthropic Agent Skills、Computer Use、Operator、Browserbase、browser-use、Manus、Skyvern、OpenCLI、CLI-Anything、Vercel agent-browser |\n| L11a | 可观测 / 监控 | [11a-observability.md](11a-observability.md) | ~2800 | Datadog Bits AI、Honeycomb、New Relic、Splunk、Langfuse |\n| L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |\n| L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |\n| L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |\n\n## 各层分析视角总表\n\n每一层都按其**自然视角** 组织。只有 L07（CI/CD）使用任务流量分析视角；其他层流量数据降级为\"症状/旁证\"。\n\n| 层 | 自然视角 | 一句话锐度 |\n|---|---|---|\n| L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |\n| L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |\n| L03 知识答疑 | **询问对象切换 (interlocutor switch)** | 人不再问人/SO，而是问模型 + MCP 工具；新载体接口层即 llms.txt / Context7 |\n| L04 IDE + AI 编辑器 | **宿主权 → 控制台 → agent 上移 三段位移** | Cursor fork VS Code 演化为多 agent 控制台；Claude Code 从 CLI 釜底抽薪 |\n| L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |\n| L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |\n| L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |\n| L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |\n| L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |\n| L09 安全 | **攻击面双扩张 + 信任移交双视角** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |\n| L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |\n| L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |\n| L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |\n| L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是\"感官不能节流\"的产品推论 |\n| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是分析视角 |\n| L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |\n\n## 16 层一句话本质\n\n| 层 | 一句话本质 |\n|---|---|\n| **L01 工单** | 工单系统的目标函数从\"让 ticket 不丢\"换成\"让 agent 不跑偏\"；产品主索引从 UI 转向 API/schema |\n| **L02 Vibe coding** | 不切 Cursor / Copilot 的盘子，把\"以前请不起工程师的人\"变成新用户；$4.7B → $12.3B 全是增量市场 |\n| **L03 知识答疑** | 用户行为整体跳过的第一案例（不是被替代，是动作消失）——Zendesk / Intercom / Confluence / Notion 命运预演 |\n| **L04 IDE + AI 编辑器** | VS Code 是宿主级护城河；Cursor 的 $50B 押的是企业 control plane 而非补全；IDE 正被 agent 从上方釜底抽薪 |\n| **L05 终端 / 自治 Agent** | CLI agent = \"unix 进程化的开发者\"——可 headless、可 SSH/CI/cron 才是真正护城河；Copilot 在这层失去全部飞轮 |\n| **L06a 代码托管** | GitHub 四占（仓库 + Copilot + VS Code + Azure）反脆弱；GitLab 一站式叙事被 best-of-breed 解构（GTLB −33%）|\n| **L06b AI 评审** | \"PR\" 抽象语义正在迁移；人退到策略层；trust score / AI-PR 标记将被 EU AI Act 推上合规层 |\n| **L07 CI/CD** | 流量模式重写——PR 合并 +98%、单工程师日 build 5→30-80、夜间 build 占比 10%→35%；价值向 merge queue + ephemeral compute 外溢 |\n| **L08 测试** | 单测层会被 Coding Agent 吃掉；护城河 = 拥有与代码作者独立的 oracle（用户流量、形式化规格、业务知识基线）|\n| **L09 安全** | D3 是 SaaSpocalypse 中**结构性增长板块**；安全从年度审计变 per-PR 必经；behavioral integrity 是下一个未解问题 |\n| **L10a 代码索引** | 大上下文 (Augment) vs 经典 IR+embedding (Sourcegraph) 双路线，分界线 50k / 400k 文件；Sourcegraph 2025-07 砍 Cody Free/Pro 转推 Amp 是行业转向信号 |\n| **L10b Agent 集成接口** | MCP 把\"集成\"商品化；2025 自动化流量首次过半（Imperva 51%、HUMAN agentic AI +7851% YoY），SaaS 三选一：CLI / 产品 MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变收入中心；**双轨制**——vendor 主动（Stripe Agent Toolkit、Anthropic Skills、SAP Joule Gateway）vs 第三方社区强 wrap（OpenCLI、CLI-Anything 21K stars、Vercel agent-browser）|\n| **L11a 可观测** | Coding Agent 时代少数显著扩张的中间层；下一代 monitoring 四元组 = metrics/logs/traces/**agent traces** |\n| **L11b 错误追踪** | Sentry Seer 是 \"error → root cause → fix PR\" 闭环范本；error tracking 工具变成 agent 的修复入口 |\n| **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|\n| **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |\n\n## 跨层主线（6 条贯穿整个 dev 栈的规律）\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 27836,
+        "completion_tokens": 166,
+        "cached_tokens": 27835,
+        "extra": {
+          "cache_creation_input_tokens": 384,
+          "cache_read_input_tokens": 27835,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 384,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 166,
+              "cache_read_input_tokens": 27835,
+              "cache_creation_input_tokens": 384,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 384
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "01-planning-tickets.md\n02-design-vibe-coding.md\n03-knowledge-qa.md\n04-ide-ai-editor.md\n05-coding-agent-cli.md\n06a-vcs-hosting.md\n06b-ai-review.md\n07-ci-build.md\n08-test-agents.md\n09-security-vuln.md\n10a-code-index.md\n10b-agent-interfaces.md\n11a-observability.md\n11b-error-tracking.md\n11c-incident-response.md\n12-docs-idp.md\nREADME.md\n---README:---\n# 2026-05-14：SDLC 工具栈 — Coding Agent 接入前后的逐层深度研究（索引）\n\n## 起源\n\n这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。\n\n每层使用其**自然视角**——本层的核心变量是什么就用什么。各层分析视角见下方\"各层分析视角总表\"。\n\n## 与主文件附录 III C 表的层级对应\n\n主文件 C 表 **18 行 → 本目录 16 个文件**。**L04** 和 **L05** 的产品本身跨界，合并处理（强行拆开 70% 内容重复）；其余 3 处（原 L06/L10/L11）按子层拆开。D6.6 Dev MCP servers 与\"GUI → Agent 化（产品供给侧）\"同层，统一作\"Agent 集成接口\"层处理。\n\n| 主文件 C 表行 | 本目录文件 | 备注 |\n|---|---|---|\n| D11 工单 | [`01-planning-tickets.md`](01-planning-tickets.md) | 1:1 |\n| D10 设计 | [`02-design-vibe-coding.md`](02-design-vibe-coding.md) | 含 Vibe coding 子层（C 表未单列） |\n| D9 知识 / 答疑 | [`03-knowledge-qa.md`](03-knowledge-qa.md) | 1:1 |\n| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | Cursor 既是 IDE fork 又是 AI 编辑器，合并处理 |\n| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | Claude Code 跨终端 / Devin 跨自治，边界模糊，合并处理 |\n| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | |\n| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | |\n| D4 CI/CD（含 C5 部署） | [`07-ci-build.md`](07-ci-build.md) | 含 C5（C 表未列） |\n| D3 安全扫描 | [`09-security-vuln.md`](09-security-vuln.md) | 1:1 |\n| D2 测试 | [`08-test-agents.md`](08-test-agents.md) | 1:1 |\n| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | |\n| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | 含 CLI / MCP / 浏览器 Agent 三条供给路径 |\n| O5 可观测 | [`11a-observability.md`](11a-observability.md) | |\n| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | |\n| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | |\n| M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |\n\n## 文件统计\n\n合计正文约 **6.3 万字**，~410 条 IEEE 引用，2025–2026 一手数据。能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。\n\n| # | 层 | 文件 | 字数 | 关键代表公司 |\n|---|---|---|---|---|\n| L01 | 规划 / 工单 | [01-planning-tickets.md](01-planning-tickets.md) | ~3300 | Linear、Atlassian Jira |\n| L02 | 设计 + Vibe coding | [02-design-vibe-coding.md](02-design-vibe-coding.md) | ~3400 | Lovable、Bolt.new、v0、Replit Agent |\n| L03 | 知识 / 答疑 | [03-knowledge-qa.md](03-knowledge-qa.md) | ~3500 | Stack Overflow、Context7、llms.txt |\n| L04 | IDE + AI 编辑器 | [04-ide-ai-editor.md](04-ide-ai-editor.md) | ~3000 | Cursor、Copilot、Windsurf、Zed、JetBrains |\n| L05 | 终端 / 自治 Coding Agent | [05-coding-agent-cli.md](05-coding-agent-cli.md) | ~3000 | Claude Code、Devin、Codex CLI、Aider |\n| L06a | 代码托管 | [06a-vcs-hosting.md](06a-vcs-hosting.md) | ~2800 | GitHub、GitLab、Bitbucket、Forgejo、Codeberg |\n| L06b | AI 代码评审 | [06b-ai-review.md](06b-ai-review.md) | ~2700 | CodeRabbit、Greptile、Graphite、Qodo、Pixee |\n| L07 | CI/CD + 构建 | [07-ci-build.md](07-ci-build.md) | ~3300 | namespace.so、Depot、Blacksmith、Buildkite、Dagger |\n| L08 | 测试 Agent | [08-test-agents.md](08-test-agents.md) | ~4500 | Meticulous、Qodo、Diffblue、Browserbase |\n| L09 | 安全 / 漏洞 | [09-security-vuln.md](09-security-vuln.md) | ~2800 | Socket、Snyk、Semgrep、Endor Labs、GitGuardian |\n| L10a | 代码索引 / RAG-for-code | [10a-code-index.md](10a-code-index.md) | ~2600 | Sourcegraph、Augment、Greptile、Continue、Aider |\n| L10b | **Agent 集成接口与产品供给侧改造**（MCP 协议 + CLI / MCP / 浏览器 Agent 三路径） | [10b-agent-interfaces.md](10b-agent-interfaces.md) | ~6000 | Anthropic MCP、Composio、Cloudflare AI Gateway、SAP Joule Gateway、Stripe Agent Toolkit、Anthropic Agent Skills、Computer Use、Operator、Browserbase、browser-use、Manus、Skyvern、OpenCLI、CLI-Anything、Vercel agent-browser |\n| L11a | 可观测 / 监控 | [11a-observability.md](11a-observability.md) | ~2800 | Datadog Bits AI、Honeycomb、New Relic、Splunk、Langfuse |\n| L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |\n| L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |\n| L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |\n\n## 各层分析视角总表\n\n每一层都按其**自然视角** 组织。只有 L07（CI/CD）使用任务流量分析视角；其他层流量数据降级为\"症状/旁证\"。\n\n| 层 | 自然视角 | 一句话锐度 |\n|---|---|---|\n| L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |\n| L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |\n| L03 知识答疑 | **询问对象切换 (interlocutor switch)** | 人不再问人/SO，而是问模型 + MCP 工具；新载体接口层即 llms.txt / Context7 |\n| L04 IDE + AI 编辑器 | **宿主权 → 控制台 → agent 上移 三段位移** | Cursor fork VS Code 演化为多 agent 控制台；Claude Code 从 CLI 釜底抽薪 |\n| L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |\n| L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |\n| L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |\n| L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |\n| L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |\n| L09 安全 | **攻击面双扩张 + 信任移交双视角** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |\n| L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |\n| L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |\n| L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |\n| L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是\"感官不能节流\"的产品推论 |\n| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是分析视角 |\n| L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |\n\n## 16 层一句话本质\n\n| 层 | 一句话本质 |\n|---|---|\n| **L01 工单** | 工单系统的目标函数从\"让 ticket 不丢\"换成\"让 agent 不跑偏\"；产品主索引从 UI 转向 API/schema |\n| **L02 Vibe coding** | 不切 Cursor / Copilot 的盘子，把\"以前请不起工程师的人\"变成新用户；$4.7B → $12.3B 全是增量市场 |\n| **L03 知识答疑** | 用户行为整体跳过的第一案例（不是被替代，是动作消失）——Zendesk / Intercom / Confluence / Notion 命运预演 |\n| **L04 IDE + AI 编辑器** | VS Code 是宿主级护城河；Cursor 的 $50B 押的是企业 control plane 而非补全；IDE 正被 agent 从上方釜底抽薪 |\n| **L05 终端 / 自治 Agent** | CLI agent = \"unix 进程化的开发者\"——可 headless、可 SSH/CI/cron 才是真正护城河；Copilot 在这层失去全部飞轮 |\n| **L06a 代码托管** | GitHub 四占（仓库 + Copilot + VS Code + Azure）反脆弱；GitLab 一站式叙事被 best-of-breed 解构（GTLB −33%）|\n| **L06b AI 评审** | \"PR\" 抽象语义正在迁移；人退到策略层；trust score / AI-PR 标记将被 EU AI Act 推上合规层 |\n| **L07 CI/CD** | 流量模式重写——PR 合并 +98%、单工程师日 build 5→30-80、夜间 build 占比 10%→35%；价值向 merge queue + ephemeral compute 外溢 |\n| **L08 测试** | 单测层会被 Coding Agent 吃掉；护城河 = 拥有与代码作者独立的 oracle（用户流量、形式化规格、业务知识基线）|\n| **L09 安全** | D3 是 SaaSpocalypse 中**结构性增长板块**；安全从年度审计变 per-PR 必经；behavioral integrity 是下一个未解问题 |\n| **L10a 代码索引** | 大上下文 (Augment) vs 经典 IR+embedding (Sourcegraph) 双路线，分界线 50k / 400k 文件；Sourcegraph 2025-07 砍 Cody Free/Pro 转推 Amp 是行业转向信号 |\n| **L10b Agent 集成接口** | MCP 把\"集成\"商品化；2025 自动化流量首次过半（Imperva 51%、HUMAN agentic AI +7851% YoY），SaaS 三选一：CLI / 产品 MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变收入中心；**双轨制**——vendor 主动（Stripe Agent Toolkit、Anthropic Skills、SAP Joule Gateway）vs 第三方社区强 wrap（OpenCLI、CLI-Anything 21K stars、Vercel agent-browser）|\n| **L11a 可观测** | Coding Agent 时代少数显著扩张的中间层；下一代 monitoring 四元组 = metrics/logs/traces/**agent traces** |\n| **L11b 错误追踪** | Sentry Seer 是 \"error → root cause → fix PR\" 闭环范本；error tracking 工具变成 agent 的修复入口 |\n| **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|\n| **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |\n\n## 跨层主线（6 条贯穿整个 dev 栈的规律）",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01BkW7gHiXE6xHN6CB7g6aSz",
+            "type": "tool_result",
+            "content": "01-planning-tickets.md\n02-design-vibe-coding.md\n03-knowledge-qa.md\n04-ide-ai-editor.md\n05-coding-agent-cli.md\n06a-vcs-hosting.md\n06b-ai-review.md\n07-ci-build.md\n08-test-agents.md\n09-security-vuln.md\n10a-code-index.md\n10b-agent-interfaces.md\n11a-observability.md\n11b-error-tracking.md\n11c-incident-response.md\n12-docs-idp.md\nREADME.md\n---README:---\n# 2026-05-14：SDLC 工具栈 — Coding Agent 接入前后的逐层深度研究（索引）\n\n## 起源\n\n这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。\n\n每层使用其**自然视角**——本层的核心变量是什么就用什么。各层分析视角见下方\"各层分析视角总表\"。\n\n## 与主文件附录 III C 表的层级对应\n\n主文件 C 表 **18 行 → 本目录 16 个文件**。**L04** 和 **L05** 的产品本身跨界，合并处理（强行拆开 70% 内容重复）；其余 3 处（原 L06/L10/L11）按子层拆开。D6.6 Dev MCP servers 与\"GUI → Agent 化（产品供给侧）\"同层，统一作\"Agent 集成接口\"层处理。\n\n| 主文件 C 表行 | 本目录文件 | 备注 |\n|---|---|---|\n| D11 工单 | [`01-planning-tickets.md`](01-planning-tickets.md) | 1:1 |\n| D10 设计 | [`02-design-vibe-coding.md`](02-design-vibe-coding.md) | 含 Vibe coding 子层（C 表未单列） |\n| D9 知识 / 答疑 | [`03-knowledge-qa.md`](03-knowledge-qa.md) | 1:1 |\n| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | Cursor 既是 IDE fork 又是 AI 编辑器，合并处理 |\n| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | Claude Code 跨终端 / Devin 跨自治，边界模糊，合并处理 |\n| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | |\n| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | |\n| D4 CI/CD（含 C5 部署） | [`07-ci-build.md`](07-ci-build.md) | 含 C5（C 表未列） |\n| D3 安全扫描 | [`09-security-vuln.md`](09-security-vuln.md) | 1:1 |\n| D2 测试 | [`08-test-agents.md`](08-test-agents.md) | 1:1 |\n| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | |\n| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | 含 CLI / MCP / 浏览器 Agent 三条供给路径 |\n| O5 可观测 | [`11a-observability.md`](11a-observability.md) | |\n| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | |\n| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | |\n| M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |\n\n## 文件统计\n\n合计正文约 **6.3 万字**，~410 条 IEEE 引用，2025–2026 一手数据。能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。\n\n| # | 层 | 文件 | 字数 | 关键代表公司 |\n|---|---|---|---|---|\n| L01 | 规划 / 工单 | [01-planning-tickets.md](01-planning-tickets.md) | ~3300 | Linear、Atlassian Jira |\n| L02 | 设计 + Vibe coding | [02-design-vibe-coding.md](02-design-vibe-coding.md) | ~3400 | Lovable、Bolt.new、v0、Replit Agent |\n| L03 | 知识 / 答疑 | [03-knowledge-qa.md](03-knowledge-qa.md) | ~3500 | Stack Overflow、Context7、llms.txt |\n| L04 | IDE + AI 编辑器 | [04-ide-ai-editor.md](04-ide-ai-editor.md) | ~3000 | Cursor、Copilot、Windsurf、Zed、JetBrains |\n| L05 | 终端 / 自治 Coding Agent | [05-coding-agent-cli.md](05-coding-agent-cli.md) | ~3000 | Claude Code、Devin、Codex CLI、Aider |\n| L06a | 代码托管 | [06a-vcs-hosting.md](06a-vcs-hosting.md) | ~2800 | GitHub、GitLab、Bitbucket、Forgejo、Codeberg |\n| L06b | AI 代码评审 | [06b-ai-review.md](06b-ai-review.md) | ~2700 | CodeRabbit、Greptile、Graphite、Qodo、Pixee |\n| L07 | CI/CD + 构建 | [07-ci-build.md](07-ci-build.md) | ~3300 | namespace.so、Depot、Blacksmith、Buildkite、Dagger |\n| L08 | 测试 Agent | [08-test-agents.md](08-test-agents.md) | ~4500 | Meticulous、Qodo、Diffblue、Browserbase |\n| L09 | 安全 / 漏洞 | [09-security-vuln.md](09-security-vuln.md) | ~2800 | Socket、Snyk、Semgrep、Endor Labs、GitGuardian |\n| L10a | 代码索引 / RAG-for-code | [10a-code-index.md](10a-code-index.md) | ~2600 | Sourcegraph、Augment、Greptile、Continue、Aider |\n| L10b | **Agent 集成接口与产品供给侧改造**（MCP 协议 + CLI / MCP / 浏览器 Agent 三路径） | [10b-agent-interfaces.md](10b-agent-interfaces.md) | ~6000 | Anthropic MCP、Composio、Cloudflare AI Gateway、SAP Joule Gateway、Stripe Agent Toolkit、Anthropic Agent Skills、Computer Use、Operator、Browserbase、browser-use、Manus、Skyvern、OpenCLI、CLI-Anything、Vercel agent-browser |\n| L11a | 可观测 / 监控 | [11a-observability.md](11a-observability.md) | ~2800 | Datadog Bits AI、Honeycomb、New Relic、Splunk、Langfuse |\n| L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |\n| L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |\n| L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |\n\n## 各层分析视角总表\n\n每一层都按其**自然视角** 组织。只有 L07（CI/CD）使用任务流量分析视角；其他层流量数据降级为\"症状/旁证\"。\n\n| 层 | 自然视角 | 一句话锐度 |\n|---|---|---|\n| L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |\n| L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |\n| L03 知识答疑 | **询问对象切换 (interlocutor switch)** | 人不再问人/SO，而是问模型 + MCP 工具；新载体接口层即 llms.txt / Context7 |\n| L04 IDE + AI 编辑器 | **宿主权 → 控制台 → agent 上移 三段位移** | Cursor fork VS Code 演化为多 agent 控制台；Claude Code 从 CLI 釜底抽薪 |\n| L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |\n| L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |\n| L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |\n| L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |\n| L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |\n| L09 安全 | **攻击面双扩张 + 信任移交双视角** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |\n| L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |\n| L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |\n| L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |\n| L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是\"感官不能节流\"的产品推论 |\n| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是分析视角 |\n| L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |\n\n## 16 层一句话本质\n\n| 层 | 一句话本质 |\n|---|---|\n| **L01 工单** | 工单系统的目标函数从\"让 ticket 不丢\"换成\"让 agent 不跑偏\"；产品主索引从 UI 转向 API/schema |\n| **L02 Vibe coding** | 不切 Cursor / Copilot 的盘子，把\"以前请不起工程师的人\"变成新用户；$4.7B → $12.3B 全是增量市场 |\n| **L03 知识答疑** | 用户行为整体跳过的第一案例（不是被替代，是动作消失）——Zendesk / Intercom / Confluence / Notion 命运预演 |\n| **L04 IDE + AI 编辑器** | VS Code 是宿主级护城河；Cursor 的 $50B 押的是企业 control plane 而非补全；IDE 正被 agent 从上方釜底抽薪 |\n| **L05 终端 / 自治 Agent** | CLI agent = \"unix 进程化的开发者\"——可 headless、可 SSH/CI/cron 才是真正护城河；Copilot 在这层失去全部飞轮 |\n| **L06a 代码托管** | GitHub 四占（仓库 + Copilot + VS Code + Azure）反脆弱；GitLab 一站式叙事被 best-of-breed 解构（GTLB −33%）|\n| **L06b AI 评审** | \"PR\" 抽象语义正在迁移；人退到策略层；trust score / AI-PR 标记将被 EU AI Act 推上合规层 |\n| **L07 CI/CD** | 流量模式重写——PR 合并 +98%、单工程师日 build 5→30-80、夜间 build 占比 10%→35%；价值向 merge queue + ephemeral compute 外溢 |\n| **L08 测试** | 单测层会被 Coding Agent 吃掉；护城河 = 拥有与代码作者独立的 oracle（用户流量、形式化规格、业务知识基线）|\n| **L09 安全** | D3 是 SaaSpocalypse 中**结构性增长板块**；安全从年度审计变 per-PR 必经；behavioral integrity 是下一个未解问题 |\n| **L10a 代码索引** | 大上下文 (Augment) vs 经典 IR+embedding (Sourcegraph) 双路线，分界线 50k / 400k 文件；Sourcegraph 2025-07 砍 Cody Free/Pro 转推 Amp 是行业转向信号 |\n| **L10b Agent 集成接口** | MCP 把\"集成\"商品化；2025 自动化流量首次过半（Imperva 51%、HUMAN agentic AI +7851% YoY），SaaS 三选一：CLI / 产品 MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变收入中心；**双轨制**——vendor 主动（Stripe Agent Toolkit、Anthropic Skills、SAP Joule Gateway）vs 第三方社区强 wrap（OpenCLI、CLI-Anything 21K stars、Vercel agent-browser）|\n| **L11a 可观测** | Coding Agent 时代少数显著扩张的中间层；下一代 monitoring 四元组 = metrics/logs/traces/**agent traces** |\n| **L11b 错误追踪** | Sentry Seer 是 \"error → root cause → fix PR\" 闭环范本；error tracking 工具变成 agent 的修复入口 |\n| **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|\n| **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |\n\n## 跨层主线（6 条贯穿整个 dev 栈的规律）",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "01-planning-tickets.md\n02-design-vibe-coding.md\n03-knowledge-qa.md\n04-ide-ai-editor.md\n05-coding-agent-cli.md\n06a-vcs-hosting.md\n06b-ai-review.md\n07-ci-build.md\n08-test-agents.md\n09-security-vuln.md\n10a-code-index.md\n10b-agent-interfaces.md\n11a-observability.md\n11b-error-tracking.md\n11c-incident-response.md\n12-docs-idp.md\nREADME.md\n---README:---\n# 2026-05-14：SDLC 工具栈 — Coding Agent 接入前后的逐层深度研究（索引）\n\n## 起源\n\n这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。\n\n每层使用其**自然视角**——本层的核心变量是什么就用什么。各层分析视角见下方\"各层分析视角总表\"。\n\n## 与主文件附录 III C 表的层级对应\n\n主文件 C 表 **18 行 → 本目录 16 个文件**。**L04** 和 **L05** 的产品本身跨界，合并处理（强行拆开 70% 内容重复）；其余 3 处（原 L06/L10/L11）按子层拆开。D6.6 Dev MCP servers 与\"GUI → Agent 化（产品供给侧）\"同层，统一作\"Agent 集成接口\"层处理。\n\n| 主文件 C 表行 | 本目录文件 | 备注 |\n|---|---|---|\n| D11 工单 | [`01-planning-tickets.md`](01-planning-tickets.md) | 1:1 |\n| D10 设计 | [`02-design-vibe-coding.md`](02-design-vibe-coding.md) | 含 Vibe coding 子层（C 表未单列） |\n| D9 知识 / 答疑 | [`03-knowledge-qa.md`](03-knowledge-qa.md) | 1:1 |\n| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | Cursor 既是 IDE fork 又是 AI 编辑器，合并处理 |\n| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | Claude Code 跨终端 / Devin 跨自治，边界模糊，合并处理 |\n| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | |\n| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | |\n| D4 CI/CD（含 C5 部署） | [`07-ci-build.md`](07-ci-build.md) | 含 C5（C 表未列） |\n| D3 安全扫描 | [`09-security-vuln.md`](09-security-vuln.md) | 1:1 |\n| D2 测试 | [`08-test-agents.md`](08-test-agents.md) | 1:1 |\n| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | |\n| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | 含 CLI / MCP / 浏览器 Agent 三条供给路径 |\n| O5 可观测 | [`11a-observability.md`](11a-observability.md) | |\n| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | |\n| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | |\n| M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |\n\n## 文件统计\n\n合计正文约 **6.3 万字**，~410 条 IEEE 引用，2025–2026 一手数据。能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。\n\n| # | 层 | 文件 | 字数 | 关键代表公司 |\n|---|---|---|---|---|\n| L01 | 规划 / 工单 | [01-planning-tickets.md](01-planning-tickets.md) | ~3300 | Linear、Atlassian Jira |\n| L02 | 设计 + Vibe coding | [02-design-vibe-coding.md](02-design-vibe-coding.md) | ~3400 | Lovable、Bolt.new、v0、Replit Agent |\n| L03 | 知识 / 答疑 | [03-knowledge-qa.md](03-knowledge-qa.md) | ~3500 | Stack Overflow、Context7、llms.txt |\n| L04 | IDE + AI 编辑器 | [04-ide-ai-editor.md](04-ide-ai-editor.md) | ~3000 | Cursor、Copilot、Windsurf、Zed、JetBrains |\n| L05 | 终端 / 自治 Coding Agent | [05-coding-agent-cli.md](05-coding-agent-cli.md) | ~3000 | Claude Code、Devin、Codex CLI、Aider |\n| L06a | 代码托管 | [06a-vcs-hosting.md](06a-vcs-hosting.md) | ~2800 | GitHub、GitLab、Bitbucket、Forgejo、Codeberg |\n| L06b | AI 代码评审 | [06b-ai-review.md](06b-ai-review.md) | ~2700 | CodeRabbit、Greptile、Graphite、Qodo、Pixee |\n| L07 | CI/CD + 构建 | [07-ci-build.md](07-ci-build.md) | ~3300 | namespace.so、Depot、Blacksmith、Buildkite、Dagger |\n| L08 | 测试 Agent | [08-test-agents.md](08-test-agents.md) | ~4500 | Meticulous、Qodo、Diffblue、Browserbase |\n| L09 | 安全 / 漏洞 | [09-security-vuln.md](09-security-vuln.md) | ~2800 | Socket、Snyk、Semgrep、Endor Labs、GitGuardian |\n| L10a | 代码索引 / RAG-for-code | [10a-code-index.md](10a-code-index.md) | ~2600 | Sourcegraph、Augment、Greptile、Continue、Aider |\n| L10b | **Agent 集成接口与产品供给侧改造**（MCP 协议 + CLI / MCP / 浏览器 Agent 三路径） | [10b-agent-interfaces.md](10b-agent-interfaces.md) | ~6000 | Anthropic MCP、Composio、Cloudflare AI Gateway、SAP Joule Gateway、Stripe Agent Toolkit、Anthropic Agent Skills、Computer Use、Operator、Browserbase、browser-use、Manus、Skyvern、OpenCLI、CLI-Anything、Vercel agent-browser |\n| L11a | 可观测 / 监控 | [11a-observability.md](11a-observability.md) | ~2800 | Datadog Bits AI、Honeycomb、New Relic、Splunk、Langfuse |\n| L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |\n| L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |\n| L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |\n\n## 各层分析视角总表\n\n每一层都按其**自然视角** 组织。只有 L07（CI/CD）使用任务流量分析视角；其他层流量数据降级为\"症状/旁证\"。\n\n| 层 | 自然视角 | 一句话锐度 |\n|---|---|---|\n| L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |\n| L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |\n| L03 知识答疑 | **询问对象切换 (interlocutor switch)** | 人不再问人/SO，而是问模型 + MCP 工具；新载体接口层即 llms.txt / Context7 |\n| L04 IDE + AI 编辑器 | **宿主权 → 控制台 → agent 上移 三段位移** | Cursor fork VS Code 演化为多 agent 控制台；Claude Code 从 CLI 釜底抽薪 |\n| L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |\n| L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |\n| L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |\n| L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |\n| L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |\n| L09 安全 | **攻击面双扩张 + 信任移交双视角** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |\n| L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |\n| L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |\n| L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |\n| L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是\"感官不能节流\"的产品推论 |\n| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是分析视角 |\n| L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |\n\n## 16 层一句话本质\n\n| 层 | 一句话本质 |\n|---|---|\n| **L01 工单** | 工单系统的目标函数从\"让 ticket 不丢\"换成\"让 agent 不跑偏\"；产品主索引从 UI 转向 API/schema |\n| **L02 Vibe coding** | 不切 Cursor / Copilot 的盘子，把\"以前请不起工程师的人\"变成新用户；$4.7B → $12.3B 全是增量市场 |\n| **L03 知识答疑** | 用户行为整体跳过的第一案例（不是被替代，是动作消失）——Zendesk / Intercom / Confluence / Notion 命运预演 |\n| **L04 IDE + AI 编辑器** | VS Code 是宿主级护城河；Cursor 的 $50B 押的是企业 control plane 而非补全；IDE 正被 agent 从上方釜底抽薪 |\n| **L05 终端 / 自治 Agent** | CLI agent = \"unix 进程化的开发者\"——可 headless、可 SSH/CI/cron 才是真正护城河；Copilot 在这层失去全部飞轮 |\n| **L06a 代码托管** | GitHub 四占（仓库 + Copilot + VS Code + Azure）反脆弱；GitLab 一站式叙事被 best-of-breed 解构（GTLB −33%）|\n| **L06b AI 评审** | \"PR\" 抽象语义正在迁移；人退到策略层；trust score / AI-PR 标记将被 EU AI Act 推上合规层 |\n| **L07 CI/CD** | 流量模式重写——PR 合并 +98%、单工程师日 build 5→30-80、夜间 build 占比 10%→35%；价值向 merge queue + ephemeral compute 外溢 |\n| **L08 测试** | 单测层会被 Coding Agent 吃掉；护城河 = 拥有与代码作者独立的 oracle（用户流量、形式化规格、业务知识基线）|\n| **L09 安全** | D3 是 SaaSpocalypse 中**结构性增长板块**；安全从年度审计变 per-PR 必经；behavioral integrity 是下一个未解问题 |\n| **L10a 代码索引** | 大上下文 (Augment) vs 经典 IR+embedding (Sourcegraph) 双路线，分界线 50k / 400k 文件；Sourcegraph 2025-07 砍 Cody Free/Pro 转推 Amp 是行业转向信号 |\n| **L10b Agent 集成接口** | MCP 把\"集成\"商品化；2025 自动化流量首次过半（Imperva 51%、HUMAN agentic AI +7851% YoY），SaaS 三选一：CLI / 产品 MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变收入中心；**双轨制**——vendor 主动（Stripe Agent Toolkit、Anthropic Skills、SAP Joule Gateway）vs 第三方社区强 wrap（OpenCLI、CLI-Anything 21K stars、Vercel agent-browser）|\n| **L11a 可观测** | Coding Agent 时代少数显著扩张的中间层；下一代 monitoring 四元组 = metrics/logs/traces/**agent traces** |\n| **L11b 错误追踪** | Sentry Seer 是 \"error → root cause → fix PR\" 闭环范本；error tracking 工具变成 agent 的修复入口 |\n| **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|\n| **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |\n\n## 跨层主线（6 条贯穿整个 dev 栈的规律）",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01BkW7gHiXE6xHN6CB7g6aSz",
+            "type": "tool_result",
+            "content": "01-planning-tickets.md\n02-design-vibe-coding.md\n03-knowledge-qa.md\n04-ide-ai-editor.md\n05-coding-agent-cli.md\n06a-vcs-hosting.md\n06b-ai-review.md\n07-ci-build.md\n08-test-agents.md\n09-security-vuln.md\n10a-code-index.md\n10b-agent-interfaces.md\n11a-observability.md\n11b-error-tracking.md\n11c-incident-response.md\n12-docs-idp.md\nREADME.md\n---README:---\n# 2026-05-14：SDLC 工具栈 — Coding Agent 接入前后的逐层深度研究（索引）\n\n## 起源\n\n这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。\n\n每层使用其**自然视角**——本层的核心变量是什么就用什么。各层分析视角见下方\"各层分析视角总表\"。\n\n## 与主文件附录 III C 表的层级对应\n\n主文件 C 表 **18 行 → 本目录 16 个文件**。**L04** 和 **L05** 的产品本身跨界，合并处理（强行拆开 70% 内容重复）；其余 3 处（原 L06/L10/L11）按子层拆开。D6.6 Dev MCP servers 与\"GUI → Agent 化（产品供给侧）\"同层，统一作\"Agent 集成接口\"层处理。\n\n| 主文件 C 表行 | 本目录文件 | 备注 |\n|---|---|---|\n| D11 工单 | [`01-planning-tickets.md`](01-planning-tickets.md) | 1:1 |\n| D10 设计 | [`02-design-vibe-coding.md`](02-design-vibe-coding.md) | 含 Vibe coding 子层（C 表未单列） |\n| D9 知识 / 答疑 | [`03-knowledge-qa.md`](03-knowledge-qa.md) | 1:1 |\n| **D8 IDE** + **D7' AI 编辑器** | [`04-ide-ai-editor.md`](04-ide-ai-editor.md) | Cursor 既是 IDE fork 又是 AI 编辑器，合并处理 |\n| **D6.5 终端 Agent** + **D6.4 自治 Agent** | [`05-coding-agent-cli.md`](05-coding-agent-cli.md) | Claude Code 跨终端 / Devin 跨自治，边界模糊，合并处理 |\n| D6 代码托管 | [`06a-vcs-hosting.md`](06a-vcs-hosting.md) | |\n| D5' AI 评审 | [`06b-ai-review.md`](06b-ai-review.md) | |\n| D4 CI/CD（含 C5 部署） | [`07-ci-build.md`](07-ci-build.md) | 含 C5（C 表未列） |\n| D3 安全扫描 | [`09-security-vuln.md`](09-security-vuln.md) | 1:1 |\n| D2 测试 | [`08-test-agents.md`](08-test-agents.md) | 1:1 |\n| D8.5 代码索引 / 上下文 | [`10a-code-index.md`](10a-code-index.md) | |\n| **D6.6 Dev MCP servers + 产品供给侧 Agent 接口** | [`10b-agent-interfaces.md`](10b-agent-interfaces.md) | 含 CLI / MCP / 浏览器 Agent 三条供给路径 |\n| O5 可观测 | [`11a-observability.md`](11a-observability.md) | |\n| O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | |\n| O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | |\n| M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |\n\n## 文件统计\n\n合计正文约 **6.3 万字**，~410 条 IEEE 引用，2025–2026 一手数据。能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。\n\n| # | 层 | 文件 | 字数 | 关键代表公司 |\n|---|---|---|---|---|\n| L01 | 规划 / 工单 | [01-planning-tickets.md](01-planning-tickets.md) | ~3300 | Linear、Atlassian Jira |\n| L02 | 设计 + Vibe coding | [02-design-vibe-coding.md](02-design-vibe-coding.md) | ~3400 | Lovable、Bolt.new、v0、Replit Agent |\n| L03 | 知识 / 答疑 | [03-knowledge-qa.md](03-knowledge-qa.md) | ~3500 | Stack Overflow、Context7、llms.txt |\n| L04 | IDE + AI 编辑器 | [04-ide-ai-editor.md](04-ide-ai-editor.md) | ~3000 | Cursor、Copilot、Windsurf、Zed、JetBrains |\n| L05 | 终端 / 自治 Coding Agent | [05-coding-agent-cli.md](05-coding-agent-cli.md) | ~3000 | Claude Code、Devin、Codex CLI、Aider |\n| L06a | 代码托管 | [06a-vcs-hosting.md](06a-vcs-hosting.md) | ~2800 | GitHub、GitLab、Bitbucket、Forgejo、Codeberg |\n| L06b | AI 代码评审 | [06b-ai-review.md](06b-ai-review.md) | ~2700 | CodeRabbit、Greptile、Graphite、Qodo、Pixee |\n| L07 | CI/CD + 构建 | [07-ci-build.md](07-ci-build.md) | ~3300 | namespace.so、Depot、Blacksmith、Buildkite、Dagger |\n| L08 | 测试 Agent | [08-test-agents.md](08-test-agents.md) | ~4500 | Meticulous、Qodo、Diffblue、Browserbase |\n| L09 | 安全 / 漏洞 | [09-security-vuln.md](09-security-vuln.md) | ~2800 | Socket、Snyk、Semgrep、Endor Labs、GitGuardian |\n| L10a | 代码索引 / RAG-for-code | [10a-code-index.md](10a-code-index.md) | ~2600 | Sourcegraph、Augment、Greptile、Continue、Aider |\n| L10b | **Agent 集成接口与产品供给侧改造**（MCP 协议 + CLI / MCP / 浏览器 Agent 三路径） | [10b-agent-interfaces.md](10b-agent-interfaces.md) | ~6000 | Anthropic MCP、Composio、Cloudflare AI Gateway、SAP Joule Gateway、Stripe Agent Toolkit、Anthropic Agent Skills、Computer Use、Operator、Browserbase、browser-use、Manus、Skyvern、OpenCLI、CLI-Anything、Vercel agent-browser |\n| L11a | 可观测 / 监控 | [11a-observability.md](11a-observability.md) | ~2800 | Datadog Bits AI、Honeycomb、New Relic、Splunk、Langfuse |\n| L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |\n| L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |\n| L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |\n\n## 各层分析视角总表\n\n每一层都按其**自然视角** 组织。只有 L07（CI/CD）使用任务流量分析视角；其他层流量数据降级为\"症状/旁证\"。\n\n| 层 | 自然视角 | 一句话锐度 |\n|---|---|---|\n| L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |\n| L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |\n| L03 知识答疑 | **询问对象切换 (interlocutor switch)** | 人不再问人/SO，而是问模型 + MCP 工具；新载体接口层即 llms.txt / Context7 |\n| L04 IDE + AI 编辑器 | **宿主权 → 控制台 → agent 上移 三段位移** | Cursor fork VS Code 演化为多 agent 控制台；Claude Code 从 CLI 釜底抽薪 |\n| L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |\n| L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |\n| L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |\n| L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |\n| L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |\n| L09 安全 | **攻击面双扩张 + 信任移交双视角** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |\n| L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |\n| L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |\n| L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |\n| L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是\"感官不能节流\"的产品推论 |\n| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是分析视角 |\n| L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |\n\n## 16 层一句话本质\n\n| 层 | 一句话本质 |\n|---|---|\n| **L01 工单** | 工单系统的目标函数从\"让 ticket 不丢\"换成\"让 agent 不跑偏\"；产品主索引从 UI 转向 API/schema |\n| **L02 Vibe coding** | 不切 Cursor / Copilot 的盘子，把\"以前请不起工程师的人\"变成新用户；$4.7B → $12.3B 全是增量市场 |\n| **L03 知识答疑** | 用户行为整体跳过的第一案例（不是被替代，是动作消失）——Zendesk / Intercom / Confluence / Notion 命运预演 |\n| **L04 IDE + AI 编辑器** | VS Code 是宿主级护城河；Cursor 的 $50B 押的是企业 control plane 而非补全；IDE 正被 agent 从上方釜底抽薪 |\n| **L05 终端 / 自治 Agent** | CLI agent = \"unix 进程化的开发者\"——可 headless、可 SSH/CI/cron 才是真正护城河；Copilot 在这层失去全部飞轮 |\n| **L06a 代码托管** | GitHub 四占（仓库 + Copilot + VS Code + Azure）反脆弱；GitLab 一站式叙事被 best-of-breed 解构（GTLB −33%）|\n| **L06b AI 评审** | \"PR\" 抽象语义正在迁移；人退到策略层；trust score / AI-PR 标记将被 EU AI Act 推上合规层 |\n| **L07 CI/CD** | 流量模式重写——PR 合并 +98%、单工程师日 build 5→30-80、夜间 build 占比 10%→35%；价值向 merge queue + ephemeral compute 外溢 |\n| **L08 测试** | 单测层会被 Coding Agent 吃掉；护城河 = 拥有与代码作者独立的 oracle（用户流量、形式化规格、业务知识基线）|\n| **L09 安全** | D3 是 SaaSpocalypse 中**结构性增长板块**；安全从年度审计变 per-PR 必经；behavioral integrity 是下一个未解问题 |\n| **L10a 代码索引** | 大上下文 (Augment) vs 经典 IR+embedding (Sourcegraph) 双路线，分界线 50k / 400k 文件；Sourcegraph 2025-07 砍 Cody Free/Pro 转推 Amp 是行业转向信号 |\n| **L10b Agent 集成接口** | MCP 把\"集成\"商品化；2025 自动化流量首次过半（Imperva 51%、HUMAN agentic AI +7851% YoY），SaaS 三选一：CLI / 产品 MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变收入中心；**双轨制**——vendor 主动（Stripe Agent Toolkit、Anthropic Skills、SAP Joule Gateway）vs 第三方社区强 wrap（OpenCLI、CLI-Anything 21K stars、Vercel agent-browser）|\n| **L11a 可观测** | Coding Agent 时代少数显著扩张的中间层；下一代 monitoring 四元组 = metrics/logs/traces/**agent traces** |\n| **L11b 错误追踪** | Sentry Seer 是 \"error → root cause → fix PR\" 闭环范本；error tracking 工具变成 agent 的修复入口 |\n| **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|\n| **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |\n\n## 跨层主线（6 条贯穿整个 dev 栈的规律）",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "ls /Users/luwei/work/Controversy/chat/SDLC-stack/ && echo \"---README:---\" && head -100 /Users/luwei/work/Controversy/chat/SDLC-stack/README.md",
+          "description": "Check SDLC-stack as reference"
+        }
+      }
+    },
+    {
+      "step_id": 5,
+      "timestamp": "2026-05-14T16:18:07.505Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 28220,
+        "completion_tokens": 6570,
+        "cached_tokens": 28219,
+        "extra": {
+          "cache_creation_input_tokens": 5791,
+          "cache_read_input_tokens": 28219,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 5791,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 6570,
+              "cache_read_input_tokens": 28219,
+              "cache_creation_input_tokens": 5791,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 5791
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 6,
+      "timestamp": "2026-05-14T16:18:08.489Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_014t3TVcPrLuU6SxoLMc2puq",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_014t3TVcPrLuU6SxoLMc2puq",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "head -60 /Users/luwei/work/Controversy/README.md",
+            "description": "Check root README index format"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_014t3TVcPrLuU6SxoLMc2puq",
+            "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n\n[stdout]\n# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 28220,
+        "completion_tokens": 6570,
+        "cached_tokens": 28219,
+        "extra": {
+          "cache_creation_input_tokens": 5791,
+          "cache_read_input_tokens": 28219,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 5791,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 6570,
+              "cache_read_input_tokens": 28219,
+              "cache_creation_input_tokens": 5791,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 5791
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014t3TVcPrLuU6SxoLMc2puq",
+            "type": "tool_result",
+            "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014t3TVcPrLuU6SxoLMc2puq",
+            "type": "tool_result",
+            "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "head -60 /Users/luwei/work/Controversy/README.md",
+          "description": "Check root README index format"
+        }
+      }
+    },
+    {
+      "step_id": 7,
+      "timestamp": "2026-05-14T16:18:13.677Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 34011,
+        "completion_tokens": 328,
+        "cached_tokens": 34010,
+        "extra": {
+          "cache_creation_input_tokens": 7057,
+          "cache_read_input_tokens": 34010,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7057,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 328,
+              "cache_read_input_tokens": 34010,
+              "cache_creation_input_tokens": 7057,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7057
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 8,
+      "timestamp": "2026-05-14T16:18:14.260Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01DzaEnX6csrT15cFSBBXCxz",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01DzaEnX6csrT15cFSBBXCxz",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "mkdir -p /Users/luwei/work/Controversy/chat/AISW-stack",
+            "description": "Create AISW-stack directory"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01DzaEnX6csrT15cFSBBXCxz",
+            "content": "(Bash completed with no output)\n\n[metadata] {\"noOutputExpected\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 34011,
+        "completion_tokens": 328,
+        "cached_tokens": 34010,
+        "extra": {
+          "cache_creation_input_tokens": 7057,
+          "cache_read_input_tokens": 34010,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7057,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 328,
+              "cache_read_input_tokens": 34010,
+              "cache_creation_input_tokens": 7057,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7057
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01DzaEnX6csrT15cFSBBXCxz",
+            "type": "tool_result",
+            "content": "(Bash completed with no output)",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01DzaEnX6csrT15cFSBBXCxz",
+            "type": "tool_result",
+            "content": "(Bash completed with no output)",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "mkdir -p /Users/luwei/work/Controversy/chat/AISW-stack",
+          "description": "Create AISW-stack directory"
+        }
+      }
+    },
+    {
+      "step_id": 9,
+      "timestamp": "2026-05-14T16:21:23.828Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Write toolu_01GRHfNVjGfsV49mbDA291DX",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01GRHfNVjGfsV49mbDA291DX",
+          "function_name": "Write",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/AISW-stack/README.md",
+            "content": "# AI 软件栈分层索引：从 GPU 驱动到终端用户 Agent 应用\n\n从最底层的 GPU 驱动 / 固件，一直到最终用户接触的 Agent 应用（ChatGPT、Cursor、Devin），完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n## 全栈总览（34 层）\n\n按\"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用\"九大段组织。\n\n| 段 | 层号 | 层名 | 自然视角 / 解决的事 |\n| --- | --- | --- | --- |\n| 底层运行时 | L01 | GPU 驱动 / 固件 | 让 OS 看到 GPU |\n| | L02 | GPU 互连 / 集合通信 | 多 GPU、多机之间搬数据 |\n| | L03 | GPU 编程模型 / 计算 API | 让程序员写 kernel |\n| | L04 | GPU 内核库（DNN / BLAS / 通信） | 别人写好的高性能算子 |\n| | L05 | 编译器 / IR | 把模型图编译成 GPU 代码 |\n| 框架 | L06 | 张量 / 训练框架 | 写模型与训练循环 |\n| | L07 | 分布式训练框架 | 千卡 / 万卡并行 |\n| | L08 | 训练数据 pipeline | 喂数据的工业管线 |\n| | L09 | 后训练 / 微调框架 | SFT / RLHF / DPO / GRPO |\n| 模型 | L10 | 基础模型权重 | 可下载或可调用的模型本体 |\n| | L11 | 评测 / 基准 | 能力打分 |\n| | L12 | 实验追踪 / MLOps | run / sweep / artifact 管理 |\n| 推理服务 | L13 | 推理引擎 | KV cache、batching、speculative |\n| | L14 | 模型服务 / 编排 | 把引擎包成 service |\n| | L15 | GPU 云 / 算力市场 | 谁来出 GPU |\n| | L16 | 模型 API 聚合 / 路由 | 一个 endpoint 调多家模型 |\n| | L17 | 前沿模型 API | 直接调闭源旗舰模型 |\n| LLM 应用中间件 | L18 | LLM 应用框架 | prompt 链 / 工作流 |\n| | L19 | Embedding / 重排序模型 | 把文本变向量 |\n| | L20 | 向量数据库 / 检索 | 存与查向量 |\n| | L21 | 长期记忆系统 | Agent 跨会话状态 |\n| | L22 | LLM 网关 / 路由 | 限流 / 配额 / fallback |\n| | L23 | Prompt 管理 / 缓存 | prompt 版本、cache 命中 |\n| Agent 核心 | L24 | Agent 框架 | tool-loop、规划、多 agent |\n| | L25 | 工具协议 / MCP / 集成 | Agent 怎么调外部世界 |\n| | L26 | 浏览器 / Computer Use | Agent 操作 GUI |\n| | L27 | 代码 / Agent 沙箱 | Agent 跑代码的安全环境 |\n| 可观测 / 安全 | L28 | LLM 观测 / 追踪 | trace、token、成本 |\n| | L29 | Guardrails / 安全 / 红队 | 注入防御、PII、越狱 |\n| | L30 | LLM 评测 / 测试 | CI 里跑 prompt 测试 |\n| 多模态外围 | L31 | 语音（TTS / ASR） | 听 / 说 |\n| | L32 | 图像 / 视频生成 | 画 / 拍 |\n| 终端用户 Agent 应用 | L33 | 通用对话 / 搜索 Agent | 给所有人用 |\n| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |\n\n---\n\n## L01 GPU 驱动 / 固件\n\n负责把硬件能力暴露给操作系统与上层运行时；包括内核态驱动、固件、用户态运行时 stub。\n\n- **NVIDIA Display / Compute Driver**（含 `nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）\n- **NVIDIA Open GPU Kernel Modules**（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）\n- **AMD ROCm / amdgpu / amdkfd driver**（`amdgpu` DRM 驱动 + KFD 计算子系统）\n- **Intel Habana Gaudi driver**（`habanalabs` 内核驱动）\n- **Apple Silicon GPU driver**（macOS / iOS 内置，与 Metal 紧绑定）\n- **NVIDIA Container Toolkit / nvidia-container-runtime**（让容器看到 GPU；事实上的 K8s GPU 接入标准）\n\n## L02 GPU 互连 / 集合通信\n\n多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。\n\n- **NVLink / NVSwitch**（节点内 GPU↔GPU，H100 900 GB/s、B200 1.8 TB/s）\n- **InfiniBand（NVIDIA Quantum-2 / Quantum-X800）+ Mellanox OFED**（节点间 RDMA）\n- **RoCE v2 / Ultra Ethernet（UEC）**（以太网上的 RDMA；Ultra Ethernet Consortium 2024 推出 1.0）\n- **AWS EFA（Elastic Fabric Adapter）+ SRD 协议**\n- **UALink 1.0**（AMD / Intel / Google / Meta 等 2024 联盟，对位 NVLink）\n- **NCCL / RCCL / oneCCL**（NVIDIA / AMD / Intel 各自的集合通信库；allreduce / allgather / sendrecv）\n- **MSCCL / MSCCL++**（微软在 NCCL 之上的可编程调度层）\n\n## L03 GPU 编程模型 / 计算 API\n\n让开发者写并行 kernel；下层各家硬件的统一抽象。\n\n- **NVIDIA CUDA**（含 `nvcc`、PTX、CUDA Runtime / Driver API）\n- **AMD ROCm / HIP**（HIP 提供 CUDA 源码级近似兼容）\n- **Apple Metal / Metal Performance Shaders（MPS）**\n- **Intel oneAPI / SYCL / DPC++**\n- **OpenCL 3.0**（跨厂商，地位下滑但仍在嵌入式 / Android）\n- **Vulkan Compute**（图形 + 计算合一，llama.cpp 用作便携后端）\n- **WebGPU / wgpu**（浏览器内 GPU 计算；Chrome 113 起默认开启）\n\n## L04 GPU 内核库（DNN / BLAS / 通信 / Attention）\n\n预编译好的高性能算子，框架直接调用。\n\n- **cuBLAS / cuBLASLt**（GEMM）\n- **cuDNN**（卷积、RNN、Attention 等深度学习算子）\n- **CUTLASS**（NVIDIA 开源的 GEMM 模板库，FlashAttention / vLLM 大量复用）\n- **FlashAttention 1 / 2 / 3**（Tri Dao；FA3 针对 Hopper Tensor Core + TMA）\n- **xFormers**（Meta；memory-efficient attention 集合）\n- **Triton kernels**（OpenAI；社区贡献的 fused MoE、RMSNorm、SwiGLU 等）\n- **NCCL / RCCL**（同 L02，也属于\"内核库\"中的通信类）\n\n## L05 编译器 / IR\n\n把模型图或 Python 代码编译成 GPU 可执行体；过去十年从单一图编译器演化为多层 IR + JIT 混合。\n\n- **OpenAI Triton**（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准）\n- **PyTorch torch.compile / TorchInductor + TorchDynamo**（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）\n- **XLA / OpenXLA**（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta 共治）\n- **MLIR**（LLVM 项目；TPU、IREE、Mojo、torch-mlir 共享的中间表示）\n- **TVM / Apache TVM + Unity**（陈天奇主导的端到端深度学习编译栈）\n- **IREE**（Google；MLIR-based，定位移动 / 边缘）\n- **Mojo / MAX**（Modular；Chris Lattner，Python 超集 + MLIR 后端）\n\n## L06 张量 / 训练框架\n\n定义计算图、autograd、optimizer；用户写 `nn.Module` 的那一层。\n\n- **PyTorch**（Meta；2025 LLM 训练事实标准，份额 >70%）\n- **JAX + Flax / NNX / Equinox**（Google；Gemini / Anthropic 训练栈核心）\n- **TensorFlow + Keras 3**（Google；Keras 3 后端可切 JAX / PyTorch / TF）\n- **MLX**（Apple；Apple Silicon 原生）\n- **MindSpore**（华为）\n- **PaddlePaddle**（百度）\n- **tinygrad**（George Hotz；研究 / 教学）\n\n## L07 分布式训练框架\n\n把模型与数据切到上千 / 上万卡上，并管 checkpoint / 容错 / 恢复。\n\n- **DeepSpeed**（Microsoft；ZeRO-1/2/3、ZeRO-Infinity、MoE）\n- **Megatron-LM / Megatron-Core**（NVIDIA；3D 并行：TP / PP / DP）\n- **PyTorch FSDP / FSDP2**（PyTorch 官方；FSDP2 2024 GA）\n- **NVIDIA NeMo**（Megatron-Core 上的端到端训练 + 数据 + 评测套件）\n- **Colossal-AI**（HPC-AI Tech）\n- **Ray Train**（Anyscale；调度层在 Ray 上）\n- **MosaicML Composer / LLM Foundry**（被 Databricks 收购）\n- **TorchTitan**（PyTorch 官方 2024 推出的 LLM 训练参考实现）\n\n## L08 训练数据 pipeline\n\n数据集构建、清洗、去重、tokenize、streaming。这一层 2023 后被独立看待。\n\n- **datatrove**（HuggingFace；FineWeb 的生产工具）\n- **MosaicML Streaming**（云对象存储到训练机的流式 dataset）\n- **WebDataset**（POSIX tar 流，PyTorch 生态早期事实标准）\n- **Nemo Curator**（NVIDIA；GPU 加速去重 / 分类）\n- **Dolma toolkit**（AI2；OLMo 数据集工具）\n- **llm-foundry**（Mosaic / Databricks）\n- **数据集本体**：FineWeb / FineWeb-Edu（HF）、RedPajama-V2（Together）、Dolma（AI2）、The Stack v2（BigCode）、Common Crawl\n\n## L09 后训练 / 微调框架\n\nSFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一层 2024-2025 爆发。\n\n- **TRL**（HuggingFace；SFT / DPO / GRPO / PPO trainer，事实标准）\n- **Unsloth**（QLoRA 极致优化，单卡微调首选）\n- **Axolotl**（OpenAccess AI Collective；config-driven 微调）\n- **LLaMA-Factory**（北航；中文社区主流）\n- **OpenRLHF**（OpenLLMAI；分布式 RLHF，Ray 调度）\n- **verl**（字节；HybridFlow，veRL，DeepSeek-R1 风格 RLVR）\n- **NeMo-Aligner**（NVIDIA）\n\n## L10 基础模型权重\n\n可下载（开源 / 开放权重）或可 API 调用的模型本体。这一层 2025 已分裂为开放权重与闭源前沿两轨。\n\n- **开放权重 / 开源**：Llama 3 / 4（Meta）、Qwen 3（阿里）、DeepSeek-V3 / R1、Mistral / Mixtral、Gemma 3（Google）、Kimi K2（Moonshot）、GLM-4.6（智谱）、Phi-4（Microsoft）、OLMo 2（AI2，真·全开源）\n- **闭源前沿**：GPT-5 / GPT-5.1（OpenAI）、Claude Opus / Sonnet / Haiku 4.x（Anthropic）、Gemini 2.5 / 3（Google DeepMind）、Grok 4（xAI）\n- **模型枢纽 / 发现**：HuggingFace Hub、ModelScope（阿里）、Replicate models、Ollama Library、Civitai（图像 / Stable Diffusion 衍生）\n\n## L11 评测 / 基准\n\n公开打分系统；越来越多被用作 RL reward 的代理。\n\n- **lm-evaluation-harness**（EleutherAI；HF Open LLM Leaderboard 后端）\n- **HELM**（Stanford CRFM）\n- **OpenCompass**（上海 AI Lab）\n- **任务类**：MMLU / MMLU-Pro、GSM8K / MATH、HumanEval / MBPP、SWE-bench / SWE-bench Verified、GPQA、ARC-AGI、HLE（Humanity's Last Exam）\n- **Agent / 长 horizon**：METR Time Horizons、TAU-bench、WebArena、OSWorld、AgentBench\n- **Embedding / 检索**：MTEB、BEIR\n- **对战 / 人类偏好**：LMSYS Chatbot Arena、SEAL（Scale）\n- **代码定制平台**：Inspect AI（UK AISI）、OpenAI Evals、DeepEval（参 L30）\n\n## L12 实验追踪 / MLOps\n\nrun、metric、artifact、sweep、模型 registry。\n\n- **Weights & Biases (W&B)**\n- **MLflow**（Databricks 开源）\n- **Neptune.ai**\n- **ClearML**\n- **Comet ML**\n- **TensorBoard**（仍是免费默认）\n- **DVC / DVC Studio**（Iterative；偏数据版本）\n\n## L13 推理引擎\n\n负责 KV cache、continuous batching、speculative decoding、量化、PagedAttention 等推理侧硬核优化。\n\n- **vLLM**（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准）\n- **NVIDIA TensorRT-LLM**（NVIDIA 官方；CUDA Graph + FP8）\n- **SGLang**（LMSYS / xAI；RadixAttention，结构化输出强）\n- **HuggingFace TGI（Text Generation Inference）**\n- **llama.cpp / GGUF**（Georgi Gerganov；CPU / Apple Silicon / 任意后端）\n- **MLC-LLM**（陈天奇团队；TVM Unity 后端，Web / 移动）\n- **DeepSpeed-FastGen / DeepSpeed-MII**\n- **LMDeploy**（上海 AI Lab；InternLM 配套）\n- **Ollama**（llama.cpp 之上的本地一键运行）\n\n## L14 模型服务 / 编排（GPU orchestration）\n\n把推理引擎封装成 service：自动伸缩、多模型、A/B、批处理。\n\n- **NVIDIA Triton Inference Server**\n- **Ray Serve**（Anyscale）\n- **KServe**（K8s 原生，原 KFServing）\n- **BentoML / Yatai**\n- **Modal**（serverless GPU 函数）\n- **Beam / Beam Cloud**\n- **Replicate Cog**（容器规范 + Replicate 平台）\n- **Seldon Core**\n\n## L15 GPU 云 / 算力市场\n\n物理 GPU 容量提供方；neocloud 与超大云共存。\n\n- **超大云 GPU**：AWS (P5 / P5e / Trainium2 Ultra)、Azure (ND H100 / ND GB200 v6)、Google Cloud (A3 Ultra / TPU v5p / v6e Trillium)、Oracle Cloud (OCI GPU bare-metal)\n- **GPU neocloud**：CoreWeave、Lambda Labs、Crusoe、Nebius（前 Yandex 海外）、Voltage Park、Applied Digital\n- **市场 / 撮合 / 长尾**：RunPod、Vast.ai、TensorDock、Salad、Hyperstack\n- **训练 + 推理一体**：Together AI、Lepton AI（被 NVIDIA 收购）\n\n## L16 模型 API 聚合 / 路由（推理服务市场）\n\n不直接持有最前沿模型，但把开源 / 半开源模型托管成 OpenAI 兼容 endpoint，并互相竞价。\n\n- **OpenRouter**（按 token 转售，覆盖 100+ 模型）\n- **Together AI**（开源模型托管 + 训练 + 推理引擎自研）\n- **Fireworks AI**（自研 FireAttention 引擎）\n- **Groq Cloud**（自家 LPU；Llama 系超低延迟）\n- **Cerebras Inference**（WSE-3；超长上下文 + 高速）\n- **SambaNova Cloud**（SN40L Reconfigurable Dataflow）\n- **Replicate**（按秒计费，模型即容器）\n- **DeepInfra**、**Anyscale Endpoints**、**Hyperbolic**\n\n## L17 前沿模型 API（闭源 / 半闭源）\n\n直接调用模型厂商自营 endpoint；当前 90%+ 高端 token 流量在这层。\n\n- **Anthropic API**（Claude Opus / Sonnet / Haiku，含 Tool Use、Computer Use、Skills、Prompt Caching、Files、Batch、Citations、Memory、MCP connector）\n- **OpenAI API**（GPT-5.x、o-series、Realtime、Assistants → Responses API、Agents SDK、Files、Batch）\n- **Google Gemini API / Vertex AI**（Gemini 2.5 / 3 Pro / Flash / Nano）\n- **xAI API**（Grok 4）\n- **DeepSeek API**（V3 / R1，价格屠夫）\n- **企业转售层**：Azure OpenAI Service、AWS Bedrock、Google Vertex AI Model Garden、IBM watsonx、Databricks Foundation Model APIs\n\n## L18 LLM 应用框架\n\nprompt 链、工作流、retriever、tool calling 的高层抽象。\n\n- **LangChain / LangChain Expression Language (LCEL)**\n- **LlamaIndex**（原 GPT-Index；偏 RAG-first）\n- **DSPy**（Stanford；prompt-as-program、optimizer 驱动）\n- **Haystack**（deepset）\n- **Vercel AI SDK**（TypeScript / React 生态最常见）\n- **Semantic Kernel**（Microsoft）\n- **Mastra**（TS，新兴）\n- **Spring AI**（Java）\n\n## L19 Embedding / 重排序模型与服务\n\n把文本 / 图像变成向量；Reranker 给检索结果二次排序。\n\n- **闭源**：OpenAI text-embedding-3、Cohere Embed v3 / Rerank、Google Vertex text-embedding-005、Voyage AI（被 MongoDB 收购）\n- **开源**：BGE / BGE-M3（北京智源）、Jina Embeddings v3、Nomic Embed、E5（Microsoft）、GTE（阿里）、Stella、mxbai-embed\n- **多模态**：CLIP / OpenCLIP、SigLIP、Jina-CLIP\n\n## L20 向量数据库 / 检索引擎\n\n- **专用向量库（SaaS-first）**：Pinecone、Weaviate、Qdrant、Milvus / Zilliz\n- **开源 / 嵌入式**：Chroma、LanceDB、FAISS（Meta；库不是服务）、Annoy、ScaNN\n- **关系数据库扩展**：pgvector、pg_vectorize、Supabase Vector、Neon + pgvector\n- **搜索引擎类**：Elasticsearch dense vector、OpenSearch k-NN、Vespa、Typesense、Meilisearch、Turbopuffer\n- **嵌入式 + KV**：Redis Vector Search、SQLite-vec\n\n## L21 长期记忆系统\n\n跨会话 / 跨 Agent 的状态层；从 RAG-of-chat 演化到结构化记忆图。\n\n- **Mem0**（开源 + SaaS，事实图 + 向量混合）\n- **Zep / Zep Cloud**（temporal knowledge graph）\n- **Letta**（原 MemGPT；研究项目公司化）\n- **LangMem**（LangChain 旗下记忆 SDK）\n- **Cognee**\n- **Anthropic Memory tool**（2025 推出，平台内置）\n\n## L22 LLM 网关 / 路由\n\n应用与 L17 / L16 之间的代理层：限流、配额、密钥、fallback、cost guard、A/B。\n\n- **LiteLLM**（BerriAI；100+ provider 适配器，自部署最常用）\n- **Portkey**\n- **Cloudflare AI Gateway**（缓存 + WAF + 计费）\n- **Kong AI Gateway**\n- **Helicone Gateway**\n- **Martian Router**（按 prompt 动态路由）\n- **OpenRouter**（兼有 L16 与 L22 双重身份）\n\n## L23 Prompt 管理 / 提示缓存\n\nprompt 版本化、A/B、提示模板、prompt 级缓存命中分析。\n\n- **PromptLayer**\n- **Langfuse Prompt Management**\n- **Helicone Prompts**\n- **Braintrust prompt registry**\n- **Latitude**（YC W24，prompt-as-code）\n- **Agenta**\n- **平台原生**：Anthropic Prompt Caching、OpenAI Prompt Caching、Gemini Context Caching\n\n## L24 Agent 框架\n\ntool-loop、规划、子任务分解、多 agent 协作。2025 这一层从\"链式工作流\"快速向\"事件循环 + 控制平面\"迁移。\n\n- **LangGraph**（LangChain；graph + 持久化 state，企业部署最多）\n- **OpenAI Agents SDK**（原 Swarm 演化；Responses API 配套）\n- **Anthropic Claude Agent SDK / claude-agent-sdk**（Claude Code 同源）\n- **AutoGen / AutoGen v0.4**（Microsoft Research；多 agent 对话）\n- **CrewAI**\n- **Pydantic AI**（type-safe，FastAPI 风格）\n- **smolagents**（HuggingFace；code-as-action）\n- **Mastra**、**Inngest Agent Kit**、**TaskWeaver**（Microsoft）\n\n## L25 工具协议 / MCP / 集成市场\n\nAgent 怎么调外部世界——文件、API、SaaS、数据库。\n\n- **Anthropic MCP（Model Context Protocol）**（2024-11 开源；2025 已被 OpenAI / Google / 主流框架普遍接入；事实标准）\n- **Composio**（500+ SaaS 集成，认证 + 工具一站式）\n- **Arcade.dev**（auth-first 的 tool runtime）\n- **Toolhouse**\n- **Pipedream Connect**\n- **Zapier MCP / Zapier AI Actions**\n- **Stripe Agent Toolkit、Cloudflare Agents SDK、SAP Joule Gateway**（厂商自营 MCP / agent 工具）\n- **服务器目录**：Smithery、MCP Hub、PulseMCP、Glama MCP Registry\n\n## L26 浏览器 / Computer Use Agent\n\n让 Agent 操作 GUI / 浏览器 / 桌面。\n\n- **闭源平台**：Anthropic Computer Use（API 内置）、OpenAI Operator（ChatGPT 内）、Google Project Mariner / Gemini browser\n- **托管浏览器基础设施**：Browserbase、Hyperbrowser、Steel.dev、Anchor Browser、AgentQL、Browserless\n- **开源 agent 控制器**：browser-use、Skyvern、Stagehand（Browserbase）、Nut.js、Open Interpreter、Playwright MCP（Microsoft）\n- **垂直自动化**：Manus（端侧通用 agent）、Reworkd、MultiOn\n\n## L27 代码 / Agent 沙箱\n\nAgent 跑代码 / 跑命令的隔离环境；MicroVM + 快照成为新基线。\n\n- **E2B**（Firecracker microVM，开源 SDK）\n- **Modal Sandboxes**（serverless GPU + sandbox 一体）\n- **Daytona**（开源 dev environment manager，被 Agent 平台普遍用作 runner）\n- **CodeSandbox SDK / CodeSandbox Containers**\n- **Cloudflare Containers / Workers Sandbox**\n- **Replit Agent runtime**（含 Nix-based 沙箱）\n- **Devin VM**（Cognition 自营）\n\n## L28 LLM 观测 / 追踪（LLM Observability）\n\ntrace、span、token / 成本、prompt / completion 日志，是 agent 时代的新 APM。\n\n- **Langfuse**（开源 + cloud，主流之一）\n- **Arize Phoenix / Arize AX**（OpenTelemetry GenAI 推手）\n- **LangSmith**（LangChain 官方）\n- **Helicone**（proxy-based，零代码接入）\n- **Braintrust**（eval + observability 一体）\n- **Logfire**（Pydantic 团队，OTel-native）\n- **W&B Weave**\n- **Datadog LLM Observability**、**New Relic AI Monitoring**、**Splunk AI Observability**（传统 APM 厂商扩展）\n\n## L29 Guardrails / 安全 / 红队\n\n提示注入防御、PII / 越狱检测、输出过滤、内容策略。\n\n- **Guardrails AI**（开源 validator 框架）\n- **NVIDIA NeMo Guardrails**（Colang DSL）\n- **Lakera Guard / Lakera Red**\n- **Protect AI（含 NB Defense、Guardian、Recon）**\n- **Robust Intelligence**（被 Cisco 收购）\n- **Prompt Security**、**HiddenLayer**、**CalypsoAI**\n- **Llama Guard 3 / Prompt Guard**（Meta 开源策略模型）\n- **Promptfoo red team**（开源越狱测试套件，参 L30）\n\n## L30 LLM 评测 / 测试（CI 中的 prompt 测试）\n\n把 prompt / agent 当作软件来跑回归测试。\n\n- **Promptfoo**（YAML + CLI，开源主流）\n- **DeepEval**（Confident AI；pytest 风格）\n- **Ragas**（RAG-specific 指标）\n- **Braintrust Evals**\n- **Patronus AI**（合规向）\n- **TruLens**（TruEra；被 Snowflake 收购）\n- **OpenAI Evals**、**Inspect AI**（UK AISI；安全评测主流）\n- **Galileo Evaluate**\n\n## L31 语音（TTS / ASR / 实时对话）\n\n- **TTS**：ElevenLabs、Cartesia、PlayHT、Hume AI、Resemble、OpenAI tts、Google Chirp 3、阿里 CosyVoice\n- **ASR**：OpenAI Whisper / Whisper Large v3、Deepgram、AssemblyAI、Speechmatics、Rev AI、NVIDIA Parakeet、Google Chirp 2\n- **实时语音 / 端到端**：OpenAI Realtime API、Google Gemini Live、Anthropic（暂无原生 voice，多用 Cartesia / ElevenLabs 拼接）、Sesame、Kyutai Moshi、LiveKit Agents、Pipecat（编排框架）、Vapi、Retell AI\n\n## L32 图像 / 视频 / 3D 生成\n\n- **图像（闭源 / SaaS）**：Midjourney、Ideogram、Adobe Firefly、Google Imagen 3、OpenAI DALL-E 3 / GPT-4o image、Recraft\n- **图像（开源 / 工作流）**：Black Forest Labs FLUX.1 / FLUX.2、Stable Diffusion 3 / SD 3.5 / SDXL（Stability AI）、PixArt-Σ、HunyuanImage（腾讯）、ComfyUI（工作流编辑器）、Automatic1111 WebUI、Fooocus\n- **视频**：Runway Gen-4、Pika 2.x、Luma Dream Machine / Ray2、Kling（快手）、Hailuo MiniMax、OpenAI Sora、Google Veo 3、HunyuanVideo（腾讯开源）、Wan 2.x（阿里开源）\n- **3D / 场景**：Luma Genie、Meshy、Tripo3D、Rodin、World Labs（Fei-Fei Li）、CSM\n- **托管 / 推理市场**：fal.ai、Replicate、RunPod Serverless（这一层与 L16 重合，但更偏 diffusion 工作负载）\n\n## L33 通用对话 / 搜索 Agent（终端用户）\n\n直接给非开发者用户用的\"AI 助手\"。\n\n- **ChatGPT**（OpenAI；含 Tasks、Operator、Codex、Connectors）\n- **Claude.ai**（Anthropic；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）\n- **Gemini app / Gemini Advanced**（Google）\n- **Grok**（xAI；X 内嵌 + grok.com）\n- **DeepSeek Chat**、**Kimi**（Moonshot）、**通义千问**、**豆包**（字节）\n- **搜索类**：Perplexity、You.com、Brave Leo、Arc Search（Browser Company）、Komo\n- **多模型聚合 / 隐私**：Poe（Quora）、Le Chat（Mistral）、HuggingChat、Msty（本地）、LM Studio（本地）\n\n## L34 垂直 Agent 应用（终端用户）\n\n按行业 / 角色划分的 Agent；2025 在编码、设计、营销、客服、医疗、法律均跑出独立公司。\n\n- **编码 Agent**：Cursor、Claude Code（Anthropic）、Devin（Cognition）、Windsurf（被 OpenAI 收购）、Replit Agent、Codex CLI（OpenAI）、Aider、GitHub Copilot Workspace、Augment、Amp（Sourcegraph）、Lovable、Bolt.new、v0（Vercel）、Manus\n- **设计 / 内容**：Figma AI / Make、Galileo AI、Framer AI、Canva Magic Studio、Jasper、Copy.ai、Notion AI\n- **销售 / 营销 / 客服**：Decagon、Sierra、Ada、Intercom Fin、Cresta、Clay、11x.ai、AirOps\n- **企业知识 / 内部 IT**：Glean、Moveworks、Hebbia、Harvey（法律）、Casetext CoCounsel（被 Thomson Reuters 收购）\n- **代码评审 / 测试 / 安全 Agent**：CodeRabbit、Greptile、Qodo、Meticulous、Snyk DeepCode AI（这一层与 SDLC 栈高度重合，详见 [`../SDLC-stack/README.md`](../SDLC-stack/README.md)）\n- **医疗 / 科研**：Abridge、Hippocratic AI、Ambience、Future House、Scite\n\n---\n\n## 几条横切的观察\n\n不属于具体某一层，但跨层规律值得单列。\n\n- **MCP 是这一栈唯一在 2024–2025 通过的\"工具接口标准\"**：从 L25 起，向上影响 L24 / L18，向下影响 L17（模型 API 内置 MCP connector）和 L22（gateway 必须懂 MCP）。\n- **L13 推理引擎 与 L14 模型服务 的边界正在合并**：vLLM、SGLang 自带 OpenAI 兼容 HTTP server，挤压了纯 L14 厂商（KServe、BentoML）的独立性。\n- **L15 GPU 云、L16 模型 API 聚合、L17 前沿模型 API 三层正在相互渗透**：CoreWeave 推自家模型；Together / Fireworks 自研推理引擎；Anthropic / OpenAI 转售他人模型（极少，但 Bedrock / Vertex 把这种关系制度化）。\n- **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。\n- **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。\n- **L18 LLM 应用框架 在 2025 出现 \"去 LangChain 化\"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。\n"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01GRHfNVjGfsV49mbDA291DX",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/chat/AISW-stack/README.md (file state is current in your context — no need to Read it back)\n\n[metadata] {\"type\": \"create\", \"filePath\": \"/Users/luwei/work/Controversy/chat/AISW-stack/README.md\", \"content\": \"# AI 软件栈分层索引：从 GPU 驱动到终端用户 Agent 应用\\n\\n从最底层的 GPU 驱动 / 固件，一直到最终用户接触的 Agent 应用（ChatGPT、Cursor、Devin），完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\\n\\n## 全栈总览（34 层）\\n\\n按\\\"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用\\\"九大段组织。\\n\\n| 段 | 层号 | 层名 | 自然视角 / 解决的事 |\\n| --- | --- | --- | --- |\\n| 底层运行时 | L01 | GPU 驱动 / 固件 | 让 OS 看到 GPU |\\n| | L02 | GPU 互连 / 集合通信 | 多 GPU、多机之间搬数据 |\\n| | L03 | GPU 编程模型 / 计算 API | 让程序员写 kernel |\\n| | L04 | GPU 内核库（DNN / BLAS / 通信） | 别人写好的高性能算子 |\\n| | L05 | 编译器 / IR | 把模型图编译成 GPU 代码 |\\n| 框架 | L06 | 张量 / 训练框架 | 写模型与训练循环 |\\n| | L07 | 分布式训练框架 | 千卡 / 万卡并行 |\\n| | L08 | 训练数据 pipeline | 喂数据的工业管线 |\\n| | L09 | 后训练 / 微调框架 | SFT / RLHF / DPO / GRPO |\\n| 模型 | L10 | 基础模型权重 | 可下载或可调用的模型本体 |\\n| | L11 | 评测 / 基准 | 能力打分 |\\n| | L12 | 实验追踪 / MLOps | run / sweep / artifact 管理 |\\n| 推理服务 | L13 | 推理引擎 | KV cache、batching、speculative |\\n| | L14 | 模型服务 / 编排 | 把引擎包成 service |\\n| | L15 | GPU 云 / 算力市场 | 谁来出 GPU |\\n| | L16 | 模型 API 聚合 / 路由 | 一个 endpoint 调多家模型 |\\n| | L17 | 前沿模型 API | 直接调闭源旗舰模型 |\\n| LLM 应用中间件 | L18 | LLM 应用框架 | prompt 链 / 工作流 |\\n| | L19 | Embedding / 重排序模型 | 把文本变向量 |\\n| | L20 | 向量数据库 / 检索 | 存与查向量 |\\n| | L21 | 长期记忆系统 | Agent 跨会话状态 |\\n| | L22 | LLM 网关 / 路由 | 限流 / 配额 / fallback |\\n| | L23 | Prompt 管理 / 缓存 | prompt 版本、cache 命中 |\\n| Agent 核心 | L24 | Agent 框架 | tool-loop、规划、多 agent |\\n| | L25 | 工具协议 / MCP / 集成 | Agent 怎么调外部世界 |\\n| | L26 | 浏览器 / Computer Use | Agent 操作 GUI |\\n| | L27 | 代码 / Agent 沙箱 | Agent 跑代码的安全环境 |\\n| 可观测 / 安全 | L28 | LLM 观测 / 追踪 | trace、token、成本 |\\n| | L29 | Guardrails / 安全 / 红队 | 注入防御、PII、越狱 |\\n| | L30 | LLM 评测 / 测试 | CI 里跑 prompt 测试 |\\n| 多模态外围 | L31 | 语音（TTS / ASR） | 听 / 说 |\\n| | L32 | 图像 / 视频生成 | 画 / 拍 |\\n| 终端用户 Agent 应用 | L33 | 通用对话 / 搜索 Agent | 给所有人用 |\\n| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |\\n\\n---\\n\\n## L01 GPU 驱动 / 固件\\n\\n负责把硬件能力暴露给操作系统与上层运行时；包括内核态驱动、固件、用户态运行时 stub。\\n\\n- **NVIDIA Display / Compute Driver**（含 `nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）\\n- **NVIDIA Open GPU Kernel Modules**（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）\\n- **AMD ROCm / amdgpu / amdkfd driver**（`amdgpu` DRM 驱动 + KFD 计算子系统）\\n- **Intel Habana Gaudi driver**（`habanalabs` 内核驱动）\\n- **Apple Silicon GPU driver**（macOS / iOS 内置，与 Metal 紧绑定）\\n- **NVIDIA Container Toolkit / nvidia-container-runtime**（让容器看到 GPU；事实上的 K8s GPU 接入标准）\\n\\n## L02 GPU 互连 / 集合通信\\n\\n多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。\\n\\n- **NVLink / NVSwitch**（节点内 GPU↔GPU，H100 900 GB/s、B200 1.8 TB/s）\\n- **InfiniBand（NVIDIA Quantum-2 / Quantum-X800）+ Mellanox OFED**（节点间 RDMA）\\n- **RoCE v2 / Ultra Ethernet（UEC）**（以太网上的 RDMA；Ultra Ethernet Consortium 2024 推出 1.0）\\n- **AWS EFA（Elastic Fabric Adapter）+ SRD 协议**\\n- **UALink 1.0**（AMD / Intel / Google / Meta 等 2024 联盟，对位 NVLink）\\n- **NCCL / RCCL / oneCCL**（NVIDIA / AMD / Intel 各自的集合通信库；allreduce / allgather / sendrecv）\\n- **MSCCL / MSCCL++**（微软在 NCCL 之上的可编程调度层）\\n\\n## L03 GPU 编程模型 / 计算 API\\n\\n让开发者写并行 kernel；下层各家硬件的统一抽象。\\n\\n- **NVIDIA CUDA**（含 `nvcc`、PTX、CUDA Runtime / Driver API）\\n- **AMD ROCm / HIP**（HIP 提供 CUDA 源码级近似兼容）\\n- **Apple Metal / Metal Performance Shaders（MPS）**\\n- **Intel oneAPI / SYCL / DPC++**\\n- **OpenCL 3.0**（跨厂商，地位下滑但仍在嵌入式 / Android）\\n- **Vulkan Compute**（图形 + 计算合一，llama.cpp 用作便携后端）\\n- **WebGPU / wgpu**（浏览器内 GPU 计算；Chrome 113 起默认开启）\\n\\n## L04 GPU 内核库（DNN / BLAS / 通信 / Attention）\\n\\n预编译好的高性能算子，框架直接调用。\\n\\n- **cuBLAS / cuBLASLt**（GEMM）\\n- **cuDNN**（卷积、RNN、Attention 等深度学习算子）\\n- **CUTLASS**（NVIDIA 开源的 GEMM 模板库，FlashAttention / vLLM 大量复用）\\n- **FlashAttention 1 / 2 / 3**（Tri Dao；FA3 针对 Hopper Tensor Core + TMA）\\n- **xFormers**（Meta；memory-efficient attention 集合）\\n- **Triton kernels**（OpenAI；社区贡献的 fused MoE、RMSNorm、SwiGLU 等）\\n- **NCCL / RCCL**（同 L02，也属于\\\"内核库\\\"中的通信类）\\n\\n## L05 编译器 / IR\\n\\n把模型图或 Python 代码编译成 GPU 可执行体；过去十年从单一图编译器演化为多层 IR + JIT 混合。\\n\\n- **OpenAI Triton**（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准）\\n- **PyTorch torch.compile / TorchInductor + TorchDynamo**（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）\\n- **XLA / OpenXLA**（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta 共治）\\n- **MLIR**（LLVM 项目；TPU、IREE、Mojo、torch-mlir 共享的中间表示）\\n- **TVM / Apache TVM + Unity**（陈天奇主导的端到端深度学习编译栈）\\n- **IREE**（Google；MLIR-based，定位移动 / 边缘）\\n- **Mojo / MAX**（Modular；Chris Lattner，Python 超集 + MLIR 后端）\\n\\n## L06 张量 / 训练框架\\n\\n定义计算图、autograd、optimizer；用户写 `nn.Module` 的那一层。\\n\\n- **PyTorch**（Meta；2025 LLM 训练事实标准，份额 >70%）\\n- **JAX + Flax / NNX / Equinox**（Google；Gemini / Anthropic 训练栈核心）\\n- **TensorFlow + Keras 3**（Google；Keras 3 后端可切 JAX / PyTorch / TF）\\n- **MLX**（Apple；Apple Silicon 原生）\\n- **MindSpore**（华为）\\n- **PaddlePaddle**（百度）\\n- **tinygrad**（George Hotz；研究 / 教学）\\n\\n## L07 分布式训练框架\\n\\n把模型与数据切到上千 / 上万卡上，并管 checkpoint / 容错 / 恢复。\\n\\n- **DeepSpeed**（Microsoft；ZeRO-1/2/3、ZeRO-Infinity、MoE）\\n- **Megatron-LM / Megatron-Core**（NVIDIA；3D 并行：TP / PP / DP）\\n- **PyTorch FSDP / FSDP2**（PyTorch 官方；FSDP2 2024 GA）\\n- **NVIDIA NeMo**（Megatron-Core 上的端到端训练 + 数据 + 评测套件）\\n- **Colossal-AI**（HPC-AI Tech）\\n- **Ray Train**（Anyscale；调度层在 Ray 上）\\n- **MosaicML Composer / LLM Foundry**（被 Databricks 收购）\\n- **TorchTitan**（PyTorch 官方 2024 推出的 LLM 训练参考实现）\\n\\n## L08 训练数据 pipeline\\n\\n数据集构建、清洗、去重、tokenize、streaming。这一层 2023 后被独立看待。\\n\\n- **datatrove**（HuggingFace；FineWeb 的生产工具）\\n- **MosaicML Streaming**（云对象存储到训练机的流式 dataset）\\n- **WebDataset**（POSIX tar 流，PyTorch 生态早期事实标准）\\n- **Nemo Curator**（NVIDIA；GPU 加速去重 / 分类）\\n- **Dolma toolkit**（AI2；OLMo 数据集工具）\\n- **llm-foundry**（Mosaic / Databricks）\\n- **数据集本体**：FineWeb / FineWeb-Edu（HF）、RedPajama-V2（Together）、Dolma（AI2）、The Stack v2（BigCode）、Common Crawl\\n\\n## L09 后训练 / 微调框架\\n\\nSFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一层 2024-2025 爆发。\\n\\n- **TRL**（HuggingFace；SFT / DPO / GRPO / PPO trainer，事实标准）\\n- **Unsloth**（QLoRA 极致优化，单卡微调首选）\\n- **Axolotl**（OpenAccess AI Collective；config-driven 微调）\\n- **LLaMA-Factory**（北航；中文社区主流）\\n- **OpenRLHF**（OpenLLMAI；分布式 RLHF，Ray 调度）\\n- **verl**（字节；HybridFlow，veRL，DeepSeek-R1 风格 RLVR）\\n- **NeMo-Aligner**（NVIDIA）\\n\\n## L10 基础模型权重\\n\\n可下载（开源 / 开放权重）或可 API 调用的模型本体。这一层 2025 已分裂为开放权重与闭源前沿两轨。\\n\\n- **开放权重 / 开源**：Llama 3 / 4（Meta）、Qwen 3（阿里）、DeepSeek-V3 / R1、Mistral / Mixtral、Gemma 3（Google）、Kimi K2（Moonshot）、GLM-4.6（智谱）、Phi-4（Microsoft）、OLMo 2（AI2，真·全开源）\\n- **闭源前沿**：GPT-5 / GPT-5.1（OpenAI）、Claude Opus / Sonnet / Haiku 4.x（Anthropic）、Gemini 2.5 / 3（Google DeepMind）、Grok 4（xAI）\\n- **模型枢纽 / 发现**：HuggingFace Hub、ModelScope（阿里）、Replicate models、Ollama Library、Civitai（图像 / Stable Diffusion 衍生）\\n\\n## L11 评测 / 基准\\n\\n公开打分系统；越来越多被用作 RL reward 的代理。\\n\\n- **lm-evaluation-harness**（EleutherAI；HF Open LLM Leaderboard 后端）\\n- **HELM**（Stanford CRFM）\\n- **OpenCompass**（上海 AI Lab）\\n- **任务类**：MMLU / MMLU-Pro、GSM8K / MATH、HumanEval / MBPP、SWE-bench / SWE-bench Verified、GPQA、ARC-AGI、HLE（Humanity's Last Exam）\\n- **Agent / 长 horizon**：METR Time Horizons、TAU-bench、WebArena、OSWorld、AgentBench\\n- **Embedding / 检索**：MTEB、BEIR\\n- **对战 / 人类偏好**：LMSYS Chatbot Arena、SEAL（Scale）\\n- **代码定制平台**：Inspect AI（UK AISI）、OpenAI Evals、DeepEval（参 L30）\\n\\n## L12 实验追踪 / MLOps\\n\\nrun、metric、artifact、sweep、模型 registry。\\n\\n- **Weights & Biases (W&B)**\\n- **MLflow**（Databricks 开源）\\n- **Neptune.ai**\\n- **ClearML**\\n- **Comet ML**\\n- **TensorBoard**（仍是免费默认）\\n- **DVC / DVC Studio**（Iterative；偏数据版本）\\n\\n## L13 推理引擎\\n\\n负责 KV cache、continuous batching、speculative decoding、量化、PagedAttention 等推理侧硬核优化。\\n\\n- **vLLM**（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准）\\n- **NVIDIA TensorRT-LLM**（NVIDIA 官方；CUDA Graph + FP8）\\n- **SGLang**（LMSYS / xAI；RadixAttention，结构化输出强）\\n- **HuggingFace TGI（Text Generation Inference）**\\n- **llama.cpp / GGUF**（Georgi Gerganov；CPU / Apple Silicon / 任意后端）\\n- **MLC-LLM**（陈天奇团队；TVM Unity 后端，Web / 移动）\\n- **DeepSpeed-FastGen / DeepSpeed-MII**\\n- **LMDeploy**（上海 AI Lab；InternLM 配套）\\n- **Ollama**（llama.cpp 之上的本地一键运行）\\n\\n## L14 模型服务 / 编排（GPU orchestration）\\n\\n把推理引擎封装成 service：自动伸缩、多模型、A/B、批处理。\\n\\n- **NVIDIA Triton Inference Server**\\n- **Ray Serve**（Anyscale）\\n- **KServe**（K8s 原生，原 KFServing）\\n- **BentoML / Yatai**\\n- **Modal**（serverless GPU 函数）\\n- **Beam / Beam Cloud**\\n- **Replicate Cog**（容器规范 + Replicate 平台）\\n- **Seldon Core**\\n\\n## L15 GPU 云 / 算力市场\\n\\n物理 GPU 容量提供方；neocloud 与超大云共存。\\n\\n- **超大云 GPU**：AWS (P5 / P5e / Trainium2 Ultra)、Azure (ND H100 / ND GB200 v6)、Google Cloud (A3 Ultra / TPU v5p / v6e Trillium)、Oracle Cloud (OCI GPU bare-metal)\\n- **GPU neocloud**：CoreWeave、Lambda Labs、Crusoe、Nebius（前 Yandex 海外）、Voltage Park、Applied Digital\\n- **市场 / 撮合 / 长尾**：RunPod、Vast.ai、TensorDock、Salad、Hyperstack\\n- **训练 + 推理一体**：Together AI、Lepton AI（被 NVIDIA 收购）\\n\\n## L16 模型 API 聚合 / 路由（推理服务市场）\\n\\n不直接持有最前沿模型，但把开源 / 半开源模型托管成 OpenAI 兼容 endpoint，并互相竞价。\\n\\n- **OpenRouter**（按 token 转售，覆盖 100+ 模型）\\n- **Together AI**（开源模型托管 + 训练 + 推理引擎自研）\\n- **Fireworks AI**（自研 FireAttention 引擎）\\n- **Groq Cloud**（自家 LPU；Llama 系超低延迟）\\n- **Cerebras Inference**（WSE-3；超长上下文 + 高速）\\n- **SambaNova Cloud**（SN40L Reconfigurable Dataflow）\\n- **Replicate**（按秒计费，模型即容器）\\n- **DeepInfra**、**Anyscale Endpoints**、**Hyperbolic**\\n\\n## L17 前沿模型 API（闭源 / 半闭源）\\n\\n直接调用模型厂商自营 endpoint；当前 90%+ 高端 token 流量在这层。\\n\\n- **Anthropic API**（Claude Opus / Sonnet / Haiku，含 Tool Use、Computer Use、Skills、Prompt Caching、Files、Batch、Citations、Memory、MCP connector）\\n- **OpenAI API**（GPT-5.x、o-series、Realtime、Assistants → Responses API、Agents SDK、Files、Batch）\\n- **Google Gemini API / Vertex AI**（Gemini 2.5 / 3 Pro / Flash / Nano）\\n- **xAI API**（Grok 4）\\n- **DeepSeek API**（V3 / R1，价格屠夫）\\n- **企业转售层**：Azure OpenAI Service、AWS Bedrock、Google Vertex AI Model Garden、IBM watsonx、Databricks Foundation Model APIs\\n\\n## L18 LLM 应用框架\\n\\nprompt 链、工作流、retriever、tool calling 的高层抽象。\\n\\n- **LangChain / LangChain Expression Language (LCEL)**\\n- **LlamaIndex**（原 GPT-Index；偏 RAG-first）\\n- **DSPy**（Stanford；prompt-as-program、optimizer 驱动）\\n- **Haystack**（deepset）\\n- **Vercel AI SDK**（TypeScript / React 生态最常见）\\n- **Semantic Kernel**（Microsoft）\\n- **Mastra**（TS，新兴）\\n- **Spring AI**（Java）\\n\\n## L19 Embedding / 重排序模型与服务\\n\\n把文本 / 图像变成向量；Reranker 给检索结果二次排序。\\n\\n- **闭源**：OpenAI text-embedding-3、Cohere Embed v3 / Rerank、Google Vertex text-embedding-005、Voyage AI（被 MongoDB 收购）\\n- **开源**：BGE / BGE-M3（北京智源）、Jina Embeddings v3、Nomic Embed、E5（Microsoft）、GTE（阿里）、Stella、mxbai-embed\\n- **多模态**：CLIP / OpenCLIP、SigLIP、Jina-CLIP\\n\\n## L20 向量数据库 / 检索引擎\\n\\n- **专用向量库（SaaS-first）**：Pinecone、Weaviate、Qdrant、Milvus / Zilliz\\n- **开源 / 嵌入式**：Chroma、LanceDB、FAISS（Meta；库不是服务）、Annoy、ScaNN\\n- **关系数据库扩展**：pgvector、pg_vectorize、Supabase Vector、Neon + pgvector\\n- **搜索引擎类**：Elasticsearch dense vector、OpenSearch k-NN、Vespa、Typesense、Meilisearch、Turbopuffer\\n- **嵌入式 + KV**：Redis Vector Search、SQLite-vec\\n\\n## L21 长期记忆系统\\n\\n跨会话 / 跨 Agent 的状态层；从 RAG-of-chat 演化到结构化记忆图。\\n\\n- **Mem0**（开源 + SaaS，事实图 + 向量混合）\\n- **Zep / Zep Cloud**（temporal knowledge graph）\\n- **Letta**（原 MemGPT；研究项目公司化）\\n- **LangMem**（LangChain 旗下记忆 SDK）\\n- **Cognee**\\n- **Anthropic Memory tool**（2025 推出，平台内置）\\n\\n## L22 LLM 网关 / 路由\\n\\n应用与 L17 / L16 之间的代理层：限流、配额、密钥、fallback、cost guard、A/B。\\n\\n- **LiteLLM**（BerriAI；100+ provider 适配器，自部署最常用）\\n- **Portkey**\\n- **Cloudflare AI Gateway**（缓存 + WAF + 计费）\\n- **Kong AI Gateway**\\n- **Helicone Gateway**\\n- **Martian Router**（按 prompt 动态路由）\\n- **OpenRouter**（兼有 L16 与 L22 双重身份）\\n\\n## L23 Prompt 管理 / 提示缓存\\n\\nprompt 版本化、A/B、提示模板、prompt 级缓存命中分析。\\n\\n- **PromptLayer**\\n- **Langfuse Prompt Management**\\n- **Helicone Prompts**\\n- **Braintrust prompt registry**\\n- **Latitude**（YC W24，prompt-as-code）\\n- **Agenta**\\n- **平台原生**：Anthropic Prompt Caching、OpenAI Prompt Caching、Gemini Context Caching\\n\\n## L24 Agent 框架\\n\\ntool-loop、规划、子任务分解、多 agent 协作。2025 这一层从\\\"链式工作流\\\"快速向\\\"事件循环 + 控制平面\\\"迁移。\\n\\n- **LangGraph**（LangChain；graph + 持久化 state，企业部署最多）\\n- **OpenAI Agents SDK**（原 Swarm 演化；Responses API 配套）\\n- **Anthropic Claude Agent SDK / claude-agent-sdk**（Claude Code 同源）\\n- **AutoGen / AutoGen v0.4**（Microsoft Research；多 agent 对话）\\n- **CrewAI**\\n- **Pydantic AI**（type-safe，FastAPI 风格）\\n- **smolagents**（HuggingFace；code-as-action）\\n- **Mastra**、**Inngest Agent Kit**、**TaskWeaver**（Microsoft）\\n\\n## L25 工具协议 / MCP / 集成市场\\n\\nAgent 怎么调外部世界——文件、API、SaaS、数据库。\\n\\n- **Anthropic MCP（Model Context Protocol）**（2024-11 开源；2025 已被 OpenAI / Google / 主流框架普遍接入；事实标准）\\n- **Composio**（500+ SaaS 集成，认证 + 工具一站式）\\n- **Arcade.dev**（auth-first 的 tool runtime）\\n- **Toolhouse**\\n- **Pipedream Connect**\\n- **Zapier MCP / Zapier AI Actions**\\n- **Stripe Agent Toolkit、Cloudflare Agents SDK、SAP Joule Gateway**（厂商自营 MCP / agent 工具）\\n- **服务器目录**：Smithery、MCP Hub、PulseMCP、Glama MCP Registry\\n\\n## L26 浏览器 / Computer Use Agent\\n\\n让 Agent 操作 GUI / 浏览器 / 桌面。\\n\\n- **闭源平台**：Anthropic Computer Use（API 内置）、OpenAI Operator（ChatGPT 内）、Google Project Mariner / Gemini browser\\n- **托管浏览器基础设施**：Browserbase、Hyperbrowser、Steel.dev、Anchor Browser、AgentQL、Browserless\\n- **开源 agent 控制器**：browser-use、Skyvern、Stagehand（Browserbase）、Nut.js、Open Interpreter、Playwright MCP（Microsoft）\\n- **垂直自动化**：Manus（端侧通用 agent）、Reworkd、MultiOn\\n\\n## L27 代码 / Agent 沙箱\\n\\nAgent 跑代码 / 跑命令的隔离环境；MicroVM + 快照成为新基线。\\n\\n- **E2B**（Firecracker microVM，开源 SDK）\\n- **Modal Sandboxes**（serverless GPU + sandbox 一体）\\n- **Daytona**（开源 dev environment manager，被 Agent 平台普遍用作 runner）\\n- **CodeSandbox SDK / CodeSandbox Containers**\\n- **Cloudflare Containers / Workers Sandbox**\\n- **Replit Agent runtime**（含 Nix-based 沙箱）\\n- **Devin VM**（Cognition 自营）\\n\\n## L28 LLM 观测 / 追踪（LLM Observability）\\n\\ntrace、span、token / 成本、prompt / completion 日志，是 agent 时代的新 APM。\\n\\n- **Langfuse**（开源 + cloud，主流之一）\\n- **Arize Phoenix / Arize AX**（OpenTelemetry GenAI 推手）\\n- **LangSmith**（LangChain 官方）\\n- **Helicone**（proxy-based，零代码接入）\\n- **Braintrust**（eval + observability 一体）\\n- **Logfire**（Pydantic 团队，OTel-native）\\n- **W&B Weave**\\n- **Datadog LLM Observability**、**New Relic AI Monitoring**、**Splunk AI Observability**（传统 APM 厂商扩展）\\n\\n## L29 Guardrails / 安全 / 红队\\n\\n提示注入防御、PII / 越狱检测、输出过滤、内容策略。\\n\\n- **Guardrails AI**（开源 validator 框架）\\n- **NVIDIA NeMo Guardrails**（Colang DSL）\\n- **Lakera Guard / Lakera Red**\\n- **Protect AI（含 NB Defense、Guardian、Recon）**\\n- **Robust Intelligence**（被 Cisco 收购）\\n- **Prompt Security**、**HiddenLayer**、**CalypsoAI**\\n- **Llama Guard 3 / Prompt Guard**（Meta 开源策略模型）\\n- **Promptfoo red team**（开源越狱测试套件，参 L30）\\n\\n## L30 LLM 评测 / 测试（CI 中的 prompt 测试）\\n\\n把 prompt / agent 当作软件来跑回归测试。\\n\\n- **Promptfoo**（YAML + CLI，开源主流）\\n- **DeepEval**（Confident AI；pytest 风格）\\n- **Ragas**（RAG-specific 指标）\\n- **Braintrust Evals**\\n- **Patronus AI**（合规向）\\n- **TruLens**（TruEra；被 Snowflake 收购）\\n- **OpenAI Evals**、**Inspect AI**（UK AISI；安全评测主流）\\n- **Galileo Evaluate**\\n\\n## L31 语音（TTS / ASR / 实时对话）\\n\\n- **TTS**：ElevenLabs、Cartesia、PlayHT、Hume AI、Resemble、OpenAI tts、Google Chirp 3、阿里 CosyVoice\\n- **ASR**：OpenAI Whisper / Whisper Large v3、Deepgram、AssemblyAI、Speechmatics、Rev AI、NVIDIA Parakeet、Google Chirp 2\\n- **实时语音 / 端到端**：OpenAI Realtime API、Google Gemini Live、Anthropic（暂无原生 voice，多用 Cartesia / ElevenLabs 拼接）、Sesame、Kyutai Moshi、LiveKit Agents、Pipecat（编排框架）、Vapi、Retell AI\\n\\n## L32 图像 / 视频 / 3D 生成\\n\\n- **图像（闭源 / SaaS）**：Midjourney、Ideogram、Adobe Firefly、Google Imagen 3、OpenAI DALL-E 3 / GPT-4o image、Recraft\\n- **图像（开源 / 工作流）**：Black Forest Labs FLUX.1 / FLUX.2、Stable Diffusion 3 / SD 3.5 / SDXL（Stability AI）、PixArt-Σ、HunyuanImage（腾讯）、ComfyUI（工作流编辑器）、Automatic1111 WebUI、Fooocus\\n- **视频**：Runway Gen-4、Pika 2.x、Luma Dream Machine / Ray2、Kling（快手）、Hailuo MiniMax、OpenAI Sora、Google Veo 3、HunyuanVideo（腾讯开源）、Wan 2.x（阿里开源）\\n- **3D / 场景**：Luma Genie、Meshy、Tripo3D、Rodin、World Labs（Fei-Fei Li）、CSM\\n- **托管 / 推理市场**：fal.ai、Replicate、RunPod Serverless（这一层与 L16 重合，但更偏 diffusion 工作负载）\\n\\n## L33 通用对话 / 搜索 Agent（终端用户）\\n\\n直接给非开发者用户用的\\\"AI 助手\\\"。\\n\\n- **ChatGPT**（OpenAI；含 Tasks、Operator、Codex、Connectors）\\n- **Claude.ai**（Anthropic；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）\\n- **Gemini app / Gemini Advanced**（Google）\\n- **Grok**（xAI；X 内嵌 + grok.com）\\n- **DeepSeek Chat**、**Kimi**（Moonshot）、**通义千问**、**豆包**（字节）\\n- **搜索类**：Perplexity、You.com、Brave Leo、Arc Search（Browser Company）、Komo\\n- **多模型聚合 / 隐私**：Poe（Quora）、Le Chat（Mistral）、HuggingChat、Msty（本地）、LM Studio（本地）\\n\\n## L34 垂直 Agent 应用（终端用户）\\n\\n按行业 / 角色划分的 Agent；2025 在编码、设计、营销、客服、医疗、法律均跑出独立公司。\\n\\n- **编码 Agent**：Cursor、Claude Code（Anthropic）、Devin（Cognition）、Windsurf（被 OpenAI 收购）、Replit Agent、Codex CLI（OpenAI）、Aider、GitHub Copilot Workspace、Augment、Amp（Sourcegraph）、Lovable、Bolt.new、v0（Vercel）、Manus\\n- **设计 / 内容**：Figma AI / Make、Galileo AI、Framer AI、Canva Magic Studio、Jasper、Copy.ai、Notion AI\\n- **销售 / 营销 / 客服**：Decagon、Sierra、Ada、Intercom Fin、Cresta、Clay、11x.ai、AirOps\\n- **企业知识 / 内部 IT**：Glean、Moveworks、Hebbia、Harvey（法律）、Casetext CoCounsel（被 Thomson Reuters 收购）\\n- **代码评审 / 测试 / 安全 Agent**：CodeRabbit、Greptile、Qodo、Meticulous、Snyk DeepCode AI（这一层与 SDLC 栈高度重合，详见 [`../SDLC-stack/README.md`](../SDLC-stack/README.md)）\\n- **医疗 / 科研**：Abridge、Hippocratic AI、Ambience、Future House、Scite\\n\\n---\\n\\n## 几条横切的观察\\n\\n不属于具体某一层，但跨层规律值得单列。\\n\\n- **MCP 是这一栈唯一在 2024–2025 通过的\\\"工具接口标准\\\"**：从 L25 起，向上影响 L24 / L18，向下影响 L17（模型 API 内置 MCP connector）和 L22（gateway 必须懂 MCP）。\\n- **L13 推理引擎 与 L14 模型服务 的边界正在合并**：vLLM、SGLang 自带 OpenAI 兼容 HTTP server，挤压了纯 L14 厂商（KServe、BentoML）的独立性。\\n- **L15 GPU 云、L16 模型 API 聚合、L17 前沿模型 API 三层正在相互渗透**：CoreWeave 推自家模型；Together / Fireworks 自研推理引擎；Anthropic / OpenAI 转售他人模型（极少，但 Bedrock / Vertex 把这种关系制度化）。\\n- **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。\\n- **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。\\n- **L18 LLM 应用框架 在 2025 出现 \\\"去 LangChain 化\\\"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。\\n\", \"structuredPatch\": [], \"originalFile\": null, \"userModified\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 41068,
+        "completion_tokens": 12200,
+        "cached_tokens": 41067,
+        "extra": {
+          "cache_creation_input_tokens": 350,
+          "cache_read_input_tokens": 41067,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 350,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 12200,
+              "cache_read_input_tokens": 41067,
+              "cache_creation_input_tokens": 350,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 350
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Write",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "create",
+            "filePath": "/Users/luwei/work/Controversy/chat/AISW-stack/README.md",
+            "content": "# AI 软件栈分层索引：从 GPU 驱动到终端用户 Agent 应用\n\n从最底层的 GPU 驱动 / 固件，一直到最终用户接触的 Agent 应用（ChatGPT、Cursor、Devin），完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n## 全栈总览（34 层）\n\n按\"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用\"九大段组织。\n\n| 段 | 层号 | 层名 | 自然视角 / 解决的事 |\n| --- | --- | --- | --- |\n| 底层运行时 | L01 | GPU 驱动 / 固件 | 让 OS 看到 GPU |\n| | L02 | GPU 互连 / 集合通信 | 多 GPU、多机之间搬数据 |\n| | L03 | GPU 编程模型 / 计算 API | 让程序员写 kernel |\n| | L04 | GPU 内核库（DNN / BLAS / 通信） | 别人写好的高性能算子 |\n| | L05 | 编译器 / IR | 把模型图编译成 GPU 代码 |\n| 框架 | L06 | 张量 / 训练框架 | 写模型与训练循环 |\n| | L07 | 分布式训练框架 | 千卡 / 万卡并行 |\n| | L08 | 训练数据 pipeline | 喂数据的工业管线 |\n| | L09 | 后训练 / 微调框架 | SFT / RLHF / DPO / GRPO |\n| 模型 | L10 | 基础模型权重 | 可下载或可调用的模型本体 |\n| | L11 | 评测 / 基准 | 能力打分 |\n| | L12 | 实验追踪 / MLOps | run / sweep / artifact 管理 |\n| 推理服务 | L13 | 推理引擎 | KV cache、batching、speculative |\n| | L14 | 模型服务 / 编排 | 把引擎包成 service |\n| | L15 | GPU 云 / 算力市场 | 谁来出 GPU |\n| | L16 | 模型 API 聚合 / 路由 | 一个 endpoint 调多家模型 |\n| | L17 | 前沿模型 API | 直接调闭源旗舰模型 |\n| LLM 应用中间件 | L18 | LLM 应用框架 | prompt 链 / 工作流 |\n| | L19 | Embedding / 重排序模型 | 把文本变向量 |\n| | L20 | 向量数据库 / 检索 | 存与查向量 |\n| | L21 | 长期记忆系统 | Agent 跨会话状态 |\n| | L22 | LLM 网关 / 路由 | 限流 / 配额 / fallback |\n| | L23 | Prompt 管理 / 缓存 | prompt 版本、cache 命中 |\n| Agent 核心 | L24 | Agent 框架 | tool-loop、规划、多 agent |\n| | L25 | 工具协议 / MCP / 集成 | Agent 怎么调外部世界 |\n| | L26 | 浏览器 / Computer Use | Agent 操作 GUI |\n| | L27 | 代码 / Agent 沙箱 | Agent 跑代码的安全环境 |\n| 可观测 / 安全 | L28 | LLM 观测 / 追踪 | trace、token、成本 |\n| | L29 | Guardrails / 安全 / 红队 | 注入防御、PII、越狱 |\n| | L30 | LLM 评测 / 测试 | CI 里跑 prompt 测试 |\n| 多模态外围 | L31 | 语音（TTS / ASR） | 听 / 说 |\n| | L32 | 图像 / 视频生成 | 画 / 拍 |\n| 终端用户 Agent 应用 | L33 | 通用对话 / 搜索 Agent | 给所有人用 |\n| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |\n\n---\n\n## L01 GPU 驱动 / 固件\n\n负责把硬件能力暴露给操作系统与上层运行时；包括内核态驱动、固件、用户态运行时 stub。\n\n- **NVIDIA Display / Compute Driver**（含 `nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）\n- **NVIDIA Open GPU Kernel Modules**（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）\n- **AMD ROCm / amdgpu / amdkfd driver**（`amdgpu` DRM 驱动 + KFD 计算子系统）\n- **Intel Habana Gaudi driver**（`habanalabs` 内核驱动）\n- **Apple Silicon GPU driver**（macOS / iOS 内置，与 Metal 紧绑定）\n- **NVIDIA Container Toolkit / nvidia-container-runtime**（让容器看到 GPU；事实上的 K8s GPU 接入标准）\n\n## L02 GPU 互连 / 集合通信\n\n多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。\n\n- **NVLink / NVSwitch**（节点内 GPU↔GPU，H100 900 GB/s、B200 1.8 TB/s）\n- **InfiniBand（NVIDIA Quantum-2 / Quantum-X800）+ Mellanox OFED**（节点间 RDMA）\n- **RoCE v2 / Ultra Ethernet（UEC）**（以太网上的 RDMA；Ultra Ethernet Consortium 2024 推出 1.0）\n- **AWS EFA（Elastic Fabric Adapter）+ SRD 协议**\n- **UALink 1.0**（AMD / Intel / Google / Meta 等 2024 联盟，对位 NVLink）\n- **NCCL / RCCL / oneCCL**（NVIDIA / AMD / Intel 各自的集合通信库；allreduce / allgather / sendrecv）\n- **MSCCL / MSCCL++**（微软在 NCCL 之上的可编程调度层）\n\n## L03 GPU 编程模型 / 计算 API\n\n让开发者写并行 kernel；下层各家硬件的统一抽象。\n\n- **NVIDIA CUDA**（含 `nvcc`、PTX、CUDA Runtime / Driver API）\n- **AMD ROCm / HIP**（HIP 提供 CUDA 源码级近似兼容）\n- **Apple Metal / Metal Performance Shaders（MPS）**\n- **Intel oneAPI / SYCL / DPC++**\n- **OpenCL 3.0**（跨厂商，地位下滑但仍在嵌入式 / Android）\n- **Vulkan Compute**（图形 + 计算合一，llama.cpp 用作便携后端）\n- **WebGPU / wgpu**（浏览器内 GPU 计算；Chrome 113 起默认开启）\n\n## L04 GPU 内核库（DNN / BLAS / 通信 / Attention）\n\n预编译好的高性能算子，框架直接调用。\n\n- **cuBLAS / cuBLASLt**（GEMM）\n- **cuDNN**（卷积、RNN、Attention 等深度学习算子）\n- **CUTLASS**（NVIDIA 开源的 GEMM 模板库，FlashAttention / vLLM 大量复用）\n- **FlashAttention 1 / 2 / 3**（Tri Dao；FA3 针对 Hopper Tensor Core + TMA）\n- **xFormers**（Meta；memory-efficient attention 集合）\n- **Triton kernels**（OpenAI；社区贡献的 fused MoE、RMSNorm、SwiGLU 等）\n- **NCCL / RCCL**（同 L02，也属于\"内核库\"中的通信类）\n\n## L05 编译器 / IR\n\n把模型图或 Python 代码编译成 GPU 可执行体；过去十年从单一图编译器演化为多层 IR + JIT 混合。\n\n- **OpenAI Triton**（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准）\n- **PyTorch torch.compile / TorchInductor + TorchDynamo**（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）\n- **XLA / OpenXLA**（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta 共治）\n- **MLIR**（LLVM 项目；TPU、IREE、Mojo、torch-mlir 共享的中间表示）\n- **TVM / Apache TVM + Unity**（陈天奇主导的端到端深度学习编译栈）\n- **IREE**（Google；MLIR-based，定位移动 / 边缘）\n- **Mojo / MAX**（Modular；Chris Lattner，Python 超集 + MLIR 后端）\n\n## L06 张量 / 训练框架\n\n定义计算图、autograd、optimizer；用户写 `nn.Module` 的那一层。\n\n- **PyTorch**（Meta；2025 LLM 训练事实标准，份额 >70%）\n- **JAX + Flax / NNX / Equinox**（Google；Gemini / Anthropic 训练栈核心）\n- **TensorFlow + Keras 3**（Google；Keras 3 后端可切 JAX / PyTorch / TF）\n- **MLX**（Apple；Apple Silicon 原生）\n- **MindSpore**（华为）\n- **PaddlePaddle**（百度）\n- **tinygrad**（George Hotz；研究 / 教学）\n\n## L07 分布式训练框架\n\n把模型与数据切到上千 / 上万卡上，并管 checkpoint / 容错 / 恢复。\n\n- **DeepSpeed**（Microsoft；ZeRO-1/2/3、ZeRO-Infinity、MoE）\n- **Megatron-LM / Megatron-Core**（NVIDIA；3D 并行：TP / PP / DP）\n- **PyTorch FSDP / FSDP2**（PyTorch 官方；FSDP2 2024 GA）\n- **NVIDIA NeMo**（Megatron-Core 上的端到端训练 + 数据 + 评测套件）\n- **Colossal-AI**（HPC-AI Tech）\n- **Ray Train**（Anyscale；调度层在 Ray 上）\n- **MosaicML Composer / LLM Foundry**（被 Databricks 收购）\n- **TorchTitan**（PyTorch 官方 2024 推出的 LLM 训练参考实现）\n\n## L08 训练数据 pipeline\n\n数据集构建、清洗、去重、tokenize、streaming。这一层 2023 后被独立看待。\n\n- **datatrove**（HuggingFace；FineWeb 的生产工具）\n- **MosaicML Streaming**（云对象存储到训练机的流式 dataset）\n- **WebDataset**（POSIX tar 流，PyTorch 生态早期事实标准）\n- **Nemo Curator**（NVIDIA；GPU 加速去重 / 分类）\n- **Dolma toolkit**（AI2；OLMo 数据集工具）\n- **llm-foundry**（Mosaic / Databricks）\n- **数据集本体**：FineWeb / FineWeb-Edu（HF）、RedPajama-V2（Together）、Dolma（AI2）、The Stack v2（BigCode）、Common Crawl\n\n## L09 后训练 / 微调框架\n\nSFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一层 2024-2025 爆发。\n\n- **TRL**（HuggingFace；SFT / DPO / GRPO / PPO trainer，事实标准）\n- **Unsloth**（QLoRA 极致优化，单卡微调首选）\n- **Axolotl**（OpenAccess AI Collective；config-driven 微调）\n- **LLaMA-Factory**（北航；中文社区主流）\n- **OpenRLHF**（OpenLLMAI；分布式 RLHF，Ray 调度）\n- **verl**（字节；HybridFlow，veRL，DeepSeek-R1 风格 RLVR）\n- **NeMo-Aligner**（NVIDIA）\n\n## L10 基础模型权重\n\n可下载（开源 / 开放权重）或可 API 调用的模型本体。这一层 2025 已分裂为开放权重与闭源前沿两轨。\n\n- **开放权重 / 开源**：Llama 3 / 4（Meta）、Qwen 3（阿里）、DeepSeek-V3 / R1、Mistral / Mixtral、Gemma 3（Google）、Kimi K2（Moonshot）、GLM-4.6（智谱）、Phi-4（Microsoft）、OLMo 2（AI2，真·全开源）\n- **闭源前沿**：GPT-5 / GPT-5.1（OpenAI）、Claude Opus / Sonnet / Haiku 4.x（Anthropic）、Gemini 2.5 / 3（Google DeepMind）、Grok 4（xAI）\n- **模型枢纽 / 发现**：HuggingFace Hub、ModelScope（阿里）、Replicate models、Ollama Library、Civitai（图像 / Stable Diffusion 衍生）\n\n## L11 评测 / 基准\n\n公开打分系统；越来越多被用作 RL reward 的代理。\n\n- **lm-evaluation-harness**（EleutherAI；HF Open LLM Leaderboard 后端）\n- **HELM**（Stanford CRFM）\n- **OpenCompass**（上海 AI Lab）\n- **任务类**：MMLU / MMLU-Pro、GSM8K / MATH、HumanEval / MBPP、SWE-bench / SWE-bench Verified、GPQA、ARC-AGI、HLE（Humanity's Last Exam）\n- **Agent / 长 horizon**：METR Time Horizons、TAU-bench、WebArena、OSWorld、AgentBench\n- **Embedding / 检索**：MTEB、BEIR\n- **对战 / 人类偏好**：LMSYS Chatbot Arena、SEAL（Scale）\n- **代码定制平台**：Inspect AI（UK AISI）、OpenAI Evals、DeepEval（参 L30）\n\n## L12 实验追踪 / MLOps\n\nrun、metric、artifact、sweep、模型 registry。\n\n- **Weights & Biases (W&B)**\n- **MLflow**（Databricks 开源）\n- **Neptune.ai**\n- **ClearML**\n- **Comet ML**\n- **TensorBoard**（仍是免费默认）\n- **DVC / DVC Studio**（Iterative；偏数据版本）\n\n## L13 推理引擎\n\n负责 KV cache、continuous batching、speculative decoding、量化、PagedAttention 等推理侧硬核优化。\n\n- **vLLM**（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准）\n- **NVIDIA TensorRT-LLM**（NVIDIA 官方；CUDA Graph + FP8）\n- **SGLang**（LMSYS / xAI；RadixAttention，结构化输出强）\n- **HuggingFace TGI（Text Generation Inference）**\n- **llama.cpp / GGUF**（Georgi Gerganov；CPU / Apple Silicon / 任意后端）\n- **MLC-LLM**（陈天奇团队；TVM Unity 后端，Web / 移动）\n- **DeepSpeed-FastGen / DeepSpeed-MII**\n- **LMDeploy**（上海 AI Lab；InternLM 配套）\n- **Ollama**（llama.cpp 之上的本地一键运行）\n\n## L14 模型服务 / 编排（GPU orchestration）\n\n把推理引擎封装成 service：自动伸缩、多模型、A/B、批处理。\n\n- **NVIDIA Triton Inference Server**\n- **Ray Serve**（Anyscale）\n- **KServe**（K8s 原生，原 KFServing）\n- **BentoML / Yatai**\n- **Modal**（serverless GPU 函数）\n- **Beam / Beam Cloud**\n- **Replicate Cog**（容器规范 + Replicate 平台）\n- **Seldon Core**\n\n## L15 GPU 云 / 算力市场\n\n物理 GPU 容量提供方；neocloud 与超大云共存。\n\n- **超大云 GPU**：AWS (P5 / P5e / Trainium2 Ultra)、Azure (ND H100 / ND GB200 v6)、Google Cloud (A3 Ultra / TPU v5p / v6e Trillium)、Oracle Cloud (OCI GPU bare-metal)\n- **GPU neocloud**：CoreWeave、Lambda Labs、Crusoe、Nebius（前 Yandex 海外）、Voltage Park、Applied Digital\n- **市场 / 撮合 / 长尾**：RunPod、Vast.ai、TensorDock、Salad、Hyperstack\n- **训练 + 推理一体**：Together AI、Lepton AI（被 NVIDIA 收购）\n\n## L16 模型 API 聚合 / 路由（推理服务市场）\n\n不直接持有最前沿模型，但把开源 / 半开源模型托管成 OpenAI 兼容 endpoint，并互相竞价。\n\n- **OpenRouter**（按 token 转售，覆盖 100+ 模型）\n- **Together AI**（开源模型托管 + 训练 + 推理引擎自研）\n- **Fireworks AI**（自研 FireAttention 引擎）\n- **Groq Cloud**（自家 LPU；Llama 系超低延迟）\n- **Cerebras Inference**（WSE-3；超长上下文 + 高速）\n- **SambaNova Cloud**（SN40L Reconfigurable Dataflow）\n- **Replicate**（按秒计费，模型即容器）\n- **DeepInfra**、**Anyscale Endpoints**、**Hyperbolic**\n\n## L17 前沿模型 API（闭源 / 半闭源）\n\n直接调用模型厂商自营 endpoint；当前 90%+ 高端 token 流量在这层。\n\n- **Anthropic API**（Claude Opus / Sonnet / Haiku，含 Tool Use、Computer Use、Skills、Prompt Caching、Files、Batch、Citations、Memory、MCP connector）\n- **OpenAI API**（GPT-5.x、o-series、Realtime、Assistants → Responses API、Agents SDK、Files、Batch）\n- **Google Gemini API / Vertex AI**（Gemini 2.5 / 3 Pro / Flash / Nano）\n- **xAI API**（Grok 4）\n- **DeepSeek API**（V3 / R1，价格屠夫）\n- **企业转售层**：Azure OpenAI Service、AWS Bedrock、Google Vertex AI Model Garden、IBM watsonx、Databricks Foundation Model APIs\n\n## L18 LLM 应用框架\n\nprompt 链、工作流、retriever、tool calling 的高层抽象。\n\n- **LangChain / LangChain Expression Language (LCEL)**\n- **LlamaIndex**（原 GPT-Index；偏 RAG-first）\n- **DSPy**（Stanford；prompt-as-program、optimizer 驱动）\n- **Haystack**（deepset）\n- **Vercel AI SDK**（TypeScript / React 生态最常见）\n- **Semantic Kernel**（Microsoft）\n- **Mastra**（TS，新兴）\n- **Spring AI**（Java）\n\n## L19 Embedding / 重排序模型与服务\n\n把文本 / 图像变成向量；Reranker 给检索结果二次排序。\n\n- **闭源**：OpenAI text-embedding-3、Cohere Embed v3 / Rerank、Google Vertex text-embedding-005、Voyage AI（被 MongoDB 收购）\n- **开源**：BGE / BGE-M3（北京智源）、Jina Embeddings v3、Nomic Embed、E5（Microsoft）、GTE（阿里）、Stella、mxbai-embed\n- **多模态**：CLIP / OpenCLIP、SigLIP、Jina-CLIP\n\n## L20 向量数据库 / 检索引擎\n\n- **专用向量库（SaaS-first）**：Pinecone、Weaviate、Qdrant、Milvus / Zilliz\n- **开源 / 嵌入式**：Chroma、LanceDB、FAISS（Meta；库不是服务）、Annoy、ScaNN\n- **关系数据库扩展**：pgvector、pg_vectorize、Supabase Vector、Neon + pgvector\n- **搜索引擎类**：Elasticsearch dense vector、OpenSearch k-NN、Vespa、Typesense、Meilisearch、Turbopuffer\n- **嵌入式 + KV**：Redis Vector Search、SQLite-vec\n\n## L21 长期记忆系统\n\n跨会话 / 跨 Agent 的状态层；从 RAG-of-chat 演化到结构化记忆图。\n\n- **Mem0**（开源 + SaaS，事实图 + 向量混合）\n- **Zep / Zep Cloud**（temporal knowledge graph）\n- **Letta**（原 MemGPT；研究项目公司化）\n- **LangMem**（LangChain 旗下记忆 SDK）\n- **Cognee**\n- **Anthropic Memory tool**（2025 推出，平台内置）\n\n## L22 LLM 网关 / 路由\n\n应用与 L17 / L16 之间的代理层：限流、配额、密钥、fallback、cost guard、A/B。\n\n- **LiteLLM**（BerriAI；100+ provider 适配器，自部署最常用）\n- **Portkey**\n- **Cloudflare AI Gateway**（缓存 + WAF + 计费）\n- **Kong AI Gateway**\n- **Helicone Gateway**\n- **Martian Router**（按 prompt 动态路由）\n- **OpenRouter**（兼有 L16 与 L22 双重身份）\n\n## L23 Prompt 管理 / 提示缓存\n\nprompt 版本化、A/B、提示模板、prompt 级缓存命中分析。\n\n- **PromptLayer**\n- **Langfuse Prompt Management**\n- **Helicone Prompts**\n- **Braintrust prompt registry**\n- **Latitude**（YC W24，prompt-as-code）\n- **Agenta**\n- **平台原生**：Anthropic Prompt Caching、OpenAI Prompt Caching、Gemini Context Caching\n\n## L24 Agent 框架\n\ntool-loop、规划、子任务分解、多 agent 协作。2025 这一层从\"链式工作流\"快速向\"事件循环 + 控制平面\"迁移。\n\n- **LangGraph**（LangChain；graph + 持久化 state，企业部署最多）\n- **OpenAI Agents SDK**（原 Swarm 演化；Responses API 配套）\n- **Anthropic Claude Agent SDK / claude-agent-sdk**（Claude Code 同源）\n- **AutoGen / AutoGen v0.4**（Microsoft Research；多 agent 对话）\n- **CrewAI**\n- **Pydantic AI**（type-safe，FastAPI 风格）\n- **smolagents**（HuggingFace；code-as-action）\n- **Mastra**、**Inngest Agent Kit**、**TaskWeaver**（Microsoft）\n\n## L25 工具协议 / MCP / 集成市场\n\nAgent 怎么调外部世界——文件、API、SaaS、数据库。\n\n- **Anthropic MCP（Model Context Protocol）**（2024-11 开源；2025 已被 OpenAI / Google / 主流框架普遍接入；事实标准）\n- **Composio**（500+ SaaS 集成，认证 + 工具一站式）\n- **Arcade.dev**（auth-first 的 tool runtime）\n- **Toolhouse**\n- **Pipedream Connect**\n- **Zapier MCP / Zapier AI Actions**\n- **Stripe Agent Toolkit、Cloudflare Agents SDK、SAP Joule Gateway**（厂商自营 MCP / agent 工具）\n- **服务器目录**：Smithery、MCP Hub、PulseMCP、Glama MCP Registry\n\n## L26 浏览器 / Computer Use Agent\n\n让 Agent 操作 GUI / 浏览器 / 桌面。\n\n- **闭源平台**：Anthropic Computer Use（API 内置）、OpenAI Operator（ChatGPT 内）、Google Project Mariner / Gemini browser\n- **托管浏览器基础设施**：Browserbase、Hyperbrowser、Steel.dev、Anchor Browser、AgentQL、Browserless\n- **开源 agent 控制器**：browser-use、Skyvern、Stagehand（Browserbase）、Nut.js、Open Interpreter、Playwright MCP（Microsoft）\n- **垂直自动化**：Manus（端侧通用 agent）、Reworkd、MultiOn\n\n## L27 代码 / Agent 沙箱\n\nAgent 跑代码 / 跑命令的隔离环境；MicroVM + 快照成为新基线。\n\n- **E2B**（Firecracker microVM，开源 SDK）\n- **Modal Sandboxes**（serverless GPU + sandbox 一体）\n- **Daytona**（开源 dev environment manager，被 Agent 平台普遍用作 runner）\n- **CodeSandbox SDK / CodeSandbox Containers**\n- **Cloudflare Containers / Workers Sandbox**\n- **Replit Agent runtime**（含 Nix-based 沙箱）\n- **Devin VM**（Cognition 自营）\n\n## L28 LLM 观测 / 追踪（LLM Observability）\n\ntrace、span、token / 成本、prompt / completion 日志，是 agent 时代的新 APM。\n\n- **Langfuse**（开源 + cloud，主流之一）\n- **Arize Phoenix / Arize AX**（OpenTelemetry GenAI 推手）\n- **LangSmith**（LangChain 官方）\n- **Helicone**（proxy-based，零代码接入）\n- **Braintrust**（eval + observability 一体）\n- **Logfire**（Pydantic 团队，OTel-native）\n- **W&B Weave**\n- **Datadog LLM Observability**、**New Relic AI Monitoring**、**Splunk AI Observability**（传统 APM 厂商扩展）\n\n## L29 Guardrails / 安全 / 红队\n\n提示注入防御、PII / 越狱检测、输出过滤、内容策略。\n\n- **Guardrails AI**（开源 validator 框架）\n- **NVIDIA NeMo Guardrails**（Colang DSL）\n- **Lakera Guard / Lakera Red**\n- **Protect AI（含 NB Defense、Guardian、Recon）**\n- **Robust Intelligence**（被 Cisco 收购）\n- **Prompt Security**、**HiddenLayer**、**CalypsoAI**\n- **Llama Guard 3 / Prompt Guard**（Meta 开源策略模型）\n- **Promptfoo red team**（开源越狱测试套件，参 L30）\n\n## L30 LLM 评测 / 测试（CI 中的 prompt 测试）\n\n把 prompt / agent 当作软件来跑回归测试。\n\n- **Promptfoo**（YAML + CLI，开源主流）\n- **DeepEval**（Confident AI；pytest 风格）\n- **Ragas**（RAG-specific 指标）\n- **Braintrust Evals**\n- **Patronus AI**（合规向）\n- **TruLens**（TruEra；被 Snowflake 收购）\n- **OpenAI Evals**、**Inspect AI**（UK AISI；安全评测主流）\n- **Galileo Evaluate**\n\n## L31 语音（TTS / ASR / 实时对话）\n\n- **TTS**：ElevenLabs、Cartesia、PlayHT、Hume AI、Resemble、OpenAI tts、Google Chirp 3、阿里 CosyVoice\n- **ASR**：OpenAI Whisper / Whisper Large v3、Deepgram、AssemblyAI、Speechmatics、Rev AI、NVIDIA Parakeet、Google Chirp 2\n- **实时语音 / 端到端**：OpenAI Realtime API、Google Gemini Live、Anthropic（暂无原生 voice，多用 Cartesia / ElevenLabs 拼接）、Sesame、Kyutai Moshi、LiveKit Agents、Pipecat（编排框架）、Vapi、Retell AI\n\n## L32 图像 / 视频 / 3D 生成\n\n- **图像（闭源 / SaaS）**：Midjourney、Ideogram、Adobe Firefly、Google Imagen 3、OpenAI DALL-E 3 / GPT-4o image、Recraft\n- **图像（开源 / 工作流）**：Black Forest Labs FLUX.1 / FLUX.2、Stable Diffusion 3 / SD 3.5 / SDXL（Stability AI）、PixArt-Σ、HunyuanImage（腾讯）、ComfyUI（工作流编辑器）、Automatic1111 WebUI、Fooocus\n- **视频**：Runway Gen-4、Pika 2.x、Luma Dream Machine / Ray2、Kling（快手）、Hailuo MiniMax、OpenAI Sora、Google Veo 3、HunyuanVideo（腾讯开源）、Wan 2.x（阿里开源）\n- **3D / 场景**：Luma Genie、Meshy、Tripo3D、Rodin、World Labs（Fei-Fei Li）、CSM\n- **托管 / 推理市场**：fal.ai、Replicate、RunPod Serverless（这一层与 L16 重合，但更偏 diffusion 工作负载）\n\n## L33 通用对话 / 搜索 Agent（终端用户）\n\n直接给非开发者用户用的\"AI 助手\"。\n\n- **ChatGPT**（OpenAI；含 Tasks、Operator、Codex、Connectors）\n- **Claude.ai**（Anthropic；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）\n- **Gemini app / Gemini Advanced**（Google）\n- **Grok**（xAI；X 内嵌 + grok.com）\n- **DeepSeek Chat**、**Kimi**（Moonshot）、**通义千问**、**豆包**（字节）\n- **搜索类**：Perplexity、You.com、Brave Leo、Arc Search（Browser Company）、Komo\n- **多模型聚合 / 隐私**：Poe（Quora）、Le Chat（Mistral）、HuggingChat、Msty（本地）、LM Studio（本地）\n\n## L34 垂直 Agent 应用（终端用户）\n\n按行业 / 角色划分的 Agent；2025 在编码、设计、营销、客服、医疗、法律均跑出独立公司。\n\n- **编码 Agent**：Cursor、Claude Code（Anthropic）、Devin（Cognition）、Windsurf（被 OpenAI 收购）、Replit Agent、Codex CLI（OpenAI）、Aider、GitHub Copilot Workspace、Augment、Amp（Sourcegraph）、Lovable、Bolt.new、v0（Vercel）、Manus\n- **设计 / 内容**：Figma AI / Make、Galileo AI、Framer AI、Canva Magic Studio、Jasper、Copy.ai、Notion AI\n- **销售 / 营销 / 客服**：Decagon、Sierra、Ada、Intercom Fin、Cresta、Clay、11x.ai、AirOps\n- **企业知识 / 内部 IT**：Glean、Moveworks、Hebbia、Harvey（法律）、Casetext CoCounsel（被 Thomson Reuters 收购）\n- **代码评审 / 测试 / 安全 Agent**：CodeRabbit、Greptile、Qodo、Meticulous、Snyk DeepCode AI（这一层与 SDLC 栈高度重合，详见 [`../SDLC-stack/README.md`](../SDLC-stack/README.md)）\n- **医疗 / 科研**：Abridge、Hippocratic AI、Ambience、Future House、Scite\n\n---\n\n## 几条横切的观察\n\n不属于具体某一层，但跨层规律值得单列。\n\n- **MCP 是这一栈唯一在 2024–2025 通过的\"工具接口标准\"**：从 L25 起，向上影响 L24 / L18，向下影响 L17（模型 API 内置 MCP connector）和 L22（gateway 必须懂 MCP）。\n- **L13 推理引擎 与 L14 模型服务 的边界正在合并**：vLLM、SGLang 自带 OpenAI 兼容 HTTP server，挤压了纯 L14 厂商（KServe、BentoML）的独立性。\n- **L15 GPU 云、L16 模型 API 聚合、L17 前沿模型 API 三层正在相互渗透**：CoreWeave 推自家模型；Together / Fireworks 自研推理引擎；Anthropic / OpenAI 转售他人模型（极少，但 Bedrock / Vertex 把这种关系制度化）。\n- **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。\n- **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。\n- **L18 LLM 应用框架 在 2025 出现 \"去 LangChain 化\"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。\n",
+            "structuredPatch": [],
+            "originalFile": null,
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GRHfNVjGfsV49mbDA291DX",
+            "type": "tool_result",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/chat/AISW-stack/README.md (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "create",
+            "filePath": "/Users/luwei/work/Controversy/chat/AISW-stack/README.md",
+            "content": "# AI 软件栈分层索引：从 GPU 驱动到终端用户 Agent 应用\n\n从最底层的 GPU 驱动 / 固件，一直到最终用户接触的 Agent 应用（ChatGPT、Cursor、Devin），完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n## 全栈总览（34 层）\n\n按\"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用\"九大段组织。\n\n| 段 | 层号 | 层名 | 自然视角 / 解决的事 |\n| --- | --- | --- | --- |\n| 底层运行时 | L01 | GPU 驱动 / 固件 | 让 OS 看到 GPU |\n| | L02 | GPU 互连 / 集合通信 | 多 GPU、多机之间搬数据 |\n| | L03 | GPU 编程模型 / 计算 API | 让程序员写 kernel |\n| | L04 | GPU 内核库（DNN / BLAS / 通信） | 别人写好的高性能算子 |\n| | L05 | 编译器 / IR | 把模型图编译成 GPU 代码 |\n| 框架 | L06 | 张量 / 训练框架 | 写模型与训练循环 |\n| | L07 | 分布式训练框架 | 千卡 / 万卡并行 |\n| | L08 | 训练数据 pipeline | 喂数据的工业管线 |\n| | L09 | 后训练 / 微调框架 | SFT / RLHF / DPO / GRPO |\n| 模型 | L10 | 基础模型权重 | 可下载或可调用的模型本体 |\n| | L11 | 评测 / 基准 | 能力打分 |\n| | L12 | 实验追踪 / MLOps | run / sweep / artifact 管理 |\n| 推理服务 | L13 | 推理引擎 | KV cache、batching、speculative |\n| | L14 | 模型服务 / 编排 | 把引擎包成 service |\n| | L15 | GPU 云 / 算力市场 | 谁来出 GPU |\n| | L16 | 模型 API 聚合 / 路由 | 一个 endpoint 调多家模型 |\n| | L17 | 前沿模型 API | 直接调闭源旗舰模型 |\n| LLM 应用中间件 | L18 | LLM 应用框架 | prompt 链 / 工作流 |\n| | L19 | Embedding / 重排序模型 | 把文本变向量 |\n| | L20 | 向量数据库 / 检索 | 存与查向量 |\n| | L21 | 长期记忆系统 | Agent 跨会话状态 |\n| | L22 | LLM 网关 / 路由 | 限流 / 配额 / fallback |\n| | L23 | Prompt 管理 / 缓存 | prompt 版本、cache 命中 |\n| Agent 核心 | L24 | Agent 框架 | tool-loop、规划、多 agent |\n| | L25 | 工具协议 / MCP / 集成 | Agent 怎么调外部世界 |\n| | L26 | 浏览器 / Computer Use | Agent 操作 GUI |\n| | L27 | 代码 / Agent 沙箱 | Agent 跑代码的安全环境 |\n| 可观测 / 安全 | L28 | LLM 观测 / 追踪 | trace、token、成本 |\n| | L29 | Guardrails / 安全 / 红队 | 注入防御、PII、越狱 |\n| | L30 | LLM 评测 / 测试 | CI 里跑 prompt 测试 |\n| 多模态外围 | L31 | 语音（TTS / ASR） | 听 / 说 |\n| | L32 | 图像 / 视频生成 | 画 / 拍 |\n| 终端用户 Agent 应用 | L33 | 通用对话 / 搜索 Agent | 给所有人用 |\n| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |\n\n---\n\n## L01 GPU 驱动 / 固件\n\n负责把硬件能力暴露给操作系统与上层运行时；包括内核态驱动、固件、用户态运行时 stub。\n\n- **NVIDIA Display / Compute Driver**（含 `nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）\n- **NVIDIA Open GPU Kernel Modules**（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）\n- **AMD ROCm / amdgpu / amdkfd driver**（`amdgpu` DRM 驱动 + KFD 计算子系统）\n- **Intel Habana Gaudi driver**（`habanalabs` 内核驱动）\n- **Apple Silicon GPU driver**（macOS / iOS 内置，与 Metal 紧绑定）\n- **NVIDIA Container Toolkit / nvidia-container-runtime**（让容器看到 GPU；事实上的 K8s GPU 接入标准）\n\n## L02 GPU 互连 / 集合通信\n\n多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。\n\n- **NVLink / NVSwitch**（节点内 GPU↔GPU，H100 900 GB/s、B200 1.8 TB/s）\n- **InfiniBand（NVIDIA Quantum-2 / Quantum-X800）+ Mellanox OFED**（节点间 RDMA）\n- **RoCE v2 / Ultra Ethernet（UEC）**（以太网上的 RDMA；Ultra Ethernet Consortium 2024 推出 1.0）\n- **AWS EFA（Elastic Fabric Adapter）+ SRD 协议**\n- **UALink 1.0**（AMD / Intel / Google / Meta 等 2024 联盟，对位 NVLink）\n- **NCCL / RCCL / oneCCL**（NVIDIA / AMD / Intel 各自的集合通信库；allreduce / allgather / sendrecv）\n- **MSCCL / MSCCL++**（微软在 NCCL 之上的可编程调度层）\n\n## L03 GPU 编程模型 / 计算 API\n\n让开发者写并行 kernel；下层各家硬件的统一抽象。\n\n- **NVIDIA CUDA**（含 `nvcc`、PTX、CUDA Runtime / Driver API）\n- **AMD ROCm / HIP**（HIP 提供 CUDA 源码级近似兼容）\n- **Apple Metal / Metal Performance Shaders（MPS）**\n- **Intel oneAPI / SYCL / DPC++**\n- **OpenCL 3.0**（跨厂商，地位下滑但仍在嵌入式 / Android）\n- **Vulkan Compute**（图形 + 计算合一，llama.cpp 用作便携后端）\n- **WebGPU / wgpu**（浏览器内 GPU 计算；Chrome 113 起默认开启）\n\n## L04 GPU 内核库（DNN / BLAS / 通信 / Attention）\n\n预编译好的高性能算子，框架直接调用。\n\n- **cuBLAS / cuBLASLt**（GEMM）\n- **cuDNN**（卷积、RNN、Attention 等深度学习算子）\n- **CUTLASS**（NVIDIA 开源的 GEMM 模板库，FlashAttention / vLLM 大量复用）\n- **FlashAttention 1 / 2 / 3**（Tri Dao；FA3 针对 Hopper Tensor Core + TMA）\n- **xFormers**（Meta；memory-efficient attention 集合）\n- **Triton kernels**（OpenAI；社区贡献的 fused MoE、RMSNorm、SwiGLU 等）\n- **NCCL / RCCL**（同 L02，也属于\"内核库\"中的通信类）\n\n## L05 编译器 / IR\n\n把模型图或 Python 代码编译成 GPU 可执行体；过去十年从单一图编译器演化为多层 IR + JIT 混合。\n\n- **OpenAI Triton**（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准）\n- **PyTorch torch.compile / TorchInductor + TorchDynamo**（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）\n- **XLA / OpenXLA**（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta 共治）\n- **MLIR**（LLVM 项目；TPU、IREE、Mojo、torch-mlir 共享的中间表示）\n- **TVM / Apache TVM + Unity**（陈天奇主导的端到端深度学习编译栈）\n- **IREE**（Google；MLIR-based，定位移动 / 边缘）\n- **Mojo / MAX**（Modular；Chris Lattner，Python 超集 + MLIR 后端）\n\n## L06 张量 / 训练框架\n\n定义计算图、autograd、optimizer；用户写 `nn.Module` 的那一层。\n\n- **PyTorch**（Meta；2025 LLM 训练事实标准，份额 >70%）\n- **JAX + Flax / NNX / Equinox**（Google；Gemini / Anthropic 训练栈核心）\n- **TensorFlow + Keras 3**（Google；Keras 3 后端可切 JAX / PyTorch / TF）\n- **MLX**（Apple；Apple Silicon 原生）\n- **MindSpore**（华为）\n- **PaddlePaddle**（百度）\n- **tinygrad**（George Hotz；研究 / 教学）\n\n## L07 分布式训练框架\n\n把模型与数据切到上千 / 上万卡上，并管 checkpoint / 容错 / 恢复。\n\n- **DeepSpeed**（Microsoft；ZeRO-1/2/3、ZeRO-Infinity、MoE）\n- **Megatron-LM / Megatron-Core**（NVIDIA；3D 并行：TP / PP / DP）\n- **PyTorch FSDP / FSDP2**（PyTorch 官方；FSDP2 2024 GA）\n- **NVIDIA NeMo**（Megatron-Core 上的端到端训练 + 数据 + 评测套件）\n- **Colossal-AI**（HPC-AI Tech）\n- **Ray Train**（Anyscale；调度层在 Ray 上）\n- **MosaicML Composer / LLM Foundry**（被 Databricks 收购）\n- **TorchTitan**（PyTorch 官方 2024 推出的 LLM 训练参考实现）\n\n## L08 训练数据 pipeline\n\n数据集构建、清洗、去重、tokenize、streaming。这一层 2023 后被独立看待。\n\n- **datatrove**（HuggingFace；FineWeb 的生产工具）\n- **MosaicML Streaming**（云对象存储到训练机的流式 dataset）\n- **WebDataset**（POSIX tar 流，PyTorch 生态早期事实标准）\n- **Nemo Curator**（NVIDIA；GPU 加速去重 / 分类）\n- **Dolma toolkit**（AI2；OLMo 数据集工具）\n- **llm-foundry**（Mosaic / Databricks）\n- **数据集本体**：FineWeb / FineWeb-Edu（HF）、RedPajama-V2（Together）、Dolma（AI2）、The Stack v2（BigCode）、Common Crawl\n\n## L09 后训练 / 微调框架\n\nSFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一层 2024-2025 爆发。\n\n- **TRL**（HuggingFace；SFT / DPO / GRPO / PPO trainer，事实标准）\n- **Unsloth**（QLoRA 极致优化，单卡微调首选）\n- **Axolotl**（OpenAccess AI Collective；config-driven 微调）\n- **LLaMA-Factory**（北航；中文社区主流）\n- **OpenRLHF**（OpenLLMAI；分布式 RLHF，Ray 调度）\n- **verl**（字节；HybridFlow，veRL，DeepSeek-R1 风格 RLVR）\n- **NeMo-Aligner**（NVIDIA）\n\n## L10 基础模型权重\n\n可下载（开源 / 开放权重）或可 API 调用的模型本体。这一层 2025 已分裂为开放权重与闭源前沿两轨。\n\n- **开放权重 / 开源**：Llama 3 / 4（Meta）、Qwen 3（阿里）、DeepSeek-V3 / R1、Mistral / Mixtral、Gemma 3（Google）、Kimi K2（Moonshot）、GLM-4.6（智谱）、Phi-4（Microsoft）、OLMo 2（AI2，真·全开源）\n- **闭源前沿**：GPT-5 / GPT-5.1（OpenAI）、Claude Opus / Sonnet / Haiku 4.x（Anthropic）、Gemini 2.5 / 3（Google DeepMind）、Grok 4（xAI）\n- **模型枢纽 / 发现**：HuggingFace Hub、ModelScope（阿里）、Replicate models、Ollama Library、Civitai（图像 / Stable Diffusion 衍生）\n\n## L11 评测 / 基准\n\n公开打分系统；越来越多被用作 RL reward 的代理。\n\n- **lm-evaluation-harness**（EleutherAI；HF Open LLM Leaderboard 后端）\n- **HELM**（Stanford CRFM）\n- **OpenCompass**（上海 AI Lab）\n- **任务类**：MMLU / MMLU-Pro、GSM8K / MATH、HumanEval / MBPP、SWE-bench / SWE-bench Verified、GPQA、ARC-AGI、HLE（Humanity's Last Exam）\n- **Agent / 长 horizon**：METR Time Horizons、TAU-bench、WebArena、OSWorld、AgentBench\n- **Embedding / 检索**：MTEB、BEIR\n- **对战 / 人类偏好**：LMSYS Chatbot Arena、SEAL（Scale）\n- **代码定制平台**：Inspect AI（UK AISI）、OpenAI Evals、DeepEval（参 L30）\n\n## L12 实验追踪 / MLOps\n\nrun、metric、artifact、sweep、模型 registry。\n\n- **Weights & Biases (W&B)**\n- **MLflow**（Databricks 开源）\n- **Neptune.ai**\n- **ClearML**\n- **Comet ML**\n- **TensorBoard**（仍是免费默认）\n- **DVC / DVC Studio**（Iterative；偏数据版本）\n\n## L13 推理引擎\n\n负责 KV cache、continuous batching、speculative decoding、量化、PagedAttention 等推理侧硬核优化。\n\n- **vLLM**（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准）\n- **NVIDIA TensorRT-LLM**（NVIDIA 官方；CUDA Graph + FP8）\n- **SGLang**（LMSYS / xAI；RadixAttention，结构化输出强）\n- **HuggingFace TGI（Text Generation Inference）**\n- **llama.cpp / GGUF**（Georgi Gerganov；CPU / Apple Silicon / 任意后端）\n- **MLC-LLM**（陈天奇团队；TVM Unity 后端，Web / 移动）\n- **DeepSpeed-FastGen / DeepSpeed-MII**\n- **LMDeploy**（上海 AI Lab；InternLM 配套）\n- **Ollama**（llama.cpp 之上的本地一键运行）\n\n## L14 模型服务 / 编排（GPU orchestration）\n\n把推理引擎封装成 service：自动伸缩、多模型、A/B、批处理。\n\n- **NVIDIA Triton Inference Server**\n- **Ray Serve**（Anyscale）\n- **KServe**（K8s 原生，原 KFServing）\n- **BentoML / Yatai**\n- **Modal**（serverless GPU 函数）\n- **Beam / Beam Cloud**\n- **Replicate Cog**（容器规范 + Replicate 平台）\n- **Seldon Core**\n\n## L15 GPU 云 / 算力市场\n\n物理 GPU 容量提供方；neocloud 与超大云共存。\n\n- **超大云 GPU**：AWS (P5 / P5e / Trainium2 Ultra)、Azure (ND H100 / ND GB200 v6)、Google Cloud (A3 Ultra / TPU v5p / v6e Trillium)、Oracle Cloud (OCI GPU bare-metal)\n- **GPU neocloud**：CoreWeave、Lambda Labs、Crusoe、Nebius（前 Yandex 海外）、Voltage Park、Applied Digital\n- **市场 / 撮合 / 长尾**：RunPod、Vast.ai、TensorDock、Salad、Hyperstack\n- **训练 + 推理一体**：Together AI、Lepton AI（被 NVIDIA 收购）\n\n## L16 模型 API 聚合 / 路由（推理服务市场）\n\n不直接持有最前沿模型，但把开源 / 半开源模型托管成 OpenAI 兼容 endpoint，并互相竞价。\n\n- **OpenRouter**（按 token 转售，覆盖 100+ 模型）\n- **Together AI**（开源模型托管 + 训练 + 推理引擎自研）\n- **Fireworks AI**（自研 FireAttention 引擎）\n- **Groq Cloud**（自家 LPU；Llama 系超低延迟）\n- **Cerebras Inference**（WSE-3；超长上下文 + 高速）\n- **SambaNova Cloud**（SN40L Reconfigurable Dataflow）\n- **Replicate**（按秒计费，模型即容器）\n- **DeepInfra**、**Anyscale Endpoints**、**Hyperbolic**\n\n## L17 前沿模型 API（闭源 / 半闭源）\n\n直接调用模型厂商自营 endpoint；当前 90%+ 高端 token 流量在这层。\n\n- **Anthropic API**（Claude Opus / Sonnet / Haiku，含 Tool Use、Computer Use、Skills、Prompt Caching、Files、Batch、Citations、Memory、MCP connector）\n- **OpenAI API**（GPT-5.x、o-series、Realtime、Assistants → Responses API、Agents SDK、Files、Batch）\n- **Google Gemini API / Vertex AI**（Gemini 2.5 / 3 Pro / Flash / Nano）\n- **xAI API**（Grok 4）\n- **DeepSeek API**（V3 / R1，价格屠夫）\n- **企业转售层**：Azure OpenAI Service、AWS Bedrock、Google Vertex AI Model Garden、IBM watsonx、Databricks Foundation Model APIs\n\n## L18 LLM 应用框架\n\nprompt 链、工作流、retriever、tool calling 的高层抽象。\n\n- **LangChain / LangChain Expression Language (LCEL)**\n- **LlamaIndex**（原 GPT-Index；偏 RAG-first）\n- **DSPy**（Stanford；prompt-as-program、optimizer 驱动）\n- **Haystack**（deepset）\n- **Vercel AI SDK**（TypeScript / React 生态最常见）\n- **Semantic Kernel**（Microsoft）\n- **Mastra**（TS，新兴）\n- **Spring AI**（Java）\n\n## L19 Embedding / 重排序模型与服务\n\n把文本 / 图像变成向量；Reranker 给检索结果二次排序。\n\n- **闭源**：OpenAI text-embedding-3、Cohere Embed v3 / Rerank、Google Vertex text-embedding-005、Voyage AI（被 MongoDB 收购）\n- **开源**：BGE / BGE-M3（北京智源）、Jina Embeddings v3、Nomic Embed、E5（Microsoft）、GTE（阿里）、Stella、mxbai-embed\n- **多模态**：CLIP / OpenCLIP、SigLIP、Jina-CLIP\n\n## L20 向量数据库 / 检索引擎\n\n- **专用向量库（SaaS-first）**：Pinecone、Weaviate、Qdrant、Milvus / Zilliz\n- **开源 / 嵌入式**：Chroma、LanceDB、FAISS（Meta；库不是服务）、Annoy、ScaNN\n- **关系数据库扩展**：pgvector、pg_vectorize、Supabase Vector、Neon + pgvector\n- **搜索引擎类**：Elasticsearch dense vector、OpenSearch k-NN、Vespa、Typesense、Meilisearch、Turbopuffer\n- **嵌入式 + KV**：Redis Vector Search、SQLite-vec\n\n## L21 长期记忆系统\n\n跨会话 / 跨 Agent 的状态层；从 RAG-of-chat 演化到结构化记忆图。\n\n- **Mem0**（开源 + SaaS，事实图 + 向量混合）\n- **Zep / Zep Cloud**（temporal knowledge graph）\n- **Letta**（原 MemGPT；研究项目公司化）\n- **LangMem**（LangChain 旗下记忆 SDK）\n- **Cognee**\n- **Anthropic Memory tool**（2025 推出，平台内置）\n\n## L22 LLM 网关 / 路由\n\n应用与 L17 / L16 之间的代理层：限流、配额、密钥、fallback、cost guard、A/B。\n\n- **LiteLLM**（BerriAI；100+ provider 适配器，自部署最常用）\n- **Portkey**\n- **Cloudflare AI Gateway**（缓存 + WAF + 计费）\n- **Kong AI Gateway**\n- **Helicone Gateway**\n- **Martian Router**（按 prompt 动态路由）\n- **OpenRouter**（兼有 L16 与 L22 双重身份）\n\n## L23 Prompt 管理 / 提示缓存\n\nprompt 版本化、A/B、提示模板、prompt 级缓存命中分析。\n\n- **PromptLayer**\n- **Langfuse Prompt Management**\n- **Helicone Prompts**\n- **Braintrust prompt registry**\n- **Latitude**（YC W24，prompt-as-code）\n- **Agenta**\n- **平台原生**：Anthropic Prompt Caching、OpenAI Prompt Caching、Gemini Context Caching\n\n## L24 Agent 框架\n\ntool-loop、规划、子任务分解、多 agent 协作。2025 这一层从\"链式工作流\"快速向\"事件循环 + 控制平面\"迁移。\n\n- **LangGraph**（LangChain；graph + 持久化 state，企业部署最多）\n- **OpenAI Agents SDK**（原 Swarm 演化；Responses API 配套）\n- **Anthropic Claude Agent SDK / claude-agent-sdk**（Claude Code 同源）\n- **AutoGen / AutoGen v0.4**（Microsoft Research；多 agent 对话）\n- **CrewAI**\n- **Pydantic AI**（type-safe，FastAPI 风格）\n- **smolagents**（HuggingFace；code-as-action）\n- **Mastra**、**Inngest Agent Kit**、**TaskWeaver**（Microsoft）\n\n## L25 工具协议 / MCP / 集成市场\n\nAgent 怎么调外部世界——文件、API、SaaS、数据库。\n\n- **Anthropic MCP（Model Context Protocol）**（2024-11 开源；2025 已被 OpenAI / Google / 主流框架普遍接入；事实标准）\n- **Composio**（500+ SaaS 集成，认证 + 工具一站式）\n- **Arcade.dev**（auth-first 的 tool runtime）\n- **Toolhouse**\n- **Pipedream Connect**\n- **Zapier MCP / Zapier AI Actions**\n- **Stripe Agent Toolkit、Cloudflare Agents SDK、SAP Joule Gateway**（厂商自营 MCP / agent 工具）\n- **服务器目录**：Smithery、MCP Hub、PulseMCP、Glama MCP Registry\n\n## L26 浏览器 / Computer Use Agent\n\n让 Agent 操作 GUI / 浏览器 / 桌面。\n\n- **闭源平台**：Anthropic Computer Use（API 内置）、OpenAI Operator（ChatGPT 内）、Google Project Mariner / Gemini browser\n- **托管浏览器基础设施**：Browserbase、Hyperbrowser、Steel.dev、Anchor Browser、AgentQL、Browserless\n- **开源 agent 控制器**：browser-use、Skyvern、Stagehand（Browserbase）、Nut.js、Open Interpreter、Playwright MCP（Microsoft）\n- **垂直自动化**：Manus（端侧通用 agent）、Reworkd、MultiOn\n\n## L27 代码 / Agent 沙箱\n\nAgent 跑代码 / 跑命令的隔离环境；MicroVM + 快照成为新基线。\n\n- **E2B**（Firecracker microVM，开源 SDK）\n- **Modal Sandboxes**（serverless GPU + sandbox 一体）\n- **Daytona**（开源 dev environment manager，被 Agent 平台普遍用作 runner）\n- **CodeSandbox SDK / CodeSandbox Containers**\n- **Cloudflare Containers / Workers Sandbox**\n- **Replit Agent runtime**（含 Nix-based 沙箱）\n- **Devin VM**（Cognition 自营）\n\n## L28 LLM 观测 / 追踪（LLM Observability）\n\ntrace、span、token / 成本、prompt / completion 日志，是 agent 时代的新 APM。\n\n- **Langfuse**（开源 + cloud，主流之一）\n- **Arize Phoenix / Arize AX**（OpenTelemetry GenAI 推手）\n- **LangSmith**（LangChain 官方）\n- **Helicone**（proxy-based，零代码接入）\n- **Braintrust**（eval + observability 一体）\n- **Logfire**（Pydantic 团队，OTel-native）\n- **W&B Weave**\n- **Datadog LLM Observability**、**New Relic AI Monitoring**、**Splunk AI Observability**（传统 APM 厂商扩展）\n\n## L29 Guardrails / 安全 / 红队\n\n提示注入防御、PII / 越狱检测、输出过滤、内容策略。\n\n- **Guardrails AI**（开源 validator 框架）\n- **NVIDIA NeMo Guardrails**（Colang DSL）\n- **Lakera Guard / Lakera Red**\n- **Protect AI（含 NB Defense、Guardian、Recon）**\n- **Robust Intelligence**（被 Cisco 收购）\n- **Prompt Security**、**HiddenLayer**、**CalypsoAI**\n- **Llama Guard 3 / Prompt Guard**（Meta 开源策略模型）\n- **Promptfoo red team**（开源越狱测试套件，参 L30）\n\n## L30 LLM 评测 / 测试（CI 中的 prompt 测试）\n\n把 prompt / agent 当作软件来跑回归测试。\n\n- **Promptfoo**（YAML + CLI，开源主流）\n- **DeepEval**（Confident AI；pytest 风格）\n- **Ragas**（RAG-specific 指标）\n- **Braintrust Evals**\n- **Patronus AI**（合规向）\n- **TruLens**（TruEra；被 Snowflake 收购）\n- **OpenAI Evals**、**Inspect AI**（UK AISI；安全评测主流）\n- **Galileo Evaluate**\n\n## L31 语音（TTS / ASR / 实时对话）\n\n- **TTS**：ElevenLabs、Cartesia、PlayHT、Hume AI、Resemble、OpenAI tts、Google Chirp 3、阿里 CosyVoice\n- **ASR**：OpenAI Whisper / Whisper Large v3、Deepgram、AssemblyAI、Speechmatics、Rev AI、NVIDIA Parakeet、Google Chirp 2\n- **实时语音 / 端到端**：OpenAI Realtime API、Google Gemini Live、Anthropic（暂无原生 voice，多用 Cartesia / ElevenLabs 拼接）、Sesame、Kyutai Moshi、LiveKit Agents、Pipecat（编排框架）、Vapi、Retell AI\n\n## L32 图像 / 视频 / 3D 生成\n\n- **图像（闭源 / SaaS）**：Midjourney、Ideogram、Adobe Firefly、Google Imagen 3、OpenAI DALL-E 3 / GPT-4o image、Recraft\n- **图像（开源 / 工作流）**：Black Forest Labs FLUX.1 / FLUX.2、Stable Diffusion 3 / SD 3.5 / SDXL（Stability AI）、PixArt-Σ、HunyuanImage（腾讯）、ComfyUI（工作流编辑器）、Automatic1111 WebUI、Fooocus\n- **视频**：Runway Gen-4、Pika 2.x、Luma Dream Machine / Ray2、Kling（快手）、Hailuo MiniMax、OpenAI Sora、Google Veo 3、HunyuanVideo（腾讯开源）、Wan 2.x（阿里开源）\n- **3D / 场景**：Luma Genie、Meshy、Tripo3D、Rodin、World Labs（Fei-Fei Li）、CSM\n- **托管 / 推理市场**：fal.ai、Replicate、RunPod Serverless（这一层与 L16 重合，但更偏 diffusion 工作负载）\n\n## L33 通用对话 / 搜索 Agent（终端用户）\n\n直接给非开发者用户用的\"AI 助手\"。\n\n- **ChatGPT**（OpenAI；含 Tasks、Operator、Codex、Connectors）\n- **Claude.ai**（Anthropic；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）\n- **Gemini app / Gemini Advanced**（Google）\n- **Grok**（xAI；X 内嵌 + grok.com）\n- **DeepSeek Chat**、**Kimi**（Moonshot）、**通义千问**、**豆包**（字节）\n- **搜索类**：Perplexity、You.com、Brave Leo、Arc Search（Browser Company）、Komo\n- **多模型聚合 / 隐私**：Poe（Quora）、Le Chat（Mistral）、HuggingChat、Msty（本地）、LM Studio（本地）\n\n## L34 垂直 Agent 应用（终端用户）\n\n按行业 / 角色划分的 Agent；2025 在编码、设计、营销、客服、医疗、法律均跑出独立公司。\n\n- **编码 Agent**：Cursor、Claude Code（Anthropic）、Devin（Cognition）、Windsurf（被 OpenAI 收购）、Replit Agent、Codex CLI（OpenAI）、Aider、GitHub Copilot Workspace、Augment、Amp（Sourcegraph）、Lovable、Bolt.new、v0（Vercel）、Manus\n- **设计 / 内容**：Figma AI / Make、Galileo AI、Framer AI、Canva Magic Studio、Jasper、Copy.ai、Notion AI\n- **销售 / 营销 / 客服**：Decagon、Sierra、Ada、Intercom Fin、Cresta、Clay、11x.ai、AirOps\n- **企业知识 / 内部 IT**：Glean、Moveworks、Hebbia、Harvey（法律）、Casetext CoCounsel（被 Thomson Reuters 收购）\n- **代码评审 / 测试 / 安全 Agent**：CodeRabbit、Greptile、Qodo、Meticulous、Snyk DeepCode AI（这一层与 SDLC 栈高度重合，详见 [`../SDLC-stack/README.md`](../SDLC-stack/README.md)）\n- **医疗 / 科研**：Abridge、Hippocratic AI、Ambience、Future House、Scite\n\n---\n\n## 几条横切的观察\n\n不属于具体某一层，但跨层规律值得单列。\n\n- **MCP 是这一栈唯一在 2024–2025 通过的\"工具接口标准\"**：从 L25 起，向上影响 L24 / L18，向下影响 L17（模型 API 内置 MCP connector）和 L22（gateway 必须懂 MCP）。\n- **L13 推理引擎 与 L14 模型服务 的边界正在合并**：vLLM、SGLang 自带 OpenAI 兼容 HTTP server，挤压了纯 L14 厂商（KServe、BentoML）的独立性。\n- **L15 GPU 云、L16 模型 API 聚合、L17 前沿模型 API 三层正在相互渗透**：CoreWeave 推自家模型；Together / Fireworks 自研推理引擎；Anthropic / OpenAI 转售他人模型（极少，但 Bedrock / Vertex 把这种关系制度化）。\n- **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。\n- **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。\n- **L18 LLM 应用框架 在 2025 出现 \"去 LangChain 化\"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。\n",
+            "structuredPatch": [],
+            "originalFile": null,
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GRHfNVjGfsV49mbDA291DX",
+            "type": "tool_result",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/chat/AISW-stack/README.md (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/AISW-stack/README.md",
+          "content": "# AI 软件栈分层索引：从 GPU 驱动到终端用户 Agent 应用\n\n从最底层的 GPU 驱动 / 固件，一直到最终用户接触的 Agent 应用（ChatGPT、Cursor、Devin），完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n## 全栈总览（34 层）\n\n按\"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用\"九大段组织。\n\n| 段 | 层号 | 层名 | 自然视角 / 解决的事 |\n| --- | --- | --- | --- |\n| 底层运行时 | L01 | GPU 驱动 / 固件 | 让 OS 看到 GPU |\n| | L02 | GPU 互连 / 集合通信 | 多 GPU、多机之间搬数据 |\n| | L03 | GPU 编程模型 / 计算 API | 让程序员写 kernel |\n| | L04 | GPU 内核库（DNN / BLAS / 通信） | 别人写好的高性能算子 |\n| | L05 | 编译器 / IR | 把模型图编译成 GPU 代码 |\n| 框架 | L06 | 张量 / 训练框架 | 写模型与训练循环 |\n| | L07 | 分布式训练框架 | 千卡 / 万卡并行 |\n| | L08 | 训练数据 pipeline | 喂数据的工业管线 |\n| | L09 | 后训练 / 微调框架 | SFT / RLHF / DPO / GRPO |\n| 模型 | L10 | 基础模型权重 | 可下载或可调用的模型本体 |\n| | L11 | 评测 / 基准 | 能力打分 |\n| | L12 | 实验追踪 / MLOps | run / sweep / artifact 管理 |\n| 推理服务 | L13 | 推理引擎 | KV cache、batching、speculative |\n| | L14 | 模型服务 / 编排 | 把引擎包成 service |\n| | L15 | GPU 云 / 算力市场 | 谁来出 GPU |\n| | L16 | 模型 API 聚合 / 路由 | 一个 endpoint 调多家模型 |\n| | L17 | 前沿模型 API | 直接调闭源旗舰模型 |\n| LLM 应用中间件 | L18 | LLM 应用框架 | prompt 链 / 工作流 |\n| | L19 | Embedding / 重排序模型 | 把文本变向量 |\n| | L20 | 向量数据库 / 检索 | 存与查向量 |\n| | L21 | 长期记忆系统 | Agent 跨会话状态 |\n| | L22 | LLM 网关 / 路由 | 限流 / 配额 / fallback |\n| | L23 | Prompt 管理 / 缓存 | prompt 版本、cache 命中 |\n| Agent 核心 | L24 | Agent 框架 | tool-loop、规划、多 agent |\n| | L25 | 工具协议 / MCP / 集成 | Agent 怎么调外部世界 |\n| | L26 | 浏览器 / Computer Use | Agent 操作 GUI |\n| | L27 | 代码 / Agent 沙箱 | Agent 跑代码的安全环境 |\n| 可观测 / 安全 | L28 | LLM 观测 / 追踪 | trace、token、成本 |\n| | L29 | Guardrails / 安全 / 红队 | 注入防御、PII、越狱 |\n| | L30 | LLM 评测 / 测试 | CI 里跑 prompt 测试 |\n| 多模态外围 | L31 | 语音（TTS / ASR） | 听 / 说 |\n| | L32 | 图像 / 视频生成 | 画 / 拍 |\n| 终端用户 Agent 应用 | L33 | 通用对话 / 搜索 Agent | 给所有人用 |\n| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |\n\n---\n\n## L01 GPU 驱动 / 固件\n\n负责把硬件能力暴露给操作系统与上层运行时；包括内核态驱动、固件、用户态运行时 stub。\n\n- **NVIDIA Display / Compute Driver**（含 `nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）\n- **NVIDIA Open GPU Kernel Modules**（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）\n- **AMD ROCm / amdgpu / amdkfd driver**（`amdgpu` DRM 驱动 + KFD 计算子系统）\n- **Intel Habana Gaudi driver**（`habanalabs` 内核驱动）\n- **Apple Silicon GPU driver**（macOS / iOS 内置，与 Metal 紧绑定）\n- **NVIDIA Container Toolkit / nvidia-container-runtime**（让容器看到 GPU；事实上的 K8s GPU 接入标准）\n\n## L02 GPU 互连 / 集合通信\n\n多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。\n\n- **NVLink / NVSwitch**（节点内 GPU↔GPU，H100 900 GB/s、B200 1.8 TB/s）\n- **InfiniBand（NVIDIA Quantum-2 / Quantum-X800）+ Mellanox OFED**（节点间 RDMA）\n- **RoCE v2 / Ultra Ethernet（UEC）**（以太网上的 RDMA；Ultra Ethernet Consortium 2024 推出 1.0）\n- **AWS EFA（Elastic Fabric Adapter）+ SRD 协议**\n- **UALink 1.0**（AMD / Intel / Google / Meta 等 2024 联盟，对位 NVLink）\n- **NCCL / RCCL / oneCCL**（NVIDIA / AMD / Intel 各自的集合通信库；allreduce / allgather / sendrecv）\n- **MSCCL / MSCCL++**（微软在 NCCL 之上的可编程调度层）\n\n## L03 GPU 编程模型 / 计算 API\n\n让开发者写并行 kernel；下层各家硬件的统一抽象。\n\n- **NVIDIA CUDA**（含 `nvcc`、PTX、CUDA Runtime / Driver API）\n- **AMD ROCm / HIP**（HIP 提供 CUDA 源码级近似兼容）\n- **Apple Metal / Metal Performance Shaders（MPS）**\n- **Intel oneAPI / SYCL / DPC++**\n- **OpenCL 3.0**（跨厂商，地位下滑但仍在嵌入式 / Android）\n- **Vulkan Compute**（图形 + 计算合一，llama.cpp 用作便携后端）\n- **WebGPU / wgpu**（浏览器内 GPU 计算；Chrome 113 起默认开启）\n\n## L04 GPU 内核库（DNN / BLAS / 通信 / Attention）\n\n预编译好的高性能算子，框架直接调用。\n\n- **cuBLAS / cuBLASLt**（GEMM）\n- **cuDNN**（卷积、RNN、Attention 等深度学习算子）\n- **CUTLASS**（NVIDIA 开源的 GEMM 模板库，FlashAttention / vLLM 大量复用）\n- **FlashAttention 1 / 2 / 3**（Tri Dao；FA3 针对 Hopper Tensor Core + TMA）\n- **xFormers**（Meta；memory-efficient attention 集合）\n- **Triton kernels**（OpenAI；社区贡献的 fused MoE、RMSNorm、SwiGLU 等）\n- **NCCL / RCCL**（同 L02，也属于\"内核库\"中的通信类）\n\n## L05 编译器 / IR\n\n把模型图或 Python 代码编译成 GPU 可执行体；过去十年从单一图编译器演化为多层 IR + JIT 混合。\n\n- **OpenAI Triton**（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准）\n- **PyTorch torch.compile / TorchInductor + TorchDynamo**（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）\n- **XLA / OpenXLA**（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta 共治）\n- **MLIR**（LLVM 项目；TPU、IREE、Mojo、torch-mlir 共享的中间表示）\n- **TVM / Apache TVM + Unity**（陈天奇主导的端到端深度学习编译栈）\n- **IREE**（Google；MLIR-based，定位移动 / 边缘）\n- **Mojo / MAX**（Modular；Chris Lattner，Python 超集 + MLIR 后端）\n\n## L06 张量 / 训练框架\n\n定义计算图、autograd、optimizer；用户写 `nn.Module` 的那一层。\n\n- **PyTorch**（Meta；2025 LLM 训练事实标准，份额 >70%）\n- **JAX + Flax / NNX / Equinox**（Google；Gemini / Anthropic 训练栈核心）\n- **TensorFlow + Keras 3**（Google；Keras 3 后端可切 JAX / PyTorch / TF）\n- **MLX**（Apple；Apple Silicon 原生）\n- **MindSpore**（华为）\n- **PaddlePaddle**（百度）\n- **tinygrad**（George Hotz；研究 / 教学）\n\n## L07 分布式训练框架\n\n把模型与数据切到上千 / 上万卡上，并管 checkpoint / 容错 / 恢复。\n\n- **DeepSpeed**（Microsoft；ZeRO-1/2/3、ZeRO-Infinity、MoE）\n- **Megatron-LM / Megatron-Core**（NVIDIA；3D 并行：TP / PP / DP）\n- **PyTorch FSDP / FSDP2**（PyTorch 官方；FSDP2 2024 GA）\n- **NVIDIA NeMo**（Megatron-Core 上的端到端训练 + 数据 + 评测套件）\n- **Colossal-AI**（HPC-AI Tech）\n- **Ray Train**（Anyscale；调度层在 Ray 上）\n- **MosaicML Composer / LLM Foundry**（被 Databricks 收购）\n- **TorchTitan**（PyTorch 官方 2024 推出的 LLM 训练参考实现）\n\n## L08 训练数据 pipeline\n\n数据集构建、清洗、去重、tokenize、streaming。这一层 2023 后被独立看待。\n\n- **datatrove**（HuggingFace；FineWeb 的生产工具）\n- **MosaicML Streaming**（云对象存储到训练机的流式 dataset）\n- **WebDataset**（POSIX tar 流，PyTorch 生态早期事实标准）\n- **Nemo Curator**（NVIDIA；GPU 加速去重 / 分类）\n- **Dolma toolkit**（AI2；OLMo 数据集工具）\n- **llm-foundry**（Mosaic / Databricks）\n- **数据集本体**：FineWeb / FineWeb-Edu（HF）、RedPajama-V2（Together）、Dolma（AI2）、The Stack v2（BigCode）、Common Crawl\n\n## L09 后训练 / 微调框架\n\nSFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一层 2024-2025 爆发。\n\n- **TRL**（HuggingFace；SFT / DPO / GRPO / PPO trainer，事实标准）\n- **Unsloth**（QLoRA 极致优化，单卡微调首选）\n- **Axolotl**（OpenAccess AI Collective；config-driven 微调）\n- **LLaMA-Factory**（北航；中文社区主流）\n- **OpenRLHF**（OpenLLMAI；分布式 RLHF，Ray 调度）\n- **verl**（字节；HybridFlow，veRL，DeepSeek-R1 风格 RLVR）\n- **NeMo-Aligner**（NVIDIA）\n\n## L10 基础模型权重\n\n可下载（开源 / 开放权重）或可 API 调用的模型本体。这一层 2025 已分裂为开放权重与闭源前沿两轨。\n\n- **开放权重 / 开源**：Llama 3 / 4（Meta）、Qwen 3（阿里）、DeepSeek-V3 / R1、Mistral / Mixtral、Gemma 3（Google）、Kimi K2（Moonshot）、GLM-4.6（智谱）、Phi-4（Microsoft）、OLMo 2（AI2，真·全开源）\n- **闭源前沿**：GPT-5 / GPT-5.1（OpenAI）、Claude Opus / Sonnet / Haiku 4.x（Anthropic）、Gemini 2.5 / 3（Google DeepMind）、Grok 4（xAI）\n- **模型枢纽 / 发现**：HuggingFace Hub、ModelScope（阿里）、Replicate models、Ollama Library、Civitai（图像 / Stable Diffusion 衍生）\n\n## L11 评测 / 基准\n\n公开打分系统；越来越多被用作 RL reward 的代理。\n\n- **lm-evaluation-harness**（EleutherAI；HF Open LLM Leaderboard 后端）\n- **HELM**（Stanford CRFM）\n- **OpenCompass**（上海 AI Lab）\n- **任务类**：MMLU / MMLU-Pro、GSM8K / MATH、HumanEval / MBPP、SWE-bench / SWE-bench Verified、GPQA、ARC-AGI、HLE（Humanity's Last Exam）\n- **Agent / 长 horizon**：METR Time Horizons、TAU-bench、WebArena、OSWorld、AgentBench\n- **Embedding / 检索**：MTEB、BEIR\n- **对战 / 人类偏好**：LMSYS Chatbot Arena、SEAL（Scale）\n- **代码定制平台**：Inspect AI（UK AISI）、OpenAI Evals、DeepEval（参 L30）\n\n## L12 实验追踪 / MLOps\n\nrun、metric、artifact、sweep、模型 registry。\n\n- **Weights & Biases (W&B)**\n- **MLflow**（Databricks 开源）\n- **Neptune.ai**\n- **ClearML**\n- **Comet ML**\n- **TensorBoard**（仍是免费默认）\n- **DVC / DVC Studio**（Iterative；偏数据版本）\n\n## L13 推理引擎\n\n负责 KV cache、continuous batching、speculative decoding、量化、PagedAttention 等推理侧硬核优化。\n\n- **vLLM**（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准）\n- **NVIDIA TensorRT-LLM**（NVIDIA 官方；CUDA Graph + FP8）\n- **SGLang**（LMSYS / xAI；RadixAttention，结构化输出强）\n- **HuggingFace TGI（Text Generation Inference）**\n- **llama.cpp / GGUF**（Georgi Gerganov；CPU / Apple Silicon / 任意后端）\n- **MLC-LLM**（陈天奇团队；TVM Unity 后端，Web / 移动）\n- **DeepSpeed-FastGen / DeepSpeed-MII**\n- **LMDeploy**（上海 AI Lab；InternLM 配套）\n- **Ollama**（llama.cpp 之上的本地一键运行）\n\n## L14 模型服务 / 编排（GPU orchestration）\n\n把推理引擎封装成 service：自动伸缩、多模型、A/B、批处理。\n\n- **NVIDIA Triton Inference Server**\n- **Ray Serve**（Anyscale）\n- **KServe**（K8s 原生，原 KFServing）\n- **BentoML / Yatai**\n- **Modal**（serverless GPU 函数）\n- **Beam / Beam Cloud**\n- **Replicate Cog**（容器规范 + Replicate 平台）\n- **Seldon Core**\n\n## L15 GPU 云 / 算力市场\n\n物理 GPU 容量提供方；neocloud 与超大云共存。\n\n- **超大云 GPU**：AWS (P5 / P5e / Trainium2 Ultra)、Azure (ND H100 / ND GB200 v6)、Google Cloud (A3 Ultra / TPU v5p / v6e Trillium)、Oracle Cloud (OCI GPU bare-metal)\n- **GPU neocloud**：CoreWeave、Lambda Labs、Crusoe、Nebius（前 Yandex 海外）、Voltage Park、Applied Digital\n- **市场 / 撮合 / 长尾**：RunPod、Vast.ai、TensorDock、Salad、Hyperstack\n- **训练 + 推理一体**：Together AI、Lepton AI（被 NVIDIA 收购）\n\n## L16 模型 API 聚合 / 路由（推理服务市场）\n\n不直接持有最前沿模型，但把开源 / 半开源模型托管成 OpenAI 兼容 endpoint，并互相竞价。\n\n- **OpenRouter**（按 token 转售，覆盖 100+ 模型）\n- **Together AI**（开源模型托管 + 训练 + 推理引擎自研）\n- **Fireworks AI**（自研 FireAttention 引擎）\n- **Groq Cloud**（自家 LPU；Llama 系超低延迟）\n- **Cerebras Inference**（WSE-3；超长上下文 + 高速）\n- **SambaNova Cloud**（SN40L Reconfigurable Dataflow）\n- **Replicate**（按秒计费，模型即容器）\n- **DeepInfra**、**Anyscale Endpoints**、**Hyperbolic**\n\n## L17 前沿模型 API（闭源 / 半闭源）\n\n直接调用模型厂商自营 endpoint；当前 90%+ 高端 token 流量在这层。\n\n- **Anthropic API**（Claude Opus / Sonnet / Haiku，含 Tool Use、Computer Use、Skills、Prompt Caching、Files、Batch、Citations、Memory、MCP connector）\n- **OpenAI API**（GPT-5.x、o-series、Realtime、Assistants → Responses API、Agents SDK、Files、Batch）\n- **Google Gemini API / Vertex AI**（Gemini 2.5 / 3 Pro / Flash / Nano）\n- **xAI API**（Grok 4）\n- **DeepSeek API**（V3 / R1，价格屠夫）\n- **企业转售层**：Azure OpenAI Service、AWS Bedrock、Google Vertex AI Model Garden、IBM watsonx、Databricks Foundation Model APIs\n\n## L18 LLM 应用框架\n\nprompt 链、工作流、retriever、tool calling 的高层抽象。\n\n- **LangChain / LangChain Expression Language (LCEL)**\n- **LlamaIndex**（原 GPT-Index；偏 RAG-first）\n- **DSPy**（Stanford；prompt-as-program、optimizer 驱动）\n- **Haystack**（deepset）\n- **Vercel AI SDK**（TypeScript / React 生态最常见）\n- **Semantic Kernel**（Microsoft）\n- **Mastra**（TS，新兴）\n- **Spring AI**（Java）\n\n## L19 Embedding / 重排序模型与服务\n\n把文本 / 图像变成向量；Reranker 给检索结果二次排序。\n\n- **闭源**：OpenAI text-embedding-3、Cohere Embed v3 / Rerank、Google Vertex text-embedding-005、Voyage AI（被 MongoDB 收购）\n- **开源**：BGE / BGE-M3（北京智源）、Jina Embeddings v3、Nomic Embed、E5（Microsoft）、GTE（阿里）、Stella、mxbai-embed\n- **多模态**：CLIP / OpenCLIP、SigLIP、Jina-CLIP\n\n## L20 向量数据库 / 检索引擎\n\n- **专用向量库（SaaS-first）**：Pinecone、Weaviate、Qdrant、Milvus / Zilliz\n- **开源 / 嵌入式**：Chroma、LanceDB、FAISS（Meta；库不是服务）、Annoy、ScaNN\n- **关系数据库扩展**：pgvector、pg_vectorize、Supabase Vector、Neon + pgvector\n- **搜索引擎类**：Elasticsearch dense vector、OpenSearch k-NN、Vespa、Typesense、Meilisearch、Turbopuffer\n- **嵌入式 + KV**：Redis Vector Search、SQLite-vec\n\n## L21 长期记忆系统\n\n跨会话 / 跨 Agent 的状态层；从 RAG-of-chat 演化到结构化记忆图。\n\n- **Mem0**（开源 + SaaS，事实图 + 向量混合）\n- **Zep / Zep Cloud**（temporal knowledge graph）\n- **Letta**（原 MemGPT；研究项目公司化）\n- **LangMem**（LangChain 旗下记忆 SDK）\n- **Cognee**\n- **Anthropic Memory tool**（2025 推出，平台内置）\n\n## L22 LLM 网关 / 路由\n\n应用与 L17 / L16 之间的代理层：限流、配额、密钥、fallback、cost guard、A/B。\n\n- **LiteLLM**（BerriAI；100+ provider 适配器，自部署最常用）\n- **Portkey**\n- **Cloudflare AI Gateway**（缓存 + WAF + 计费）\n- **Kong AI Gateway**\n- **Helicone Gateway**\n- **Martian Router**（按 prompt 动态路由）\n- **OpenRouter**（兼有 L16 与 L22 双重身份）\n\n## L23 Prompt 管理 / 提示缓存\n\nprompt 版本化、A/B、提示模板、prompt 级缓存命中分析。\n\n- **PromptLayer**\n- **Langfuse Prompt Management**\n- **Helicone Prompts**\n- **Braintrust prompt registry**\n- **Latitude**（YC W24，prompt-as-code）\n- **Agenta**\n- **平台原生**：Anthropic Prompt Caching、OpenAI Prompt Caching、Gemini Context Caching\n\n## L24 Agent 框架\n\ntool-loop、规划、子任务分解、多 agent 协作。2025 这一层从\"链式工作流\"快速向\"事件循环 + 控制平面\"迁移。\n\n- **LangGraph**（LangChain；graph + 持久化 state，企业部署最多）\n- **OpenAI Agents SDK**（原 Swarm 演化；Responses API 配套）\n- **Anthropic Claude Agent SDK / claude-agent-sdk**（Claude Code 同源）\n- **AutoGen / AutoGen v0.4**（Microsoft Research；多 agent 对话）\n- **CrewAI**\n- **Pydantic AI**（type-safe，FastAPI 风格）\n- **smolagents**（HuggingFace；code-as-action）\n- **Mastra**、**Inngest Agent Kit**、**TaskWeaver**（Microsoft）\n\n## L25 工具协议 / MCP / 集成市场\n\nAgent 怎么调外部世界——文件、API、SaaS、数据库。\n\n- **Anthropic MCP（Model Context Protocol）**（2024-11 开源；2025 已被 OpenAI / Google / 主流框架普遍接入；事实标准）\n- **Composio**（500+ SaaS 集成，认证 + 工具一站式）\n- **Arcade.dev**（auth-first 的 tool runtime）\n- **Toolhouse**\n- **Pipedream Connect**\n- **Zapier MCP / Zapier AI Actions**\n- **Stripe Agent Toolkit、Cloudflare Agents SDK、SAP Joule Gateway**（厂商自营 MCP / agent 工具）\n- **服务器目录**：Smithery、MCP Hub、PulseMCP、Glama MCP Registry\n\n## L26 浏览器 / Computer Use Agent\n\n让 Agent 操作 GUI / 浏览器 / 桌面。\n\n- **闭源平台**：Anthropic Computer Use（API 内置）、OpenAI Operator（ChatGPT 内）、Google Project Mariner / Gemini browser\n- **托管浏览器基础设施**：Browserbase、Hyperbrowser、Steel.dev、Anchor Browser、AgentQL、Browserless\n- **开源 agent 控制器**：browser-use、Skyvern、Stagehand（Browserbase）、Nut.js、Open Interpreter、Playwright MCP（Microsoft）\n- **垂直自动化**：Manus（端侧通用 agent）、Reworkd、MultiOn\n\n## L27 代码 / Agent 沙箱\n\nAgent 跑代码 / 跑命令的隔离环境；MicroVM + 快照成为新基线。\n\n- **E2B**（Firecracker microVM，开源 SDK）\n- **Modal Sandboxes**（serverless GPU + sandbox 一体）\n- **Daytona**（开源 dev environment manager，被 Agent 平台普遍用作 runner）\n- **CodeSandbox SDK / CodeSandbox Containers**\n- **Cloudflare Containers / Workers Sandbox**\n- **Replit Agent runtime**（含 Nix-based 沙箱）\n- **Devin VM**（Cognition 自营）\n\n## L28 LLM 观测 / 追踪（LLM Observability）\n\ntrace、span、token / 成本、prompt / completion 日志，是 agent 时代的新 APM。\n\n- **Langfuse**（开源 + cloud，主流之一）\n- **Arize Phoenix / Arize AX**（OpenTelemetry GenAI 推手）\n- **LangSmith**（LangChain 官方）\n- **Helicone**（proxy-based，零代码接入）\n- **Braintrust**（eval + observability 一体）\n- **Logfire**（Pydantic 团队，OTel-native）\n- **W&B Weave**\n- **Datadog LLM Observability**、**New Relic AI Monitoring**、**Splunk AI Observability**（传统 APM 厂商扩展）\n\n## L29 Guardrails / 安全 / 红队\n\n提示注入防御、PII / 越狱检测、输出过滤、内容策略。\n\n- **Guardrails AI**（开源 validator 框架）\n- **NVIDIA NeMo Guardrails**（Colang DSL）\n- **Lakera Guard / Lakera Red**\n- **Protect AI（含 NB Defense、Guardian、Recon）**\n- **Robust Intelligence**（被 Cisco 收购）\n- **Prompt Security**、**HiddenLayer**、**CalypsoAI**\n- **Llama Guard 3 / Prompt Guard**（Meta 开源策略模型）\n- **Promptfoo red team**（开源越狱测试套件，参 L30）\n\n## L30 LLM 评测 / 测试（CI 中的 prompt 测试）\n\n把 prompt / agent 当作软件来跑回归测试。\n\n- **Promptfoo**（YAML + CLI，开源主流）\n- **DeepEval**（Confident AI；pytest 风格）\n- **Ragas**（RAG-specific 指标）\n- **Braintrust Evals**\n- **Patronus AI**（合规向）\n- **TruLens**（TruEra；被 Snowflake 收购）\n- **OpenAI Evals**、**Inspect AI**（UK AISI；安全评测主流）\n- **Galileo Evaluate**\n\n## L31 语音（TTS / ASR / 实时对话）\n\n- **TTS**：ElevenLabs、Cartesia、PlayHT、Hume AI、Resemble、OpenAI tts、Google Chirp 3、阿里 CosyVoice\n- **ASR**：OpenAI Whisper / Whisper Large v3、Deepgram、AssemblyAI、Speechmatics、Rev AI、NVIDIA Parakeet、Google Chirp 2\n- **实时语音 / 端到端**：OpenAI Realtime API、Google Gemini Live、Anthropic（暂无原生 voice，多用 Cartesia / ElevenLabs 拼接）、Sesame、Kyutai Moshi、LiveKit Agents、Pipecat（编排框架）、Vapi、Retell AI\n\n## L32 图像 / 视频 / 3D 生成\n\n- **图像（闭源 / SaaS）**：Midjourney、Ideogram、Adobe Firefly、Google Imagen 3、OpenAI DALL-E 3 / GPT-4o image、Recraft\n- **图像（开源 / 工作流）**：Black Forest Labs FLUX.1 / FLUX.2、Stable Diffusion 3 / SD 3.5 / SDXL（Stability AI）、PixArt-Σ、HunyuanImage（腾讯）、ComfyUI（工作流编辑器）、Automatic1111 WebUI、Fooocus\n- **视频**：Runway Gen-4、Pika 2.x、Luma Dream Machine / Ray2、Kling（快手）、Hailuo MiniMax、OpenAI Sora、Google Veo 3、HunyuanVideo（腾讯开源）、Wan 2.x（阿里开源）\n- **3D / 场景**：Luma Genie、Meshy、Tripo3D、Rodin、World Labs（Fei-Fei Li）、CSM\n- **托管 / 推理市场**：fal.ai、Replicate、RunPod Serverless（这一层与 L16 重合，但更偏 diffusion 工作负载）\n\n## L33 通用对话 / 搜索 Agent（终端用户）\n\n直接给非开发者用户用的\"AI 助手\"。\n\n- **ChatGPT**（OpenAI；含 Tasks、Operator、Codex、Connectors）\n- **Claude.ai**（Anthropic；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）\n- **Gemini app / Gemini Advanced**（Google）\n- **Grok**（xAI；X 内嵌 + grok.com）\n- **DeepSeek Chat**、**Kimi**（Moonshot）、**通义千问**、**豆包**（字节）\n- **搜索类**：Perplexity、You.com、Brave Leo、Arc Search（Browser Company）、Komo\n- **多模型聚合 / 隐私**：Poe（Quora）、Le Chat（Mistral）、HuggingChat、Msty（本地）、LM Studio（本地）\n\n## L34 垂直 Agent 应用（终端用户）\n\n按行业 / 角色划分的 Agent；2025 在编码、设计、营销、客服、医疗、法律均跑出独立公司。\n\n- **编码 Agent**：Cursor、Claude Code（Anthropic）、Devin（Cognition）、Windsurf（被 OpenAI 收购）、Replit Agent、Codex CLI（OpenAI）、Aider、GitHub Copilot Workspace、Augment、Amp（Sourcegraph）、Lovable、Bolt.new、v0（Vercel）、Manus\n- **设计 / 内容**：Figma AI / Make、Galileo AI、Framer AI、Canva Magic Studio、Jasper、Copy.ai、Notion AI\n- **销售 / 营销 / 客服**：Decagon、Sierra、Ada、Intercom Fin、Cresta、Clay、11x.ai、AirOps\n- **企业知识 / 内部 IT**：Glean、Moveworks、Hebbia、Harvey（法律）、Casetext CoCounsel（被 Thomson Reuters 收购）\n- **代码评审 / 测试 / 安全 Agent**：CodeRabbit、Greptile、Qodo、Meticulous、Snyk DeepCode AI（这一层与 SDLC 栈高度重合，详见 [`../SDLC-stack/README.md`](../SDLC-stack/README.md)）\n- **医疗 / 科研**：Abridge、Hippocratic AI、Ambience、Future House、Scite\n\n---\n\n## 几条横切的观察\n\n不属于具体某一层，但跨层规律值得单列。\n\n- **MCP 是这一栈唯一在 2024–2025 通过的\"工具接口标准\"**：从 L25 起，向上影响 L24 / L18，向下影响 L17（模型 API 内置 MCP connector）和 L22（gateway 必须懂 MCP）。\n- **L13 推理引擎 与 L14 模型服务 的边界正在合并**：vLLM、SGLang 自带 OpenAI 兼容 HTTP server，挤压了纯 L14 厂商（KServe、BentoML）的独立性。\n- **L15 GPU 云、L16 模型 API 聚合、L17 前沿模型 API 三层正在相互渗透**：CoreWeave 推自家模型；Together / Fireworks 自研推理引擎；Anthropic / OpenAI 转售他人模型（极少，但 Bedrock / Vertex 把这种关系制度化）。\n- **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。\n- **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。\n- **L18 LLM 应用框架 在 2025 出现 \"去 LangChain 化\"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。\n"
+        }
+      }
+    },
+    {
+      "step_id": 10,
+      "timestamp": "2026-05-14T16:21:29.502Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Edit toolu_0172Uj2VhSo9e1HtTn7yvz4s",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_0172Uj2VhSo9e1HtTn7yvz4s",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/README.md",
+            "old_string": "| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+            "new_string": "| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_0172Uj2VhSo9e1HtTn7yvz4s",
+            "content": "<tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>\n\n[error] tool reported failure"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 41418,
+        "completion_tokens": 365,
+        "cached_tokens": 41417,
+        "extra": {
+          "cache_creation_input_tokens": 12264,
+          "cache_read_input_tokens": 41417,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 12264,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 365,
+              "cache_read_input_tokens": 41417,
+              "cache_creation_input_tokens": 12264,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 12264
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "<tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>",
+            "is_error": true,
+            "tool_use_id": "toolu_0172Uj2VhSo9e1HtTn7yvz4s"
+          }
+        },
+        "tool_result_is_error": true,
+        "metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "<tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>",
+            "is_error": true,
+            "tool_use_id": "toolu_0172Uj2VhSo9e1HtTn7yvz4s"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/README.md",
+          "old_string": "| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+          "new_string": "| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |"
+        }
+      }
+    },
+    {
+      "step_id": 11,
+      "timestamp": "2026-05-14T16:21:32.474Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Read toolu_01AK6Vo32NEpBgaP6ZcR6ds2",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01AK6Vo32NEpBgaP6ZcR6ds2",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/README.md",
+            "limit": 15
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01AK6Vo32NEpBgaP6ZcR6ds2",
+            "content": "1\t# Controversy\n2\t\n3\t每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n4\t\n5\t## 索引\n6\t\n7\t| 日期 | 主题 | 文件 |\n8\t| --- | --- | --- |\n9\t| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n10\t| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n11\t| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n12\t| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n13\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/README.md\", \"content\": \"# Controversy\\n\\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\\n\\n## 索引\\n\\n| 日期 | 主题 | 文件 |\\n| --- | --- | --- |\\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\\n\", \"numLines\": 13, \"startLine\": 1, \"totalLines\": 13}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 53682,
+        "completion_tokens": 103,
+        "cached_tokens": 53681,
+        "extra": {
+          "cache_creation_input_tokens": 441,
+          "cache_read_input_tokens": 53681,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 441,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 103,
+              "cache_read_input_tokens": 53681,
+              "cache_creation_input_tokens": 441,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 441
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/README.md",
+              "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+              "numLines": 13,
+              "startLine": 1,
+              "totalLines": 13
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AK6Vo32NEpBgaP6ZcR6ds2",
+            "type": "tool_result",
+            "content": "1\t# Controversy\n2\t\n3\t每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n4\t\n5\t## 索引\n6\t\n7\t| 日期 | 主题 | 文件 |\n8\t| --- | --- | --- |\n9\t| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n10\t| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n11\t| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n12\t| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n13\t"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/README.md",
+              "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+              "numLines": 13,
+              "startLine": 1,
+              "totalLines": 13
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AK6Vo32NEpBgaP6ZcR6ds2",
+            "type": "tool_result",
+            "content": "1\t# Controversy\n2\t\n3\t每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n4\t\n5\t## 索引\n6\t\n7\t| 日期 | 主题 | 文件 |\n8\t| --- | --- | --- |\n9\t| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n10\t| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n11\t| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n12\t| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n13\t"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/README.md",
+          "limit": 15
+        }
+      }
+    },
+    {
+      "step_id": 12,
+      "timestamp": "2026-05-14T16:21:36.902Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Edit toolu_01VzS8riY3Ej8HkkWLyiN46i",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01VzS8riY3Ej8HkkWLyiN46i",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/README.md",
+            "old_string": "| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+            "new_string": "| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01VzS8riY3Ej8HkkWLyiN46i",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/README.md\", \"oldString\": \"| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\", \"newString\": \"| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\", \"originalFile\": \"# Controversy\\n\\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\\n\\n## 索引\\n\\n| 日期 | 主题 | 文件 |\\n| --- | --- | --- |\\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\\n\", \"structuredPatch\": [{\"oldStart\": 6, \"oldLines\": 6, \"newStart\": 6, \"newLines\": 7, \"lines\": [\" \", \" | 日期 | 主题 | 文件 |\", \" | --- | --- | --- |\", \"+| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\", \" | 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\", \" | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\", \" | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 54123,
+        "completion_tokens": 365,
+        "cached_tokens": 54122,
+        "extra": {
+          "cache_creation_input_tokens": 621,
+          "cache_read_input_tokens": 54122,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 621,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 365,
+              "cache_read_input_tokens": 54122,
+              "cache_creation_input_tokens": 621,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 621
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/README.md",
+            "oldString": "| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+            "newString": "| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+            "originalFile": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+            "structuredPatch": [
+              {
+                "oldStart": 6,
+                "oldLines": 6,
+                "newStart": 6,
+                "newLines": 7,
+                "lines": [
+                  " ",
+                  " | 日期 | 主题 | 文件 |",
+                  " | --- | --- | --- |",
+                  "+| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |",
+                  " | 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+                  " | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+                  " | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VzS8riY3Ej8HkkWLyiN46i",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/README.md",
+            "oldString": "| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+            "newString": "| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+            "originalFile": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+            "structuredPatch": [
+              {
+                "oldStart": 6,
+                "oldLines": 6,
+                "newStart": 6,
+                "newLines": 7,
+                "lines": [
+                  " ",
+                  " | 日期 | 主题 | 文件 |",
+                  " | --- | --- | --- |",
+                  "+| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |",
+                  " | 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+                  " | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+                  " | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VzS8riY3Ej8HkkWLyiN46i",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/README.md",
+          "old_string": "| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+          "new_string": "| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |"
+        }
+      }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-05-14T16:21:55.286Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "已建好 `chat/AISW-stack/README.md` 并把根索引顶上对应一行。\n\n栈共分 **34 层 / 9 段**，从 GPU 驱动到终端 Agent 应用一根通。每层至少 3 个代表性软件，并尽量覆盖\"闭源前沿 / 开源主流 / 新兴挑战者\"三类：\n\n- 底层运行时（L01–L05）：驱动、互连 / 集合通信、CUDA / ROCm / Metal、cuBLAS / cuDNN / FlashAttention、Triton / XLA / MLIR\n- 框架（L06–L09）：PyTorch / JAX / MLX、DeepSpeed / Megatron / FSDP、datatrove / Mosaic Streaming、TRL / Unsloth / verl\n- 模型（L10–L12）：开放权重 vs 闭源前沿、lm-eval-harness / HELM / SWE-bench、W&B / MLflow\n- 推理服务（L13–L17）：vLLM / TensorRT-LLM / SGLang、Triton / Ray Serve / Modal、CoreWeave / Lambda / Crusoe、OpenRouter / Together / Fireworks、Anthropic / OpenAI / Gemini\n- LLM 应用中间件（L18–L23）：LangChain / DSPy、Pinecone / pgvector、Mem0 / Zep、LiteLLM / Portkey\n- Agent 核心（L24–L27）：LangGraph / Agents SDK / Claude Agent SDK、MCP / Composio、Browserbase / Computer Use、E2B / Modal Sandbox\n- 可观测 / 安全（L28–L30）：Langfuse / Arize / Helicone、Guardrails AI / NeMo / Lakera、Promptfoo / DeepEval / Ragas\n- 多模态外围（L31–L32）：ElevenLabs / Whisper / Deepgram、Midjourney / FLUX / Runway\n- 终端用户应用（L33–L34）：ChatGPT / Claude.ai / Gemini、Cursor / Devin / Manus 等\n\n末尾还附了 6 条跨层观察（MCP 标准、L13–L14 合并、推理三层互渗、RL 闭环、垂直 Agent 解耦、去 LangChain 化）。",
+      "metrics": {
+        "prompt_tokens": 54744,
+        "completion_tokens": 802,
+        "cached_tokens": 54743,
+        "extra": {
+          "cache_creation_input_tokens": 446,
+          "cache_read_input_tokens": 54743,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 446,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 802,
+              "cache_read_input_tokens": 54743,
+              "cache_creation_input_tokens": 446,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 446
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 430919,
+    "total_completion_tokens": 28333,
+    "total_cached_tokens": 430897,
+    "total_steps": 13,
+    "extra": {
+      "service_tiers": [
+        "standard"
+      ],
+      "total_cache_creation_input_tokens": 62298,
+      "total_cache_read_input_tokens": 430897
+    }
+  }
+}
