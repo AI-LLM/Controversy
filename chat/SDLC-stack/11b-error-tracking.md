@@ -1,22 +1,20 @@
 # 2026-05-14：SDLC 栈 / 错误追踪与 AI Debugging (O4) 层深度研究
 
-本篇 lens：**调试主体迁移；O4 从仪表盘变 agent 的感官 (debugging subject migration; O4 from dashboard to agent's sensorium)**。L11b 的本质不在"流量大不大"，而在它处于 SDLC 数据栈里**两端都已经天然机器友好**的稀有位置——input 端 stack trace 自带结构化、output 端修复点 (file/line/function) 也自带结构化，agent 中间只夹一层根因推理就能闭环。Sentry Seer 的 unlimited 定价、PR-review 扩展、读取 repo `rules` 文件、MCP server 一行接入——三件看似不相关的产品动作放在"感官层"框架里就被同一条逻辑串起来。监控指标在姊妹篇 11a，事故响应在 11c。
+本篇 lens：**调试主体迁移；O4 从仪表盘变 agent 的感官 (debugging subject migration; O4 from dashboard to agent's sensorium)**。L11b 处于 SDLC 数据栈里**两端都已经天然机器友好**的稀有位置——input 端 stack trace 自带结构化、output 端修复点 (file/line/function) 也自带结构化，agent 中间只夹一层根因推理就能闭环。
 
-## 一、O4 两端为何天然机器友好
+## 一、O4 两端天然机器友好
 
-L11b 不是流量层，是**接口层**。要回答"为什么错误追踪比可观测平台 (O5) 与事故响应 (O1') 都更早被 LLM 内吞"，要先看它两端的结构化基线，而不是它的事件吞吐量。
+错误追踪是**接口层**。两端的结构化基线决定了它比相邻层更早被 LLM 内吞。
 
 **input 端：stack trace 是 1970 年代就被规范化的格式**。一条 issue 进入 Sentry 时已经是 file/line/function/exception_type/breadcrumbs/release/commit 七元组——`docs.sentry.io/product/issues/` 把字段 schema 公开列着 [[1]](https://docs.sentry.io/product/issues/)。Bugsnag 日处理 >1B crash reports 全部按这套 schema 走 [[2]](https://www.businesswire.com/news/home/20210428005141/en/SmartBear-Adds-Enterprise-grade-Application-Stability-and-Error-Monitoring-with-Acquisition-of-Bugsnag)。Sentry 自报服务 4M 开发者、150 000 组织、月处理 ~790B events，这个量级背后是**同一套字段格式被复制了七亿次/月** [[3]](https://sentry.io/about/)。
 
-**output 端：修复点天然是 (path, line, diff) 三元组**。一次 patch 在 Git 里就是 unified diff，不需要任何后处理就能喂回 SCM。这是 O4 与 O5 / O1' 的根本差异：
+**output 端：修复点天然是 (path, line, diff) 三元组**。一次 patch 在 Git 里就是 unified diff，不需要任何后处理就能喂回 SCM。O4 与相邻层的差异：
 
 - O5 (Observability，11a) 输出是连续 metric + 自然语言告警，含义需要人解释；
 - O1' (Incident response，11c) 输出是组织协调动作，需要权限审批与人际沟通；
 - **O4 (Error tracking) 两端都是结构化文本**——agent 只在中间做"读 trace → 定位 → 生成 diff"一段推理。
 
-这才是 L11b 比相邻层早一拍被 agent 内吞的真因。流量数字（790B events、>1B crash reports、6 000+ 客户、NIST 把 debug + test + verify 估到全软件预算的 50–75%、年度 >$100B [[4]](https://coralogix.com/blog/this-is-what-your-developers-are-doing-75-of-the-time-and-this-is-the-cost-you-pay/)）只是**接口层之上的市场水位**，量纲不是因；接口结构化才是因。
-
-⚠ 解读：本节是因果重排——原版按"流量大→需求大→内吞"叙述，本版按"接口结构化→主体可迁移→流量在感官层非线性涨"叙述。两个数据集相同，但因果方向不同。
+接口结构化是 L11b 比相邻层早一拍被 agent 内吞的真因。流量数字（790B events、>1B crash reports、6 000+ 客户、NIST 把 debug + test + verify 估到全软件预算的 50–75%、年度 >$100B [[4]](https://coralogix.com/blog/this-is-what-your-developers-are-doing-75-of-the-time-and-this-is-the-cost-you-pay/)）是接口层之上的市场水位。
 
 ## 二、调试主体迁移：人 → agent
 
