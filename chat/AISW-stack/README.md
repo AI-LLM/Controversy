@@ -334,6 +334,7 @@ Agent 怎么调外部世界——文件、API、SaaS、数据库。
 - **Pipedream Connect**
 - **Zapier MCP / Zapier AI Actions**
 - **Stripe Agent Toolkit、Cloudflare Agents SDK、SAP Joule Gateway**（厂商自营 MCP / agent 工具）
+- **CLI 强 wrap 路径**：OpenCLI（开放规范，把任意 CLI 描述为 agent-callable tool）、CLI-Anything（GitHub 21K stars，社区驱动地把已有 CLI 包成 LLM 工具）——与厂商主动出 MCP 形成"第三方强 wrap"对照
 - **服务器目录**：Smithery、MCP Hub、PulseMCP、Glama MCP Registry
 
 ## L26 浏览器 / Computer Use Agent
@@ -342,7 +343,7 @@ Agent 怎么调外部世界——文件、API、SaaS、数据库。
 
 - **闭源平台**：Anthropic Computer Use（API 内置）、OpenAI Operator（ChatGPT 内）、Google Project Mariner / Gemini browser
 - **托管浏览器基础设施**：Browserbase、Hyperbrowser、Steel.dev、Anchor Browser、AgentQL、Browserless
-- **开源 agent 控制器**：browser-use、Skyvern、Stagehand（Browserbase）、Nut.js、Open Interpreter、Playwright MCP（Microsoft）
+- **开源 agent 控制器**：browser-use、Skyvern、Stagehand（Browserbase）、Nut.js、Open Interpreter、Playwright MCP（Microsoft）、Vercel agent-browser（v0 / Vercel AI SDK 配套，把浏览器封装为 agent 可直调的 tool）
 - **垂直自动化**：Manus（端侧通用 agent）、Reworkd、MultiOn
 
 ## L27 代码 / Agent 沙箱
