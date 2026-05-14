@@ -131,7 +131,7 @@ Cognition Devin 与 Claude Code 走的不是一条路。Claude Code 是**让工�
 
 ## 7. 几条本质判断
 
-**(a) CLI agent vs IDE agent 的长期格局**：两者不是替代关系，是**异步 vs 同步**的分工。IDE agent（Cursor、Copilot inline）覆盖 < 30 秒的同步交互；CLI agent 覆盖 > 5 分钟的异步任务。**senior 工程师从 IDE 主战场迁到 terminal + Mission Control，初级工程师还在 IDE。**这条裂痕 2025–2026 已经非常清晰。
+**(a) CLI agent vs IDE agent 的长期格局**：两者不是替代关系，是**异步 vs 同步**的分工。IDE agent（Cursor、Copilot inline）覆盖 < 30 秒的同步交互；CLI agent 覆盖 > 5 分钟的异步任务（⚠ 解读；时间阈值是作者对两种形态典型 latency 的概括，非测量值）。**senior 工程师从 IDE 主战场迁到 terminal + Mission Control，初级工程师还在 IDE。**这条裂痕 2025–2026 已经非常清晰。
 
 **(b) Anthropic 的位置**：Claude Code 让 Anthropic 在 dev 工具栈拿到了一个**结构性优势**——不只是模型 API，还有**协议层（MCP）+ 客户端形态（Claude Code）+ 模型本身**三件一起出。Claude Code ARR 估算 ~\$2.5B（2026 年初），SWE-bench Verified Opus 4.6 80.8% / Sonnet 4.6 79.6%（更新到 Opus 4.7 87.6%）[[19]](https://www.swebench.com/)。Anthropic 实际上在 coding agent 这一层做了"卖铲子的同时也下场挖矿"。
 

@@ -99,7 +99,7 @@ Bolt 产出 Nuxt 项目骨架、`nuxt.config.ts`、`content/` markdown 集合、
 
 ## 7. 边界：vibe coding 在哪些情况下崩溃
 
-事实层（已记录的事故）：2025–2026 共 7 起 vibe-coded 应用事故，包括 150 万个 API key 外泄、未鉴权拿到企业私数据、AI 删生产库；2026 年 3 月 Amazon 6 小时宕机、6.3M 订单受影响，内部 post-mortem 把根因关联到"激进 AI-coding mandate 下生成的代码"[[25]](https://getautonoma.com/blog/vibe-coding-failures), [[26]](https://thenewstack.io/vibe-coding-fails-enterprise-reality-check/)。
+事实层（已记录的事故）：2025–2026 共 7 起 vibe-coded 应用事故，包括 150 万个 API key 外泄、未鉴权拿到企业私数据、AI 删生产库[[25]](https://getautonoma.com/blog/vibe-coding-failures)；2026-03-05 Amazon 北美零售站 6 小时宕机、估计损失 6.3M 订单，外部分析把根因关联到 Amazon 内部 "Kiro 80% 周使用率" mandate 下生成的代码[[42]](https://securityboulevard.com/2026/03/amazon-lost-6-3-million-orders-to-vibe-coding-your-soc-is-next/), [[43]](https://getautonoma.com/blog/amazon-vibe-coding-lessons)。
 
 模式层：vibe-coded 应用在 5 个维度持续掉链子——埋藏的业务逻辑、缺失的异常处理、无合规审计、逻辑漂移、零制度化知识沉淀[[27]](https://www.kognitos.com/blog/why-vibe-coding-breaks-in-production/)。James Gosling 原话："*as soon as your [vibe coding] project gets even slightly complicated, they pretty much always blow their brains out. […] In the enterprise, software has to work every fucking time.*"[[26]](https://thenewstack.io/vibe-coding-fails-enterprise-reality-check/)
 

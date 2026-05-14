@@ -75,7 +75,7 @@ Stack Overflow 把 15 年累积的问答库做成订阅 API（OverflowAPI），�
 3. **OverflowAI**（2024 年 5 月推出）—— 在 Teams 上叠加 AI 检索 add-on，捆绑提价 [[12]](https://stackoverflow.blog/2024/10/22/stack-overflow-ceo-update-first-half-1h-2024/)
 4. 招聘与广告业务（下滑中，但基数仍在）
 
-**关键张力**：公开站的内容生产已近停摆——没有新问答，模型迟早把 2022 年之前的存量学完。Stack Overflow 在卖一份正在贬值的资产。devclass 2025 年 5 月报道其公开品牌正在 rebrand，与此同时月新问题已跌至个位百 [[17]](https://www.devclass.com/ai-ml/2025/05/13/stack-overflow-seeks-rebrand-as-traffic-continues-to-plummet-which-is-bad-news-for-developers/1623624)。
+**关键张力**：公开站的内容生产已近停摆——没有新问答，模型迟早把 2022 年之前的存量学完（⚠ 解读）。Stack Overflow 在卖一份正在贬值的资产（⚠ 解读）。devclass 2025 年 5 月报道其公开品牌正在 rebrand，与此同时月新问题已跌至个位百 [[17]](https://www.devclass.com/ai-ml/2025/05/13/stack-overflow-seeks-rebrand-as-traffic-continues-to-plummet-which-is-bad-news-for-developers/1623624)（"个位百"为依 [1]、[6] 综合估算的量级口径）。
 
 ## 3. 新需求与新基建：从"人读文档"到"Agent 读文档"
 
@@ -91,7 +91,7 @@ Stack Overflow 把 15 年累积的问答库做成订阅 API（OverflowAPI），�
 - 解决的核心问题：LLM 上下文窗口装不下整站；HTML 转纯文本嘈杂；导航/广告/JS 干扰严重 [[19]](https://llmstxt.org/)
 - 配套有 `llms-full.txt`（整站文档拼接版）供模型一次性吃进去
 
-到 2025 年中已被 Mintlify、GitBook、Fern、Docusaurus、VitePress 等文档平台原生支持；Anthropic、Instructor、fast.ai 等已上线 [[20]](https://www.mintlify.com/blog/simplifying-docs-with-llms-txt), [[21]](https://python.useinstructor.com/blog/2025/03/19/instructor-adopts-llms-txt/)。
+到 2025 年中已被 Mintlify、GitBook、Fern、Docusaurus、VitePress 等文档平台原生支持 [[31]](https://www.mintlify.com/library/best-llms-txt-platforms)（GitBook 2025-01 加入 llms.txt，2025-06 加入 llms-full.txt / 单页 .md）；Anthropic、Instructor、fast.ai 等已上线 [[20]](https://www.mintlify.com/blog/simplifying-docs-with-llms-txt), [[21]](https://python.useinstructor.com/blog/2025/03/19/instructor-adopts-llms-txt/)。
 
 ### 3.2 Context7：MCP 文档服务的标杆
 
