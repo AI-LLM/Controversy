@@ -100,7 +100,7 @@ DORA 2025 报告引入显式的"AI measurement layer"，建议跟踪 *AI-assiste
 
 第三，**Service catalog 的真正护城河是数据新鲜度而非可视化**。Backstage 网页再漂亮，YAML 腐烂照样让 Agent 给出错误答案。Roadie / Cortex / OpsLevel 三家未来 18 个月的角力焦点就是"谁能让 catalog 自动保鲜"——AI 发现 ownership、AI 修复 broken dependency、AI 自动 onboard 新服务。
 
-第四，**DevEx 度量从主观问卷过渡到 Agent telemetry**。这一波的 DORA 升级会重新定义平台工程团队的 KPI——不再是"开发者满意度 8.2 分"，而是"AI 接受率 41%、Agent 触发 PR 占 23%"。问卷不死，但权重会被信号替代。
+第四，**DevEx 度量从主观问卷过渡到 Agent telemetry**。这一波的 DORA 升级会重新定义平台工程团队的 KPI——不再是"开发者满意度 8.2 分"，而是"AI 接受率 X%、Agent 触发 PR 占 Y%"这类来自 IDE / IDP / Git 的连续信号（⚠ 解读：括号内数字为占位示例，非来自具体调查；GitHub Copilot 的公开 acceptance rate 区间约 30–38%，Cursor / Supermaven 的 inline autocomplete 报告值可达 42–72%，见 [[29]](https://www.secondtalent.com/resources/github-copilot-statistics/)）。问卷不死，但权重会被信号替代。
 
 第五，**llms.txt 与 docs MCP server 是冗余共存而非二选一**。前者面向通用爬虫式消费，后者面向有 session 的 Agent 任务；二者覆盖不同的 Agent 工作流，预计未来 2 年都不会消失。但若必须押一边，MCP 的赢面更大——因为它是 stateful 的、可执行的，而不仅是只读 index。
 

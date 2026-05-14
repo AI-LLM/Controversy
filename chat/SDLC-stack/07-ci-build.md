@@ -197,3 +197,17 @@ GitHub Actions 自己也在调整——2026-01 hosted runner 降价最多 39%，
 [20] Aviator, "Aviator MergeQueue vs. Mergify: A Comparison," 2026. (Aviator MergeQueue 用于 1000+ 工程师 monorepo 团队；Mergify Max plan $21/seat/月) [Online]. Available: <https://www.aviator.co/aviator-mergequeue-mergify>
 
 [21] Mergify, "Automatic migration from autoqueue to auto_merge_conditions," May 2026. (2026-05-06 deprecation；Mergify 自动开 migration PR 重写配置) [Online]. Available: <https://docs.mergify.com/changelog/2026-05-06-automatic-migration-from-autoqueue-to-auto-merge-conditions/>
+
+[22] DORA, "Accelerate State of DevOps Report 2024," Google Cloud / DORA, 2024. (39,000+ 受访者；deployment frequency 与 change lead time 分布；用作团队 PR/天量级参考的间接基线) [Online]. Available: <https://dora.dev/research/2024/dora-report/>
+
+[23] Buildkite, "Monorepo CI best practices," 2024. (Shopify monolith CI 优化前中位 45 min、95% 优化后 <18 min；Slack ~10→2 min 等业内公开案例) [Online]. Available: <https://buildkite.com/resources/blog/monorepo-ci-best-practices/>
+
+[24] GitHub, "GitHub Actions cache size can now exceed 10 GB per repository," GitHub Changelog, Nov 2025. (默认 10 GB / 7 天保留；2025-11 起按量付费可扩展) [Online]. Available: <https://github.blog/changelog/2025-11-20-github-actions-cache-size-can-now-exceed-10-gb-per-repository/>
+
+[25] GitHub, "Actions limits — Reference," GitHub Docs, 2026. (Free 20 / Pro 40 / Team 60 / Enterprise 500 标准 runner 并发；macOS 子上限) [Online]. Available: <https://docs.github.com/en/actions/reference/limits>
+
+[26] GitHub, "Increased Concurrency Limit for GitHub-Hosted Runners," GitHub Changelog, Sep 2023. (4–64 vCPU 大型 runner 并发上限从 250 提到 1000) [Online]. Available: <https://github.blog/changelog/2023-09-18-increased-concurrency-limit-for-github-hosted-runners/>
+
+[27] CircleCI, "Concurrency — Documentation," 2026. (Free 30 并发 / Performance plan 80 并发；annual plan 客户可申请提升) [Online]. Available: <https://circleci.com/docs/guides/optimize/concurrency/>
+
+[28] Namespace, "Pricing," 2026. (x64 standard 2vCPU/8GB $0.0008/min；30 vCPU $0.0120/min；premium 2×；Linux-on-Apple-Silicon $0.012/min) [Online]. Available: <https://namespace.so/pricing>
