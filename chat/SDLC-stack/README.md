@@ -4,12 +4,9 @@
 
 这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。**用户要求把每一层用 subagent 并行深度研究，挖到流量/任务量模式突变 → 新需求 → 解决方案 → 案例代码 这一层的本质**。范本是 namespace.so（CI/CD 那一层）。
 
-16 个 subagent 并行后台执行（最初 17 个独立层；5/14 补充层 L13 经合并后并入 L10b，形成综合的"Agent 集成接口"层），每个一篇独立报告，按 namespace.so 范式作答：
-1. Pre-Agent 流量/任务量模式
-2. Agent 时代如何突变
-3. 由此产生的新需求
-4. 代表公司技术架构（含配置示例、benchmark）
-5. 几条本质判断
+16 个 subagent 并行后台执行（最初 17 个独立层；5/14 补充层 L13 经合并后并入 L10b，形成综合的"Agent 集成接口"层）。
+
+**重要修订（5/14 二轮）**：用户指出 namespace.so 的"任务流量"是 CI/CD 这一层的**自然** lens，但其他层的本质变量不是 throughput。第一轮报告硬套了流量框架的层（L01、L02、L03、L06a、L06b、L09、L10b、L11b 等）经诊断后全部**按本层自然 lens 重写**。L07 保留流量 lens（namespace.so 本尊所在层）。各层重写后的 lens 见下方"各层 lens 总表"。
 
 ## 与主文件附录 III C 表的层级对应
 
@@ -58,6 +55,29 @@
 | L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |
 | L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |
 | L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |
+
+## 各层 lens 总表（5/14 二轮重写后的最终 lens）
+
+每一层都按其**自然 lens** 重写，而非套 namespace.so 的 CI/CD 流量框架。流量数据在多数层降级为"症状/旁证"。
+
+| 层 | 自然 lens | 一句话锐度 |
+|---|---|---|
+| L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |
+| L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |
+| L03 知识答疑 | **询问对象切换 (interlocutor switch)** | 人不再问人/SO，而是问模型 + MCP 工具；新载体接口层即 llms.txt / Context7 |
+| L04 IDE + AI 编辑器 | **宿主权 → 控制台 → agent 上移 三段位移** | Cursor fork VS Code 演化为多 agent 控制台；Claude Code 从 CLI 釜底抽薪 |
+| L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |
+| L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |
+| L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |
+| L07 CI/CD | **任务流量 (namespace.so 本尊)** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |
+| L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |
+| L09 安全 | **攻击面双扩张 + 信任移交 双 lens** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |
+| L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |
+| L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |
+| L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |
+| L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是"感官不能节流"的产品推论 |
+| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是 lens |
+| L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |
 
 ## 16 层一句话本质
 
