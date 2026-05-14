@@ -7,7 +7,8 @@
     "model_name": "claude-opus-4-7",
     "extra": {
       "cwds": [
-        "/Users/luwei/work/Controversy"
+        "/Users/luwei/work/Controversy",
+        "/Users/luwei/work/Controversy/chat/SDLC-stack"
       ],
       "git_branches": [
         "agent/312406c3-d739-4668-95e5-48094bbaaf54",
@@ -26369,19 +26370,852 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 295,
+      "timestamp": "2026-05-14T09:53:16.368Z",
+      "source": "user",
+      "message": "有一个方向是把GUI app、网站 CLI化或MCP化，如果没有包含，则搜索具体方案和案例，加入适当的层",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 296,
+      "timestamp": "2026-05-14T09:54:36.893Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 328799,
+        "completion_tokens": 5628,
+        "cached_tokens": 328793,
+        "extra": {
+          "cache_creation_input_tokens": 790,
+          "cache_read_input_tokens": 328793,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 790,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 5628,
+              "cache_read_input_tokens": 328793,
+              "cache_creation_input_tokens": 790,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 790
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 297,
+      "timestamp": "2026-05-14T09:54:37.387Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "先查现有 16 文件里这个方向的覆盖度，再决定是新增层还是补充到现有文件。",
+      "metrics": {
+        "prompt_tokens": 328799,
+        "completion_tokens": 5628,
+        "cached_tokens": 328793,
+        "extra": {
+          "cache_creation_input_tokens": 790,
+          "cache_read_input_tokens": 328793,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 790,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 5628,
+              "cache_read_input_tokens": 328793,
+              "cache_creation_input_tokens": 790,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 790
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 298,
+      "timestamp": "2026-05-14T09:54:39.191Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_013TYARNYWu3Frm4XdfxP7nq",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_013TYARNYWu3Frm4XdfxP7nq",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cd /Users/luwei/work/Controversy/chat/SDLC-stack && grep -l -E \"Computer Use|Operator|Browserbase|Stagehand|browser-use|Skyvern|Manus|Stripe Agent Toolkit|Anthropic Skills|GUI 化|CLI 化|MCP 化\" *.md | sort",
+            "description": "Check coverage of GUI→CLI/MCP/Browser direction"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_013TYARNYWu3Frm4XdfxP7nq",
+            "content": "03-knowledge-qa.md\n08-test-agents.md\n10b-mcp-servers.md\n11c-incident-response.md\nREADME.md\n\n[stdout]\n03-knowledge-qa.md\n08-test-agents.md\n10b-mcp-servers.md\n11c-incident-response.md\nREADME.md\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 328799,
+        "completion_tokens": 5628,
+        "cached_tokens": 328793,
+        "extra": {
+          "cache_creation_input_tokens": 790,
+          "cache_read_input_tokens": 328793,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 790,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 5628,
+              "cache_read_input_tokens": 328793,
+              "cache_creation_input_tokens": 790,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 790
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "03-knowledge-qa.md\n08-test-agents.md\n10b-mcp-servers.md\n11c-incident-response.md\nREADME.md",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013TYARNYWu3Frm4XdfxP7nq",
+            "type": "tool_result",
+            "content": "03-knowledge-qa.md\n08-test-agents.md\n10b-mcp-servers.md\n11c-incident-response.md\nREADME.md",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "03-knowledge-qa.md\n08-test-agents.md\n10b-mcp-servers.md\n11c-incident-response.md\nREADME.md",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013TYARNYWu3Frm4XdfxP7nq",
+            "type": "tool_result",
+            "content": "03-knowledge-qa.md\n08-test-agents.md\n10b-mcp-servers.md\n11c-incident-response.md\nREADME.md",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "cd /Users/luwei/work/Controversy/chat/SDLC-stack && grep -l -E \"Computer Use|Operator|Browserbase|Stagehand|browser-use|Skyvern|Manus|Stripe Agent Toolkit|Anthropic Skills|GUI 化|CLI 化|MCP 化\" *.md | sort",
+          "description": "Check coverage of GUI→CLI/MCP/Browser direction"
+        }
+      }
+    },
+    {
+      "step_id": 299,
+      "timestamp": "2026-05-14T09:54:44.165Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01RBV686D1KBaFKynL2u8oMj",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01RBV686D1KBaFKynL2u8oMj",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "for f in 03-knowledge-qa.md 08-test-agents.md 10b-mcp-servers.md 11c-incident-response.md; do echo \"=== $f ===\"; grep -E \"Computer Use|Operator|Browserbase|Stagehand|browser-use|Skyvern|Manus|Stripe Agent Toolkit|Anthropic Skills\" \"$f\"; echo; done",
+            "description": "Check actual context"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01RBV686D1KBaFKynL2u8oMj",
+            "content": "Exit code 1\n=== 03-knowledge-qa.md ===\n\n[error] tool reported failure"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 329584,
+        "completion_tokens": 247,
+        "cached_tokens": 329583,
+        "extra": {
+          "cache_creation_input_tokens": 5691,
+          "cache_read_input_tokens": 329583,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 5691,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 247,
+              "cache_read_input_tokens": 329583,
+              "cache_creation_input_tokens": 5691,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 5691
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Exit code 1\n=== 03-knowledge-qa.md ===",
+            "is_error": true,
+            "tool_use_id": "toolu_01RBV686D1KBaFKynL2u8oMj"
+          }
+        },
+        "tool_result_is_error": true,
+        "metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Exit code 1\n=== 03-knowledge-qa.md ===",
+            "is_error": true,
+            "tool_use_id": "toolu_01RBV686D1KBaFKynL2u8oMj"
+          }
+        },
+        "raw_arguments": {
+          "command": "for f in 03-knowledge-qa.md 08-test-agents.md 10b-mcp-servers.md 11c-incident-response.md; do echo \"=== $f ===\"; grep -E \"Computer Use|Operator|Browserbase|Stagehand|browser-use|Skyvern|Manus|Stripe Agent Toolkit|Anthropic Skills\" \"$f\"; echo; done",
+          "description": "Check actual context"
+        }
+      }
+    },
+    {
+      "step_id": 300,
+      "timestamp": "2026-05-14T09:54:56.947Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_013LfzdZqSzqVQDfxDvpT5N8",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_013LfzdZqSzqVQDfxDvpT5N8",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "grep -nE \"(Computer Use|Operator|Browserbase|Stagehand|browser-use|Skyvern|Manus|Stripe Agent Toolkit|Anthropic Skills)\" 08-test-agents.md 10b-mcp-servers.md 11c-incident-response.md",
+            "description": "Check matches per file"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_013LfzdZqSzqVQDfxDvpT5N8",
+            "content": "08-test-agents.md:89:Anthropic Computer Use（2024 年 10 月发布，给 Claude 加视觉 + 坐标级 GUI 控制 [[19]](https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua)）与 OpenAI Operator/CUA 把\"让 LLM 当 QA 测试员\"从科幻拉到工程。配套的 Browserbase 提供托管浏览器、session 持久化与 live debugging，专门为 agent 而非 scraper 设计 [[20]](https://apiscout.dev/guides/best-browser-automation-apis-2026)。\n08-test-agents.md:91:**最小可用模式。**Browserbase MCP server + Claude Code 子 agent：\n08-test-agents.md:96:  - 创建 Browserbase isolated session\n08-test-agents.md:105:- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。基准数据：Playwright CLI 比 browser-use CLI 快 **2–26×**（screenshot 200ms vs DOM 操作 2s 起）[[26]](https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026)；同等抓取量下 Stagehand 等 AI agent 工具 LLM 费用 **\\$50–200/天**，Playwright 仅消耗计算资源 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。AI 浏览器工具新任务成功率约 **70–85%**，但 UI 变更下不易破坏 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。\n08-test-agents.md:172:[19] WorkOS, \"Anthropic's Computer Use versus OpenAI's Computer Using Agent (CUA),\" 2024. (Claude 3.5 Sonnet 2024-10 上线，坐标级 GUI 控制。) [Online]. Available: <https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua>\n08-test-agents.md:174:[20] APIScout, \"Best Browser Automation APIs 2026,\" 2026. (Browserbase 为 agent 而非 scraper 设计。) [Online]. Available: <https://apiscout.dev/guides/best-browser-automation-apis-2026>\n08-test-agents.md:186:[26] ytyng, \"Playwright CLI vs agent-browser vs Claude in Chrome — AI browser automation token benchmark,\" 2026. (Playwright CLI 比 browser-use CLI 快 2–26×；后者 screenshot 200ms，DOM 操作 2s+。) [Online]. Available: <https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026>\n08-test-agents.md:188:[27] NxCode, \"Stagehand vs Browser Use vs Playwright: AI Browser Automation Compared,\" 2026. (10k 次/天抓取：Stagehand LLM 费用 \\$50–200/天，Playwright 仅计算成本；AI 工具新任务成功率 70–85%。) [Online]. Available: <https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026>\n11c-incident-response.md:62:4. **runbook 即代码 + Skills 是新的护城河形式**。Anthropic Skills 和 Honeycomb Canvas Skills 把\"团队默会知识\"打包成 agent 可消费的 skill bundle——这是过去 wiki + checklist 解决不了的形态。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。\n\n[stdout]\n08-test-agents.md:89:Anthropic Computer Use（2024 年 10 月发布，给 Claude 加视觉 + 坐标级 GUI 控制 [[19]](https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua)）与 OpenAI Operator/CUA 把\"让 LLM 当 QA 测试员\"从科幻拉到工程。配套的 Browserbase 提供托管浏览器、session 持久化与 live debugging，专门为 agent 而非 scraper 设计 [[20]](https://apiscout.dev/guides/best-browser-automation-apis-2026)。\n08-test-agents.md:91:**最小可用模式。**Browserbase MCP server + Claude Code 子 agent：\n08-test-agents.md:96:  - 创建 Browserbase isolated session\n08-test-agents.md:105:- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。基准数据：Playwright CLI 比 browser-use CLI 快 **2–26×**（screenshot 200ms vs DOM 操作 2s 起）[[26]](https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026)；同等抓取量下 Stagehand 等 AI agent 工具 LLM 费用 **\\$50–200/天**，Playwright 仅消耗计算资源 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。AI 浏览器工具新任务成功率约 **70–85%**，但 UI 变更下不易破坏 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。\n08-test-agents.md:172:[19] WorkOS, \"Anthropic's Computer Use versus OpenAI's Computer Using Agent (CUA),\" 2024. (Claude 3.5 Sonnet 2024-10 上线，坐标级 GUI 控制。) [Online]. Available: <https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua>\n08-test-agents.md:174:[20] APIScout, \"Best Browser Automation APIs 2026,\" 2026. (Browserbase 为 agent 而非 scraper 设计。) [Online]. Available: <https://apiscout.dev/guides/best-browser-automation-apis-2026>\n08-test-agents.md:186:[26] ytyng, \"Playwright CLI vs agent-browser vs Claude in Chrome — AI browser automation token benchmark,\" 2026. (Playwright CLI 比 browser-use CLI 快 2–26×；后者 screenshot 200ms，DOM 操作 2s+。) [Online]. Available: <https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026>\n08-test-agents.md:188:[27] NxCode, \"Stagehand vs Browser Use vs Playwright: AI Browser Automation Compared,\" 2026. (10k 次/天抓取：Stagehand LLM 费用 \\$50–200/天，Playwright 仅计算成本；AI 工具新任务成功率 70–85%。) [Online]. Available: <https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026>\n11c-incident-response.md:62:4. **runbook 即代码 + Skills 是新的护城河形式**。Anthropic Skills 和 Honeycomb Canvas Skills 把\"团队默会知识\"打包成 agent 可消费的 skill bundle——这是过去 wiki + checklist 解决不了的形态。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 335275,
+        "completion_tokens": 214,
+        "cached_tokens": 335274,
+        "extra": {
+          "cache_creation_input_tokens": 262,
+          "cache_read_input_tokens": 335274,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 262,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 214,
+              "cache_read_input_tokens": 335274,
+              "cache_creation_input_tokens": 262,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 262
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "08-test-agents.md:89:Anthropic Computer Use（2024 年 10 月发布，给 Claude 加视觉 + 坐标级 GUI 控制 [[19]](https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua)）与 OpenAI Operator/CUA 把\"让 LLM 当 QA 测试员\"从科幻拉到工程。配套的 Browserbase 提供托管浏览器、session 持久化与 live debugging，专门为 agent 而非 scraper 设计 [[20]](https://apiscout.dev/guides/best-browser-automation-apis-2026)。\n08-test-agents.md:91:**最小可用模式。**Browserbase MCP server + Claude Code 子 agent：\n08-test-agents.md:96:  - 创建 Browserbase isolated session\n08-test-agents.md:105:- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。基准数据：Playwright CLI 比 browser-use CLI 快 **2–26×**（screenshot 200ms vs DOM 操作 2s 起）[[26]](https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026)；同等抓取量下 Stagehand 等 AI agent 工具 LLM 费用 **\\$50–200/天**，Playwright 仅消耗计算资源 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。AI 浏览器工具新任务成功率约 **70–85%**，但 UI 变更下不易破坏 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。\n08-test-agents.md:172:[19] WorkOS, \"Anthropic's Computer Use versus OpenAI's Computer Using Agent (CUA),\" 2024. (Claude 3.5 Sonnet 2024-10 上线，坐标级 GUI 控制。) [Online]. Available: <https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua>\n08-test-agents.md:174:[20] APIScout, \"Best Browser Automation APIs 2026,\" 2026. (Browserbase 为 agent 而非 scraper 设计。) [Online]. Available: <https://apiscout.dev/guides/best-browser-automation-apis-2026>\n08-test-agents.md:186:[26] ytyng, \"Playwright CLI vs agent-browser vs Claude in Chrome — AI browser automation token benchmark,\" 2026. (Playwright CLI 比 browser-use CLI 快 2–26×；后者 screenshot 200ms，DOM 操作 2s+。) [Online]. Available: <https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026>\n08-test-agents.md:188:[27] NxCode, \"Stagehand vs Browser Use vs Playwright: AI Browser Automation Compared,\" 2026. (10k 次/天抓取：Stagehand LLM 费用 \\$50–200/天，Playwright 仅计算成本；AI 工具新任务成功率 70–85%。) [Online]. Available: <https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026>\n11c-incident-response.md:62:4. **runbook 即代码 + Skills 是新的护城河形式**。Anthropic Skills 和 Honeycomb Canvas Skills 把\"团队默会知识\"打包成 agent 可消费的 skill bundle——这是过去 wiki + checklist 解决不了的形态。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013LfzdZqSzqVQDfxDvpT5N8",
+            "type": "tool_result",
+            "content": "08-test-agents.md:89:Anthropic Computer Use（2024 年 10 月发布，给 Claude 加视觉 + 坐标级 GUI 控制 [[19]](https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua)）与 OpenAI Operator/CUA 把\"让 LLM 当 QA 测试员\"从科幻拉到工程。配套的 Browserbase 提供托管浏览器、session 持久化与 live debugging，专门为 agent 而非 scraper 设计 [[20]](https://apiscout.dev/guides/best-browser-automation-apis-2026)。\n08-test-agents.md:91:**最小可用模式。**Browserbase MCP server + Claude Code 子 agent：\n08-test-agents.md:96:  - 创建 Browserbase isolated session\n08-test-agents.md:105:- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。基准数据：Playwright CLI 比 browser-use CLI 快 **2–26×**（screenshot 200ms vs DOM 操作 2s 起）[[26]](https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026)；同等抓取量下 Stagehand 等 AI agent 工具 LLM 费用 **\\$50–200/天**，Playwright 仅消耗计算资源 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。AI 浏览器工具新任务成功率约 **70–85%**，但 UI 变更下不易破坏 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。\n08-test-agents.md:172:[19] WorkOS, \"Anthropic's Computer Use versus OpenAI's Computer Using Agent (CUA),\" 2024. (Claude 3.5 Sonnet 2024-10 上线，坐标级 GUI 控制。) [Online]. Available: <https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua>\n08-test-agents.md:174:[20] APIScout, \"Best Browser Automation APIs 2026,\" 2026. (Browserbase 为 agent 而非 scraper 设计。) [Online]. Available: <https://apiscout.dev/guides/best-browser-automation-apis-2026>\n08-test-agents.md:186:[26] ytyng, \"Playwright CLI vs agent-browser vs Claude in Chrome — AI browser automation token benchmark,\" 2026. (Playwright CLI 比 browser-use CLI 快 2–26×；后者 screenshot 200ms，DOM 操作 2s+。) [Online]. Available: <https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026>\n08-test-agents.md:188:[27] NxCode, \"Stagehand vs Browser Use vs Playwright: AI Browser Automation Compared,\" 2026. (10k 次/天抓取：Stagehand LLM 费用 \\$50–200/天，Playwright 仅计算成本；AI 工具新任务成功率 70–85%。) [Online]. Available: <https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026>\n11c-incident-response.md:62:4. **runbook 即代码 + Skills 是新的护城河形式**。Anthropic Skills 和 Honeycomb Canvas Skills 把\"团队默会知识\"打包成 agent 可消费的 skill bundle——这是过去 wiki + checklist 解决不了的形态。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "08-test-agents.md:89:Anthropic Computer Use（2024 年 10 月发布，给 Claude 加视觉 + 坐标级 GUI 控制 [[19]](https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua)）与 OpenAI Operator/CUA 把\"让 LLM 当 QA 测试员\"从科幻拉到工程。配套的 Browserbase 提供托管浏览器、session 持久化与 live debugging，专门为 agent 而非 scraper 设计 [[20]](https://apiscout.dev/guides/best-browser-automation-apis-2026)。\n08-test-agents.md:91:**最小可用模式。**Browserbase MCP server + Claude Code 子 agent：\n08-test-agents.md:96:  - 创建 Browserbase isolated session\n08-test-agents.md:105:- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。基准数据：Playwright CLI 比 browser-use CLI 快 **2–26×**（screenshot 200ms vs DOM 操作 2s 起）[[26]](https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026)；同等抓取量下 Stagehand 等 AI agent 工具 LLM 费用 **\\$50–200/天**，Playwright 仅消耗计算资源 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。AI 浏览器工具新任务成功率约 **70–85%**，但 UI 变更下不易破坏 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。\n08-test-agents.md:172:[19] WorkOS, \"Anthropic's Computer Use versus OpenAI's Computer Using Agent (CUA),\" 2024. (Claude 3.5 Sonnet 2024-10 上线，坐标级 GUI 控制。) [Online]. Available: <https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua>\n08-test-agents.md:174:[20] APIScout, \"Best Browser Automation APIs 2026,\" 2026. (Browserbase 为 agent 而非 scraper 设计。) [Online]. Available: <https://apiscout.dev/guides/best-browser-automation-apis-2026>\n08-test-agents.md:186:[26] ytyng, \"Playwright CLI vs agent-browser vs Claude in Chrome — AI browser automation token benchmark,\" 2026. (Playwright CLI 比 browser-use CLI 快 2–26×；后者 screenshot 200ms，DOM 操作 2s+。) [Online]. Available: <https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026>\n08-test-agents.md:188:[27] NxCode, \"Stagehand vs Browser Use vs Playwright: AI Browser Automation Compared,\" 2026. (10k 次/天抓取：Stagehand LLM 费用 \\$50–200/天，Playwright 仅计算成本；AI 工具新任务成功率 70–85%。) [Online]. Available: <https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026>\n11c-incident-response.md:62:4. **runbook 即代码 + Skills 是新的护城河形式**。Anthropic Skills 和 Honeycomb Canvas Skills 把\"团队默会知识\"打包成 agent 可消费的 skill bundle——这是过去 wiki + checklist 解决不了的形态。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013LfzdZqSzqVQDfxDvpT5N8",
+            "type": "tool_result",
+            "content": "08-test-agents.md:89:Anthropic Computer Use（2024 年 10 月发布，给 Claude 加视觉 + 坐标级 GUI 控制 [[19]](https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua)）与 OpenAI Operator/CUA 把\"让 LLM 当 QA 测试员\"从科幻拉到工程。配套的 Browserbase 提供托管浏览器、session 持久化与 live debugging，专门为 agent 而非 scraper 设计 [[20]](https://apiscout.dev/guides/best-browser-automation-apis-2026)。\n08-test-agents.md:91:**最小可用模式。**Browserbase MCP server + Claude Code 子 agent：\n08-test-agents.md:96:  - 创建 Browserbase isolated session\n08-test-agents.md:105:- **成本与延迟。**视觉推理跑一遍 E2E flow，比 Playwright 慢一个数量级、贵两个数量级。基准数据：Playwright CLI 比 browser-use CLI 快 **2–26×**（screenshot 200ms vs DOM 操作 2s 起）[[26]](https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026)；同等抓取量下 Stagehand 等 AI agent 工具 LLM 费用 **\\$50–200/天**，Playwright 仅消耗计算资源 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。AI 浏览器工具新任务成功率约 **70–85%**，但 UI 变更下不易破坏 [[27]](https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026)。\n08-test-agents.md:172:[19] WorkOS, \"Anthropic's Computer Use versus OpenAI's Computer Using Agent (CUA),\" 2024. (Claude 3.5 Sonnet 2024-10 上线，坐标级 GUI 控制。) [Online]. Available: <https://workos.com/blog/anthropics-computer-use-versus-openais-computer-using-agent-cua>\n08-test-agents.md:174:[20] APIScout, \"Best Browser Automation APIs 2026,\" 2026. (Browserbase 为 agent 而非 scraper 设计。) [Online]. Available: <https://apiscout.dev/guides/best-browser-automation-apis-2026>\n08-test-agents.md:186:[26] ytyng, \"Playwright CLI vs agent-browser vs Claude in Chrome — AI browser automation token benchmark,\" 2026. (Playwright CLI 比 browser-use CLI 快 2–26×；后者 screenshot 200ms，DOM 操作 2s+。) [Online]. Available: <https://www.ytyng.com/en/blog/ai-browser-automation-tools-comparison-2026>\n08-test-agents.md:188:[27] NxCode, \"Stagehand vs Browser Use vs Playwright: AI Browser Automation Compared,\" 2026. (10k 次/天抓取：Stagehand LLM 费用 \\$50–200/天，Playwright 仅计算成本；AI 工具新任务成功率 70–85%。) [Online]. Available: <https://www.nxcode.io/resources/news/stagehand-vs-browser-use-vs-playwright-ai-browser-automation-2026>\n11c-incident-response.md:62:4. **runbook 即代码 + Skills 是新的护城河形式**。Anthropic Skills 和 Honeycomb Canvas Skills 把\"团队默会知识\"打包成 agent 可消费的 skill bundle——这是过去 wiki + checklist 解决不了的形态。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "grep -nE \"(Computer Use|Operator|Browserbase|Stagehand|browser-use|Skyvern|Manus|Stripe Agent Toolkit|Anthropic Skills)\" 08-test-agents.md 10b-mcp-servers.md 11c-incident-response.md",
+          "description": "Check matches per file"
+        }
+      }
+    },
+    {
+      "step_id": 301,
+      "timestamp": "2026-05-14T09:55:10.519Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 335537,
+        "completion_tokens": 3382,
+        "cached_tokens": 335536,
+        "extra": {
+          "cache_creation_input_tokens": 1563,
+          "cache_read_input_tokens": 335536,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1563,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3382,
+              "cache_read_input_tokens": 335536,
+              "cache_creation_input_tokens": 1563,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1563
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 302,
+      "timestamp": "2026-05-14T09:55:13.239Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "确认是个缺口——只有 L08 写了浏览器 agent 在 QA 场景的用法，没有中心层覆盖\"产品供给侧把自己改造成 Agent 可调用界面\"这条主线。CLI 化（gh / stripe / vercel）、MCP 化（Stripe Agent Toolkit / Linear MCP）、浏览器 Agent 驱动（Computer Use / Operator / Manus）三条路径都缺中心位置。\n\n新增 L13。",
+      "metrics": {
+        "prompt_tokens": 335537,
+        "completion_tokens": 3382,
+        "cached_tokens": 335536,
+        "extra": {
+          "cache_creation_input_tokens": 1563,
+          "cache_read_input_tokens": 335536,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1563,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3382,
+              "cache_read_input_tokens": 335536,
+              "cache_creation_input_tokens": 1563,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1563
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 303,
+      "timestamp": "2026-05-14T09:55:15.991Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed TaskCreate toolu_01Bgc9xjh8QpocWjHebpvXRX",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Bgc9xjh8QpocWjHebpvXRX",
+          "function_name": "TaskCreate",
+          "arguments": {
+            "subject": "L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究",
+            "description": "subagent 调研 CLI 工具复兴 / SaaS 主动做 MCP server / Computer Use/Operator/Browserbase/browser-use/Manus，产出 chat/SDLC-stack/13-agent-interfaces.md，完成后更新 README + 主文件 C 表",
+            "activeForm": "L13 调研中"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Bgc9xjh8QpocWjHebpvXRX",
+            "content": "Task #19 created successfully: L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究\n\n[metadata] {\"task\": {\"id\": \"19\", \"subject\": \"L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究\"}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 335537,
+        "completion_tokens": 3382,
+        "cached_tokens": 335536,
+        "extra": {
+          "cache_creation_input_tokens": 1563,
+          "cache_read_input_tokens": 335536,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1563,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3382,
+              "cache_read_input_tokens": 335536,
+              "cache_creation_input_tokens": 1563,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1563
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "TaskCreate",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "task": {
+              "id": "19",
+              "subject": "L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Bgc9xjh8QpocWjHebpvXRX",
+            "type": "tool_result",
+            "content": "Task #19 created successfully: L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "task": {
+              "id": "19",
+              "subject": "L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Bgc9xjh8QpocWjHebpvXRX",
+            "type": "tool_result",
+            "content": "Task #19 created successfully: L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究"
+          }
+        },
+        "raw_arguments": {
+          "subject": "L13 GUI/网站的 CLI/MCP/浏览器 Agent 化 — 新增层深度研究",
+          "description": "subagent 调研 CLI 工具复兴 / SaaS 主动做 MCP server / Computer Use/Operator/Browserbase/browser-use/Manus，产出 chat/SDLC-stack/13-agent-interfaces.md，完成后更新 README + 主文件 C 表",
+          "activeForm": "L13 调研中"
+        }
+      }
+    },
+    {
+      "step_id": 304,
+      "timestamp": "2026-05-14T09:55:16.427Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed TaskUpdate toolu_019eSVPJiiiSxeamuUuJ6GGX",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_019eSVPJiiiSxeamuUuJ6GGX",
+          "function_name": "TaskUpdate",
+          "arguments": {
+            "taskId": "19",
+            "status": "in_progress"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_019eSVPJiiiSxeamuUuJ6GGX",
+            "content": "Updated task #19 status\n\n[metadata] {\"success\": true, \"taskId\": \"19\", \"updatedFields\": [\"status\"], \"statusChange\": {\"from\": \"pending\", \"to\": \"in_progress\"}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 335537,
+        "completion_tokens": 3382,
+        "cached_tokens": 335536,
+        "extra": {
+          "cache_creation_input_tokens": 1563,
+          "cache_read_input_tokens": 335536,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1563,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3382,
+              "cache_read_input_tokens": 335536,
+              "cache_creation_input_tokens": 1563,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1563
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "TaskUpdate",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "success": true,
+            "taskId": "19",
+            "updatedFields": [
+              "status"
+            ],
+            "statusChange": {
+              "from": "pending",
+              "to": "in_progress"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019eSVPJiiiSxeamuUuJ6GGX",
+            "type": "tool_result",
+            "content": "Updated task #19 status"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "success": true,
+            "taskId": "19",
+            "updatedFields": [
+              "status"
+            ],
+            "statusChange": {
+              "from": "pending",
+              "to": "in_progress"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019eSVPJiiiSxeamuUuJ6GGX",
+            "type": "tool_result",
+            "content": "Updated task #19 status"
+          }
+        },
+        "raw_arguments": {
+          "taskId": "19",
+          "status": "in_progress"
+        }
+      }
+    },
+    {
+      "step_id": 305,
+      "timestamp": "2026-05-14T09:55:44.341Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_018ujdzk3EW4bKxKo99T1Heb",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_018ujdzk3EW4bKxKo99T1Heb",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "L13 Agent-Accessible Interfaces",
+            "subagent_type": "general-purpose",
+            "prompt": "你为\"SDLC 工具栈分层深度研究\"系列新增一层 **L13**：GUI app / SaaS 网站 → 被 Agent 可调用界面的供给侧改造。\n\n**今天日期**：2026-05-14\n\n**背景**：用户审阅时指出现有 16 层漏了一个方向——\"产品方如何把自己改造成 Agent 可调用的表面\"。Pre-Agent 时代 SaaS 默认只有 GUI（人通过浏览器点）；Agent 时代每个产品被迫提供以下三条路径任一：\n1. **CLI 工具**：gh、stripe、vercel、aws、gcloud、kubectl 等命令行（部分 Pre-Agent 就有，但 Agent 时代成为关键供给）\n2. **MCP server**：产品方主动暴露 MCP server（与 L10b 协议层不同，本层是**产品侧**的供给）\n3. **浏览器 Agent**：让 Agent 通过 GUI 操作产品（Anthropic Computer Use、OpenAI Operator、Browserbase、Stagehand、browser-use、Skyvern、Manus AI）\n\n**你产出的新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`\n\n**与现有层的边界（必须严格遵守）**：\n- **L10b**（MCP servers）：写协议层 + dev 工具的 MCP server 生态。**本层不写协议本身**，写**产品方如何被迫供给 Agent 可调用界面**（含非 dev 产品如 Stripe / Notion / Figma / Slack / Cloudflare 等）。可以引用 L10b。\n- **L05**（终端 Coding Agent）：写 Claude Code / Devin 等\"吃 Agent\"。本层写**被吃的一方**——SaaS 怎么自我改造让 Agent 能吃。\n- **L08**（测试 Agent）：已提过 Browserbase / Computer Use 在 QA 场景。本层从更广视角看（不止 QA 用例），覆盖产品供给侧策略选择。\n\n**必须回答**：\n\n1. **Pre-Agent 时代 SaaS / GUI 应用的\"对外接口\"分层**：人 GUI 主路径、API 是辅助、CLI 是开发者偏好（GitHub CLI 2020、Stripe CLI 2020、Vercel CLI、gcloud、aws 等历史与采用率）。这一层在 Pre-Agent 是什么状态？\n2. **Agent 时代流量模式怎么变了**：什么数据能证明 Agent 流量已经超过 / 接近人流量？SaaS 看到 API/CLI 调用增长曲线、CDN 看到的 bot 流量增长？\n3. **三条供给路径的实际进展**：\n   a. **CLI 路径**：Charm.sh 生态、CLI 工具复兴；Stripe Agent Toolkit、Vercel AI SDK；Linear / Slack / Notion 等 SaaS 是否新做 CLI / 新增 Agent toolkit？\n   b. **MCP 路径**：产品方主动做 MCP server 的实际数据（数量、采用率）；Anthropic Skills（2025-10 公布）作为\"打包 GUI workflow 给 Agent\"的封装；Stripe MCP、Notion MCP、Figma MCP、Slack MCP、Cloudflare MCP、Atlassian MCP 现状\n   c. **浏览器 Agent 路径**：Anthropic Computer Use（2024-10 发布）、OpenAI Operator（2025-01）、Browserbase（融资数据）、Stagehand、browser-use（Python lib，GitHub stars）、Skyvern（RPA 替代）、Manus AI、Magnitude、Hyperbrowser；技术路线对比\n4. **新需求**：产品方如何选 CLI / MCP / 浏览器三条路；定价模式如何应对 Agent 大量调用（per-call vs per-seat）；rate limit / 反 Bot 系统如何区分友 Agent / 恶 Agent；GUI 设计语言如何同时服务人 + Agent\n5. **具体案例**：2-3 个具体公司如何走通这条路（如 Stripe Agent Toolkit / Cloudflare MCP / Manus AI / Skyvern / Figma Make 等），技术架构 + 代码 / 配置示例（保留原貌）\n6. **本质判断**：3-5 条\n   - 5 年后 web 产品是否仍以 GUI 为主入口？\n   - API-first 是否已演化为 Agent-first？\n   - 哪一条路径会赢（CLI vs MCP vs 浏览器 Agent）？\n   - 反 Bot 经济学：友 Agent 流量收钱 vs 恶 Agent 屏蔽\n\n**格式要求**：\n- 中文 markdown，IEEE 引用 `[N]`、行内 `[[N]](URL)`\n- 无 emoji\n- 标题：`# 2026-05-14：SDLC 栈 / GUI 产品的 CLI / MCP / 浏览器化 (L13) 层深度研究`\n- 区分**事实**（带信源）和**解读**（自己分析）\n- **数字精确，事实声明必须 [[N]](URL)，无引用的数字必须 ⚠ 估算 / 解读 + 依据**\n- 保留代码 / 配置示例原貌（CLI / MCP / browser-use 示例）\n- 篇幅 2500–3500 字\n\n**重要**：用 WebSearch / WebFetch 实际查最新数据：\n- Stripe Agent Toolkit / Vercel AI SDK 发布数据\n- Anthropic Skills 2025-10 公告 + 2026 更新\n- browser-use GitHub stars、采用情况\n- Manus AI / Skyvern 融资 / 估值\n- Cloudflare radar bot 流量数据 / Imperva Bad Bot Report\n- Operator 案例\n\n**完成后**：回复一段 ≤200 字总结，含核心发现、新引用数、⚠ 数量、文件路径。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_018ujdzk3EW4bKxKo99T1Heb",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: a65e31d05013e92c2 (internal ID - do not mention to user. Use SendMessage with to: 'a65e31d05013e92c2' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a65e31d05013e92c2.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"a65e31d05013e92c2\", \"description\": \"L13 Agent-Accessible Interfaces\", \"prompt\": \"你为\\\"SDLC 工具栈分层深度研究\\\"系列新增一层 **L13**：GUI app / SaaS 网站 → 被 Agent 可调用界面的供给侧改造。\\n\\n**今天日期**：2026-05-14\\n\\n**背景**：用户审阅时指出现有 16 层漏了一个方向——\\\"产品方如何把自己改造成 Agent 可调用的表面\\\"。Pre-Agent 时代 SaaS 默认只有 GUI（人通过浏览器点）；Agent 时代每个产品被迫提供以下三条路径任一：\\n1. **CLI 工具**：gh、stripe、vercel、aws、gcloud、kubectl 等命令行（部分 Pre-Agent 就有，但 Agent 时代成为关键供给）\\n2. **MCP server**：产品方主动暴露 MCP server（与 L10b 协议层不同，本层是**产品侧**的供给）\\n3. **浏览器 Agent**：让 Agent 通过 GUI 操作产品（Anthropic Computer Use、OpenAI Operator、Browserbase、Stagehand、browser-use、Skyvern、Manus AI）\\n\\n**你产出的新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`\\n\\n**与现有层的边界（必须严格遵守）**：\\n- **L10b**（MCP servers）：写协议层 + dev 工具的 MCP server 生态。**本层不写协议本身**，写**产品方如何被迫供给 Agent 可调用界面**（含非 dev 产品如 Stripe / Notion / Figma / Slack / Cloudflare 等）。可以引用 L10b。\\n- **L05**（终端 Coding Agent）：写 Claude Code / Devin 等\\\"吃 Agent\\\"。本层写**被吃的一方**——SaaS 怎么自我改造让 Agent 能吃。\\n- **L08**（测试 Agent）：已提过 Browserbase / Computer Use 在 QA 场景。本层从更广视角看（不止 QA 用例），覆盖产品供给侧策略选择。\\n\\n**必须回答**：\\n\\n1. **Pre-Agent 时代 SaaS / GUI 应用的\\\"对外接口\\\"分层**：人 GUI 主路径、API 是辅助、CLI 是开发者偏好（GitHub CLI 2020、Stripe CLI 2020、Vercel CLI、gcloud、aws 等历史与采用率）。这一层在 Pre-Agent 是什么状态？\\n2. **Agent 时代流量模式怎么变了**：什么数据能证明 Agent 流量已经超过 / 接近人流量？SaaS 看到 API/CLI 调用增长曲线、CDN 看到的 bot 流量增长？\\n3. **三条供给路径的实际进展**：\\n   a. **CLI 路径**：Charm.sh 生态、CLI 工具复兴；Stripe Agent Toolkit、Vercel AI SDK；Linear / Slack / Notion 等 SaaS 是否新做 CLI / 新增 Agent toolkit？\\n   b. **MCP 路径**：产品方主动做 MCP server 的实际数据（数量、采用率）；Anthropic Skills（2025-10 公布）作为\\\"打包 GUI workflow 给 Agent\\\"的封装；Stripe MCP、Notion MCP、Figma MCP、Slack MCP、Cloudflare MCP、Atlassian MCP 现状\\n   c. **浏览器 Agent 路径**：Anthropic Computer Use（2024-10 发布）、OpenAI Operator（2025-01）、Browserbase（融资数据）、Stagehand、browser-use（Python lib，GitHub stars）、Skyvern（RPA 替代）、Manus AI、Magnitude、Hyperbrowser；技术路线对比\\n4. **新需求**：产品方如何选 CLI / MCP / 浏览器三条路；定价模式如何应对 Agent 大量调用（per-call vs per-seat）；rate limit / 反 Bot 系统如何区分友 Agent / 恶 Agent；GUI 设计语言如何同时服务人 + Agent\\n5. **具体案例**：2-3 个具体公司如何走通这条路（如 Stripe Agent Toolkit / Cloudflare MCP / Manus AI / Skyvern / Figma Make 等），技术架构 + 代码 / 配置示例（保留原貌）\\n6. **本质判断**：3-5 条\\n   - 5 年后 web 产品是否仍以 GUI 为主入口？\\n   - API-first 是否已演化为 Agent-first？\\n   - 哪一条路径会赢（CLI vs MCP vs 浏览器 Agent）？\\n   - 反 Bot 经济学：友 Agent 流量收钱 vs 恶 Agent 屏蔽\\n\\n**格式要求**：\\n- 中文 markdown，IEEE 引用 `[N]`、行内 `[[N]](URL)`\\n- 无 emoji\\n- 标题：`# 2026-05-14：SDLC 栈 / GUI 产品的 CLI / MCP / 浏览器化 (L13) 层深度研究`\\n- 区分**事实**（带信源）和**解读**（自己分析）\\n- **数字精确，事实声明必须 [[N]](URL)，无引用的数字必须 ⚠ 估算 / 解读 + 依据**\\n- 保留代码 / 配置示例原貌（CLI / MCP / browser-use 示例）\\n- 篇幅 2500–3500 字\\n\\n**重要**：用 WebSearch / WebFetch 实际查最新数据：\\n- Stripe Agent Toolkit / Vercel AI SDK 发布数据\\n- Anthropic Skills 2025-10 公告 + 2026 更新\\n- browser-use GitHub stars、采用情况\\n- Manus AI / Skyvern 融资 / 估值\\n- Cloudflare radar bot 流量数据 / Imperva Bad Bot Report\\n- Operator 案例\\n\\n**完成后**：回复一段 ≤200 字总结，含核心发现、新引用数、⚠ 数量、文件路径。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a65e31d05013e92c2.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 335537,
+        "completion_tokens": 3382,
+        "cached_tokens": 335536,
+        "extra": {
+          "cache_creation_input_tokens": 1563,
+          "cache_read_input_tokens": 335536,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1563,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3382,
+              "cache_read_input_tokens": 335536,
+              "cache_creation_input_tokens": 1563,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1563
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a65e31d05013e92c2",
+            "description": "L13 Agent-Accessible Interfaces",
+            "prompt": "你为\"SDLC 工具栈分层深度研究\"系列新增一层 **L13**：GUI app / SaaS 网站 → 被 Agent 可调用界面的供给侧改造。\n\n**今天日期**：2026-05-14\n\n**背景**：用户审阅时指出现有 16 层漏了一个方向——\"产品方如何把自己改造成 Agent 可调用的表面\"。Pre-Agent 时代 SaaS 默认只有 GUI（人通过浏览器点）；Agent 时代每个产品被迫提供以下三条路径任一：\n1. **CLI 工具**：gh、stripe、vercel、aws、gcloud、kubectl 等命令行（部分 Pre-Agent 就有，但 Agent 时代成为关键供给）\n2. **MCP server**：产品方主动暴露 MCP server（与 L10b 协议层不同，本层是**产品侧**的供给）\n3. **浏览器 Agent**：让 Agent 通过 GUI 操作产品（Anthropic Computer Use、OpenAI Operator、Browserbase、Stagehand、browser-use、Skyvern、Manus AI）\n\n**你产出的新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`\n\n**与现有层的边界（必须严格遵守）**：\n- **L10b**（MCP servers）：写协议层 + dev 工具的 MCP server 生态。**本层不写协议本身**，写**产品方如何被迫供给 Agent 可调用界面**（含非 dev 产品如 Stripe / Notion / Figma / Slack / Cloudflare 等）。可以引用 L10b。\n- **L05**（终端 Coding Agent）：写 Claude Code / Devin 等\"吃 Agent\"。本层写**被吃的一方**——SaaS 怎么自我改造让 Agent 能吃。\n- **L08**（测试 Agent）：已提过 Browserbase / Computer Use 在 QA 场景。本层从更广视角看（不止 QA 用例），覆盖产品供给侧策略选择。\n\n**必须回答**：\n\n1. **Pre-Agent 时代 SaaS / GUI 应用的\"对外接口\"分层**：人 GUI 主路径、API 是辅助、CLI 是开发者偏好（GitHub CLI 2020、Stripe CLI 2020、Vercel CLI、gcloud、aws 等历史与采用率）。这一层在 Pre-Agent 是什么状态？\n2. **Agent 时代流量模式怎么变了**：什么数据能证明 Agent 流量已经超过 / 接近人流量？SaaS 看到 API/CLI 调用增长曲线、CDN 看到的 bot 流量增长？\n3. **三条供给路径的实际进展**：\n   a. **CLI 路径**：Charm.sh 生态、CLI 工具复兴；Stripe Agent Toolkit、Vercel AI SDK；Linear / Slack / Notion 等 SaaS 是否新做 CLI / 新增 Agent toolkit？\n   b. **MCP 路径**：产品方主动做 MCP server 的实际数据（数量、采用率）；Anthropic Skills（2025-10 公布）作为\"打包 GUI workflow 给 Agent\"的封装；Stripe MCP、Notion MCP、Figma MCP、Slack MCP、Cloudflare MCP、Atlassian MCP 现状\n   c. **浏览器 Agent 路径**：Anthropic Computer Use（2024-10 发布）、OpenAI Operator（2025-01）、Browserbase（融资数据）、Stagehand、browser-use（Python lib，GitHub stars）、Skyvern（RPA 替代）、Manus AI、Magnitude、Hyperbrowser；技术路线对比\n4. **新需求**：产品方如何选 CLI / MCP / 浏览器三条路；定价模式如何应对 Agent 大量调用（per-call vs per-seat）；rate limit / 反 Bot 系统如何区分友 Agent / 恶 Agent；GUI 设计语言如何同时服务人 + Agent\n5. **具体案例**：2-3 个具体公司如何走通这条路（如 Stripe Agent Toolkit / Cloudflare MCP / Manus AI / Skyvern / Figma Make 等），技术架构 + 代码 / 配置示例（保留原貌）\n6. **本质判断**：3-5 条\n   - 5 年后 web 产品是否仍以 GUI 为主入口？\n   - API-first 是否已演化为 Agent-first？\n   - 哪一条路径会赢（CLI vs MCP vs 浏览器 Agent）？\n   - 反 Bot 经济学：友 Agent 流量收钱 vs 恶 Agent 屏蔽\n\n**格式要求**：\n- 中文 markdown，IEEE 引用 `[N]`、行内 `[[N]](URL)`\n- 无 emoji\n- 标题：`# 2026-05-14：SDLC 栈 / GUI 产品的 CLI / MCP / 浏览器化 (L13) 层深度研究`\n- 区分**事实**（带信源）和**解读**（自己分析）\n- **数字精确，事实声明必须 [[N]](URL)，无引用的数字必须 ⚠ 估算 / 解读 + 依据**\n- 保留代码 / 配置示例原貌（CLI / MCP / browser-use 示例）\n- 篇幅 2500–3500 字\n\n**重要**：用 WebSearch / WebFetch 实际查最新数据：\n- Stripe Agent Toolkit / Vercel AI SDK 发布数据\n- Anthropic Skills 2025-10 公告 + 2026 更新\n- browser-use GitHub stars、采用情况\n- Manus AI / Skyvern 融资 / 估值\n- Cloudflare radar bot 流量数据 / Imperva Bad Bot Report\n- Operator 案例\n\n**完成后**：回复一段 ≤200 字总结，含核心发现、新引用数、⚠ 数量、文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a65e31d05013e92c2.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_018ujdzk3EW4bKxKo99T1Heb",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a65e31d05013e92c2 (internal ID - do not mention to user. Use SendMessage with to: 'a65e31d05013e92c2' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a65e31d05013e92c2.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "a65e31d05013e92c2",
+            "description": "L13 Agent-Accessible Interfaces",
+            "prompt": "你为\"SDLC 工具栈分层深度研究\"系列新增一层 **L13**：GUI app / SaaS 网站 → 被 Agent 可调用界面的供给侧改造。\n\n**今天日期**：2026-05-14\n\n**背景**：用户审阅时指出现有 16 层漏了一个方向——\"产品方如何把自己改造成 Agent 可调用的表面\"。Pre-Agent 时代 SaaS 默认只有 GUI（人通过浏览器点）；Agent 时代每个产品被迫提供以下三条路径任一：\n1. **CLI 工具**：gh、stripe、vercel、aws、gcloud、kubectl 等命令行（部分 Pre-Agent 就有，但 Agent 时代成为关键供给）\n2. **MCP server**：产品方主动暴露 MCP server（与 L10b 协议层不同，本层是**产品侧**的供给）\n3. **浏览器 Agent**：让 Agent 通过 GUI 操作产品（Anthropic Computer Use、OpenAI Operator、Browserbase、Stagehand、browser-use、Skyvern、Manus AI）\n\n**你产出的新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`\n\n**与现有层的边界（必须严格遵守）**：\n- **L10b**（MCP servers）：写协议层 + dev 工具的 MCP server 生态。**本层不写协议本身**，写**产品方如何被迫供给 Agent 可调用界面**（含非 dev 产品如 Stripe / Notion / Figma / Slack / Cloudflare 等）。可以引用 L10b。\n- **L05**（终端 Coding Agent）：写 Claude Code / Devin 等\"吃 Agent\"。本层写**被吃的一方**——SaaS 怎么自我改造让 Agent 能吃。\n- **L08**（测试 Agent）：已提过 Browserbase / Computer Use 在 QA 场景。本层从更广视角看（不止 QA 用例），覆盖产品供给侧策略选择。\n\n**必须回答**：\n\n1. **Pre-Agent 时代 SaaS / GUI 应用的\"对外接口\"分层**：人 GUI 主路径、API 是辅助、CLI 是开发者偏好（GitHub CLI 2020、Stripe CLI 2020、Vercel CLI、gcloud、aws 等历史与采用率）。这一层在 Pre-Agent 是什么状态？\n2. **Agent 时代流量模式怎么变了**：什么数据能证明 Agent 流量已经超过 / 接近人流量？SaaS 看到 API/CLI 调用增长曲线、CDN 看到的 bot 流量增长？\n3. **三条供给路径的实际进展**：\n   a. **CLI 路径**：Charm.sh 生态、CLI 工具复兴；Stripe Agent Toolkit、Vercel AI SDK；Linear / Slack / Notion 等 SaaS 是否新做 CLI / 新增 Agent toolkit？\n   b. **MCP 路径**：产品方主动做 MCP server 的实际数据（数量、采用率）；Anthropic Skills（2025-10 公布）作为\"打包 GUI workflow 给 Agent\"的封装；Stripe MCP、Notion MCP、Figma MCP、Slack MCP、Cloudflare MCP、Atlassian MCP 现状\n   c. **浏览器 Agent 路径**：Anthropic Computer Use（2024-10 发布）、OpenAI Operator（2025-01）、Browserbase（融资数据）、Stagehand、browser-use（Python lib，GitHub stars）、Skyvern（RPA 替代）、Manus AI、Magnitude、Hyperbrowser；技术路线对比\n4. **新需求**：产品方如何选 CLI / MCP / 浏览器三条路；定价模式如何应对 Agent 大量调用（per-call vs per-seat）；rate limit / 反 Bot 系统如何区分友 Agent / 恶 Agent；GUI 设计语言如何同时服务人 + Agent\n5. **具体案例**：2-3 个具体公司如何走通这条路（如 Stripe Agent Toolkit / Cloudflare MCP / Manus AI / Skyvern / Figma Make 等），技术架构 + 代码 / 配置示例（保留原貌）\n6. **本质判断**：3-5 条\n   - 5 年后 web 产品是否仍以 GUI 为主入口？\n   - API-first 是否已演化为 Agent-first？\n   - 哪一条路径会赢（CLI vs MCP vs 浏览器 Agent）？\n   - 反 Bot 经济学：友 Agent 流量收钱 vs 恶 Agent 屏蔽\n\n**格式要求**：\n- 中文 markdown，IEEE 引用 `[N]`、行内 `[[N]](URL)`\n- 无 emoji\n- 标题：`# 2026-05-14：SDLC 栈 / GUI 产品的 CLI / MCP / 浏览器化 (L13) 层深度研究`\n- 区分**事实**（带信源）和**解读**（自己分析）\n- **数字精确，事实声明必须 [[N]](URL)，无引用的数字必须 ⚠ 估算 / 解读 + 依据**\n- 保留代码 / 配置示例原貌（CLI / MCP / browser-use 示例）\n- 篇幅 2500–3500 字\n\n**重要**：用 WebSearch / WebFetch 实际查最新数据：\n- Stripe Agent Toolkit / Vercel AI SDK 发布数据\n- Anthropic Skills 2025-10 公告 + 2026 更新\n- browser-use GitHub stars、采用情况\n- Manus AI / Skyvern 融资 / 估值\n- Cloudflare radar bot 流量数据 / Imperva Bad Bot Report\n- Operator 案例\n\n**完成后**：回复一段 ≤200 字总结，含核心发现、新引用数、⚠ 数量、文件路径。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a65e31d05013e92c2.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_018ujdzk3EW4bKxKo99T1Heb",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: a65e31d05013e92c2 (internal ID - do not mention to user. Use SendMessage with to: 'a65e31d05013e92c2' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/a65e31d05013e92c2.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "L13 Agent-Accessible Interfaces",
+          "subagent_type": "general-purpose",
+          "prompt": "你为\"SDLC 工具栈分层深度研究\"系列新增一层 **L13**：GUI app / SaaS 网站 → 被 Agent 可调用界面的供给侧改造。\n\n**今天日期**：2026-05-14\n\n**背景**：用户审阅时指出现有 16 层漏了一个方向——\"产品方如何把自己改造成 Agent 可调用的表面\"。Pre-Agent 时代 SaaS 默认只有 GUI（人通过浏览器点）；Agent 时代每个产品被迫提供以下三条路径任一：\n1. **CLI 工具**：gh、stripe、vercel、aws、gcloud、kubectl 等命令行（部分 Pre-Agent 就有，但 Agent 时代成为关键供给）\n2. **MCP server**：产品方主动暴露 MCP server（与 L10b 协议层不同，本层是**产品侧**的供给）\n3. **浏览器 Agent**：让 Agent 通过 GUI 操作产品（Anthropic Computer Use、OpenAI Operator、Browserbase、Stagehand、browser-use、Skyvern、Manus AI）\n\n**你产出的新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`\n\n**与现有层的边界（必须严格遵守）**：\n- **L10b**（MCP servers）：写协议层 + dev 工具的 MCP server 生态。**本层不写协议本身**，写**产品方如何被迫供给 Agent 可调用界面**（含非 dev 产品如 Stripe / Notion / Figma / Slack / Cloudflare 等）。可以引用 L10b。\n- **L05**（终端 Coding Agent）：写 Claude Code / Devin 等\"吃 Agent\"。本层写**被吃的一方**——SaaS 怎么自我改造让 Agent 能吃。\n- **L08**（测试 Agent）：已提过 Browserbase / Computer Use 在 QA 场景。本层从更广视角看（不止 QA 用例），覆盖产品供给侧策略选择。\n\n**必须回答**：\n\n1. **Pre-Agent 时代 SaaS / GUI 应用的\"对外接口\"分层**：人 GUI 主路径、API 是辅助、CLI 是开发者偏好（GitHub CLI 2020、Stripe CLI 2020、Vercel CLI、gcloud、aws 等历史与采用率）。这一层在 Pre-Agent 是什么状态？\n2. **Agent 时代流量模式怎么变了**：什么数据能证明 Agent 流量已经超过 / 接近人流量？SaaS 看到 API/CLI 调用增长曲线、CDN 看到的 bot 流量增长？\n3. **三条供给路径的实际进展**：\n   a. **CLI 路径**：Charm.sh 生态、CLI 工具复兴；Stripe Agent Toolkit、Vercel AI SDK；Linear / Slack / Notion 等 SaaS 是否新做 CLI / 新增 Agent toolkit？\n   b. **MCP 路径**：产品方主动做 MCP server 的实际数据（数量、采用率）；Anthropic Skills（2025-10 公布）作为\"打包 GUI workflow 给 Agent\"的封装；Stripe MCP、Notion MCP、Figma MCP、Slack MCP、Cloudflare MCP、Atlassian MCP 现状\n   c. **浏览器 Agent 路径**：Anthropic Computer Use（2024-10 发布）、OpenAI Operator（2025-01）、Browserbase（融资数据）、Stagehand、browser-use（Python lib，GitHub stars）、Skyvern（RPA 替代）、Manus AI、Magnitude、Hyperbrowser；技术路线对比\n4. **新需求**：产品方如何选 CLI / MCP / 浏览器三条路；定价模式如何应对 Agent 大量调用（per-call vs per-seat）；rate limit / 反 Bot 系统如何区分友 Agent / 恶 Agent；GUI 设计语言如何同时服务人 + Agent\n5. **具体案例**：2-3 个具体公司如何走通这条路（如 Stripe Agent Toolkit / Cloudflare MCP / Manus AI / Skyvern / Figma Make 等），技术架构 + 代码 / 配置示例（保留原貌）\n6. **本质判断**：3-5 条\n   - 5 年后 web 产品是否仍以 GUI 为主入口？\n   - API-first 是否已演化为 Agent-first？\n   - 哪一条路径会赢（CLI vs MCP vs 浏览器 Agent）？\n   - 反 Bot 经济学：友 Agent 流量收钱 vs 恶 Agent 屏蔽\n\n**格式要求**：\n- 中文 markdown，IEEE 引用 `[N]`、行内 `[[N]](URL)`\n- 无 emoji\n- 标题：`# 2026-05-14：SDLC 栈 / GUI 产品的 CLI / MCP / 浏览器化 (L13) 层深度研究`\n- 区分**事实**（带信源）和**解读**（自己分析）\n- **数字精确，事实声明必须 [[N]](URL)，无引用的数字必须 ⚠ 估算 / 解读 + 依据**\n- 保留代码 / 配置示例原貌（CLI / MCP / browser-use 示例）\n- 篇幅 2500–3500 字\n\n**重要**：用 WebSearch / WebFetch 实际查最新数据：\n- Stripe Agent Toolkit / Vercel AI SDK 发布数据\n- Anthropic Skills 2025-10 公告 + 2026 更新\n- browser-use GitHub stars、采用情况\n- Manus AI / Skyvern 融资 / 估值\n- Cloudflare radar bot 流量数据 / Imperva Bad Bot Report\n- Operator 案例\n\n**完成后**：回复一段 ≤200 字总结，含核心发现、新引用数、⚠ 数量、文件路径。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 306,
+      "timestamp": "2026-05-14T09:55:51.216Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "L13 subagent 已起。研究方向：CLI 化 / MCP 化 / 浏览器 Agent 化三条路径在 SaaS 供给侧的进展。\n\n完成后我会：\n1. 把 L13 行加进 SDLC-stack/README.md（C 表对应、文件统计、一句话本质）\n2. 在主文件 附录 III 的 C 节适当位置增加这一层（这是 C 表当时漏的方向）\n\n等通知。",
+      "metrics": {
+        "prompt_tokens": 337100,
+        "completion_tokens": 160,
+        "cached_tokens": 337099,
+        "extra": {
+          "cache_creation_input_tokens": 3840,
+          "cache_read_input_tokens": 337099,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3840,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 160,
+              "cache_read_input_tokens": 337099,
+              "cache_creation_input_tokens": 3840,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3840
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 46238394,
-    "total_completion_tokens": 668884,
-    "total_cached_tokens": 46226966,
-    "total_steps": 294,
+    "total_prompt_tokens": 49904435,
+    "total_completion_tokens": 703299,
+    "total_cached_tokens": 49892981,
+    "total_steps": 306,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 1976353,
-      "total_cache_read_input_tokens": 46226966
+      "total_cache_creation_input_tokens": 1996331,
+      "total_cache_read_input_tokens": 49892981
     }
   }
 }
