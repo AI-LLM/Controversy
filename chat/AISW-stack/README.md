@@ -1,8 +1,13 @@
 # AI 软件栈分层索引：从 GPU 驱动到终端用户 Agent 应用
 
-从最底层的 GPU 驱动 / 固件，一直到最终用户接触的 Agent 应用（ChatGPT、Cursor、Devin），完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。
+从最底层的 GPU 驱动 / 固件，一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。
 
-## 全栈总览（34 层）
+文件分两大段：
+
+- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从 GPU 驱动到 ChatGPT / Cursor / Devin 一根通。
+- **B. 并列应用分支**：科学计算 / AI4Science、机器人、自动驾驶、世界模型 / 3D、经典视觉、量化金融——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径，不进 LLM 推理服务和 Agent 中间件那条线。
+
+## A. LLM / Agent 主干 — 全栈总览（34 层）
 
 按"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用"九大段组织。
 
@@ -440,6 +445,110 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 
 ---
 
+## B. 并列应用分支（共享 L01–L09，从 L10 起分叉）
+
+LLM 不是 GPU 的唯一负载。下面 6 条分支与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。每条分支用 `B*` 编号，自上而下从"领域基础层"到"终端应用"组织。
+
+### B1 科学计算 / HPC 通用底座（与 L06–L09 并行）
+
+数值仿真、PDE 求解、分子动力学、量子模拟、线性 / 整数规划——这一段比深度学习古老 30 年，但 2023 后被 GPU 与 AI 重新激活。
+
+- **数值 / 张量底座（与深度学习共享）**：NumPy、SciPy、CuPy、JAX、PyTorch（autograd 也用作物理仿真）、Julia + CUDA.jl
+- **经典 HPC 运行时**：OpenMPI、MPICH、NVIDIA HPC-X、UCX；OpenMP；Slurm、PBS、LSF；Spack、EasyBuild（HPC 包管理）
+- **分子 / 化学 / 生物仿真**：GROMACS（CUDA / SYCL）、OpenMM、LAMMPS-GPU、NAMD-CUDA、AMBER、Schrödinger Suite（商业）
+- **量子模拟 / 编程**：NVIDIA cuQuantum + CUDA-Q、IBM Qiskit、Google Cirq、Xanadu PennyLane、Quantinuum TKET
+- **优化 / 运筹**：NVIDIA cuOpt（GPU 路径规划）、Gurobi、IBM CPLEX、Google OR-Tools、COIN-OR
+- **CFD / 工程仿真**：Ansys Fluent (GPU)、Siemens Simcenter STAR-CCM+、NVIDIA Modulus（物理信息 NN）、PhiFlow、JAX-CFD
+
+### B2 AI4Science 领域基础模型（与 L10 并行）
+
+把"基础模型"的范式从语言迁到分子、天气、材料、基因、数学。2024–2025 是 AlphaFold 3 + GraphCast + MatterGen 三个里程碑同年发生的一年。
+
+- **蛋白质 / 抗体 / 复合物**：AlphaFold 3（Google DeepMind / Isomorphic Labs，2024-05；2024-11 开放权重学术非商用）、RoseTTAFold All-Atom（Baker Lab）、ESM-3（EvolutionaryScale）、Boltz-1 / Boltz-2（MIT，2024–2025；Boltz-2 含亲和力预测）、Chai-1（Chai Discovery）
+- **小分子 / 药物 / 反应**：NVIDIA BioNeMo MolMIM、OpenFold、DiffDock（Gabriele Corso）、AlphaFold-Multimer、Insilico Medicine Pharma.AI
+- **天气 / 气候**：GraphCast、GenCast（DeepMind）、Pangu-Weather（华为，2023 Nature）、FourCastNet（NVIDIA）、Aurora（Microsoft，2024）、Fuxi（复旦）、ECMWF AIFS
+- **材料 / 凝聚态**：MatterGen（Microsoft Research，2024）、MACE（Cambridge）、NequIP、Allegro（MIT）、GNoME（DeepMind，220 万新晶体）、Orb（Orbital Materials）
+- **数学 / 形式化推理**：AlphaProof + AlphaGeometry 2（DeepMind，2024 IMO 银牌）、FunSearch、Lean + Lean Copilot、DeepSeek-Prover-V2
+- **单细胞 / 基因组**：scGPT（Wang Bo）、Geneformer（Christina Theodoris）、scFoundation（清华 + 百图生科）、GeneCompass、Evo 2（Arc Institute，1.7T 核苷酸训练）
+- **医学影像**：MONAI（NVIDIA + KCL）、MedSAM、TotalSegmentator、Google MedGemini、Microsoft RAD-DINO
+
+### B3 科学 / 工程平台与服务（与 L13–L17 并行）
+
+把 B2 的模型工程化、API 化、SaaS 化。
+
+- **NVIDIA 自研栈**：BioNeMo Framework + BioNeMo NIM Microservices、Earth-2 + Earth-2 Studio、Modulus（PINN / Neural Operator）、CUDA-Q Cloud
+- **闭源 / 公司化研发平台**：Isomorphic Labs AlphaFold Server、Schrödinger LiveDesign（药物发现 SaaS）、Recursion Pharmaceuticals BioHive-2（自营超算 + 模型）、Cradle.bio、Profluent
+- **科学计算云**：Rescale、CoreWeave Mission Control（HPC + AI 双模）、AWS HPC（ParallelCluster）、Azure CycleCloud、Google Cluster Toolkit
+- **科学数据 / Notebook**：Quarto、Jupyter + JupyterHub、Anaconda、Hugging Face Datasets for Science（PubMedQA、OpenProteinSet）
+
+### B4 机器人栈：从中间件到 VLA 模型（与 L18–L26 并行）
+
+物理具身 AI 自己一根栈。2024–2025 关键变化是 VLA（Vision-Language-Action）取代了过去的"感知 + 规划 + 控制"三段式。
+
+- **B4a 机器人中间件 / 实时 OS**：ROS 2（事实标准，Humble / Iron / Jazzy）、NVIDIA Isaac ROS、MoveIt 2、micro-ROS（MCU 上的 ROS）、PX4 / ArduPilot（无人机）；实时层 NVIDIA Holoscan、QNX、VxWorks、Xenomai
+- **B4b 仿真 / 数字孪生**：NVIDIA Isaac Sim + Isaac Lab、NVIDIA Cosmos（世界基础模型，2025-01 发布）、MuJoCo + MuJoCo-MJX（DeepMind 2021 收购后开源 + JAX 化）、Gazebo / Ignition、Genesis（CMU + 多校，2024-12，零样本物理仿真）、Drake（TRI）、Habitat 3（Meta）、AI2-THOR、Unity ML-Agents
+- **B4c 机器人基础模型 / VLA**：NVIDIA GR00T N1 / GR00T-Dreams、Physical Intelligence π0 / π0.5（2024–2025，Sergey Levine、Chelsea Finn）、Google DeepMind RT-2 / Open X-Embodiment / Gemini Robotics（2025-03）、Skild AI Skild Brain（$300M Series A）、Figure Helix、1X World Model、OpenVLA（Stanford）、RDT-1B（清华）、Octo（UC Berkeley）
+- **B4d 数据 / 训练框架**：LeRobot（HuggingFace；社区主流）、Diffusion Policy（哥伦比亚 + TRI）、ACT（Tony Zhao）、Open X-Embodiment 数据集（22 机器人形态、527 任务）、DROID 数据集
+- **B4e 终端机器人产品**：人形 Tesla Optimus、Figure 02 / 03、1X Neo Beta、Apptronik Apollo、Unitree H1 / G1 / GD01；四足 Boston Dynamics Spot、ANYmal、Unitree Go2；服务 / 物流 Agility Robotics Digit、Covariant Brain（被 Amazon "聘走团队"）；手术 Intuitive da Vinci 5
+
+### B5 自动驾驶栈（与 L18–L34 并行）
+
+闭源端到端神经网络栈已成为主流；HD 地图 + 规则栈正在被替代。
+
+- **B5a 闭源端到端 / 整车**：Tesla FSD V13 / V14（HW4 → HW5）、Waymo Driver（Multi-Modal Foundation Model 路线）、Mobileye SuperVision / Chauffeur / Drive、华为 ADS 3.0 / 4.0、小鹏 XNGP、理想 AD Max、Momenta、Pony.ai、Wayve（伦敦，端到端 self-driving 模型 LINGO + GAIA）
+- **B5b 车载 AI 平台 / 芯片栈**：NVIDIA DRIVE Thor + DRIVE AV / DRIVE OS、Mobileye EyeQ6 / EyeQ Ultra、Qualcomm Snapdragon Ride、Horizon Robotics Journey 6（中国主流国产替代）、地平线 SuperDrive
+- **B5c 开源 / 开放栈**：百度 Apollo、Autoware (Foundation)、Comma.ai openpilot、CARLA（仿真）、AirSim（已停维但仍流行）
+- **B5d 仿真 / 数据闭环**：NVIDIA DRIVE Sim + Omniverse、Applied Intuition（仿真 + 数据平台）、Foretellix、Cognata、Parallel Domain、Helm.ai
+- **B5e 高精地图 / 定位（被端到端架构挤压但未消失）**：HERE、TomTom、四维图新、Mapbox、Atlatec（被 NVIDIA 收购）
+
+### B6 世界模型 / 3D 重建 / 游戏 AI（与 L32 并行但目标不同）
+
+L32 偏"生成图像 / 视频"；这一支偏"生成可交互的 3D 世界"。
+
+- **B6a 通用世界模型**：Google DeepMind Genie 2 / Genie 3（2025-08，从一张图生成可交互 1 分钟世界）、World Labs Marble（Fei-Fei Li，2025-12 GA）、Wayve GAIA-2、NVIDIA Cosmos World Foundation Models、Decart Mirage、Odyssey
+- **B6b 3D 重建 / 新视角合成**：NeRF / Instant-NGP（NVIDIA）、3D Gaussian Splatting（Inria 2023；事实标准）、Mip-Splatting、Luma Genie、Polycam、KIRI Engine
+- **B6c 文本 → 3D / Mesh**：Meshy、Tripo3D（VAST）、Rodin（DeemosTech）、Hunyuan3D 2.5（腾讯）、Trellis（Microsoft）、CSM、Spline AI
+- **B6d 游戏内 NPC / 引擎 AI**：NVIDIA ACE（Audio2Face、Riva、NeMo Retriever 套件）、Inworld AI、Convai、Charisma.ai
+- **B6e 工业 / 编辑器**：NVIDIA Omniverse + USD、Unity Sentis（端内 ONNX 推理）、Unreal NNE（Neural Network Engine）、Pixar OpenUSD、Houdini Copernicus
+
+### B7 经典计算机视觉 / 边缘感知（与 L13–L14 并行，但模型不属 LLM）
+
+工业视觉、安防、医学影像、OCR、文档智能——这一段在 LLM 大火前就有，2024–2025 又被 VLM 部分蚕食但远未消失。
+
+- **B7a 检测 / 分割 / Pose**：YOLOv10 / v11 / v12（Ultralytics）、RT-DETR（百度）、Detectron2（Meta）、MMDetection / MMPose / MMSegmentation（OpenMMLab）、SAM 2（Meta，视频分割）、Grounding DINO、Florence-2（Microsoft）
+- **B7b OCR / 文档智能**：PaddleOCR（百度，开源主流）、Tesseract、Surya、DocLayout-YOLO、Nougat（Meta，学术 PDF）、MinerU（上海 AI Lab）、Mistral OCR、Reducto、Unstructured.io
+- **B7c 视频理解**：InternVideo 2.5、VideoLLaMA 3、Qwen2.5-VL、TwelveLabs Marengo、Video-CCAM
+- **B7d 边缘 / 嵌入式部署**：NVIDIA DeepStream + TensorRT、Intel OpenVINO、Qualcomm AI Engine Direct（QNN）、Arm NN、Apple Core ML、MediaPipe（Google）、Hailo Dataflow Compiler
+- **B7e 数据 / 训练平台**：Roboflow、Encord、Labelbox、Voxel51 FiftyOne、CVAT、Supervisely
+- **B7f 终端应用**：工业 Cognex VisionPro Deep Learning、Keyence、Landing AI（Andrew Ng）；安防 Hikvision、Dahua；医学影像 Aidoc、Annalise.ai、Viz.ai；零售 Standard AI、Trigo
+
+### B8 量化金融 / 经典 ML 应用（轻量分支）
+
+绝大多数金融 AI 跑在 L06 PyTorch / JAX 通用框架上，没有独立"基础模型"层；但工具链与终端用户面孔与 LLM 分支差异大。
+
+- **B8a 经典 ML 框架**：scikit-learn、XGBoost、LightGBM、CatBoost、RAPIDS cuML（GPU 加速 sklearn）、H2O.ai
+- **B8b 时间序列 / 预测**：Prophet（Meta）、NeuralProphet、Nixtla（StatsForecast / NeuralForecast / TimeGPT）、Salesforce Merlion、Amazon Chronos
+- **B8c 量化 / 回测平台**：QuantConnect、Backtrader、vectorbt / vectorbt-pro、Zipline-reloaded、QuantLib（衍生品定价库）、NVIDIA cuOpt + Risk Pricing
+- **B8d 金融领域模型**：BloombergGPT、FinGPT、FinBERT、PIXIU；金融具体应用大多复用 GPT / Claude，没有独立分发
+- **B8e 终端 / 平台**：Bloomberg Terminal + AI、FactSet Mercury、Two Sigma Venn、AlphaSense、Hebbia（这一项已在 L34 列出）
+
+---
+
+## 各分支与主干共享 / 分叉点速查
+
+| 主干层 | LLM / Agent（A 段） | 科学计算（B1–B3） | 机器人（B4） | 自动驾驶（B5） | 世界模型 / 3D（B6） | 经典 CV（B7） |
+|---|---|---|---|---|---|---|
+| L01–L05 驱动 / 内核库 / 编译器 | 共享 | 共享 + 加 OpenMM / cuQuantum kernel | 共享 + 实时 OS | 共享 + 车规级 BSP | 共享 | 共享 + OpenVINO / TensorRT |
+| L06–L07 框架 / 分布式 | PyTorch / JAX / DeepSpeed | PyTorch / JAX / Julia / MPI | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch + JAX | PyTorch + OpenMMLab |
+| L08 数据 pipeline | FineWeb / datatrove | 实验数据 + 仿真生成 | Open X-Embodiment / DROID | 路采 + Replay + 仿真 | 多视角 / 视频对 | Roboflow / Labelbox |
+| L09 后训练 | TRL / verl | 极少（多预训练即终态） | LeRobot + ACT + Diffusion Policy | 半监督 + RLHF 仿真 | 极少 | 微调 + 蒸馏 |
+| L10 模型 | Llama / Claude / GPT | AlphaFold 3 / GraphCast / MatterGen | π0 / GR00T / RT-2 | Tesla FSD / Waymo | Genie 3 / Marble | YOLO / SAM 2 |
+| L13–L14 推理 / 服务 | vLLM / Triton Inference | BioNeMo NIM / Earth-2 Studio | Isaac ROS / 车载 NN runtime | DRIVE OS / EyeQ runtime | Gaussian Splatting renderer | DeepStream / OpenVINO |
+| L24–L26 Agent / 工具 | LangGraph / MCP / Computer Use | 多数无（人在闭环） | VLA 控制循环（非 LLM Agent） | 端到端策略，无 Agent 层 | 编辑器内交互 | 无 |
+| L33–L34 终端 | ChatGPT / Cursor | AlphaFold Server / Schrödinger | Tesla Optimus / Figure | Tesla FSD / Robotaxi | Marble / Genie 3 | 工业 / 医疗 / 零售视觉 |
+
+---
+
 ## 几条横切的观察
 
 不属于具体某一层，但跨层规律值得单列。
@@ -450,3 +559,5 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 - **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。
 - **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。
 - **L18 LLM 应用框架 在 2025 出现 "去 LangChain 化"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。
+- **B 段（非 LLM 分支）共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干"Agent 框架"的话语去套是误读；只有 B6 世界模型与 L32 视频生成在底层模型上真正同源。
+- **NVIDIA 是唯一在 A / B 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（B4）→ DRIVE（B5）→ Omniverse + ACE（B6）→ DeepStream（B7）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。
