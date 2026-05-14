@@ -106,7 +106,7 @@ DORA 2025 报告引入显式的"AI measurement layer"，建议跟踪 *AI-assiste
 
 ## 参考文献
 
-[1] Swimm.io, "Swimm — Code-Coupled Documentation," 2026. [Online]. Available: <https://swimm.io/>
+[1] O. Rosenbaum, "Sync don't sink: why we built Swimm for dev teams," *Swimm Blog*, 2021. (Swimm 立项动机：让 docs 与代码同步。) [Online]. Available: <https://swimm.io/blog/sync-dont-sink-why-we-built-swimm-for-dev-teams>
 
 [2] Backstage, "Descriptor Format of Catalog Entities," *backstage.io docs*, 2026. [Online]. Available: <https://backstage.io/docs/features/software-catalog/descriptor-format/>
 

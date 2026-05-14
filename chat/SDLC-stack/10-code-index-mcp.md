@@ -43,13 +43,13 @@ Pre-Agent 栈里，开发者获取"和我现在改的代码相关的其它代码
 - 跨仓库上下文支持最多 10 个 repo [[6]](https://sourcegraph.com/docs/cody)。
 - 路线偏"**经典 IR 工程**"：相信稀疏检索 + 符号精确链接比纯向量更稳定。
 
-**工程上谁更可扩展？分界线在哪？**
+**工程上谁更可扩展？分界线在哪？**（⚠ 以下三档分界线为作者综合估算，依据：Augment 自报 400k+ 文件为其设计上限 [[2]](https://www.augmentcode.com/guides/why-400k-file-codebases-break-traditional-ai)、Sourcegraph 文档跨仓库 ≤10 repo 的硬限制 [[6]](https://sourcegraph.com/docs/cody)、以及"长上下文 vs RAG"经验法则——单仓库 ≤数万文件可直接长上下文兜底 [[25]](https://www.sitepoint.com/long-context-vs-rag-1m-token-windows/)；公开基准未给出精确门槛。）
 
 - **<50k 文件、单仓库**：差不多——任何方案都能在几秒内召回，差异不显著。
 - **50k–400k 文件、多仓库 / monorepo**：Sourcegraph 的代码图 + 增量索引架构有十年优势；Augment 的 delta ingestion 也能跑，但调优深度还在追赶。
 - **>400k 文件、组织级、跨语言**：纯向量必然碎；纯符号图也会因为缺乏语义模糊匹配（"找到所有'鉴权相关'函数"）而召回不足。**事实上的赢家是"两边都做"**——Augment 在做符号图、Sourcegraph 在做更深的 embedding；殊途同归。
 
-**本质判断**：长上下文模型把"必须 RAG"的门槛从 50k 文件推高到 200k–400k 文件，但**没有消灭 RAG**。任何一个企业 monorepo（Google / Meta / 任何 10 年以上的 SaaS）都在这道分界线之上。代码索引层是结构性新增，不是过渡品。
+**本质判断**（⚠ 解读）：长上下文模型把"必须 RAG"的门槛从 50k 文件推高到 200k–400k 文件，但**没有消灭 RAG**。任何一个企业 monorepo（Google / Meta / 任何 10 年以上的 SaaS）都在这道分界线之上。代码索引层是结构性新增，不是过渡品。
 
 ## 4. MCP 在 dev 工具生态的爆发：每个 SaaS 被迫"双 UI"
 
