@@ -14,7 +14,7 @@ PR approve 这一票之所以稀缺，不是因为读 diff 慢，而是因为它
 - **Review turnaround**：2024 大公司中位工程师 merge 一个 PR 约 13 小时，绝大多数时间在等 review [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；行业基线 time-to-first-review 中位 7–12h、time-to-merge 中位 24–48h [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround)；Google 内部 review 平均 4h [[3]](https://www.michaelagreiler.com/code-reviews-at-google/)。
 - **占工时**：Meta 内部数据显示评审是 change lead time 中**最大的延迟来源** [[4]](https://engineering.fb.com/2022/11/16/culture/meta-code-review-time-improving/)。
 
-一周 5 PR、一审 7h、一改 1–2 轮，全公司能扛住的不只是流量，是**每个判断单元的颗粒度恰好匹配人的注意力 budget**（⚠ 解读，综合 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer), [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround) 中位数复述）。
+一周 3 PR、一审 7–12 小时（大公司中位 13h 才合并），全公司能扛住的不只是流量，是**每个判断单元的颗粒度恰好匹配人的注意力 budget**（⚠ 解读，综合 [[1]](https://www.minware.com/guide/metrics/average-prs-merged-per-developer), [[2]](https://graphite.com/guides/tracking-improving-code-review-turnaround) 中位数复述）。
 
 ## 二、流量突变：写端单价掉两个数量级，信号生产成为唯一瓶颈
 
