@@ -33571,19 +33571,504 @@
         "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 379,
+      "timestamp": "2026-05-14T12:44:22.082Z",
+      "source": "user",
+      "message": "SDLC-stackL13不应单独一层，而是扩充L10a",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 380,
+      "timestamp": "2026-05-14T12:44:29.007Z",
+      "source": "user",
+      "message": "SDLC-stack L13不应单独一层，而是扩充L10a",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 381,
+      "timestamp": "2026-05-14T12:44:50.131Z",
+      "source": "user",
+      "message": "SDLC-stack L13不应单独一层，而是扩充L10b",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 382,
+      "timestamp": "2026-05-14T12:49:25.888Z",
+      "source": "user",
+      "message": "SDLC-stack L13不应单独一层，而是扩充L10b",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 383,
+      "timestamp": "2026-05-14T12:50:12.284Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 409401,
+        "completion_tokens": 6890,
+        "cached_tokens": 409395,
+        "extra": {
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 409395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 6890,
+              "cache_read_input_tokens": 409395,
+              "cache_creation_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 384,
+      "timestamp": "2026-05-14T12:50:15.843Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "理解。L13 的内容（CLI / 产品 MCP / 浏览器 Agent 三条路径 + 社区强 wrap）确实属于 \"Agent 集成接口\"这个大主题，和 L10b 的 MCP 协议层是同一层的不同切面。\n\n执行计划：\n1. subagent 合并 10b + 13 → 新文件 `10b-agent-interfaces.md`\n2. 删原 10b-mcp-servers.md 和 13-agent-interfaces.md\n3. SDLC-stack/README.md：17 → 16 文件、合并层描述、删 L13 行\n4. 主文件：L8.3 / 附录 III C 表 / SAP 引用里把 \"L13\" 字样改为指向新 L10b",
+      "metrics": {
+        "prompt_tokens": 409401,
+        "completion_tokens": 6890,
+        "cached_tokens": 409395,
+        "extra": {
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 409395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 6890,
+              "cache_read_input_tokens": 409395,
+              "cache_creation_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 385,
+      "timestamp": "2026-05-14T12:50:18.638Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed TaskCreate toolu_015AJRbXh5Z4Fw73V6t9qdhJ",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_015AJRbXh5Z4Fw73V6t9qdhJ",
+          "function_name": "TaskCreate",
+          "arguments": {
+            "subject": "合并 L10b + L13 为综合\"Agent 集成接口\"层",
+            "description": "subagent 合并 10b-mcp-servers.md + 13-agent-interfaces.md 为 10b-agent-interfaces.md；完成后删 2 个原文件、改 README 17→16 / 删 L13 行、改主文件交叉引用",
+            "activeForm": "合并 L10b/L13"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_015AJRbXh5Z4Fw73V6t9qdhJ",
+            "content": "Task #20 created successfully: 合并 L10b + L13 为综合\"Agent 集成接口\"层\n\n[metadata] {\"task\": {\"id\": \"20\", \"subject\": \"合并 L10b + L13 为综合\\\"Agent 集成接口\\\"层\"}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 409401,
+        "completion_tokens": 6890,
+        "cached_tokens": 409395,
+        "extra": {
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 409395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 6890,
+              "cache_read_input_tokens": 409395,
+              "cache_creation_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "TaskCreate",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "task": {
+              "id": "20",
+              "subject": "合并 L10b + L13 为综合\"Agent 集成接口\"层"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_015AJRbXh5Z4Fw73V6t9qdhJ",
+            "type": "tool_result",
+            "content": "Task #20 created successfully: 合并 L10b + L13 为综合\"Agent 集成接口\"层"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "task": {
+              "id": "20",
+              "subject": "合并 L10b + L13 为综合\"Agent 集成接口\"层"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_015AJRbXh5Z4Fw73V6t9qdhJ",
+            "type": "tool_result",
+            "content": "Task #20 created successfully: 合并 L10b + L13 为综合\"Agent 集成接口\"层"
+          }
+        },
+        "raw_arguments": {
+          "subject": "合并 L10b + L13 为综合\"Agent 集成接口\"层",
+          "description": "subagent 合并 10b-mcp-servers.md + 13-agent-interfaces.md 为 10b-agent-interfaces.md；完成后删 2 个原文件、改 README 17→16 / 删 L13 行、改主文件交叉引用",
+          "activeForm": "合并 L10b/L13"
+        }
+      }
+    },
+    {
+      "step_id": 386,
+      "timestamp": "2026-05-14T12:50:18.998Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed TaskUpdate toolu_01AaHUAsTEgG3w5su5HqeZvm",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01AaHUAsTEgG3w5su5HqeZvm",
+          "function_name": "TaskUpdate",
+          "arguments": {
+            "taskId": "20",
+            "status": "in_progress"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01AaHUAsTEgG3w5su5HqeZvm",
+            "content": "Updated task #20 status\n\n[metadata] {\"success\": true, \"taskId\": \"20\", \"updatedFields\": [\"status\"], \"statusChange\": {\"from\": \"pending\", \"to\": \"in_progress\"}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 409401,
+        "completion_tokens": 6890,
+        "cached_tokens": 409395,
+        "extra": {
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 409395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 6890,
+              "cache_read_input_tokens": 409395,
+              "cache_creation_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "TaskUpdate",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "success": true,
+            "taskId": "20",
+            "updatedFields": [
+              "status"
+            ],
+            "statusChange": {
+              "from": "pending",
+              "to": "in_progress"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AaHUAsTEgG3w5su5HqeZvm",
+            "type": "tool_result",
+            "content": "Updated task #20 status"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "success": true,
+            "taskId": "20",
+            "updatedFields": [
+              "status"
+            ],
+            "statusChange": {
+              "from": "pending",
+              "to": "in_progress"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AaHUAsTEgG3w5su5HqeZvm",
+            "type": "tool_result",
+            "content": "Updated task #20 status"
+          }
+        },
+        "raw_arguments": {
+          "taskId": "20",
+          "status": "in_progress"
+        }
+      }
+    },
+    {
+      "step_id": 387,
+      "timestamp": "2026-05-14T12:50:51.014Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Agent toolu_01Kqxi6etjRRU6EjZ45togdU",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Kqxi6etjRRU6EjZ45togdU",
+          "function_name": "Agent",
+          "arguments": {
+            "description": "合并 L10b + L13",
+            "subagent_type": "general-purpose",
+            "prompt": "你为\"SDLC 工具栈分层深度研究\"系列做层合并。\n\n**今天日期**：2026-05-14\n\n**背景**：原来 L10b 是 \"Dev MCP server / Agent 集成协议层\"，L13 是 \"GUI → Agent 化（产品供给侧）\" 单独一层。用户判断 L13 不应单独一层，**应扩充 L10b**——合并成一个综合的\"Agent 集成接口\"层。\n\n**任务**：把下面两个文件合并成一个综合报告，**信息不能丢失**，结构要重新组织（不是简单拼接）：\n\n- 源文件 A：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-mcp-servers.md`（MCP 协议层 + dev 工具 MCP server 生态）\n- 源文件 B：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`（GUI → Agent 化供给侧；CLI / MCP / 浏览器 Agent 三条路径）\n\n**新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-agent-interfaces.md`\n\n**合并后的范围**：\n- D6.6 Dev MCP servers + 产品供给侧 Agent 接口\n- 同时覆盖：(a) MCP 协议本体 + 注册中心 / Gateway / Aggregator 三层范式；(b) 产品方主动供给三条路径（CLI、产品 MCP server、浏览器 Agent）；(c) 第三方社区强 wrap（OpenCLI 标准化 + CLI-Anything universal wrapper + Vercel agent-browser 跨 agent CLI 桥）\n\n**强制保留的关键事实数据点（不能丢，必须带原引用或重编号后的引用）**：\n\n来自 10b：\n- MCP 2024-11 发布、2025-12 Linux Foundation AAIF 捐赠\n- 9 400+ server 数字、官方 registry 季度滚动\n- Composio Tool Router beta、Cloudflare AI Gateway、SAP Joule Gateway、mcp-gateway-registry\n- OAuth 2.1 + RFC 8707、SEP-1649 server-card、IETF DNS-discovery\n- claude_desktop_config.json 配置示例（保留原貌）\n- 78% 企业 AI 团队生产用 MCP-backed Agent\n- 三种 gateway 范式对比表\n\n来自 13：\n- Imperva 51% 自动化流量首次过半、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY\n- Stripe Agent Toolkit 2024-11 发布；Vercel AI SDK 5/6\n- Atlassian / Cloudflare / Notion / Slack / Figma MCP 时间线\n- Anthropic Agent Skills 2025-10 公布、2025-12 开放标准、合作伙伴清单\n- Computer Use 2024-10、Operator 2025-01\n- Browserbase $40M Series B、估值 $300M\n- browser-use YC W25 $17M Seed、40k stars\n- Skyvern $2.7M Seed、Manus AI $500M → Meta $2B 收购被中国 NDRC 否决\n- OSWorld-Verified 14.9% → 79.6%（18 个月）\n- HTTP 402 pay-per-crawl、Cloudflare default-block AI\n- OpenCLI Specification（spectreconsole/open-cli + opencli.org）\n- CLI-Anything（HKUDS，约 21K stars）+ CLI-Hub registry\n- Vercel agent-browser（Rust CLI，跨 Claude Code/Codex/Cursor/Gemini CLI/Copilot/Goose/OpenCode/Windsurf）\n- abhinav-nigam/agent-browser（74 个 browser tool via MCP）\n- Stripe Agent Toolkit、Cloudflare Remote MCP、browser-use 三段代码示例\n- 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n\n**结构建议（重新组织，不是拼接两份）**：\n\n```\n# 2026-05-14：SDLC 栈 / Agent 集成接口与产品供给侧改造 (D6.6) 层深度研究\n\n## 1. Pre-Agent 时代产品对外接口的三圈（GUI + REST API + 少数 CLI）\n## 2. Agent 时代流量模式突变（51% 自动化、+7851% agentic、78% 企业生产用 MCP）\n## 3. MCP 协议层\n   3.1 协议本体（2024-11 发布、Linux Foundation 捐赠、9400+ server、roadmap）\n   3.2 三种 gateway / aggregator 范式对比（SAP Joule / 开源 mcp-gateway-registry / Composio Tool Router）\n   3.3 认证 / 审计 / 合规栈（OAuth 2.1 + RFC 8707 + SEP-1649）\n## 4. 三条产品供给路径\n   4.1 CLI 路径——老技术新身位\n     - 4.1.1 既有官方 CLI（gh / stripe / vercel / aws / gcloud / kubectl）\n     - 4.1.2 Agent SDK 升级（Stripe Agent Toolkit、Vercel AI SDK 5/6、Bubble Tea TUI）\n     - 4.1.3 OpenCLI 协议化（CLI 的 OpenAPI）\n     - 4.1.4 CLI-Anything 社区强 wrap（绕开 vendor 决策权）\n     - 4.1.5 Vercel agent-browser（CLI 桥到浏览器）\n   4.2 MCP 路径——产品方主动暴露 server\n     - 4.2.1 SaaS 主流玩家（Atlassian / Cloudflare / Notion / Slack / Figma / Stripe MCP）\n     - 4.2.2 Anthropic Agent Skills（高频 workflow 标准封装）\n   4.3 浏览器 Agent 路径——把 GUI 当 API 用\n     - 4.3.1 大模型平台（Computer Use、Operator）\n     - 4.3.2 基础设施 / SDK（Browserbase、Stagehand、browser-use、agent-browser）\n     - 4.3.3 应用层 / 替代 RPA（Skyvern、Manus AI）\n     - 4.3.4 OSWorld-Verified benchmark 演进\n   4.4 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n## 5. 新需求：选型、定价、反 Bot 经济学反转\n   - HTTP 402 pay-per-crawl\n   - 反 Bot 从 cost center 变 revenue center\n   - vendor 主动 vs 第三方被迫 wrap 双轨制\n## 6. 具体配置 / 代码示例（保留原貌）\n   - claude_desktop_config.json\n   - Stripe Agent Toolkit function call 示例\n   - Cloudflare Remote MCP Workers 部署示例\n   - browser-use Python 示例\n## 7. 几条本质判断\n```\n\n**要求**：\n- 引用**全部重新编号 [1] 开始**（IEEE 风格）；两个源文件的引用合并去重；尽量**全部保留**（10b 25 条、13 57 条，去重后预计 50–70 条）\n- 中文 markdown，无 emoji\n- 保留代码 / 配置示例原貌\n- 篇幅 **5000–6000 字**（合并后比单独 L10b 或 L13 都长）\n- 区分**事实**（带 `[[N]](URL)` 信源）和**解读**（标 ⚠ + 依据）\n- 数字精确，不要把行业经验值写成事实\n\n**完成后**回 ≤300 字总结：(a) 总引用数（去重后保留多少 / 来自 A 多少 / 来自 B 多少 / 新增多少）(b) ⚠ 数量 (c) 文件路径 (d) 关键决策：哪些内容被合并精简、哪些被保留全文。",
+            "run_in_background": true
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Kqxi6etjRRU6EjZ45togdU",
+            "content": "{\"type\": \"text\", \"text\": \"Async agent launched successfully.\\nagentId: ad756ea1565e43936 (internal ID - do not mention to user. Use SendMessage with to: 'ad756ea1565e43936' to continue this agent.)\\nThe agent is working in the background. You will be notified automatically when it completes.\\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/ad756ea1565e43936.output\\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.\"}\n\n[metadata] {\"isAsync\": true, \"status\": \"async_launched\", \"agentId\": \"ad756ea1565e43936\", \"description\": \"合并 L10b + L13\", \"prompt\": \"你为\\\"SDLC 工具栈分层深度研究\\\"系列做层合并。\\n\\n**今天日期**：2026-05-14\\n\\n**背景**：原来 L10b 是 \\\"Dev MCP server / Agent 集成协议层\\\"，L13 是 \\\"GUI → Agent 化（产品供给侧）\\\" 单独一层。用户判断 L13 不应单独一层，**应扩充 L10b**——合并成一个综合的\\\"Agent 集成接口\\\"层。\\n\\n**任务**：把下面两个文件合并成一个综合报告，**信息不能丢失**，结构要重新组织（不是简单拼接）：\\n\\n- 源文件 A：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-mcp-servers.md`（MCP 协议层 + dev 工具 MCP server 生态）\\n- 源文件 B：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`（GUI → Agent 化供给侧；CLI / MCP / 浏览器 Agent 三条路径）\\n\\n**新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-agent-interfaces.md`\\n\\n**合并后的范围**：\\n- D6.6 Dev MCP servers + 产品供给侧 Agent 接口\\n- 同时覆盖：(a) MCP 协议本体 + 注册中心 / Gateway / Aggregator 三层范式；(b) 产品方主动供给三条路径（CLI、产品 MCP server、浏览器 Agent）；(c) 第三方社区强 wrap（OpenCLI 标准化 + CLI-Anything universal wrapper + Vercel agent-browser 跨 agent CLI 桥）\\n\\n**强制保留的关键事实数据点（不能丢，必须带原引用或重编号后的引用）**：\\n\\n来自 10b：\\n- MCP 2024-11 发布、2025-12 Linux Foundation AAIF 捐赠\\n- 9 400+ server 数字、官方 registry 季度滚动\\n- Composio Tool Router beta、Cloudflare AI Gateway、SAP Joule Gateway、mcp-gateway-registry\\n- OAuth 2.1 + RFC 8707、SEP-1649 server-card、IETF DNS-discovery\\n- claude_desktop_config.json 配置示例（保留原貌）\\n- 78% 企业 AI 团队生产用 MCP-backed Agent\\n- 三种 gateway 范式对比表\\n\\n来自 13：\\n- Imperva 51% 自动化流量首次过半、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY\\n- Stripe Agent Toolkit 2024-11 发布；Vercel AI SDK 5/6\\n- Atlassian / Cloudflare / Notion / Slack / Figma MCP 时间线\\n- Anthropic Agent Skills 2025-10 公布、2025-12 开放标准、合作伙伴清单\\n- Computer Use 2024-10、Operator 2025-01\\n- Browserbase $40M Series B、估值 $300M\\n- browser-use YC W25 $17M Seed、40k stars\\n- Skyvern $2.7M Seed、Manus AI $500M → Meta $2B 收购被中国 NDRC 否决\\n- OSWorld-Verified 14.9% → 79.6%（18 个月）\\n- HTTP 402 pay-per-crawl、Cloudflare default-block AI\\n- OpenCLI Specification（spectreconsole/open-cli + opencli.org）\\n- CLI-Anything（HKUDS，约 21K stars）+ CLI-Hub registry\\n- Vercel agent-browser（Rust CLI，跨 Claude Code/Codex/Cursor/Gemini CLI/Copilot/Goose/OpenCode/Windsurf）\\n- abhinav-nigam/agent-browser（74 个 browser tool via MCP）\\n- Stripe Agent Toolkit、Cloudflare Remote MCP、browser-use 三段代码示例\\n- 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\\n\\n**结构建议（重新组织，不是拼接两份）**：\\n\\n```\\n# 2026-05-14：SDLC 栈 / Agent 集成接口与产品供给侧改造 (D6.6) 层深度研究\\n\\n## 1. Pre-Agent 时代产品对外接口的三圈（GUI + REST API + 少数 CLI）\\n## 2. Agent 时代流量模式突变（51% 自动化、+7851% agentic、78% 企业生产用 MCP）\\n## 3. MCP 协议层\\n   3.1 协议本体（2024-11 发布、Linux Foundation 捐赠、9400+ server、roadmap）\\n   3.2 三种 gateway / aggregator 范式对比（SAP Joule / 开源 mcp-gateway-registry / Composio Tool Router）\\n   3.3 认证 / 审计 / 合规栈（OAuth 2.1 + RFC 8707 + SEP-1649）\\n## 4. 三条产品供给路径\\n   4.1 CLI 路径——老技术新身位\\n     - 4.1.1 既有官方 CLI（gh / stripe / vercel / aws / gcloud / kubectl）\\n     - 4.1.2 Agent SDK 升级（Stripe Agent Toolkit、Vercel AI SDK 5/6、Bubble Tea TUI）\\n     - 4.1.3 OpenCLI 协议化（CLI 的 OpenAPI）\\n     - 4.1.4 CLI-Anything 社区强 wrap（绕开 vendor 决策权）\\n     - 4.1.5 Vercel agent-browser（CLI 桥到浏览器）\\n   4.2 MCP 路径——产品方主动暴露 server\\n     - 4.2.1 SaaS 主流玩家（Atlassian / Cloudflare / Notion / Slack / Figma / Stripe MCP）\\n     - 4.2.2 Anthropic Agent Skills（高频 workflow 标准封装）\\n   4.3 浏览器 Agent 路径——把 GUI 当 API 用\\n     - 4.3.1 大模型平台（Computer Use、Operator）\\n     - 4.3.2 基础设施 / SDK（Browserbase、Stagehand、browser-use、agent-browser）\\n     - 4.3.3 应用层 / 替代 RPA（Skyvern、Manus AI）\\n     - 4.3.4 OSWorld-Verified benchmark 演进\\n   4.4 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\\n## 5. 新需求：选型、定价、反 Bot 经济学反转\\n   - HTTP 402 pay-per-crawl\\n   - 反 Bot 从 cost center 变 revenue center\\n   - vendor 主动 vs 第三方被迫 wrap 双轨制\\n## 6. 具体配置 / 代码示例（保留原貌）\\n   - claude_desktop_config.json\\n   - Stripe Agent Toolkit function call 示例\\n   - Cloudflare Remote MCP Workers 部署示例\\n   - browser-use Python 示例\\n## 7. 几条本质判断\\n```\\n\\n**要求**：\\n- 引用**全部重新编号 [1] 开始**（IEEE 风格）；两个源文件的引用合并去重；尽量**全部保留**（10b 25 条、13 57 条，去重后预计 50–70 条）\\n- 中文 markdown，无 emoji\\n- 保留代码 / 配置示例原貌\\n- 篇幅 **5000–6000 字**（合并后比单独 L10b 或 L13 都长）\\n- 区分**事实**（带 `[[N]](URL)` 信源）和**解读**（标 ⚠ + 依据）\\n- 数字精确，不要把行业经验值写成事实\\n\\n**完成后**回 ≤300 字总结：(a) 总引用数（去重后保留多少 / 来自 A 多少 / 来自 B 多少 / 新增多少）(b) ⚠ 数量 (c) 文件路径 (d) 关键决策：哪些内容被合并精简、哪些被保留全文。\", \"outputFile\": \"/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/ad756ea1565e43936.output\", \"canReadOutputFile\": true}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 409401,
+        "completion_tokens": 6890,
+        "cached_tokens": 409395,
+        "extra": {
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 409395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 6890,
+              "cache_read_input_tokens": 409395,
+              "cache_creation_input_tokens": 0,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 0
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false,
+        "tool_use_name": "Agent",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "ad756ea1565e43936",
+            "description": "合并 L10b + L13",
+            "prompt": "你为\"SDLC 工具栈分层深度研究\"系列做层合并。\n\n**今天日期**：2026-05-14\n\n**背景**：原来 L10b 是 \"Dev MCP server / Agent 集成协议层\"，L13 是 \"GUI → Agent 化（产品供给侧）\" 单独一层。用户判断 L13 不应单独一层，**应扩充 L10b**——合并成一个综合的\"Agent 集成接口\"层。\n\n**任务**：把下面两个文件合并成一个综合报告，**信息不能丢失**，结构要重新组织（不是简单拼接）：\n\n- 源文件 A：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-mcp-servers.md`（MCP 协议层 + dev 工具 MCP server 生态）\n- 源文件 B：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`（GUI → Agent 化供给侧；CLI / MCP / 浏览器 Agent 三条路径）\n\n**新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-agent-interfaces.md`\n\n**合并后的范围**：\n- D6.6 Dev MCP servers + 产品供给侧 Agent 接口\n- 同时覆盖：(a) MCP 协议本体 + 注册中心 / Gateway / Aggregator 三层范式；(b) 产品方主动供给三条路径（CLI、产品 MCP server、浏览器 Agent）；(c) 第三方社区强 wrap（OpenCLI 标准化 + CLI-Anything universal wrapper + Vercel agent-browser 跨 agent CLI 桥）\n\n**强制保留的关键事实数据点（不能丢，必须带原引用或重编号后的引用）**：\n\n来自 10b：\n- MCP 2024-11 发布、2025-12 Linux Foundation AAIF 捐赠\n- 9 400+ server 数字、官方 registry 季度滚动\n- Composio Tool Router beta、Cloudflare AI Gateway、SAP Joule Gateway、mcp-gateway-registry\n- OAuth 2.1 + RFC 8707、SEP-1649 server-card、IETF DNS-discovery\n- claude_desktop_config.json 配置示例（保留原貌）\n- 78% 企业 AI 团队生产用 MCP-backed Agent\n- 三种 gateway 范式对比表\n\n来自 13：\n- Imperva 51% 自动化流量首次过半、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY\n- Stripe Agent Toolkit 2024-11 发布；Vercel AI SDK 5/6\n- Atlassian / Cloudflare / Notion / Slack / Figma MCP 时间线\n- Anthropic Agent Skills 2025-10 公布、2025-12 开放标准、合作伙伴清单\n- Computer Use 2024-10、Operator 2025-01\n- Browserbase $40M Series B、估值 $300M\n- browser-use YC W25 $17M Seed、40k stars\n- Skyvern $2.7M Seed、Manus AI $500M → Meta $2B 收购被中国 NDRC 否决\n- OSWorld-Verified 14.9% → 79.6%（18 个月）\n- HTTP 402 pay-per-crawl、Cloudflare default-block AI\n- OpenCLI Specification（spectreconsole/open-cli + opencli.org）\n- CLI-Anything（HKUDS，约 21K stars）+ CLI-Hub registry\n- Vercel agent-browser（Rust CLI，跨 Claude Code/Codex/Cursor/Gemini CLI/Copilot/Goose/OpenCode/Windsurf）\n- abhinav-nigam/agent-browser（74 个 browser tool via MCP）\n- Stripe Agent Toolkit、Cloudflare Remote MCP、browser-use 三段代码示例\n- 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n\n**结构建议（重新组织，不是拼接两份）**：\n\n```\n# 2026-05-14：SDLC 栈 / Agent 集成接口与产品供给侧改造 (D6.6) 层深度研究\n\n## 1. Pre-Agent 时代产品对外接口的三圈（GUI + REST API + 少数 CLI）\n## 2. Agent 时代流量模式突变（51% 自动化、+7851% agentic、78% 企业生产用 MCP）\n## 3. MCP 协议层\n   3.1 协议本体（2024-11 发布、Linux Foundation 捐赠、9400+ server、roadmap）\n   3.2 三种 gateway / aggregator 范式对比（SAP Joule / 开源 mcp-gateway-registry / Composio Tool Router）\n   3.3 认证 / 审计 / 合规栈（OAuth 2.1 + RFC 8707 + SEP-1649）\n## 4. 三条产品供给路径\n   4.1 CLI 路径——老技术新身位\n     - 4.1.1 既有官方 CLI（gh / stripe / vercel / aws / gcloud / kubectl）\n     - 4.1.2 Agent SDK 升级（Stripe Agent Toolkit、Vercel AI SDK 5/6、Bubble Tea TUI）\n     - 4.1.3 OpenCLI 协议化（CLI 的 OpenAPI）\n     - 4.1.4 CLI-Anything 社区强 wrap（绕开 vendor 决策权）\n     - 4.1.5 Vercel agent-browser（CLI 桥到浏览器）\n   4.2 MCP 路径——产品方主动暴露 server\n     - 4.2.1 SaaS 主流玩家（Atlassian / Cloudflare / Notion / Slack / Figma / Stripe MCP）\n     - 4.2.2 Anthropic Agent Skills（高频 workflow 标准封装）\n   4.3 浏览器 Agent 路径——把 GUI 当 API 用\n     - 4.3.1 大模型平台（Computer Use、Operator）\n     - 4.3.2 基础设施 / SDK（Browserbase、Stagehand、browser-use、agent-browser）\n     - 4.3.3 应用层 / 替代 RPA（Skyvern、Manus AI）\n     - 4.3.4 OSWorld-Verified benchmark 演进\n   4.4 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n## 5. 新需求：选型、定价、反 Bot 经济学反转\n   - HTTP 402 pay-per-crawl\n   - 反 Bot 从 cost center 变 revenue center\n   - vendor 主动 vs 第三方被迫 wrap 双轨制\n## 6. 具体配置 / 代码示例（保留原貌）\n   - claude_desktop_config.json\n   - Stripe Agent Toolkit function call 示例\n   - Cloudflare Remote MCP Workers 部署示例\n   - browser-use Python 示例\n## 7. 几条本质判断\n```\n\n**要求**：\n- 引用**全部重新编号 [1] 开始**（IEEE 风格）；两个源文件的引用合并去重；尽量**全部保留**（10b 25 条、13 57 条，去重后预计 50–70 条）\n- 中文 markdown，无 emoji\n- 保留代码 / 配置示例原貌\n- 篇幅 **5000–6000 字**（合并后比单独 L10b 或 L13 都长）\n- 区分**事实**（带 `[[N]](URL)` 信源）和**解读**（标 ⚠ + 依据）\n- 数字精确，不要把行业经验值写成事实\n\n**完成后**回 ≤300 字总结：(a) 总引用数（去重后保留多少 / 来自 A 多少 / 来自 B 多少 / 新增多少）(b) ⚠ 数量 (c) 文件路径 (d) 关键决策：哪些内容被合并精简、哪些被保留全文。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/ad756ea1565e43936.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Kqxi6etjRRU6EjZ45togdU",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: ad756ea1565e43936 (internal ID - do not mention to user. Use SendMessage with to: 'ad756ea1565e43936' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/ad756ea1565e43936.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "isAsync": true,
+            "status": "async_launched",
+            "agentId": "ad756ea1565e43936",
+            "description": "合并 L10b + L13",
+            "prompt": "你为\"SDLC 工具栈分层深度研究\"系列做层合并。\n\n**今天日期**：2026-05-14\n\n**背景**：原来 L10b 是 \"Dev MCP server / Agent 集成协议层\"，L13 是 \"GUI → Agent 化（产品供给侧）\" 单独一层。用户判断 L13 不应单独一层，**应扩充 L10b**——合并成一个综合的\"Agent 集成接口\"层。\n\n**任务**：把下面两个文件合并成一个综合报告，**信息不能丢失**，结构要重新组织（不是简单拼接）：\n\n- 源文件 A：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-mcp-servers.md`（MCP 协议层 + dev 工具 MCP server 生态）\n- 源文件 B：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`（GUI → Agent 化供给侧；CLI / MCP / 浏览器 Agent 三条路径）\n\n**新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-agent-interfaces.md`\n\n**合并后的范围**：\n- D6.6 Dev MCP servers + 产品供给侧 Agent 接口\n- 同时覆盖：(a) MCP 协议本体 + 注册中心 / Gateway / Aggregator 三层范式；(b) 产品方主动供给三条路径（CLI、产品 MCP server、浏览器 Agent）；(c) 第三方社区强 wrap（OpenCLI 标准化 + CLI-Anything universal wrapper + Vercel agent-browser 跨 agent CLI 桥）\n\n**强制保留的关键事实数据点（不能丢，必须带原引用或重编号后的引用）**：\n\n来自 10b：\n- MCP 2024-11 发布、2025-12 Linux Foundation AAIF 捐赠\n- 9 400+ server 数字、官方 registry 季度滚动\n- Composio Tool Router beta、Cloudflare AI Gateway、SAP Joule Gateway、mcp-gateway-registry\n- OAuth 2.1 + RFC 8707、SEP-1649 server-card、IETF DNS-discovery\n- claude_desktop_config.json 配置示例（保留原貌）\n- 78% 企业 AI 团队生产用 MCP-backed Agent\n- 三种 gateway 范式对比表\n\n来自 13：\n- Imperva 51% 自动化流量首次过半、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY\n- Stripe Agent Toolkit 2024-11 发布；Vercel AI SDK 5/6\n- Atlassian / Cloudflare / Notion / Slack / Figma MCP 时间线\n- Anthropic Agent Skills 2025-10 公布、2025-12 开放标准、合作伙伴清单\n- Computer Use 2024-10、Operator 2025-01\n- Browserbase $40M Series B、估值 $300M\n- browser-use YC W25 $17M Seed、40k stars\n- Skyvern $2.7M Seed、Manus AI $500M → Meta $2B 收购被中国 NDRC 否决\n- OSWorld-Verified 14.9% → 79.6%（18 个月）\n- HTTP 402 pay-per-crawl、Cloudflare default-block AI\n- OpenCLI Specification（spectreconsole/open-cli + opencli.org）\n- CLI-Anything（HKUDS，约 21K stars）+ CLI-Hub registry\n- Vercel agent-browser（Rust CLI，跨 Claude Code/Codex/Cursor/Gemini CLI/Copilot/Goose/OpenCode/Windsurf）\n- abhinav-nigam/agent-browser（74 个 browser tool via MCP）\n- Stripe Agent Toolkit、Cloudflare Remote MCP、browser-use 三段代码示例\n- 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n\n**结构建议（重新组织，不是拼接两份）**：\n\n```\n# 2026-05-14：SDLC 栈 / Agent 集成接口与产品供给侧改造 (D6.6) 层深度研究\n\n## 1. Pre-Agent 时代产品对外接口的三圈（GUI + REST API + 少数 CLI）\n## 2. Agent 时代流量模式突变（51% 自动化、+7851% agentic、78% 企业生产用 MCP）\n## 3. MCP 协议层\n   3.1 协议本体（2024-11 发布、Linux Foundation 捐赠、9400+ server、roadmap）\n   3.2 三种 gateway / aggregator 范式对比（SAP Joule / 开源 mcp-gateway-registry / Composio Tool Router）\n   3.3 认证 / 审计 / 合规栈（OAuth 2.1 + RFC 8707 + SEP-1649）\n## 4. 三条产品供给路径\n   4.1 CLI 路径——老技术新身位\n     - 4.1.1 既有官方 CLI（gh / stripe / vercel / aws / gcloud / kubectl）\n     - 4.1.2 Agent SDK 升级（Stripe Agent Toolkit、Vercel AI SDK 5/6、Bubble Tea TUI）\n     - 4.1.3 OpenCLI 协议化（CLI 的 OpenAPI）\n     - 4.1.4 CLI-Anything 社区强 wrap（绕开 vendor 决策权）\n     - 4.1.5 Vercel agent-browser（CLI 桥到浏览器）\n   4.2 MCP 路径——产品方主动暴露 server\n     - 4.2.1 SaaS 主流玩家（Atlassian / Cloudflare / Notion / Slack / Figma / Stripe MCP）\n     - 4.2.2 Anthropic Agent Skills（高频 workflow 标准封装）\n   4.3 浏览器 Agent 路径——把 GUI 当 API 用\n     - 4.3.1 大模型平台（Computer Use、Operator）\n     - 4.3.2 基础设施 / SDK（Browserbase、Stagehand、browser-use、agent-browser）\n     - 4.3.3 应用层 / 替代 RPA（Skyvern、Manus AI）\n     - 4.3.4 OSWorld-Verified benchmark 演进\n   4.4 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n## 5. 新需求：选型、定价、反 Bot 经济学反转\n   - HTTP 402 pay-per-crawl\n   - 反 Bot 从 cost center 变 revenue center\n   - vendor 主动 vs 第三方被迫 wrap 双轨制\n## 6. 具体配置 / 代码示例（保留原貌）\n   - claude_desktop_config.json\n   - Stripe Agent Toolkit function call 示例\n   - Cloudflare Remote MCP Workers 部署示例\n   - browser-use Python 示例\n## 7. 几条本质判断\n```\n\n**要求**：\n- 引用**全部重新编号 [1] 开始**（IEEE 风格）；两个源文件的引用合并去重；尽量**全部保留**（10b 25 条、13 57 条，去重后预计 50–70 条）\n- 中文 markdown，无 emoji\n- 保留代码 / 配置示例原貌\n- 篇幅 **5000–6000 字**（合并后比单独 L10b 或 L13 都长）\n- 区分**事实**（带 `[[N]](URL)` 信源）和**解读**（标 ⚠ + 依据）\n- 数字精确，不要把行业经验值写成事实\n\n**完成后**回 ≤300 字总结：(a) 总引用数（去重后保留多少 / 来自 A 多少 / 来自 B 多少 / 新增多少）(b) ⚠ 数量 (c) 文件路径 (d) 关键决策：哪些内容被合并精简、哪些被保留全文。",
+            "outputFile": "/private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/ad756ea1565e43936.output",
+            "canReadOutputFile": true
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Kqxi6etjRRU6EjZ45togdU",
+            "type": "tool_result",
+            "content": [
+              {
+                "type": "text",
+                "text": "Async agent launched successfully.\nagentId: ad756ea1565e43936 (internal ID - do not mention to user. Use SendMessage with to: 'ad756ea1565e43936' to continue this agent.)\nThe agent is working in the background. You will be notified automatically when it completes.\nDo not duplicate this agent's work — avoid working with the same files or topics it is using. Work on non-overlapping tasks, or briefly tell the user what you launched and end your response.\noutput_file: /private/tmp/claude-501/-Users-luwei-work-Controversy/b3080dc8-fa9c-4ad7-bd43-4102da159f1e/tasks/ad756ea1565e43936.output\nDo NOT Read or tail this file via the shell tool — it is the full sub-agent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification."
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "description": "合并 L10b + L13",
+          "subagent_type": "general-purpose",
+          "prompt": "你为\"SDLC 工具栈分层深度研究\"系列做层合并。\n\n**今天日期**：2026-05-14\n\n**背景**：原来 L10b 是 \"Dev MCP server / Agent 集成协议层\"，L13 是 \"GUI → Agent 化（产品供给侧）\" 单独一层。用户判断 L13 不应单独一层，**应扩充 L10b**——合并成一个综合的\"Agent 集成接口\"层。\n\n**任务**：把下面两个文件合并成一个综合报告，**信息不能丢失**，结构要重新组织（不是简单拼接）：\n\n- 源文件 A：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-mcp-servers.md`（MCP 协议层 + dev 工具 MCP server 生态）\n- 源文件 B：`/Users/luwei/work/Controversy/chat/SDLC-stack/13-agent-interfaces.md`（GUI → Agent 化供给侧；CLI / MCP / 浏览器 Agent 三条路径）\n\n**新文件**：`/Users/luwei/work/Controversy/chat/SDLC-stack/10b-agent-interfaces.md`\n\n**合并后的范围**：\n- D6.6 Dev MCP servers + 产品供给侧 Agent 接口\n- 同时覆盖：(a) MCP 协议本体 + 注册中心 / Gateway / Aggregator 三层范式；(b) 产品方主动供给三条路径（CLI、产品 MCP server、浏览器 Agent）；(c) 第三方社区强 wrap（OpenCLI 标准化 + CLI-Anything universal wrapper + Vercel agent-browser 跨 agent CLI 桥）\n\n**强制保留的关键事实数据点（不能丢，必须带原引用或重编号后的引用）**：\n\n来自 10b：\n- MCP 2024-11 发布、2025-12 Linux Foundation AAIF 捐赠\n- 9 400+ server 数字、官方 registry 季度滚动\n- Composio Tool Router beta、Cloudflare AI Gateway、SAP Joule Gateway、mcp-gateway-registry\n- OAuth 2.1 + RFC 8707、SEP-1649 server-card、IETF DNS-discovery\n- claude_desktop_config.json 配置示例（保留原貌）\n- 78% 企业 AI 团队生产用 MCP-backed Agent\n- 三种 gateway 范式对比表\n\n来自 13：\n- Imperva 51% 自动化流量首次过半、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY\n- Stripe Agent Toolkit 2024-11 发布；Vercel AI SDK 5/6\n- Atlassian / Cloudflare / Notion / Slack / Figma MCP 时间线\n- Anthropic Agent Skills 2025-10 公布、2025-12 开放标准、合作伙伴清单\n- Computer Use 2024-10、Operator 2025-01\n- Browserbase $40M Series B、估值 $300M\n- browser-use YC W25 $17M Seed、40k stars\n- Skyvern $2.7M Seed、Manus AI $500M → Meta $2B 收购被中国 NDRC 否决\n- OSWorld-Verified 14.9% → 79.6%（18 个月）\n- HTTP 402 pay-per-crawl、Cloudflare default-block AI\n- OpenCLI Specification（spectreconsole/open-cli + opencli.org）\n- CLI-Anything（HKUDS，约 21K stars）+ CLI-Hub registry\n- Vercel agent-browser（Rust CLI，跨 Claude Code/Codex/Cursor/Gemini CLI/Copilot/Goose/OpenCode/Windsurf）\n- abhinav-nigam/agent-browser（74 个 browser tool via MCP）\n- Stripe Agent Toolkit、Cloudflare Remote MCP、browser-use 三段代码示例\n- 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n\n**结构建议（重新组织，不是拼接两份）**：\n\n```\n# 2026-05-14：SDLC 栈 / Agent 集成接口与产品供给侧改造 (D6.6) 层深度研究\n\n## 1. Pre-Agent 时代产品对外接口的三圈（GUI + REST API + 少数 CLI）\n## 2. Agent 时代流量模式突变（51% 自动化、+7851% agentic、78% 企业生产用 MCP）\n## 3. MCP 协议层\n   3.1 协议本体（2024-11 发布、Linux Foundation 捐赠、9400+ server、roadmap）\n   3.2 三种 gateway / aggregator 范式对比（SAP Joule / 开源 mcp-gateway-registry / Composio Tool Router）\n   3.3 认证 / 审计 / 合规栈（OAuth 2.1 + RFC 8707 + SEP-1649）\n## 4. 三条产品供给路径\n   4.1 CLI 路径——老技术新身位\n     - 4.1.1 既有官方 CLI（gh / stripe / vercel / aws / gcloud / kubectl）\n     - 4.1.2 Agent SDK 升级（Stripe Agent Toolkit、Vercel AI SDK 5/6、Bubble Tea TUI）\n     - 4.1.3 OpenCLI 协议化（CLI 的 OpenAPI）\n     - 4.1.4 CLI-Anything 社区强 wrap（绕开 vendor 决策权）\n     - 4.1.5 Vercel agent-browser（CLI 桥到浏览器）\n   4.2 MCP 路径——产品方主动暴露 server\n     - 4.2.1 SaaS 主流玩家（Atlassian / Cloudflare / Notion / Slack / Figma / Stripe MCP）\n     - 4.2.2 Anthropic Agent Skills（高频 workflow 标准封装）\n   4.3 浏览器 Agent 路径——把 GUI 当 API 用\n     - 4.3.1 大模型平台（Computer Use、Operator）\n     - 4.3.2 基础设施 / SDK（Browserbase、Stagehand、browser-use、agent-browser）\n     - 4.3.3 应用层 / 替代 RPA（Skyvern、Manus AI）\n     - 4.3.4 OSWorld-Verified benchmark 演进\n   4.4 三路径技术对比表（延迟 / 成本 / 可靠性 / 改产品成本）\n## 5. 新需求：选型、定价、反 Bot 经济学反转\n   - HTTP 402 pay-per-crawl\n   - 反 Bot 从 cost center 变 revenue center\n   - vendor 主动 vs 第三方被迫 wrap 双轨制\n## 6. 具体配置 / 代码示例（保留原貌）\n   - claude_desktop_config.json\n   - Stripe Agent Toolkit function call 示例\n   - Cloudflare Remote MCP Workers 部署示例\n   - browser-use Python 示例\n## 7. 几条本质判断\n```\n\n**要求**：\n- 引用**全部重新编号 [1] 开始**（IEEE 风格）；两个源文件的引用合并去重；尽量**全部保留**（10b 25 条、13 57 条，去重后预计 50–70 条）\n- 中文 markdown，无 emoji\n- 保留代码 / 配置示例原貌\n- 篇幅 **5000–6000 字**（合并后比单独 L10b 或 L13 都长）\n- 区分**事实**（带 `[[N]](URL)` 信源）和**解读**（标 ⚠ + 依据）\n- 数字精确，不要把行业经验值写成事实\n\n**完成后**回 ≤300 字总结：(a) 总引用数（去重后保留多少 / 来自 A 多少 / 来自 B 多少 / 新增多少）(b) ⚠ 数量 (c) 文件路径 (d) 关键决策：哪些内容被合并精简、哪些被保留全文。",
+          "run_in_background": true
+        }
+      }
+    },
+    {
+      "step_id": 388,
+      "timestamp": "2026-05-14T12:50:58.079Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "合并 subagent 已起。完成后我会：\n- 删 `10b-mcp-servers.md` 和 `13-agent-interfaces.md`\n- 更新 SDLC-stack/README.md（17 → 16 文件、删 L13 行、扩 L10b 描述）\n- 主文件 附录 II / 附录 III / SAP 案例 把指向 13-agent-interfaces.md 的引用全部改到 10b-agent-interfaces.md\n\n等通知。",
+      "metrics": {
+        "prompt_tokens": 409396,
+        "completion_tokens": 164,
+        "cached_tokens": 409395,
+        "extra": {
+          "cache_creation_input_tokens": 7336,
+          "cache_read_input_tokens": 409395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7336,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 164,
+              "cache_read_input_tokens": 409395,
+              "cache_creation_input_tokens": 7336,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7336
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy/chat/SDLC-stack",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 74466739,
-    "total_completion_tokens": 786432,
-    "total_cached_tokens": 74451422,
-    "total_steps": 378,
+    "total_prompt_tokens": 76923140,
+    "total_completion_tokens": 821046,
+    "total_cached_tokens": 76907792,
+    "total_steps": 388,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 2107059,
-      "total_cache_read_input_tokens": 74451422
+      "total_cache_creation_input_tokens": 2114395,
+      "total_cache_read_input_tokens": 76907792
     }
   }
 }
