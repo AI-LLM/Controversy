@@ -71,7 +71,7 @@ Vibe coding 工具栈跑通必须把 6 件事打包进同一个 URL：
 | 模型 | Anthropic Claude 系列（Bolt 初代主打 Claude 3.5 Sonnet）[[17]](https://newsletter.posthog.com/p/from-0-to-40m-arr-inside-the-tech) | 多模型路由 | Vercel 自研前端代码专用模型 |
 | 经济模型本质 | 浏览器里跑 = 不烧云容器，毛利高 | 烧 Supabase + LLM token | 主要烧 LLM + Vercel infra |
 
-**关键差异**：Bolt 押注"浏览器即 IDE 即运行时"——npm install < 500ms（CDN 预压缩层）、TCP 不通时走 WebSocket relay 回浏览器沙箱[[19]](https://blog.stackblitz.com/posts/introducing-webcontainers/)。Lovable 押注"完整云后端，自动管 schema"——非开发者从来不想懂迁移、不想懂 RLS。v0 押注"我只交付组件，你来接"——保留 Vercel 平台粘性，避免 lock-in 抗拒。
+**关键差异**：Bolt 押注"浏览器即 IDE 即运行时"——WebContainer 中 npm/pnpm/yarn 安装可比本地快 5–10×（依赖解析与磁盘 linking 优化）[[41]](https://blog.stackblitz.com/posts/announcing-native-package-manager-support/)、TCP 不通时走 ServiceWorker 虚拟 TCP / WebSocket relay 回浏览器沙箱[[19]](https://blog.stackblitz.com/posts/introducing-webcontainers/)（⚠ 原文"< 500ms"系作者综合估算，已替换为厂商公开的 5–10× 加速口径）。Lovable 押注"完整云后端，自动管 schema"——非开发者从来不想懂迁移、不想懂 RLS。v0 押注"我只交付组件，你来接"——保留 Vercel 平台粘性，避免 lock-in 抗拒。
 
 ---
 

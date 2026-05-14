@@ -204,3 +204,7 @@ PR 流量从「人发的稀疏事件」变成「Agent 发的密集流」之后�
 [33] Augment Code, "AI Coding Tools SOC2 Compliance: Enterprise Security Guide," 2025. (SOC 2 change management requires AI-generated code follow same review/approval as human-written code.) [Online]. Available: <https://www.augmentcode.com/tools/ai-coding-tools-soc2-compliance-enterprise-security-guide>
 
 [34] CodeAnt AI, "GitHub AI Code Review Tools Built for SOC 2 Audits," 2025. (CC6.1 / CC8.1 require qualified reviewer approval per change with change request + testing evidence.) [Online]. Available: <https://www.codeant.ai/blogs/github-ai-code-review-tools-soc2-compliance>
+
+[35] GitHub Docs, "About GitHub Copilot coding agent," 2026. (Coding Agent opens PRs and pushes commits under its own bot identity; PR author / commit author surfaces Copilot as the source.) [Online]. Available: <https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent>
+
+[36] GitHub Community Discussion #179983, "How to prevent Copilot Coding Agent from being the main author of commits in master," 2025. (Confirms Copilot Coding Agent appears as commit author / Co-authored-by trailer on merged PRs.) [Online]. Available: <https://github.com/orgs/community/discussions/179983>

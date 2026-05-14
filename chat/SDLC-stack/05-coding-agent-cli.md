@@ -120,7 +120,7 @@ Cognition Devin 与 Claude Code 走的不是一条路。Claude Code 是**让工�
 
 **OpenAI Codex CLI**（2025-04-16 发布，**不是** 2021 那个 Codex 模型；同名复用）：Rust 写的开源终端 agent，npm/Homebrew 分发。绑 ChatGPT 订阅（Plus / Pro / Business / Enterprise）即用，跑 o3 / o4-mini 后端 [[12]](https://developers.openai.com/codex/cli)。2026 年 4 月：75K+ GitHub stars、1453 万 npm 月下载（2026-03）、300 万周活跃（Sam Altman 2026-04-08 披露）[[22]](https://www.gradually.ai/en/codex-statistics/)。在 Terminal-Bench 2.0 上以 **77.3%** 领先 Claude Code 的 **65.4%**（但调校过的 "Claude Mythos" harness 能打到 92.1%）[[13]](https://www.tbench.ai/leaderboard/terminal-bench/2.0)。
 
-**Aider**：开源 CLI agent，**最重要的差异**是 git-aware diff 模式——不让模型重写整文件，而是要求模型输出 search/replace diff block；这种 edit format 显著降低 token 消耗，也降低"误删无关代码"的概率 [[14]](https://github.com/Aider-AI/aider-swe-bench)。每次成功编辑自动 `git commit`，message 自动写。Aider Polyglot benchmark（225 道 Exercism 题，6 语言）是社区里被广泛引用的多语言尺子，2026 年榜首是 Claude Opus 4.6。Aider 的定位：**BYOK + 任意模型 + 重 git 集成**，对成本敏感、模型不锁定的团队是首选。
+**Aider**：开源 CLI agent，**最重要的差异**是 git-aware diff 模式——不让模型重写整文件，而是要求模型输出 search/replace diff block；这种 edit format 显著降低 token 消耗，也降低"误删无关代码"的概率 [[14]](https://github.com/Aider-AI/aider-swe-bench)。每次成功编辑自动 `git commit`，message 自动写。Aider Polyglot benchmark（225 道 Exercism 难题，覆盖 C++/Go/Java/JavaScript/Python/Rust 共 6 语言）是社区里被广泛引用的多语言尺子 [[23]](https://aider.chat/2024/12/21/polyglot.html)，2026 年 5 月榜首区由 Claude Opus 4.5/4.6 占据（Aider 官方榜显示 Opus 4.5 ~89.4%，Opus 4.6 进一步领先）[[24]](https://aider.chat/docs/leaderboards/)。Aider 的定位：**BYOK + 任意模型 + 重 git 集成**，对成本敏感、模型不锁定的团队是首选。
 
 其他重要玩家：
 
