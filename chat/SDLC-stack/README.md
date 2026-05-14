@@ -2,9 +2,9 @@
 
 ## 起源
 
-这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到流量/任务量模式突变 → 新需求 → 解决方案 → 案例代码 这一层的本质。namespace.so（CI/CD 那一层）是范本。
+这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。
 
-每层使用其**自然 lens**——本质变量是什么就用什么。只有 L07 CI/CD 以"任务流量"为 lens（namespace.so 本尊所在层），其他层不套流量框架。各层 lens 见下方"各层 lens 总表"。
+每层使用其**自然 lens**——本层的核心变量是什么就用什么。各层 lens 见下方"各层 lens 总表"。
 
 ## 与主文件附录 III C 表的层级对应
 
@@ -65,7 +65,7 @@
 | L05 终端 / 自治 Agent | **agent 作为 unix 进程** | CLI agent = 可被 cron/CI/SSH 拉起的 unix 进程；Copilot 因 IDE-DNA 失飞轮 |
 | L06a 代码托管 | **分发渠道 + 协议先发 双护城河** | GitHub 180M dev + Agent identity/signing/provenance 写成事实标准 |
 | L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |
-| L07 CI/CD | **任务流量 (namespace.so 本尊)** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |
+| L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |
 | L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |
 | L09 安全 | **攻击面双扩张 + 信任移交 双 lens** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |
 | L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |
