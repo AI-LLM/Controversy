@@ -244,7 +244,7 @@ run、metric、artifact、sweep、模型 registry。
 - **Google Gemini API / Vertex AI**（Gemini 2.5 / 3 Pro / Flash / Nano）
 - **xAI API**（Grok 4）
 - **DeepSeek API**（V3 / R1，价格屠夫）
-- **企业转售层**：Azure OpenAI Service、AWS Bedrock、Google Vertex AI Model Garden、IBM watsonx、Databricks Foundation Model APIs
+- **企业转售层**：Azure OpenAI Service、AWS Bedrock、Google Vertex AI Model Garden、IBM watsonx、Databricks Foundation Model APIs、**SAP BTP GenAI Hub**（SAP 客户在 BTP 内调用 Anthropic / OpenAI / 自家 SAP-AI 的统一入口）、Oracle Cloud Generative AI Service
 
 ## L18 LLM 应用框架
 
@@ -297,6 +297,7 @@ prompt 链、工作流、retriever、tool calling 的高层抽象。
 - **Helicone Gateway**
 - **Martian Router**（按 prompt 动态路由）
 - **OpenRouter**（兼有 L16 与 L22 双重身份）
+- **企业 / 系统记录层 gateway**：SAP Joule MCP Gateway（强制非 SAP Agent 经 Joule / BTP 路由到 S/4HANA 才"合规"）、Oracle AI Apps Gateway、Workday AGI Gateway——把"通行权"做到 ERP / HCM 入口
 
 ## L23 Prompt 管理 / 提示缓存
 
@@ -322,6 +323,7 @@ tool-loop、规划、子任务分解、多 agent 协作。2025 这一层从"链�
 - **Pydantic AI**（type-safe，FastAPI 风格）
 - **smolagents**（HuggingFace；code-as-action）
 - **Mastra**、**Inngest Agent Kit**、**TaskWeaver**（Microsoft）
+- **企业 / 云厂商一体化平台**：Azure AI Foundry（原 Azure AI Studio，含 Agent Service）、AWS Bedrock Agents、Google Vertex AI Agent Builder、Databricks Mosaic AI Agent Framework、SAP Joule Studio（企业级 Agent 构建器，35 解决方案集成、30+ 专属 Agent）、ServiceNow AI Agent Studio
 
 ## L25 工具协议 / MCP / 集成市场
 
@@ -333,7 +335,7 @@ Agent 怎么调外部世界——文件、API、SaaS、数据库。
 - **Toolhouse**
 - **Pipedream Connect**
 - **Zapier MCP / Zapier AI Actions**
-- **Stripe Agent Toolkit、Cloudflare Agents SDK、SAP Joule Gateway**（厂商自营 MCP / agent 工具）
+- **厂商自营 MCP / Agent 工具（Vendor-side）**：Stripe Agent Toolkit、Cloudflare Agents SDK + Cloudflare MCP + **HTTP 402 pay-per-crawl**（把反 Bot 从成本中心变收入中心）、Anthropic Agent Skills（2025-10 公布；与 SAP Joule Skills 同类抽象）、SAP Joule MCP Gateway + Joule Skills（2 500+）、Atlassian Remote MCP、Notion MCP、Slack MCP、Figma MCP、GitHub MCP、Salesforce MCP for Agentforce
 - **CLI 强 wrap 路径**：OpenCLI（开放规范，把任意 CLI 描述为 agent-callable tool）、CLI-Anything（GitHub 21K stars，社区驱动地把已有 CLI 包成 LLM 工具）——与厂商主动出 MCP 形成"第三方强 wrap"对照
 - **服务器目录**：Smithery、MCP Hub、PulseMCP、Glama MCP Registry
 
@@ -422,6 +424,7 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 - **DeepSeek Chat**、**Kimi**（Moonshot）、**通义千问**、**豆包**（字节）
 - **搜索类**：Perplexity、You.com、Brave Leo、Arc Search（Browser Company）、Komo
 - **多模型聚合 / 隐私**：Poe（Quora）、Le Chat（Mistral）、HuggingChat、Msty（本地）、LM Studio（本地）
+- **企业内 Copilot / 默认入口**：Microsoft 365 Copilot（$30/seat，企业 AI 默认入口；CIO 把它当 SAP / Workday / Slack 的统一抢前端）、Google Gemini for Workspace、Slack AI、Notion AI、Glean Assistant、SAP Joule（SAP 客户内嵌 Agent UI，生产采用率仅 3% 但是 SAP 战略中枢）
 
 ## L34 垂直 Agent 应用（终端用户）
 
@@ -429,8 +432,9 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 
 - **编码 Agent**：Cursor、Claude Code（Anthropic）、Devin（Cognition）、Windsurf（被 OpenAI 收购）、Replit Agent、Codex CLI（OpenAI）、Aider、GitHub Copilot Workspace、Augment、Amp（Sourcegraph）、Lovable、Bolt.new、v0（Vercel）、Manus
 - **设计 / 内容**：Figma AI / Make、Galileo AI、Framer AI、Canva Magic Studio、Jasper、Copy.ai、Notion AI
-- **销售 / 营销 / 客服**：Decagon、Sierra、Ada、Intercom Fin、Cresta、Clay、11x.ai、AirOps
+- **销售 / 营销 / 客服**：Decagon、Sierra、Ada、Intercom Fin、Cresta、Clay、11x.ai、AirOps、**Salesforce Agentforce**（CRM 数据上的 Agent 平台，per-conversation $2 定价）
 - **企业知识 / 内部 IT**：Glean、Moveworks、Hebbia、Harvey（法律）、Casetext CoCounsel（被 Thomson Reuters 收购）
+- **ERP / HCM / ITSM 内嵌 Agent（系统记录层自营）**：SAP Joule（覆盖 S/4HANA、SuccessFactors、Ariba、Concur、Fieldglass；30+ 专属 Agent，FY25 BTP 收入是 SAP "Agent toll booth" 押注核心）、Oracle AI Apps / Oracle Fusion AI Agents、Workday AGI / Workday Illuminate、ServiceNow Now Assist + AI Agents（ITSM / HRSD / CSM）、Microsoft Dynamics 365 Copilot
 - **代码评审 / 测试 / 安全 Agent**：CodeRabbit、Greptile、Qodo、Meticulous、Snyk DeepCode AI（这一层与 SDLC 栈高度重合，详见 [`../SDLC-stack/README.md`](../SDLC-stack/README.md)）
 - **医疗 / 科研**：Abridge、Hippocratic AI、Ambience、Future House、Scite
 
