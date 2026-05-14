@@ -141,5 +141,3 @@ Rovo Dev 是 Atlassian 的翻盘动作：基于 Claude 3.5 Sonnet 的代码 Agen
 [20] Forgejo, "Forgejo monthly report - October 2025," Oct. 2025. (1,930+ contributors over 3 yrs; NLnet €50,000 grant Apr 2025.) [Online]. Available: <https://forgejo.org/2025-10-monthly-report/>
 
 [21] ServerSpan, "The 2026 Guide to Self-Hosted Git: Gitea, Forgejo, and the Future of Code Hosting," 2026. (Gitea rank #2 in self-hosted; Sourcehut rank #20; Forgejo fork from Gitea late 2024 over governance.) [Online]. Available: <https://www.serverspan.com/en/blog/the-2026-guide-to-self-hosted-git-gitea-forgejo-and-the-future-of-code-hosting>
-
-[22] minware, "Average PRs Merged Per Developer," 2024. (Elite teams: 5+ PR/dev/week; Google median: 3 changes/week, 80th pct 7; Lyst median: 3 PR/week.) [Online]. Available: <https://www.minware.com/guide/metrics/average-prs-merged-per-developer>

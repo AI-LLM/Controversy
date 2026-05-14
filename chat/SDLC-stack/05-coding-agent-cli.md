@@ -40,7 +40,7 @@ Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在
 - 自带 OS 级 sandbox（`--permission-mode`）+ MCP 协议把外部能力当 tool 调用 [[6]](https://code.claude.com/docs/en/mcp)。
 - OpenHands / All Hands AI 是开源旗舰，CodeAct 2.1 是首个 SWE-bench >50% 的开源 agent，SDK 在 SWE-bench Verified 用 Claude Sonnet 4.5 达 72% [[7]](https://www.openhands.dev/)。
 - Goose (Block) 2025 年 1 月开源、CLI + 桌面双形态、最早一批 MCP 深度集成者、70+ extensions、2025-12 捐给 Linux Foundation Agentic AI Foundation [[8]](https://block.xyz/inside/block-open-source-introduces-codename-goose)。
-- Codex CLI 2025-04-16 Rust 开源重生（与 2021 同名 API 模型无技术关系，仅复用品牌）。2026-04 累计 75K+ GitHub stars、1453 万 npm 月下载、300 万周活跃（Sam Altman 2026-04-08 披露）[[9]](https://www.gradually.ai/en/codex-statistics/)。
+- Codex CLI 2025-04-16 Rust 开源重生（与 2021 同名 API 模型无技术关系，仅复用品牌），绑 ChatGPT 订阅（Plus / Pro / Business / Enterprise）即用、跑 o3 / o4-mini 后端 [[25]](https://developers.openai.com/codex/cli)。2026-04 累计 75K+ GitHub stars、1453 万 npm 月下载、300 万周活跃（Sam Altman 2026-04-08 披露）[[9]](https://www.gradually.ai/en/codex-statistics/)。
 
 **进程化较浅但 git 集成最深：Aider**
 - 同样是 unix 进程，但故意保持轻——BYOK + 任意模型 + 重 git 集成。每次成功编辑自动 `git commit`，message 自动写。
