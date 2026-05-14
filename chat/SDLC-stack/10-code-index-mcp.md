@@ -97,7 +97,7 @@ Cursor（`~/.cursor/mcp.json`）格式同上 [[14]](https://mcpplaygroundonline.
 
 ## 7. 新需求：认证 / 权限 / audit / gateway / marketplace
 
-200+ 第三方 server 跑在 dev 机本地、又或者远程暴露 SSE 端点，**安全债集体到期**。
+数百第三方 server 跑在 dev 机本地、又或者远程暴露 SSE 端点（⚠ 量级估算：官方 registry 已收录 9,400+ server [[7]](https://www.digitalapplied.com/blog/mcp-adoption-statistics-2026-model-context-protocol)，单个开发者实装规模通常在数十到数百个），**安全债集体到期**。
 
 - **认证标准化**：MCP 2026-03-15 规范强制 OAuth 2.1，PKCE 必走，RFC 8707 resource indicator 防止 token 跨 server replay [[15]](https://dasroot.net/posts/2026/04/mcp-authorization-specification-oauth-2-1-resource-indicators/)。
 - **Row-level / scope-level 权限**：Sentry / Linear 都开始按 project + 操作类型细粒度 scope；Postgres MCP 早期 SQL injection CVE 后，read-only DSN 成事实最低线 [[11]](https://toolradar.com/blog/best-mcp-servers-2026)。
@@ -108,13 +108,13 @@ Cursor（`~/.cursor/mcp.json`）格式同上 [[14]](https://mcpplaygroundonline.
 
 ## 8. 几条本质判断
 
-**判断 1：MCP 把"集成"从一个昂贵环节变成商品。** Pre-Agent 时代，企业每接一个 SaaS 平均花 4–8 周工程时间写 OAuth + webhook + 字段映射。MCP 协议化以后，接一个新工具趋近于"在 JSON 里加 4 行 + 配一个 token"。集成工程师这个岗位的稀缺性正在被磨平——这是 Zapier / Workato / MuleSoft / 各家 iPaaS 长期定价权的根。
+**判断 1：MCP 把"集成"从一个昂贵环节变成商品。** Pre-Agent 时代，企业每接一个 SaaS 平均花 4–8 周工程时间写 OAuth + webhook + 字段映射 [[28]](https://prismatic.io/blog/cut-saas-integration-dev-time-with-embedded-ipaas/)。MCP 协议化以后，接一个新工具趋近于"在 JSON 里加 4 行 + 配一个 token"。集成工程师这个岗位的稀缺性正在被磨平（⚠ 解读）——这是 Zapier / Workato / MuleSoft / 各家 iPaaS 长期定价权的根。
 
-**判断 2：dev SaaS 的"双 UI 失血传导链"是真实的。** 任何不出 MCP server 的 dev SaaS（项目管理、监控、CI、feature flag、analytics）在 12–24 个月内会被"看不见"——开发者不再点开它的网页，agent 直接走 API。控制权从"漂亮 UI"迁移到"协议 + 数据"。这条传导链已经在 Sentry、Linear、Datadog、PagerDuty 的财报口径里出现"AI 集成被作为留存关键"的措辞，反推了 5 月 13 日美股软件股集体重挫的市场叙事（见 `chat/美股软件股近期重挫 (2026-05-13).md`）。
+**判断 2：dev SaaS 的"双 UI 失血传导链"是真实的**（⚠ 解读）**。** 任何不出 MCP server 的 dev SaaS（项目管理、监控、CI、feature flag、analytics）在 12–24 个月内会被"看不见"（⚠ 作者综合估算，依据：MCP registry 12 个月 7.8× 增速 [[7]](https://www.digitalapplied.com/blog/mcp-adoption-statistics-2026-model-context-protocol) + 主流 dev SaaS 已普遍出官方 server [[8]](https://github.blog/changelog/2025-04-04-github-mcp-server-public-preview/) [[9]](https://blog.sentry.io/yes-sentry-has-an-mcp-server-and-its-pretty-good/)）——开发者不再点开它的网页，agent 直接走 API。控制权从"漂亮 UI"迁移到"协议 + 数据"。2026 年 2 月以来的"SaaSpocalypse"行情（Anthropic Claude Cowork 发布触发单日 $285B 软件股市值蒸发 [[29]](https://www.cnbc.com/2026/02/06/ai-anthropic-tools-saas-software-stocks-selloff.html)）即同一传导链的市场表达；5 月 13 日的延续性重挫见 `chat/美股软件股近期重挫 (2026-05-13).md`。
 
-**判断 3：未来 3 年最重要的协议级机会是 MCP gateway / registry / aggregator 这三层。** 单点 MCP server 已经商品化、谁都能写；真正稀缺的是把 N×M 个 agent↔server 关系收敛成 1×M 的中间层。SAP Joule MCP Gateway、Composio Tool Router、官方 registry 是三种不同切法。这一层会在 2027 前出现至少一个独角兽，对位的不是 Zapier 而是**Okta / Cloudflare**——"身份 + 边界 + 审计"的 agent 版本。
+**判断 3：未来 3 年最重要的协议级机会是 MCP gateway / registry / aggregator 这三层**（⚠ 解读）**。** 单点 MCP server 已经商品化、谁都能写；真正稀缺的是把 N×M 个 agent↔server 关系收敛成 1×M 的中间层。SAP Joule MCP Gateway、Composio Tool Router、官方 registry 是三种不同切法。这一层会在 2027 前出现至少一个独角兽（⚠ 作者预测），对位的不是 Zapier 而是**Okta / Cloudflare**——"身份 + 边界 + 审计"的 agent 版本。
 
-**判断 4：代码索引层会被部分吞并到 IDE，但企业版会独立存活。** 个人开发者用 Cursor / Claude Code 内置的代码索引就够了；企业（>50k 文件、合规 + 数据驻留 + SSO）会继续买 Sourcegraph / Augment 这种专门产品，因为索引服务的真正护城河不是算法而是"**接进客户内网 + 不外泄代码 + 实时增量 + RBAC**"——这四件事正好是 IDE 厂商不愿做的脏活。
+**判断 4：代码索引层会被部分吞并到 IDE，但企业版会独立存活**（⚠ 解读）**。** 个人开发者用 Cursor / Claude Code 内置的代码索引就够了；企业（>50k 文件、合规 + 数据驻留 + SSO）会继续买 Sourcegraph / Augment 这种专门产品，因为索引服务的真正护城河不是算法而是"**接进客户内网 + 不外泄代码 + 实时增量 + RBAC**"——这四件事正好是 IDE 厂商不愿做的脏活。
 
 ## 信源
 
@@ -157,3 +157,21 @@ Cursor（`~/.cursor/mcp.json`）格式同上 [[14]](https://mcpplaygroundonline.
 [19] Composio, "Apify MCP Integration with Claude Code," *Composio Toolkits*. (Tool Router 一个 endpoint 接 1,000+ app、20,000+ tool。) [Online]. Available: <https://composio.dev/toolkits/apify/framework/claude-code>
 
 [20] Apify, "apify-mcp-server," *GitHub*. [Online]. Available: <https://github.com/apify/apify-mcp-server>
+
+[21] Wikipedia contributors, "Sourcegraph," *Wikipedia*. (创立于 2013 年，创始人 Quinn Slack 与 Beyang Liu。) [Online]. Available: <https://en.wikipedia.org/wiki/Sourcegraph>
+
+[22] Anthropic, "Context windows," *Claude API Docs*. (Opus 4.6/Sonnet 4.6 自 2026-03-13 起 1M 上下文 GA；默认 200K。) [Online]. Available: <https://platform.claude.com/docs/en/build-with-claude/context-windows>
+
+[23] OpenAI, "Introducing GPT-5.5," *OpenAI Blog*, Apr. 2026. (API 1M 上下文，Codex 400K，发布于 2026-04-23。) [Online]. Available: <https://openai.com/index/introducing-gpt-5-5/>
+
+[24] Augment Code, "Enterprise Multi-File Refactoring: Why AI Breaks at Scale," *Augment Code Tools*, 2026. (89% 多文件重构准确率；首家 ISO/IEC 42001 认证的 AI 编码助手；Context Engine 400k+ 文件。) [Online]. Available: <https://www.augmentcode.com/tools/enterprise-multi-file-refactoring-why-ai-breaks-at-scale>
+
+[25] C. Wood, "Long Context vs RAG: When 1M Token Windows Replace RAG," *SitePoint*, 2026. (长上下文与 RAG 适用边界讨论。) [Online]. Available: <https://www.sitepoint.com/long-context-vs-rag-1m-token-windows/>
+
+[26] Anthropic, "Introducing the Model Context Protocol," *Anthropic News*, Nov. 25, 2024. [Online]. Available: <https://www.anthropic.com/news/model-context-protocol>
+
+[27] J. Bandler / *Fortune* staff, "Wall Street is convinced AI will kill SaaS. History and economics say something else," *Fortune*, Mar. 25, 2026. [Online]. Available: <https://fortune.com/2026/03/25/ai-wall-street-software-as-a-service-productivity/>
+
+[28] Prismatic, "Cut SaaS Integration Dev Time with Embedded iPaaS," *Prismatic Blog*. (典型单 SaaS 集成在 4–6 周工程时间，复杂映射可到 8 周。) [Online]. Available: <https://prismatic.io/blog/cut-saas-integration-dev-time-with-embedded-ipaas/>
+
+[29] *CNBC*, "AI fears pummel software stocks: Is it 'illogical' panic or a SaaS apocalypse?" Feb. 6, 2026. (2026-02-03 Claude Cowork 发布触发 SaaSpocalypse，单日 $285B 软件股市值蒸发。) [Online]. Available: <https://www.cnbc.com/2026/02/06/ai-anthropic-tools-saas-software-stocks-selloff.html>
