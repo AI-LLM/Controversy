@@ -4,14 +4,14 @@
 
 ## 一、Pre-Agent 时代的 CI 流量模式（2010–2023）
 
-**典型负载剖面**（中型 SaaS，~200 工程师）：
+**典型负载剖面**（中型 SaaS，~200 工程师，⚠ 以下数字除特别注明者外均为**行业经验值 / 作者综合估算**，目的是给出 Pre-Agent 时代的量级参考，不是精确统计）：
 
-- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零
-- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天
-- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟
-- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB，传输 ~145 MiB/s，命中 60–75% 是好成绩 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)
-- **并发上限**：免费 GHA 默认 20 个 concurrent job，企业版 1000；CircleCI 按合同并发数计费
-- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%
+- **PR/天**：每工程师 ~1.5，团队 ~300 PR/天高峰；夜间归零（⚠ 行业经验值，作者综合估算，依据为 DORA 2024 报告中 elite 团队的部署频率分布外推 [[22]](https://dora.dev/research/2024/dora-report/)）
+- **build/PR**：~3 次（push、rebase、merge），合计 ~900 build/天（⚠ 行业经验值，作者综合估算）
+- **build runtime**：JS monorepo 中位 8–12 分钟，Java/Bazel 大库 20–40 分钟（⚠ 量级参考；Shopify monolith 优化前 45 min、95% 优化后 <18 min，Slack ~10→2 min，均见公开案例 [[23]](https://buildkite.com/resources/blog/monorepo-ci-best-practices/)）
+- **cache hit rate**：GitHub Actions 默认 cache 上限 10 GB [[24]](https://github.blog/changelog/2025-11-20-github-actions-cache-size-can-now-exceed-10-gb-per-repository/)，传输 ~145 MiB/s，命中 60–75% 是好成绩（命中率为⚠ 经验值；带宽数字见 [[1]](https://runs-on.com/benchmarks/github-actions-cache-performance/)）
+- **并发上限**：GHA Free 20 / Pro 40 / Team 60 / Enterprise 500 标准 runner，4–64 vCPU 大型 runner 上限 1000 [[25]](https://docs.github.com/en/actions/reference/limits) [[26]](https://github.blog/changelog/2023-09-18-increased-concurrency-limit-for-github-hosted-runners/)；CircleCI Free 30 / Performance 80，企业可联系增配 [[27]](https://circleci.com/docs/guides/optimize/concurrency/)
+- **触发时间分布**：UTC 工作时段集中，周末/夜晚 < 10%（⚠ 行业经验值，作者综合估算；未找到一手公开统计，留作与第 2.2 节"夜里涨到 ~35%"的对照基线）
 
 钱的逻辑是 **per-minute 计 build runtime**——GitHub Actions Linux x64 标准价 $0.008/min，Windows 1.6×，macOS 8×，2025 年 GitHub 全平台跑掉 **115 亿分钟** [[2]](https://github.com/resources/insights/2026-pricing-changes-for-github-actions)。
 
@@ -23,7 +23,7 @@ CI 平台的护城河是 **生态（marketplace action）+ 与 SCM 的集成**�
 
 Faros AI 在 2026-04 发布的 *AI Productivity Paradox* 研究：**高 AI 采用率团队完成任务多 21%，合并 PR 多 98%**，但 PR review time 也涨 91% [[3]](https://www.faros.ai/blog/ai-software-engineering)。Cursor 2026-02 ARR $2B 时已有 1M+ 日活、5 万企业客户 [[4]](https://www.getpanto.ai/blog/cursor-ai-statistics)；Cursor 2.0（2025-10）支持单开发者 **同时跑 8 个并行 agent**，每个 agent 占独立 workspace clone [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f)。Devin 2.0 同样支持 **multi-instance parallel**，一名工程师把当天 4 个任务各分配一个 Devin 实例 [[6]](https://www.deployhq.com/guides/devin)。
 
-后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人。
+后果：**一名工程师每日触发的 build 数从 ~5（3 次/PR × 1.5 PR）跳到 ~30–80**——8 个 agent 各自跑 lint/test 的 push 频率远高于人（⚠ **解读**：基于 [[5]](https://medium.com/@chaos.architect25/the-best-ai-coding-tools-of-may-2026-cf2db2804a0f) 中 Cursor 2.0 单工程师 8 并行 agent 上限外推，未见公开统计）。
 
 ### 2.2 触发分布扁平化
 

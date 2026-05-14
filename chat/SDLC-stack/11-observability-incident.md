@@ -1,20 +1,20 @@
 # 2026-05-14：SDLC 栈 / 可观测与事故响应 层深度研究
 
-Coding Agent 把代码产出量推高 10–100x 之后，唯一在金融市场上跑赢"AI 焦虑"的中间层就是可观测性。DDOG 在 2026-05-07 公布 Q1 营收破 10 亿、同比 +32%，当日盘后跳涨约 31% [[1]](https://investors.datadoghq.com/news-releases/news-release-details/datadog-announces-first-quarter-2026-financial-results), [[2]](https://www.benzinga.com/Opinion/26/05/52461478/datadog-becomes-harder-to-ignore-after-solid-q1-earnings)。这不是某个 SaaS 周期性反弹，而是一条结构性结论的市场定价：**Coding Agent 既制造垃圾、也制造昂贵的垃圾，垃圾产生在生产环境，所以"观察 + 处置"层是 Agent 时代唯一显著扩张的中间层。** 本篇按 namespace.so 范式拆 O5（可观测平台）/ O4（事故响应）/ O1'（AI Agent 自身可观测）三层，挖底层结构变化。
+Coding Agent 把代码产出量推高 10–100x（⚠ 解读：取自本系列姐妹篇的量纲假设，行业公开测量目前多在 ~30–55% 任务提速、46% 代码由 Copilot 生成区间 [[33]](https://www.getpanto.ai/blog/github-copilot-statistics)，"10–100x" 是上限叠加多 agent 并发的外推）之后，唯一在金融市场上跑赢"AI 焦虑"的中间层就是可观测性。DDOG 在 2026-05-07 公布 Q1 营收破 10 亿、同比 +32%，当日盘后跳涨约 31% [[1]](https://investors.datadoghq.com/news-releases/news-release-details/datadog-announces-first-quarter-2026-financial-results), [[2]](https://www.benzinga.com/Opinion/26/05/52461478/datadog-becomes-harder-to-ignore-after-solid-q1-earnings)。这不是某个 SaaS 周期性反弹，而是一条结构性结论的市场定价：**Coding Agent 既制造垃圾、也制造昂贵的垃圾，垃圾产生在生产环境，所以"观察 + 处置"层是 Agent 时代唯一显著扩张的中间层。** 本篇按 namespace.so 范式拆 O5（可观测平台）/ O4（事故响应）/ O1'（AI Agent 自身可观测）三层，挖底层结构变化。
 
 ## 一、Pre-Agent 时代的基线流量
 
 在 2023–2024 这条 baseline 上：
 
 - **MTTR / MTTA**：DORA 2024 把"恢复时长" 拆成 Failed Deployment Recovery Time，Elite < 1h、High < 1day、Low > 1month 是经典阶梯 [[3]](https://www.atlassian.com/incident-management/kpis/common-metrics)。SRE 圈追求 MTTA < 45s 不让"修复时钟"被检测延迟吃掉 [[4]](https://www.harness.io/blog/what-is-mttr-dora-metric)。
-- **on-call 压力**：PagerDuty AIOps 公布的工业基线是它能砍 91% 的告警噪声 [[5]](https://www.pagerduty.com/platform/aiops/)；反推下来，没有降噪的团队人均周受呼次数在两位数级，"告警疲劳"是 2024 年最被引用的 on-call 投诉。
+- **on-call 压力**：PagerDuty AIOps 公布的工业基线是它能砍 91% 的告警噪声 [[5]](https://www.pagerduty.com/platform/aiops/)；这个 91% 与基线相互校验：incident.io 2024 年对 500+ on-call 工程师的调研显示**人均每周中位 42 次寻呼** [[34]](https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works)，Catchpoint 2024 SRE 调研里 70% 团队把"告警疲劳"列入前三大运维痛点、41% 工程师考虑因之离职 [[34]](https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works)——"告警疲劳"成为 2024 年 on-call 工程岗位被引用最多的离职动因（⚠ 解读：从上述两条调研合成的小结，"最被引用"是定性归纳而非排名结果）。
 - **log/metric 爆炸**：IDC 估到 2025 年全球数据体量 180 ZB [[6]](https://clickhouse.com/resources/engineering/what-is-observability)；可观测成本由 volume × cardinality × retention 三轴驱动 [[7]](https://clickhouse.com/resources/engineering/observability-tco-cost-reduction)。Kubernetes 容器化把 cardinality 推到指数线——每个 pod 自己一套 label，单一 deployment 的扩缩容就能让 series 数翻倍 [[8]](https://www.observeinc.com/blog/understanding-high-cardinality-in-observability)。"Cardinality explosion is the silent budget killer" 在 2024 年成为业内口头禅 [[9]](https://www.sawmills.ai/blog/best-practices-for-high-cardinality-metrics-in-datadog)。
 
 底色：**人均 on-call 容量被两条曲线挤压**——告警维度（cardinality）指数增长，人脑带宽线性。AIOps 在 2024 之前的故事是降噪、是相关性聚类，**还没敢说"自己修"**。
 
 ## 二、Coding Agent 带来的流量本质变化
 
-Coding Agent 时代代码量按 10–100x 放大[见姐妹篇]，对 O5/O4 的冲击不止"bug 多了"：
+Coding Agent 时代代码量按 10–100x 放大（⚠ 解读：同上节假设，引自本系列姐妹篇 [[33]](https://www.getpanto.ai/blog/github-copilot-statistics)），对 O5/O4 的冲击不止"bug 多了"：
 
 1. **错误类型分布偏移**。Pre-Agent 的事故偏典型——逻辑越界、SQL 慢、容量超限；Post-Agent 多出一类**幻觉诱发型 bug**：变量名拼错但通过 lint、API 调用参数顺序颠倒、对一个 deprecated 接口的自信调用。Sentry Seer 自己的内部事故就是一例：`LlmNoRegionsToRunError` 阻断了 ~42 000 issue summary、~1 600 spam-detection、~850 autofix 调用，根因只有 6 行代码——"我们 provision 了 GCP 容量"与"代码知道我们 provision 了"之间的认知差 [[10]](https://blog.sentry.io/seer-fixes-seer-debugging-agent/)。这种 bug 的特征：单点小、面儿广、跨服务、低 reproducibility——**人类读 log 不容易抓，机器读全栈 trace 才抓得到**。
 2. **on-call 压力曲线非线性爆炸**。代码量乘 10–100x、事故密度未必同比，但**告警面积线性膨胀**：更多服务、更多依赖、更多金丝雀阶段。PagerDuty 2026 Spring 把 SRE agent 直接挂在 escalation policy 上，AWS DevOps Agent 案例宣称 77% MTTR 削减 [[11]](https://medium.com/devops-ai-decoded/the-ai-sre-agent-revolution-why-2026-is-the-year-of-autonomous-incident-resolution-073807b2209d)。一线 SRE 反馈：**60 天后整体 alert 量 70–95% 下降、Sev-2 MTTR 20–40% 改进** [[11]](https://medium.com/devops-ai-decoded/the-ai-sre-agent-revolution-why-2026-is-the-year-of-autonomous-incident-resolution-073807b2209d)。
@@ -82,7 +82,7 @@ claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
 
 ## 八、几条本质判断
 
-1. **可观测层是 Coding Agent 时代少数显著扩张的中间层**。Coding Agent 把代码量推高 10–100x，下游 telemetry 体量被线性甚至超线性放大；同时高基数 + 幻觉 bug 让"无 LLM 协助则不可解"的事故占比上升。两条曲线叠加，让按量计费 SaaS（DDOG、Splunk、Honeycomb）和按 fix 收费 SaaS（Resolve、Cleric）同时受益。
+1. **可观测层是 Coding Agent 时代少数显著扩张的中间层**。Coding Agent 把代码量推高 10–100x（⚠ 解读：同前节假设 [[33]](https://www.getpanto.ai/blog/github-copilot-statistics)），下游 telemetry 体量被线性甚至超线性放大；同时高基数 + 幻觉 bug 让"无 LLM 协助则不可解"的事故占比上升。两条曲线叠加，让按量计费 SaaS（DDOG、Splunk、Honeycomb）和按 fix 收费 SaaS（Resolve、Cleric）同时受益。
 2. **DDOG 跑赢是平台数据广度 × LLM 入口的双杀**——别人只有部分数据，Bits AI 拿全栈；别人 LLM 工具是 add-on，Datadog 用 Bits AI 把 dashboard 替换成自然语言入口，**锁定下一代用户的肌肉记忆**。Q1 +30% 是市场对这个论点的定价，不是周期。
 3. **下一代 monitoring = metrics / logs / traces / agent traces 四元组**。前三元组是 Charity Majors 时代的口号，第四元组让"什么人/什么 agent 做了什么"变成可审计、可计费、可治理的一级对象。三大厂（Datadog / New Relic / Splunk）+ AI-native（Langfuse / Arize）+ AI gateway（Helicone / Portkey）正在抢这个第四元组的标准位。
 4. **闭环已经成型**：Sentry Seer → Claude Code → GitHub PR；Datadog Bits AI SRE → Bits AI Dev → PR。**fix PR 从"工程师写"变成"agent 写、agent 审、人 merge"**。on-call 这个职位将在 24 个月内重新定义——从"夜里被叫醒去查 log"变成"早上来 review 一堆 agent 已经修好的 PR"。

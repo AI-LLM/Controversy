@@ -123,7 +123,7 @@ Phind 是 YC 系 AI 搜索引擎，专为开发者设计，2022-2024 年靠"LLM 
 - 2025 年末刚融资 **$10M**
 - **2026 年 1 月 16 日突然关停**，无 sunset 期，融资到账后一个多月 [[29]](https://x.com/edzitron/status/2010932551511122050)
 
-死因明确：当基础模型厂商（OpenAI / Anthropic / Google）原生具备 Web search + 文档检索后，"在 LLM 外面套一层开发者 UI"的差异化消失。Phind 既不掌握模型，也不掌握 IDE，也不掌握私域数据，**夹层产品的命运在大模型每升级一代时被收紧一次**。Kagi 这类付费搜索引擎在开发者群体里仍有小众价值（无追踪、无广告），但 5% 量级的渗透率谈不上替代品。
+死因明确：当基础模型厂商（OpenAI / Anthropic / Google）原生具备 Web search + 文档检索后，"在 LLM 外面套一层开发者 UI"的差异化消失（⚠ 解读）。Phind 既不掌握模型，也不掌握 IDE，也不掌握私域数据，**夹层产品的命运在大模型每升级一代时被收紧一次**（⚠ 解读）。Kagi 这类付费搜索引擎在开发者群体里仍有小众价值（无追踪、无广告），但 5% 量级的渗透率（⚠ 作者综合估算：[4] 中 Perplexity 约 5%，Kagi 未单列；此处仅做量级参考）谈不上替代品。
 
 ## 5. 本质判断：这是"行为整体跳过"的第一案例
 
@@ -214,3 +214,7 @@ Confluence 搜索、Zendesk Help Center 之类的 "人去搜的内部 Q&A 库" �
 [28] Intelligent Tools, "Why Did Phind Shut Down? The Real Story," 2026. (峰值 27K 搜索/月；两年跌 91%) [Online]. Available: <https://intelligenttools.co/blog/improved-phind-shutdown-post>
 
 [29] E. Zitron, X post, 2026. (Phind 融资 $10M 后一个多月，2026-01-16 关停) [Online]. Available: <https://x.com/edzitron/status/2010932551511122050>
+
+[30] American University Business Law Review, "The Google-Reddit AI Deal: Strategic Move or a Harbinger of Licensing Agreements to Come?," 2024. (Reddit-Google 内容许可约 $60M/年) [Online]. Available: <https://aublr.org/2024/03/the-google-reddit-ai-deal-strategic-move-or-a-harbinger-of-licensing-agreements-to-come/>
+
+[31] Mintlify, "Best llms.txt implementation platforms and tools in 2026," 2026. (Mintlify / Fern / GitBook / Docusaurus / VitePress 的 llms.txt 支持状态) [Online]. Available: <https://www.mintlify.com/library/best-llms-txt-platforms>

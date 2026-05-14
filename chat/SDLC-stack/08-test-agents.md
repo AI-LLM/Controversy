@@ -7,9 +7,9 @@
 
 讨论 AI 怎么改测试之前，先把"Pre-Coding-Agent 时代"的测试经济学摆清楚。这一层从来没"健康"过，它是被工程师默默牺牲掉的那个变量。
 
-**工时分布。**Stripe 的 *Developer Coefficient* 研究指出，开发者每周约 17 小时（约占工时 42%）耗在技术债与维护上 [[1]](https://stripe.com/files/reports/the-developer-coefficient.pdf)；Sonar 与多家 DX 调研把工时拆得更细：维护 19%、测试 12%、安全 4%，三者合计约 35% [[2]](https://www.sonarsource.com/blog/how-much-time-do-developers-spend-actually-writing-code)。换句话说，**测试只拿到了开发者 1/10 的真实带宽**——但它名义上要为发布质量背书。
+**工时分布。**Stripe 的 *Developer Coefficient* 研究指出，开发者每周约 17 小时（约占工时 42%）耗在技术债与维护上 [[1]](https://stripe.com/files/reports/the-developer-coefficient.pdf)；Sonar 与多家 DX 调研把工时拆得更细：维护 19%、测试 12%、安全 4%，三者合计约 35% [[2]](https://www.sonarsource.com/blog/how-much-time-do-developers-spend-actually-writing-code)。换句话说，**测试只拿到了开发者约 1/10 的真实带宽**——但它名义上要为发布质量背书。（⚠ 解读：从 [[2]] 中 12% 测试工时直接换算，"1/10"是修辞性近似。）
 
-**Coverage 目标 vs 实际。**业界常喊的"金标准"是 80%，Industrial Logic 的工业调查把它直接命名为"corporate gating standard" [[3]](https://www.qt.io/quality-assurance/blog/is-70-80-90-or-100-code-coverage-good-enough)；但一份跨 7 种语言、47 个项目的实证研究显示，**真实平均只有 74–76%** [[3]](https://www.qt.io/quality-assurance/blog/is-70-80-90-or-100-code-coverage-good-enough)。差距来自一个常识：超过 70–80% 之后，每多覆盖一个 branch 的边际成本陡升、缺陷捕获率反而下降，所以大多数团队默契地停在那里。
+**Coverage 目标 vs 实际。**业界常喊的"金标准"是 80%，Industrial Logic 的工业调查把它直接命名为"corporate gating standard" [[3]](https://www.qt.io/quality-assurance/blog/is-70-80-90-or-100-code-coverage-good-enough)；但一份跨 7 种语言、47 个项目的实证研究显示，**真实平均只有 74–76%** [[3]](https://www.qt.io/quality-assurance/blog/is-70-80-90-or-100-code-coverage-good-enough)。差距来自一个常识：超过 70–80% 之后，每多覆盖一个 branch 的边际成本陡升、缺陷捕获率反而下降，所以大多数团队默契地停在那里。（⚠ 解读：边际成本与缺陷捕获曲线为行业经验，未配实证图表，此处为作者综合判断。）
 
 **Flaky test 的真实成本。**ICST 2024 一项五年工业纵向研究测出，flaky tests 吃掉开发者 2.5% 的有效工时（1.1% 排查假失败 + 1.3% 修测试） [[4]](https://conf.researchr.org/details/icst-2024/icst-2024-industry/1/Cost-of-Flaky-Tests-in-CI-An-Industrial-Case-Study)；Bitrise 对 1000 万次 CI build 的统计显示，**遭遇 flaky tests 的团队比例从 2022 的 10% 升到 2025 的 26%**，58% 团队的 flaky run 占比 >1%，24% 大型组织 >5% [[5]](https://testdino.com/blog/flaky-test-benchmark)。Google 内部报告则给出 16% 测试呈 flaky 行为，每条平均浪费 2.3 小时/周 [[2]](https://www.sonarsource.com/blog/how-much-time-do-developers-spend-actually-writing-code)。
 
@@ -17,7 +17,7 @@
 
 ## 二、Coding Agent 之后：测试缺口被指数级放大
 
-2025–2026 Coding Agent（Claude Code、Cursor Agent、Codex CLI、Copilot Workspace）把工程师的代码产出量推到 **10–100×** 数量级。这件事在测试侧引发三条直接后果：
+2025–2026 Coding Agent（Claude Code、Cursor Agent、Codex CLI、Copilot Workspace）显著放大了工程师的代码产出量——业界口径常见 **10–100×**（⚠ 作者综合估算：来自一线工程师博客与厂商营销，缺乏 RCT 验证；与之相反，METR 2025-07 的 RCT 在 16 名开源资深开发者上测出 AI 工具反而让人**慢 19%** [[24]](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)、[[25]](https://arxiv.org/abs/2507.09089)。真实分布更可能呈双峰：探索/样板代码大幅加速，深度调试/重构反而减速）。但**代码行数**层面的产出确实在上升，这件事在测试侧引发三条直接后果：
 
 1. **测试缺口爆炸。**手写测试的人力不变、代码量 10×，意味着 coverage 默认下滑、bug 逃逸到生产的概率非线性上升。测试从"被忽视的瓶颈"升级为"主要瓶颈"。
 2. **测试自身被 Agent 写——但写法值得怀疑。**Diffblue 的对比研究指出，GitHub Copilot 生成的 Java 单测正确率约 65%，常见 30–45% 的编译/运行失败率 [[6]](https://www.diffblue.com/resources/copilot-vs-diffblue-cover-ai-unit-test-showdown/)；而最关键的问题不是失败率，是 **test oracle 问题**：LLM 倾向生成"刻画当前行为"的 assertion，而非"刻画规格行为"的 assertion——也就是把 bug 一起冻进了 regression suite [[7]](https://arxiv.org/abs/2601.05542)、[[8]](https://arxiv.org/html/2410.21136v1)。

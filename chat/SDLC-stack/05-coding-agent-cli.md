@@ -133,7 +133,7 @@ Cognition Devin 与 Claude Code 走的不是一条路。Claude Code 是**让工�
 
 **(a) CLI agent vs IDE agent 的长期格局**：两者不是替代关系，是**异步 vs 同步**的分工。IDE agent（Cursor、Copilot inline）覆盖 < 30 秒的同步交互；CLI agent 覆盖 > 5 分钟的异步任务（⚠ 解读；时间阈值是作者对两种形态典型 latency 的概括，非测量值）。**senior 工程师从 IDE 主战场迁到 terminal + Mission Control，初级工程师还在 IDE。**这条裂痕 2025–2026 已经非常清晰。
 
-**(b) Anthropic 的位置**：Claude Code 让 Anthropic 在 dev 工具栈拿到了一个**结构性优势**——不只是模型 API，还有**协议层（MCP）+ 客户端形态（Claude Code）+ 模型本身**三件一起出。Claude Code ARR 估算 ~\$2.5B（2026 年初），SWE-bench Verified Opus 4.6 80.8% / Sonnet 4.6 79.6%（更新到 Opus 4.7 87.6%）[[19]](https://www.swebench.com/)。Anthropic 实际上在 coding agent 这一层做了"卖铲子的同时也下场挖矿"。
+**(b) Anthropic 的位置**：Claude Code 让 Anthropic 在 dev 工具栈拿到了一个**结构性优势**——不只是模型 API，还有**协议层（MCP）+ 客户端形态（Claude Code）+ 模型本身**三件一起出。Claude Code run-rate revenue 在 2026-02 已超 \$2.5B（投资分析报告综合估算，含 API 使用 + 订阅 + 企业合同；非审计数字）[[25]](https://www.mindstudio.ai/blog/claude-code-2-5-billion-annualized-revenue-terminal-tool)。SWE-bench Verified Opus 4.6 80.8% / Sonnet 4.6 79.6%（更新到 Opus 4.7 87.6%）[[19]](https://www.swebench.com/)。Anthropic 实际上在 coding agent 这一层做了"卖铲子的同时也下场挖矿"。
 
 **(c) 为什么 GitHub Copilot 在这一层没拿到优势**：Copilot 的 DNA 是"IDE 补全"，组织、产品、UI、定价、销售全部围绕"在编辑器里按 Tab"。当形态从"在编辑器里"变成"在 terminal headless"，Copilot 内部所有积累的飞轮都不能直接平移：
   - IDE 插件分发渠道在 CLI 无用；
@@ -185,3 +185,13 @@ GitHub 2025 才急着推 Copilot Workspace + coding agent，但被 Claude Code �
 [19] SWE-bench team, "SWE-bench Leaderboards," 2026. (Opus 4.6: 80.8%；Sonnet 4.6: 79.6%；Opus 4.7: 87.6%。) [Online]. Available: <https://www.swebench.com/>
 
 [20] T. Pan, "Claude Code Became Market Leader in 9 Months. GitHub Copilot Had a Multi-Year Head Start. What Changed?," *10x.pub Forum*, 2026. [Online]. Available: <https://tianpan.co/forum/t/claude-code-became-market-leader-in-9-months-github-copilot-had-a-multi-year-head-start-what-changed/2840>
+
+[21] Weaverse, "Shopify AI Toolkit Explained: Dev MCP, Cursor, Claude Code, Skill Packages (2026)," 2026. (Shopify 2026-04-09 开源 Shopify AI Toolkit，含 Claude Code plugin。) [Online]. Available: <https://weaverse.io/blogs/shopify-ai-toolkit-dev-mcp-hydrogen-2026>
+
+[22] Gradually.ai, "OpenAI Codex Statistics 2026: Key Numbers, Data & Facts," 2026. (75K+ GitHub stars；npm 月下载 1453 万（2026-03）；3M weekly active users，Sam Altman 2026-04-08 披露。) [Online]. Available: <https://www.gradually.ai/en/codex-statistics/>
+
+[23] P. Gauthier, "o1 tops aider's new polyglot leaderboard," *aider.chat*, Dec. 2024. (225 道 Exercism 最难题，覆盖 C++/Go/Java/JavaScript/Python/Rust 6 语言。) [Online]. Available: <https://aider.chat/2024/12/21/polyglot.html>
+
+[24] Aider, "Aider LLM Leaderboards," 2026. (2026 年 5 月 Opus 4.5 ~89.4%；Opus 4.6 进一步领先。) [Online]. Available: <https://aider.chat/docs/leaderboards/>
+
+[25] MindStudio, "Claude Code Is Doing \$2.5B in Annualized Revenue — Just from the Terminal Tool," 2026. (2026-02 Claude Code run-rate revenue 超 \$2.5B，含 API + 订阅 + 企业合同；外部估算。) [Online]. Available: <https://www.mindstudio.ai/blog/claude-code-2-5-billion-annualized-revenue-terminal-tool>

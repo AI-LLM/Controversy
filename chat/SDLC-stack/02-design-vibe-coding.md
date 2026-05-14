@@ -109,7 +109,7 @@ Bolt 产出 Nuxt 项目骨架、`nuxt.config.ts`、`content/` markdown 集合、
 - 当合规（HIPAA / SOC2 / PCI）要求审计链条时，"我让 AI 帮我加了支付"那一刻就失败。
 - 当性能瓶颈不在第一性原理而在系统级（DB 索引、CDN 边界、并发模型）时，Vibe coding 找不到入口。
 
-界限：**MVP、内部工具、营销页、单人 SaaS、demo** 是甜区；**多团队协作的核心系统** 仍是工程师 + 真 IDE + 真 CI/CD。
+界限（⚠ 解读）：**MVP、内部工具、营销页、单人 SaaS、demo** 是甜区；**多团队协作的核心系统** 仍是工程师 + 真 IDE + 真 CI/CD。依据：上述事故记录全部集中在生产、多人协作、合规敏感场景；而 §3 各家自报的核心用例都聚焦原型 / MVP / 个人项目（[[7]](https://techcrunch.com/2025/11/10/lovable-says-its-nearing-8-million-users-as-the-year-old-ai-coding-startup-eyes-more-corporate-employees/), [[28]](https://www.designmonks.co/case-study/lovable-ai-app-builder)）。
 
 ---
 
@@ -117,9 +117,9 @@ Bolt 产出 Nuxt 项目骨架、`nuxt.config.ts`、`content/` markdown 集合、
 
 **判断 1：用户基数差一个数量级**。全球开发者 2025 年 28.7M，而 vibe coding 头部三家覆盖用户 60M+。即便假设有重叠，新增 30M+ 用户（PM / 设计师 / 创业者 / 学生）是从无到有，不是从 Cursor 那里挖走。
 
-**判断 2：典型用例不重叠**。Lovable 的 "投资人 demo / MVP / 单人 SaaS"[[28]](https://www.designmonks.co/case-study/lovable-ai-app-builder)，传统开发栈在过去根本没赚到这部分钱——它们或者根本不存在（idea 死在 PPT 里），或者外包给上海/班加罗尔的外包团队。Vibe coding 把"想法 → 可点击 demo"的成本从 5 万美元拉到 $25/月订阅。
+**判断 2：典型用例不重叠**。Lovable 的 "投资人 demo / MVP / 单人 SaaS"[[28]](https://www.designmonks.co/case-study/lovable-ai-app-builder)，传统开发栈在过去根本没赚到这部分钱——它们或者根本不存在（idea 死在 PPT 里），或者外包给上海/班加罗尔的外包团队（⚠ 解读）。Vibe coding 把"想法 → 可点击 demo"的成本从行业典型 MVP 外包价 $15K–$50K[[44]](https://www.creolestudios.com/mvp-development-cost/) 拉到 $25/月订阅。
 
-**判断 3：增量预算来源**。$4.7B → $12.3B 的 vibe coding 市场规模主要来自三处资金池：(a) 之前用 Webflow / Wix 的 no-code 预算上移；(b) 之前花在外包定制的 SMB 预算下移；(c) 完全新增的"个人软件"消费（11% 的 vibe coder 在做自用工具）[[4]](https://www.secondtalent.com/resources/vibe-coding-statistics/)。这三块都不是 Cursor、JetBrains、GitHub Copilot 的盘子。
+**判断 3：增量预算来源**（⚠ 解读：三处资金池为作者综合推断，仅 (c) 项有 [[4]] 直接证据）。$4.7B → $12.3B 的 vibe coding 市场规模主要来自三处资金池：(a) 之前用 Webflow / Wix 的 no-code 预算上移；(b) 之前花在外包定制的 SMB 预算下移；(c) 完全新增的"个人软件"消费（11% 的 vibe coder 在做自用工具）[[4]](https://www.secondtalent.com/resources/vibe-coding-statistics/)。这三块都不是 Cursor、JetBrains、GitHub Copilot 的盘子。
 
 **判断 4：传统设计层被压扁但不消失**。Figma 自身的反应是发布 Figma Make（2025-05 推出，Claude 3.7 Sonnet，可吃 Figma 文件做输入并接 Supabase）[[29]](https://www.cnbc.com/2025/05/07/figma-launches-premium-figma-make-vibe-coding-ai-software-designer.html), [[30]](https://www.figma.com/blog/figma-make-general-availability/)。Tempo、Subframe 走"设计原图保留 + 代码同步"路线[[31]](https://www.subframe.com/), [[32]](https://www.tempo.new/)。这一层在重组，不在消亡——但产值结构正从"画稿子的工时"转移到"原型即代码的订阅"。
 

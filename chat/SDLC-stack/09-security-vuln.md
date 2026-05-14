@@ -7,14 +7,14 @@ Pre-Coding-Agent 时代，安全是 SDLC 里"最容易省略的一环"——年�
 历史基线由三组数据锚定：
 
 - **SCA 扫描频次**：传统模式是 nightly build + release gate，多数中型企业每周一次完整依赖扫描，CI/CD 流水线里仅做轻量 lockfile diff。
-- **SAST 误报率**：默认配置下令人发指。NIST 测过 Java SAST 工具的误报率高达 78% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；2024 年 Tolly 报告显示 Checkmarx 在基准应用上误报 36.3% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；SonarQube 在 Java/TypeScript 默认配置下 40–60% 的发现被判定为非问题；行业经验是"未调优 60–90%，调优后 10–20%" [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)。
-- **漏洞修复周期**：Dark Reading 引用的数据是平均 MTTR 270 天 [[2]](https://www.darkreading.com/cyberattacks-data-breaches/mttr-most-important-security-metric)；Edgescan 给出 Critical 级 MTTR 约 65 天 [[3]](https://info.edgescan.com/vulnerability-statistics-li23)。CISA BOD 22-01 把 KEV 修复时限压到 14 天，是事实上的"上限红线"，多数私营公司远达不到。
+- **SAST 误报率**：默认配置下令人发指。NIST 测过 Java SAST 工具的误报率高达 78% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；2024 年 Tolly 报告显示 Checkmarx 在基准应用上误报 36.3% [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)；SonarQube 在 Java/TypeScript 默认配置下 40–60% 的发现被判定为非问题（⚠ 作者综合估算：SonarQube 官方自报"已审阅 issue"误报率 3.2%，与一线团队普遍体感存在落差；此处 40–60% 取行业从业者经验，非官方披露）；行业经验是"未调优 60–90%，调优后 10–20%" [[1]](https://www.mobb.ai/blog/sast-tools-false-positive-comparison)。
+- **漏洞修复周期**：Dark Reading 引用的数据是平均 MTTR 270 天 [[2]](https://www.darkreading.com/cyberattacks-data-breaches/mttr-most-important-security-metric)；Edgescan 给出 Critical 级 MTTR 约 65 天 [[3]](https://info.edgescan.com/vulnerability-statistics-li23)。CISA BOD 22-01 把 KEV 修复时限压到 14 天 [[34]](https://www.cisa.gov/news-events/directives/bod-22-01-reducing-significant-risk-known-exploited-vulnerabilities)，是事实上的"上限红线"，多数私营公司远达不到。
 
 一句话：Pre-Agent 时代的安全工具理论上完整，实际上被噪声和迟滞拖死。
 
 ## 2. AI Coding Agent 之后，漏洞图谱发生了什么
 
-**2.1 代码量爆炸 → 漏洞密度上涨。**Snyk 2024 的研究显示，AI 生成的代码比人写的代码平均多 36% 安全问题，集中在 CWE-20 输入校验、CWE-79 输出编码 [[4]](https://devclass.com/2023/12/05/ai-assistants-write-insecure-code-that-humans-trust-too-much-snyk-survey-finds/)。Stanford 早在 2022 就发现接入 Codex 的参与者写出更不安全的解 [[5]](https://techcrunch.com/2022/12/28/code-generating-ai-can-introduce-security-vulnerabilities-study-finds/)。2025 年 arXiv 大规模分析 [[6]](https://arxiv.org/abs/2510.26103) 进一步指出 AI 代码"漏洞密度"系统性高于人写代码。复合效果：单位时间漏洞产出可能上涨 5–10×。
+**2.1 代码量爆炸 → 漏洞密度上涨。**Snyk 2024 的研究显示，AI 生成的代码比人写的代码平均多 36% 安全问题，集中在 CWE-20 输入校验、CWE-79 输出编码 [[4]](https://devclass.com/2023/12/05/ai-assistants-write-insecure-code-that-humans-trust-too-much-snyk-survey-finds/)。Stanford 早在 2022 就发现接入 Codex 的参与者写出更不安全的解 [[5]](https://techcrunch.com/2022/12/28/code-generating-ai-can-introduce-security-vulnerabilities-study-finds/)。2025 年 arXiv 大规模分析 [[6]](https://arxiv.org/abs/2510.26103) 进一步指出 AI 代码"漏洞密度"系统性高于人写代码。复合效果：单位时间漏洞产出可能上涨 5–10×（⚠ 作者综合估算：以 AI 提速代码产出 3–5× × 漏洞密度 +36% 的乘数推得，无单一信源直接支撑该区间）。
 
 **2.2 Slopsquatting：LLM 幻觉变成攻击面。**USENIX Security 2025 一项 576,000 代码样本、16 个 LLM 的研究显示，AI 推荐的包名 19.7% 是不存在的——五分之一 [[7]](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks)。攻击者只需注册这些幻觉名字、塞入恶意 payload，等 Coding Agent 把它写进 `package.json`。Socket 2026 报告披露 2025 全年 npm 上发布了 454,648 个恶意包 [[7]](https://socket.dev/blog/slopsquatting-how-ai-hallucinations-are-fueling-a-new-class-of-supply-chain-attacks)。
 
@@ -28,7 +28,7 @@ Pre-Coding-Agent 时代，安全是 SDLC 里"最容易省略的一环"——年�
 
 **Socket（供应链 / Slopsquatting）。**Socket 的核心算法是"对每一个发布到 npm 的包做行为分析"：扫描 install script、混淆代码、隐藏 payload、特权 API 调用，识别 70+ 风险信号，从发布到检出常常以分钟计 [[15]](https://docs.socket.dev/docs/socket-firewall-free)。Phantom dependencies——在 `node_modules` 里被 `require()` 但没在 `package.json` 声明的包——会被单独打标 [[16]](https://docs.socket.dev/docs/phantom-dependencies)。2025-09 上线 Socket Firewall Free，开发者机器本地 block 已确认的恶意包，AI 标记但未人工复核的只警告不阻断 [[17]](https://www.theregister.com/2025/09/30/socket_will_block_it_with/)。Socket for GitHub 在 PR 维度监听 `package.json`/`yarn.lock` 变化，新依赖即触发评论 [[18]](https://docs.socket.dev/docs/socket-for-github)。
 
-**Snyk Autofix / DeepCode AI。**Snyk Agent Fix 自称 80% 准确率、MTTR 下降 84%（开启 autofix 时）[[19]](https://snyk.io/blog/find-auto-fix-prioritize-intelligently-snyks-ai-powered-code/)。技术核心 CodeReduce 把上下文压缩后喂给 LLM，使开源 LLM 的修复表现超过 GPT-4 [[20]](https://snyk.io/blog/deepcode-ai-vulnerability-autofixing/)。2026-02 Snyk 宣布 AI Security Fabric，覆盖代码 / 模型 / Agent 三层。典型 PR 流程：扫到 CVE → DeepCode 生成 patch → 在 PR 上 review → 合并；误报由 DeepCode 自己做"反证"过滤。
+**Snyk Autofix / DeepCode AI。**Snyk Agent Fix 自称 80% 准确率、MTTR 下降 84%（开启 autofix 时）[[19]](https://snyk.io/blog/find-auto-fix-prioritize-intelligently-snyks-ai-powered-code/)。技术核心 CodeReduce 把上下文压缩后喂给 LLM，使开源 LLM 的修复表现超过 GPT-4 [[20]](https://snyk.io/blog/deepcode-ai-vulnerability-autofixing/)。2026-02 Snyk 宣布 AI Security Fabric，覆盖代码 / 模型 / Agent 三层 [[35]](https://snyk.io/news/snyk-ai-security-fabric/)。典型 PR 流程：扫到 CVE → DeepCode 生成 patch → 在 PR 上 review → 合并；误报由 DeepCode 自己做"反证"过滤。
 
 **Semgrep AI Assistant。**与 Snyk 形成对照：Semgrep 把 LLM 当成 rule 的"上下文层"而非生成器。Autotriage 用 RAG + LLM 对 rule 元数据、过去的 triage 决定、findings 数据流上下文（几十行附近代码）做综合判断 [[21]](https://semgrep.dev/blog/2025/building-an-appsec-ai-that-security-researchers-agree-with-96-of-the-time/)；自报与安全研究员"真阳性"一致率 96%、误报识别准确率 >95% [[21]](https://semgrep.dev/blog/2025/building-an-appsec-ai-that-security-researchers-agree-with-96-of-the-time/)；triage 工作量首周降 20%、一周后降 40% [[22]](https://semgrep.dev/blog/2025/announcing-ai-noise-filtering-and-triage-memories/)。Assistant Memories 让每个组织/规则/项目维度积累偏好。
 
@@ -40,7 +40,7 @@ Pre-Coding-Agent 时代，安全是 SDLC 里"最容易省略的一环"——年�
 
 **Anthropic Claude Code Security。**2026-02 发布，定位是"读代码像人类研究员"的语义分析，多阶段 self-verification 过滤误报 [[30]](https://www.anthropic.com/news/claude-code-security)。声称用 Opus 4.6 在开源代码库里发掘 500+ 历史漏洞 [[30]](https://www.anthropic.com/news/claude-code-security)。讽刺的是，它本身又是 PR 评论 prompt injection 的受害方之一 [[8]](https://www.securityweek.com/claude-code-gemini-cli-github-copilot-agents-vulnerable-to-prompt-injection-via-comments/)。
 
-**Aikido。**all-in-one AppSec：SAST + SCA + DAST + CSPM + secrets + IaC，AI triage 自称降噪 95%，Pro $600/月 / 10 用户 [[31]](https://www.aikido.dev/pricing)。卖点是中小团队不需要拼 5 个独立工具。
+**Aikido。**all-in-one AppSec：SAST + SCA + DAST + CSPM + secrets + IaC，AutoTriage 自称降噪 95%（去重 + reachability + 上下文关联）[[36]](https://www.aikido.dev/blog/autotriage-and-the-swiss-cheese-model-of-security-noise-reduction)，Pro $600/月 / 10 用户 [[31]](https://www.aikido.dev/pricing)。卖点是中小团队不需要拼 5 个独立工具。
 
 ## 4. 新需求：Agent 代码的可追溯性
 
