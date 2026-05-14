@@ -57,7 +57,7 @@ Pre-Agent 栈里，开发者获取"和我现在改的代码相关的其它代码
 
 Model Context Protocol 由 Anthropic 2024 年 11 月 25 日开源 [[26]](https://www.anthropic.com/news/model-context-protocol)，到 2026 年 4 月，官方 registry 收录 9,400+ server，相比 2025 Q1 的 1,200 个增长 7.8 倍 [[7]](https://www.digitalapplied.com/blog/mcp-adoption-statistics-2026-model-context-protocol)。GitHub 自营的 `github-mcp-server` 于 2025 年 4 月进入 public preview，取代了原 Anthropic 维护的 reference 版本 [[8]](https://github.blog/changelog/2025-04-04-github-mcp-server-public-preview/)。Sentry 官方 MCP 暴露 16 个工具，支持 OAuth + 远程 streamable HTTP [[9]](https://blog.sentry.io/yes-sentry-has-an-mcp-server-and-its-pretty-good/)。Postgres、Slack、Linear、Notion、Figma 各家相继发了官方或半官方 server。
 
-这件事的本质 **不**是"又一个集成协议"。本质是：**任何 SaaS 现在都被迫维护两套 UI——人 UI（网页 / app）和 agent UI（MCP server）**。前者 20 年没变形态，后者从零开始且增长曲线极陡。一个 SaaS 不出 MCP server 的代价是"在 Cursor / Claude Code / Codex 的工作流里被绕过"——而那是 2026 年新增软件订阅的最大来源。
+这件事的本质 **不**是"又一个集成协议"。本质是：**任何 SaaS 现在都被迫维护两套 UI——人 UI（网页 / app）和 agent UI（MCP server）**（⚠ 解读：作者从 MCP registry 增长曲线 [[7]](https://www.digitalapplied.com/blog/mcp-adoption-statistics-2026-model-context-protocol) + Sentry / GitHub / Linear 主动出官方 server 的行为 [[8]](https://github.blog/changelog/2025-04-04-github-mcp-server-public-preview/) [[9]](https://blog.sentry.io/yes-sentry-has-an-mcp-server-and-its-pretty-good/) 中归纳的命题）。前者 20 年没变形态（⚠ 解读），后者从零开始且增长曲线极陡。一个 SaaS 不出 MCP server 的代价是"在 Cursor / Claude Code / Codex 的工作流里被绕过"——而 agent 工作流被广泛视为 2026 年新增软件订阅的关键叙事（见 2026 SaaSpocalypse 报道 [[27]](https://fortune.com/2026/03/25/ai-wall-street-software-as-a-service-productivity/)）。
 
 ## 5. 具体案例：MCP 在日常 dev 工作流的形态
 
