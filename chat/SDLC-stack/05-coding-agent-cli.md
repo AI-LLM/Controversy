@@ -1,6 +1,6 @@
 # 2026-05-14：SDLC 栈 / 终端与自治 Coding Agent 层深度研究
 
-## 1. lens：CLI agent = 可被 cron / CI / SSH / 另一个 agent 拉起的 unix 进程
+## 1. 分析视角：CLI agent = 可被 cron / CI / SSH / 另一个 agent 拉起的 unix 进程
 
 这一层与上一层（IDE 内 Copilot / Cursor）的根本分野，不是"模型更强"也不是"能力更大"，而是**形态**：CLI agent 是一个**普通的 unix 可执行文件**。
 
@@ -26,7 +26,7 @@ Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在
 
 ## 3. 形态光谱：按"进程化深度"排序
 
-市面上 6 款主流终端 / 自治 agent 都自称"在 terminal 里跑"，但它们在**进程化深度**（headless 程度、sandbox 强度、可被调用程度）上落差很大。按 lens 的三条约束打分如下（⚠ 解读；维度是作者综合 lens 推出，不是行业标准评测）：
+市面上 6 款主流终端 / 自治 agent 都自称"在 terminal 里跑"，但它们在**进程化深度**（headless 程度、sandbox 强度、可被调用程度）上落差很大。按分析视角的三条约束打分如下（⚠ 解读；维度是作者综合分析视角推出，不是行业标准评测）：
 
 **进程化最深：Devin / Factory Droids（"agent 是独立服务"）**
 - Devin 的每个任务直接在 Cognition 托管的一次性 VM 里跑，从 Linear / Jira / Slack webhook 触发，agent 全程**完全脱离任何人类 session**——它本质上是 SaaS 后端的一个 worker，CLI 只是入口之一。ACU（Agent Compute Unit，1 ACU ≈ 15 分钟 VM + 推理 + 网络）作为计费单位本身就预设"agent 是按时长跑的进程" [[4]](https://venturebeat.com/programming-development/devin-2-0-is-here-cognition-slashes-price-of-ai-software-engineer-to-20-per-month-from-500)。
@@ -47,7 +47,7 @@ Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在
 
 **进程化最浅（agent-first IDE）：Google Antigravity**
 - 2025-11-18 公开预览、Gemini 3 同步发布、"agent-first IDE"。Mission Control 视图能并行调度 5 个 agent；支持 Gemini 3.1 Pro / Flash、Claude Sonnet/Opus 4.6、GPT-OSS-120B。深度浏览器集成（agent 自己开 Chromium 跑 e2e）[[13]](https://developers.googleblog.com/build-with-google-antigravity-our-new-agentic-development-platform/)。
-- 形态上是 IDE 包 agent，所以 agent 的可被调用性弱于纯 CLI——它仍然假设有 IDE session 存在。这正好印证 lens：**离 unix 进程越远，越退回 Copilot 的窠臼**。
+- 形态上是 IDE 包 agent，所以 agent 的可被调用性弱于纯 CLI——它仍然假设有 IDE session 存在。这正好印证分析视角：**离 unix 进程越远，越退回 Copilot 的窠臼**。
 
 光谱两头的差距由此清楚：进程化越深，越往 SaaS worker 演化；越浅，越退化为"带 agent 的 IDE"。
 
@@ -73,7 +73,7 @@ Copilot / Cursor 把 agent 绑在 IDE 进程的生命周期里，agent 只能在
 - **incident-driven 修复**：PagerDuty webhook → 启动 agent → 读日志 → 定位 → 提 hotfix PR。Factory.ai 的 incident droid 就是这条线 [[15]](https://factory.ai/)。
 - **codebase migration**：Python 2→3、React class→hooks、CommonJS→ESM 类大型迁移可以让 agent 一仓一仓跑。
 
-这四类用例都共享一条结构：**触发器是另一个 unix 主体（webhook / cron / queue）而非人**。这是 lens 的字面验证。
+这四类用例都共享一条结构：**触发器是另一个 unix 主体（webhook / cron / queue）而非人**。这是分析视角的字面验证。
 
 ## 5. Claude Code：把 unix 进程做成可扩展执行环境
 
@@ -144,7 +144,7 @@ claude mcp add --transport http github \
 
 ## 6. Lens 反证：GitHub Copilot 为何在这一层失位
 
-Copilot 的失位是 lens 最有力的反证案例。Copilot 不缺资源、不缺模型、不缺渠道、不缺先发——它在 IDE 补全形态里有多年飞轮。但当形态从"在编辑器里"变成"在 terminal headless"，Copilot 内部的飞轮**一个也不能直接平移**：
+Copilot 的失位是分析视角最有力的反证案例。Copilot 不缺资源、不缺模型、不缺渠道、不缺先发——它在 IDE 补全形态里有多年飞轮。但当形态从"在编辑器里"变成"在 terminal headless"，Copilot 内部的飞轮**一个也不能直接平移**：
 
 - **分发渠道错配**：IDE 插件 marketplace 在 CLI 无用。CLI agent 走 npm / Homebrew / brew tap，根本不经过 VS Code Extension Marketplace。
 - **漏斗错配**：Copilot 的商业漏斗是"免费补全 → 付费 enterprise"，依赖"按 Tab 的那一瞬"。agent 形态里这一瞬不存在——agent 在凌晨 3 点跑，没有 Tab、没有"接受补全"的微动作。计费必须改成 token / ACU / VM 时长，整个销售剧本要重写。
@@ -159,7 +159,7 @@ GitHub 2025 才急着推 Copilot Workspace + coding agent，被 Claude Code 抢�
 
 **(a) CLI agent vs IDE agent 的长期格局**：两者不是替代关系，是**异步 vs 同步**的分工。IDE agent（Cursor、Copilot inline）覆盖 < 30 秒的同步交互；CLI agent 覆盖 > 5 分钟的异步任务（⚠ 解读；时间阈值是作者对两种形态典型 latency 的概括，非测量值）。senior 工程师从 IDE 主战场迁到 terminal + Mission Control，初级工程师还在 IDE。这条裂痕 2025–2026 已经非常清晰。
 
-**(b) Anthropic 的结构性优势**：Claude Code 让 Anthropic 在 dev 工具栈拿到**协议层（MCP）+ 客户端形态（Claude Code）+ 模型本身**三件一起出。这是"卖铲子的同时也下场挖矿"。结构性优势的根源仍是 lens——MCP 协议本身就是为"agent 进程之间互相调用"设计的，Claude Code 是这套协议第一个完整 reference implementation。
+**(b) Anthropic 的结构性优势**：Claude Code 让 Anthropic 在 dev 工具栈拿到**协议层（MCP）+ 客户端形态（Claude Code）+ 模型本身**三件一起出。这是"卖铲子的同时也下场挖矿"。结构性优势的根源仍是分析视角——MCP 协议本身就是为"agent 进程之间互相调用"设计的，Claude Code 是这套协议第一个完整 reference implementation。
 
 **(c) "可被其它系统调用"是这一层的真正护城河**：CLI agent 真正的杀手锏不是 UI，是它**作为 unix 进程的可组合性**——能被 cron 拉起、能被 GitHub Actions 调用、能被另一个 agent 当 tool。这把 coding agent 从"开发者的工具"变成"系统的一部分"。IDE agent 永远做不到，因为它绑死在 GUI。
 

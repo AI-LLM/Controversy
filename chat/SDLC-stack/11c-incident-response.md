@@ -5,7 +5,7 @@
 - **Tier 1 自治闭环（处置侧）**：无人介入即可关单的事故占比，乘以"不引入新事故"的安全边界。这一根轴解释了为什么计费单位从席位重构成 per-fix / per-incident，也解释了为什么 PagerDuty 把 AIOps 与 SRE Agent 拆成两层产品。
 - **runbook 即资产（沉淀侧）**：runbook / skill bundle 沉淀深度构成的切换成本。这一根轴解释了为什么 Resolve、Cleric、Honeycomb Canvas、Anthropic Skills 都在卷"团队默会知识可消费化"——护城河不在 LLM、不在集成数，而在客户私有 runbook 资产的厚度。
 
-"角色重分配"——on-call 从夜班变白日 review——是这两根轴交叉后的**结果**，不是 lens 本身。
+"角色重分配"——on-call 从夜班变白日 review——是这两根轴交叉后的**结果**，不是分析视角本身。
 
 ## 一、事故响应的核心：Tier 1 自治闭环 + runbook 即资产
 
@@ -61,7 +61,7 @@ PagerDuty AIOps 把 87% 噪声砍掉之后剩下的告警每一条都重要：�
 
 1. **计费单位从席位切到处置量**。Pre-Agent 时代 PagerDuty 按人头卖，逻辑是"人是稀缺的接警工"；Post-Agent 时代 Resolve / Cleric 按事故 / Tier 1 处置量卖，逻辑是"agent 是稀缺的关单工"。计费单位的迁移是 Tier 1 闭环率上探的**直接结果**——只有当"无人介入关单"成为可承诺的产品形态，per-fix 才有合同基础。这与 O5（按 volume 计）、O4（按 issue 计）的计费基底都不同，**O1' 的市场天花板因此被重画**。
 2. **护城河从集成数切到私有 runbook 资产**。早期 AI SRE 比拼"接了多少家可观测厂、多少家云、多少家 CI/CD"，集成数是显性变量；当多数玩家都接了 14+ 家之后，**真正的切换成本变成"客户在你这里沉淀了多少私有 runbook / skill bundle / 运营记忆"**。Anthropic Skills、Honeycomb Canvas、Cleric 的 operational memory——三家做同一件事：把客户默会知识固化在 agent 可消费的结构里，让客户搬家时不得不重新教一遍。**谁掌握客户 runbook，谁就掌握下一代 on-call 入口**。Resolve.ai 14 个月估值 $1B → $1.5B 押的不是 LLM，是 vendor-neutral 通道里沉淀的客户 workflow 与 runbook——这条假设如果成立，Resolve 会成为新一代 PagerDuty；不成立，会被大厂吃掉。**贵的不是模型，是私有 runbook 沉淀深度**。
-3. **岗位从夜班切到白日 review**。⚠ **解读**：on-call 工程师工作的"夜间属性"将在 24 个月内基本消失（窗口为外推，基础是 Resolve / Bits AI / AWS DevOps Agent 当前部署节奏 + Anthropic 自家 SRE 已"先 reach for Claude" [[22]](https://www.theregister.com/2026/03/19/anthropic_claude_sre)）。Tier 1 由 agent 在分钟内闭环、人在白天 review；只有 Sev-0 / 架构问题保留人值守。**41% 工程师考虑因 on-call 离职**这一基线 [[1]](https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works) 将被结构性消解——但前提是 false-fix 率足够低。岗位重分配是双主轴的**结果**而非 lens：自治闭环率上探把人从 Tier 1 顶出来、runbook 资产化把人的角色固化在"教 agent + review agent"上。**SRE 不会消失，但夜班会**。
+3. **岗位从夜班切到白日 review**。⚠ **解读**：on-call 工程师工作的"夜间属性"将在 24 个月内基本消失（窗口为外推，基础是 Resolve / Bits AI / AWS DevOps Agent 当前部署节奏 + Anthropic 自家 SRE 已"先 reach for Claude" [[22]](https://www.theregister.com/2026/03/19/anthropic_claude_sre)）。Tier 1 由 agent 在分钟内闭环、人在白天 review；只有 Sev-0 / 架构问题保留人值守。**41% 工程师考虑因 on-call 离职**这一基线 [[1]](https://incident.io/blog/alert-fatigue-solutions-for-dev-ops-teams-in-2025-what-works) 将被结构性消解——但前提是 false-fix 率足够低。岗位重分配是双主轴的**结果**而非分析视角：自治闭环率上探把人从 Tier 1 顶出来、runbook 资产化把人的角色固化在"教 agent + review agent"上。**SRE 不会消失，但夜班会**。
 
 补一句配套观察：**AIOps 与 SRE Agent 是两件事**。AIOps 解决"alert 太多"，SRE Agent 解决"alert 接下来怎么办"——PagerDuty 自己把它们拆成两层产品就是承认这一点。
 

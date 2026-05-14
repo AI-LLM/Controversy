@@ -4,7 +4,7 @@
 
 这一系列是 [`chat/美股软件股近期重挫 (2026-05-13).md`](../美股软件股近期重挫%20(2026-05-13).md) 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。本目录把每一层挖到本质：核心变量是什么、流量/任务量/接口/责任/信号等如何被 Coding Agent 重塑、新需求与代表公司技术架构。
 
-每层使用其**自然 lens**——本层的核心变量是什么就用什么。各层 lens 见下方"各层 lens 总表"。
+每层使用其**自然视角**——本层的核心变量是什么就用什么。各层分析视角见下方"各层分析视角总表"。
 
 ## 与主文件附录 III C 表的层级对应
 
@@ -52,11 +52,11 @@
 | L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |
 | L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |
 
-## 各层 lens 总表
+## 各层分析视角总表
 
-每一层都按其**自然 lens** 组织。只有 L07（CI/CD）使用任务流量 lens；其他层流量数据降级为"症状/旁证"。
+每一层都按其**自然视角** 组织。只有 L07（CI/CD）使用任务流量分析视角；其他层流量数据降级为"症状/旁证"。
 
-| 层 | 自然 lens | 一句话锐度 |
+| 层 | 自然视角 | 一句话锐度 |
 |---|---|---|
 | L01 工单 | **消费者切换 (reader switch)** | 工单读者从人脑切到 LLM；意图必须自包含；seat 经济学反转 |
 | L02 Vibe coding | **创造门槛崩塌 (creation threshold collapse)** | 能力 + 成本 + 时间三重崩塌；不切传统盘子，是增量市场 |
@@ -67,12 +67,12 @@
 | L06b AI 评审 | **信号生产 (trust signal generation)** | 五家在生产不同形状的信号（精度/召回/颗粒/窄域/多维）；合规是下游约束 |
 | L07 CI/CD | **任务流量** | PR 合并 +98%、build 5→30-80、夜间占比 10→35%；价值向 merge queue + ephemeral compute 外溢 |
 | L08 测试 | **作者-验证者分离** | 锁住组织结构 + 信号源 + 禁止 silently mutated 三层；护城河 = 独立 oracle |
-| L09 安全 | **攻击面双扩张 + 信任移交 双 lens** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |
+| L09 安全 | **攻击面双扩张 + 信任移交双视角** | 内生 +36% 与外源 slopsquatting/Shai-Hulud 双扩张；信任移交四级阶梯决定卡位 |
 | L10a 代码索引 | **代码语料的结构化抽取竞赛** | 五条路线：docstring-of-AST / GNN+数据流 / PageRank / AST chunk / 不抽取 |
 | L10b Agent 集成接口 | **集成商品化 + 通行权重新分配** | 集成被 MCP 商品化；通行权三层（gateway/registry/aggregator）是新租金位 |
 | L11a 可观测 | **四元组重组下的协议 + 数据广度 双护城河** | metrics/logs/traces/agent traces 是新货架；OTel GenAI + MCP 是新协议 |
 | L11b 错误追踪 | **调试主体迁移；O4 从仪表盘变 agent 感官** | 两端天然机器友好；Unlimited 定价是"感官不能节流"的产品推论 |
-| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是 lens |
+| L11c 事故响应 | **Tier 1 自治闭环 + runbook 即资产 双主轴** | 处置侧 + 沉淀侧两个独立维度；角色重分配是结果不是分析视角 |
 | L12 文档 + IDP | **Catalog/Docs 即 Agent 工具集 (context-as-tool)** | 同一份知识从 page 变成 tool；底层 fidelity 不达标时高 acceptance rate 反而是危险信号 |
 
 ## 16 层一句话本质

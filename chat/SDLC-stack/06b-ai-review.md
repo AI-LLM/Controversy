@@ -1,6 +1,6 @@
 # 2026-05-14：SDLC 栈 / AI 代码评审 (D5') 层深度研究
 
-本篇 lens：**signable signal generation（可签字信号生产）**——AI 代码评审层卖的不是 diff 吞吐，而是把 Agent 写出的密集 diff 流压缩成组织敢落章的离散判断单元。
+本篇分析视角：**signable signal generation（可签字信号生产）**——AI 代码评审层卖的不是 diff 吞吐，而是把 Agent 写出的密集 diff 流压缩成组织敢落章的离散判断单元。
 
 ---
 

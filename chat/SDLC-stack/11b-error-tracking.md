@@ -1,6 +1,6 @@
 # 2026-05-14：SDLC 栈 / 错误追踪与 AI Debugging (O4) 层深度研究
 
-本篇 lens：**调试主体迁移；O4 从仪表盘变 agent 的感官 (debugging subject migration; O4 from dashboard to agent's sensorium)**。L11b 处于 SDLC 数据栈里**两端都已经天然机器友好**的稀有位置——input 端 stack trace 自带结构化、output 端修复点 (file/line/function) 也自带结构化，agent 中间只夹一层根因推理就能闭环。
+本篇分析视角：**调试主体迁移；O4 从仪表盘变 agent 的感官 (debugging subject migration; O4 from dashboard to agent's sensorium)**。L11b 处于 SDLC 数据栈里**两端都已经天然机器友好**的稀有位置——input 端 stack trace 自带结构化、output 端修复点 (file/line/function) 也自带结构化，agent 中间只夹一层根因推理就能闭环。
 
 ## 一、O4 两端天然机器友好
 
@@ -37,7 +37,7 @@ debug 主体不得不迁移。L11b 的整条供给侧——从 Sentry 到 Datado
 
 ## 三、O4 从仪表盘变 agent 感官：MCP / rules / hand-off 三件套
 
-把"主体是 agent"翻译成产品就是三件事：感官接入、行为规范读取、推理结果的下游 hand-off。这三件在 Sentry 2025–2026 路线图里被同时落地，构成一个**"感官层"** 的三件套——它们不是孤立 feature，是同一条 lens 的三个出口。
+把"主体是 agent"翻译成产品就是三件事：感官接入、行为规范读取、推理结果的下游 hand-off。这三件在 Sentry 2025–2026 路线图里被同时落地，构成一个**"感官层"** 的三件套——它们不是孤立 feature，是同一条分析视角的三个出口。
 
 **(1) MCP server = 感官接入**。`Sentry MCP` 让 Claude Code 在写代码阶段就直读 Sentry [[11]](https://docs.sentry.io/ai/mcp/), [[12]](https://github.com/getsentry/sentry-mcp)。配置一行：
 

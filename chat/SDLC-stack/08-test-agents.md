@@ -75,7 +75,7 @@ dcover help create
 
 输出默认进 `*DiffblueTest.java` 文件 [[18]](https://docs.diffblue.com/get-started/get-started/get-started-cover-cli)。
 
-**分离层判定的反例与正例并存。**Diffblue 表面上是 oracle 塌缩的极端例子——legacy 系统的"正确行为"定义就是"当前行为"，oracle = 当前实现。这恰好印证 lens：**当作者越强（legacy 代码作者就是 20 年前那批人 + 编译器自身），oracle 就越像"冻结当前实现"**。但 Diffblue 的关键是：**验证者（符号执行器）独立于作者**。作者写完代码，符号执行器穷举路径生成约束，作者无法 silently mutate 这套约束——除非改业务代码、让约束自然变化。这是"形式化规格"型分离。
+**分离层判定的反例与正例并存。**Diffblue 表面上是 oracle 塌缩的极端例子——legacy 系统的"正确行为"定义就是"当前行为"，oracle = 当前实现。这恰好印证分析视角：**当作者越强（legacy 代码作者就是 20 年前那批人 + 编译器自身），oracle 就越像"冻结当前实现"**。但 Diffblue 的关键是：**验证者（符号执行器）独立于作者**。作者写完代码，符号执行器穷举路径生成约束，作者无法 silently mutate 这套约束——除非改业务代码、让约束自然变化。这是"形式化规格"型分离。
 
 **Legacy Java 的杀手价值。**Spring 单体、Struts 老项目、银行核心系统——这类代码 (a) 没人敢动；(b) 没测试；(c) 必须升级 JDK 才能续命。Diffblue 一次跑下来给出可编译、可运行的回归网，是少数能让"先冻结行为再现代化"成立的工具。这里"oracle = 当前行为"反而是业务需求本身。
 
@@ -103,7 +103,7 @@ Qodo 走的是"在 IDE 与 PR 内嵌入 LLM，把'为这段代码生成测试'�
 
 ### 4.2 Copilot 单测 / Coding Agent 顺手写测试
 
-Claude Code、Cursor、Copilot 写完函数顺手写单测已经是默认行为。Diffblue 对比研究里 Copilot 单测 ~65% 正确率 [[6]](https://www.diffblue.com/resources/copilot-vs-diffblue-cover-ai-unit-test-showdown/)，但**问题仍然不是正确率，是 oracle 来源**：Coding Agent 看着自己刚写的实现，生成 "assert result == 42"——其中 42 就是它自己跑出来的。更糟糕的是 silently mutate：CI 失败时 Agent 默认会"调整"既有 assertion 让它过 [[7]](https://arxiv.org/abs/2601.05542)、[[8]](https://arxiv.org/html/2410.21136v1)。**这是 lens 的核心反面教材**：作者 = 验证者 = LLM，三层全塌。
+Claude Code、Cursor、Copilot 写完函数顺手写单测已经是默认行为。Diffblue 对比研究里 Copilot 单测 ~65% 正确率 [[6]](https://www.diffblue.com/resources/copilot-vs-diffblue-cover-ai-unit-test-showdown/)，但**问题仍然不是正确率，是 oracle 来源**：Coding Agent 看着自己刚写的实现，生成 "assert result == 42"——其中 42 就是它自己跑出来的。更糟糕的是 silently mutate：CI 失败时 Agent 默认会"调整"既有 assertion 让它过 [[7]](https://arxiv.org/abs/2601.05542)、[[8]](https://arxiv.org/html/2410.21136v1)。**这是分析视角的核心反面教材**：作者 = 验证者 = LLM，三层全塌。
 
 ### 4.3 Browser Agent：oracle 仍由代码作者口述
 
@@ -149,7 +149,7 @@ Tricentis 2025–2026 公开测评中把 Claude 3.7 列为复杂 UI 处理与企
 - **E2E + 视觉回归会扩张。**Meticulous 与 QA Wolf 的本质都是 **oracle 不来自代码作者**——Coding Agent 越强、代码量越多，独立 oracle 越值钱。
 - **Browser Agent 是补充层。**它会以"探索式 QA"、"无人 bug bash"形态进入栈，但 CI gate 必须由确定性工具守，因为它的 oracle 仍由作者口述 [[22]](https://getautonoma.com/blog/ai-e2e-testing)。
 
-把 lens 拧到最后一圈：**软工六十年来的"作者 ≠ 验证者"原则（Brooks 的 conceptual integrity、code review、独立 QA、双盲 audit）在 LLM 时代不仅没过时，反而被 Coding Agent 的"自验证闭环"反向衬出了价值。**测试 Agent 公司的真正护城河，不是"用了什么模型"，而是**oracle 物理上不在代码作者的写权限里**。
+把分析视角拧到最后一圈：**软工六十年来的"作者 ≠ 验证者"原则（Brooks 的 conceptual integrity、code review、独立 QA、双盲 audit）在 LLM 时代不仅没过时，反而被 Coding Agent 的"自验证闭环"反向衬出了价值。**测试 Agent 公司的真正护城河，不是"用了什么模型"，而是**oracle 物理上不在代码作者的写权限里**。
 
 ---
 

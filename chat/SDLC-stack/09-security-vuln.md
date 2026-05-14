@@ -1,6 +1,6 @@
 # 2026-05-14：SDLC 栈 / 安全与漏洞 (D3) 层深度研究
 
-D3 层（漏洞 / 供应链 / 密钥）的市场盘子不取决于 PR 数量，而取决于两件事：攻击面的形态如何被 Coding Agent 重塑，信任结构如何在人类 reviewer、AI reviewer、工具调用沙盒、运行时行为证明之间迁移。本报告用两个 lens 串起 Snyk、Socket、GitGuardian、Semgrep、Endor Labs、Aikido、Veracode、Anthropic Claude Code Security、CodeQL/GitHub 的现状：一是**攻击面双扩张**（内生漏洞密度 + 外源供应链），二是**信任移交四级阶梯**。
+D3 层（漏洞 / 供应链 / 密钥）的市场盘子不取决于 PR 数量，而取决于两件事：攻击面的形态如何被 Coding Agent 重塑，信任结构如何在人类 reviewer、AI reviewer、工具调用沙盒、运行时行为证明之间迁移。本报告用两个分析视角串起 Snyk、Socket、GitGuardian、Semgrep、Endor Labs、Aikido、Veracode、Anthropic Claude Code Security、CodeQL/GitHub 的现状：一是**攻击面双扩张**（内生漏洞密度 + 外源供应链），二是**信任移交四级阶梯**。
 
 ## 1. 这一层的核心是信噪比 + MTTR
 
