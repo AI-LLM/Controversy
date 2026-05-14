@@ -12,7 +12,7 @@ Pre-Agent 栈里"代码上下文获取"的语料形态是**人脑工作记忆 + 
 
 - **grep / ripgrep**：字面量、正则。准、召回低、不懂语义（找 `getUser` 找不到 `fetchUser`）。
 - **IDE find references / go-to-definition**：靠 LSP / SCIP，精确但只对已建过索引的语言有效，跨仓库瓶颈明显。
-- **Sourcegraph 早期 code search**（2013 年由 Quinn Slack / Beyang Liu 创立 [[3]](https://en.wikipedia.org/wiki/Sourcegraph)）：把 grep + LSP-类符号图扩到**组织级跨仓库**ProductX 化 [[4]](https://sourcegraph.com/blog/anatomy-of-a-coding-assistant)。
+- **Sourcegraph 早期 code search**（2013 年由 Quinn Slack / Beyang Liu 创立 [[3]](https://en.wikipedia.org/wiki/Sourcegraph)）：把 grep + LSP-类符号图扩到**组织级跨仓库**产品化 [[4]](https://sourcegraph.com/blog/anatomy-of-a-coding-assistant)。
 - **ctags / cscope**：90 年代留下的符号索引，至今仍在 Linux 内核开发圈广泛使用。
 
 这套体系的设定是"**人是检索者，工具是过滤器**"——人脑判断"哪个结果相关"，工具只负责快。成功度量是"开发者每天 grep 几次"，没人问"grep 把 token 分配得好不好"，因为没有 token。
