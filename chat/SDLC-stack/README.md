@@ -4,7 +4,7 @@
 
 这一系列是 `chat/美股软件股近期重挫 (2026-05-13).md` 附录 III 的展开。该附录的 C 节给出了 SDLC 栈 **18 行**的 Pre-Agent / Post-Agent 对比框架，每行只能放一句结论。**用户要求把每一层用 subagent 并行深度研究，挖到流量/任务量模式突变 → 新需求 → 解决方案 → 案例代码 这一层的本质**。范本是 namespace.so（CI/CD 那一层）。
 
-16 个 subagent 并行后台执行，每个一篇独立报告，按 namespace.so 范式作答：
+17 个 subagent 并行后台执行（16 个原始层 + 1 个 2026-05-14 补充层 L13），每个一篇独立报告，按 namespace.so 范式作答：
 1. Pre-Agent 流量/任务量模式
 2. Agent 时代如何突变
 3. 由此产生的新需求
@@ -13,7 +13,7 @@
 
 ## 与主文件附录 III C 表的层级对应
 
-主文件 C 表 **18 行 → 本目录 16 个文件**。两处保持有意合并（**L04** 和 **L05** 的产品本身跨界，强行拆开 70% 内容重复）；其余 3 处合并（原 L06/L10/L11）已按用户要求拆开。
+主文件 C 表 **18 行 → 本目录 17 个文件**。两处保持有意合并（**L04** 和 **L05** 的产品本身跨界，强行拆开 70% 内容重复）；其余 3 处合并（原 L06/L10/L11）已按用户要求拆开。**L13 是 5/14 补充层**，C 表写作时漏了"产品供给侧改造"这条方向。
 
 | 主文件 C 表行 | 本目录文件 | 备注 |
 |---|---|---|
@@ -33,12 +33,13 @@
 | O4 错误追踪 | [`11b-error-tracking.md`](11b-error-tracking.md) | 已从原 L11 拆出 |
 | O1' 事故响应 | [`11c-incident-response.md`](11c-incident-response.md) | 已从原 L11 拆出 |
 | M1 文档 | [`12-docs-idp.md`](12-docs-idp.md) | 含 M3 IDP（C 表未单列） |
+| **（新增）** L13 GUI → Agent 化（供给侧） | [`13-agent-interfaces.md`](13-agent-interfaces.md) | **5/14 补充**：C 表写作时漏了"产品方如何被迫给 Agent 长脸"这条主线 |
 
-**总文件数 16 = 18 行 − 2 处有意合并**。
+**总文件数 17 = 18 行 C 表 − 2 处有意合并 + 1 处补充层**。
 
 ## 文件统计
 
-合计正文约 **5.5 万字**，~350 条 IEEE 引用，全部用 WebSearch / WebFetch 拉的 2025–2026 一手数据。所有引用经独立审计 round 修正：能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。
+合计正文约 **6.3 万字**，~400 条 IEEE 引用，全部用 WebSearch / WebFetch 拉的 2025–2026 一手数据。所有引用经独立审计 round 修正：能找到出处的全部带 `[[N]](URL)`，找不到出处的所有数字 / 命名声明均显式标注 `⚠ 估算 / 解读` 并写明依据。
 
 | # | 层 | 文件 | 字数 | 关键代表公司 |
 |---|---|---|---|---|
@@ -58,8 +59,9 @@
 | L11b | 错误追踪 / AI Debugging | [11b-error-tracking.md](11b-error-tracking.md) | ~2400 | Sentry Seer、Rollbar、Bugsnag、Datadog Error Tracking |
 | L11c | 事故响应 / AI SRE | [11c-incident-response.md](11c-incident-response.md) | ~2700 | Resolve.ai、Cleric、Parity、Robusta、Incident.io |
 | L12 | 文档 + IDP | [12-docs-idp.md](12-docs-idp.md) | ~3000 | Mintlify、Backstage、Cortex、Port |
+| **L13** | **GUI → Agent 化（产品供给侧）** | [13-agent-interfaces.md](13-agent-interfaces.md) | ~3500 | Stripe Agent Toolkit、Cloudflare MCP、Computer Use、Operator、Browserbase、Manus AI、Skyvern、browser-use |
 
-## 16 层一句话本质
+## 17 层一句话本质
 
 | 层 | 一句话本质 |
 |---|---|
@@ -79,6 +81,7 @@
 | **L11b 错误追踪** | Sentry Seer 是 "error → root cause → fix PR" 闭环范本；error tracking 工具变成 agent 的修复入口 |
 | **L11c 事故响应** | on-call Tier 1 由 agent 接管；alert fatigue 42 pages/wk 中位数推动 AI SRE 赛道（Resolve $1.5B 估值）|
 | **L12 文档 + IDP** | 文档主要读者从人变成 Agent；买家从 tech writer 转向 platform engineering；Confluence/Notion 搜索价值被 LLM 内置搜索清零 |
+| **L13 GUI → Agent 化** | 2025 自动化流量首次过半（Imperva 51%、Cloudflare bot 30%、HUMAN agentic AI +7851% YoY），SaaS 必须三选一：CLI / MCP / 浏览器 Agent；Cloudflare HTTP 402 把反 Bot 从成本中心变成收入中心 |
 
 ## 跨层主线（6 条贯穿整个 dev 栈的规律）
 
@@ -95,6 +98,7 @@
 - **on-call alert 量**：60 天后 −70~95%（L11c）
 - **AI 代码漏洞密度**：+36%（L09）
 - **AI-service secret 泄漏**：+81%（GitGuardian，L09）
+- **自动化流量首次过半**：Imperva 51%、Cloudflare bot 30%、HUMAN agentic AI 同比 **+7 851%**（L13）—— SaaS "GUI-first" 默认假设被打穿
 
 ### 2. 真正受益的是"基础设施 + 中间件 + 安全 + 可观测"，被吃掉的是"流程 SaaS"
 
