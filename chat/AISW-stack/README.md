@@ -7,6 +7,61 @@
 - **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从 GPU 驱动到 ChatGPT / Cursor / Devin 一根通。
 - **B–G. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径，不进 LLM 推理服务和 Agent 中间件那条线。
 
+## L 层 × 分支 总表
+
+横轴 7 列对应 **A 主干 + B–G 6 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：
+
+- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。
+- `—`：该层在该分支不存在或可忽略。
+- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。
+  - L35 HPC 作业调度 / 工作流（B 专属：Slurm / PBS / Spack 这一段在 LLM 训练里被 K8s + Ray 取代）
+  - L36 机器人 / 实时中间件（C / D 共用：ROS 2 / DriveWorks / AUTOSAR / Holoscan）
+  - L37 物理仿真 / 数字孪生引擎（B / C / D / E 共用：Isaac Sim / MuJoCo / GROMACS / CARLA / Omniverse）
+  - L38 高精地图 / 定位（D 专属）
+
+| L | A. LLM / Agent | B. 科学计算 | C. 机器人 | D. 自动驾驶 | E. 世界模型 / 3D | F. 经典 CV | G. 量化金融 |
+|---|---|---|---|---|---|---|---|
+| L01 GPU 驱动 / 固件 | NVIDIA / ROCm / Metal / Gaudi driver | 同 A | 同 A | 同 A + NVIDIA DRIVE OS driver | 同 A | 同 A + Hailo / Qualcomm QNN driver | 同 A |
+| L02 互连 / 集合通信 | NVLink, NCCL, InfiniBand | 同 A，重 MPI + InfiniBand | NVLink for AGI rig；车端 PCIe | NVLink-C2C 整车 + 仿真集群 IB | 同 A | 边缘多无互连 | 同 A |
+| L03 GPU 编程模型 | CUDA, ROCm, Metal, SYCL | 同 A + Julia CUDA.jl | 同 A | 同 A | 同 A | 同 A + Apple Metal | 同 A + RAPIDS |
+| L04 GPU 内核库 | cuBLAS, cuDNN, FlashAttention, NCCL, CUTLASS | cuFFT, cuSolver, cuSPARSE, cuQuantum, NVSHMEM | cuDNN + Isaac CUDA kernels | cuDNN + TensorRT plugins | 3DGS rasterizer, NeRF CUDA kernels | cuDNN + TensorRT INT8 | cuDF, cuML, cuOpt |
+| L05 编译器 / IR | Triton, XLA, MLIR, TVM, torch.compile | 同 A + Codon | 同 A | TensorRT, NVIDIA DLA, TVM | 同 A | TensorRT, OpenVINO, Apple Core ML compiler | 同 A |
+| L06 张量 / 训练框架 | PyTorch, JAX, MLX, TensorFlow | NumPy, SciPy, CuPy, JAX, PyTorch, Julia | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch, JAX, threestudio | PyTorch + OpenMMLab | scikit-learn, XGBoost, LightGBM, PyTorch |
+| L07 分布式训练 | DeepSpeed, Megatron, FSDP, NeMo, Ray Train | MPI + NCCL（HPC 风格而非 ZeRO） | 多在单 / 几卡 | 同 A（仿真 + 路采联训） | 同 A（video diffusion 训练） | 同 A | 多单卡 |
+| L08 训练数据 pipeline | FineWeb, datatrove, Mosaic Streaming | 实验数据 + 仿真合成 | Open X-Embodiment, DROID, LeRobot dataset | 路采 + 影子模式 + Auto-labeling | 多视角视频 / 3D scan | Roboflow, Encord, Labelbox, FiftyOne | 时间序列 + 因子库 |
+| L09 后训练 / 微调 | TRL, verl, Unsloth, Axolotl | 极少（预训练即终态） | LeRobot, Diffusion Policy, ACT | RLHF on driving sims | 极少 | YOLO finetune + 蒸馏 | sklearn 训练即生产 |
+| L10 基础模型权重 | Llama, Claude, GPT, Qwen, DeepSeek | AlphaFold 3, GraphCast, MatterGen, scGPT, Evo 2 | GR00T N1, π0 / π0.5, RT-2, OpenVLA, RDT-1B | Tesla FSD V13/14, Waymo Driver, Wayve LINGO | Genie 3, Marble, Cosmos | YOLOv11, SAM 2, Florence-2, RT-DETR | BloombergGPT, FinGPT, TimeGPT, Chronos |
+| L11 评测 / 基准 | MMLU, SWE-bench, MTEB, METR Time Horizons | CASP, WeatherBench, Matbench Discovery | RLBench, CALVIN, LIBERO | nuScenes, KITTI, Argoverse, CARLA Leaderboard | VBench, 3D-FUTURE | COCO, ImageNet, Open Images | Sharpe / Sortino / IR |
+| L12 实验追踪 / MLOps | W&B, MLflow, Neptune | 同 A | 同 A | 同 A + 闭源整车数据平台 | 同 A | 同 A | 同 A |
+| L13 推理引擎 | vLLM, TensorRT-LLM, SGLang, llama.cpp | BioNeMo NIM 引擎, Modulus runtime | Isaac ROS GEMs runtime | NVIDIA DRIVE OS, Mobileye EyeQ runtime, openpilot | 3DGS renderer, Instant-NGP runtime | NVIDIA DeepStream, Intel OpenVINO, Apple Core ML | 通常无独立引擎 |
+| L14 模型服务 / 编排 | Triton Inference, Ray Serve, BentoML | BioNeMo NIM Microservices, Earth-2 Studio | Isaac Manipulator, MoveIt 2 servers | Tesla inference fleet, Mobileye OTA | NVIDIA Omniverse Kit | DeepStream pipeline, VMS 平台 | 自建 Python / QuantConnect cloud |
+| L15 GPU 云 / 算力市场 | CoreWeave, Lambda, Crusoe, Nebius | Rescale, AWS HPC, Azure CycleCloud | Tesla 自建, Figure GPU farm | Tesla Dojo, Mobileye 自建 | RunPod, fal.ai | AWS Panorama 边缘 | 通用 AWS / GCP |
+| L16 模型 API 聚合 | OpenRouter, Together, Fireworks, Groq | — | — | — | fal.ai 3D 模型托管 | Replicate（YOLO / SAM 托管） | — |
+| L17 前沿模型 API | Anthropic, OpenAI, Gemini, xAI, DeepSeek | Isomorphic AlphaFold Server, Schrödinger LiveDesign API | Skild Brain API, π API（内部） | — | World Labs Marble API, Decart Mirage | — | Bloomberg API |
+| L18 LLM 应用框架 | LangChain, LlamaIndex, DSPy, Vercel AI SDK | — | — | — | — | — | — |
+| L19 Embedding / 重排序 | OpenAI text-embedding-3, Cohere Embed, BGE | ESM-2 / 3（蛋白）, MolE（分子） | — | — | OpenCLIP, SigLIP | CLIP, SigLIP, DINOv2 | FinBERT embedding |
+| L20 向量数据库 / 检索 | Pinecone, Weaviate, Qdrant, Milvus | FAISS（蛋白 / 分子搜索） | — | — | 3D scene 索引（少） | Roboflow Universe | — |
+| L21 长期记忆 | Mem0, Zep, Letta | — | （仅 in-context） | — | — | — | — |
+| L22 LLM 网关 / 路由 | LiteLLM, Portkey, Cloudflare AI Gateway | — | — | — | — | — | — |
+| L23 Prompt 管理 / 缓存 | PromptLayer, Langfuse Prompts, Braintrust | — | — | — | — | — | — |
+| L24 Agent 框架 | LangGraph, AutoGen, Claude Agent SDK | — | VLA 控制循环（**非 Agent 概念**） | 端到端策略（**非 Agent**） | — | — | — |
+| L25 工具协议 / MCP | Anthropic MCP, Composio, Arcade | — | — | — | — | — | — |
+| L26 浏览器 / Computer Use | Browserbase, Operator, browser-use | — | — | — | — | — | — |
+| L27 代码 / Agent 沙箱 | E2B, Modal Sandbox, Daytona | — | — | — | — | — | — |
+| L28 LLM 观测 / 追踪 | Langfuse, Arize, LangSmith | — | Foxglove, Datadog | 自动驾驶闭源遥测平台 | — | Prometheus + Grafana | — |
+| L29 Guardrails / 安全 | Guardrails AI, NeMo Guardrails, Lakera | — | ISO 13482 服务机器人安全 | ISO 26262 + 21448 SOTIF + UNECE R157 | — | — | — |
+| L30 LLM 评测 / 测试 | Promptfoo, DeepEval, Ragas | — | — | — | — | — | — |
+| L31 语音 (TTS / ASR) | ElevenLabs, Whisper, Cartesia, Deepgram | — | Figure 接 ElevenLabs; NVIDIA Riva | Cerence 车载语音 | — | — | — |
+| L32 图像 / 视频 / 3D 生成 | Midjourney, Sora, FLUX, Runway | — | — | — | 与 E 段相互渗透 | — | — |
+| L33 通用对话 / 搜索 Agent | ChatGPT, Claude.ai, Gemini, M365 Copilot, SAP Joule | — | — | — | — | — | — |
+| L34 垂直 Agent 应用 | Cursor, Devin, Salesforce Agentforce, SAP Joule | AlphaFold Server, Schrödinger LiveDesign client | Tesla Optimus, Figure 02, 1X Neo, Unitree GD01 | Tesla FSD, Waymo One, Mobileye Chauffeur | World Labs Marble app, Genie 3 playground | Hikvision, Cognex, Aidoc, Standard AI | Bloomberg Terminal, FactSet Mercury, AlphaSense, Hebbia |
+| L35 HPC 作业调度 / 工作流 | — | Slurm, PBS, LSF, Spack, EasyBuild | — | — | — | — | — |
+| L36 机器人 / 实时中间件 | — | — | ROS 2, micro-ROS, MoveIt 2, NVIDIA Holoscan, PX4, QNX | NVIDIA DriveWorks, AUTOSAR Classic / Adaptive | — | — | — |
+| L37 物理仿真 / 数字孪生引擎 | — | GROMACS, OpenMM, LAMMPS, NAMD, JAX-CFD, PhiFlow | Isaac Sim, MuJoCo, Gazebo, Genesis, Drake, Habitat | NVIDIA DRIVE Sim, Applied Intuition, CARLA, AirSim | NVIDIA Omniverse + USD, Unity ML-Agents | — | — |
+| L38 高精地图 / 定位 | — | — | — | HERE, TomTom, 四维图新, Mapbox | — | — | — |
+
+---
+
 ## A. LLM / Agent 主干 — 全栈总览（34 层）
 
 按"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用"九大段组织。
