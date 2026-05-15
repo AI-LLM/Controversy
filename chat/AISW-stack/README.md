@@ -142,6 +142,22 @@
 - `neuron-ls` / `neuron-top`[[261]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/neuron-runtime/index.html)（对位 `nvidia-smi`）
 - AWS Neuron Container Toolkit[[260]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/release-notes/runtime/aws-neuronx-dkms/index.html)（EKS / ECS 接入）
 
+**高通（Qualcomm）**：
+- Adreno GPU driver[[873]](https://developer.qualcomm.com/software/adreno-gpu-sdk)（Android / Windows on Snapdragon，KGSL 内核侧 + 用户态 OpenCL / Vulkan / OpenGL ES）
+- Hexagon DSP / NPU driver（FastRPC + ADSP/CDSP/NSP 固件，SoC 内置 Hexagon Tensor Processor）
+- Qualcomm Cloud AI 100[[872]](https://www.qualcomm.com/products/technology/processors/cloud-artificial-intelligence/cloud-ai-100) PCIe driver（QAic 数据中心推理卡的内核驱动 + Platform SDK）
+- Snapdragon Ride[[753]](https://www.qualcomm.com/automotive/solutions/snapdragon-ride) Vision SDK driver stack（车载 SA8775P / SA8295P）
+
+**联发科（MediaTek）**：
+- Mali GPU / Imagination GPU driver（Dimensity / Genio / Kompanio SoC 多用 Arm Mali，少数用 Imagination IMG）
+- MediaTek APU (AI Processing Unit) driver[[874]](https://neuropilot.mediatek.com/)（NeuroPilot driver + APU firmware，Android Neural Networks HAL 后端）
+- Dimensity Auto[[875]](https://www.mediatek.com/products/automotive) 平台驱动（车机 MT2731 / Dimensity Auto Cockpit）
+
+**瑞芯微（Rockchip）**：
+- Mali GPU driver（RK3588 / RK3576 / RK3568 多用 Arm Mali-G610 / G52，社区 Panfrost 替代驱动渐熟）
+- RKNPU driver[[879]](https://github.com/rockchip-linux/rknpu2)（`rknpu_ko` 内核模块；RK3588 6 TOPS、RK3576 6 TOPS、RV1106 / RV1109 边缘视觉子系列）
+- RKNN Runtime[[879]](https://github.com/rockchip-linux/rknpu2)（用户态 `librknnrt.so`，对位 NVIDIA `libnvidia-ml` + TensorRT runtime）
+
 ## L02 GPU 互连 / 集合通信
 
 多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。
@@ -183,6 +199,9 @@
 - Apple：Metal[[15]](https://developer.apple.com/metal/) + Metal Performance Shaders（MPS）+ Metal Shading Language（MSL）+ MetalFX；ANE（Apple Neural Engine）通过 Core ML / BNNS 间接暴露，无公开 kernel-level API
 - AWS：AWS Neuron SDK[[283]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/about-neuron/index.html) + NKI[[284]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/nki/)（Neuron Kernel Interface，Python DSL，对位 CUDA C++ + Triton）+ Neuron PyTorch / JAX 适配层
 - Microsoft（Windows-only 跨厂商加速线）：DirectX 12 / Direct3D 12 Compute[[285]](https://learn.microsoft.com/en-us/windows/win32/direct3d12/direct3d-12-graphics) + HLSL（着色器与计算 kernel 写法）+ DirectML[[286]](https://learn.microsoft.com/en-us/windows/ai/directml/dml)（基于 D3D12 的硬件无关 ML 计算 API，NVIDIA / AMD / Intel / Qualcomm Windows 端通吃）+ DirectStorage[[287]](https://devblogs.microsoft.com/directx/directstorage-api-available-on-pc/)（高速 IO，GPU 直读）
+- 高通（Qualcomm）：Qualcomm AI Engine Direct (QNN)[[793]](https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk)（Hexagon NPU + Adreno GPU + Kryo CPU 统一编程接口，C / C++ + Python 适配）+ Hexagon SDK[[868]](https://developer.qualcomm.com/software/hexagon-dsp-sdk)（HVX 向量 / HMX 矩阵指令、scalar / vector / tensor 三种 kernel 写法）+ SNPE[[869]](https://www.qualcomm.com/developer/software/neural-processing-sdk-for-ai)（Snapdragon Neural Processing Engine，传统 model-loading runtime）+ Adreno SDK[[873]](https://developer.qualcomm.com/software/adreno-gpu-sdk)（OpenCL / Vulkan / OpenGL ES）
+- 联发科（MediaTek）：NeuroPilot SDK[[874]](https://neuropilot.mediatek.com/)（统一 APU / GPU / DSP / CPU 编程接口，对位 QNN；含 NeuroPilot Compiler、NeuroPilot Runtime、NN-Tools）+ Android NNAPI 后端 + ArmNN / TFLite delegate
+- 瑞芯微（Rockchip）：RKNN-Toolkit2[[878]](https://github.com/airockchip/rknn-toolkit2)（Python 模型转换 + 量化 + 仿真，对位 TensorRT 前端）+ RKNN C/C++ API（用户态 kernel 调度）+ RKNPU2 runtime[[879]](https://github.com/rockchip-linux/rknpu2)（设备侧执行器）
 
 **跨厂商 / 便携后端**：
 - OpenCL 3.0[[288]](https://www.khronos.org/opencl/)（跨厂商，地位下滑但仍在嵌入式 / Android）
@@ -209,6 +228,9 @@
 - 华为：CANN ACLNN[[298]](https://www.hiascend.com/document/detail/en/canncommercial/800/apiref/)（Ascend Neural Network Operator Library）
 - Apple：BNNS / BNNSGraph[[299]](https://developer.apple.com/documentation/accelerate/bnns)（Accelerate 内 Basic Neural Network Subroutines）+ MPS Graph + Core ML kernel library
 - AWS：Neuron Custom Operators 库 + AWS Neuron[[283]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/about-neuron/index.html) `libnrt` 算子集
+- 高通：QNN op packages（HTP / GPU / DSP backend 各自一套预编译算子集）+ Hexagon NN library（HVX / HMX fused conv / matmul / attention）+ AIMET[[871]](https://github.com/quic/aimet) 量化感知 op set
+- 联发科：NeuroPilot SDK 内置 APU op library + TFLite GPU delegate（Mali / Imagination）
+- 瑞芯微：RKNN op set（卷积 / Transformer / Attention 已支持 Llama / Qwen / Whisper / YOLO 主流结构）+ MatMul / Softmax INT4 / INT8 fused kernels（RK3588 / RK3576 NPU 上）
 
 **GEMM 模板 / kernel 编写库**：
 - NVIDIA：CUTLASS（FlashAttention[[22]](https://github.com/dao-ailab/flash-attention) / vLLM 大量复用）
@@ -246,6 +268,9 @@
 - 华为：CANN Graph Engine[[309]](https://www.hiascend.com/en/cann)（GE）+ TBE / AscendC 算子编译器；MindSpore Graph Engine[[310]](https://github.com/mindspore-ai/mindspore)（MindSpore IR / MindIR）
 - Apple：Metal Compiler[[311]](https://developer.apple.com/documentation/metal/metal-libraries)（`metal` + `metallib`）+ Core ML Compiler[[312]](https://developer.apple.com/documentation/coreml)（`coremlcompiler`，把 `.mlmodel` / `.mlpackage` 编成 ANE / GPU / CPU 多目标 program）+ MLX JIT[[313]](https://github.com/ml-explore/mlx)
 - AWS：Neuron Compiler[[314]](https://awsdocs-neuron.readthedocs-hosted.com/)（接 PyTorch / JAX / XLA HLO → NEFF 二进制格式）+ XLA-Neuron 后端
+- 高通：QNN Converter / QNN Model Compiler（ONNX / TFLite / PyTorch → QNN context binary `.bin`，可分派到 HTP / GPU / CPU）+ Hexagon LLVM toolchain（`hexagon-clang`，HVX / HMX 自动向量化）+ AI Hub[[870]](https://aihub.qualcomm.com/) 云端模型编译流水线（用户上传 PyTorch / ONNX，平台自动编译并跑真机 benchmark）
+- 联发科：NeuroPilot Compiler[[874]](https://neuropilot.mediatek.com/)（DLA / TFLite → APU 可执行格式）+ MDLA backend（MediaTek Deep Learning Accelerator IR）
+- 瑞芯微：RKNN-Toolkit2 Converter[[878]](https://github.com/airockchip/rknn-toolkit2)（ONNX / PyTorch / TensorFlow / Caffe → `.rknn` 模型；含 PTQ 量化、混合精度、graph fusion；事实上的国产边缘转换器主流）
 
 **跨厂商 / 上层 IR 与 JIT**：
 - OpenAI Triton[[315]](https://github.com/triton-lang/triton)（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准；NVIDIA / AMD / Intel 各自维护后端）
@@ -360,6 +385,9 @@ run、metric、artifact、sweep、模型 registry。
 - 华为：MindIE[[384]](https://www.hiascend.com/en/developer/software/mindie)（Mind Inference Engine，对位 TensorRT-LLM）+ MindSpore Lite[[385]](https://www.mindspore.cn/lite/en)（端边一体）+ Ascend vLLM 适配层
 - Apple：Core ML（端侧默认推理路径，自动分派 ANE / GPU / CPU）+ MLX（M 系列 GPU 上的 PyTorch-like 框架，含 mlx-lm）+ MPSGraph[[386]](https://developer.apple.com/documentation/metalperformanceshadersgraph) + llama.cpp Metal 后端
 - AWS：AWS Neuron + Transformers-Neuronx[[387]](https://aws.amazon.com/ai/machine-learning/neuron/)（Trainium / Inferentia2 上 LLM 推理库）+ vLLM Neuron 后端 + DJLServing[[388]](https://github.com/deepjavalibrary/djl-serving) Neuron
+- 高通（端侧 / 数据中心两线）：Qualcomm AI Engine Direct (QNN)[[793]](https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk) runtime（手机 / Copilot+ PC / 车机）+ Qualcomm Genie[[882]](https://www.qualcomm.com/developer/software/genie-sdk)（On-Device 生成式 AI SDK，2024-10 发布；Llama 3 / Phi-3 在 Snapdragon 8 Gen 3 / 8 Elite 上跑 20+ tokens/s）+ AI Hub Models（Qualcomm 维护 100+ 优化模型）+ Cloud AI 100[[872]](https://www.qualcomm.com/products/technology/processors/cloud-artificial-intelligence/cloud-ai-100) Apps SDK（数据中心 PCIe 卡，vLLM 后端）；llama.cpp + MLC-LLM 通过 QNN backend 接入
+- 联发科：NeuroPilot SDK runtime[[874]](https://neuropilot.mediatek.com/) + Dimensity 9400 / 9500 上的端侧 LLM 推理（Llama 3 8B 4-bit @ 20+ tokens/s）+ Genio Model Library[[876]](https://www.mediatek.com/products/iot)（IoT / Edge AI）+ Kompanio[[877]](https://www.mediatek.com/products/chromebooks-tablets) ChromeOS ML stack；llama.cpp + MLC-LLM 也支持 Mali GPU OpenCL / Vulkan 后端
+- 瑞芯微：RKNN Runtime[[879]](https://github.com/rockchip-linux/rknpu2)（C / Python API；RK3588[[881]](https://www.rock-chips.com/a/en/products/RK35_Series/2022/0926/1660.html) 6 TOPS、RK3576 6 TOPS、RV1106 0.5 TOPS）+ **RKLLM**[[880]](https://github.com/airockchip/rknn-llm)（瑞芯微大模型推理框架，对位 llama.cpp；支持 Llama 3、Qwen 2.5、ChatGLM、MiniCPM、Phi-3、InternLM 等，在 RK3588 上跑 Qwen 2.5 7B INT4 @ 4-5 tokens/s）+ MLC-LLM + llama.cpp Mali GPU 路径
 - Microsoft（Windows / Azure 端推理栈）：ONNX Runtime[[389]](https://onnxruntime.ai/)（跨平台事实标准，含 CUDA / TensorRT / DirectML / CoreML / OpenVINO / WebGPU 多 EP）+ DirectML EP for ONNX Runtime[[286]](https://learn.microsoft.com/en-us/windows/ai/directml/dml)（Windows 端 GPU 厂商无关推理）+ Windows ML[[390]](https://learn.microsoft.com/en-us/windows/ai/windows-ml/overview)（Windows 11 内置 ML 推理 API，Copilot+ PC 上分派至 NPU / GPU / CPU）+ Olive[[391]](https://github.com/microsoft/Olive)（端到端模型优化工具链：量化 + 图优化 + EP 适配）+ DeepSpeed-Inference
 
 ## L14 模型服务 / 编排（GPU orchestration）
@@ -666,7 +694,7 @@ LLM 不是 GPU 的唯一负载。下面 6 条分支（**B** 科学计算 / **C**
 闭源端到端神经网络栈已成为主流；HD 地图 + 规则栈正在被替代。
 
 - **Da 闭源端到端 / 整车**：Tesla FSD V13 / V14（HW4 → HW5）、Waymo Driver（Multi-Modal Foundation Model 路线）、Mobileye SuperVision / Chauffeur / Drive[[749]](https://www.mobileye.com/solutions/super-vision/)、华为 ADS 3.0 / 4.0、小鹏 XNGP、理想 AD Max、Momenta、Pony.ai、Wayve（伦敦，端到端 self-driving 模型 LINGO + GAIA）[[750]](https://wayve.ai/)
-- **Db 车载 AI 平台 / 芯片栈**：NVIDIA DRIVE Thor + DRIVE AV / DRIVE OS[[751]](https://developer.nvidia.com/drive/agx)、Mobileye EyeQ6 / EyeQ Ultra[[752]](https://www.mobileye.com/solutions/super-vision/)、Qualcomm Snapdragon Ride[[753]](https://www.qualcomm.com/automotive/solutions/snapdragon-ride)、Horizon Robotics Journey 6（中国主流国产替代）[[754]](https://en.horizon.auto/)、地平线 SuperDrive
+- **Db 车载 AI 平台 / 芯片栈**：NVIDIA DRIVE Thor + DRIVE AV / DRIVE OS[[751]](https://developer.nvidia.com/drive/agx)、Mobileye EyeQ6 / EyeQ Ultra[[752]](https://www.mobileye.com/solutions/super-vision/)、Qualcomm Snapdragon Ride[[753]](https://www.qualcomm.com/automotive/solutions/snapdragon-ride) / Ride Flex SoC（SA8775P 智驾 + 座舱融合，2025 主流量产）+ Snapdragon Cockpit Elite、MediaTek Dimensity Auto Cockpit / Dimensity Auto Connect[[875]](https://www.mediatek.com/products/automotive)（与 NVIDIA 联合的 AI 座舱平台，CES 2024 发布 NVIDIA DRIVE OS on MTK SoC）、Horizon Robotics Journey 6（中国主流国产替代）[[754]](https://en.horizon.auto/)、地平线 SuperDrive、瑞芯微 RK3588M（座舱 / 仪表 / 流媒体后视镜，国产中低端车型大量采用）
 - **Dc 开源 / 开放栈**：百度 Apollo[[755]](https://www.apollo.auto/en/)、Autoware (Foundation)[[756]](https://autoware.org/)、Comma.ai openpilot、CARLA（仿真）、AirSim（已停维但仍流行）
 - **Dd 仿真 / 数据闭环**：NVIDIA DRIVE Sim + Omniverse、Applied Intuition（仿真 + 数据平台）[[757]](https://www.appliedintuition.com/)、Foretellix[[758]](https://www.foretellix.com/)、Cognata、Parallel Domain、Helm.ai
 - **De 高精地图 / 定位（被端到端架构挤压但未消失）**：HERE、TomTom、四维图新、Mapbox、Atlatec[[759]](https://www.bosch.com/)（被 Bosch 收购）
@@ -688,7 +716,7 @@ L32 偏"生成图像 / 视频"；这一支偏"生成可交互的 3D 世界"。
 - **Fa 检测 / 分割 / Pose**：YOLOv10 / v11 / v12（Ultralytics）[[775]](https://www.ultralytics.com/)、RT-DETR（百度）、Detectron2（Meta）[[776]](https://github.com/facebookresearch/detectron2)、MMDetection / MMPose / MMSegmentation（OpenMMLab）[[777]](https://github.com/open-mmlab)、SAM 2（Meta，视频分割）、Grounding DINO[[778]](https://github.com/IDEA-Research/GroundingDINO)、Florence-2（Microsoft）
 - **Fb OCR / 文档智能**：PaddleOCR（百度，开源主流）[[779]](https://github.com/PaddlePaddle/PaddleOCR)、Tesseract[[780]](https://github.com/tesseract-ocr/tesseract)、Surya[[781]](https://github.com/VikParuchuri/surya)、DocLayout-YOLO[[782]](https://github.com/opendatalab/DocLayout-YOLO)、Nougat（Meta，学术 PDF）[[783]](https://github.com/facebookresearch/nougat)、MinerU（上海 AI Lab）[[784]](https://github.com/opendatalab/MinerU)、Mistral OCR[[785]](https://mistral.ai/news/mistral-ocr)、Reducto[[786]](https://reducto.ai/)、Unstructured.io[[787]](https://unstructured.io/)
 - **Fc 视频理解**：InternVideo 2.5[[788]](https://github.com/OpenGVLab/InternVideo)、VideoLLaMA 3[[789]](https://github.com/DAMO-NLP-SG/VideoLLaMA3)、Qwen2.5-VL[[790]](https://github.com/QwenLM/Qwen-VL)、TwelveLabs Marengo[[791]](https://www.twelvelabs.io/product/models-overview)、Video-CCAM[[792]](https://github.com/QQ-MM/Video-CCAM)
-- **Fd 边缘 / 嵌入式部署**：NVIDIA DeepStream + TensorRT、Intel OpenVINO、Qualcomm AI Engine Direct（QNN）[[793]](https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk)、Arm NN[[794]](https://www.arm.com/products/silicon-ip-cpu/ethos/arm-nn)、Apple Core ML、MediaPipe（Google）[[795]](https://developers.google.com/mediapipe)、Hailo Dataflow Compiler[[796]](https://hailo.ai/products/hailo-software/hailo-ai-software-suite/)
+- **Fd 边缘 / 嵌入式部署**：NVIDIA DeepStream + TensorRT、Intel OpenVINO、Qualcomm AI Engine Direct（QNN）[[793]](https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk) + Qualcomm Genie[[882]](https://www.qualcomm.com/developer/software/genie-sdk) + AI Hub[[870]](https://aihub.qualcomm.com/)、MediaTek NeuroPilot[[874]](https://neuropilot.mediatek.com/) + Genio[[876]](https://www.mediatek.com/products/iot)、Rockchip RKNN-Toolkit2[[878]](https://github.com/airockchip/rknn-toolkit2) + RKNPU2[[879]](https://github.com/rockchip-linux/rknpu2) + RKLLM[[880]](https://github.com/airockchip/rknn-llm)（国产边缘视觉 / 端侧 LLM 主流，海康 / 大华 / 安霸竞品线大量基于 RK3588 / RK3576 出货）、Arm NN[[794]](https://www.arm.com/products/silicon-ip-cpu/ethos/arm-nn)、Apple Core ML、MediaPipe（Google）[[795]](https://developers.google.com/mediapipe)、Hailo Dataflow Compiler[[796]](https://hailo.ai/products/hailo-software/hailo-ai-software-suite/)、爱芯元智 AXera Pulsar SDK[[883]](https://www.axera-tech.com/)（AX650N / AX620E）、地平线 Horizon OpenExplorer（Journey / Sunrise X 系列）、寒武纪 MagicMind
 - **Fe 数据 / 训练平台**：Roboflow[[797]](https://roboflow.com/)、Encord[[798]](https://encord.com/)、Labelbox[[799]](https://labelbox.com/)、Voxel51 FiftyOne[[800]](https://voxel51.com/fiftyone)、CVAT[[801]](https://www.cvat.ai/)、Supervisely[[802]](https://supervisely.com/)
 - **Ff 终端应用**：工业 Cognex VisionPro Deep Learning[[803]](https://www.cognex.com/en/products/machine-vision-software/visionpro-software)、Keyence[[804]](https://www.keyence.com/products/vision/)、Landing AI（Andrew Ng）[[805]](https://landing.ai/)；安防 Hikvision[[806]](https://www.hikvision.com/en/)、Dahua[[807]](https://www.dahuasecurity.com/)；医学影像 Aidoc[[808]](https://www.aidoc.com/)、Annalise.ai[[809]](https://annalise.ai/)、Viz.ai[[810]](https://www.viz.ai/)；零售 Standard AI[[811]](https://standard.ai/)、Trigo[[812]](https://www.trigoretail.com/)
 
@@ -742,6 +770,7 @@ L32 已列了 Sora / Veo / Runway 等生成模型。本段重在**工业级 VFX 
 - **L18 LLM 应用框架 在 2025 出现 "去 LangChain[[153]](https://www.langchain.com/) 化"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。
 - **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干"Agent 框架"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。
 - **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。
+- **移动 / 边缘 SoC 三巨头（高通 / 联发科 / 瑞芯微）走的是与 NVIDIA 正交的栈**：他们集中在 L01（自研 NPU 驱动）+ L03（QNN / NeuroPilot / RKNN 三套互不兼容的 SDK）+ L13（端侧 LLM 推理引擎 Genie / NeuroPilot / RKLLM），几乎不出现在 L06–L09 训练栈与 L18 以上 Agent 栈——他们卖的是"模型转出后跑在哪"的最后一公里。三家分工：高通占高端手机 / Copilot+ PC / 高端车载（Snapdragon Ride）、联发科占中高端手机 + 中端车机 + ChromeOS、瑞芯微占低成本边缘视觉 + 中低端国产车机 / IoT。共同对手是 Apple ANE + 内置 Core ML 闭环（Apple 自家硬件 / 自家 OS / 自家 SDK 不外销）。
 
 ---
 
@@ -2480,3 +2509,35 @@ L32 已列了 Sora / Veo / Runway 等生成模型。本段重在**工业级 VFX 
 [866] Veed.io, "VEED — AI online video editor", [Online]. Available: <https://www.veed.io/>
 
 [867] Lightricks, "LTX-Video — Open-source video generation", [Online]. Available: <https://www.lightricks.com/>
+
+[868] Qualcomm, "Hexagon SDK," [Online]. Available: <https://developer.qualcomm.com/software/hexagon-dsp-sdk>
+
+[869] Qualcomm, "Snapdragon Neural Processing SDK (SNPE)," [Online]. Available: <https://www.qualcomm.com/developer/software/neural-processing-sdk-for-ai>
+
+[870] Qualcomm, "Qualcomm AI Hub," [Online]. Available: <https://aihub.qualcomm.com/>
+
+[871] Qualcomm Innovation Center, "AIMET — AI Model Efficiency Toolkit," GitHub repository, accessed 2026. [Online]. Available: <https://github.com/quic/aimet>
+
+[872] Qualcomm, "Cloud AI 100," [Online]. Available: <https://www.qualcomm.com/products/technology/processors/cloud-artificial-intelligence/cloud-ai-100>
+
+[873] Qualcomm, "Adreno GPU SDK," [Online]. Available: <https://developer.qualcomm.com/software/adreno-gpu-sdk>
+
+[874] MediaTek, "NeuroPilot SDK," [Online]. Available: <https://neuropilot.mediatek.com/>
+
+[875] MediaTek, "Automotive Solutions — Dimensity Auto," [Online]. Available: <https://www.mediatek.com/products/automotive>
+
+[876] MediaTek, "Genio — IoT Platform," [Online]. Available: <https://www.mediatek.com/products/iot>
+
+[877] MediaTek, "Kompanio — Chromebooks & Tablets," [Online]. Available: <https://www.mediatek.com/products/chromebooks-tablets>
+
+[878] Rockchip / airockchip, "RKNN-Toolkit2," GitHub repository, accessed 2026. [Online]. Available: <https://github.com/airockchip/rknn-toolkit2>
+
+[879] Rockchip, "RKNPU2 Runtime," GitHub repository, accessed 2026. [Online]. Available: <https://github.com/rockchip-linux/rknpu2>
+
+[880] Rockchip / airockchip, "RKLLM — Rockchip Large Language Model SDK," GitHub repository, accessed 2026. [Online]. Available: <https://github.com/airockchip/rknn-llm>
+
+[881] Rockchip, "RK3588 — Octa-core 64-bit AI Processor with 6 TOPS NPU," [Online]. Available: <https://www.rock-chips.com/a/en/products/RK35_Series/2022/0926/1660.html>
+
+[882] Qualcomm, "Genie SDK — On-Device Generative AI," [Online]. Available: <https://www.qualcomm.com/developer/software/genie-sdk>
+
+[883] AXera Tech, "Pulsar SDK — Axera AI Toolchain," [Online]. Available: <https://www.axera-tech.com/>
