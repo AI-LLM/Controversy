@@ -740,7 +740,7 @@ L32 偏"生成图像 / 视频"；这一支偏"生成可交互的 3D 世界"。
 - **Hd 程序化生成 / 资产**：Promethean AI[[839]](https://www.prometheanai.com/)、Scenario[[840]](https://www.scenario.com/)、Rosebud AI[[841]](https://www.rosebud.ai/)、Skybox AI（360° 场景）、Houdini procedural、SideFX Solaris
 - **He 反作弊 / 玩家行为**：BattlEye、Easy Anti-Cheat（Epic）、VAC（Valve）、GGWP[[842]](https://www.ggwp.com/)、Anybrain[[843]](https://www.anybrain.gg/)（行为生物特征反作弊）
 - **Hf 玩家服务 / live ops 后端**：Microsoft PlayFab、AWS GameLift、Unity Gaming Services[[844]](https://unity.com/products/gaming-services)、Epic Online Services[[845]](https://dev.epicgames.com/services)、GameAnalytics、Unity Analytics
-- **Hg 终端游戏 / AI-first 工作室**：Inworld 集成游戏（Status: One、Sims-style 等）、Hidden Door[[846]](https://www.hiddendoor.co/)（叙事 AI 游戏平台）、AI Dungeon[[847]](https://aidungeon.com/)、Suck Up![[848]](https://www.proxima-enterprises.com/)（Proxima Enterprises）
+- **Hg 终端游戏 / AI-first 工作室**：Inworld 集成游戏（Status: One、Sims-style 等）、Hidden Door[[846]](https://www.hiddendoor.co/)（叙事 AI 游戏平台）、AI Dungeon[[847]](https://aidungeon.com/)、Suck Up\![[848]](https://www.proxima-enterprises.com/)（Proxima Enterprises）
 
 ### I 影视娱乐栈：VFX / 后期 / 虚拟制作 / 生成式（与 E / L32 高度渗透）
 
