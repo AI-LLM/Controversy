@@ -110,44 +110,44 @@
 负责把硬件能力暴露给操作系统与上层运行时；包括内核态驱动、固件、用户态运行时 stub。
 
 **NVIDIA**：
-- Display / Compute Driver（`nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）
+- Display / Compute Driver[[221]](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html)（`nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）
 - Open GPU Kernel Modules[[220]](https://github.com/NVIDIA/open-gpu-kernel-modules)（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）
 - NVIDIA Container Toolkit[[221]](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html) / `nvidia-container-runtime`（K8s / Docker 接入事实标准）
 
 **AMD**：
 - `amdgpu` DRM driver[[222]](https://rocm.docs.amd.com/) + `amdkfd` KFD 计算子系统
-- ROCm runtime + `rocm-smi`
+- ROCm[[14]](https://www.amd.com/en/products/software/rocm.html) runtime + `rocm-smi`
 - AMD GPU Operator[[223]](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/)（K8s 接入）
 
 **Intel**：
 - `i915` / `xe` driver[[224]](https://docs.kernel.org/gpu/i915.html)（消费 / 数据中心 Xe / Ponte Vecchio / Falcon Shores）
 - `habanalabs`[[225]](https://docs.habana.ai/en/latest/Installation_Guide/Driver_Installation.html) 内核驱动（Habana Gaudi 2 / 3）
-- Intel GPU Tools (`igt`) + `xpu-smi`
+- Intel GPU Tools (`igt`)[[224]](https://docs.kernel.org/gpu/i915.html) + `xpu-smi`
 
 **华为昇腾（Ascend）**：
 - `davinci_manager`[[226]](https://www.hiascend.com/en/hardware/firmware-drivers/community) + `devmm_svm` + `drv_npu` 内核驱动（Atlas / Ascend 910B / 910C）
-- HCCN driver（互连专用）
-- `npu-smi`（对位 `nvidia-smi`）
-- Ascend Docker Runtime
+- HCCN driver[[226]](https://www.hiascend.com/en/hardware/firmware-drivers/community)（互连专用）
+- `npu-smi`[[226]](https://www.hiascend.com/en/hardware/firmware-drivers/community)（对位 `nvidia-smi`）
+- Ascend Docker Runtime[[226]](https://www.hiascend.com/en/hardware/firmware-drivers/community)
 
 **Apple**：
 - Apple Silicon GPU / ANE driver[[227]](https://developer.apple.com/metal/)（macOS / iOS 内置，与 Metal 紧绑定，闭源）
-- AGX / DCP（Display Controller Processor）固件
-- AMX co-processor（M 系列 CPU 内置矩阵单元）通过私有 ABI 暴露给 Accelerate
-- `powermetrics` / `sysdiagnose`（对位 `nvidia-smi` 的功耗 / 利用率读取入口）
+- AGX / DCP（Display Controller Processor）固件[[227]](https://developer.apple.com/metal/)
+- AMX co-processor（M 系列 CPU 内置矩阵单元）通过私有 ABI 暴露给 Accelerate[[258]](https://developer.apple.com/documentation/accelerate)
+- `powermetrics` / `sysdiagnose`[[227]](https://developer.apple.com/metal/)（对位 `nvidia-smi` 的功耗 / 利用率读取入口）
 
 **AWS（Annapurna / Trainium 阵营）**：
 - Neuron driver[[228]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/release-notes/runtime/aws-neuronx-dkms/index.html)（Trainium / Trainium2 / Inferentia2 的内核驱动 `neuron-driver`）
 - Neuron Runtime[[229]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/neuron-runtime/index.html)（用户态运行时；负责 NEFF 加载、DMA、collective）
-- `neuron-ls` / `neuron-top`（对位 `nvidia-smi`）
-- AWS Neuron Container Toolkit（EKS / ECS 接入）
+- `neuron-ls` / `neuron-top`[[229]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/neuron-runtime/index.html)（对位 `nvidia-smi`）
+- AWS Neuron Container Toolkit[[228]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/release-notes/runtime/aws-neuronx-dkms/index.html)（EKS / ECS 接入）
 
 ## L02 GPU 互连 / 集合通信
 
 多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。
 
 **节点内互连（芯片 ↔ 芯片）**：
-- NVIDIA：NVLink / NVSwitch（H100 900 GB/s、B200 1.8 TB/s、GB200 NVL72 全互连域）
+- NVIDIA：NVLink[[10]](https://www.nvidia.com/en-us/data-center/nvlink/) / NVSwitch（H100 900 GB/s、B200 1.8 TB/s、GB200 NVL72 全互连域）
 - AMD：Infinity Fabric / xGMI[[230]](https://www.amd.com/en/technologies/infinity-architecture)（MI300X 7 路全互连）
 - Intel：Xe Link[[231]](https://www.intel.com/content/www/us/en/products/docs/processors/max-series/overview.html)（Ponte Vecchio）
 - 华为：HCCS[[232]](https://www.hiascend.com/en/hardware/cluster)（HyperLink；Ascend 910B 内 8 卡 fullmesh，节点内 392 GB/s）
@@ -159,15 +159,15 @@
 - AWS EFA[[236]](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html)（Elastic Fabric Adapter）+ SRD 协议（EFA v2 / v3，Trn2 UltraServer 用 EFAv3）
 - Ultra Ethernet[[237]](https://ultraethernet.org/)（UEC 1.0，2024）；RoCE v2
 - UALink[[238]](https://ualinkconsortium.org/) 1.0（AMD / Intel / Google / Meta 联盟，对位 NVLink 跨节点版）
-- 华为：200 GE RoCE（CloudEngine 8800 / 16800 系列；Atlas 900 集群）
+- 华为：200 GE RoCE（CloudEngine 8800 / 16800 系列；Atlas 900[[377]](https://www.hiascend.com/en/hardware/cluster) 集群）
 - Apple：无（Apple 不卖训练集群，节点间网络不在产品线内）
 
 **集合通信库（NCCL 对应面）**：
-- NVIDIA NCCL
+- NVIDIA NCCL[[11]](https://developer.nvidia.com/nccl)
 - AMD RCCL[[239]](https://github.com/ROCm/rccl)（NCCL API 兼容 fork）
 - Intel oneCCL[[240]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/oneccl.html)
 - 华为 HCCL[[241]](https://www.hiascend.com/cann/hccl)（Huawei Collective Communication Library）
-- Apple：MLX Distributed `mlx.distributed`（基于 MPI 或 ring；规模偏研究）
+- Apple：MLX[[35]](https://github.com/ml-explore/mlx) Distributed `mlx.distributed`（基于 MPI 或 ring；规模偏研究）
 - AWS：Neuron Collective Communication[[242]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/neuron-runtime/about/collectives.html)（NCCL-style API，跑在 NeuronLink + EFA 上）
 - 微软 MSCCL[[243]](https://github.com/microsoft/mscclpp) / MSCCL++（在 NCCL 之上的可编程调度层）
 
@@ -176,63 +176,63 @@
 让开发者写并行 kernel；下层各家硬件的统一抽象。
 
 **厂商专有 GPU / 加速器计算栈**：
-- NVIDIA：CUDA（`nvcc` 编译器、PTX 中间码、CUDA Runtime / Driver API、NVRTC、CUDA Graphs）
+- NVIDIA：CUDA[[13]](https://developer.nvidia.com/cuda)（`nvcc` 编译器、PTX 中间码、CUDA Runtime / Driver API、NVRTC、CUDA Graphs）
 - AMD：ROCm / HIP[[244]](https://rocm.docs.amd.com/projects/HIP/en/latest/)（HIP 提供 CUDA 源码级近似兼容，`hipify` 自动迁移）+ HIPCC
 - Intel：oneAPI / SYCL / DPC++[[245]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html)（`icpx`）；Habana SynapseAI[[246]](https://docs.habana.ai/en/latest/Gaudi_Overview/Intel_Gaudi_Software_Suite.html)（Gaudi 专用，Python + C++ 接口）
 - 华为：CANN[[247]](https://www.hiascend.com/en/cann)（Compute Architecture for Neural Networks）+ AscendC[[248]](https://www.hiascend.com/document/detail/en/canncommercial/800/opdevg/Ascendcopdevg/atlas_ascendc_10_0036.html)L[[249]](https://www.hiascend.com/document/detail/en/canncommercial/800/apiref/)（runtime C API，对位 CUDA Runtime）+ AscendC（C++ kernel DSL，对位 CUDA C++）
-- Apple：Metal + Metal Performance Shaders（MPS）+ Metal Shading Language（MSL）+ MetalFX；ANE（Apple Neural Engine）通过 Core ML / BNNS 间接暴露，无公开 kernel-level API
+- Apple：Metal[[15]](https://developer.apple.com/metal/) + Metal Performance Shaders（MPS）+ Metal Shading Language（MSL）+ MetalFX；ANE（Apple Neural Engine）通过 Core ML / BNNS 间接暴露，无公开 kernel-level API
 - AWS：AWS Neuron SDK[[250]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/about-neuron/index.html) + NKI[[251]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/nki/)（Neuron Kernel Interface，Python DSL，对位 CUDA C++ + Triton）+ Neuron PyTorch / JAX 适配层
 
 **跨厂商 / 便携后端**：
 - OpenCL 3.0[[252]](https://www.khronos.org/opencl/)（跨厂商，地位下滑但仍在嵌入式 / Android）
 - Vulkan Compute[[253]](https://www.khronos.org/vulkan/)（图形 + 计算合一；llama.cpp 用作便携后端）
 - WebGPU[[254]](https://www.w3.org/TR/webgpu/) / wgpu（浏览器内 GPU 计算；Chrome 113 起默认开启）
-- Codeplay oneAPI for CUDA / for ROCm（SYCL 跨硬件适配层）
+- Codeplay oneAPI for CUDA[[13]](https://developer.nvidia.com/cuda) / for ROCm（SYCL 跨硬件适配层）
 
 ## L04 GPU 内核库（DNN / BLAS / 通信 / Attention）
 
 预编译好的高性能算子，框架直接调用。四大硬件厂商各自一套，再叠加跨厂商的 Attention / fused kernel。
 
 **GEMM / BLAS**：
-- NVIDIA：cuBLAS / cuBLASLt
+- NVIDIA：cuBLAS[[19]](https://developer.nvidia.com/cublas) / cuBLASLt
 - AMD：rocBLAS[[255]](https://rocm.docs.amd.com/projects/rocBLAS/en/latest/) / hipBLASLt
 - Intel：oneMKL[[256]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html)（含 BLAS / LAPACK / FFT / Sparse）
 - 华为：CANN AOL[[257]](https://www.hiascend.com/en/cann)（Ascend Operator Library；含 BLAS / Vector kernels）
 - Apple：Accelerate / vecLib BLAS[[258]](https://developer.apple.com/documentation/accelerate) + AMX 内置加速；Metal Performance Shaders MPSMatrixMultiplication[[259]](https://developer.apple.com/documentation/metalperformanceshaders)
-- AWS：Neuron BLAS kernels（Trainium / Inferentia2 上的 matmul / GEMM 算子）
+- AWS：Neuron BLAS kernels（Trainium / Inferentia2[[379]](https://aws.amazon.com/ai/machine-learning/inferentia/) 上的 matmul / GEMM 算子）
 
 **深度学习 primitive（卷积 / RNN / Attention / Norm）**：
-- NVIDIA：cuDNN
+- NVIDIA：cuDNN[[20]](https://developer.nvidia.com/cudnn)
 - AMD：MIOpen[[260]](https://rocm.docs.amd.com/projects/MIOpen/en/latest/)
 - Intel：oneDNN[[261]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onednn.html)（原 MKL-DNN / DNNL）
 - 华为：CANN ACLNN[[262]](https://www.hiascend.com/document/detail/en/canncommercial/800/apiref/)（Ascend Neural Network Operator Library）
 - Apple：BNNS / BNNSGraph[[263]](https://developer.apple.com/documentation/accelerate/bnns)（Accelerate 内 Basic Neural Network Subroutines）+ MPS Graph + Core ML kernel library
-- AWS：Neuron Custom Operators 库 + AWS Neuron `libnrt` 算子集
+- AWS：Neuron Custom Operators 库 + AWS Neuron[[250]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/about-neuron/index.html) `libnrt` 算子集
 
 **GEMM 模板 / kernel 编写库**：
-- NVIDIA：CUTLASS（FlashAttention / vLLM 大量复用）
+- NVIDIA：CUTLASS（FlashAttention[[21]](https://github.com/dao-ailab/flash-attention) / vLLM 大量复用）
 - AMD：Composable Kernel[[264]](https://github.com/ROCm/composable_kernel) (CK)
 - Intel：XeTLA[[265]](https://github.com/intel/xetla)、TileLang
-- 华为：AscendC kernel 套件（含 TBE / Tensor Boost Engine 老接口）
-- Apple：MLX kernel DSL（C++ + Metal 后端，对位 CUTLASS 但远更轻量）
-- AWS：NKI（Neuron Kernel Interface，Trainium 上写 fused kernel 的 Python DSL）
+- 华为：AscendC[[248]](https://www.hiascend.com/document/detail/en/canncommercial/800/opdevg/Ascendcopdevg/atlas_ascendc_10_0036.html) kernel 套件（含 TBE / Tensor Boost Engine 老接口）
+- Apple：MLX kernel DSL（C++ + Metal 后端，对位 CUTLASS[[22]](https://github.com/NVIDIA/cutlass) 但远更轻量）
+- AWS：NKI[[251]](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/nki/)（Neuron Kernel Interface，Trainium 上写 fused kernel 的 Python DSL）
 
 **集合通信**：
-- NVIDIA NCCL / AMD RCCL / Intel oneCCL / 华为 HCCL / Apple MLX Distributed / AWS Neuron Collective Communication（见 L02 集合通信库一节）
+- NVIDIA NCCL / AMD RCCL / Intel oneCCL / 华为 HCCL / Apple MLX Distributed[[296]](https://ml-explore.github.io/mlx/build/html/usage/distributed.html) / AWS Neuron Collective Communication（见 L02 集合通信库一节）
 
 **FFT / Sparse / Solver / 量子**：
-- NVIDIA：cuFFT、cuSPARSE、cuSolver、cuQuantum、NVSHMEM
+- NVIDIA：cuFFT、cuSPARSE、cuSolver、cuQuantum[[26]](https://developer.nvidia.com/cuquantum-sdk)、NVSHMEM
 - AMD：rocFFT[[266]](https://rocm.docs.amd.com/projects/rocFFT/en/latest/)、rocSPARSE、rocSOLVER
-- Intel：oneMKL DFT / Sparse / Solver
-- 华为：CANN AOL 内置 FFT / Sparse / Solver 子集
-- Apple：Accelerate vDSP（FFT / DSP）+ Sparse Solvers + LAPACK；Metal Performance Shaders MPSMatrixDecomposition
-- AWS：通过 Neuron 调用上层 JAX / PyTorch 走 XLA → Neuron Compiler；专用 FFT / Solver 库未独立公开
+- Intel：oneMKL[[256]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html) DFT / Sparse / Solver
+- 华为：CANN AOL[[257]](https://www.hiascend.com/en/cann) 内置 FFT / Sparse / Solver 子集
+- Apple：Accelerate vDSP（FFT / DSP）+ Sparse Solvers + LAPACK；Metal[[15]](https://developer.apple.com/metal/) Performance Shaders MPSMatrixDecomposition
+- AWS：通过 Neuron 调用上层 JAX / PyTorch[[33]](https://pytorch.org/) 走 XLA → Neuron Compiler；专用 FFT / Solver 库未独立公开
 
 **跨厂商 / 高层 attention 与 fused kernel**：
-- FlashAttention 1 / 2 / 3（Tri Dao；FA3 针对 Hopper Tensor Core + TMA；AMD 有 `flash-attention` ROCm fork；Intel Habana 自研 FusedSDPA）
+- FlashAttention[[21]](https://github.com/dao-ailab/flash-attention) 1 / 2 / 3（Tri Dao；FA3 针对 Hopper Tensor Core + TMA；AMD 有 `flash-attention` ROCm fork；Intel Habana 自研 FusedSDPA）
 - xFormers[[267]](https://github.com/facebookresearch/xformers)（Meta；memory-efficient attention 集合）
-- Triton kernels（OpenAI；社区贡献的 fused MoE / RMSNorm / SwiGLU；AMD Triton 与 Intel Triton 在各自硬件上接后端）
-- MSCCL / MSCCL++（微软在 NCCL 之上的可编程调度层）
+- Triton[[28]](https://github.com/triton-lang/triton) kernels（OpenAI；社区贡献的 fused MoE / RMSNorm / SwiGLU；AMD Triton 与 Intel Triton 在各自硬件上接后端）
+- MSCCL / MSCCL++（微软在 NCCL[[11]](https://developer.nvidia.com/nccl) 之上的可编程调度层）
 
 ## L05 编译器 / IR
 
@@ -250,7 +250,7 @@
 - OpenAI Triton[[278]](https://github.com/triton-lang/triton)（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准；NVIDIA / AMD / Intel 各自维护后端）
 - PyTorch torch.compile[[279]](https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html) / TorchInductor + TorchDynamo（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）
 - XLA / OpenXLA[[280]](https://github.com/openxla/xla)（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta + Intel + AMD 共治）
-- MLIR（LLVM 项目；TPU、IREE、Mojo、torch-mlir、CANN 共享的中间表示）
+- MLIR[[30]](https://mlir.llvm.org/)（LLVM 项目；TPU、IREE、Mojo、torch-mlir、CANN 共享的中间表示）
 - TVM / Apache TVM[[281]](https://github.com/apache/tvm) + Unity（陈天奇主导的端到端深度学习编译栈；MLC-LLM 后端）
 - IREE[[282]](https://github.com/iree-org/iree)（Google；MLIR-based，定位移动 / 边缘）
 - Mojo / MAX[[283]](https://www.modular.com/open-source/mojo)（Modular；Chris Lattner，Python 超集 + MLIR 后端）
@@ -259,10 +259,10 @@
 
 定义计算图、autograd、optimizer；用户写 `nn.Module` 的那一层。
 
-- **PyTorch**（Meta；2025 LLM 训练事实标准，份额 >70%）
+- **PyTorch[[33]](https://pytorch.org/)**（Meta；2025 LLM 训练事实标准，份额 >70%）
 - **JAX + Flax[[284]](https://github.com/google/flax) / NNX / Equinox**（Google；Gemini / Anthropic 训练栈核心）
 - **TensorFlow + Keras 3[[285]](https://github.com/keras-team/keras)**（Google；Keras 3 后端可切 JAX / PyTorch / TF）
-- **MLX**（Apple；Apple Silicon 原生）
+- **MLX[[35]](https://github.com/ml-explore/mlx)**（Apple；Apple Silicon 原生）
 - **MindSpore[[286]](https://github.com/mindspore-ai/mindspore)**（华为）
 - **PaddlePaddle[[287]](https://github.com/PaddlePaddle/Paddle)**（百度）
 - **tinygrad[[288]](https://github.com/tinygrad/tinygrad)**（George Hotz；研究 / 教学）
@@ -271,12 +271,12 @@
 
 把模型与数据切到上千 / 上万卡上，并管 checkpoint / 容错 / 恢复。
 
-- **DeepSpeed**（Microsoft；ZeRO-1/2/3、ZeRO-Infinity、MoE）
-- **Megatron-LM / Megatron-Core**（NVIDIA；3D 并行：TP / PP / DP）
-- **PyTorch FSDP / FSDP2**（PyTorch 官方；FSDP2 2024 GA）
+- **DeepSpeed[[44]](https://www.deepspeed.ai/)**（Microsoft；ZeRO-1/2/3、ZeRO-Infinity、MoE）
+- **Megatron[[45]](https://github.com/NVIDIA/Megatron-LM)-LM / Megatron-Core**（NVIDIA；3D 并行：TP / PP / DP）
+- **PyTorch[[33]](https://pytorch.org/) FSDP / FSDP2**（PyTorch 官方；FSDP2 2024 GA）
 - **NVIDIA NeMo[[289]](https://github.com/NVIDIA/NeMo)**（Megatron-Core 上的端到端训练 + 数据 + 评测套件）
 - **Colossal-AI[[290]](https://github.com/hpcaitech/ColossalAI)**（HPC-AI Tech）
-- **Ray Train**（Anyscale；调度层在 Ray 上）
+- **Ray Train[[48]](https://docs.ray.io/en/latest/train/train.html)**（Anyscale；调度层在 Ray 上）
 - **MosaicML Composer[[291]](https://github.com/mosaicml/composer) / LLM Foundry[[292]](https://github.com/mosaicml/llm-foundry)**（被 Databricks 收购）
 - **TorchTitan[[293]](https://github.com/pytorch/torchtitan)**（PyTorch 官方 2024 推出的 LLM 训练参考实现）
 - **厂商专有训练栈**：AMD ROCm Megatron-LM fork + ROCm DeepSpeed；Intel Habana Gaudi 上的 Optimum-Habana + DeepSpeed-Habana 集成；华为 MindFormers[[294]](https://github.com/mindspore-lab/mindformers) / MindSpore Distributed（基于 MindSpore 的大模型并行套件，对位 Megatron + DeepSpeed）+ ModelLink[[295]](https://gitee.com/ascend/ModelLink)（昇腾 PyTorch 适配大模型训练套件）；Apple MLX Distributed[[296]](https://ml-explore.github.io/mlx/build/html/usage/distributed.html)（`mlx.distributed`，定位研究 / 小集群）；AWS Neuron Distributed Training + SageMaker HyperPod[[297]](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html)（Trainium2 + EFAv3，支持 FSDP / 张量并行）
@@ -285,24 +285,24 @@
 
 数据集构建、清洗、去重、tokenize、streaming。这一层 2023 后被独立看待。
 
-- **datatrove**（HuggingFace；FineWeb 的生产工具）
-- **MosaicML Streaming**（云对象存储到训练机的流式 dataset）
+- **datatrove[[51]](https://github.com/huggingface/datatrove)**（HuggingFace；FineWeb 的生产工具）
+- **MosaicML Streaming**[[52]](https://github.com/mosaicml/streaming)（云对象存储到训练机的流式 dataset）
 - **WebDataset[[298]](https://github.com/webdataset/webdataset)**（POSIX tar 流，PyTorch 生态早期事实标准）
 - **Nemo Curator[[299]](https://github.com/NVIDIA-NeMo/Curator)**（NVIDIA；GPU 加速去重 / 分类）
 - **Dolma toolkit[[300]](https://github.com/allenai/dolma)**（AI2；OLMo 数据集工具）
-- **llm-foundry**（Mosaic / Databricks）
+- **llm-foundry**[[292]](https://github.com/mosaicml/llm-foundry)（Mosaic / Databricks）
 - **数据集本体**：FineWeb / FineWeb-Edu（HF）、RedPajama-V2[[301]](https://github.com/togethercomputer/RedPajama-Data)（Together）、Dolma[[302]](https://huggingface.co/datasets/allenai/dolma)（AI2）、The Stack v2[[303]](https://huggingface.co/datasets/bigcode/the-stack-v2)（BigCode）、Common Crawl[[304]](https://commoncrawl.org/)
 
 ## L09 后训练 / 微调框架
 
 SFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一层 2024-2025 爆发。
 
-- **TRL**（HuggingFace；SFT / DPO / GRPO / PPO trainer，事实标准）
-- **Unsloth**（QLoRA 极致优化，单卡微调首选）
-- **Axolotl**（OpenAccess AI Collective；config-driven 微调）
+- **TRL[[56]](https://github.com/huggingface/trl)**（HuggingFace；SFT / DPO / GRPO / PPO trainer，事实标准）
+- **Unsloth[[58]](https://unsloth.ai/)**（QLoRA 极致优化，单卡微调首选）
+- **Axolotl[[59]](https://github.com/axolotl-ai-cloud/axolotl)**（OpenAccess AI Collective；config-driven 微调）
 - **LLaMA-Factory[[305]](https://github.com/hiyouga/LLaMA-Factory)**（北航；中文社区主流）
 - **OpenRLHF[[306]](https://github.com/OpenRLHF/OpenRLHF)**（OpenLLMAI；分布式 RLHF，Ray 调度）
-- **verl**（字节；HybridFlow，veRL，DeepSeek-R1 风格 RLVR）
+- **verl**（字节；HybridFlow，veRL，DeepSeek[[65]](https://www.deepseek.com/en/)-R1 风格 RLVR）
 - **NeMo-Aligner[[307]](https://github.com/NVIDIA/NeMo-Aligner)**（NVIDIA）
 
 ## L10 基础模型权重
@@ -310,7 +310,7 @@ SFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一�
 可下载（开源 / 开放权重）或可 API 调用的模型本体。这一层 2025 已分裂为开放权重与闭源前沿两轨。
 
 - **开放权重 / 开源**：Llama 3 / 4（Meta）、Qwen 3（阿里）、DeepSeek-V3 / R1、Mistral / Mixtral[[308]](https://mistral.ai/)、Gemma 3[[309]](https://ai.google.dev/gemma)（Google）、Kimi K2[[310]](https://github.com/MoonshotAI/Kimi-K2)（Moonshot）、GLM-4.6[[311]](https://github.com/THUDM/GLM-4)（智谱）、Phi-4[[312]](https://huggingface.co/microsoft/phi-4)（Microsoft）、OLMo 2[[313]](https://github.com/allenai/OLMo)（AI2，真·全开源）
-- **闭源前沿**：GPT-5 / GPT-5.1（OpenAI）、Claude Opus / Sonnet / Haiku 4.x（Anthropic）、Gemini 2.5 / 3（Google DeepMind）、Grok 4（xAI）
+- **闭源前沿**：GPT-5 / GPT-5.1（OpenAI）、Claude[[62]](https://www.anthropic.com/claude) Opus / Sonnet / Haiku 4.x（Anthropic）、Gemini 2.5 / 3（Google DeepMind）、Grok 4（xAI）
 - **模型枢纽 / 发现**：HuggingFace Hub[[314]](https://huggingface.co/)、ModelScope[[315]](https://github.com/modelscope/modelscope)（阿里）、Replicate models、Ollama Library[[316]](https://ollama.com/library)、Civitai[[317]](https://civitai.com/models)（图像 / Stable Diffusion 衍生）
 
 ## L11 评测 / 基准
@@ -330,9 +330,9 @@ SFT、RLHF / DPO / IPO / GRPO / RLVR、reward modeling、合成数据。这一�
 
 run、metric、artifact、sweep、模型 registry。
 
-- **Weights & Biases (W&B)**
-- **MLflow**（Databricks 开源）
-- **Neptune.ai**
+- **Weights & Biases (W&B[[101]](https://wandb.ai/site/))**
+- **MLflow[[102]](https://mlflow.org/)**（Databricks 开源）
+- **Neptune[[103]](https://neptune.ai/).ai**
 - **ClearML[[335]](https://clear.ml/)**
 - **Comet ML[[336]](https://www.comet.com/site/)**
 - **TensorBoard[[337]](https://github.com/tensorflow/tensorboard)**（仍是免费默认）
@@ -343,8 +343,8 @@ run、metric、artifact、sweep、模型 registry。
 负责 KV cache、continuous batching、speculative decoding、量化、PagedAttention 等推理侧硬核优化。
 
 **跨厂商 / 通用**：
-- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA 主线 + ROCm / Intel / Ascend 后端）
-- SGLang（LMSYS / xAI；RadixAttention，结构化输出强）
+- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA[[13]](https://developer.nvidia.com/cuda) 主线 + ROCm / Intel / Ascend 后端）
+- SGLang[[106]](https://github.com/sgl-project/sglang)（LMSYS / xAI；RadixAttention，结构化输出强）
 - HuggingFace TGI[[339]](https://github.com/huggingface/text-generation-inference)（Text Generation Inference）
 - llama.cpp / GGUF[[340]](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md)（Georgi Gerganov；CPU / Apple Silicon / CUDA / ROCm / Vulkan / SYCL 任意后端）
 - MLC-LLM[[341]](https://github.com/mlc-ai/mlc-llm)（陈天奇团队；TVM Unity 后端，Web / 移动 / 任意硬件）
@@ -353,7 +353,7 @@ run、metric、artifact、sweep、模型 registry。
 - Ollama[[344]](https://ollama.com/)（llama.cpp 之上的本地一键运行）
 
 **厂商专有推理栈**：
-- NVIDIA：TensorRT-LLM（CUDA Graph + FP8 / FP4，Hopper / Blackwell 专属优化）+ TensorRT 通用
+- NVIDIA：TensorRT-LLM（CUDA[[13]](https://developer.nvidia.com/cuda) Graph + FP8 / FP4，Hopper / Blackwell 专属优化）+ TensorRT 通用
 - AMD：AITER[[345]](https://github.com/ROCm/aiter)（AMD Inference Throughput Engine for ROCm）+ vLLM-ROCm 官方分支 + Composable Kernel attention
 - Intel：OpenVINO[[346]](https://github.com/openvinotoolkit/openvino)（Xe / Habana / CPU 通吃）+ IPEX-LLM[[347]](https://github.com/intel/ipex-llm)（Intel Extension for PyTorch LLM 分支，原 BigDL-LLM）+ Habana TGI / vLLM-fork
 - 华为：MindIE[[348]](https://www.hiascend.com/en/developer/software/mindie)（Mind Inference Engine，对位 TensorRT-LLM）+ MindSpore Lite[[349]](https://www.mindspore.cn/lite/en)（端边一体）+ Ascend vLLM 适配层
@@ -365,10 +365,10 @@ run、metric、artifact、sweep、模型 registry。
 把推理引擎封装成 service：自动伸缩、多模型、A/B、批处理。
 
 **跨厂商 / 通用**：
-- Ray Serve（Anyscale）
+- Ray Serve[[119]](https://docs.ray.io/en/latest/serve/index.html)（Anyscale）
 - KServe[[353]](https://github.com/kserve/kserve)（K8s 原生，原 KFServing）
-- BentoML / Yatai
-- Modal（serverless GPU 函数）
+- BentoML[[120]](https://www.bentoml.com/) / Yatai
+- Modal（serverless GPU[[620]](https://lammps.org/) 函数）
 - Beam[[354]](https://www.beam.cloud/) / Beam Cloud
 - Replicate Cog[[355]](https://github.com/replicate/cog)（容器规范 + Replicate 平台）
 - Seldon Core[[356]](https://github.com/SeldonIO/seldon-core)
@@ -385,7 +385,7 @@ run、metric、artifact、sweep、模型 registry。
 
 物理 GPU 容量提供方；neocloud 与超大云共存。
 
-- **超大云 GPU**：AWS (P5 / P5e / Trainium2 Ultra)、Azure (ND H100 / ND GB200 v6)、Google Cloud (A3 Ultra / TPU v5p / v6e Trillium)、Oracle Cloud (OCI GPU bare-metal)
+- **超大云 GPU**：AWS (P5 / P5e / Trainium2[[378]](https://aws.amazon.com/ai/machine-learning/trainium/) Ultra)、Azure (ND H100 / ND GB200 v6)、Google Cloud (A3 Ultra / TPU v5p / v6e Trillium)、Oracle Cloud (OCI GPU bare-metal)
 - **GPU neocloud**：CoreWeave、Lambda Labs、Crusoe、Nebius（前 Yandex 海外）、Voltage Park[[365]](https://www.voltagepark.com/)、Applied Digital[[366]](https://www.applieddigital.com/)
 - **市场 / 撮合 / 长尾**：RunPod、Vast.ai[[367]](https://vast.ai/)、TensorDock[[368]](https://www.tensordock.com/)、Salad[[369]](https://salad.com/)、Hyperstack[[370]](https://www.hyperstack.cloud/)
 - **训练 + 推理一体**：Together AI、Lepton AI[[371]](https://www.lepton.ai/)（被 NVIDIA 收购）
@@ -393,27 +393,27 @@ run、metric、artifact、sweep、模型 registry。
 - **Intel Gaudi 算力**：Intel Tiber AI Cloud[[375]](https://www.intel.com/content/www/us/en/developer/tools/devcloud/services.html)（原 Intel Developer Cloud）、IBM Cloud Gaudi 3
 - **华为昇腾算力**：华为云 ModelArts[[376]](https://www.huaweicloud.com/intl/en-us/product/modelarts.html) + Atlas 900[[377]](https://www.hiascend.com/en/hardware/cluster)（910B / 910C 集群）、运营商云（移动 / 联通 / 电信）昇腾 AI 算力、地方智算中心（如武汉昇腾、济南昇腾）
 - **AWS 自研芯片算力**：Trn2 / Trn2 UltraServer（Trainium2[[378]](https://aws.amazon.com/ai/machine-learning/trainium/)，64 芯片 NeuronLink 域）、Inf2（Inferentia2[[379]](https://aws.amazon.com/ai/machine-learning/inferentia/)）；SageMaker HyperPod（训练）、Bedrock（推理 API 直供）
-- **Apple 算力供给**：无对外 GPU / NPU 云租赁；服务端仅 Apple Private Cloud Compute 自用，外部不可访问（Apple Intelligence 后端）
+- **Apple 算力供给**：无对外 GPU / NPU 云租赁；服务端仅 Apple Private Cloud Compute[[362]](https://security.apple.com/documentation/private-cloud-compute) 自用，外部不可访问（Apple Intelligence 后端）
 
 ## L16 模型 API 聚合 / 路由（推理服务市场）
 
 不直接持有最前沿模型，但把开源 / 半开源模型托管成 OpenAI 兼容 endpoint，并互相竞价。
 
-- **OpenRouter**（按 token 转售，覆盖 100+ 模型）
-- **Together AI**（开源模型托管 + 训练 + 推理引擎自研）
-- **Fireworks AI**（自研 FireAttention 引擎）
-- **Groq Cloud**（自家 LPU；Llama 系超低延迟）
+- **OpenRouter[[136]](https://openrouter.ai/)**（按 token 转售，覆盖 100+ 模型）
+- **Together[[137]](https://www.together.ai/) AI**（开源模型托管 + 训练 + 推理引擎自研）
+- **Fireworks[[138]](https://fireworks.ai/) AI**（自研 FireAttention 引擎）
+- **Groq Cloud**（自家 LPU；Llama[[61]](https://ai.meta.com/llama/) 系超低延迟）
 - **Cerebras Inference[[380]](https://www.cerebras.ai/inference)**（WSE-3；超长上下文 + 高速）
 - **SambaNova Cloud[[381]](https://sambanova.ai/products/sambacloud)**（SN40L Reconfigurable Dataflow）
-- **Replicate**（按秒计费，模型即容器）
+- **Replicate[[140]](https://replicate.com/)**（按秒计费，模型即容器）
 - **DeepInfra[[382]](https://deepinfra.com/)**、**Anyscale Endpoints[[383]](https://www.anyscale.com/)**、**Hyperbolic[[384]](https://www.hyperbolic.ai/)**
 
 ## L17 前沿模型 API（闭源 / 半闭源）
 
 直接调用模型厂商自营 endpoint；当前 90%+ 高端 token 流量在这层。
 
-- **Anthropic API**（Claude Opus / Sonnet / Haiku，含 Tool Use、Computer Use、Skills、Prompt Caching、Files、Batch、Citations、Memory、MCP connector）
-- **OpenAI API**（GPT-5.x、o-series、Realtime、Assistants → Responses API、Agents SDK、Files、Batch）
+- **Anthropic[[141]](https://www.anthropic.com/api) API**（Claude Opus / Sonnet / Haiku，含 Tool Use、Computer Use、Skills、Prompt Caching、Files、Batch、Citations、Memory、MCP connector）
+- **OpenAI[[142]](https://openai.com/api/) API**（GPT-5.x、o-series、Realtime、Assistants → Responses API、Agents SDK、Files、Batch）
 - **Google Gemini API / Vertex AI[[385]](https://cloud.google.com/vertex-ai)**（Gemini 2.5 / 3 Pro / Flash / Nano）
 - **xAI API[[386]](https://x.ai/api)**（Grok 4）
 - **DeepSeek API[[387]](https://api-docs.deepseek.com/)**（V3 / R1，价格屠夫）
@@ -423,11 +423,11 @@ run、metric、artifact、sweep、模型 registry。
 
 prompt 链、工作流、retriever、tool calling 的高层抽象。
 
-- **LangChain / LangChain Expression Language (LCEL)**
-- **LlamaIndex**（原 GPT-Index；偏 RAG-first）
-- **DSPy**（Stanford；prompt-as-program、optimizer 驱动）
+- **LangChain[[145]](https://www.langchain.com/) / LangChain Expression Language (LCEL)**
+- **LlamaIndex[[146]](https://www.llamaindex.ai/)**（原 GPT-Index；偏 RAG-first）
+- **DSPy[[147]](https://github.com/stanfordnlp/dspy)**（Stanford；prompt-as-program、optimizer 驱动）
 - **Haystack[[393]](https://haystack.deepset.ai/)**（deepset）
-- **Vercel AI SDK**（TypeScript / React 生态最常见）
+- **Vercel AI SDK[[148]](https://ai-sdk.dev/)**（TypeScript / React 生态最常见）
 - **Semantic Kernel[[394]](https://learn.microsoft.com/en-us/semantic-kernel/)**（Microsoft）
 - **Mastra[[395]](https://mastra.ai/)**（TS，新兴）
 - **Spring AI[[396]](https://spring.io/projects/spring-ai/)**（Java）
@@ -442,7 +442,7 @@ prompt 链、工作流、retriever、tool calling 的高层抽象。
 
 ## L20 向量数据库 / 检索引擎
 
-- **专用向量库（SaaS-first）**：Pinecone、Weaviate、Qdrant、Milvus / Zilliz
+- **专用向量库（SaaS-first）**：Pinecone[[152]](https://www.pinecone.io/)、Weaviate、Qdrant、Milvus / Zilliz
 - **开源 / 嵌入式**：Chroma[[411]](https://www.trychroma.com/)、LanceDB[[412]](https://www.lancedb.com/)、FAISS（Meta；库不是服务）、Annoy[[413]](https://github.com/spotify/annoy)、ScaNN[[414]](https://github.com/google-research/google-research/tree/master/scann)
 - **关系数据库扩展**：pgvector[[415]](https://github.com/pgvector/pgvector)、pg_vectorize、Supabase Vector[[416]](https://supabase.com/modules/vector)、Neon + pgvector[[417]](https://neon.com/)
 - **搜索引擎类**：Elasticsearch dense vector[[418]](https://www.elastic.co/elasticsearch)、OpenSearch k-NN[[419]](https://opensearch.org/)、Vespa[[420]](https://vespa.ai/)、Typesense[[421]](https://typesense.org/)、Meilisearch[[422]](https://www.meilisearch.com/)、Turbopuffer[[423]](https://turbopuffer.com/)
@@ -452,9 +452,9 @@ prompt 链、工作流、retriever、tool calling 的高层抽象。
 
 跨会话 / 跨 Agent 的状态层；从 RAG-of-chat 演化到结构化记忆图。
 
-- **Mem0**（开源 + SaaS，事实图 + 向量混合）
-- **Zep / Zep Cloud**（temporal knowledge graph）
-- **Letta**（原 MemGPT；研究项目公司化）
+- **Mem0[[158]](https://mem0.ai/)**（开源 + SaaS，事实图 + 向量混合）
+- **Zep[[159]](https://www.getzep.com/) / Zep Cloud**（temporal knowledge graph）
+- **Letta[[160]](https://www.letta.com/)**（原 MemGPT；研究项目公司化）
 - **LangMem[[426]](https://github.com/langchain-ai/langmem)**（LangChain 旗下记忆 SDK）
 - **Cognee[[427]](https://www.cognee.ai/)**
 - **Anthropic Memory tool[[428]](https://docs.anthropic.com/en/docs/build-with-claude/memory-tool)**（2025 推出，平台内置）
@@ -463,23 +463,23 @@ prompt 链、工作流、retriever、tool calling 的高层抽象。
 
 应用与 L17 / L16 之间的代理层：限流、配额、密钥、fallback、cost guard、A/B。
 
-- **LiteLLM**（BerriAI；100+ provider 适配器，自部署最常用）
-- **Portkey**
-- **Cloudflare AI Gateway**（缓存 + WAF + 计费）
+- **LiteLLM[[161]](https://github.com/BerriAI/litellm)**（BerriAI；100+ provider 适配器，自部署最常用）
+- **Portkey[[162]](https://portkey.ai/)**
+- **Cloudflare AI Gateway[[163]](https://developers.cloudflare.com/ai-gateway/)**（缓存 + WAF + 计费）
 - **Kong AI Gateway[[429]](https://konghq.com/products/kong-ai-gateway)**
-- **Helicone Gateway**
+- **Helicone[[487]](https://www.helicone.ai/) Gateway**
 - **Martian Router[[430]](https://withmartian.com/)**（按 prompt 动态路由）
-- **OpenRouter**（兼有 L16 与 L22 双重身份）
+- **OpenRouter[[136]](https://openrouter.ai/)**（兼有 L16 与 L22 双重身份）
 - **企业 / 系统记录层 gateway**：SAP Joule MCP Gateway[[431]](https://www.sap.com/products/artificial-intelligence/ai-assistant.html)（强制非 SAP Agent 经 Joule / BTP 路由到 S/4HANA 才"合规"）、Oracle AI Apps Gateway、Workday AGI Gateway——把"通行权"做到 ERP / HCM 入口
 
 ## L23 Prompt 管理 / 提示缓存
 
 prompt 版本化、A/B、提示模板、prompt 级缓存命中分析。
 
-- **PromptLayer**
+- **PromptLayer[[164]](https://www.promptlayer.com/)**
 - **Langfuse Prompt Management[[432]](https://langfuse.com/docs/prompts)**
 - **Helicone Prompts[[433]](https://www.helicone.ai/)**
-- **Braintrust prompt registry**
+- **Braintrust[[166]](https://www.braintrust.dev/) prompt registry**
 - **Latitude[[434]](https://latitude.so/)**（YC W24，prompt-as-code）
 - **Agenta[[435]](https://agenta.ai/)**
 - **平台原生**：Anthropic Prompt Caching[[436]](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)、OpenAI Prompt Caching[[437]](https://platform.openai.com/docs/guides/prompt-caching)、Gemini Context Caching[[438]](https://ai.google.dev/gemini-api/docs/caching)
@@ -488,10 +488,10 @@ prompt 版本化、A/B、提示模板、prompt 级缓存命中分析。
 
 tool-loop、规划、子任务分解、多 agent 协作。2025 这一层从"链式工作流"快速向"事件循环 + 控制平面"迁移。
 
-- **LangGraph**（LangChain；graph + 持久化 state，企业部署最多）
+- **LangGraph**（LangChain[[145]](https://www.langchain.com/)；graph + 持久化 state，企业部署最多）
 - **OpenAI Agents SDK[[439]](https://openai.github.io/openai-agents-python/)**（原 Swarm 演化[[440]](https://github.com/openai/swarm)；Responses API 配套）
-- **Anthropic Claude Agent SDK / claude-agent-sdk**（Claude Code 同源）
-- **AutoGen / AutoGen v0.4**（Microsoft Research；多 agent 对话）
+- **Anthropic Claude Agent SDK[[169]](https://docs.anthropic.com/en/docs/agents-and-tools) / claude-agent-sdk**（Claude Code 同源）
+- **AutoGen[[168]](https://github.com/microsoft/autogen) / AutoGen v0.4**（Microsoft Research；多 agent 对话）
 - **CrewAI[[441]](https://crewai.com/)**
 - **Pydantic AI[[442]](https://ai.pydantic.dev/)**（type-safe，FastAPI 风格）
 - **smolagents[[443]](https://github.com/huggingface/smolagents)**（HuggingFace；code-as-action）
@@ -502,9 +502,9 @@ tool-loop、规划、子任务分解、多 agent 协作。2025 这一层从"链�
 
 Agent 怎么调外部世界——文件、API、SaaS、数据库。
 
-- **Anthropic MCP（Model Context Protocol）**（2024-11 开源；2025 已被 OpenAI / Google / 主流框架普遍接入；事实标准）
-- **Composio**（500+ SaaS 集成，认证 + 工具一站式）
-- **Arcade.dev**（auth-first 的 tool runtime）
+- **Anthropic MCP[[170]](https://modelcontextprotocol.io/)（Model Context Protocol）**（2024-11 开源；2025 已被 OpenAI / Google / 主流框架普遍接入；事实标准）
+- **Composio[[171]](https://composio.dev/)**（500+ SaaS 集成，认证 + 工具一站式）
+- **Arcade[[172]](https://www.arcade.dev/).dev**（auth-first 的 tool runtime）
 - **Toolhouse[[452]](https://toolhouse.ai/)**
 - **Pipedream Connect[[453]](https://pipedream.com/connect)**
 - **Zapier MCP[[454]](https://zapier.com/mcp) / Zapier AI Actions**
@@ -525,23 +525,23 @@ Agent 怎么调外部世界——文件、API、SaaS、数据库。
 
 Agent 跑代码 / 跑命令的隔离环境；MicroVM + 快照成为新基线。
 
-- **E2B**（Firecracker microVM，开源 SDK）
-- **Modal Sandboxes**（serverless GPU + sandbox 一体）
-- **Daytona**（开源 dev environment manager，被 Agent 平台普遍用作 runner）
+- **E2B[[176]](https://e2b.dev/)**（Firecracker microVM，开源 SDK）
+- **Modal Sandboxes**（serverless GPU[[620]](https://lammps.org/) + sandbox 一体）
+- **Daytona[[178]](https://www.daytona.io/)**（开源 dev environment manager，被 Agent 平台普遍用作 runner）
 - **CodeSandbox SDK[[482]](https://codesandbox.io/sdk) / CodeSandbox Containers**
 - **Cloudflare Containers[[483]](https://developers.cloudflare.com/containers/) / Workers Sandbox**
 - **Replit Agent runtime[[484]](https://replit.com/products/agent)**（含 Nix-based 沙箱）
-- **Devin VM**（Cognition 自营）
+- **Devin VM**[[3]](https://devin.ai/)（Cognition 自营）
 
 ## L28 LLM 观测 / 追踪（LLM Observability）
 
 trace、span、token / 成本、prompt / completion 日志，是 agent 时代的新 APM。
 
-- **Langfuse**（开源 + cloud，主流之一）
+- **Langfuse[[165]](https://langfuse.com/)**（开源 + cloud，主流之一）
 - **Arize Phoenix[[485]](https://phoenix.arize.com/) / Arize AX[[486]](https://arize.com/)**（OpenTelemetry GenAI 推手）
-- **LangSmith**（LangChain 官方）
+- **LangSmith**（LangChain[[145]](https://www.langchain.com/) 官方）
 - **Helicone[[487]](https://www.helicone.ai/)**（proxy-based，零代码接入）
-- **Braintrust**（eval + observability 一体）
+- **Braintrust[[166]](https://www.braintrust.dev/)**（eval + observability 一体）
 - **Logfire[[488]](https://logfire.pydantic.dev/)**（Pydantic 团队，OTel-native）
 - **W&B Weave[[489]](https://wandb.ai/site/weave/)**
 - **Datadog LLM Observability[[490]](https://www.datadoghq.com/product/ai/llm-observability/)**、**New Relic AI Monitoring[[491]](https://newrelic.com/platform/ai-monitoring)**、**Splunk AI Observability[[492]](https://www.splunk.com/en_us/products/observability-cloud.html)**（传统 APM 厂商扩展）
@@ -550,26 +550,26 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 
 提示注入防御、PII / 越狱检测、输出过滤、内容策略。
 
-- **Guardrails AI**（开源 validator 框架）
-- **NVIDIA NeMo Guardrails**（Colang DSL）
+- **Guardrails AI[[184]](https://github.com/guardrails-ai/guardrails)**（开源 validator 框架）
+- **NVIDIA NeMo Guardrails[[185]](https://github.com/NVIDIA-NeMo/Guardrails)**（Colang DSL）
 - **Lakera Guard / Lakera Red[[493]](https://www.lakera.ai/lakera-guard)**
 - **Protect AI[[494]](https://protectai.com/)（含 NB Defense[[495]](https://github.com/protectai/nbdefense)、Guardian、Recon）**
 - **Robust Intelligence[[496]](https://www.robustintelligence.com/)**（被 Cisco 收购）
 - **Prompt Security[[497]](https://prompt.security/)**、**HiddenLayer[[498]](https://www.hiddenlayer.com/)**、**CalypsoAI[[499]](https://calypsoai.com/)**
 - **Llama Guard 3 / Prompt Guard[[500]](https://www.llama.com/docs/model-cards-and-prompt-formats/prompt-guard/)**（Meta 开源策略模型）
-- **Promptfoo red team**（开源越狱测试套件，参 L30）
+- **Promptfoo[[190]](https://www.promptfoo.dev/) red team**（开源越狱测试套件，参 L30）
 
 ## L30 LLM 评测 / 测试（CI 中的 prompt 测试）
 
 把 prompt / agent 当作软件来跑回归测试。
 
-- **Promptfoo**（YAML + CLI，开源主流）
-- **DeepEval**（Confident AI；pytest 风格）
-- **Ragas**（RAG-specific 指标）
-- **Braintrust Evals**
+- **Promptfoo[[190]](https://www.promptfoo.dev/)**（YAML + CLI，开源主流）
+- **DeepEval[[191]](https://github.com/confident-ai/deepeval)**（Confident AI；pytest 风格）
+- **Ragas[[192]](https://github.com/explodinggradients/ragas)**（RAG-specific 指标）
+- **Braintrust[[166]](https://www.braintrust.dev/) Evals**
 - **Patronus AI[[501]](https://www.patronus.ai/)**（合规向）
 - **TruLens[[502]](https://www.trulens.org/)**（TruEra；被 Snowflake 收购）
-- **OpenAI Evals**、**Inspect AI**（UK AISI；安全评测主流）
+- **OpenAI Evals[[334]](https://github.com/openai/evals)**、**Inspect AI**（UK AISI；安全评测主流）
 - **Galileo Evaluate[[503]](https://galileo.ai/)**
 
 ## L31 语音（TTS / ASR / 实时对话）
@@ -584,14 +584,14 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 - **图像（开源 / 工作流）**：Black Forest Labs FLUX.1 / FLUX.2、Stable Diffusion 3[[528]](https://stability.ai/) / SD 3.5 / SDXL（Stability AI）、PixArt-Σ[[529]](https://github.com/PixArt-alpha/PixArt-sigma)、HunyuanImage[[530]](https://github.com/Tencent-Hunyuan/HunyuanImage-3.0)（腾讯）、ComfyUI[[531]](https://github.com/Comfy-Org/ComfyUI)（工作流编辑器）、Automatic1111 WebUI[[532]](https://github.com/AUTOMATIC1111/stable-diffusion-webui)、Fooocus[[533]](https://github.com/lllyasviel/Fooocus)
 - **视频**：Runway Gen-4、Pika 2.x[[534]](https://pika.art/)、Luma Dream Machine[[535]](https://lumalabs.ai/dream-machine) / Ray2、Kling[[536]](https://app.klingai.com/global)（快手）、Hailuo MiniMax[[537]](https://hailuoai.video/)、OpenAI Sora、Google Veo 3[[538]](https://deepmind.google/technologies/veo/)、HunyuanVideo[[539]](https://github.com/Tencent-Hunyuan/HunyuanVideo)（腾讯开源）、Wan 2.x[[540]](https://github.com/Wan-Video/Wan2.2)（阿里开源）
 - **3D / 场景**：Luma Genie[[541]](https://lumalabs.ai/)、Meshy[[542]](https://www.meshy.ai/)、Tripo3D[[543]](https://www.tripo3d.ai/)、Rodin[[544]](https://hyper3d.ai/)、World Labs[[545]](https://www.worldlabs.ai/)（Fei-Fei Li）、CSM[[546]](https://www.csm.ai/)
-- **托管 / 推理市场**：fal.ai、Replicate、RunPod Serverless（这一层与 L16 重合，但更偏 diffusion 工作负载）
+- **托管 / 推理市场**：fal.ai、Replicate[[140]](https://replicate.com/)、RunPod Serverless（这一层与 L16 重合，但更偏 diffusion 工作负载）
 
 ## L33 通用对话 / 搜索 Agent（终端用户）
 
 直接给非开发者用户用的"AI 助手"。
 
-- **ChatGPT**（OpenAI；含 Tasks、Operator、Codex、Connectors）
-- **Claude.ai**（Anthropic；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）
+- **ChatGPT**（OpenAI；含 Tasks、Operator[[174]](https://openai.com/index/introducing-operator/)、Codex、Connectors）
+- **Claude.ai**（Anthropic[[141]](https://www.anthropic.com/api)；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）
 - **Gemini app[[547]](https://gemini.google.com/) / Gemini Advanced**（Google）
 - **Grok[[548]](https://grok.com/)**（xAI；X 内嵌 + grok.com）
 - **DeepSeek Chat[[549]](https://chat.deepseek.com/)**、**Kimi[[550]](https://kimi.moonshot.cn/)**（Moonshot）、**通义千问[[551]](https://tongyi.aliyun.com/)**、**豆包[[552]](https://www.doubao.com/)**（字节）
@@ -621,7 +621,7 @@ LLM 不是 GPU 的唯一负载。下面 6 条分支（**B** 科学计算 / **C**
 
 数值仿真、PDE 求解、分子动力学、量子模拟、线性 / 整数规划——这一段比深度学习古老 30 年，但 2023 后被 GPU 与 AI 重新激活。
 
-- **数值 / 张量底座（与深度学习共享）**：NumPy、SciPy、CuPy、JAX、PyTorch（autograd 也用作物理仿真）、Julia + CUDA.jl
+- **数值 / 张量底座（与深度学习共享）**：NumPy、SciPy、CuPy、JAX、PyTorch[[33]](https://pytorch.org/)（autograd 也用作物理仿真）、Julia + CUDA.jl
 - **经典 HPC 运行时**：OpenMP[[612]](https://www.openmp.org/)I[[613]](https://www.open-mpi.org/)、MPICH[[614]](https://www.mpich.org/)、NVIDIA HPC-X[[615]](https://developer.nvidia.com/networking/hpc-x)、UCX[[616]](https://openucx.org/)；OpenMP；Slurm、PBS[[617]](https://altair.com/pbs-professional)、LSF[[618]](https://www.ibm.com/products/hpc-workload-management)；Spack、EasyBuild[[619]](https://easybuild.io/)（HPC 包管理）
 - **分子 / 化学 / 生物仿真**：GROMACS（CUDA / SYCL）、OpenMM、LAMMPS-GPU[[620]](https://lammps.org/)、NAMD-CUDA[[621]](https://www.ks.uiuc.edu/Research/namd/)、AMBER[[622]](https://ambermd.org/)、Schrödinger Suite（商业）[[623]](https://www.schrodinger.com/)
 - **量子模拟 / 编程**：NVIDIA cuQuantum + CUDA-Q[[624]](https://developer.nvidia.com/cuda-q)、IBM Qiskit[[625]](https://www.ibm.com/quantum/qiskit)、Google Cirq[[626]](https://quantumai.google/cirq)、Xanadu PennyLane[[627]](https://pennylane.ai/)、Quantinuum TKET[[628]](https://www.quantinuum.com/products-solutions/developer-tools)
@@ -722,13 +722,13 @@ L32 偏"生成图像 / 视频"；这一支偏"生成可交互的 3D 世界"。
 不属于具体某一层，但跨层规律值得单列。
 
 - **MCP 是这一栈唯一在 2024–2025 通过的"工具接口标准"**：从 L25 起，向上影响 L24 / L18，向下影响 L17（模型 API 内置 MCP connector）和 L22（gateway 必须懂 MCP）。
-- **L13 推理引擎 与 L14 模型服务 的边界正在合并**：vLLM、SGLang 自带 OpenAI 兼容 HTTP server，挤压了纯 L14 厂商（KServe、BentoML）的独立性。
-- **L15 GPU 云、L16 模型 API 聚合、L17 前沿模型 API 三层正在相互渗透**：CoreWeave 推自家模型；Together / Fireworks 自研推理引擎；Anthropic / OpenAI 转售他人模型（极少，但 Bedrock / Vertex 把这种关系制度化）。
+- **L13 推理引擎 与 L14 模型服务 的边界正在合并**：vLLM、SGLang[[106]](https://github.com/sgl-project/sglang) 自带 OpenAI 兼容 HTTP server，挤压了纯 L14 厂商（KServe、BentoML）的独立性。
+- **L15 GPU 云、L16 模型 API 聚合、L17 前沿模型 API 三层正在相互渗透**：CoreWeave[[125]](https://www.coreweave.com/) 推自家模型；Together / Fireworks 自研推理引擎；Anthropic / OpenAI 转售他人模型（极少，但 Bedrock / Vertex 把这种关系制度化）。
 - **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。
 - **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。
-- **L18 LLM 应用框架 在 2025 出现 "去 LangChain 化"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。
+- **L18 LLM 应用框架 在 2025 出现 "去 LangChain[[145]](https://www.langchain.com/) 化"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。
 - **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干"Agent 框架"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。
-- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。
+- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[20]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。
 
 ---
 
