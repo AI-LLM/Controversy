@@ -1,15 +1,15 @@
-# AI 软件栈分层索引：从 GPU 驱动到终端用户 Agent 应用
+# AI 软件栈分层索引：从设备驱动到终端用户应用
 
-从最底层的 GPU 驱动 / 固件，一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。
+从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。
 
 文件分两大段：
 
-- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从 GPU 驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。
-- **B–G. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径，不进 LLM 推理服务和 Agent 中间件那条线。
+- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。
+- **B–I. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。
 
 ## L 层 × 分支 总表
 
-横轴 7 列对应 **A 主干 + B–G 6 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：
+横轴 9 列对应 **A 主干 + B–I 8 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：
 
 - `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。
 - `—`：该层在该分支不存在或可忽略。
@@ -19,46 +19,46 @@
   - L37 物理仿真 / 数字孪生引擎（B / C / D / E 共用：Isaac Sim / MuJoCo[[8]](https://mujoco.org/) / GROMACS[[9]](https://www.gromacs.org/) / CARLA / Omniverse）
   - L38 高精地图 / 定位（D 专属）
 
-| L | A. LLM / Agent | B. 科学计算 | C. 机器人 | D. 自动驾驶 | E. 世界模型 / 3D | F. 经典 CV | G. 量化金融 |
-|---|---|---|---|---|---|---|---|
-| L01 GPU 驱动 / 固件 | NVIDIA / ROCm / Metal / Gaudi driver | 同 A | 同 A | 同 A + NVIDIA DRIVE OS driver | 同 A | 同 A + Hailo / Qualcomm QNN driver | 同 A |
-| L02 互连 / 集合通信 | NVLink[[10]](https://www.nvidia.com/en-us/data-center/nvlink/), NCCL[[11]](https://developer.nvidia.com/nccl), InfiniBand[[12]](https://www.nvidia.com/en-us/networking/products/infiniband/) | 同 A，重 MPI + InfiniBand | NVLink for AGI rig；车端 PCIe | NVLink-C2C 整车 + 仿真集群 IB | 同 A | 边缘多无互连 | 同 A |
-| L03 GPU 编程模型 | CUDA[[13]](https://developer.nvidia.com/cuda), ROCm[[14]](https://www.amd.com/en/products/software/rocm.html), Metal[[15]](https://developer.apple.com/metal/), SYCL[[16]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html), DirectML[[17]](https://learn.microsoft.com/en-us/windows/ai/directml/dml) | 同 A + Julia CUDA.jl[[18]](https://github.com/JuliaGPU/CUDA.jl) | 同 A | 同 A | 同 A | 同 A + Apple Metal + DirectML | 同 A + RAPIDS[[19]](https://rapids.ai/) |
-| L04 GPU 内核库 | cuBLAS[[20]](https://developer.nvidia.com/cublas), cuDNN[[21]](https://developer.nvidia.com/cudnn), FlashAttention[[22]](https://github.com/dao-ailab/flash-attention), NCCL, CUTLASS[[23]](https://github.com/NVIDIA/cutlass) | cuFFT[[24]](https://developer.nvidia.com/cufft), cuSolver[[25]](https://developer.nvidia.com/cusolver), cuSPARSE[[26]](https://developer.nvidia.com/cusparse), cuQuantum[[27]](https://developer.nvidia.com/cuquantum-sdk), NVSHMEM[[28]](https://developer.nvidia.com/nvshmem) | cuDNN + Isaac CUDA kernels | cuDNN + TensorRT plugins | 3DGS rasterizer, NeRF CUDA kernels | cuDNN + TensorRT INT8 | cuDF, cuML, cuOpt |
-| L05 编译器 / IR | Triton[[29]](https://github.com/triton-lang/triton), XLA[[30]](https://openxla.org/xla), MLIR[[31]](https://mlir.llvm.org/), TVM[[32]](https://tvm.apache.org/), torch.compile | 同 A + Codon[[33]](https://github.com/exaloop/codon) | 同 A | TensorRT, NVIDIA DLA, TVM | 同 A | TensorRT, OpenVINO, Apple Core ML compiler | 同 A |
-| L06 张量 / 训练框架 | PyTorch[[34]](https://pytorch.org/), JAX[[35]](https://github.com/jax-ml/jax), MLX[[36]](https://github.com/ml-explore/mlx), TensorFlow[[37]](https://www.tensorflow.org/) | NumPy[[38]](https://numpy.org/), SciPy[[39]](https://scipy.org/), CuPy[[40]](https://cupy.dev/), JAX, PyTorch, Julia[[41]](https://julialang.org/) | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch, JAX, threestudio | PyTorch + OpenMMLab | scikit-learn[[42]](https://scikit-learn.org/), XGBoost[[43]](https://xgboost.readthedocs.io/), LightGBM[[44]](https://github.com/microsoft/LightGBM), PyTorch |
-| L07 分布式训练 | DeepSpeed[[45]](https://www.deepspeed.ai/), Megatron[[46]](https://github.com/NVIDIA/Megatron-LM), FSDP[[47]](https://docs.pytorch.org/docs/stable/fsdp.html), NeMo[[48]](https://docs.nvidia.com/nemo-framework/user-guide/latest/overview.html), Ray Train[[49]](https://docs.ray.io/en/latest/train/train.html) | MPI[[50]](https://www.mpi-forum.org/) + NCCL（HPC 风格而非 ZeRO） | 多在单 / 几卡 | 同 A（仿真 + 路采联训） | 同 A（video diffusion 训练） | 同 A | 多单卡 |
-| L08 训练数据 pipeline | FineWeb[[51]](https://huggingface.co/datasets/HuggingFaceFW/fineweb), datatrove[[52]](https://github.com/huggingface/datatrove), Mosaic Streaming[[53]](https://github.com/mosaicml/streaming) | 实验数据 + 仿真合成 | Open X-Embodiment[[54]](https://robotics-transformer-x.github.io/), DROID[[55]](https://droid-dataset.github.io/), LeRobot[[56]](https://github.com/huggingface/lerobot) dataset | 路采 + 影子模式 + Auto-labeling | 多视角视频 / 3D scan | Roboflow, Encord, Labelbox, FiftyOne | 时间序列 + 因子库 |
-| L09 后训练 / 微调 | TRL[[57]](https://github.com/huggingface/trl), verl[[58]](https://github.com/volcengine/verl), Unsloth[[59]](https://unsloth.ai/), Axolotl[[60]](https://github.com/axolotl-ai-cloud/axolotl) | 极少（预训练即终态） | LeRobot, Diffusion Policy[[61]](https://github.com/real-stanford/diffusion_policy), ACT | RLHF on driving sims | 极少 | YOLO finetune + 蒸馏 | sklearn 训练即生产 |
-| L10 基础模型权重 | Llama[[62]](https://ai.meta.com/llama/), Claude[[63]](https://www.anthropic.com/claude), GPT[[64]](https://openai.com/api/), Qwen[[65]](https://github.com/QwenLM/Qwen), DeepSeek[[66]](https://www.deepseek.com/en/) | AlphaFold 3[[67]](https://alphafoldserver.com/), GraphCast[[68]](https://deepmind.google/technologies/graphcast/), MatterGen[[69]](https://www.microsoft.com/en-us/research/blog/mattergen-a-new-paradigm-of-materials-design-with-generative-ai/), scGPT[[70]](https://github.com/bowang-lab/scGPT), Evo 2[[71]](https://arcinstitute.org/news/blog/evo2) | GR00T[[72]](https://developer.nvidia.com/isaac/gr00t) N1, π0[[73]](https://www.physicalintelligence.company/) / π0.5, RT-2[[74]](https://robotics-transformer2.github.io/), OpenVLA[[75]](https://openvla.github.io/), RDT-1B[[76]](https://rdt-robotics.github.io/rdt-robotics/) | Tesla FSD[[77]](https://www.tesla.com/support/autopilot) V13/14, Waymo Driver[[78]](https://waymo.com/), Wayve LINGO[[79]](https://wayve.ai/thinking/lingo-natural-language-autonomous-driving/) | Genie 3[[80]](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/), Marble[[81]](https://www.worldlabs.ai/), Cosmos[[82]](https://www.nvidia.com/en-us/ai/cosmos/) | YOLOv11[[83]](https://docs.ultralytics.com/models/yolo11/), SAM 2[[84]](https://ai.meta.com/sam2/), Florence-2[[85]](https://huggingface.co/microsoft/Florence-2-large), RT-DETR[[86]](https://github.com/lyuwenyu/RT-DETR) | BloombergGPT[[87]](https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/), FinGPT[[88]](https://github.com/AI4Finance-Foundation/FinGPT), TimeGPT[[89]](https://www.nixtla.io/), Chronos[[90]](https://github.com/amazon-science/chronos-forecasting) |
-| L11 评测 / 基准 | MMLU[[91]](https://arxiv.org/abs/2009.03300), SWE-bench[[92]](https://www.swebench.com/), MTEB[[93]](https://github.com/embeddings-benchmark/mteb/), METR Time Horizons[[94]](https://metr.org/time-horizons/) | CASP[[95]](https://predictioncenter.org/), WeatherBench[[96]](https://github.com/pangeo-data/WeatherBench), Matbench Discovery[[97]](https://matbench-discovery.materialsproject.org/) | RLBench[[98]](https://github.com/stepjam/RLBench), CALVIN, LIBERO | nuScenes[[99]](https://www.nuscenes.org/), KITTI, Argoverse, CARLA Leaderboard | VBench, 3D-FUTURE | COCO[[100]](https://cocodataset.org/), ImageNet[[101]](https://www.image-net.org/), Open Images | Sharpe / Sortino / IR |
-| L12 实验追踪 / MLOps | W&B[[102]](https://wandb.ai/site/), MLflow[[103]](https://mlflow.org/), Neptune[[104]](https://neptune.ai/) | 同 A | 同 A | 同 A + 闭源整车数据平台 | 同 A | 同 A | 同 A |
-| L13 推理引擎 | vLLM[[105]](https://github.com/vllm-project/vllm), TensorRT-LLM[[106]](https://github.com/NVIDIA/TensorRT-LLM), SGLang[[107]](https://github.com/sgl-project/sglang), llama.cpp[[108]](https://github.com/ggerganov/llama.cpp), ONNX Runtime[[109]](https://onnxruntime.ai/) | BioNeMo NIM[[110]](https://www.nvidia.com/en-us/clara/bionemo/) 引擎, Modulus runtime | Isaac ROS[[111]](https://developer.nvidia.com/isaac/ros) GEMs runtime | NVIDIA DRIVE OS[[112]](https://developer.nvidia.com/drive/drive-os), Mobileye EyeQ[[113]](https://www.mobileye.com/technology/eyeq-chip/) runtime, openpilot[[114]](https://github.com/commaai/openpilot) | 3DGS[[115]](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) renderer, Instant-NGP[[116]](https://github.com/NVlabs/instant-ngp) runtime | NVIDIA DeepStream[[117]](https://developer.nvidia.com/deepstream-sdk), Intel OpenVINO[[118]](https://docs.openvino.ai/), Apple Core ML[[119]](https://developer.apple.com/machine-learning/core-ml/), ONNX Runtime + DirectML EP | 通常无独立引擎 |
-| L14 模型服务 / 编排 | Triton Inference[[120]](https://github.com/triton-inference-server/server), Ray Serve[[121]](https://docs.ray.io/en/latest/serve/index.html), BentoML[[122]](https://www.bentoml.com/) | BioNeMo NIM Microservices[[123]](https://www.nvidia.com/en-us/clara/bionemo/), Earth-2 Studio[[124]](https://www.nvidia.com/en-us/high-performance-computing/earth-2/) | Isaac Manipulator, MoveIt 2[[125]](https://moveit.ai/) servers | Tesla inference fleet, Mobileye OTA | NVIDIA Omniverse Kit[[126]](https://developer.nvidia.com/omniverse/kit-sdk) | DeepStream pipeline, VMS 平台 | 自建 Python / QuantConnect cloud |
-| L15 GPU 云 / 算力市场 | CoreWeave[[127]](https://www.coreweave.com/), Lambda[[128]](https://lambda.ai/), Crusoe[[129]](https://www.crusoe.ai/), Nebius[[130]](https://nebius.com/) | Rescale[[131]](https://rescale.com/), AWS HPC[[132]](https://aws.amazon.com/hpc/), Azure CycleCloud[[133]](https://azure.microsoft.com/en-us/products/cyclecloud) | Tesla 自建, Figure GPU farm | Tesla Dojo[[134]](https://www.tesla.com/AI), Mobileye 自建 | RunPod[[135]](https://www.runpod.io/), fal.ai[[136]](https://fal.ai/) | AWS Panorama[[137]](https://aws.amazon.com/panorama/) 边缘 | 通用 AWS / GCP |
-| L16 模型 API 聚合 | OpenRouter[[138]](https://openrouter.ai/), Together[[139]](https://www.together.ai/), Fireworks[[140]](https://fireworks.ai/), Groq[[141]](https://groq.com/) | — | — | — | fal.ai 3D 模型托管 | Replicate[[142]](https://replicate.com/)（YOLO / SAM 托管） | — |
-| L17 前沿模型 API | Anthropic[[143]](https://www.anthropic.com/api), OpenAI[[144]](https://openai.com/api/), Gemini[[145]](https://ai.google.dev/), xAI[[146]](https://x.ai/), DeepSeek | Isomorphic AlphaFold Server, Schrödinger LiveDesign API | Skild Brain API, π API（内部） | — | World Labs Marble API, Decart Mirage | — | Bloomberg API |
-| L18 LLM 应用框架 | LangChain[[147]](https://www.langchain.com/), LlamaIndex[[148]](https://www.llamaindex.ai/), DSPy[[149]](https://github.com/stanfordnlp/dspy), Vercel AI SDK[[150]](https://ai-sdk.dev/) | — | — | — | — | — | — |
-| L19 Embedding / 重排序 | OpenAI text-embedding-3[[151]](https://platform.openai.com/docs/guides/embeddings), Cohere Embed[[152]](https://cohere.com/embed), BGE[[153]](https://github.com/FlagOpen/FlagEmbedding) | ESM-2 / 3（蛋白）, MolE（分子） | — | — | OpenCLIP, SigLIP | CLIP, SigLIP, DINOv2 | FinBERT embedding |
-| L20 向量数据库 / 检索 | Pinecone[[154]](https://www.pinecone.io/), Weaviate[[155]](https://weaviate.io/), Qdrant[[156]](https://qdrant.tech/), Milvus[[157]](https://milvus.io/) | FAISS[[158]](https://github.com/facebookresearch/faiss)（蛋白 / 分子搜索） | — | — | 3D scene 索引（少） | Roboflow Universe[[159]](https://universe.roboflow.com/) | — |
-| L21 长期记忆 | Mem0[[160]](https://mem0.ai/), Zep[[161]](https://www.getzep.com/), Letta[[162]](https://www.letta.com/) | — | （仅 in-context） | — | — | — | — |
-| L22 LLM 网关 / 路由 | LiteLLM[[163]](https://github.com/BerriAI/litellm), Portkey[[164]](https://portkey.ai/), Cloudflare AI Gateway[[165]](https://developers.cloudflare.com/ai-gateway/) | — | — | — | — | — | — |
-| L23 Prompt 管理 / 缓存 | PromptLayer[[166]](https://www.promptlayer.com/), Langfuse[[167]](https://langfuse.com/) Prompts, Braintrust[[168]](https://www.braintrust.dev/) | — | — | — | — | — | — |
-| L24 Agent 框架 | LangGraph[[169]](https://www.langchain.com/langgraph), AutoGen[[170]](https://github.com/microsoft/autogen), Claude Agent SDK[[171]](https://docs.anthropic.com/en/docs/agents-and-tools) | — | VLA 控制循环（**非 Agent 概念**） | 端到端策略（**非 Agent**） | — | — | — |
-| L25 工具协议 / MCP | Anthropic MCP[[172]](https://modelcontextprotocol.io/), Composio[[173]](https://composio.dev/), Arcade[[174]](https://www.arcade.dev/) | — | — | — | — | — | — |
-| L26 浏览器 / Computer Use | Browserbase[[175]](https://www.browserbase.com/), Operator[[176]](https://openai.com/index/introducing-operator/), browser-use[[177]](https://github.com/browser-use/browser-use) | — | — | — | — | — | — |
-| L27 代码 / Agent 沙箱 | E2B[[178]](https://e2b.dev/), Modal Sandbox[[179]](https://modal.com/), Daytona[[180]](https://www.daytona.io/) | — | — | — | — | — | — |
-| L28 LLM 观测 / 追踪 | Langfuse, Arize[[181]](https://arize.com/), LangSmith[[182]](https://www.langchain.com/langsmith-platform) | — | Foxglove[[183]](https://foxglove.dev/), Datadog | 自动驾驶闭源遥测平台 | — | Prometheus[[184]](https://prometheus.io/) + Grafana[[185]](https://grafana.com/) | — |
-| L29 Guardrails / 安全 | Guardrails AI[[186]](https://github.com/guardrails-ai/guardrails), NeMo Guardrails[[187]](https://github.com/NVIDIA-NeMo/Guardrails), Lakera[[188]](https://www.lakera.ai/) | — | ISO 13482[[189]](https://www.iso.org/standard/53820.html) 服务机器人安全 | ISO 26262[[190]](https://www.iso.org/standard/68383.html) + 21448 SOTIF + UNECE R157[[191]](https://unece.org/transport/documents/2021/03/standards/un-regulation-no-157-automated-lane-keeping-systems-alks) | — | — | — |
-| L30 LLM 评测 / 测试 | Promptfoo[[192]](https://www.promptfoo.dev/), DeepEval[[193]](https://github.com/confident-ai/deepeval), Ragas[[194]](https://github.com/explodinggradients/ragas) | — | — | — | — | — | — |
-| L31 语音 (TTS / ASR) | ElevenLabs[[195]](https://elevenlabs.io/), Whisper[[196]](https://github.com/openai/whisper), Cartesia[[197]](https://cartesia.ai/), Deepgram[[198]](https://deepgram.com/) | — | Figure 接 ElevenLabs; NVIDIA Riva[[199]](https://developer.nvidia.com/riva) | Cerence[[200]](https://www.cerence.com/) 车载语音 | — | — | — |
-| L32 图像 / 视频 / 3D 生成 | Midjourney[[201]](https://www.midjourney.com/), Sora[[202]](https://openai.com/sora/), FLUX[[203]](https://bfl.ai/), Runway[[204]](https://runwayml.com/) | — | — | — | 与 E 段相互渗透 | — | — |
-| L33 通用对话 / 搜索 Agent | ChatGPT, Claude.ai[[205]](https://claude.ai/), Gemini, M365 Copilot[[206]](https://www.microsoft.com/en-us/microsoft-365-copilot), SAP Joule[[207]](https://www.sap.com/products/artificial-intelligence/ai-assistant.html) | — | — | — | — | — | — |
-| L34 垂直 Agent 应用 | Cursor, Devin, Salesforce Agentforce[[208]](https://www.salesforce.com/agentforce/), SAP Joule | AlphaFold Server, Schrödinger LiveDesign client | Tesla Optimus, Figure 02, 1X Neo, Unitree GD01 | Tesla FSD, Waymo One, Mobileye Chauffeur | World Labs Marble app, Genie 3 playground | Hikvision, Cognex, Aidoc, Standard AI | Bloomberg Terminal, FactSet Mercury, AlphaSense, Hebbia |
-| L35 HPC 作业调度 / 工作流 | — | Slurm, PBS[[209]](https://www.altair.com/pbs-professional/), LSF, Spack[[210]](https://spack.io/), EasyBuild | — | — | — | — | — |
-| L36 机器人 / 实时中间件 | — | — | ROS 2, micro-ROS, MoveIt 2, NVIDIA Holoscan[[211]](https://developer.nvidia.com/holoscan-sdk), PX4, QNX | NVIDIA DriveWorks[[212]](https://developer.nvidia.com/drive/driveworks), AUTOSAR[[213]](https://www.autosar.org/) Classic / Adaptive | — | — | — |
-| L37 物理仿真 / 数字孪生引擎 | — | GROMACS, OpenMM[[214]](https://openmm.org/), LAMMPS, NAMD, JAX-CFD, PhiFlow | Isaac Sim[[215]](https://developer.nvidia.com/isaac/sim), MuJoCo, Gazebo, Genesis, Drake, Habitat | NVIDIA DRIVE Sim[[216]](https://developer.nvidia.com/drive/simulation), Applied Intuition, CARLA[[217]](https://carla.org/), AirSim | NVIDIA Omniverse[[218]](https://www.nvidia.com/en-us/omniverse/) + USD, Unity ML-Agents | — | — |
-| L38 高精地图 / 定位 | — | — | — | HERE[[219]](https://www.here.com/), TomTom[[220]](https://www.tomtom.com/), 四维图新, Mapbox[[221]](https://www.mapbox.com/) | — | — | — |
+| L | A. LLM / Agent | B. 科学计算 | C. 机器人 | D. 自动驾驶 | E. 世界模型 / 3D | F. 经典 CV | G. 量化金融 | H. 游戏 | I. 影视娱乐 |
+|---|---|---|---|---|---|---|--- | --- | --- |
+| L01 GPU 驱动 / 固件 | NVIDIA / ROCm / Metal / Gaudi driver | 同 A | 同 A | 同 A + NVIDIA DRIVE OS driver | 同 A | 同 A + Hailo / Qualcomm QNN driver | 同 A | 同 A | 同 A |
+| L02 互连 / 集合通信 | NVLink[[10]](https://www.nvidia.com/en-us/data-center/nvlink/), NCCL[[11]](https://developer.nvidia.com/nccl), InfiniBand[[12]](https://www.nvidia.com/en-us/networking/products/infiniband/) | 同 A，重 MPI + InfiniBand | NVLink for AGI rig；车端 PCIe | NVLink-C2C 整车 + 仿真集群 IB | 同 A | 边缘多无互连 | 同 A | 同 A（单节点为主） | 同 A（渲染农场用 10–100 GbE / IB） |
+| L03 GPU 编程模型 | CUDA[[13]](https://developer.nvidia.com/cuda), ROCm[[14]](https://www.amd.com/en/products/software/rocm.html), Metal[[15]](https://developer.apple.com/metal/), SYCL[[16]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html), DirectML[[17]](https://learn.microsoft.com/en-us/windows/ai/directml/dml) | 同 A + Julia CUDA.jl[[18]](https://github.com/JuliaGPU/CUDA.jl) | 同 A | 同 A | 同 A | 同 A + Apple Metal + DirectML | 同 A + RAPIDS[[19]](https://rapids.ai/) | 同 A + DirectX 12（PC / Xbox）, Metal（Mac / iOS） | 同 A + Metal（Mac DCC） |
+| L04 GPU 内核库 | cuBLAS[[20]](https://developer.nvidia.com/cublas), cuDNN[[21]](https://developer.nvidia.com/cudnn), FlashAttention[[22]](https://github.com/dao-ailab/flash-attention), NCCL, CUTLASS[[23]](https://github.com/NVIDIA/cutlass) | cuFFT[[24]](https://developer.nvidia.com/cufft), cuSolver[[25]](https://developer.nvidia.com/cusolver), cuSPARSE[[26]](https://developer.nvidia.com/cusparse), cuQuantum[[27]](https://developer.nvidia.com/cuquantum-sdk), NVSHMEM[[28]](https://developer.nvidia.com/nvshmem) | cuDNN + Isaac CUDA kernels | cuDNN + TensorRT plugins | 3DGS rasterizer, NeRF CUDA kernels | cuDNN + TensorRT INT8 | cuDF, cuML, cuOpt | cuDNN（DLSS / NPC inference）+ DirectML kernels | cuDNN + OptiX denoise kernels |
+| L05 编译器 / IR | Triton[[29]](https://github.com/triton-lang/triton), XLA[[30]](https://openxla.org/xla), MLIR[[31]](https://mlir.llvm.org/), TVM[[32]](https://tvm.apache.org/), torch.compile | 同 A + Codon[[33]](https://github.com/exaloop/codon) | 同 A | TensorRT, NVIDIA DLA, TVM | 同 A | TensorRT, OpenVINO, Apple Core ML compiler | 同 A | 同 A + HLSL / shader compilers | 同 A |
+| L06 张量 / 训练框架 | PyTorch[[34]](https://pytorch.org/), JAX[[35]](https://github.com/jax-ml/jax), MLX[[36]](https://github.com/ml-explore/mlx), TensorFlow[[37]](https://www.tensorflow.org/) | NumPy[[38]](https://numpy.org/), SciPy[[39]](https://scipy.org/), CuPy[[40]](https://cupy.dev/), JAX, PyTorch, Julia[[41]](https://julialang.org/) | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch, JAX, threestudio | PyTorch + OpenMMLab | scikit-learn[[42]](https://scikit-learn.org/), XGBoost[[43]](https://xgboost.readthedocs.io/), LightGBM[[44]](https://github.com/microsoft/LightGBM), PyTorch | PyTorch（NPC AI 训练）+ ONNX | PyTorch（generative VFX） |
+| L07 分布式训练 | DeepSpeed[[45]](https://www.deepspeed.ai/), Megatron[[46]](https://github.com/NVIDIA/Megatron-LM), FSDP[[47]](https://docs.pytorch.org/docs/stable/fsdp.html), NeMo[[48]](https://docs.nvidia.com/nemo-framework/user-guide/latest/overview.html), Ray Train[[49]](https://docs.ray.io/en/latest/train/train.html) | MPI[[50]](https://www.mpi-forum.org/) + NCCL（HPC 风格而非 ZeRO） | 多在单 / 几卡 | 同 A（仿真 + 路采联训） | 同 A（video diffusion 训练） | 同 A | 多单卡 | 多在单卡 | 多在单卡 |
+| L08 训练数据 pipeline | FineWeb[[51]](https://huggingface.co/datasets/HuggingFaceFW/fineweb), datatrove[[52]](https://github.com/huggingface/datatrove), Mosaic Streaming[[53]](https://github.com/mosaicml/streaming) | 实验数据 + 仿真合成 | Open X-Embodiment[[54]](https://robotics-transformer-x.github.io/), DROID[[55]](https://droid-dataset.github.io/), LeRobot[[56]](https://github.com/huggingface/lerobot) dataset | 路采 + 影子模式 + Auto-labeling | 多视角视频 / 3D scan | Roboflow, Encord, Labelbox, FiftyOne | 时间序列 + 因子库 | 游戏 telemetry / 玩家行为日志 | 镜头库 / 母带 / 标注 |
+| L09 后训练 / 微调 | TRL[[57]](https://github.com/huggingface/trl), verl[[58]](https://github.com/volcengine/verl), Unsloth[[59]](https://unsloth.ai/), Axolotl[[60]](https://github.com/axolotl-ai-cloud/axolotl) | 极少（预训练即终态） | LeRobot, Diffusion Policy[[61]](https://github.com/real-stanford/diffusion_policy), ACT | RLHF on driving sims | 极少 | YOLO finetune + 蒸馏 | sklearn 训练即生产 | NPC behavior tuning, 反作弊模型微调 | LoRA / Dreambooth 风格化 |
+| L10 基础模型权重 | Llama[[62]](https://ai.meta.com/llama/), Claude[[63]](https://www.anthropic.com/claude), GPT[[64]](https://openai.com/api/), Qwen[[65]](https://github.com/QwenLM/Qwen), DeepSeek[[66]](https://www.deepseek.com/en/) | AlphaFold 3[[67]](https://alphafoldserver.com/), GraphCast[[68]](https://deepmind.google/technologies/graphcast/), MatterGen[[69]](https://www.microsoft.com/en-us/research/blog/mattergen-a-new-paradigm-of-materials-design-with-generative-ai/), scGPT[[70]](https://github.com/bowang-lab/scGPT), Evo 2[[71]](https://arcinstitute.org/news/blog/evo2) | GR00T[[72]](https://developer.nvidia.com/isaac/gr00t) N1, π0[[73]](https://www.physicalintelligence.company/) / π0.5, RT-2[[74]](https://robotics-transformer2.github.io/), OpenVLA[[75]](https://openvla.github.io/), RDT-1B[[76]](https://rdt-robotics.github.io/rdt-robotics/) | Tesla FSD[[77]](https://www.tesla.com/support/autopilot) V13/14, Waymo Driver[[78]](https://waymo.com/), Wayve LINGO[[79]](https://wayve.ai/thinking/lingo-natural-language-autonomous-driving/) | Genie 3[[80]](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/), Marble[[81]](https://www.worldlabs.ai/), Cosmos[[82]](https://www.nvidia.com/en-us/ai/cosmos/) | YOLOv11[[83]](https://docs.ultralytics.com/models/yolo11/), SAM 2[[84]](https://ai.meta.com/sam2/), Florence-2[[85]](https://huggingface.co/microsoft/Florence-2-large), RT-DETR[[86]](https://github.com/lyuwenyu/RT-DETR) | BloombergGPT[[87]](https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/), FinGPT[[88]](https://github.com/AI4Finance-Foundation/FinGPT), TimeGPT[[89]](https://www.nixtla.io/), Chronos[[90]](https://github.com/amazon-science/chronos-forecasting) | NVIDIA ACE[[804]], Inworld[[805]], Convai[[806]] NPC LLM | 与 E / L32 共用：Sora, Veo 3, Kling, Runway |
+| L11 评测 / 基准 | MMLU[[91]](https://arxiv.org/abs/2009.03300), SWE-bench[[92]](https://www.swebench.com/), MTEB[[93]](https://github.com/embeddings-benchmark/mteb/), METR Time Horizons[[94]](https://metr.org/time-horizons/) | CASP[[95]](https://predictioncenter.org/), WeatherBench[[96]](https://github.com/pangeo-data/WeatherBench), Matbench Discovery[[97]](https://matbench-discovery.materialsproject.org/) | RLBench[[98]](https://github.com/stepjam/RLBench), CALVIN, LIBERO | nuScenes[[99]](https://www.nuscenes.org/), KITTI, Argoverse, CARLA Leaderboard | VBench, 3D-FUTURE | COCO[[100]](https://cocodataset.org/), ImageNet[[101]](https://www.image-net.org/), Open Images | Sharpe / Sortino / IR | NPC dialogue 评估（少公开基准） | 人工评审 + 内部 A/B |
+| L12 实验追踪 / MLOps | W&B[[102]](https://wandb.ai/site/), MLflow[[103]](https://mlflow.org/), Neptune[[104]](https://neptune.ai/) | 同 A | 同 A | 同 A + 闭源整车数据平台 | 同 A | 同 A | 同 A | 同 A | 同 A |
+| L13 推理引擎 | vLLM[[105]](https://github.com/vllm-project/vllm), TensorRT-LLM[[106]](https://github.com/NVIDIA/TensorRT-LLM), SGLang[[107]](https://github.com/sgl-project/sglang), llama.cpp[[108]](https://github.com/ggerganov/llama.cpp), ONNX Runtime[[109]](https://onnxruntime.ai/) | BioNeMo NIM[[110]](https://www.nvidia.com/en-us/clara/bionemo/) 引擎, Modulus runtime | Isaac ROS[[111]](https://developer.nvidia.com/isaac/ros) GEMs runtime | NVIDIA DRIVE OS[[112]](https://developer.nvidia.com/drive/drive-os), Mobileye EyeQ[[113]](https://www.mobileye.com/technology/eyeq-chip/) runtime, openpilot[[114]](https://github.com/commaai/openpilot) | 3DGS[[115]](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) renderer, Instant-NGP[[116]](https://github.com/NVlabs/instant-ngp) runtime | NVIDIA DeepStream[[117]](https://developer.nvidia.com/deepstream-sdk), Intel OpenVINO[[118]](https://docs.openvino.ai/), Apple Core ML[[119]](https://developer.apple.com/machine-learning/core-ml/), ONNX Runtime + DirectML EP | 通常无独立引擎 | ONNX Runtime + DirectML（游戏内推理）+ NVIDIA TensorRT | 与 L32 共用 diffusion runtime |
+| L14 模型服务 / 编排 | Triton Inference[[120]](https://github.com/triton-inference-server/server), Ray Serve[[121]](https://docs.ray.io/en/latest/serve/index.html), BentoML[[122]](https://www.bentoml.com/) | BioNeMo NIM Microservices[[123]](https://www.nvidia.com/en-us/clara/bionemo/), Earth-2 Studio[[124]](https://www.nvidia.com/en-us/high-performance-computing/earth-2/) | Isaac Manipulator, MoveIt 2[[125]](https://moveit.ai/) servers | Tesla inference fleet, Mobileye OTA | NVIDIA Omniverse Kit[[126]](https://developer.nvidia.com/omniverse/kit-sdk) | DeepStream pipeline, VMS 平台 | 自建 Python / QuantConnect cloud | 游戏后端：PlayFab[[807]], GameLift[[809]] | 渲染农场 + AI 服务集群 |
+| L15 GPU 云 / 算力市场 | CoreWeave[[127]](https://www.coreweave.com/), Lambda[[128]](https://lambda.ai/), Crusoe[[129]](https://www.crusoe.ai/), Nebius[[130]](https://nebius.com/) | Rescale[[131]](https://rescale.com/), AWS HPC[[132]](https://aws.amazon.com/hpc/), Azure CycleCloud[[133]](https://azure.microsoft.com/en-us/products/cyclecloud) | Tesla 自建, Figure GPU farm | Tesla Dojo[[134]](https://www.tesla.com/AI), Mobileye 自建 | RunPod[[135]](https://www.runpod.io/), fal.ai[[136]](https://fal.ai/) | AWS Panorama[[137]](https://aws.amazon.com/panorama/) 边缘 | 通用 AWS / GCP | Tencent / NetEase / Sony 自建 GPU farms | 渲染云：Conductor[[810]], AWS Thinkbox Deadline[[811]] |
+| L16 模型 API 聚合 | OpenRouter[[138]](https://openrouter.ai/), Together[[139]](https://www.together.ai/), Fireworks[[140]](https://fireworks.ai/), Groq[[141]](https://groq.com/) | — | — | — | fal.ai 3D 模型托管 | Replicate[[142]](https://replicate.com/)（YOLO / SAM 托管） | — | — | — |
+| L17 前沿模型 API | Anthropic[[143]](https://www.anthropic.com/api), OpenAI[[144]](https://openai.com/api/), Gemini[[145]](https://ai.google.dev/), xAI[[146]](https://x.ai/), DeepSeek | Isomorphic AlphaFold Server, Schrödinger LiveDesign API | Skild Brain API, π API（内部） | — | World Labs Marble API, Decart Mirage | — | Bloomberg API | — | — |
+| L18 LLM 应用框架 | LangChain[[147]](https://www.langchain.com/), LlamaIndex[[148]](https://www.llamaindex.ai/), DSPy[[149]](https://github.com/stanfordnlp/dspy), Vercel AI SDK[[150]](https://ai-sdk.dev/) | — | — | — | — | — | — | — | — |
+| L19 Embedding / 重排序 | OpenAI text-embedding-3[[151]](https://platform.openai.com/docs/guides/embeddings), Cohere Embed[[152]](https://cohere.com/embed), BGE[[153]](https://github.com/FlagOpen/FlagEmbedding) | ESM-2 / 3（蛋白）, MolE（分子） | — | — | OpenCLIP, SigLIP | CLIP, SigLIP, DINOv2 | FinBERT embedding | — | — |
+| L20 向量数据库 / 检索 | Pinecone[[154]](https://www.pinecone.io/), Weaviate[[155]](https://weaviate.io/), Qdrant[[156]](https://qdrant.tech/), Milvus[[157]](https://milvus.io/) | FAISS[[158]](https://github.com/facebookresearch/faiss)（蛋白 / 分子搜索） | — | — | 3D scene 索引（少） | Roboflow Universe[[159]](https://universe.roboflow.com/) | — | — | — |
+| L21 长期记忆 | Mem0[[160]](https://mem0.ai/), Zep[[161]](https://www.getzep.com/), Letta[[162]](https://www.letta.com/) | — | （仅 in-context） | — | — | — | — | NPC long-term memory：Charisma[[812]] | — |
+| L22 LLM 网关 / 路由 | LiteLLM[[163]](https://github.com/BerriAI/litellm), Portkey[[164]](https://portkey.ai/), Cloudflare AI Gateway[[165]](https://developers.cloudflare.com/ai-gateway/) | — | — | — | — | — | — | — | — |
+| L23 Prompt 管理 / 缓存 | PromptLayer[[166]](https://www.promptlayer.com/), Langfuse[[167]](https://langfuse.com/) Prompts, Braintrust[[168]](https://www.braintrust.dev/) | — | — | — | — | — | — | — | — |
+| L24 Agent 框架 | LangGraph[[169]](https://www.langchain.com/langgraph), AutoGen[[170]](https://github.com/microsoft/autogen), Claude Agent SDK[[171]](https://docs.anthropic.com/en/docs/agents-and-tools) | — | VLA 控制循环（**非 Agent 概念**） | 端到端策略（**非 Agent**） | — | — | — | —（NPC 走专用 dialogue 循环，非 Agent） | — |
+| L25 工具协议 / MCP | Anthropic MCP[[172]](https://modelcontextprotocol.io/), Composio[[173]](https://composio.dev/), Arcade[[174]](https://www.arcade.dev/) | — | — | — | — | — | — | — | — |
+| L26 浏览器 / Computer Use | Browserbase[[175]](https://www.browserbase.com/), Operator[[176]](https://openai.com/index/introducing-operator/), browser-use[[177]](https://github.com/browser-use/browser-use) | — | — | — | — | — | — | — | — |
+| L27 代码 / Agent 沙箱 | E2B[[178]](https://e2b.dev/), Modal Sandbox[[179]](https://modal.com/), Daytona[[180]](https://www.daytona.io/) | — | — | — | — | — | — | — | — |
+| L28 LLM 观测 / 追踪 | Langfuse, Arize[[181]](https://arize.com/), LangSmith[[182]](https://www.langchain.com/langsmith-platform) | — | Foxglove[[183]](https://foxglove.dev/), Datadog | 自动驾驶闭源遥测平台 | — | Prometheus[[184]](https://prometheus.io/) + Grafana[[185]](https://grafana.com/) | — | Unity Analytics, GameAnalytics[[808]] | ShotGrid[[813]]（生产管线追踪） |
+| L29 Guardrails / 安全 | Guardrails AI[[186]](https://github.com/guardrails-ai/guardrails), NeMo Guardrails[[187]](https://github.com/NVIDIA-NeMo/Guardrails), Lakera[[188]](https://www.lakera.ai/) | — | ISO 13482[[189]](https://www.iso.org/standard/53820.html) 服务机器人安全 | ISO 26262[[190]](https://www.iso.org/standard/68383.html) + 21448 SOTIF + UNECE R157[[191]](https://unece.org/transport/documents/2021/03/standards/un-regulation-no-157-automated-lane-keeping-systems-alks) | — | — | — | 反作弊：BattlEye[[814]], Easy Anti-Cheat[[815]], VAC[[816]] | C2PA[[817]] 内容来源 + watermarking |
+| L30 LLM 评测 / 测试 | Promptfoo[[192]](https://www.promptfoo.dev/), DeepEval[[193]](https://github.com/confident-ai/deepeval), Ragas[[194]](https://github.com/explodinggradients/ragas) | — | — | — | — | — | — | — | — |
+| L31 语音 (TTS / ASR) | ElevenLabs[[195]](https://elevenlabs.io/), Whisper[[196]](https://github.com/openai/whisper), Cartesia[[197]](https://cartesia.ai/), Deepgram[[198]](https://deepgram.com/) | — | Figure 接 ElevenLabs; NVIDIA Riva[[199]](https://developer.nvidia.com/riva) | Cerence[[200]](https://www.cerence.com/) 车载语音 | — | — | — | 与 A 共用 ElevenLabs / Riva 做 NPC 配音 | ElevenLabs, Descript[[818]], Adobe Podcast[[819]] |
+| L32 图像 / 视频 / 3D 生成 | Midjourney[[201]](https://www.midjourney.com/), Sora[[202]](https://openai.com/sora/), FLUX[[203]](https://bfl.ai/), Runway[[204]](https://runwayml.com/) | — | — | — | 与 E 段相互渗透 | — | — | MetaHuman[[820]], Reallusion[[821]] | 与 A 共用 + Topaz Video AI[[822]], Wonder Dynamics[[823]] Wonder Studio |
+| L33 通用对话 / 搜索 Agent | ChatGPT, Claude.ai[[205]](https://claude.ai/), Gemini, M365 Copilot[[206]](https://www.microsoft.com/en-us/microsoft-365-copilot), SAP Joule[[207]](https://www.sap.com/products/artificial-intelligence/ai-assistant.html) | — | — | — | — | — | — | — | — |
+| L34 垂直 Agent 应用 | Cursor, Devin, Salesforce Agentforce[[208]](https://www.salesforce.com/agentforce/), SAP Joule | AlphaFold Server, Schrödinger LiveDesign client | Tesla Optimus, Figure 02, 1X Neo, Unitree GD01 | Tesla FSD, Waymo One, Mobileye Chauffeur | World Labs Marble app, Genie 3 playground | Hikvision, Cognex, Aidoc, Standard AI | Bloomberg Terminal, FactSet Mercury, AlphaSense, Hebbia | Inworld 集成游戏, Replica Studios[[824]], Skybox AI[[825]] | Cuebric[[826]], Captions[[827]], Adobe Firefly Video[[828]], ILM StageCraft[[829]] |
+| L35 HPC 作业调度 / 工作流 | — | Slurm, PBS[[209]](https://www.altair.com/pbs-professional/), LSF, Spack[[210]](https://spack.io/), EasyBuild | — | — | — | — | — | — | — |
+| L36 机器人 / 实时中间件 | — | — | ROS 2, micro-ROS, MoveIt 2, NVIDIA Holoscan[[211]](https://developer.nvidia.com/holoscan-sdk), PX4, QNX | NVIDIA DriveWorks[[212]](https://developer.nvidia.com/drive/driveworks), AUTOSAR[[213]](https://www.autosar.org/) Classic / Adaptive | — | — | — | — | — |
+| L37 物理仿真 / 数字孪生引擎 | — | GROMACS, OpenMM[[214]](https://openmm.org/), LAMMPS, NAMD, JAX-CFD, PhiFlow | Isaac Sim[[215]](https://developer.nvidia.com/isaac/sim), MuJoCo, Gazebo, Genesis, Drake, Habitat | NVIDIA DRIVE Sim[[216]](https://developer.nvidia.com/drive/simulation), Applied Intuition, CARLA[[217]](https://carla.org/), AirSim | NVIDIA Omniverse[[218]](https://www.nvidia.com/en-us/omniverse/) + USD, Unity ML-Agents | — | — | Unity ML-Agents（与 E 共用） | V-Ray[[830]], RenderMan[[831]], Arnold[[832]] 渲染器；Houdini[[833]] 物理 |
+| L38 高精地图 / 定位 | — | — | — | HERE[[219]](https://www.here.com/), TomTom[[220]](https://www.tomtom.com/), 四维图新, Mapbox[[221]](https://www.mapbox.com/) | — | — | — | — | — |
 
 ---
 
@@ -702,20 +702,46 @@ L32 偏"生成图像 / 视频"；这一支偏"生成可交互的 3D 世界"。
 - **Gd 金融领域模型**：BloombergGPT、FinGPT、FinBERT[[800]](https://github.com/yya518/FinBERT)、PIXIU[[17]](https://github.com/The-FinAI/PIXIU)；金融具体应用大多复用 GPT / Claude，没有独立分发
 - **Ge 终端 / 平台**：Bloomberg Terminal + AI[[801]](https://professional.bloomberg.com/products/bloomberg-terminal/)、FactSet Mercury[[109]](https://www.factset.com/ai)、Two Sigma Venn[[802]](https://www.venn.twosigma.com/)、AlphaSense[[803]](https://www.alpha-sense.com/)、Hebbia（这一项已在 L34 列出）
 
+### H 游戏栈：引擎 + NPC AI + 反作弊 + 渲染（与 L13 / L21 / L29 / L32 渗透）
+
+游戏行业 AI 应用集中在三个方向：实时性能（DLSS / FSR / XeSS 等 super-resolution）、NPC 智能（对话 + 行为）、反作弊与玩家行为监测。生成式 AI 主要进入资产生成与原型阶段，对线上玩法的影响仍较有限。
+
+- **Ha 游戏引擎（AI 是嵌入而非主干）**：Unreal Engine[[804]](https://www.unrealengine.com/)、Unity[[805]](https://unity.com/)、Godot[[806]](https://godotengine.org/)、CryEngine[[807]](https://www.cryengine.com/)、Cocos Creator[[808]](https://www.cocos.com/en/creator)
+- **Hb 实时画质提升 / 上采样**：NVIDIA DLSS[[809]](https://www.nvidia.com/en-us/geforce/technologies/dlss/)（Deep Learning Super Sampling）、AMD FSR[[810]](https://gpuopen.com/fidelityfx-super-resolution-4/)（FidelityFX Super Resolution）、Intel XeSS[[811]](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/technology/xess.html)、Sony PSSR[[812]](https://blog.playstation.com/2024/09/10/playstation-5-pro-launches-november-7-priced-at-699-99/)（PlayStation Spectral Super Resolution）
+- **Hc NPC / 对话 AI**：NVIDIA ACE、Inworld AI（含 Inworld Origins 演示）、Convai、Charisma.ai、Replica Studios（语音 + 角色）；游戏内 LLM 集成方向上 NetEase Naraku Dialogue 等本土探索
+- **Hd 程序化生成 / 资产**：Promethean AI[[813]](https://www.prometheanai.com/)、Scenario[[814]](https://www.scenario.com/)、Rosebud AI[[815]](https://www.rosebud.ai/)、Skybox AI（360° 场景）、Houdini procedural、SideFX Solaris
+- **He 反作弊 / 玩家行为**：BattlEye、Easy Anti-Cheat（Epic）、VAC（Valve）、GGWP[[816]](https://www.ggwp.com/)、Anybrain[[817]](https://www.anybrain.gg/)（行为生物特征反作弊）
+- **Hf 玩家服务 / live ops 后端**：Microsoft PlayFab、AWS GameLift、Unity Gaming Services[[818]](https://unity.com/products/gaming-services)、Epic Online Services[[819]](https://dev.epicgames.com/services)、GameAnalytics、Unity Analytics
+- **Hg 终端游戏 / AI-first 工作室**：Inworld 集成游戏（Status: One、Sims-style 等）、Hidden Door[[820]](https://www.hiddendoor.co/)（叙事 AI 游戏平台）、AI Dungeon[[821]](https://aidungeon.com/)、Suck Up![[822]](https://www.proxima-enterprises.com/)（Proxima Enterprises）
+
+### I 影视娱乐栈：VFX / 后期 / 虚拟制作 / 生成式（与 E / L32 高度渗透）
+
+L32 已列了 Sora / Veo / Runway 等生成模型。本段重在**工业级 VFX 工具链** + **AI-first 制作工作流**——它们大多用 NVIDIA / Apple GPU、但栈在 Houdini / Nuke / DaVinci 这条传统 DCC 轴上演化。
+
+- **Ia VFX / 合成 / 调色**：Adobe After Effects[[823]](https://www.adobe.com/products/aftereffects.html)、Foundry Nuke[[824]](https://www.foundry.com/products/nuke-family/nuke)、Blackmagic DaVinci Resolve[[825]](https://www.blackmagicdesign.com/products/davinciresolve)、Autodesk Maya[[826]](https://www.autodesk.com/products/maya/overview)、Blender[[827]](https://www.blender.org/)、Houdini、Cinema 4D[[828]](https://www.maxon.net/en/cinema-4d)
+- **Ib AI VFX / 自动化制作**：Wonder Dynamics Wonder Studio（角色替换 + 自动 mocap）、Runway（视频生成与编辑）、Move.ai[[829]](https://www.move.ai/)（无标记 mocap）、Cuebric（虚拟制作 LED wall 场景）、Promise[[830]](https://www.promise.studio/)（生成式电影工作室）
+- **Ic 视频生成 / 模型层**：与 L32 共用：Sora、Veo 3、Kling、Runway Gen-4、Pika、Luma Dream Machine、Hailuo MiniMax、HunyuanVideo、Wan、OpenAI Sora 2 等
+- **Id 音频 / 配音 / 修复**：ElevenLabs（配音）、Resemble、Descript（视频 + 播客后期 + Overdub）、Adobe Podcast（语音增强）、Krisp[[831]](https://krisp.ai/)（降噪）、iZotope RX[[832]](https://www.izotope.com/en/products/rx.html)（音频修复）
+- **Ie 影像增强 / 修复 / 上采样**：Topaz Video AI（去噪 / 上采样 / 帧插值）、Adobe Enhance / Premiere AI、NVIDIA RTX Video[[833]](https://www.nvidia.com/en-us/geforce/news/rtx-video-super-resolution/)、DaVinci Resolve Neural Engine
+- **If 虚拟制作 / LED 摄影棚**：ILM StageCraft（Mandalorian 的 LED volume）、Disguise[[834]](https://www.disguise.one/)、Pixotope[[835]](https://www.pixotope.com/)、Unreal Engine + nDisplay（实时背景）
+- **Ig 渲染引擎 / 渲染农场**：V-Ray、RenderMan（Pixar）、Arnold（Autodesk）、Redshift[[836]](https://www.maxon.net/en/redshift)、Octane[[837]](https://home.otoy.com/render/octane-render/)；渲染云 Conductor、AWS Thinkbox Deadline、Coresite、Foundry Athera
+- **Ih 字幕 / 翻译 / 内容审核**：Captions（短视频 AI 工作室）、Submagic[[838]](https://www.submagic.co/)、CapCut[[839]](https://www.capcut.com/)（字节，AI 内嵌剪辑）、Veed.io[[840]](https://www.veed.io/)
+- **Ii AI-first 影视工作室 / 终端品牌**：Adobe Firefly Video、ILM StageCraft、Marvel（已多次使用 AI 风格化）、Wonder Studios、Promise；Lightricks / LTX-Video[[841]](https://www.lightricks.com/) 模型；OpenAI Sora 自有 app
+
 ---
 
 ## 各分支与主干共享 / 分叉点速查
 
 | 主干层 | LLM / Agent（A 段） | 科学计算（B1–B3） | 机器人（C） | 自动驾驶（D） | 世界模型 / 3D（E） | 经典 CV（F） |
-|---|---|---|---|---|---|---|
-| L01–L05 驱动 / 内核库 / 编译器 | 共享 | 共享 + 加 OpenMM / cuQuantum kernel | 共享 + 实时 OS | 共享 + 车规级 BSP | 共享 | 共享 + OpenVINO / TensorRT |
-| L06–L07 框架 / 分布式 | PyTorch / JAX / DeepSpeed | PyTorch / JAX / Julia / MPI | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch + JAX | PyTorch + OpenMMLab |
-| L08 数据 pipeline | FineWeb / datatrove | 实验数据 + 仿真生成 | Open X-Embodiment / DROID | 路采 + Replay + 仿真 | 多视角 / 视频对 | Roboflow / Labelbox |
-| L09 后训练 | TRL / verl | 极少（多预训练即终态） | LeRobot + ACT + Diffusion Policy | 半监督 + RLHF 仿真 | 极少 | 微调 + 蒸馏 |
-| L10 模型 | Llama / Claude / GPT | AlphaFold 3 / GraphCast / MatterGen | π0 / GR00T / RT-2 | Tesla FSD / Waymo | Genie 3 / Marble | YOLO / SAM 2 |
-| L13–L14 推理 / 服务 | vLLM / Triton Inference | BioNeMo NIM / Earth-2 Studio | Isaac ROS / 车载 NN runtime | DRIVE OS / EyeQ runtime | Gaussian Splatting renderer | DeepStream / OpenVINO |
-| L24–L26 Agent / 工具 | LangGraph / MCP / Computer Use | 多数无（人在闭环） | VLA 控制循环（非 LLM Agent） | 端到端策略，无 Agent 层 | 编辑器内交互 | 无 |
-| L33–L34 终端 | ChatGPT / Cursor | AlphaFold Server / Schrödinger | Tesla Optimus / Figure | Tesla FSD / Robotaxi | Marble / Genie 3 | 工业 / 医疗 / 零售视觉 |
+|---|---|---|---|---|---|--- | --- | --- |
+| L01–L05 驱动 / 内核库 / 编译器 | 共享 | 共享 + 加 OpenMM / cuQuantum kernel | 共享 + 实时 OS | 共享 + 车规级 BSP | 共享 | 共享 + OpenVINO / TensorRT | 同 A | 同 A |
+| L06–L07 框架 / 分布式 | PyTorch / JAX / DeepSpeed | PyTorch / JAX / Julia / MPI | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch + JAX | PyTorch + OpenMMLab | PyTorch（NPC AI 训练）+ ONNX | PyTorch（generative VFX） |
+| L08 数据 pipeline | FineWeb / datatrove | 实验数据 + 仿真生成 | Open X-Embodiment / DROID | 路采 + Replay + 仿真 | 多视角 / 视频对 | Roboflow / Labelbox | 游戏 telemetry / 玩家行为日志 | 镜头库 / 母带 / 标注 |
+| L09 后训练 | TRL / verl | 极少（多预训练即终态） | LeRobot + ACT + Diffusion Policy | 半监督 + RLHF 仿真 | 极少 | 微调 + 蒸馏 | NPC behavior tuning, 反作弊模型微调 | LoRA / Dreambooth 风格化 |
+| L10 模型 | Llama / Claude / GPT | AlphaFold 3 / GraphCast / MatterGen | π0 / GR00T / RT-2 | Tesla FSD / Waymo | Genie 3 / Marble | YOLO / SAM 2 | NVIDIA ACE[[804]], Inworld[[805]], Convai[[806]] NPC LLM | 与 E / L32 共用：Sora, Veo 3, Kling, Runway |
+| L13–L14 推理 / 服务 | vLLM / Triton Inference | BioNeMo NIM / Earth-2 Studio | Isaac ROS / 车载 NN runtime | DRIVE OS / EyeQ runtime | Gaussian Splatting renderer | DeepStream / OpenVINO | ONNX Runtime + DirectML（游戏内推理）+ NVIDIA TensorRT | 与 L32 共用 diffusion runtime |
+| L24–L26 Agent / 工具 | LangGraph / MCP / Computer Use | 多数无（人在闭环） | VLA 控制循环（非 LLM Agent） | 端到端策略，无 Agent 层 | 编辑器内交互 | 无 | —（NPC 走专用 dialogue 循环，非 Agent） | — |
+| L33–L34 终端 | ChatGPT / Cursor | AlphaFold Server / Schrödinger | Tesla Optimus / Figure | Tesla FSD / Robotaxi | Marble / Genie 3 | 工业 / 医疗 / 零售视觉 | — | — |
 
 ---
 
@@ -2341,3 +2367,79 @@ L32 偏"生成图像 / 视频"；这一支偏"生成可交互的 3D 世界"。
 [802] Two Sigma, "Venn: Investment Portfolio Analytics Platform," *venn.twosigma.com*, 2025. [Online]. Available: <https://www.venn.twosigma.com/>
 
 [803] AlphaSense, "AlphaSense: AI-Powered Market Intelligence and Search Platform," *alpha-sense.com*, 2025. [Online]. Available: <https://www.alpha-sense.com/>
+
+[804] Epic Games, "Unreal Engine", [Online]. Available: <https://www.unrealengine.com/>
+
+[805] Unity Technologies, "Unity Engine", [Online]. Available: <https://unity.com/>
+
+[806] Godot Engine community, "Godot Engine", [Online]. Available: <https://godotengine.org/>
+
+[807] Crytek, "CryEngine", [Online]. Available: <https://www.cryengine.com/>
+
+[808] Cocos, "Cocos Creator", [Online]. Available: <https://www.cocos.com/en/creator>
+
+[809] NVIDIA, "DLSS — Deep Learning Super Sampling", [Online]. Available: <https://www.nvidia.com/en-us/geforce/technologies/dlss/>
+
+[810] AMD, "FidelityFX Super Resolution (FSR)", [Online]. Available: <https://gpuopen.com/fidelityfx-super-resolution-4/>
+
+[811] Intel, "Intel XeSS (Xe Super Sampling)", [Online]. Available: <https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/technology/xess.html>
+
+[812] Sony Interactive Entertainment, "PlayStation 5 Pro — PSSR", PlayStation.Blog, [Online]. Available: <https://blog.playstation.com/2024/09/10/playstation-5-pro-launches-november-7-priced-at-699-99/>
+
+[813] Promethean AI, "Promethean AI", [Online]. Available: <https://www.prometheanai.com/>
+
+[814] Scenario, "Scenario AI Generative Art", [Online]. Available: <https://www.scenario.com/>
+
+[815] Rosebud AI, "Rosebud AI", [Online]. Available: <https://www.rosebud.ai/>
+
+[816] GGWP, "GGWP — AI-powered player safety", [Online]. Available: <https://www.ggwp.com/>
+
+[817] Anybrain, "Anybrain — Behaviour-based anti-cheat", [Online]. Available: <https://www.anybrain.gg/>
+
+[818] Unity Technologies, "Unity Gaming Services", [Online]. Available: <https://unity.com/products/gaming-services>
+
+[819] Epic Games, "Epic Online Services", [Online]. Available: <https://dev.epicgames.com/services>
+
+[820] Hidden Door, "Hidden Door — Social roleplay platform", [Online]. Available: <https://www.hiddendoor.co/>
+
+[821] Latitude, "AI Dungeon", [Online]. Available: <https://aidungeon.com/>
+
+[822] Proxima Enterprises, "Suck Up! and Proxima Enterprises games", [Online]. Available: <https://www.proxima-enterprises.com/>
+
+[823] Adobe, "Adobe After Effects", [Online]. Available: <https://www.adobe.com/products/aftereffects.html>
+
+[824] Foundry, "Nuke Family — Compositing software", [Online]. Available: <https://www.foundry.com/products/nuke-family/nuke>
+
+[825] Blackmagic Design, "DaVinci Resolve", [Online]. Available: <https://www.blackmagicdesign.com/products/davinciresolve>
+
+[826] Autodesk, "Maya", [Online]. Available: <https://www.autodesk.com/products/maya/overview>
+
+[827] Blender Foundation, "Blender", [Online]. Available: <https://www.blender.org/>
+
+[828] Maxon, "Cinema 4D", [Online]. Available: <https://www.maxon.net/en/cinema-4d>
+
+[829] Move.ai, "Move.ai — Markerless motion capture", [Online]. Available: <https://www.move.ai/>
+
+[830] Promise, "Promise — Generative film studio", [Online]. Available: <https://www.promise.studio/>
+
+[831] Krisp Technologies, "Krisp — AI voice productivity", [Online]. Available: <https://krisp.ai/>
+
+[832] iZotope, "RX — Audio repair and enhancement", [Online]. Available: <https://www.izotope.com/en/products/rx.html>
+
+[833] NVIDIA, "RTX Video Super Resolution", [Online]. Available: <https://www.nvidia.com/en-us/geforce/news/rtx-video-super-resolution/>
+
+[834] Disguise, "Disguise — Virtual production platform", [Online]. Available: <https://www.disguise.one/>
+
+[835] Pixotope, "Pixotope — Real-time virtual production", [Online]. Available: <https://www.pixotope.com/>
+
+[836] Maxon, "Redshift Renderer", [Online]. Available: <https://www.maxon.net/en/redshift>
+
+[837] OTOY, "Octane Render", [Online]. Available: <https://home.otoy.com/render/octane-render/>
+
+[838] Submagic, "Submagic — AI video editor", [Online]. Available: <https://www.submagic.co/>
+
+[839] ByteDance, "CapCut", [Online]. Available: <https://www.capcut.com/>
+
+[840] Veed.io, "VEED — AI online video editor", [Online]. Available: <https://www.veed.io/>
+
+[841] Lightricks, "LTX-Video — Open-source video generation", [Online]. Available: <https://www.lightricks.com/>
