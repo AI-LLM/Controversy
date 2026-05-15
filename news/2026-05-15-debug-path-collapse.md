@@ -23,4 +23,4 @@
 ## 信源
 
 - 灯火明，《一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌》，InfoQ 微信公众号. [Online]. Available: <https://mp.weixin.qq.com/s/AslSVBMGkT98lPwNWsv8yQ>
-- InfoQ，《微软警告称，AI 正在掏空初级开发者的培养渠道》（文中引用的前序报道）.
+- InfoQ，《微软警告称，AI 正在掏空初级开发者的培养渠道》（文中引用的前序报道）. [Online]. Available: <https://www.infoq.cn/article/w3Oek9aKw8lfpRZ7QBo4>
