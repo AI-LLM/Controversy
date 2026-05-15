@@ -130,42 +130,58 @@
 - `npu-smi`（对位 `nvidia-smi`）
 - Ascend Docker Runtime
 
-**其他**：Apple Silicon GPU driver（macOS / iOS 内置，与 Metal 紧绑定）
+**Apple**：
+- Apple Silicon GPU / ANE driver（macOS / iOS 内置，与 Metal 紧绑定，闭源）
+- AGX / DCP（Display Controller Processor）固件
+- AMX co-processor（M 系列 CPU 内置矩阵单元）通过私有 ABI 暴露给 Accelerate
+- `powermetrics` / `sysdiagnose`（对位 `nvidia-smi` 的功耗 / 利用率读取入口）
+
+**AWS（Annapurna / Trainium 阵营）**：
+- Neuron driver（Trainium / Trainium2 / Inferentia2 的内核驱动 `neuron-driver`）
+- Neuron Runtime（用户态运行时；负责 NEFF 加载、DMA、collective）
+- `neuron-ls` / `neuron-top`（对位 `nvidia-smi`）
+- AWS Neuron Container Toolkit（EKS / ECS 接入）
 
 ## L02 GPU 互连 / 集合通信
 
 多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。
 
-**节点内互连（GPU ↔ GPU）**：
+**节点内互连（芯片 ↔ 芯片）**：
 - NVIDIA：NVLink / NVSwitch（H100 900 GB/s、B200 1.8 TB/s、GB200 NVL72 全互连域）
 - AMD：Infinity Fabric / xGMI（MI300X 7 路全互连）
 - Intel：Xe Link（Ponte Vecchio）
 - 华为：HCCS（HyperLink；Ascend 910B 内 8 卡 fullmesh，节点内 392 GB/s）
+- Apple：UltraFusion（M Ultra 把两颗 M Max 缝合为单一逻辑芯片，2.5 TB/s）；M 系列内部 fabric 闭源
+- AWS：NeuronLink-v3（Trainium2 内 16 芯片 fullmesh）+ Trn2 UltraServer 64 芯片域
 
 **节点间网络**：
 - NVIDIA / Mellanox Quantum-2 / Quantum-X800 InfiniBand + OFED
-- AWS EFA（Elastic Fabric Adapter）+ SRD 协议
+- AWS EFA（Elastic Fabric Adapter）+ SRD 协议（EFA v2 / v3，Trn2 UltraServer 用 EFAv3）
 - Ultra Ethernet（UEC 1.0，2024）；RoCE v2
 - UALink 1.0（AMD / Intel / Google / Meta 联盟，对位 NVLink 跨节点版）
 - 华为：200 GE RoCE（CloudEngine 8800 / 16800 系列；Atlas 900 集群）
+- Apple：无（Apple 不卖训练集群，节点间网络不在产品线内）
 
 **集合通信库（NCCL 对应面）**：
 - NVIDIA NCCL
 - AMD RCCL（NCCL API 兼容 fork）
 - Intel oneCCL
 - 华为 HCCL（Huawei Collective Communication Library）
+- Apple：MLX Distributed `mlx.distributed`（基于 MPI 或 ring；规模偏研究）
+- AWS：Neuron Collective Communication（NCCL-style API，跑在 NeuronLink + EFA 上）
 - 微软 MSCCL / MSCCL++（在 NCCL 之上的可编程调度层）
 
 ## L03 GPU 编程模型 / 计算 API
 
 让开发者写并行 kernel；下层各家硬件的统一抽象。
 
-**厂商专有 GPU 计算栈**：
+**厂商专有 GPU / 加速器计算栈**：
 - NVIDIA：CUDA（`nvcc` 编译器、PTX 中间码、CUDA Runtime / Driver API、NVRTC、CUDA Graphs）
 - AMD：ROCm / HIP（HIP 提供 CUDA 源码级近似兼容，`hipify` 自动迁移）+ HIPCC
 - Intel：oneAPI / SYCL / DPC++（`icpx`）；Habana SynapseAI（Gaudi 专用，Python + C++ 接口）
 - 华为：CANN（Compute Architecture for Neural Networks）+ AscendCL（runtime C API，对位 CUDA Runtime）+ AscendC（C++ kernel DSL，对位 CUDA C++）
-- Apple：Metal / Metal Performance Shaders（MPS）
+- Apple：Metal + Metal Performance Shaders（MPS）+ Metal Shading Language（MSL）+ MetalFX；ANE（Apple Neural Engine）通过 Core ML / BNNS 间接暴露，无公开 kernel-level API
+- AWS：AWS Neuron SDK + NKI（Neuron Kernel Interface，Python DSL，对位 CUDA C++ + Triton）+ Neuron PyTorch / JAX 适配层
 
 **跨厂商 / 便携后端**：
 - OpenCL 3.0（跨厂商，地位下滑但仍在嵌入式 / Android）
@@ -182,27 +198,35 @@
 - AMD：rocBLAS / hipBLASLt
 - Intel：oneMKL（含 BLAS / LAPACK / FFT / Sparse）
 - 华为：CANN AOL（Ascend Operator Library；含 BLAS / Vector kernels）
+- Apple：Accelerate / vecLib BLAS + AMX 内置加速；Metal Performance Shaders MPSMatrixMultiplication
+- AWS：Neuron BLAS kernels（Trainium / Inferentia2 上的 matmul / GEMM 算子）
 
 **深度学习 primitive（卷积 / RNN / Attention / Norm）**：
 - NVIDIA：cuDNN
 - AMD：MIOpen
 - Intel：oneDNN（原 MKL-DNN / DNNL）
 - 华为：CANN ACLNN（Ascend Neural Network Operator Library）
+- Apple：BNNS / BNNSGraph（Accelerate 内 Basic Neural Network Subroutines）+ MPS Graph + Core ML kernel library
+- AWS：Neuron Custom Operators 库 + AWS Neuron `libnrt` 算子集
 
 **GEMM 模板 / kernel 编写库**：
 - NVIDIA：CUTLASS（FlashAttention / vLLM 大量复用）
 - AMD：Composable Kernel (CK)
 - Intel：XeTLA、TileLang
 - 华为：AscendC kernel 套件（含 TBE / Tensor Boost Engine 老接口）
+- Apple：MLX kernel DSL（C++ + Metal 后端，对位 CUTLASS 但远更轻量）
+- AWS：NKI（Neuron Kernel Interface，Trainium 上写 fused kernel 的 Python DSL）
 
 **集合通信**：
-- NVIDIA NCCL / AMD RCCL / Intel oneCCL / 华为 HCCL（见 L02 节点间集合通信库一节）
+- NVIDIA NCCL / AMD RCCL / Intel oneCCL / 华为 HCCL / Apple MLX Distributed / AWS Neuron Collective Communication（见 L02 集合通信库一节）
 
 **FFT / Sparse / Solver / 量子**：
 - NVIDIA：cuFFT、cuSPARSE、cuSolver、cuQuantum、NVSHMEM
 - AMD：rocFFT、rocSPARSE、rocSOLVER
 - Intel：oneMKL DFT / Sparse / Solver
 - 华为：CANN AOL 内置 FFT / Sparse / Solver 子集
+- Apple：Accelerate vDSP（FFT / DSP）+ Sparse Solvers + LAPACK；Metal Performance Shaders MPSMatrixDecomposition
+- AWS：通过 Neuron 调用上层 JAX / PyTorch 走 XLA → Neuron Compiler；专用 FFT / Solver 库未独立公开
 
 **跨厂商 / 高层 attention 与 fused kernel**：
 - FlashAttention 1 / 2 / 3（Tri Dao；FA3 针对 Hopper Tensor Core + TMA；AMD 有 `flash-attention` ROCm fork；Intel Habana 自研 FusedSDPA）
@@ -219,6 +243,8 @@
 - AMD：HIPCC + LLVM AMDGPU backend；ROCm Compute Profile (RCP)
 - Intel：oneAPI DPC++ compiler（`icpx`）；Habana SynapseAI Graph Compiler
 - 华为：CANN Graph Engine（GE）+ TBE / AscendC 算子编译器；MindSpore Graph Engine（MindSpore IR / MindIR）
+- Apple：Metal Compiler（`metal` + `metallib`）+ Core ML Compiler（`coremlcompiler`，把 `.mlmodel` / `.mlpackage` 编成 ANE / GPU / CPU 多目标 program）+ MLX JIT
+- AWS：Neuron Compiler（接 PyTorch / JAX / XLA HLO → NEFF 二进制格式）+ XLA-Neuron 后端
 
 **跨厂商 / 上层 IR 与 JIT**：
 - OpenAI Triton（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准；NVIDIA / AMD / Intel 各自维护后端）
@@ -253,7 +279,7 @@
 - **Ray Train**（Anyscale；调度层在 Ray 上）
 - **MosaicML Composer / LLM Foundry**（被 Databricks 收购）
 - **TorchTitan**（PyTorch 官方 2024 推出的 LLM 训练参考实现）
-- **厂商专有训练栈**：AMD ROCm Megatron-LM fork + ROCm DeepSpeed；Intel Habana Gaudi 上的 Optimum-Habana + DeepSpeed-Habana 集成；华为 MindFormers / MindSpore Distributed（基于 MindSpore 的大模型并行套件，对位 Megatron + DeepSpeed）+ ModelLink（昇腾 PyTorch 适配大模型训练套件）
+- **厂商专有训练栈**：AMD ROCm Megatron-LM fork + ROCm DeepSpeed；Intel Habana Gaudi 上的 Optimum-Habana + DeepSpeed-Habana 集成；华为 MindFormers / MindSpore Distributed（基于 MindSpore 的大模型并行套件，对位 Megatron + DeepSpeed）+ ModelLink（昇腾 PyTorch 适配大模型训练套件）；Apple MLX Distributed（`mlx.distributed`，定位研究 / 小集群）；AWS Neuron Distributed Training + SageMaker HyperPod（Trainium2 + EFAv3，支持 FSDP / 张量并行）
 
 ## L08 训练数据 pipeline
 
@@ -331,6 +357,8 @@ run、metric、artifact、sweep、模型 registry。
 - AMD：AITER（AMD Inference Throughput Engine for ROCm）+ vLLM-ROCm 官方分支 + Composable Kernel attention
 - Intel：OpenVINO（Xe / Habana / CPU 通吃）+ IPEX-LLM（Intel Extension for PyTorch LLM 分支，原 BigDL-LLM）+ Habana TGI / vLLM-fork
 - 华为：MindIE（Mind Inference Engine，对位 TensorRT-LLM）+ MindSpore Lite（端边一体）+ Ascend vLLM 适配层
+- Apple：Core ML（端侧默认推理路径，自动分派 ANE / GPU / CPU）+ MLX（M 系列 GPU 上的 PyTorch-like 框架，含 mlx-lm）+ MPSGraph + llama.cpp Metal 后端
+- AWS：AWS Neuron + Transformers-Neuronx（Trainium / Inferentia2 上 LLM 推理库）+ vLLM Neuron 后端 + DJLServing Neuron
 
 ## L14 模型服务 / 编排（GPU orchestration）
 
@@ -350,6 +378,8 @@ run、metric、artifact、sweep、模型 registry。
 - AMD：AMD Inference Server（原 ZenDNN serving，CPU + GPU）+ ROCm Triton Inference 后端
 - Intel：OpenVINO Model Server（OVMS，对位 Triton）+ Habana SynapseAI Model Server
 - 华为：MindCluster（推理集群管理）+ MindX（昇腾推理参考方案，电力 / 制造 / 金融分行业 SDK）+ ModelArts 推理服务
+- Apple：Core ML 仅端侧，无独立 model server 产品；服务侧 Apple 自家用 Apple Private Cloud Compute（Apple Silicon Server 集群 + Swift on Server，私有不外销）
+- AWS：Amazon SageMaker Inference + SageMaker MMS（Multi-Model Server）+ Amazon Bedrock（托管前沿模型，含 Anthropic / Meta / Mistral / Amazon Nova）+ DJL Serving
 
 ## L15 GPU 云 / 算力市场
 
@@ -362,6 +392,8 @@ run、metric、artifact、sweep、模型 registry。
 - **AMD 算力供给**：TensorWave（北美首家 MI300X 专营 neocloud）、Hot Aisle、Vultr MI300X、Oracle OCI MI300X、Microsoft Azure ND MI300X v5
 - **Intel Gaudi 算力**：Intel Tiber AI Cloud（原 Intel Developer Cloud）、IBM Cloud Gaudi 3
 - **华为昇腾算力**：华为云 ModelArts + Atlas 900（910B / 910C 集群）、运营商云（移动 / 联通 / 电信）昇腾 AI 算力、地方智算中心（如武汉昇腾、济南昇腾）
+- **AWS 自研芯片算力**：Trn2 / Trn2 UltraServer（Trainium2，64 芯片 NeuronLink 域）、Inf2（Inferentia2）；SageMaker HyperPod（训练）、Bedrock（推理 API 直供）
+- **Apple 算力供给**：无对外 GPU / NPU 云租赁；服务端仅 Apple Private Cloud Compute 自用，外部不可访问（Apple Intelligence 后端）
 
 ## L16 模型 API 聚合 / 路由（推理服务市场）
 
