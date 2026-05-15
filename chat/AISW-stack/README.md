@@ -109,60 +109,125 @@
 
 负责把硬件能力暴露给操作系统与上层运行时；包括内核态驱动、固件、用户态运行时 stub。
 
-- **NVIDIA Display / Compute Driver**（含 `nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）
-- **NVIDIA Open GPU Kernel Modules**（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）
-- **AMD ROCm / amdgpu / amdkfd driver**（`amdgpu` DRM 驱动 + KFD 计算子系统）
-- **Intel Habana Gaudi driver**（`habanalabs` 内核驱动）
-- **Apple Silicon GPU driver**（macOS / iOS 内置，与 Metal 紧绑定）
-- **NVIDIA Container Toolkit / nvidia-container-runtime**（让容器看到 GPU；事实上的 K8s GPU 接入标准）
+**NVIDIA**：
+- Display / Compute Driver（`nvidia.ko` 内核模块、GSP 固件、`nvidia-smi`、MIG / vGPU）
+- Open GPU Kernel Modules（2022 起开源的 R515+ 内核侧驱动，仅支持 Turing 及更新架构）
+- NVIDIA Container Toolkit / `nvidia-container-runtime`（K8s / Docker 接入事实标准）
+
+**AMD**：
+- `amdgpu` DRM driver + `amdkfd` KFD 计算子系统
+- ROCm runtime + `rocm-smi`
+- AMD GPU Operator（K8s 接入）
+
+**Intel**：
+- `i915` / `xe` driver（消费 / 数据中心 Xe / Ponte Vecchio / Falcon Shores）
+- `habanalabs` 内核驱动（Habana Gaudi 2 / 3）
+- Intel GPU Tools (`igt`) + `xpu-smi`
+
+**华为昇腾（Ascend）**：
+- `davinci_manager` + `devmm_svm` + `drv_npu` 内核驱动（Atlas / Ascend 910B / 910C）
+- HCCN driver（互连专用）
+- `npu-smi`（对位 `nvidia-smi`）
+- Ascend Docker Runtime
+
+**其他**：Apple Silicon GPU driver（macOS / iOS 内置，与 Metal 紧绑定）
 
 ## L02 GPU 互连 / 集合通信
 
 多卡 / 多机之间的物理与协议层；性能瓶颈往往不在 FLOPS 而在这层。
 
-- **NVLink / NVSwitch**（节点内 GPU↔GPU，H100 900 GB/s、B200 1.8 TB/s）
-- **InfiniBand（NVIDIA Quantum-2 / Quantum-X800）+ Mellanox OFED**（节点间 RDMA）
-- **RoCE v2 / Ultra Ethernet（UEC）**（以太网上的 RDMA；Ultra Ethernet Consortium 2024 推出 1.0）
-- **AWS EFA（Elastic Fabric Adapter）+ SRD 协议**
-- **UALink 1.0**（AMD / Intel / Google / Meta 等 2024 联盟，对位 NVLink）
-- **NCCL / RCCL / oneCCL**（NVIDIA / AMD / Intel 各自的集合通信库；allreduce / allgather / sendrecv）
-- **MSCCL / MSCCL++**（微软在 NCCL 之上的可编程调度层）
+**节点内互连（GPU ↔ GPU）**：
+- NVIDIA：NVLink / NVSwitch（H100 900 GB/s、B200 1.8 TB/s、GB200 NVL72 全互连域）
+- AMD：Infinity Fabric / xGMI（MI300X 7 路全互连）
+- Intel：Xe Link（Ponte Vecchio）
+- 华为：HCCS（HyperLink；Ascend 910B 内 8 卡 fullmesh，节点内 392 GB/s）
+
+**节点间网络**：
+- NVIDIA / Mellanox Quantum-2 / Quantum-X800 InfiniBand + OFED
+- AWS EFA（Elastic Fabric Adapter）+ SRD 协议
+- Ultra Ethernet（UEC 1.0，2024）；RoCE v2
+- UALink 1.0（AMD / Intel / Google / Meta 联盟，对位 NVLink 跨节点版）
+- 华为：200 GE RoCE（CloudEngine 8800 / 16800 系列；Atlas 900 集群）
+
+**集合通信库（NCCL 对应面）**：
+- NVIDIA NCCL
+- AMD RCCL（NCCL API 兼容 fork）
+- Intel oneCCL
+- 华为 HCCL（Huawei Collective Communication Library）
+- 微软 MSCCL / MSCCL++（在 NCCL 之上的可编程调度层）
 
 ## L03 GPU 编程模型 / 计算 API
 
 让开发者写并行 kernel；下层各家硬件的统一抽象。
 
-- **NVIDIA CUDA**（含 `nvcc`、PTX、CUDA Runtime / Driver API）
-- **AMD ROCm / HIP**（HIP 提供 CUDA 源码级近似兼容）
-- **Apple Metal / Metal Performance Shaders（MPS）**
-- **Intel oneAPI / SYCL / DPC++**
-- **OpenCL 3.0**（跨厂商，地位下滑但仍在嵌入式 / Android）
-- **Vulkan Compute**（图形 + 计算合一，llama.cpp 用作便携后端）
-- **WebGPU / wgpu**（浏览器内 GPU 计算；Chrome 113 起默认开启）
+**厂商专有 GPU 计算栈**：
+- NVIDIA：CUDA（`nvcc` 编译器、PTX 中间码、CUDA Runtime / Driver API、NVRTC、CUDA Graphs）
+- AMD：ROCm / HIP（HIP 提供 CUDA 源码级近似兼容，`hipify` 自动迁移）+ HIPCC
+- Intel：oneAPI / SYCL / DPC++（`icpx`）；Habana SynapseAI（Gaudi 专用，Python + C++ 接口）
+- 华为：CANN（Compute Architecture for Neural Networks）+ AscendCL（runtime C API，对位 CUDA Runtime）+ AscendC（C++ kernel DSL，对位 CUDA C++）
+- Apple：Metal / Metal Performance Shaders（MPS）
+
+**跨厂商 / 便携后端**：
+- OpenCL 3.0（跨厂商，地位下滑但仍在嵌入式 / Android）
+- Vulkan Compute（图形 + 计算合一；llama.cpp 用作便携后端）
+- WebGPU / wgpu（浏览器内 GPU 计算；Chrome 113 起默认开启）
+- Codeplay oneAPI for CUDA / for ROCm（SYCL 跨硬件适配层）
 
 ## L04 GPU 内核库（DNN / BLAS / 通信 / Attention）
 
-预编译好的高性能算子，框架直接调用。
+预编译好的高性能算子，框架直接调用。四大硬件厂商各自一套，再叠加跨厂商的 Attention / fused kernel。
 
-- **cuBLAS / cuBLASLt**（GEMM）
-- **cuDNN**（卷积、RNN、Attention 等深度学习算子）
-- **CUTLASS**（NVIDIA 开源的 GEMM 模板库，FlashAttention / vLLM 大量复用）
-- **FlashAttention 1 / 2 / 3**（Tri Dao；FA3 针对 Hopper Tensor Core + TMA）
-- **xFormers**（Meta；memory-efficient attention 集合）
-- **Triton kernels**（OpenAI；社区贡献的 fused MoE、RMSNorm、SwiGLU 等）
-- **NCCL / RCCL**（同 L02，也属于"内核库"中的通信类）
+**GEMM / BLAS**：
+- NVIDIA：cuBLAS / cuBLASLt
+- AMD：rocBLAS / hipBLASLt
+- Intel：oneMKL（含 BLAS / LAPACK / FFT / Sparse）
+- 华为：CANN AOL（Ascend Operator Library；含 BLAS / Vector kernels）
+
+**深度学习 primitive（卷积 / RNN / Attention / Norm）**：
+- NVIDIA：cuDNN
+- AMD：MIOpen
+- Intel：oneDNN（原 MKL-DNN / DNNL）
+- 华为：CANN ACLNN（Ascend Neural Network Operator Library）
+
+**GEMM 模板 / kernel 编写库**：
+- NVIDIA：CUTLASS（FlashAttention / vLLM 大量复用）
+- AMD：Composable Kernel (CK)
+- Intel：XeTLA、TileLang
+- 华为：AscendC kernel 套件（含 TBE / Tensor Boost Engine 老接口）
+
+**集合通信**：
+- NVIDIA NCCL / AMD RCCL / Intel oneCCL / 华为 HCCL（见 L02 节点间集合通信库一节）
+
+**FFT / Sparse / Solver / 量子**：
+- NVIDIA：cuFFT、cuSPARSE、cuSolver、cuQuantum、NVSHMEM
+- AMD：rocFFT、rocSPARSE、rocSOLVER
+- Intel：oneMKL DFT / Sparse / Solver
+- 华为：CANN AOL 内置 FFT / Sparse / Solver 子集
+
+**跨厂商 / 高层 attention 与 fused kernel**：
+- FlashAttention 1 / 2 / 3（Tri Dao；FA3 针对 Hopper Tensor Core + TMA；AMD 有 `flash-attention` ROCm fork；Intel Habana 自研 FusedSDPA）
+- xFormers（Meta；memory-efficient attention 集合）
+- Triton kernels（OpenAI；社区贡献的 fused MoE / RMSNorm / SwiGLU；AMD Triton 与 Intel Triton 在各自硬件上接后端）
+- MSCCL / MSCCL++（微软在 NCCL 之上的可编程调度层）
 
 ## L05 编译器 / IR
 
 把模型图或 Python 代码编译成 GPU 可执行体；过去十年从单一图编译器演化为多层 IR + JIT 混合。
 
-- **OpenAI Triton**（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准）
-- **PyTorch torch.compile / TorchInductor + TorchDynamo**（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）
-- **XLA / OpenXLA**（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta 共治）
-- **MLIR**（LLVM 项目；TPU、IREE、Mojo、torch-mlir 共享的中间表示）
-- **TVM / Apache TVM + Unity**（陈天奇主导的端到端深度学习编译栈）
-- **IREE**（Google；MLIR-based，定位移动 / 边缘）
-- **Mojo / MAX**（Modular；Chris Lattner，Python 超集 + MLIR 后端）
+**厂商专有图编译器 / 设备编译器**：
+- NVIDIA：NVCC + NVRTC + PTX → SASS（ptxas）
+- AMD：HIPCC + LLVM AMDGPU backend；ROCm Compute Profile (RCP)
+- Intel：oneAPI DPC++ compiler（`icpx`）；Habana SynapseAI Graph Compiler
+- 华为：CANN Graph Engine（GE）+ TBE / AscendC 算子编译器；MindSpore Graph Engine（MindSpore IR / MindIR）
+
+**跨厂商 / 上层 IR 与 JIT**：
+- OpenAI Triton（Python 嵌入式 DSL，事实上的 GPU kernel 写法新标准；NVIDIA / AMD / Intel 各自维护后端）
+- PyTorch torch.compile / TorchInductor + TorchDynamo（PT 2.x 默认编译路径，下接 Triton / C++ / Halide）
+- XLA / OpenXLA（JAX 与 TF 默认；Google + AWS + NVIDIA + Meta + Intel + AMD 共治）
+- MLIR（LLVM 项目；TPU、IREE、Mojo、torch-mlir、CANN 共享的中间表示）
+- TVM / Apache TVM + Unity（陈天奇主导的端到端深度学习编译栈；MLC-LLM 后端）
+- IREE（Google；MLIR-based，定位移动 / 边缘）
+- Mojo / MAX（Modular；Chris Lattner，Python 超集 + MLIR 后端）
 
 ## L06 张量 / 训练框架
 
@@ -188,6 +253,7 @@
 - **Ray Train**（Anyscale；调度层在 Ray 上）
 - **MosaicML Composer / LLM Foundry**（被 Databricks 收购）
 - **TorchTitan**（PyTorch 官方 2024 推出的 LLM 训练参考实现）
+- **厂商专有训练栈**：AMD ROCm Megatron-LM fork + ROCm DeepSpeed；Intel Habana Gaudi 上的 Optimum-Habana + DeepSpeed-Habana 集成；华为 MindFormers / MindSpore Distributed（基于 MindSpore 的大模型并行套件，对位 Megatron + DeepSpeed）+ ModelLink（昇腾 PyTorch 适配大模型训练套件）
 
 ## L08 训练数据 pipeline
 
@@ -250,28 +316,40 @@ run、metric、artifact、sweep、模型 registry。
 
 负责 KV cache、continuous batching、speculative decoding、量化、PagedAttention 等推理侧硬核优化。
 
-- **vLLM**（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准）
-- **NVIDIA TensorRT-LLM**（NVIDIA 官方；CUDA Graph + FP8）
-- **SGLang**（LMSYS / xAI；RadixAttention，结构化输出强）
-- **HuggingFace TGI（Text Generation Inference）**
-- **llama.cpp / GGUF**（Georgi Gerganov；CPU / Apple Silicon / 任意后端）
-- **MLC-LLM**（陈天奇团队；TVM Unity 后端，Web / 移动）
-- **DeepSpeed-FastGen / DeepSpeed-MII**
-- **LMDeploy**（上海 AI Lab；InternLM 配套）
-- **Ollama**（llama.cpp 之上的本地一键运行）
+**跨厂商 / 通用**：
+- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA 主线 + ROCm / Intel / Ascend 后端）
+- SGLang（LMSYS / xAI；RadixAttention，结构化输出强）
+- HuggingFace TGI（Text Generation Inference）
+- llama.cpp / GGUF（Georgi Gerganov；CPU / Apple Silicon / CUDA / ROCm / Vulkan / SYCL 任意后端）
+- MLC-LLM（陈天奇团队；TVM Unity 后端，Web / 移动 / 任意硬件）
+- DeepSpeed-FastGen / DeepSpeed-MII
+- LMDeploy（上海 AI Lab；InternLM 配套，NVIDIA + Ascend 双后端）
+- Ollama（llama.cpp 之上的本地一键运行）
+
+**厂商专有推理栈**：
+- NVIDIA：TensorRT-LLM（CUDA Graph + FP8 / FP4，Hopper / Blackwell 专属优化）+ TensorRT 通用
+- AMD：AITER（AMD Inference Throughput Engine for ROCm）+ vLLM-ROCm 官方分支 + Composable Kernel attention
+- Intel：OpenVINO（Xe / Habana / CPU 通吃）+ IPEX-LLM（Intel Extension for PyTorch LLM 分支，原 BigDL-LLM）+ Habana TGI / vLLM-fork
+- 华为：MindIE（Mind Inference Engine，对位 TensorRT-LLM）+ MindSpore Lite（端边一体）+ Ascend vLLM 适配层
 
 ## L14 模型服务 / 编排（GPU orchestration）
 
 把推理引擎封装成 service：自动伸缩、多模型、A/B、批处理。
 
-- **NVIDIA Triton Inference Server**
-- **Ray Serve**（Anyscale）
-- **KServe**（K8s 原生，原 KFServing）
-- **BentoML / Yatai**
-- **Modal**（serverless GPU 函数）
-- **Beam / Beam Cloud**
-- **Replicate Cog**（容器规范 + Replicate 平台）
-- **Seldon Core**
+**跨厂商 / 通用**：
+- Ray Serve（Anyscale）
+- KServe（K8s 原生，原 KFServing）
+- BentoML / Yatai
+- Modal（serverless GPU 函数）
+- Beam / Beam Cloud
+- Replicate Cog（容器规范 + Replicate 平台）
+- Seldon Core
+
+**厂商专有 model server**：
+- NVIDIA：Triton Inference Server（事实标准；多框架 / 多模型并行）+ NIM Microservices（OpenAI-API 兼容容器）
+- AMD：AMD Inference Server（原 ZenDNN serving，CPU + GPU）+ ROCm Triton Inference 后端
+- Intel：OpenVINO Model Server（OVMS，对位 Triton）+ Habana SynapseAI Model Server
+- 华为：MindCluster（推理集群管理）+ MindX（昇腾推理参考方案，电力 / 制造 / 金融分行业 SDK）+ ModelArts 推理服务
 
 ## L15 GPU 云 / 算力市场
 
@@ -281,6 +359,9 @@ run、metric、artifact、sweep、模型 registry。
 - **GPU neocloud**：CoreWeave、Lambda Labs、Crusoe、Nebius（前 Yandex 海外）、Voltage Park、Applied Digital
 - **市场 / 撮合 / 长尾**：RunPod、Vast.ai、TensorDock、Salad、Hyperstack
 - **训练 + 推理一体**：Together AI、Lepton AI（被 NVIDIA 收购）
+- **AMD 算力供给**：TensorWave（北美首家 MI300X 专营 neocloud）、Hot Aisle、Vultr MI300X、Oracle OCI MI300X、Microsoft Azure ND MI300X v5
+- **Intel Gaudi 算力**：Intel Tiber AI Cloud（原 Intel Developer Cloud）、IBM Cloud Gaudi 3
+- **华为昇腾算力**：华为云 ModelArts + Atlas 900（910B / 910C 集群）、运营商云（移动 / 联通 / 电信）昇腾 AI 算力、地方智算中心（如武汉昇腾、济南昇腾）
 
 ## L16 模型 API 聚合 / 路由（推理服务市场）
 
