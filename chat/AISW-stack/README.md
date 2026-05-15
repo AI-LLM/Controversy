@@ -121,11 +121,11 @@
 
 **Intel**：
 - `i915` / `xe` driver[[224]](https://docs.kernel.org/gpu/i915.html)（消费 / 数据中心 Xe / Ponte Vecchio / Falcon Shores）
-- `habanalabs[[225]](https://docs.habana.ai/en/latest/Installation_Guide/Driver_Installation.html)` 内核驱动（Habana Gaudi 2 / 3）
+- `habanalabs`[[225]](https://docs.habana.ai/en/latest/Installation_Guide/Driver_Installation.html) 内核驱动（Habana Gaudi 2 / 3）
 - Intel GPU Tools (`igt`) + `xpu-smi`
 
 **华为昇腾（Ascend）**：
-- `davinci_manager[[226]](https://www.hiascend.com/en/hardware/firmware-drivers/community)` + `devmm_svm` + `drv_npu` 内核驱动（Atlas / Ascend 910B / 910C）
+- `davinci_manager`[[226]](https://www.hiascend.com/en/hardware/firmware-drivers/community) + `devmm_svm` + `drv_npu` 内核驱动（Atlas / Ascend 910B / 910C）
 - HCCN driver（互连专用）
 - `npu-smi`（对位 `nvidia-smi`）
 - Ascend Docker Runtime
