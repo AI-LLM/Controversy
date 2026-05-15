@@ -73,12 +73,14 @@ CREATE TABLE IF NOT EXISTS entries (
     slug         TEXT NOT NULL UNIQUE,
     name         TEXT NOT NULL,
     url          TEXT,
-    layer_code   TEXT NOT NULL,
+    layer_code   TEXT,
+    branch_code  TEXT,
     vendor       TEXT,
     category     TEXT,
     notes        TEXT,
     source_line  INTEGER,
-    FOREIGN KEY (layer_code) REFERENCES layers(code)
+    FOREIGN KEY (layer_code)  REFERENCES layers(code),
+    FOREIGN KEY (branch_code) REFERENCES branches(code)
 );
 
 CREATE TABLE IF NOT EXISTS entry_refs (
@@ -125,21 +127,22 @@ _PUNCT_RE = re.compile(r"[\s/（）()，,、；;:：&+]+")
 _DECO_RE = re.compile(r"[*_`\"'·]")
 
 
-def slugify(layer_code: str, name: str) -> str:
+def slugify(prefix: str, name: str) -> str:
     s = unicodedata.normalize("NFKC", name)
     s = _DECO_RE.sub("", s)
     s = _PUNCT_RE.sub("-", s)
     s = re.sub(r"-+", "-", s).strip("-").lower()
     if not s:
         s = hashlib.md5(name.encode("utf-8")).hexdigest()[:8]
-    return f"{layer_code.lower()}-{s}"
+    return f"{prefix.lower()}-{s}"
 
 
 # ---------------------------------------------------------------------------
 # parsing
 
 LAYER_HEADING_RE = re.compile(r"^##\s+(L\d{2})\s+(.+?)\s*$")
-SUBBRANCH_HEADING_RE = re.compile(r"^###\s+([A-I][a-z0-9]*|[A-I]\d?)\s+(.+?)\s*$")
+SUBBRANCH_HEADING_RE = re.compile(r"^###\s+([A-I](?:[a-z]+|\d+))\s+(.+?)\s*$")
+BRANCH_HEADING_RE = re.compile(r"^###\s+([A-I])\s+(.+?)\s*$")
 SECTION_BREAK_RE = re.compile(r"^##\s+(.+?)\s*$")
 VENDOR_BLOCK_RE = re.compile(r"^\*\*([^*]+)\*\*[:：]\s*$")
 INLINE_VENDOR_RE = re.compile(r"^[-*]\s+\*\*([^*]+)\*\*[:：]")
@@ -273,7 +276,7 @@ def parse_md(text: str):
             state["category"] = None
             continue
 
-        # --- ### 子分支 ---
+        # --- ### Xa 子分支（字母+小写或数字后缀） ---
         m = SUBBRANCH_HEADING_RE.match(line)
         if m:
             code = m.group(1)
@@ -281,13 +284,29 @@ def parse_md(text: str):
             parent = code[0]
             branches.setdefault(code, {
                 "code": code, "name": heading_name,
-                "parent": parent if code != parent else None,
+                "parent": parent,
                 "pos": sub_pos,
             })
             sub_pos += 1
             state["subbranch"] = code
             state["branch"] = parent
-            state["layer"] = None  # 子分支不绑 L
+            state["layer"] = None
+            state["vendor"] = None
+            state["category"] = None
+            continue
+
+        # --- ### X 分支总览（单字母） ---
+        m = BRANCH_HEADING_RE.match(line)
+        if m:
+            code = m.group(1)
+            heading_name = m.group(2).strip()
+            branches.setdefault(code, {
+                "code": code, "name": heading_name,
+                "parent": None, "pos": ord(code) - ord("A"),
+            })
+            state["branch"] = code
+            state["subbranch"] = None
+            state["layer"] = None
             state["vendor"] = None
             state["category"] = None
             continue
@@ -313,47 +332,46 @@ def parse_md(text: str):
                 state["vendor"] = None
             continue
 
-        # --- bullet 行：抽 entry ---
-        if not line.lstrip().startswith(("-", "*")):
-            continue
+        if not REF_LINK_RE.search(line):
+            continue  # 行内无引用，跳过
 
-        # 在 bullet 内可能有 "**vendor**：rest" 或 "**category**：rest"
+        # 处理 bullet 内的 vendor / category 前缀
         local_vendor = state["vendor"]
         local_category = state["category"]
-        rest = line.lstrip()[1:].strip()  # 去掉 "- "
-        m = GROUP_LABEL_RE.match(line)
-        if m:
-            label = m.group(1).strip()
-            if (cv := canonical_vendor(label)):
-                local_vendor = cv
-            local_category = label
-            rest = m.group(2)
-        else:
-            m2 = BARE_VENDOR_RE.match(line)
-            if m2 and (cv := canonical_vendor(m2.group(1).strip())):
-                local_vendor = cv
-                rest = m2.group(2)
+        rest = line
+        is_bullet = line.lstrip().startswith(("-", "*"))
+        if is_bullet:
+            rest = line.lstrip()[1:].strip()
+            m = GROUP_LABEL_RE.match(line)
+            if m:
+                label = m.group(1).strip()
+                if (cv := canonical_vendor(label)):
+                    local_vendor = cv
+                local_category = label
+                rest = m.group(2)
+            else:
+                m2 = BARE_VENDOR_RE.match(line)
+                if m2 and (cv := canonical_vendor(m2.group(1).strip())):
+                    local_vendor = cv
+                    rest = m2.group(2)
 
         if state["subbranch"]:
-            # 子分支 bullet 没有 L 锚定，跳过 entry 抽取
-            # （内容本身是子分支级 group label + entries，layer 留 NULL）
             layer_code = None
             branch_code = state["subbranch"]
         else:
             layer_code = state["layer"]
             branch_code = state["branch"]
 
-        if not layer_code:
-            continue  # 第一版只索引带 L 的 entries
+        slug_prefix = layer_code or branch_code
+        if not slug_prefix:
+            continue
 
         for entry in extract_entries(rest, layer_code, ln_idx):
             entry["vendor"] = local_vendor
             entry["category"] = local_category
-            slug = slugify(layer_code, entry["name"])
-            if slug in entries:
-                # 已存在；只合并 refs / branches
-                pass
-            else:
+            entry["branch"] = branch_code
+            slug = slugify(slug_prefix, entry["name"])
+            if slug not in entries:
                 entry["slug"] = slug
                 entries[slug] = entry
             entry_branches.append((slug, branch_code))
@@ -392,7 +410,7 @@ def extract_entries(text: str, layer_code: str, source_line: int):
         parts = NAME_SPLIT_RE.split(before)
         raw_name = parts[-1] if parts else ""
         name = clean_name(raw_name)
-        if not name:
+        if not is_valid_name(name):
             continue
         notes = extract_trailing_notes(text, m.end())
         out.append({
@@ -409,9 +427,22 @@ def extract_entries(text: str, layer_code: str, source_line: int):
 def clean_name(s: str) -> str:
     s = _DECO_RE.sub("", s)
     s = re.sub(r"^[\s\-+]+|[\s\-+:：]+$", "", s)
-    # 头部 "**X**：rest" 残留处理
     s = re.sub(r"^[\s　]+", "", s)
     return s.strip()
+
+
+def is_valid_name(name: str) -> bool:
+    """过滤明显是 url 残片 / 注释括号片段的伪 name。"""
+    if not name:
+        return False
+    if name.startswith(("//", ")", "）", "/")):
+        return False
+    if "://" in name:
+        return False
+    # 整体是纯注释括号 `（...）`
+    if re.fullmatch(r"[（(].*[）)]", name):
+        return False
+    return True
 
 
 def extract_trailing_notes(text: str, pos: int) -> str | None:
@@ -481,10 +512,11 @@ def write_db(conn: sqlite3.Connection, data: dict, md_sha: str):
     slug_to_id: dict[str, int] = {}
     for slug, e in data["entries"].items():
         cur.execute(
-            "INSERT INTO entries(slug, name, url, layer_code, vendor, category, notes, source_line) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            (slug, e["name"], e["url"], e["layer"], e.get("vendor"),
-             e.get("category"), e.get("notes"), e.get("source_line")),
+            "INSERT INTO entries(slug, name, url, layer_code, branch_code, vendor, category, notes, source_line) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (slug, e["name"], e["url"], e.get("layer"), e.get("branch"),
+             e.get("vendor"), e.get("category"), e.get("notes"),
+             e.get("source_line")),
         )
         slug_to_id[slug] = cur.lastrowid
 

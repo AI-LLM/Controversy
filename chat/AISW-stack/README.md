@@ -683,78 +683,197 @@ LLM 不是 GPU 的唯一负载。下面 6 条分支（**B** 科学计算 / **C**
 
 物理具身 AI 自己一根栈。2024–2025 关键变化是 VLA（Vision-Language-Action）取代了过去的"感知 + 规划 + 控制"三段式。
 
-- **Ca 机器人中间件 / 实时 OS**：ROS 2（事实标准，Humble / Iron / Jazzy）、NVIDIA Isaac ROS、MoveIt 2、micro-ROS（MCU 上的 ROS）[[718]](https://micro.ros.org/)、PX4 / ArduPilot[[719]](https://ardupilot.org/)（无人机）[[720]](https://px4.io/)；实时层 NVIDIA Holoscan、QNX[[721]](https://blackberry.qnx.com/en)、VxWorks[[722]](https://www.windriver.com/products/vxworks)、Xenomai[[723]](https://xenomai.org/)
-- **Cb 仿真 / 数字孪生**：NVIDIA Isaac Sim + Isaac Lab[[724]](https://developer.nvidia.com/isaac/lab)、NVIDIA Cosmos（世界基础模型，2025-01 发布）[[725]](https://www.nvidia.com/en-us/ai/cosmos/)、MuJoCo + MuJoCo-MJX（DeepMind 2021 收购后开源 + JAX 化）、Gazebo / Ignition、Genesis（CMU + 多校，2024-12，零样本物理仿真）[[726]](https://genesis-embodied-ai.github.io/)、Drake（TRI）[[727]](https://drake.mit.edu/)、Habitat 3（Meta）[[728]](https://aihabitat.org/)、AI2-THOR[[729]](https://ai2thor.allenai.org/)、Unity ML-Agents[[730]](https://github.com/unity-technologies/ml-agents)
-- **Cc 机器人基础模型 / VLA**：NVIDIA GR00T N1 / GR00T-Dreams[[731]](https://nvidianews.nvidia.com/news/nvidia-isaac-gr00t-n1-open-humanoid-robot-foundation-model-simulation-frameworks)、Physical Intelligence π0 / π0.5（2024–2025，Sergey Levine、Chelsea Finn）[[732]](https://www.pi.website/blog/pi0)、Google DeepMind RT-2 / Open X-Embodiment / Gemini Robotics（2025-03）[[733]](https://deepmind.google/models/gemini-robotics/)、Skild AI Skild Brain（$300M Series A）[[734]](https://www.skild.ai/)、Figure Helix[[735]](https://www.figure.ai/helix)、1X World Model[[736]](https://www.1x.tech/discover/1x-world-model)、OpenVLA（Stanford）、RDT-1B（清华）、Octo（UC Berkeley）[[737]](https://octo-models.github.io/)
-- **Cd 数据 / 训练框架**：LeRobot（HuggingFace；社区主流）、Diffusion Policy（哥伦比亚 + TRI）、ACT（Tony Zhao）[[738]](https://github.com/tonyzhaozh/act)、Open X-Embodiment 数据集（22 机器人形态、527 任务）、DROID 数据集
-- **Ce 终端机器人产品**：人形 Tesla Optimus[[739]](https://www.tesla.com/AI)、Figure 02 / 03[[740]](https://www.figure.ai/)、1X Neo Beta[[741]](https://www.1x.tech/neo)、Apptronik Apollo[[742]](https://apptronik.com/apollo)、Unitree H1 / G1 / GD01[[743]](https://www.unitree.com/h1/)；四足 Boston Dynamics Spot[[744]](https://bostondynamics.com/products/spot/)、ANYmal[[745]](https://www.anybotics.com/robotics/anymal/)、Unitree Go2[[746]](https://www.unitree.com/go2/)；服务 / 物流 Agility Robotics Digit[[747]](https://www.agilityrobotics.com/)、Covariant Brain（被 Amazon "聘走团队"）；手术 Intuitive da Vinci 5[[748]](https://www.intuitive.com/en-us/products-and-services/da-vinci/5)
+### Ca 机器人中间件 / 实时 OS
+
+ROS 2（事实标准，Humble / Iron / Jazzy）、NVIDIA Isaac ROS、MoveIt 2、micro-ROS（MCU 上的 ROS）[[718]](https://micro.ros.org/)、PX4 / ArduPilot[[719]](https://ardupilot.org/)（无人机）[[720]](https://px4.io/)；实时层 NVIDIA Holoscan、QNX[[721]](https://blackberry.qnx.com/en)、VxWorks[[722]](https://www.windriver.com/products/vxworks)、Xenomai[[723]](https://xenomai.org/)
+
+### Cb 仿真 / 数字孪生
+
+NVIDIA Isaac Sim + Isaac Lab[[724]](https://developer.nvidia.com/isaac/lab)、NVIDIA Cosmos（世界基础模型，2025-01 发布）[[725]](https://www.nvidia.com/en-us/ai/cosmos/)、MuJoCo + MuJoCo-MJX（DeepMind 2021 收购后开源 + JAX 化）、Gazebo / Ignition、Genesis（CMU + 多校，2024-12，零样本物理仿真）[[726]](https://genesis-embodied-ai.github.io/)、Drake（TRI）[[727]](https://drake.mit.edu/)、Habitat 3（Meta）[[728]](https://aihabitat.org/)、AI2-THOR[[729]](https://ai2thor.allenai.org/)、Unity ML-Agents[[730]](https://github.com/unity-technologies/ml-agents)
+
+### Cc 机器人基础模型 / VLA
+
+NVIDIA GR00T N1 / GR00T-Dreams[[731]](https://nvidianews.nvidia.com/news/nvidia-isaac-gr00t-n1-open-humanoid-robot-foundation-model-simulation-frameworks)、Physical Intelligence π0 / π0.5（2024–2025，Sergey Levine、Chelsea Finn）[[732]](https://www.pi.website/blog/pi0)、Google DeepMind RT-2 / Open X-Embodiment / Gemini Robotics（2025-03）[[733]](https://deepmind.google/models/gemini-robotics/)、Skild AI Skild Brain（$300M Series A）[[734]](https://www.skild.ai/)、Figure Helix[[735]](https://www.figure.ai/helix)、1X World Model[[736]](https://www.1x.tech/discover/1x-world-model)、OpenVLA（Stanford）、RDT-1B（清华）、Octo（UC Berkeley）[[737]](https://octo-models.github.io/)
+
+### Cd 数据 / 训练框架
+
+LeRobot（HuggingFace；社区主流）、Diffusion Policy（哥伦比亚 + TRI）、ACT（Tony Zhao）[[738]](https://github.com/tonyzhaozh/act)、Open X-Embodiment 数据集（22 机器人形态、527 任务）、DROID 数据集
+
+### Ce 终端机器人产品
+
+人形 Tesla Optimus[[739]](https://www.tesla.com/AI)、Figure 02 / 03[[740]](https://www.figure.ai/)、1X Neo Beta[[741]](https://www.1x.tech/neo)、Apptronik Apollo[[742]](https://apptronik.com/apollo)、Unitree H1 / G1 / GD01[[743]](https://www.unitree.com/h1/)；四足 Boston Dynamics Spot[[744]](https://bostondynamics.com/products/spot/)、ANYmal[[745]](https://www.anybotics.com/robotics/anymal/)、Unitree Go2[[746]](https://www.unitree.com/go2/)；服务 / 物流 Agility Robotics Digit[[747]](https://www.agilityrobotics.com/)、Covariant Brain（被 Amazon "聘走团队"）；手术 Intuitive da Vinci 5[[748]](https://www.intuitive.com/en-us/products-and-services/da-vinci/5)
 
 ### D 自动驾驶栈（与 L18–L34 并行）
 
 闭源端到端神经网络栈已成为主流；HD 地图 + 规则栈正在被替代。
 
-- **Da 闭源端到端 / 整车**：Tesla FSD V13 / V14（HW4 → HW5）、Waymo Driver（Multi-Modal Foundation Model 路线）、Mobileye SuperVision / Chauffeur / Drive[[749]](https://www.mobileye.com/solutions/super-vision/)、华为 ADS 3.0 / 4.0、小鹏 XNGP、理想 AD Max、Momenta、Pony.ai、Wayve（伦敦，端到端 self-driving 模型 LINGO + GAIA）[[750]](https://wayve.ai/)
-- **Db 车载 AI 平台 / 芯片栈**：NVIDIA DRIVE Thor + DRIVE AV / DRIVE OS[[751]](https://developer.nvidia.com/drive/agx)、Mobileye EyeQ6 / EyeQ Ultra[[752]](https://www.mobileye.com/solutions/super-vision/)、Qualcomm Snapdragon Ride[[753]](https://www.qualcomm.com/automotive/solutions/snapdragon-ride) / Ride Flex SoC（SA8775P 智驾 + 座舱融合，2025 主流量产）+ Snapdragon Cockpit Elite、MediaTek Dimensity Auto Cockpit / Dimensity Auto Connect[[875]](https://www.mediatek.com/products/automotive)（与 NVIDIA 联合的 AI 座舱平台，CES 2024 发布 NVIDIA DRIVE OS on MTK SoC）、Horizon Robotics Journey 6（中国主流国产替代）[[754]](https://en.horizon.auto/)、地平线 SuperDrive、瑞芯微 RK3588M（座舱 / 仪表 / 流媒体后视镜，国产中低端车型大量采用）
-- **Dc 开源 / 开放栈**：百度 Apollo[[755]](https://www.apollo.auto/en/)、Autoware (Foundation)[[756]](https://autoware.org/)、Comma.ai openpilot、CARLA（仿真）、AirSim（已停维但仍流行）
-- **Dd 仿真 / 数据闭环**：NVIDIA DRIVE Sim + Omniverse、Applied Intuition（仿真 + 数据平台）[[757]](https://www.appliedintuition.com/)、Foretellix[[758]](https://www.foretellix.com/)、Cognata、Parallel Domain、Helm.ai
-- **De 高精地图 / 定位（被端到端架构挤压但未消失）**：HERE、TomTom、四维图新、Mapbox、Atlatec[[759]](https://www.bosch.com/)（被 Bosch 收购）
+### Da 闭源端到端 / 整车
+
+Tesla FSD V13 / V14（HW4 → HW5）、Waymo Driver（Multi-Modal Foundation Model 路线）、Mobileye SuperVision / Chauffeur / Drive[[749]](https://www.mobileye.com/solutions/super-vision/)、华为 ADS 3.0 / 4.0、小鹏 XNGP、理想 AD Max、Momenta、Pony.ai、Wayve（伦敦，端到端 self-driving 模型 LINGO + GAIA）[[750]](https://wayve.ai/)
+
+### Db 车载 AI 平台 / 芯片栈
+
+NVIDIA DRIVE Thor + DRIVE AV / DRIVE OS[[751]](https://developer.nvidia.com/drive/agx)、Mobileye EyeQ6 / EyeQ Ultra[[752]](https://www.mobileye.com/solutions/super-vision/)、Qualcomm Snapdragon Ride[[753]](https://www.qualcomm.com/automotive/solutions/snapdragon-ride) / Ride Flex SoC（SA8775P 智驾 + 座舱融合，2025 主流量产）+ Snapdragon Cockpit Elite、MediaTek Dimensity Auto Cockpit / Dimensity Auto Connect[[875]](https://www.mediatek.com/products/automotive)（与 NVIDIA 联合的 AI 座舱平台，CES 2024 发布 NVIDIA DRIVE OS on MTK SoC）、Horizon Robotics Journey 6（中国主流国产替代）[[754]](https://en.horizon.auto/)、地平线 SuperDrive、瑞芯微 RK3588M（座舱 / 仪表 / 流媒体后视镜，国产中低端车型大量采用）
+
+### Dc 开源 / 开放栈
+
+百度 Apollo[[755]](https://www.apollo.auto/en/)、Autoware (Foundation)[[756]](https://autoware.org/)、Comma.ai openpilot、CARLA（仿真）、AirSim（已停维但仍流行）
+
+### Dd 仿真 / 数据闭环
+
+NVIDIA DRIVE Sim + Omniverse、Applied Intuition（仿真 + 数据平台）[[757]](https://www.appliedintuition.com/)、Foretellix[[758]](https://www.foretellix.com/)、Cognata、Parallel Domain、Helm.ai
+
+### De 高精地图 / 定位（被端到端架构挤压但未消失）
+
+HERE、TomTom、四维图新、Mapbox、Atlatec[[759]](https://www.bosch.com/)（被 Bosch 收购）
 
 ### E 世界模型 / 3D 重建 / 游戏 AI（与 L32 并行但目标不同）
 
 L32 偏"生成图像 / 视频"；这一支偏"生成可交互的 3D 世界"。
 
-- **Ea 通用世界模型**：Google DeepMind Genie 2 / Genie 3（2025-08，从一张图生成可交互 1 分钟世界）[[760]](https://deepmind.google/blog/genie-2-a-large-scale-foundation-world-model/)、World Labs Marble（Fei-Fei Li，2025-12 GA）[[761]](https://www.worldlabs.ai/)、Wayve GAIA-2[[762]](https://wayve.ai/science/gaia/)、NVIDIA Cosmos World Foundation Models、Decart Mirage、Odyssey
-- **Eb 3D 重建 / 新视角合成**：NeRF / Instant-NGP（NVIDIA）、3D Gaussian Splatting（Inria 2023；事实标准）、Mip-Splatting[[763]](https://github.com/autonomousvision/mip-splatting)、Luma Genie、Polycam[[764]](https://poly.cam/)、KIRI Engine[[765]](https://www.kiriengine.app/)
-- **Ec 文本 → 3D / Mesh**：Meshy、Tripo3D（VAST）、Rodin（DeemosTech）[[766]](https://hyperhuman.deemos.com/)、Hunyuan3D 2.5（腾讯）[[767]](https://github.com/Tencent-Hunyuan/Hunyuan3D-2)、Trellis（Microsoft）[[768]](https://github.com/microsoft/TRELLIS)、CSM、Spline AI[[769]](https://spline.design/)
-- **Ed 游戏内 NPC / 引擎 AI**：NVIDIA ACE（Audio2Face、Riva、NeMo Retriever 套件）[[770]](https://developer.nvidia.com/ace-for-games)、Inworld AI[[92]](https://inworld.ai/)、Convai[[771]](https://convai.com/)、Charisma.ai[[169]](https://charisma.ai/)
-- **Ee 工业 / 编辑器**：NVIDIA Omniverse + USD、Unity Sentis（端内 ONNX 推理）[[772]](https://unity.com/products/sentis)、Unreal NNE（Neural Network Engine）、Pixar OpenUSD[[773]](https://openusd.org/)、Houdini Copernicus[[774]](https://www.sidefx.com/products/whats-new-in-h205/copernicus/)
+### Ea 通用世界模型
+
+Google DeepMind Genie 2 / Genie 3（2025-08，从一张图生成可交互 1 分钟世界）[[760]](https://deepmind.google/blog/genie-2-a-large-scale-foundation-world-model/)、World Labs Marble（Fei-Fei Li，2025-12 GA）[[761]](https://www.worldlabs.ai/)、Wayve GAIA-2[[762]](https://wayve.ai/science/gaia/)、NVIDIA Cosmos World Foundation Models、Decart Mirage、Odyssey
+
+### Eb 3D 重建 / 新视角合成
+
+NeRF / Instant-NGP（NVIDIA）、3D Gaussian Splatting（Inria 2023；事实标准）、Mip-Splatting[[763]](https://github.com/autonomousvision/mip-splatting)、Luma Genie、Polycam[[764]](https://poly.cam/)、KIRI Engine[[765]](https://www.kiriengine.app/)
+
+### Ec 文本 → 3D / Mesh
+
+Meshy、Tripo3D（VAST）、Rodin（DeemosTech）[[766]](https://hyperhuman.deemos.com/)、Hunyuan3D 2.5（腾讯）[[767]](https://github.com/Tencent-Hunyuan/Hunyuan3D-2)、Trellis（Microsoft）[[768]](https://github.com/microsoft/TRELLIS)、CSM、Spline AI[[769]](https://spline.design/)
+
+### Ed 游戏内 NPC / 引擎 AI
+
+NVIDIA ACE（Audio2Face、Riva、NeMo Retriever 套件）[[770]](https://developer.nvidia.com/ace-for-games)、Inworld AI[[92]](https://inworld.ai/)、Convai[[771]](https://convai.com/)、Charisma.ai[[169]](https://charisma.ai/)
+
+### Ee 工业 / 编辑器
+
+NVIDIA Omniverse + USD、Unity Sentis（端内 ONNX 推理）[[772]](https://unity.com/products/sentis)、Unreal NNE（Neural Network Engine）、Pixar OpenUSD[[773]](https://openusd.org/)、Houdini Copernicus[[774]](https://www.sidefx.com/products/whats-new-in-h205/copernicus/)
 
 ### F 经典计算机视觉 / 边缘感知（与 L13–L14 并行，但模型不属 LLM）
 
 工业视觉、安防、医学影像、OCR、文档智能——这一段在 LLM 大火前就有，2024–2025 又被 VLM 部分蚕食但远未消失。
 
-- **Fa 检测 / 分割 / Pose**：YOLOv10 / v11 / v12（Ultralytics）[[775]](https://www.ultralytics.com/)、RT-DETR（百度）、Detectron2（Meta）[[776]](https://github.com/facebookresearch/detectron2)、MMDetection / MMPose / MMSegmentation（OpenMMLab）[[777]](https://github.com/open-mmlab)、SAM 2（Meta，视频分割）、Grounding DINO[[778]](https://github.com/IDEA-Research/GroundingDINO)、Florence-2（Microsoft）
-- **Fb OCR / 文档智能**：PaddleOCR（百度，开源主流）[[779]](https://github.com/PaddlePaddle/PaddleOCR)、Tesseract[[780]](https://github.com/tesseract-ocr/tesseract)、Surya[[781]](https://github.com/VikParuchuri/surya)、DocLayout-YOLO[[782]](https://github.com/opendatalab/DocLayout-YOLO)、Nougat（Meta，学术 PDF）[[783]](https://github.com/facebookresearch/nougat)、MinerU（上海 AI Lab）[[784]](https://github.com/opendatalab/MinerU)、Mistral OCR[[785]](https://mistral.ai/news/mistral-ocr)、Reducto[[786]](https://reducto.ai/)、Unstructured.io[[787]](https://unstructured.io/)
-- **Fc 视频理解**：InternVideo 2.5[[788]](https://github.com/OpenGVLab/InternVideo)、VideoLLaMA 3[[789]](https://github.com/DAMO-NLP-SG/VideoLLaMA3)、Qwen2.5-VL[[790]](https://github.com/QwenLM/Qwen-VL)、TwelveLabs Marengo[[791]](https://www.twelvelabs.io/product/models-overview)、Video-CCAM[[792]](https://github.com/QQ-MM/Video-CCAM)
-- **Fd 边缘 / 嵌入式部署**：NVIDIA DeepStream + TensorRT、Intel OpenVINO、Qualcomm AI Engine Direct（QNN）[[793]](https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk) + Qualcomm Genie[[882]](https://www.qualcomm.com/developer/software/genie-sdk) + AI Hub[[870]](https://aihub.qualcomm.com/)、MediaTek NeuroPilot[[874]](https://neuropilot.mediatek.com/) + Genio[[876]](https://www.mediatek.com/products/iot)、Rockchip RKNN-Toolkit2[[878]](https://github.com/airockchip/rknn-toolkit2) + RKNPU2[[879]](https://github.com/rockchip-linux/rknpu2) + RKLLM[[880]](https://github.com/airockchip/rknn-llm)（国产边缘视觉 / 端侧 LLM 主流，海康 / 大华 / 安霸竞品线大量基于 RK3588 / RK3576 出货）、Arm NN[[794]](https://www.arm.com/products/silicon-ip-cpu/ethos/arm-nn)、Apple Core ML、MediaPipe（Google）[[795]](https://developers.google.com/mediapipe)、Hailo Dataflow Compiler[[796]](https://hailo.ai/products/hailo-software/hailo-ai-software-suite/)、爱芯元智 AXera Pulsar SDK[[883]](https://www.axera-tech.com/)（AX650N / AX620E）、地平线 Horizon OpenExplorer（Journey / Sunrise X 系列）、寒武纪 MagicMind
-- **Fe 数据 / 训练平台**：Roboflow[[797]](https://roboflow.com/)、Encord[[798]](https://encord.com/)、Labelbox[[799]](https://labelbox.com/)、Voxel51 FiftyOne[[800]](https://voxel51.com/fiftyone)、CVAT[[801]](https://www.cvat.ai/)、Supervisely[[802]](https://supervisely.com/)
-- **Ff 终端应用**：工业 Cognex VisionPro Deep Learning[[803]](https://www.cognex.com/en/products/machine-vision-software/visionpro-software)、Keyence[[804]](https://www.keyence.com/products/vision/)、Landing AI（Andrew Ng）[[805]](https://landing.ai/)；安防 Hikvision[[806]](https://www.hikvision.com/en/)、Dahua[[807]](https://www.dahuasecurity.com/)；医学影像 Aidoc[[808]](https://www.aidoc.com/)、Annalise.ai[[809]](https://annalise.ai/)、Viz.ai[[810]](https://www.viz.ai/)；零售 Standard AI[[811]](https://standard.ai/)、Trigo[[812]](https://www.trigoretail.com/)
+### Fa 检测 / 分割 / Pose
+
+YOLOv10 / v11 / v12（Ultralytics）[[775]](https://www.ultralytics.com/)、RT-DETR（百度）、Detectron2（Meta）[[776]](https://github.com/facebookresearch/detectron2)、MMDetection / MMPose / MMSegmentation（OpenMMLab）[[777]](https://github.com/open-mmlab)、SAM 2（Meta，视频分割）、Grounding DINO[[778]](https://github.com/IDEA-Research/GroundingDINO)、Florence-2（Microsoft）
+
+### Fb OCR / 文档智能
+
+PaddleOCR（百度，开源主流）[[779]](https://github.com/PaddlePaddle/PaddleOCR)、Tesseract[[780]](https://github.com/tesseract-ocr/tesseract)、Surya[[781]](https://github.com/VikParuchuri/surya)、DocLayout-YOLO[[782]](https://github.com/opendatalab/DocLayout-YOLO)、Nougat（Meta，学术 PDF）[[783]](https://github.com/facebookresearch/nougat)、MinerU（上海 AI Lab）[[784]](https://github.com/opendatalab/MinerU)、Mistral OCR[[785]](https://mistral.ai/news/mistral-ocr)、Reducto[[786]](https://reducto.ai/)、Unstructured.io[[787]](https://unstructured.io/)
+
+### Fc 视频理解
+
+InternVideo 2.5[[788]](https://github.com/OpenGVLab/InternVideo)、VideoLLaMA 3[[789]](https://github.com/DAMO-NLP-SG/VideoLLaMA3)、Qwen2.5-VL[[790]](https://github.com/QwenLM/Qwen-VL)、TwelveLabs Marengo[[791]](https://www.twelvelabs.io/product/models-overview)、Video-CCAM[[792]](https://github.com/QQ-MM/Video-CCAM)
+
+### Fd 边缘 / 嵌入式部署
+
+NVIDIA DeepStream + TensorRT、Intel OpenVINO、Qualcomm AI Engine Direct（QNN）[[793]](https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk) + Qualcomm Genie[[882]](https://www.qualcomm.com/developer/software/genie-sdk) + AI Hub[[870]](https://aihub.qualcomm.com/)、MediaTek NeuroPilot[[874]](https://neuropilot.mediatek.com/) + Genio[[876]](https://www.mediatek.com/products/iot)、Rockchip RKNN-Toolkit2[[878]](https://github.com/airockchip/rknn-toolkit2) + RKNPU2[[879]](https://github.com/rockchip-linux/rknpu2) + RKLLM[[880]](https://github.com/airockchip/rknn-llm)（国产边缘视觉 / 端侧 LLM 主流，海康 / 大华 / 安霸竞品线大量基于 RK3588 / RK3576 出货）、Arm NN[[794]](https://www.arm.com/products/silicon-ip-cpu/ethos/arm-nn)、Apple Core ML、MediaPipe（Google）[[795]](https://developers.google.com/mediapipe)、Hailo Dataflow Compiler[[796]](https://hailo.ai/products/hailo-software/hailo-ai-software-suite/)、爱芯元智 AXera Pulsar SDK[[883]](https://www.axera-tech.com/)（AX650N / AX620E）、地平线 Horizon OpenExplorer（Journey / Sunrise X 系列）、寒武纪 MagicMind
+
+### Fe 数据 / 训练平台
+
+Roboflow[[797]](https://roboflow.com/)、Encord[[798]](https://encord.com/)、Labelbox[[799]](https://labelbox.com/)、Voxel51 FiftyOne[[800]](https://voxel51.com/fiftyone)、CVAT[[801]](https://www.cvat.ai/)、Supervisely[[802]](https://supervisely.com/)
+
+### Ff 终端应用
+
+工业 Cognex VisionPro Deep Learning[[803]](https://www.cognex.com/en/products/machine-vision-software/visionpro-software)、Keyence[[804]](https://www.keyence.com/products/vision/)、Landing AI（Andrew Ng）[[805]](https://landing.ai/)；安防 Hikvision[[806]](https://www.hikvision.com/en/)、Dahua[[807]](https://www.dahuasecurity.com/)；医学影像 Aidoc[[808]](https://www.aidoc.com/)、Annalise.ai[[809]](https://annalise.ai/)、Viz.ai[[810]](https://www.viz.ai/)；零售 Standard AI[[811]](https://standard.ai/)、Trigo[[812]](https://www.trigoretail.com/)
 
 ### G 量化金融 / 经典 ML 应用（轻量分支）
 
 绝大多数金融 AI 跑在 L06 PyTorch / JAX 通用框架上，没有独立"基础模型"层；但工具链与终端用户面孔与 LLM 分支差异大。
 
-- **Ga 经典 ML 框架**：scikit-learn、XGBoost、LightGBM、CatBoost[[813]](https://catboost.ai/)、RAPIDS cuML（GPU 加速 sklearn）[[814]](https://rapids.ai/)、H2O.ai[[815]](https://h2o.ai/)
-- **Gb 时间序列 / 预测**：Prophet（Meta）[[816]](https://facebook.github.io/prophet/)、NeuralProphet[[817]](https://neuralprophet.com/)、Nixtla（StatsForecast / NeuralForecast / TimeGPT）[[818]](https://www.nixtla.io/)、Salesforce Merlion[[819]](https://github.com/salesforce/Merlion)、Amazon Chronos[[820]](https://github.com/amazon-science/chronos-forecasting)
-- **Gc 量化 / 回测平台**：QuantConnect[[821]](https://www.quantconnect.com/)、Backtrader[[822]](https://www.backtrader.com/)、vectorbt / vectorbt-pro[[823]](https://vectorbt.dev/)、Zipline-reloaded[[824]](https://github.com/stefan-jansen/zipline-reloaded)、QuantLib（衍生品定价库）[[825]](https://www.quantlib.org/)、NVIDIA cuOpt + Risk Pricing
-- **Gd 金融领域模型**：BloombergGPT、FinGPT、FinBERT[[826]](https://github.com/yya518/FinBERT)、PIXIU[[17]](https://github.com/The-FinAI/PIXIU)；金融具体应用大多复用 GPT / Claude，没有独立分发
-- **Ge 终端 / 平台**：Bloomberg Terminal + AI[[827]](https://professional.bloomberg.com/products/bloomberg-terminal/)、FactSet Mercury[[111]](https://www.factset.com/ai)、Two Sigma Venn[[828]](https://www.venn.twosigma.com/)、AlphaSense[[829]](https://www.alpha-sense.com/)、Hebbia（这一项已在 L34 列出）
+### Ga 经典 ML 框架
+
+scikit-learn、XGBoost、LightGBM、CatBoost[[813]](https://catboost.ai/)、RAPIDS cuML（GPU 加速 sklearn）[[814]](https://rapids.ai/)、H2O.ai[[815]](https://h2o.ai/)
+
+### Gb 时间序列 / 预测
+
+Prophet（Meta）[[816]](https://facebook.github.io/prophet/)、NeuralProphet[[817]](https://neuralprophet.com/)、Nixtla（StatsForecast / NeuralForecast / TimeGPT）[[818]](https://www.nixtla.io/)、Salesforce Merlion[[819]](https://github.com/salesforce/Merlion)、Amazon Chronos[[820]](https://github.com/amazon-science/chronos-forecasting)
+
+### Gc 量化 / 回测平台
+
+QuantConnect[[821]](https://www.quantconnect.com/)、Backtrader[[822]](https://www.backtrader.com/)、vectorbt / vectorbt-pro[[823]](https://vectorbt.dev/)、Zipline-reloaded[[824]](https://github.com/stefan-jansen/zipline-reloaded)、QuantLib（衍生品定价库）[[825]](https://www.quantlib.org/)、NVIDIA cuOpt + Risk Pricing
+
+### Gd 金融领域模型
+
+BloombergGPT、FinGPT、FinBERT[[826]](https://github.com/yya518/FinBERT)、PIXIU[[17]](https://github.com/The-FinAI/PIXIU)；金融具体应用大多复用 GPT / Claude，没有独立分发
+
+### Ge 终端 / 平台
+
+Bloomberg Terminal + AI[[827]](https://professional.bloomberg.com/products/bloomberg-terminal/)、FactSet Mercury[[111]](https://www.factset.com/ai)、Two Sigma Venn[[828]](https://www.venn.twosigma.com/)、AlphaSense[[829]](https://www.alpha-sense.com/)、Hebbia（这一项已在 L34 列出）
 
 ### H 游戏栈：引擎 + NPC AI + 反作弊 + 渲染（与 L13 / L21 / L29 / L32 渗透）
 
 游戏行业 AI 应用集中在三个方向：实时性能（DLSS / FSR / XeSS 等 super-resolution）、NPC 智能（对话 + 行为）、反作弊与玩家行为监测。生成式 AI 主要进入资产生成与原型阶段，对线上玩法的影响仍较有限。
 
-- **Ha 游戏引擎（AI 是嵌入而非主干）**：Unreal Engine[[830]](https://www.unrealengine.com/)、Unity[[831]](https://unity.com/)、Godot[[832]](https://godotengine.org/)、CryEngine[[833]](https://www.cryengine.com/)、Cocos Creator[[834]](https://www.cocos.com/en/creator)
-- **Hb 实时画质提升 / 上采样**：NVIDIA DLSS[[835]](https://www.nvidia.com/en-us/geforce/technologies/dlss/)（Deep Learning Super Sampling）、AMD FSR[[836]](https://gpuopen.com/fidelityfx-super-resolution-4/)（FidelityFX Super Resolution）、Intel XeSS[[837]](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/technology/xess.html)、Sony PSSR[[838]](https://blog.playstation.com/2024/09/10/playstation-5-pro-launches-november-7-priced-at-699-99/)（PlayStation Spectral Super Resolution）
-- **Hc NPC / 对话 AI**：NVIDIA ACE、Inworld AI（含 Inworld Origins 演示）、Convai、Charisma.ai、Replica Studios（语音 + 角色）；游戏内 LLM 集成方向上 NetEase Naraku Dialogue 等本土探索
-- **Hd 程序化生成 / 资产**：Promethean AI[[839]](https://www.prometheanai.com/)、Scenario[[840]](https://www.scenario.com/)、Rosebud AI[[841]](https://www.rosebud.ai/)、Skybox AI（360° 场景）、Houdini procedural、SideFX Solaris
-- **He 反作弊 / 玩家行为**：BattlEye、Easy Anti-Cheat（Epic）、VAC（Valve）、GGWP[[842]](https://www.ggwp.com/)、Anybrain[[843]](https://www.anybrain.gg/)（行为生物特征反作弊）
-- **Hf 玩家服务 / live ops 后端**：Microsoft PlayFab、AWS GameLift、Unity Gaming Services[[844]](https://unity.com/products/gaming-services)、Epic Online Services[[845]](https://dev.epicgames.com/services)、GameAnalytics、Unity Analytics
-- **Hg 终端游戏 / AI-first 工作室**：Inworld 集成游戏（Status: One、Sims-style 等）、Hidden Door[[846]](https://www.hiddendoor.co/)（叙事 AI 游戏平台）、AI Dungeon[[847]](https://aidungeon.com/)、Suck Up\![[848]](https://www.proxima-enterprises.com/)（Proxima Enterprises）
+### Ha 游戏引擎（AI 是嵌入而非主干）
+
+Unreal Engine[[830]](https://www.unrealengine.com/)、Unity[[831]](https://unity.com/)、Godot[[832]](https://godotengine.org/)、CryEngine[[833]](https://www.cryengine.com/)、Cocos Creator[[834]](https://www.cocos.com/en/creator)
+
+### Hb 实时画质提升 / 上采样
+
+NVIDIA DLSS[[835]](https://www.nvidia.com/en-us/geforce/technologies/dlss/)（Deep Learning Super Sampling）、AMD FSR[[836]](https://gpuopen.com/fidelityfx-super-resolution-4/)（FidelityFX Super Resolution）、Intel XeSS[[837]](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/technology/xess.html)、Sony PSSR[[838]](https://blog.playstation.com/2024/09/10/playstation-5-pro-launches-november-7-priced-at-699-99/)（PlayStation Spectral Super Resolution）
+
+### Hc NPC / 对话 AI
+
+NVIDIA ACE、Inworld AI（含 Inworld Origins 演示）、Convai、Charisma.ai、Replica Studios（语音 + 角色）；游戏内 LLM 集成方向上 NetEase Naraku Dialogue 等本土探索
+
+### Hd 程序化生成 / 资产
+
+Promethean AI[[839]](https://www.prometheanai.com/)、Scenario[[840]](https://www.scenario.com/)、Rosebud AI[[841]](https://www.rosebud.ai/)、Skybox AI（360° 场景）、Houdini procedural、SideFX Solaris
+
+### He 反作弊 / 玩家行为
+
+BattlEye、Easy Anti-Cheat（Epic）、VAC（Valve）、GGWP[[842]](https://www.ggwp.com/)、Anybrain[[843]](https://www.anybrain.gg/)（行为生物特征反作弊）
+
+### Hf 玩家服务 / live ops 后端
+
+Microsoft PlayFab、AWS GameLift、Unity Gaming Services[[844]](https://unity.com/products/gaming-services)、Epic Online Services[[845]](https://dev.epicgames.com/services)、GameAnalytics、Unity Analytics
+
+### Hg 终端游戏 / AI-first 工作室
+
+Inworld 集成游戏（Status: One、Sims-style 等）、Hidden Door[[846]](https://www.hiddendoor.co/)（叙事 AI 游戏平台）、AI Dungeon[[847]](https://aidungeon.com/)、Suck Up\![[848]](https://www.proxima-enterprises.com/)（Proxima Enterprises）
 
 ### I 影视娱乐栈：VFX / 后期 / 虚拟制作 / 生成式（与 E / L32 高度渗透）
 
 L32 已列了 Sora / Veo / Runway 等生成模型。本段重在**工业级 VFX 工具链** + **AI-first 制作工作流**——它们大多用 NVIDIA / Apple GPU、但栈在 Houdini / Nuke / DaVinci 这条传统 DCC 轴上演化。
 
-- **Ia VFX / 合成 / 调色**：Adobe After Effects[[849]](https://www.adobe.com/products/aftereffects.html)、Foundry Nuke[[850]](https://www.foundry.com/products/nuke-family/nuke)、Blackmagic DaVinci Resolve[[851]](https://www.blackmagicdesign.com/products/davinciresolve)、Autodesk Maya[[852]](https://www.autodesk.com/products/maya/overview)、Blender[[853]](https://www.blender.org/)、Houdini、Cinema 4D[[854]](https://www.maxon.net/en/cinema-4d)
-- **Ib AI VFX / 自动化制作**：Wonder Dynamics Wonder Studio（角色替换 + 自动 mocap）、Runway（视频生成与编辑）、Move.ai[[855]](https://www.move.ai/)（无标记 mocap）、Cuebric（虚拟制作 LED wall 场景）、Promise[[856]](https://www.promise.studio/)（生成式电影工作室）
-- **Ic 视频生成 / 模型层**：与 L32 共用：Sora、Veo 3、Kling、Runway Gen-4、Pika、Luma Dream Machine、Hailuo MiniMax、HunyuanVideo、Wan、OpenAI Sora 2 等
-- **Id 音频 / 配音 / 修复**：ElevenLabs（配音）、Resemble、Descript（视频 + 播客后期 + Overdub）、Adobe Podcast（语音增强）、Krisp[[857]](https://krisp.ai/)（降噪）、iZotope RX[[858]](https://www.izotope.com/en/products/rx.html)（音频修复）
-- **Ie 影像增强 / 修复 / 上采样**：Topaz Video AI（去噪 / 上采样 / 帧插值）、Adobe Enhance / Premiere AI、NVIDIA RTX Video[[859]](https://www.nvidia.com/en-us/geforce/news/rtx-video-super-resolution/)、DaVinci Resolve Neural Engine
-- **If 虚拟制作 / LED 摄影棚**：ILM StageCraft（Mandalorian 的 LED volume）、Disguise[[860]](https://www.disguise.one/)、Pixotope[[861]](https://www.pixotope.com/)、Unreal Engine + nDisplay（实时背景）
-- **Ig 渲染引擎 / 渲染农场**：V-Ray、RenderMan（Pixar）、Arnold（Autodesk）、Redshift[[862]](https://www.maxon.net/en/redshift)、Octane[[863]](https://home.otoy.com/render/octane-render/)；渲染云 Conductor、AWS Thinkbox Deadline、Coresite、Foundry Athera
-- **Ih 字幕 / 翻译 / 内容审核**：Captions（短视频 AI 工作室）、Submagic[[864]](https://www.submagic.co/)、CapCut[[865]](https://www.capcut.com/)（字节，AI 内嵌剪辑）、Veed.io[[866]](https://www.veed.io/)
-- **Ii AI-first 影视工作室 / 终端品牌**：Adobe Firefly Video、ILM StageCraft、Marvel（已多次使用 AI 风格化）、Wonder Studios、Promise；Lightricks / LTX-Video[[867]](https://www.lightricks.com/) 模型；OpenAI Sora 自有 app
+### Ia VFX / 合成 / 调色
+
+Adobe After Effects[[849]](https://www.adobe.com/products/aftereffects.html)、Foundry Nuke[[850]](https://www.foundry.com/products/nuke-family/nuke)、Blackmagic DaVinci Resolve[[851]](https://www.blackmagicdesign.com/products/davinciresolve)、Autodesk Maya[[852]](https://www.autodesk.com/products/maya/overview)、Blender[[853]](https://www.blender.org/)、Houdini、Cinema 4D[[854]](https://www.maxon.net/en/cinema-4d)
+
+### Ib AI VFX / 自动化制作
+
+Wonder Dynamics Wonder Studio（角色替换 + 自动 mocap）、Runway（视频生成与编辑）、Move.ai[[855]](https://www.move.ai/)（无标记 mocap）、Cuebric（虚拟制作 LED wall 场景）、Promise[[856]](https://www.promise.studio/)（生成式电影工作室）
+
+### Ic 视频生成 / 模型层
+
+与 L32 共用：Sora、Veo 3、Kling、Runway Gen-4、Pika、Luma Dream Machine、Hailuo MiniMax、HunyuanVideo、Wan、OpenAI Sora 2 等
+
+### Id 音频 / 配音 / 修复
+
+ElevenLabs（配音）、Resemble、Descript（视频 + 播客后期 + Overdub）、Adobe Podcast（语音增强）、Krisp[[857]](https://krisp.ai/)（降噪）、iZotope RX[[858]](https://www.izotope.com/en/products/rx.html)（音频修复）
+
+### Ie 影像增强 / 修复 / 上采样
+
+Topaz Video AI（去噪 / 上采样 / 帧插值）、Adobe Enhance / Premiere AI、NVIDIA RTX Video[[859]](https://www.nvidia.com/en-us/geforce/news/rtx-video-super-resolution/)、DaVinci Resolve Neural Engine
+
+### If 虚拟制作 / LED 摄影棚
+
+ILM StageCraft（Mandalorian 的 LED volume）、Disguise[[860]](https://www.disguise.one/)、Pixotope[[861]](https://www.pixotope.com/)、Unreal Engine + nDisplay（实时背景）
+
+### Ig 渲染引擎 / 渲染农场
+
+V-Ray、RenderMan（Pixar）、Arnold（Autodesk）、Redshift[[862]](https://www.maxon.net/en/redshift)、Octane[[863]](https://home.otoy.com/render/octane-render/)；渲染云 Conductor、AWS Thinkbox Deadline、Coresite、Foundry Athera
+
+### Ih 字幕 / 翻译 / 内容审核
+
+Captions（短视频 AI 工作室）、Submagic[[864]](https://www.submagic.co/)、CapCut[[865]](https://www.capcut.com/)（字节，AI 内嵌剪辑）、Veed.io[[866]](https://www.veed.io/)
+
+### Ii AI-first 影视工作室 / 终端品牌
+
+Adobe Firefly Video、ILM StageCraft、Marvel（已多次使用 AI 风格化）、Wonder Studios、Promise；Lightricks / LTX-Video[[867]](https://www.lightricks.com/) 模型；OpenAI Sora 自有 app
 
 ---
 
