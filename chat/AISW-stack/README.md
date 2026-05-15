@@ -730,21 +730,6 @@ L32 已列了 Sora / Veo / Runway 等生成模型。本段重在**工业级 VFX 
 
 ---
 
-## 各分支与主干共享 / 分叉点速查
-
-| 主干层 | LLM / Agent（A 段） | 科学计算（B1–B3） | 机器人（C） | 自动驾驶（D） | 世界模型 / 3D（E） | 经典 CV（F） |
-|---|---|---|---|---|---|--- | --- | --- |
-| L01–L05 驱动 / 内核库 / 编译器 | 共享 | 共享 + 加 OpenMM / cuQuantum kernel | 共享 + 实时 OS | 共享 + 车规级 BSP | 共享 | 共享 + OpenVINO / TensorRT | 同 A | 同 A |
-| L06–L07 框架 / 分布式 | PyTorch / JAX / DeepSpeed | PyTorch / JAX / Julia / MPI | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch + JAX | PyTorch + OpenMMLab | PyTorch（NPC AI 训练）+ ONNX | PyTorch（generative VFX） |
-| L08 数据 pipeline | FineWeb / datatrove | 实验数据 + 仿真生成 | Open X-Embodiment / DROID | 路采 + Replay + 仿真 | 多视角 / 视频对 | Roboflow / Labelbox | 游戏 telemetry / 玩家行为日志 | 镜头库 / 母带 / 标注 |
-| L09 后训练 | TRL / verl | 极少（多预训练即终态） | LeRobot + ACT + Diffusion Policy | 半监督 + RLHF 仿真 | 极少 | 微调 + 蒸馏 | NPC behavior tuning, 反作弊模型微调 | LoRA / Dreambooth 风格化 |
-| L10 模型 | Llama / Claude / GPT | AlphaFold 3 / GraphCast / MatterGen | π0 / GR00T / RT-2 | Tesla FSD / Waymo | Genie 3 / Marble | YOLO / SAM 2 | NVIDIA ACE[[91]](https://developer.nvidia.com/ace), Inworld[[92]](https://inworld.ai/), Convai[[92]](https://inworld.ai/) NPC LLM | 与 E / L32 共用：Sora, Veo 3, Kling, Runway |
-| L13–L14 推理 / 服务 | vLLM / Triton Inference | BioNeMo NIM / Earth-2 Studio | Isaac ROS / 车载 NN runtime | DRIVE OS / EyeQ runtime | Gaussian Splatting renderer | DeepStream / OpenVINO | ONNX Runtime + DirectML（游戏内推理）+ NVIDIA TensorRT | 与 L32 共用 diffusion runtime |
-| L24–L26 Agent / 工具 | LangGraph / MCP / Computer Use | 多数无（人在闭环） | VLA 控制循环（非 LLM Agent） | 端到端策略，无 Agent 层 | 编辑器内交互 | 无 | —（NPC 走专用 dialogue 循环，非 Agent） | — |
-| L33–L34 终端 | ChatGPT / Cursor | AlphaFold Server / Schrödinger | Tesla Optimus / Figure | Tesla FSD / Robotaxi | Marble / Genie 3 | 工业 / 医疗 / 零售视觉 | — | — |
-
----
-
 ## 几条横切的观察
 
 不属于具体某一层，但跨层规律值得单列。
