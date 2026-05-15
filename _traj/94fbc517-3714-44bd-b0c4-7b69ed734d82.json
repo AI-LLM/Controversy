@@ -10,6 +10,7 @@
         "/Users/luwei/work/Controversy"
       ],
       "git_branches": [
+        "agent/94fbc517-3714-44bd-b0c4-7b69ed734d82",
         "agent/9e2ad28a-05c1-4224-adc3-1631ff120cc5"
       ]
     }
@@ -867,19 +868,835 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-05-15T13:52:26.697Z",
+      "source": "user",
+      "message": "一个二十多年老兵的忧心：那条从Debug开始走向资深工程师的路，正在崩塌",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 14,
+      "timestamp": "2026-05-15T13:54:11.857Z",
+      "source": "user",
+      "message": "把README.md表格中前两行删掉，增加这个主题 https://mp.weixin.qq.com/s/AslSVBMGkT98lPwNWsv8yQ （内容如下），相关资料 链接到 https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-05-human-education.md / https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-05-human-education.md。主题链接里的内容：一个二十多年老兵的忧心：那条从Debug开始走向资深工程师的路，正在崩塌\n图片\n作者 | 灯火明\n编辑 | 蔡芳芳\n【编者按】 不久前，InfoQ 曾报道了 《微软警告称，AI 正在掏空初级开发者的培养渠道》。微软 Azure CTO Mark Russinovich 等人的研究文章指出，当企业将初级任务自动化以追求短期 ROI 时，不仅让新人背负了丧失深度思考能力的“认知债务”，更导致了软件人才金字塔底座的崩塌——我们正在失去培养下一代资深工程师的“训练场”。\n\n在传统的软件工程人才培养链路中，那些看似低价值的 Bug 修复、文档整理和简单模块编写，恰恰是新人理解复杂系统、建立工程直觉的“训练场”。当 AI 抽干了这些高训练密度的初级任务，软件行业赖以生存的人才管线正面临断裂的风险。\n\nInfoQ 始终关注开发者生态的长期演进。我们认为，这不仅是一个就业市场的波动问题，更是一次关于“工程能力如何传递”的深层拷问。\n\n如果说微软的文章是从机构研究视角发出的宏观警告，那么今天这篇文章，则是一位拥有 20 年编程经验的行业老兵，从工程实战和人才培养的一线发出的深度回响。作者敏锐地指出：软件行业那条“从 Debug 和文档起步，在琐碎任务中理解系统”的自然进化路径正在崩塌，并从工业界用人策略的漂移、高等教育体系的滞后以及科研逻辑的异化三个维度展开分析。\n\n为什么你必须读这篇文章？\n\n1. 如果你是企业管理者： 你需要思考，在追求短期 ROI 的同时，如何避免砍掉公司未来的“种子粮”。\n2.如果你是教育工作者： 面对“教育滞后于工业”的宿命，如何重构课程体系以应对“人才成熟周期前移”？\n3.如果你是正在入行的准开发者： 当“人人都能写代码”成为现实，你必须重新审视职业程序员的核心护城河——那些 Prompt 给不了的“背锅经历”和系统判断力。\n\nAI 降低了写代码的门槛，却在无形中抬高了成为职业工程师的门槛。 以下是关于这场“无声革命”的观察与思考。\n如果 AI 持续替代大量初级开发任务，未来五到十年内一个关键问题会变得越来越突出：中高级工程师从哪里来？\n\n过去，计算机行业有一条相对自然的人才培养路径。新人从模块代码写起，自行调试，编写注释和文档，再经过 commiter review 代码风格，跑 CI，通过后最终 merge 入仓。在这套流程中，新人会逐渐理解系统、业务、工程习惯和组织协作。模块本身可能并不复杂，但这些初级任务能让他们快速上手。\n\n而现在，AI 编程工具最先压缩的恰恰是这些高确定性、高重复性，但对于初级工程师来说又有最高训练密度的任务。时下各大公司都在思考如何有效引入 AI 编程工具让资深工程师提高效率，同时压缩初级开发岗位节省成本。但长期看，这势必会拔掉培养资深工程师所需的“苗子”。\n\n因此，文章开篇那个问题的本质是：当初级任务不再具备经济价值时，行业对初级工程师的要求会如何变化，而岗位训练机制又会如何变化？\n\n下面我将尝试从工业界和教育界两方面聊聊这个问题可能的答案。\n\n对工业界的影响\n从工业界看，AI 编程工具普及后，企业用人策略可能出现明显分化。\n\n对于不愿意或没有能力培养初级开发的中小企业，以及非 IT 企业内部的开发部门来说，最现实且短期理性的策略可能是减少初级岗位，用少量资深开发加 AI 工具，再配合外包来维持开发需求。对单个公司来说这很合理：既然 AI 可以完成一部分明确任务，为什么还要投入时间培养经验不足的新手？\n\n但从行业整体来看，如果所有公司都如此，长期就会出现人才管线断裂。初级岗位减少，真实工程训练减少，能成长为资深开发的人也会减少。几年之后，企业可能会发现资深开发更贵、更难招，而大量历史系统、技术债务会堆积，这些仍然需要真正有经验的人来处理。\n\n大厂的情况可能会有所不同。有资源、有长期人才战略的公司，仍然可能保留实习项目、应届生项目、导师制度等较为完备的内部培养机制，但对初级岗位的门槛会显著提高。\n\n过去初级岗位只需要能完成明确任务，现在则需要具备 AI 协作、小规模代码库分析、模块化验证与调试等等能力，甚至承担一些基本工程判断责任。而一个刚出大学门、连 stack trace 都可能不太会读的应届生是很难达到这个标准的。\n\n更进一步地说，AI 工具的出现让公司期待初级岗位一开始就具备更接近中级工程师的判断力。\n\n这样的变化对于计算机行业的新人来说，意味着 更残酷的竞争：大厂会培养少数高潜新人，名校、强实习和开源或研究项目经历会成为更重要的敲门砖。\n\n计算机行业的入口不会完全关闭，但会更卷：少数新人进入高质量培养计划，多数人被挡在门外或流向边缘技术岗位。这代表了行业人才成熟周期的整体前移。\n\n未来，行业可能会要求学生在大学早期甚至大学前就已经有相当的计算机基础：较为熟练的使用一门高级语言、熟悉基础算法和数据结构、了解基础的 OS/ 网络 / 体系结构知识、，甚至有 OI/ACM 竞赛经验或者个人项目集。想从事计算机行业的人，可能会像现在的艺术生那样从小就开始学习专业知识并接受相关训练。 传统意义上“大学时才系统接触编程，毕业后从初级岗位开始一步步迈向资深”，这样的例子可能会从主流变成越来越罕见的例外。\n\nAI 降低的是“生成代码”的门槛，但却提高了“成为职业程序员”的门槛。\n\n对计算机高等教育的影响\n在这种行业背景下，计算机高等教育会受到很大冲击，原先的 旧教育体系面临较高的重构压力。\n\n过去，大学主要负责基础教育，企业负责工程训练。传统计算机专业通常会教授算法、数据结构、操作系统、网络、计算机组成或体系结构，加上一门编程语言，再配合若干项目课。这个体系过去大体可行，因为本质上学生在大学里学的是编程基础课，真正的工程能力往往是通过进入企业后从事初级开发岗位补上来的。\n\n但如果 AI 压缩了初级开发岗位，这套分工就会被打破，大学不可避免地需要承担更多原本由企业完成的训练功能。也就是说，高等教育不能只教理论基础，还需要把更多“企业里初级开发会要干的活”模拟进课程体系。\n\n一个理想的方向，是在高等教育中建立更接近真实工程环境的训练机制：比如组织学生阅读一个陌生的小型代码库并模拟可能出现的生产事故。而后引导学生复现并分析错误根因，通过调试修复并提交 PR，接受 peer review，写单元测试，做事故复盘等完整流程。\n\n这些训练和传统课程不同。它们不只是让学生“知道某个知识点”，而是让学生理解一个工程系统是如何长期运行、演进和出问题的。\n\n但这对高等教育资源要求很高，它需要一个足够复杂又不至于太吓人的代码库、需要助教们承担指导和 review 职责，需要鲁棒的测试环境及 CI 基础设施，甚至需要和工业界合作。强校可能有条件做到，普通院校很难完整承担。结果可能是，计算机高等教育本身也会进一步分化：有些学校可以提供真实工程训练，有些学校仍然停留在传统课程和孤立项目作业上。\n\n与此同时，原有的理论课也不能丢。AI 时代的理论基础可能更重要，因为只有理解底层机制，人才有能力判断 AI 生成的代码是否可靠。但理论课的教法需要更接近真实工程问题：\n\n算法和数据结构不能只停留在刷题和复杂度分析，还要介入数据的实际组织和维护。\n操作系统不能只讲进程、线程、虚拟内存和文件系统，还要面对资源争用和系统故障。\n网络不能只讲 TCP/IP 和 DNS，还要排查超时、重试风暴。\n体系结构不能只讲 pipeline、cache 和指令集，还要联系硬件约束，分析代码是计算 bound 还是吞吐 bound。\n编程语言课也不能只追求语法，而要训练可读性、错误处理、测试、模块化和维护性。\n但问题在于，任何一个上过大学 CS 专业的人都知道，在当下的教育环境中，能把前半部分讲明白就已经非常了不起。即便是从现在开始做教育改革，到真正产生效果也需要相当长的时间，而 AI 工具的普及只用了两三年。\n\n教育变化通常滞后于工业变化。 这种滞后会造成一个现实错位：一部分学生在旧体系下被培养，但毕业时需要面对的已经是一个使用 AI 工具、对初级岗位要求更高的新市场。\n\n在学术界，这种“错位”已经开始暴露问题了。我的不少师兄弟在学术界做教职带研究生，他们告诉我现在很多学生尝试新思路时强烈依赖 LLM 生成 demo、脚本和实验代码。这本身无可厚非，真正的问题是 学生无法理解生成出来的代码，也不具备 debug 能力。一旦输出出错，代码无法运行或结果无法达到预期，他们无法靠自己定位，最终只能推给导师。而导师为了项目进度，又不得不亲自 debug。虽然短期内论文和 demo 可以继续推进，但最关键的训练环节被跳过了。这样培养出来的学生也很难满足未来市场对 researcher 的要求。\n\n更严重的是，由于计算机科学大部分属于实验科学，debug 能力不仅是工程能力，也是科研可信度的一部分。如果学生不能对自己的实验系统负责，就很难判断实验结论是否建立在可靠实现之上。一个 silent bug 可能直接导致整篇论文得出错误的结论。\n\n可能的未来培养机制\n到目前为止，计算机行业都依赖一种很自然的学徒制：新人通过低阶真实任务逐渐成长。AI 时代，这种自然路径被压缩了。未来如果想延续中高级工程师培养链条，行业必须把训练机制显式设计出来。\n\n一种比较现实的方案可能是“多方共同承担”：\n\n大学把学生训练到“可被学徒化”的水平；\n企业提供名额更少但更高质量的培养方案；\n开源社区提供真实协作与长期维护经验；\nAI 工具提供个性化辅导、代码解释和低成本练习环境；\n导师和资深工程师训练新人形成判断、验证以及为代码负责的能力。\n但重中之重，可能还是在于想要从事计算机行业的人自己。 你需要尽早起步，最好能在大学前就打好基础，在大学期间能做几个拿得出手的作品或者参与研究或开源项目，这样才会让你跻身于“能够驾驭 AI 编程工具的初级开发”的及格线上。\n\n这乍一听很可笑，就像是在招聘广告上写“要求应届生具备 3 年实际开发经验”。但在 AI 编程工具喊出“人人都能写代码”的 slogan 之后，这份“经验”就变成了区分业余和专业的唯一条件。\n\n无论如何，只有拥有过真实的“背锅经历”（需求变化、系统故障、线上事故、拉通对齐、清理屎山等等），才能真正从“初级”成长为“资深”，而这些经历是任何 prompt 都给不了的。",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 15,
+      "timestamp": "2026-05-15T13:54:18.318Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 16793,
+        "completion_tokens": 234,
+        "cached_tokens": 16787,
+        "extra": {
+          "cache_creation_input_tokens": 14585,
+          "cache_read_input_tokens": 16787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 14585,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 234,
+              "cache_read_input_tokens": 16787,
+              "cache_creation_input_tokens": 14585,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 14585
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 16,
+      "timestamp": "2026-05-15T13:54:18.596Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Read toolu_01GSbaS3phxjZP7yDwvkbLDs",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01GSbaS3phxjZP7yDwvkbLDs",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/README.md"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01GSbaS3phxjZP7yDwvkbLDs",
+            "content": "Wasted call — file unchanged since your last Read. Refer to that earlier tool_result instead.\n\n[metadata] {\"type\": \"file_unchanged\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/README.md\"}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16793,
+        "completion_tokens": 234,
+        "cached_tokens": 16787,
+        "extra": {
+          "cache_creation_input_tokens": 14585,
+          "cache_read_input_tokens": 16787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 14585,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 234,
+              "cache_read_input_tokens": 16787,
+              "cache_creation_input_tokens": 14585,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 14585
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "file_unchanged",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/README.md"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GSbaS3phxjZP7yDwvkbLDs",
+            "type": "tool_result",
+            "content": "Wasted call — file unchanged since your last Read. Refer to that earlier tool_result instead."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "file_unchanged",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/README.md"
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GSbaS3phxjZP7yDwvkbLDs",
+            "type": "tool_result",
+            "content": "Wasted call — file unchanged since your last Read. Refer to that earlier tool_result instead."
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/README.md"
+        }
+      }
+    },
+    {
+      "step_id": 17,
+      "timestamp": "2026-05-15T13:54:21.391Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 31373,
+        "completion_tokens": 135,
+        "cached_tokens": 31372,
+        "extra": {
+          "cache_creation_input_tokens": 283,
+          "cache_read_input_tokens": 31372,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 283,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 135,
+              "cache_read_input_tokens": 31372,
+              "cache_creation_input_tokens": 283,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 283
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 18,
+      "timestamp": "2026-05-15T13:54:21.531Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_014pXPnQ3NueLJ5rd2t2bVhR",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_014pXPnQ3NueLJ5rd2t2bVhR",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cat /Users/luwei/work/Controversy/README.md",
+            "description": "Read README.md content"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_014pXPnQ3NueLJ5rd2t2bVhR",
+            "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n\n[stdout]\n# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 31373,
+        "completion_tokens": 135,
+        "cached_tokens": 31372,
+        "extra": {
+          "cache_creation_input_tokens": 283,
+          "cache_read_input_tokens": 31372,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 283,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 135,
+              "cache_read_input_tokens": 31372,
+              "cache_creation_input_tokens": 283,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 283
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014pXPnQ3NueLJ5rd2t2bVhR",
+            "type": "tool_result",
+            "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_014pXPnQ3NueLJ5rd2t2bVhR",
+            "type": "tool_result",
+            "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "cat /Users/luwei/work/Controversy/README.md",
+          "description": "Read README.md content"
+        }
+      }
+    },
+    {
+      "step_id": 19,
+      "timestamp": "2026-05-15T13:54:24.297Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01XNYhNNHiyvwzudLrgwTRER",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01XNYhNNHiyvwzudLrgwTRER",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "ls /Users/luwei/work/Controversy/news/",
+            "description": "List news files"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01XNYhNNHiyvwzudLrgwTRER",
+            "content": "2026-05-11-claude-mythos-metr.md\n2026-05-13-unitree-gd01.md\n\n[stdout]\n2026-05-11-claude-mythos-metr.md\n2026-05-13-unitree-gd01.md\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 31656,
+        "completion_tokens": 104,
+        "cached_tokens": 31655,
+        "extra": {
+          "cache_creation_input_tokens": 705,
+          "cache_read_input_tokens": 31655,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 705,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 104,
+              "cache_read_input_tokens": 31655,
+              "cache_creation_input_tokens": 705,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 705
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "2026-05-11-claude-mythos-metr.md\n2026-05-13-unitree-gd01.md",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01XNYhNNHiyvwzudLrgwTRER",
+            "type": "tool_result",
+            "content": "2026-05-11-claude-mythos-metr.md\n2026-05-13-unitree-gd01.md",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "2026-05-11-claude-mythos-metr.md\n2026-05-13-unitree-gd01.md",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01XNYhNNHiyvwzudLrgwTRER",
+            "type": "tool_result",
+            "content": "2026-05-11-claude-mythos-metr.md\n2026-05-13-unitree-gd01.md",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "ls /Users/luwei/work/Controversy/news/",
+          "description": "List news files"
+        }
+      }
+    },
+    {
+      "step_id": 20,
+      "timestamp": "2026-05-15T13:54:42.183Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 32361,
+        "completion_tokens": 2389,
+        "cached_tokens": 32360,
+        "extra": {
+          "cache_creation_input_tokens": 151,
+          "cache_read_input_tokens": 32360,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 151,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 2389,
+              "cache_read_input_tokens": 32360,
+              "cache_creation_input_tokens": 151,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 151
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 21,
+      "timestamp": "2026-05-15T13:54:43.614Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "这是用户转发的一篇微信公众号文章（素材类），需要按素材归档模板存档，并在 README 顶部追加索引。\n\n先创建笔记文件：",
+      "metrics": {
+        "prompt_tokens": 32361,
+        "completion_tokens": 2389,
+        "cached_tokens": 32360,
+        "extra": {
+          "cache_creation_input_tokens": 151,
+          "cache_read_input_tokens": 32360,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 151,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 2389,
+              "cache_read_input_tokens": 32360,
+              "cache_creation_input_tokens": 151,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 151
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 22,
+      "timestamp": "2026-05-15T13:55:06.436Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Write toolu_01Sy4L4z6rZYxMHeMZmrkWii",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Sy4L4z6rZYxMHeMZmrkWii",
+          "function_name": "Write",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md",
+            "content": "# 2026-05-15：素材｜一个二十多年老兵的忧心——那条从 Debug 开始走向资深工程师的路，正在崩塌\n\n来源：InfoQ 微信公众号，作者署名\"灯火明\"，编辑蔡芳芳。文章接续 InfoQ 此前对微软 Azure CTO Mark Russinovich 等人研究的报道《微软警告称，AI 正在掏空初级开发者的培养渠道》，从一线工程师的视角对\"AI 抽走初级训练场\"问题作出回响。归档原因：与本仓库正在追踪的 AIM4SD / 工程教育议题直接相关。\n\n## 核心论点（作者原文复述）\n\n- AI 编程工具最先压缩的，恰恰是高确定性、高重复性、但对初级工程师训练密度最高的任务（Bug 修复、文档、简单模块）。\n- 单个公司\"少招初级 + 资深 + AI + 外包\"在短期 ROI 上理性，但所有公司都这么做就会导致行业人才管线断裂。\n- 大厂仍可能保留实习生 / 应届生培养，但初级岗位门槛被显著抬高——要求新人入职时就具备接近中级的判断力。\n- 行业人才成熟周期整体前移：未来从事计算机行业的人，可能像艺术生一样需要从小开始接受专业训练。\n- \"AI 降低的是写代码的门槛，但抬高的是成为职业程序员的门槛。\"\n- 高等教育压力骤增：原本由企业承担的工程训练（陌生代码库阅读、故障复现、PR/Review、事故复盘）需要被模拟进课程，但教育变革速度远滞后于工业。\n- 学术界已经出现错位：研究生依赖 LLM 生成实验代码，但读不懂、debug 不了，最后只能甩给导师；而 debug 能力是计算机这类实验科学可信度的一部分，silent bug 可能让整篇论文结论错误。\n- 未来培养机制可能需要\"多方共同承担\"：大学训练到可学徒化水平 + 企业少而精的培养计划 + 开源社区真实协作 + AI 工具个性化辅导 + 资深工程师把判断力传下去。\n- 对个人的建议：尽早起步、大学前打基础、大学期间产出可见作品或参与研究 / 开源，\"3 年实际开发经验\"将成为区分业余与专业的及格线。\n- 落点：\"只有拥有过真实的'背锅经历'（需求变化、系统故障、线上事故、拉通对齐、清理屎山等等），才能真正从初级成长为资深，而这些经历是任何 prompt 都给不了的。\"\n\n## 相关资料\n\n- [AIM4SD 第 5 章：人类教育 (gitcode 镜像)](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-05-human-education.md)\n- [AIM4SD 第 5 章：人类教育 (GitHub)](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-05-human-education.md)\n\n## 信源\n\n- 灯火明，《一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌》，InfoQ 微信公众号. [Online]. Available: <https://mp.weixin.qq.com/s/AslSVBMGkT98lPwNWsv8yQ>\n- InfoQ，《微软警告称，AI 正在掏空初级开发者的培养渠道》（文中引用的前序报道）.\n"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Sy4L4z6rZYxMHeMZmrkWii",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md (file state is current in your context — no need to Read it back)\n\n[metadata] {\"type\": \"create\", \"filePath\": \"/Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md\", \"content\": \"# 2026-05-15：素材｜一个二十多年老兵的忧心——那条从 Debug 开始走向资深工程师的路，正在崩塌\\n\\n来源：InfoQ 微信公众号，作者署名\\\"灯火明\\\"，编辑蔡芳芳。文章接续 InfoQ 此前对微软 Azure CTO Mark Russinovich 等人研究的报道《微软警告称，AI 正在掏空初级开发者的培养渠道》，从一线工程师的视角对\\\"AI 抽走初级训练场\\\"问题作出回响。归档原因：与本仓库正在追踪的 AIM4SD / 工程教育议题直接相关。\\n\\n## 核心论点（作者原文复述）\\n\\n- AI 编程工具最先压缩的，恰恰是高确定性、高重复性、但对初级工程师训练密度最高的任务（Bug 修复、文档、简单模块）。\\n- 单个公司\\\"少招初级 + 资深 + AI + 外包\\\"在短期 ROI 上理性，但所有公司都这么做就会导致行业人才管线断裂。\\n- 大厂仍可能保留实习生 / 应届生培养，但初级岗位门槛被显著抬高——要求新人入职时就具备接近中级的判断力。\\n- 行业人才成熟周期整体前移：未来从事计算机行业的人，可能像艺术生一样需要从小开始接受专业训练。\\n- \\\"AI 降低的是写代码的门槛，但抬高的是成为职业程序员的门槛。\\\"\\n- 高等教育压力骤增：原本由企业承担的工程训练（陌生代码库阅读、故障复现、PR/Review、事故复盘）需要被模拟进课程，但教育变革速度远滞后于工业。\\n- 学术界已经出现错位：研究生依赖 LLM 生成实验代码，但读不懂、debug 不了，最后只能甩给导师；而 debug 能力是计算机这类实验科学可信度的一部分，silent bug 可能让整篇论文结论错误。\\n- 未来培养机制可能需要\\\"多方共同承担\\\"：大学训练到可学徒化水平 + 企业少而精的培养计划 + 开源社区真实协作 + AI 工具个性化辅导 + 资深工程师把判断力传下去。\\n- 对个人的建议：尽早起步、大学前打基础、大学期间产出可见作品或参与研究 / 开源，\\\"3 年实际开发经验\\\"将成为区分业余与专业的及格线。\\n- 落点：\\\"只有拥有过真实的'背锅经历'（需求变化、系统故障、线上事故、拉通对齐、清理屎山等等），才能真正从初级成长为资深，而这些经历是任何 prompt 都给不了的。\\\"\\n\\n## 相关资料\\n\\n- [AIM4SD 第 5 章：人类教育 (gitcode 镜像)](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-05-human-education.md)\\n- [AIM4SD 第 5 章：人类教育 (GitHub)](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-05-human-education.md)\\n\\n## 信源\\n\\n- 灯火明，《一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌》，InfoQ 微信公众号. [Online]. Available: <https://mp.weixin.qq.com/s/AslSVBMGkT98lPwNWsv8yQ>\\n- InfoQ，《微软警告称，AI 正在掏空初级开发者的培养渠道》（文中引用的前序报道）.\\n\", \"structuredPatch\": [], \"originalFile\": null, \"userModified\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 32361,
+        "completion_tokens": 2389,
+        "cached_tokens": 32360,
+        "extra": {
+          "cache_creation_input_tokens": 151,
+          "cache_read_input_tokens": 32360,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 151,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 2389,
+              "cache_read_input_tokens": 32360,
+              "cache_creation_input_tokens": 151,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 151
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Write",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "create",
+            "filePath": "/Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md",
+            "content": "# 2026-05-15：素材｜一个二十多年老兵的忧心——那条从 Debug 开始走向资深工程师的路，正在崩塌\n\n来源：InfoQ 微信公众号，作者署名\"灯火明\"，编辑蔡芳芳。文章接续 InfoQ 此前对微软 Azure CTO Mark Russinovich 等人研究的报道《微软警告称，AI 正在掏空初级开发者的培养渠道》，从一线工程师的视角对\"AI 抽走初级训练场\"问题作出回响。归档原因：与本仓库正在追踪的 AIM4SD / 工程教育议题直接相关。\n\n## 核心论点（作者原文复述）\n\n- AI 编程工具最先压缩的，恰恰是高确定性、高重复性、但对初级工程师训练密度最高的任务（Bug 修复、文档、简单模块）。\n- 单个公司\"少招初级 + 资深 + AI + 外包\"在短期 ROI 上理性，但所有公司都这么做就会导致行业人才管线断裂。\n- 大厂仍可能保留实习生 / 应届生培养，但初级岗位门槛被显著抬高——要求新人入职时就具备接近中级的判断力。\n- 行业人才成熟周期整体前移：未来从事计算机行业的人，可能像艺术生一样需要从小开始接受专业训练。\n- \"AI 降低的是写代码的门槛，但抬高的是成为职业程序员的门槛。\"\n- 高等教育压力骤增：原本由企业承担的工程训练（陌生代码库阅读、故障复现、PR/Review、事故复盘）需要被模拟进课程，但教育变革速度远滞后于工业。\n- 学术界已经出现错位：研究生依赖 LLM 生成实验代码，但读不懂、debug 不了，最后只能甩给导师；而 debug 能力是计算机这类实验科学可信度的一部分，silent bug 可能让整篇论文结论错误。\n- 未来培养机制可能需要\"多方共同承担\"：大学训练到可学徒化水平 + 企业少而精的培养计划 + 开源社区真实协作 + AI 工具个性化辅导 + 资深工程师把判断力传下去。\n- 对个人的建议：尽早起步、大学前打基础、大学期间产出可见作品或参与研究 / 开源，\"3 年实际开发经验\"将成为区分业余与专业的及格线。\n- 落点：\"只有拥有过真实的'背锅经历'（需求变化、系统故障、线上事故、拉通对齐、清理屎山等等），才能真正从初级成长为资深，而这些经历是任何 prompt 都给不了的。\"\n\n## 相关资料\n\n- [AIM4SD 第 5 章：人类教育 (gitcode 镜像)](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-05-human-education.md)\n- [AIM4SD 第 5 章：人类教育 (GitHub)](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-05-human-education.md)\n\n## 信源\n\n- 灯火明，《一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌》，InfoQ 微信公众号. [Online]. Available: <https://mp.weixin.qq.com/s/AslSVBMGkT98lPwNWsv8yQ>\n- InfoQ，《微软警告称，AI 正在掏空初级开发者的培养渠道》（文中引用的前序报道）.\n",
+            "structuredPatch": [],
+            "originalFile": null,
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Sy4L4z6rZYxMHeMZmrkWii",
+            "type": "tool_result",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "create",
+            "filePath": "/Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md",
+            "content": "# 2026-05-15：素材｜一个二十多年老兵的忧心——那条从 Debug 开始走向资深工程师的路，正在崩塌\n\n来源：InfoQ 微信公众号，作者署名\"灯火明\"，编辑蔡芳芳。文章接续 InfoQ 此前对微软 Azure CTO Mark Russinovich 等人研究的报道《微软警告称，AI 正在掏空初级开发者的培养渠道》，从一线工程师的视角对\"AI 抽走初级训练场\"问题作出回响。归档原因：与本仓库正在追踪的 AIM4SD / 工程教育议题直接相关。\n\n## 核心论点（作者原文复述）\n\n- AI 编程工具最先压缩的，恰恰是高确定性、高重复性、但对初级工程师训练密度最高的任务（Bug 修复、文档、简单模块）。\n- 单个公司\"少招初级 + 资深 + AI + 外包\"在短期 ROI 上理性，但所有公司都这么做就会导致行业人才管线断裂。\n- 大厂仍可能保留实习生 / 应届生培养，但初级岗位门槛被显著抬高——要求新人入职时就具备接近中级的判断力。\n- 行业人才成熟周期整体前移：未来从事计算机行业的人，可能像艺术生一样需要从小开始接受专业训练。\n- \"AI 降低的是写代码的门槛，但抬高的是成为职业程序员的门槛。\"\n- 高等教育压力骤增：原本由企业承担的工程训练（陌生代码库阅读、故障复现、PR/Review、事故复盘）需要被模拟进课程，但教育变革速度远滞后于工业。\n- 学术界已经出现错位：研究生依赖 LLM 生成实验代码，但读不懂、debug 不了，最后只能甩给导师；而 debug 能力是计算机这类实验科学可信度的一部分，silent bug 可能让整篇论文结论错误。\n- 未来培养机制可能需要\"多方共同承担\"：大学训练到可学徒化水平 + 企业少而精的培养计划 + 开源社区真实协作 + AI 工具个性化辅导 + 资深工程师把判断力传下去。\n- 对个人的建议：尽早起步、大学前打基础、大学期间产出可见作品或参与研究 / 开源，\"3 年实际开发经验\"将成为区分业余与专业的及格线。\n- 落点：\"只有拥有过真实的'背锅经历'（需求变化、系统故障、线上事故、拉通对齐、清理屎山等等），才能真正从初级成长为资深，而这些经历是任何 prompt 都给不了的。\"\n\n## 相关资料\n\n- [AIM4SD 第 5 章：人类教育 (gitcode 镜像)](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-05-human-education.md)\n- [AIM4SD 第 5 章：人类教育 (GitHub)](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-05-human-education.md)\n\n## 信源\n\n- 灯火明，《一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌》，InfoQ 微信公众号. [Online]. Available: <https://mp.weixin.qq.com/s/AslSVBMGkT98lPwNWsv8yQ>\n- InfoQ，《微软警告称，AI 正在掏空初级开发者的培养渠道》（文中引用的前序报道）.\n",
+            "structuredPatch": [],
+            "originalFile": null,
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Sy4L4z6rZYxMHeMZmrkWii",
+            "type": "tool_result",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/news/2026-05-15-debug-path-collapse.md",
+          "content": "# 2026-05-15：素材｜一个二十多年老兵的忧心——那条从 Debug 开始走向资深工程师的路，正在崩塌\n\n来源：InfoQ 微信公众号，作者署名\"灯火明\"，编辑蔡芳芳。文章接续 InfoQ 此前对微软 Azure CTO Mark Russinovich 等人研究的报道《微软警告称，AI 正在掏空初级开发者的培养渠道》，从一线工程师的视角对\"AI 抽走初级训练场\"问题作出回响。归档原因：与本仓库正在追踪的 AIM4SD / 工程教育议题直接相关。\n\n## 核心论点（作者原文复述）\n\n- AI 编程工具最先压缩的，恰恰是高确定性、高重复性、但对初级工程师训练密度最高的任务（Bug 修复、文档、简单模块）。\n- 单个公司\"少招初级 + 资深 + AI + 外包\"在短期 ROI 上理性，但所有公司都这么做就会导致行业人才管线断裂。\n- 大厂仍可能保留实习生 / 应届生培养，但初级岗位门槛被显著抬高——要求新人入职时就具备接近中级的判断力。\n- 行业人才成熟周期整体前移：未来从事计算机行业的人，可能像艺术生一样需要从小开始接受专业训练。\n- \"AI 降低的是写代码的门槛，但抬高的是成为职业程序员的门槛。\"\n- 高等教育压力骤增：原本由企业承担的工程训练（陌生代码库阅读、故障复现、PR/Review、事故复盘）需要被模拟进课程，但教育变革速度远滞后于工业。\n- 学术界已经出现错位：研究生依赖 LLM 生成实验代码，但读不懂、debug 不了，最后只能甩给导师；而 debug 能力是计算机这类实验科学可信度的一部分，silent bug 可能让整篇论文结论错误。\n- 未来培养机制可能需要\"多方共同承担\"：大学训练到可学徒化水平 + 企业少而精的培养计划 + 开源社区真实协作 + AI 工具个性化辅导 + 资深工程师把判断力传下去。\n- 对个人的建议：尽早起步、大学前打基础、大学期间产出可见作品或参与研究 / 开源，\"3 年实际开发经验\"将成为区分业余与专业的及格线。\n- 落点：\"只有拥有过真实的'背锅经历'（需求变化、系统故障、线上事故、拉通对齐、清理屎山等等），才能真正从初级成长为资深，而这些经历是任何 prompt 都给不了的。\"\n\n## 相关资料\n\n- [AIM4SD 第 5 章：人类教育 (gitcode 镜像)](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-05-human-education.md)\n- [AIM4SD 第 5 章：人类教育 (GitHub)](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-05-human-education.md)\n\n## 信源\n\n- 灯火明，《一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌》，InfoQ 微信公众号. [Online]. Available: <https://mp.weixin.qq.com/s/AslSVBMGkT98lPwNWsv8yQ>\n- InfoQ，《微软警告称，AI 正在掏空初级开发者的培养渠道》（文中引用的前序报道）.\n"
+        }
+      }
+    },
+    {
+      "step_id": 23,
+      "timestamp": "2026-05-15T13:55:22.308Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "更新 README 索引：删除前两行，在顶部追加新条目。",
+      "metrics": {
+        "prompt_tokens": 32512,
+        "completion_tokens": 701,
+        "cached_tokens": 32511,
+        "extra": {
+          "cache_creation_input_tokens": 2459,
+          "cache_read_input_tokens": 32511,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2459,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 701,
+              "cache_read_input_tokens": 32511,
+              "cache_creation_input_tokens": 2459,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2459
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 24,
+      "timestamp": "2026-05-15T13:55:29.532Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Edit toolu_01QJhGj1iXXa3kAMXo7yu5K4",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01QJhGj1iXXa3kAMXo7yu5K4",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/README.md",
+            "old_string": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+            "new_string": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01QJhGj1iXXa3kAMXo7yu5K4",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/README.md\", \"oldString\": \"| 日期 | 主题 | 文件 |\\n| --- | --- | --- |\\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\", \"newString\": \"| 日期 | 主题 | 文件 |\\n| --- | --- | --- |\\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\", \"originalFile\": \"# Controversy\\n\\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\\n\\n## 索引\\n\\n| 日期 | 主题 | 文件 |\\n| --- | --- | --- |\\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\\n\", \"structuredPatch\": [{\"oldStart\": 6, \"oldLines\": 8, \"newStart\": 6, \"newLines\": 7, \"lines\": [\" \", \" | 日期 | 主题 | 文件 |\", \" | --- | --- | --- |\", \"-| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\", \"-| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\", \"+| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\", \" | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\", \" | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\", \" | 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 32512,
+        "completion_tokens": 701,
+        "cached_tokens": 32511,
+        "extra": {
+          "cache_creation_input_tokens": 2459,
+          "cache_read_input_tokens": 32511,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2459,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 701,
+              "cache_read_input_tokens": 32511,
+              "cache_creation_input_tokens": 2459,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2459
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/README.md",
+            "oldString": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+            "newString": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+            "originalFile": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+            "structuredPatch": [
+              {
+                "oldStart": 6,
+                "oldLines": 8,
+                "newStart": 6,
+                "newLines": 7,
+                "lines": [
+                  " ",
+                  " | 日期 | 主题 | 文件 |",
+                  " | --- | --- | --- |",
+                  "-| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |",
+                  "-| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+                  "+| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |",
+                  " | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+                  " | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |",
+                  " | 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01QJhGj1iXXa3kAMXo7yu5K4",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/README.md",
+            "oldString": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+            "newString": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+            "originalFile": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+            "structuredPatch": [
+              {
+                "oldStart": 6,
+                "oldLines": 8,
+                "newStart": 6,
+                "newLines": 7,
+                "lines": [
+                  " ",
+                  " | 日期 | 主题 | 文件 |",
+                  " | --- | --- | --- |",
+                  "-| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |",
+                  "-| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |",
+                  "+| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |",
+                  " | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+                  " | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |",
+                  " | 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01QJhGj1iXXa3kAMXo7yu5K4",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/README.md",
+          "old_string": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |\n| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |",
+          "new_string": "| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |"
+        }
+      }
+    },
+    {
+      "step_id": 25,
+      "timestamp": "2026-05-15T13:55:33.853Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "已完成：\n- 删除 README 索引表中 2026-05-14 的两行（AISW-stack 与 SDLC-stack）\n- 顶部追加 2026-05-15 新条目，指向 `news/2026-05-15-debug-path-collapse.md`\n- 新建归档文件，含微信公众号文章的核心论点复述、两个 AIM4SD `chapter-05-human-education.md` 链接（gitcode + GitHub）以及信源",
+      "metrics": {
+        "prompt_tokens": 34971,
+        "completion_tokens": 159,
+        "cached_tokens": 34970,
+        "extra": {
+          "cache_creation_input_tokens": 782,
+          "cache_read_input_tokens": 34970,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 782,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 159,
+              "cache_read_input_tokens": 34970,
+              "cache_creation_input_tokens": 782,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 782
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 273701,
-    "total_completion_tokens": 4902,
-    "total_cached_tokens": 272299,
-    "total_steps": 12,
+    "total_prompt_tokens": 598767,
+    "total_completion_tokens": 14472,
+    "total_cached_tokens": 597344,
+    "total_steps": 25,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 54769,
-      "total_cache_read_input_tokens": 272299
+      "total_cache_creation_input_tokens": 91363,
+      "total_cache_read_input_tokens": 597344
     }
   }
 }

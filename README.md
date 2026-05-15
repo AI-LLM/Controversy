@@ -6,8 +6,7 @@
 
 | 日期 | 主题 | 文件 |
 | --- | --- | --- |
-| 2026-05-14 | 素材｜AI 软件栈分层索引（GPU 驱动 → 终端 Agent 应用，34 层） | [chat/AISW-stack/README.md](chat/AISW-stack/README.md) |
-| 2026-05-14 | 素材｜SDLC 工具栈分层深度研究（12 篇并行 subagent 报告） | [chat/SDLC-stack/README.md](chat/SDLC-stack/README.md) |
+| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |
 | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |
 | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |
 | 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |
