@@ -1,26 +1,34 @@
 #!/usr/bin/env python3
-"""AISW-stack sqlite3 索引与 README.md 生成工具。
+"""AISW-stack MVC Controller。
 
-数据源：chat/AISW-stack/index.sqlite3
-输出：  chat/AISW-stack/README.md
+架构：
+  Model       chat/AISW-stack/index.sqlite3   （source of truth）
+  View        chat/AISW-stack/README.md        （由 Model 渲染）
+  Controller  scripts/aiswstack_controller.py （本文件）
 
-设计方向：db 是 source of truth，md 由 db 渲染。
-  - `blocks` 表存 md 切片（按 ## / ### 拆段），是真正的可编辑内容
-  - 其他表（layers / branches / entries / refs / cells / *_links）是
-    从 blocks 派生的查询索引，每次 import / render 时自动重建
+Model 的核心是 `blocks` 表——存按 ## / ### 拆段后的 md 原文切片。
+其他表（layers / branches / entries / refs / branch_cells / entry_refs）
+是 import / render 时从 blocks 自动派生的查询索引，不要直接改它们。
 
 子命令：
   init        新建空 schema
   import      把 README.md 一次性导入 db（清空重建）
-  render      从 db 生成 README.md（覆盖原文件）
+  render      从 db 重新生成 README.md（覆盖原文件）
   stats       统计行数
-  query SQL   执行任意 SQL（含 SELECT）
+  query SQL   执行任意 SQL（包括 UPDATE / INSERT 到 blocks）
+  next-ref    返回下一个可用引用号（max ref num + 1）
 
 日常工作流：
   1. （仅一次）`import` 把 md 灌进 db
-  2. 编辑：`UPDATE blocks SET body=... WHERE key='L13'`
-  3. `render` 重写 README.md
-  4. 查询：`query "SELECT ... FROM entries WHERE vendor='高通'"`
+  2. 编辑：query "UPDATE blocks SET body=... WHERE key='L13'"
+  3. render 重写 README.md
+  4. 查询派生索引：query "SELECT ... FROM entries WHERE vendor='高通'"
+
+结构性调整（需要改本 Controller 的场景）：
+  - 新增主分支（A–I 之外的顶级列）：扩展 MAIN_BRANCHES、调整主表渲染
+  - 改变 block 切分粒度（如把 vendor 块独立成 block）：
+    split_into_blocks / derive_indexes / render 三处需要联动
+  - 新增 vendor 白名单：KNOWN_VENDORS / VENDOR_ALIASES
 """
 
 from __future__ import annotations
@@ -659,6 +667,12 @@ def cmd_query(args):
         print("\t".join("" if r[c] is None else str(r[c]) for c in cols))
 
 
+def cmd_next_ref(args):
+    conn = connect()
+    row = conn.execute("SELECT COALESCE(MAX(num), 0) + 1 FROM refs").fetchone()
+    print(row[0])
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -666,6 +680,7 @@ def main():
     sub.add_parser("import").set_defaults(func=cmd_import)
     sub.add_parser("render").set_defaults(func=cmd_render)
     sub.add_parser("stats").set_defaults(func=cmd_stats)
+    sub.add_parser("next-ref").set_defaults(func=cmd_next_ref)
     pq = sub.add_parser("query")
     pq.add_argument("sql")
     pq.set_defaults(func=cmd_query)
