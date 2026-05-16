@@ -545,6 +545,11 @@ def cmd_delete_block(args):
                        (args.key,)).fetchone()
     if not row:
         sys.exit(f"block '{args.key}' not found")
+    # 先清掉派生表里 FK 指向此 block 的行（entries.block_key）
+    conn.execute(
+        "DELETE FROM entry_refs WHERE entry_id IN "
+        "(SELECT id FROM entries WHERE block_key=?)", (args.key,))
+    conn.execute("DELETE FROM entries WHERE block_key=?", (args.key,))
     conn.execute("DELETE FROM blocks WHERE key=?", (args.key,))
     conn.execute("UPDATE blocks SET order_idx = order_idx - 1 WHERE order_idx > ?",
                  (row[0],))

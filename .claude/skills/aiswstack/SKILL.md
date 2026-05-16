@@ -345,13 +345,27 @@ python3 scripts/aiswstack_controller.py query \
 
 ## 完整示例 3：用户说"加 J 学习 / 教育 主分支"
 
-加新主分支是最重的结构性调整，做错最容易留漏洞。三类典型漏洞：
+加新主分支是最重的结构性调整，做错最容易留漏洞。**先看四个不变量**：
 
-1. **改了 `MAIN_BRANCHES` 但忘了改 `BRANCH_TITLE_RE`**：`derive_indexes` 找不到 J 系子分支，render 失败（FOREIGN KEY 错误）
-2. **改了主表加 J 列但默认全填 `同 A`**：偷懒，没反映 J 分支真正的差异（教育栈 L08 / L10 / L11 / L21 / L24 / L29 / L31 / L33 / L34 / L37 都不是 `同 A`）
-3. **改了主表 + 子分支但漏改散文**：`top` block、`summary-table` 引介、`parallel-intro` 都会写"B–I" / "6 条分支"，必须同步
+1. **改 `MAIN_BRANCHES` + 确认 `BRANCH_TITLE_RE`**：是 `[A-Z]`（已够）；写死成 `[A-I]` 会让 `derive_indexes` 找不到 J 子分支、render FOREIGN KEY 报错
+2. **主表 cell 必须挂 `[[N]](url)` 引用**：cell 里每个具名产品 / 数据集 / 基准 / 法规都要带引用号——既方便读者点链接，又强制 cell 内的每个名字都有溯源；引用号 == 该实体在子分支段的注册号（详见下文工作流）
+3. **必须先全栈调研、后划子分支**：错误顺序（先建 5 个"应用类"子分支再调研主表）会让 cell 里出现的非应用类实体（数据集、评测基准、合规法规、仿真工具…）在子分支段无处安放
+4. **散文措辞要同步**：`top` / `summary-table` 引介 / `parallel-intro` 都会带"B–I" / "8 条 / 6 条" / "C–G" / "A 主干" 之类，必须 grep 全清
 
-### 标准流程（按此顺序执行）
+### 标准流程（按此顺序执行）——七步
+
+```
+1. 改 Controller 源码（MAIN_BRANCHES、必要时 BRANCH_TITLE_RE）
+2. 改散文：top / summary-table 引介 / parallel-intro / crosscut 里所有 B–I 类措辞
+3. 起 subagent 全栈深调研 → 输出：
+      a) 38 行主表 cell（产品名 + url，不含 ref 号——号 agent 后续分配）
+      b) 子分支 J1..Jn 划分建议（每个 Jk 名 + 主题 + 应包含 entries）
+      c) 完整 entity 列表（name + url + 在哪些 L 行 + 在哪些 Jk）
+4. agent 注册所有 entity 引用（每个 url 一个 ref 号；查重复用）
+5. 用 add-block 建 J 总览 + J1..Jn 子分支，body 含 [[N]](url)
+6. 用 set-body 写主表 J 列，cell 内每个名字挂 [[N]](url)
+7. render + 验证：主表每个 [[N]] 都能在 refs 表找到；J1..Jn entries 覆盖主表 cell 中的所有产品
+```
 
 #### 第 1 步：改 Controller 源码
 
@@ -421,11 +435,17 @@ prompt 关键要点：
 
 - 给出新分支名 / 覆盖范围（"J 学习 / 教育，含 AI 辅导 / 备课 / 评估 / 语言学习 / K-12 / 高校"）
 - 给出 cell 写作约定（`同 A` / `同 A + 补丁` / 具体方案 / `—`）+ 现有 A–I 列的长度风格
-- 明列**重点调研层**（subagent 不会自己判断哪些层有差异）：见骨架说明里的 L08 / L10 / L11 / L17 / L20 / L21 / L24 / L29 / L31 / L32 / L33 / L34 / L37
+- **要求 cell 中每个具名产品 / 数据集 / 基准 / 法规都附 url**——cell 输出格式为 `Name{{url}}, Name{{url}}, ...`，让 agent 后续替换 `{{url}}` 为 `[[N]](url)`。**不要让 subagent 输出"纯名字 / 无 url" 的 cell**——这正是上次的错误，导致主表 cell 没法点链接、且与子分支段失联。
+- **要求 subagent 同步输出子分支划分建议**：不是预定 J1–J5 让 subagent 凑数，而是让 subagent 根据调研结果建议子分支数量与边界——如果发现教育数据集 / 评测基准 / 合规法规 / STEM 仿真这类"非应用类"差异，应建议独立成子分支
+- 明列**重点调研层**：L08 数据集 / L09 后训练 / L10 垂直模型 / L11 评测基准 / L17 教育 API / L20 RAG / L21 学生模型 / L24 教学 Agent 模式 / L29 合规 + 防作弊 / L31 发音 / L32 教学课件 / L33 Edu 版对话 / L34 终端产品 / L37 STEM 仿真
 - 明令搜索语言：英文优先，中国实体（作业帮 / 学而思 / 科大讯飞等）用中文
-- 严格输出格式：38 行 `Lxx: <cell>` + 一段总结
+- 严格输出格式：(a) 38 行 `Lxx: <cell 含 {{url}} 占位>`；(b) 子分支建议 markdown 列表；(c) entity 表格 `| name | url | layers | sub-branches |`；(d) 一段总结
 
-subagent 返回后逐行检查：太长的 cell（>6 个产品）精简到 4–6 个最有代表性的。
+subagent 返回后：
+1. 逐行检查 cell：太长精简到 4–6 个最有代表性的；确认每个具名实体都带 `{{url}}` 占位
+2. 检查 entity 表格：去重，对每个 url 检查 refs 表是否已注册（`SELECT num FROM refs WHERE url=?`），有则复用号，无则 `add-ref` 新建
+3. 形成 `url → ref_num` 映射
+4. 用此映射把 cell 与子分支 body 里的 `Name{{url}}` 全部替换成 `Name[[N]](url)`
 
 #### 第 4 步：把调研结果写入主表 J 列
 

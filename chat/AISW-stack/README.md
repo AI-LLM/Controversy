@@ -19,42 +19,42 @@
 | L | A. LLM / Agent | B. 科学计算 | C. 机器人 | D. 自动驾驶 | E. 世界模型 / 3D | F. 经典 CV | G. 量化金融 | H. 游戏 | I. 影视娱乐 | J. 学习 / 教育 |
 |---|---|---|---|---|---|---|--- | --- | --- | --- |
 | L01 GPU 驱动 / 固件 | NVIDIA / ROCm / Metal / Gaudi driver | 同 A | 同 A | 同 A + NVIDIA DRIVE OS driver | 同 A | 同 A + Hailo / Qualcomm QNN driver | 同 A | 同 A | 同 A | 同 A |
-| L02 互连 / 集合通信 | NVLink[[10]](https://www.nvidia.com/en-us/data-center/nvlink/), NCCL[[11]](https://developer.nvidia.com/nccl), InfiniBand[[12]](https://www.nvidia.com/en-us/networking/products/infiniband/) | 同 A，重 MPI + InfiniBand | NVLink for AGI rig；车端 PCIe | NVLink-C2C 整车 + 仿真集群 IB | 同 A | 边缘多无互连 | 同 A | 同 A（单节点为主） | 同 A（渲染农场用 10–100 GbE / IB） | 同 A（多为单卡 / 推理） |
-| L03 GPU 编程模型 | CUDA[[13]](https://developer.nvidia.com/cuda), ROCm[[14]](https://www.amd.com/en/products/software/rocm.html), Metal[[15]](https://developer.apple.com/metal/), SYCL[[16]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html), DirectML[[17]](https://learn.microsoft.com/en-us/windows/ai/directml/dml) | 同 A + Julia CUDA.jl[[18]](https://github.com/JuliaGPU/CUDA.jl) | 同 A | 同 A | 同 A | 同 A + Apple Metal + DirectML | 同 A + RAPIDS[[19]](https://rapids.ai/) | 同 A + DirectX 12（PC / Xbox）, Metal（Mac / iOS） | 同 A + Metal（Mac DCC） | 同 A |
-| L04 GPU 内核库 | cuBLAS[[20]](https://developer.nvidia.com/cublas), cuDNN[[21]](https://developer.nvidia.com/cudnn), FlashAttention[[22]](https://github.com/dao-ailab/flash-attention), NCCL, CUTLASS[[23]](https://github.com/NVIDIA/cutlass) | cuFFT[[24]](https://developer.nvidia.com/cufft), cuSolver[[25]](https://developer.nvidia.com/cusolver), cuSPARSE[[26]](https://developer.nvidia.com/cusparse), cuQuantum[[27]](https://developer.nvidia.com/cuquantum-sdk), NVSHMEM[[28]](https://developer.nvidia.com/nvshmem) | cuDNN + Isaac CUDA kernels | cuDNN + TensorRT plugins | 3DGS rasterizer, NeRF CUDA kernels | cuDNN + TensorRT INT8 | cuDF, cuML, cuOpt | cuDNN（DLSS / NPC inference）+ DirectML kernels | cuDNN + OptiX denoise kernels | 同 A |
-| L05 编译器 / IR | Triton[[29]](https://github.com/triton-lang/triton), XLA[[30]](https://openxla.org/xla), MLIR[[31]](https://mlir.llvm.org/), TVM[[32]](https://tvm.apache.org/), torch.compile | 同 A + Codon[[33]](https://github.com/exaloop/codon) | 同 A | TensorRT, NVIDIA DLA, TVM | 同 A | TensorRT, OpenVINO, Apple Core ML compiler | 同 A | 同 A + HLSL / shader compilers | 同 A | 同 A + Core ML / ONNX（学习平板端侧） |
-| L06 张量 / 训练框架 | PyTorch[[34]](https://pytorch.org/), JAX[[35]](https://github.com/jax-ml/jax), MLX[[36]](https://github.com/ml-explore/mlx), TensorFlow[[37]](https://www.tensorflow.org/) | NumPy[[38]](https://numpy.org/), SciPy[[39]](https://scipy.org/), CuPy[[40]](https://cupy.dev/), JAX, PyTorch, Julia[[41]](https://julialang.org/) | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch, JAX, threestudio | PyTorch + OpenMMLab | scikit-learn[[42]](https://scikit-learn.org/), XGBoost[[43]](https://xgboost.readthedocs.io/), LightGBM[[44]](https://github.com/microsoft/LightGBM), PyTorch | PyTorch（NPC AI 训练）+ ONNX | PyTorch（generative VFX） | 同 A |
-| L07 分布式训练 | DeepSpeed[[45]](https://www.deepspeed.ai/), Megatron[[46]](https://github.com/NVIDIA/Megatron-LM), FSDP[[47]](https://docs.pytorch.org/docs/stable/fsdp.html), NeMo[[48]](https://docs.nvidia.com/nemo-framework/user-guide/latest/overview.html), Ray Train[[49]](https://docs.ray.io/en/latest/train/train.html) | MPI[[50]](https://www.mpi-forum.org/) + NCCL（HPC 风格而非 ZeRO） | 多在单 / 几卡 | 同 A（仿真 + 路采联训） | 同 A（video diffusion 训练） | 同 A | 多单卡 | 多在单卡 | 多在单卡 | 多在单 / 几卡，少需 ZeRO |
-| L08 训练数据 pipeline | FineWeb[[51]](https://huggingface.co/datasets/HuggingFaceFW/fineweb), datatrove[[52]](https://github.com/huggingface/datatrove), Mosaic Streaming[[53]](https://github.com/mosaicml/streaming) | 实验数据 + 仿真合成 | Open X-Embodiment[[54]](https://robotics-transformer-x.github.io/), DROID[[55]](https://droid-dataset.github.io/), LeRobot[[56]](https://github.com/huggingface/lerobot) dataset | 路采 + 影子模式 + Auto-labeling | 多视角视频 / 3D scan | Roboflow, Encord, Labelbox, FiftyOne | 时间序列 + 因子库 | 游戏 telemetry / 玩家行为日志 | 镜头库 / 母带 / 标注 | MathDial, EdNet, ASSISTments, Junyi Academy, Eedi |
-| L09 后训练 / 微调 | TRL[[57]](https://github.com/huggingface/trl), verl[[58]](https://github.com/volcengine/verl), Unsloth[[59]](https://unsloth.ai/), Axolotl[[60]](https://github.com/axolotl-ai-cloud/axolotl) | 极少（预训练即终态） | LeRobot, Diffusion Policy[[61]](https://github.com/real-stanford/diffusion_policy), ACT | RLHF on driving sims | 极少 | YOLO finetune + 蒸馏 | sklearn 训练即生产 | NPC behavior tuning, 反作弊模型微调 | LoRA / Dreambooth 风格化 | Khanmigo GPT-4 prompt 调教；MathTutorBench 微调；中国厂商 SFT |
-| L10 基础模型权重 | Llama[[62]](https://ai.meta.com/llama/), Claude[[63]](https://www.anthropic.com/claude), GPT[[64]](https://openai.com/api/), Qwen[[65]](https://github.com/QwenLM/Qwen), DeepSeek[[66]](https://www.deepseek.com/en/) | AlphaFold 3[[67]](https://alphafoldserver.com/), GraphCast[[68]](https://deepmind.google/technologies/graphcast/), MatterGen[[69]](https://www.microsoft.com/en-us/research/blog/mattergen-a-new-paradigm-of-materials-design-with-generative-ai/), scGPT[[70]](https://github.com/bowang-lab/scGPT), Evo 2[[71]](https://arcinstitute.org/news/blog/evo2) | GR00T[[72]](https://developer.nvidia.com/isaac/gr00t) N1, π0[[73]](https://www.physicalintelligence.company/) / π0.5, RT-2[[74]](https://robotics-transformer2.github.io/), OpenVLA[[75]](https://openvla.github.io/), RDT-1B[[76]](https://rdt-robotics.github.io/rdt-robotics/) | Tesla FSD[[77]](https://www.tesla.com/support/autopilot) V13/14, Waymo Driver[[78]](https://waymo.com/), Wayve LINGO[[79]](https://wayve.ai/thinking/lingo-natural-language-autonomous-driving/) | Genie 3[[80]](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/), Marble[[81]](https://www.worldlabs.ai/), Cosmos[[82]](https://www.nvidia.com/en-us/ai/cosmos/) | YOLOv11[[83]](https://docs.ultralytics.com/models/yolo11/), SAM 2[[84]](https://ai.meta.com/sam2/), Florence-2[[85]](https://huggingface.co/microsoft/Florence-2-large), RT-DETR[[86]](https://github.com/lyuwenyu/RT-DETR) | BloombergGPT[[87]](https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/), FinGPT[[88]](https://github.com/AI4Finance-Foundation/FinGPT), TimeGPT[[89]](https://www.nixtla.io/), Chronos[[90]](https://github.com/amazon-science/chronos-forecasting) | NVIDIA ACE[[91]](https://developer.nvidia.com/ace), Inworld[[92]](https://inworld.ai/), Convai[[92]](https://inworld.ai/) NPC LLM | 与 E / L32 共用：Sora, Veo 3, Kling, Runway | 通用大模型主导（GPT-4 / Claude / Gemini / DeepSeek）+ 学而思九章, 科大讯飞星火, 网易有道子曰 |
-| L11 评测 / 基准 | MMLU[[93]](https://arxiv.org/abs/2009.03300), SWE-bench[[94]](https://www.swebench.com/), MTEB[[95]](https://github.com/embeddings-benchmark/mteb/), METR Time Horizons[[96]](https://metr.org/time-horizons/) | CASP[[97]](https://predictioncenter.org/), WeatherBench[[98]](https://github.com/pangeo-data/WeatherBench), Matbench Discovery[[99]](https://matbench-discovery.materialsproject.org/) | RLBench[[100]](https://github.com/stepjam/RLBench), CALVIN, LIBERO | nuScenes[[101]](https://www.nuscenes.org/), KITTI, Argoverse, CARLA Leaderboard | VBench, 3D-FUTURE | COCO[[102]](https://cocodataset.org/), ImageNet[[103]](https://www.image-net.org/), Open Images | Sharpe / Sortino / IR | NPC dialogue 评估（少公开基准） | 人工评审 + 内部 A/B | MMLU, AGIEval, GAOKAO-bench, CMMLU, ARC, OpenBookQA, SciQ, MathTutorBench |
+| L02 互连 / 集合通信 | NVLink[[10]](https://www.nvidia.com/en-us/data-center/nvlink/), NCCL[[11]](https://developer.nvidia.com/nccl), InfiniBand[[12]](https://www.nvidia.com/en-us/networking/products/infiniband/) | 同 A，重 MPI + InfiniBand | NVLink for AGI rig；车端 PCIe | NVLink-C2C 整车 + 仿真集群 IB | 同 A | 边缘多无互连 | 同 A | 同 A（单节点为主） | 同 A（渲染农场用 10–100 GbE / IB） | 同 A（多单卡 / 单节点训练） |
+| L03 GPU 编程模型 | CUDA[[13]](https://developer.nvidia.com/cuda), ROCm[[14]](https://www.amd.com/en/products/software/rocm.html), Metal[[15]](https://developer.apple.com/metal/), SYCL[[16]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html), DirectML[[17]](https://learn.microsoft.com/en-us/windows/ai/directml/dml) | 同 A + Julia CUDA.jl[[18]](https://github.com/JuliaGPU/CUDA.jl) | 同 A | 同 A | 同 A | 同 A + Apple Metal + DirectML | 同 A + RAPIDS[[19]](https://rapids.ai/) | 同 A + DirectX 12（PC / Xbox）, Metal（Mac / iOS） | 同 A + Metal（Mac DCC） | 同 A + DirectML / Metal（学习机 / 平板端推理） |
+| L04 GPU 内核库 | cuBLAS[[20]](https://developer.nvidia.com/cublas), cuDNN[[21]](https://developer.nvidia.com/cudnn), FlashAttention[[22]](https://github.com/dao-ailab/flash-attention), NCCL, CUTLASS[[23]](https://github.com/NVIDIA/cutlass) | cuFFT[[24]](https://developer.nvidia.com/cufft), cuSolver[[25]](https://developer.nvidia.com/cusolver), cuSPARSE[[26]](https://developer.nvidia.com/cusparse), cuQuantum[[27]](https://developer.nvidia.com/cuquantum-sdk), NVSHMEM[[28]](https://developer.nvidia.com/nvshmem) | cuDNN + Isaac CUDA kernels | cuDNN + TensorRT plugins | 3DGS rasterizer, NeRF CUDA kernels | cuDNN + TensorRT INT8 | cuDF, cuML, cuOpt | cuDNN（DLSS / NPC inference）+ DirectML kernels | cuDNN + OptiX denoise kernels | 同 A（cuDNN + ONNX Runtime 内核） |
+| L05 编译器 / IR | Triton[[29]](https://github.com/triton-lang/triton), XLA[[30]](https://openxla.org/xla), MLIR[[31]](https://mlir.llvm.org/), TVM[[32]](https://tvm.apache.org/), torch.compile | 同 A + Codon[[33]](https://github.com/exaloop/codon) | 同 A | TensorRT, NVIDIA DLA, TVM | 同 A | TensorRT, OpenVINO, Apple Core ML compiler | 同 A | 同 A + HLSL / shader compilers | 同 A | 同 A + Core ML compiler[[967]](https://developer.apple.com/machine-learning/core-ml/)（iPad / 学习机端侧） |
+| L06 张量 / 训练框架 | PyTorch[[34]](https://pytorch.org/), JAX[[35]](https://github.com/jax-ml/jax), MLX[[36]](https://github.com/ml-explore/mlx), TensorFlow[[37]](https://www.tensorflow.org/) | NumPy[[38]](https://numpy.org/), SciPy[[39]](https://scipy.org/), CuPy[[40]](https://cupy.dev/), JAX, PyTorch, Julia[[41]](https://julialang.org/) | PyTorch + ROS DDS | PyTorch + DriveWorks | PyTorch, JAX, threestudio | PyTorch + OpenMMLab | scikit-learn[[42]](https://scikit-learn.org/), XGBoost[[43]](https://xgboost.readthedocs.io/), LightGBM[[44]](https://github.com/microsoft/LightGBM), PyTorch | PyTorch（NPC AI 训练）+ ONNX | PyTorch（generative VFX） | 同 A（PyTorch + ONNX 主导） |
+| L07 分布式训练 | DeepSpeed[[45]](https://www.deepspeed.ai/), Megatron[[46]](https://github.com/NVIDIA/Megatron-LM), FSDP[[47]](https://docs.pytorch.org/docs/stable/fsdp.html), NeMo[[48]](https://docs.nvidia.com/nemo-framework/user-guide/latest/overview.html), Ray Train[[49]](https://docs.ray.io/en/latest/train/train.html) | MPI[[50]](https://www.mpi-forum.org/) + NCCL（HPC 风格而非 ZeRO） | 多在单 / 几卡 | 同 A（仿真 + 路采联训） | 同 A（video diffusion 训练） | 同 A | 多单卡 | 多在单卡 | 多在单卡 | 多单 / 几卡，少数大厂（科大讯飞 / 网易有道 / 学而思）走 同 A 路径 |
+| L08 训练数据 pipeline | FineWeb[[51]](https://huggingface.co/datasets/HuggingFaceFW/fineweb), datatrove[[52]](https://github.com/huggingface/datatrove), Mosaic Streaming[[53]](https://github.com/mosaicml/streaming) | 实验数据 + 仿真合成 | Open X-Embodiment[[54]](https://robotics-transformer-x.github.io/), DROID[[55]](https://droid-dataset.github.io/), LeRobot[[56]](https://github.com/huggingface/lerobot) dataset | 路采 + 影子模式 + Auto-labeling | 多视角视频 / 3D scan | Roboflow, Encord, Labelbox, FiftyOne | 时间序列 + 因子库 | 游戏 telemetry / 玩家行为日志 | 镜头库 / 母带 / 标注 | MathDial[[931]](https://huggingface.co/datasets/eth-nlped/mathdial), EdNet[[932]](https://github.com/riiid/ednet), ASSISTments[[933]](https://new.assistments.org/), Junyi Academy[[934]](https://www.junyiacademy.org/), Eedi[[935]](https://www.eedi.com/) |
+| L09 后训练 / 微调 | TRL[[57]](https://github.com/huggingface/trl), verl[[58]](https://github.com/volcengine/verl), Unsloth[[59]](https://unsloth.ai/), Axolotl[[60]](https://github.com/axolotl-ai-cloud/axolotl) | 极少（预训练即终态） | LeRobot, Diffusion Policy[[61]](https://github.com/real-stanford/diffusion_policy), ACT | RLHF on driving sims | 极少 | YOLO finetune + 蒸馏 | sklearn 训练即生产 | NPC behavior tuning, 反作弊模型微调 | LoRA / Dreambooth 风格化 | 同 A（TRL / LoRA / Unsloth），加教师演示数据 SFT |
+| L10 基础模型权重 | Llama[[62]](https://ai.meta.com/llama/), Claude[[63]](https://www.anthropic.com/claude), GPT[[64]](https://openai.com/api/), Qwen[[65]](https://github.com/QwenLM/Qwen), DeepSeek[[66]](https://www.deepseek.com/en/) | AlphaFold 3[[67]](https://alphafoldserver.com/), GraphCast[[68]](https://deepmind.google/technologies/graphcast/), MatterGen[[69]](https://www.microsoft.com/en-us/research/blog/mattergen-a-new-paradigm-of-materials-design-with-generative-ai/), scGPT[[70]](https://github.com/bowang-lab/scGPT), Evo 2[[71]](https://arcinstitute.org/news/blog/evo2) | GR00T[[72]](https://developer.nvidia.com/isaac/gr00t) N1, π0[[73]](https://www.physicalintelligence.company/) / π0.5, RT-2[[74]](https://robotics-transformer2.github.io/), OpenVLA[[75]](https://openvla.github.io/), RDT-1B[[76]](https://rdt-robotics.github.io/rdt-robotics/) | Tesla FSD[[77]](https://www.tesla.com/support/autopilot) V13/14, Waymo Driver[[78]](https://waymo.com/), Wayve LINGO[[79]](https://wayve.ai/thinking/lingo-natural-language-autonomous-driving/) | Genie 3[[80]](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/), Marble[[81]](https://www.worldlabs.ai/), Cosmos[[82]](https://www.nvidia.com/en-us/ai/cosmos/) | YOLOv11[[83]](https://docs.ultralytics.com/models/yolo11/), SAM 2[[84]](https://ai.meta.com/sam2/), Florence-2[[85]](https://huggingface.co/microsoft/Florence-2-large), RT-DETR[[86]](https://github.com/lyuwenyu/RT-DETR) | BloombergGPT[[87]](https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/), FinGPT[[88]](https://github.com/AI4Finance-Foundation/FinGPT), TimeGPT[[89]](https://www.nixtla.io/), Chronos[[90]](https://github.com/amazon-science/chronos-forecasting) | NVIDIA ACE[[91]](https://developer.nvidia.com/ace), Inworld[[92]](https://inworld.ai/), Convai[[92]](https://inworld.ai/) NPC LLM | 与 E / L32 共用：Sora, Veo 3, Kling, Runway | MathGPT 九章[[908]](https://www.mathgpt.com/), 子曰 (网易有道)[[909]](https://aicenter.youdao.com/), 讯飞星火教育版[[910]](https://xinghuo.xfyun.cn/), 文心 (小度 Z30 底模)[[911]](https://yiyan.baidu.com/), 作业帮大模型[[912]](https://www.zybang.com/)；通用底模仍走 GPT / Claude / Gemini / DeepSeek |
+| L11 评测 / 基准 | MMLU[[93]](https://arxiv.org/abs/2009.03300), SWE-bench[[94]](https://www.swebench.com/), MTEB[[95]](https://github.com/embeddings-benchmark/mteb/), METR Time Horizons[[96]](https://metr.org/time-horizons/) | CASP[[97]](https://predictioncenter.org/), WeatherBench[[98]](https://github.com/pangeo-data/WeatherBench), Matbench Discovery[[99]](https://matbench-discovery.materialsproject.org/) | RLBench[[100]](https://github.com/stepjam/RLBench), CALVIN, LIBERO | nuScenes[[101]](https://www.nuscenes.org/), KITTI, Argoverse, CARLA Leaderboard | VBench, 3D-FUTURE | COCO[[102]](https://cocodataset.org/), ImageNet[[103]](https://www.image-net.org/), Open Images | Sharpe / Sortino / IR | NPC dialogue 评估（少公开基准） | 人工评审 + 内部 A/B | GSM8K[[937]](https://huggingface.co/datasets/openai/gsm8k), MATH[[938]](https://github.com/hendrycks/math), AGIEval[[939]](https://github.com/ruixiangcui/AGIEval), GAOKAO-Bench[[940]](https://github.com/OpenLMLab/GAOKAO-Bench), CMMLU[[941]](https://github.com/haonan-li/CMMLU), MathTutorBench[[936]](https://arxiv.org/abs/2502.18940), OpenBookQA[[942]](https://allenai.org/data/open-book-qa), SciQ[[943]](https://allenai.org/data/sciq), ARC[[944]](https://allenai.org/data/arc) |
 | L12 实验追踪 / MLOps | W&B[[104]](https://wandb.ai/site/), MLflow[[105]](https://mlflow.org/), Neptune[[106]](https://neptune.ai/) | 同 A | 同 A | 同 A + 闭源整车数据平台 | 同 A | 同 A | 同 A | 同 A | 同 A | 同 A |
-| L13 推理引擎 | vLLM[[107]](https://github.com/vllm-project/vllm), TensorRT-LLM[[108]](https://github.com/NVIDIA/TensorRT-LLM), SGLang[[109]](https://github.com/sgl-project/sglang), llama.cpp[[110]](https://github.com/ggerganov/llama.cpp), ONNX Runtime[[111]](https://onnxruntime.ai/) | BioNeMo NIM[[112]](https://www.nvidia.com/en-us/clara/bionemo/) 引擎, Modulus runtime | Isaac ROS[[113]](https://developer.nvidia.com/isaac/ros) GEMs runtime | NVIDIA DRIVE OS[[114]](https://developer.nvidia.com/drive/drive-os), Mobileye EyeQ[[115]](https://www.mobileye.com/technology/eyeq-chip/) runtime, openpilot[[116]](https://github.com/commaai/openpilot) | 3DGS[[117]](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) renderer, Instant-NGP[[118]](https://github.com/NVlabs/instant-ngp) runtime | NVIDIA DeepStream[[119]](https://developer.nvidia.com/deepstream-sdk), Intel OpenVINO[[120]](https://docs.openvino.ai/), Apple Core ML[[121]](https://developer.apple.com/machine-learning/core-ml/), ONNX Runtime + DirectML EP | 通常无独立引擎 | ONNX Runtime + DirectML（游戏内推理）+ NVIDIA TensorRT | 与 L32 共用 diffusion runtime | 同 A + Core ML / 端侧学习平板 NPU |
+| L13 推理引擎 | vLLM[[107]](https://github.com/vllm-project/vllm), TensorRT-LLM[[108]](https://github.com/NVIDIA/TensorRT-LLM), SGLang[[109]](https://github.com/sgl-project/sglang), llama.cpp[[110]](https://github.com/ggerganov/llama.cpp), ONNX Runtime[[111]](https://onnxruntime.ai/) | BioNeMo NIM[[112]](https://www.nvidia.com/en-us/clara/bionemo/) 引擎, Modulus runtime | Isaac ROS[[113]](https://developer.nvidia.com/isaac/ros) GEMs runtime | NVIDIA DRIVE OS[[114]](https://developer.nvidia.com/drive/drive-os), Mobileye EyeQ[[115]](https://www.mobileye.com/technology/eyeq-chip/) runtime, openpilot[[116]](https://github.com/commaai/openpilot) | 3DGS[[117]](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) renderer, Instant-NGP[[118]](https://github.com/NVlabs/instant-ngp) runtime | NVIDIA DeepStream[[119]](https://developer.nvidia.com/deepstream-sdk), Intel OpenVINO[[120]](https://docs.openvino.ai/), Apple Core ML[[121]](https://developer.apple.com/machine-learning/core-ml/), ONNX Runtime + DirectML EP | 通常无独立引擎 | ONNX Runtime + DirectML（游戏内推理）+ NVIDIA TensorRT | 与 L32 共用 diffusion runtime | 同 A（vLLM / TensorRT-LLM 服务端；llama.cpp / ONNX Runtime + DirectML / Core ML 端侧学习机） |
 | L14 模型服务 / 编排 | Triton Inference[[122]](https://github.com/triton-inference-server/server), Ray Serve[[123]](https://docs.ray.io/en/latest/serve/index.html), BentoML[[124]](https://www.bentoml.com/) | BioNeMo NIM Microservices[[125]](https://www.nvidia.com/en-us/clara/bionemo/), Earth-2 Studio[[126]](https://www.nvidia.com/en-us/high-performance-computing/earth-2/) | Isaac Manipulator, MoveIt 2[[127]](https://moveit.ai/) servers | Tesla inference fleet, Mobileye OTA | NVIDIA Omniverse Kit[[128]](https://developer.nvidia.com/omniverse/kit-sdk) | DeepStream pipeline, VMS 平台 | 自建 Python / QuantConnect cloud | 游戏后端：PlayFab[[129]](https://playfab.com/), GameLift[[130]](https://aws.amazon.com/gamelift/) | 渲染农场 + AI 服务集群 | 同 A |
-| L15 GPU 云 / 算力市场 | CoreWeave[[131]](https://www.coreweave.com/), Lambda[[132]](https://lambda.ai/), Crusoe[[133]](https://www.crusoe.ai/), Nebius[[134]](https://nebius.com/) | Rescale[[135]](https://rescale.com/), AWS HPC[[136]](https://aws.amazon.com/hpc/), Azure CycleCloud[[137]](https://azure.microsoft.com/en-us/products/cyclecloud) | Tesla 自建, Figure GPU farm | Tesla Dojo[[138]](https://www.tesla.com/AI), Mobileye 自建 | RunPod[[139]](https://www.runpod.io/), fal.ai[[140]](https://fal.ai/) | AWS Panorama[[141]](https://aws.amazon.com/panorama/) 边缘 | 通用 AWS / GCP | Tencent / NetEase / Sony 自建 GPU farms | 渲染云：Conductor[[142]](https://www.conductortech.com/), AWS Thinkbox Deadline[[143]](https://aws.amazon.com/thinkbox-deadline/) | 同 A（多走云厂教育合约价） |
+| L15 GPU 云 / 算力市场 | CoreWeave[[131]](https://www.coreweave.com/), Lambda[[132]](https://lambda.ai/), Crusoe[[133]](https://www.crusoe.ai/), Nebius[[134]](https://nebius.com/) | Rescale[[135]](https://rescale.com/), AWS HPC[[136]](https://aws.amazon.com/hpc/), Azure CycleCloud[[137]](https://azure.microsoft.com/en-us/products/cyclecloud) | Tesla 自建, Figure GPU farm | Tesla Dojo[[138]](https://www.tesla.com/AI), Mobileye 自建 | RunPod[[139]](https://www.runpod.io/), fal.ai[[140]](https://fal.ai/) | AWS Panorama[[141]](https://aws.amazon.com/panorama/) 边缘 | 通用 AWS / GCP | Tencent / NetEase / Sony 自建 GPU farms | 渲染云：Conductor[[142]](https://www.conductortech.com/), AWS Thinkbox Deadline[[143]](https://aws.amazon.com/thinkbox-deadline/) | 同 A（少数大厂走 CoreWeave / 自建集群） |
 | L16 模型 API 聚合 | OpenRouter[[144]](https://openrouter.ai/), Together[[145]](https://www.together.ai/), Fireworks[[146]](https://fireworks.ai/), Groq[[147]](https://groq.com/) | — | — | — | fal.ai 3D 模型托管 | Replicate[[148]](https://replicate.com/)（YOLO / SAM 托管） | — | — | — | 同 A |
-| L17 前沿模型 API | Anthropic[[149]](https://www.anthropic.com/api), OpenAI[[150]](https://openai.com/api/), Gemini[[151]](https://ai.google.dev/), xAI[[152]](https://x.ai/), DeepSeek | Isomorphic AlphaFold Server, Schrödinger LiveDesign API | Skild Brain API, π API（内部） | — | World Labs Marble API, Decart Mirage | — | Bloomberg API | — | — | OpenAI ChatGPT Edu, Anthropic Claude for Education, Google Gemini for Education / Workspace |
+| L17 前沿模型 API | Anthropic[[149]](https://www.anthropic.com/api), OpenAI[[150]](https://openai.com/api/), Gemini[[151]](https://ai.google.dev/), xAI[[152]](https://x.ai/), DeepSeek | Isomorphic AlphaFold Server, Schrödinger LiveDesign API | Skild Brain API, π API（内部） | — | World Labs Marble API, Decart Mirage | — | Bloomberg API | — | — | ChatGPT Edu[[919]](https://openai.com/chatgpt/education/), Claude for Education[[920]](https://claude.com/solutions/education), Gemini for Education[[922]](https://edu.google.com/intl/ALL_us/ai/gemini-for-education/), Microsoft Copilot for Education[[924]](https://www.microsoft.com/en-us/education/copilot) |
 | L18 LLM 应用框架 | LangChain[[153]](https://www.langchain.com/), LlamaIndex[[154]](https://www.llamaindex.ai/), DSPy[[155]](https://github.com/stanfordnlp/dspy), Vercel AI SDK[[156]](https://ai-sdk.dev/) | — | — | — | — | — | — | — | — | 同 A |
-| L19 Embedding / 重排序 | OpenAI text-embedding-3[[157]](https://platform.openai.com/docs/guides/embeddings), Cohere Embed[[158]](https://cohere.com/embed), BGE[[159]](https://github.com/FlagOpen/FlagEmbedding) | ESM-2 / 3（蛋白）, MolE（分子） | — | — | OpenCLIP, SigLIP | CLIP, SigLIP, DINOv2 | FinBERT embedding | — | — | 同 A |
-| L20 向量数据库 / 检索 | Pinecone[[160]](https://www.pinecone.io/), Weaviate[[161]](https://weaviate.io/), Qdrant[[162]](https://qdrant.tech/), Milvus[[163]](https://milvus.io/) | FAISS[[164]](https://github.com/facebookresearch/faiss)（蛋白 / 分子搜索） | — | — | 3D scene 索引（少） | Roboflow Universe[[165]](https://universe.roboflow.com/) | — | — | — | 同 A + 教材 / 题库 RAG 索引（KG-RAG 课程 corpus） |
-| L21 长期记忆 | Mem0[[166]](https://mem0.ai/), Zep[[167]](https://www.getzep.com/), Letta[[168]](https://www.letta.com/) | — | （仅 in-context） | — | — | — | — | NPC long-term memory：Charisma[[169]](https://charisma.ai/) | — | 知识图谱 + 学生模型 / 学习画像（BKT / DKT 传统 + Mem0 / Zep 新栈） |
+| L19 Embedding / 重排序 | OpenAI text-embedding-3[[157]](https://platform.openai.com/docs/guides/embeddings), Cohere Embed[[158]](https://cohere.com/embed), BGE[[159]](https://github.com/FlagOpen/FlagEmbedding) | ESM-2 / 3（蛋白）, MolE（分子） | — | — | OpenCLIP, SigLIP | CLIP, SigLIP, DINOv2 | FinBERT embedding | — | — | 同 A（OpenAI / Cohere / BGE embedding 用于课件检索） |
+| L20 向量数据库 / 检索 | Pinecone[[160]](https://www.pinecone.io/), Weaviate[[161]](https://weaviate.io/), Qdrant[[162]](https://qdrant.tech/), Milvus[[163]](https://milvus.io/) | FAISS[[164]](https://github.com/facebookresearch/faiss)（蛋白 / 分子搜索） | — | — | 3D scene 索引（少） | Roboflow Universe[[165]](https://universe.roboflow.com/) | — | — | — | 同 A（教材 / 题库 RAG 走 Pinecone / Qdrant / Milvus） |
+| L21 长期记忆 | Mem0[[166]](https://mem0.ai/), Zep[[167]](https://www.getzep.com/), Letta[[168]](https://www.letta.com/) | — | （仅 in-context） | — | — | — | — | NPC long-term memory：Charisma[[169]](https://charisma.ai/) | — | 学生模型独立栈：pyBKT[[945]](https://github.com/CAHLR/pyBKT), pyKT[[946]](https://github.com/pykt-team/pykt-toolkit)（BKT / DKT 知识掌握状态追踪，区别于 LLM 长期记忆） |
 | L22 LLM 网关 / 路由 | LiteLLM[[170]](https://github.com/BerriAI/litellm), Portkey[[171]](https://portkey.ai/), Cloudflare AI Gateway[[172]](https://developers.cloudflare.com/ai-gateway/) | — | — | — | — | — | — | — | — | 同 A |
 | L23 Prompt 管理 / 缓存 | PromptLayer[[173]](https://www.promptlayer.com/), Langfuse[[174]](https://langfuse.com/) Prompts, Braintrust[[175]](https://www.braintrust.dev/) | — | — | — | — | — | — | — | — | 同 A |
-| L24 Agent 框架 | LangGraph[[176]](https://www.langchain.com/langgraph), AutoGen[[177]](https://github.com/microsoft/autogen), Claude Agent SDK[[178]](https://docs.anthropic.com/en/docs/agents-and-tools) | — | VLA 控制循环（**非 Agent 概念**） | 端到端策略（**非 Agent**） | — | — | — | —（NPC 走专用 dialogue 循环，非 Agent） | — | Socratic / scaffolding 教学循环（Khanmigo, SocraticAI, Learning Mode） |
-| L25 工具协议 / MCP | Anthropic MCP[[179]](https://modelcontextprotocol.io/), Composio[[180]](https://composio.dev/), Arcade[[181]](https://www.arcade.dev/) | — | — | — | — | — | — | — | — | 同 A + LTI 1.3 / Canvas 接入 |
-| L26 浏览器 / Computer Use | Browserbase[[182]](https://www.browserbase.com/), Operator[[183]](https://openai.com/index/introducing-operator/), browser-use[[184]](https://github.com/browser-use/browser-use) | — | — | — | — | — | — | — | — | — |
-| L27 代码 / Agent 沙箱 | E2B[[185]](https://e2b.dev/), Modal Sandbox[[186]](https://modal.com/), Daytona[[187]](https://www.daytona.io/) | — | — | — | — | — | — | — | — | 学生编程沙箱：Replit, GitHub Classroom Codespaces |
+| L24 Agent 框架 | LangGraph[[176]](https://www.langchain.com/langgraph), AutoGen[[177]](https://github.com/microsoft/autogen), Claude Agent SDK[[178]](https://docs.anthropic.com/en/docs/agents-and-tools) | — | VLA 控制循环（**非 Agent 概念**） | 端到端策略（**非 Agent**） | — | — | — | —（NPC 走专用 dialogue 循环，非 Agent） | — | Khanmigo Socratic loop[[884]](https://www.khanmigo.ai/), Claude Learning mode[[921]](https://www.anthropic.com/news/advancing-claude-for-education)；否则同 A |
+| L25 工具协议 / MCP | Anthropic MCP[[179]](https://modelcontextprotocol.io/), Composio[[180]](https://composio.dev/), Arcade[[181]](https://www.arcade.dev/) | — | — | — | — | — | — | — | — | LTI 1.3[[928]](https://www.1edtech.org/standards/lti)（Canvas[[925]](https://www.instructure.com/canvas) / Moodle[[927]](https://moodle.org/) / Open edX[[926]](https://openedx.org/) 集成协议） |
+| L26 浏览器 / Computer Use | Browserbase[[182]](https://www.browserbase.com/), Operator[[183]](https://openai.com/index/introducing-operator/), browser-use[[184]](https://github.com/browser-use/browser-use) | — | — | — | — | — | — | — | — | 同 A |
+| L27 代码 / Agent 沙箱 | E2B[[185]](https://e2b.dev/), Modal Sandbox[[186]](https://modal.com/), Daytona[[187]](https://www.daytona.io/) | — | — | — | — | — | — | — | — | 同 A + Codecademy[[905]](https://www.codecademy.com/) 内嵌沙箱, JDoodle[[907]](https://www.jdoodle.com/)（编程教学场景） |
 | L28 LLM 观测 / 追踪 | Langfuse, Arize[[188]](https://arize.com/), LangSmith[[189]](https://www.langchain.com/langsmith-platform) | — | Foxglove[[190]](https://foxglove.dev/), Datadog | 自动驾驶闭源遥测平台 | — | Prometheus[[191]](https://prometheus.io/) + Grafana[[192]](https://grafana.com/) | — | Unity Analytics, GameAnalytics[[193]](https://gameanalytics.com/) | ShotGrid[[194]](https://www.autodesk.com/products/flow-production-tracking)（生产管线追踪） | 同 A |
-| L29 Guardrails / 安全 | Guardrails AI[[195]](https://github.com/guardrails-ai/guardrails), NeMo Guardrails[[196]](https://github.com/NVIDIA-NeMo/Guardrails), Lakera[[197]](https://www.lakera.ai/) | — | ISO 13482[[198]](https://www.iso.org/standard/53820.html) 服务机器人安全 | ISO 26262[[199]](https://www.iso.org/standard/68383.html) + 21448 SOTIF + UNECE R157[[200]](https://unece.org/transport/documents/2021/03/standards/un-regulation-no-157-automated-lane-keeping-systems-alks) | — | — | — | 反作弊：BattlEye[[201]](https://www.battleye.com/), Easy Anti-Cheat[[202]](https://www.easy.ac/), VAC[[203]](https://help.steampowered.com/en/faqs/view/571A-97DA-70E9-FF74) | C2PA[[204]](https://c2pa.org/) 内容来源 + watermarking | COPPA / FERPA / GDPR-K + 中国未成年人保护法；AI 检测 Turnitin / GPTZero；考试监控 Honorlock / Respondus |
-| L30 LLM 评测 / 测试 | Promptfoo[[205]](https://www.promptfoo.dev/), DeepEval[[206]](https://github.com/confident-ai/deepeval), Ragas[[207]](https://github.com/explodinggradients/ragas) | — | — | — | — | — | — | — | — | 同 A + 教学有效性 A/B（学习成效非答案正确率） |
-| L31 语音 (TTS / ASR) | ElevenLabs[[208]](https://elevenlabs.io/), Whisper[[209]](https://github.com/openai/whisper), Cartesia[[210]](https://cartesia.ai/), Deepgram[[211]](https://deepgram.com/) | — | Figure 接 ElevenLabs; NVIDIA Riva[[212]](https://developer.nvidia.com/riva) | Cerence[[213]](https://www.cerence.com/) 车载语音 | — | — | — | 与 A 共用 ElevenLabs / Riva 做 NPC 配音 | ElevenLabs, Descript[[214]](https://www.descript.com/), Adobe Podcast[[215]](https://podcast.adobe.com/) | ELSA Speak 音素引擎, Speak, Duolingo Max Video Call, 儿童 ASR fine-tuned Whisper |
-| L32 图像 / 视频 / 3D 生成 | Midjourney[[216]](https://www.midjourney.com/), Sora[[217]](https://openai.com/sora/), FLUX[[218]](https://bfl.ai/), Runway[[219]](https://runwayml.com/) | — | — | — | 与 E 段相互渗透 | — | — | MetaHuman[[220]](https://www.unrealengine.com/en-US/metahuman), Reallusion[[221]](https://www.reallusion.com/) | 与 A 共用 + Topaz Video AI[[222]](https://www.topazlabs.com/topaz-video-ai), Wonder Dynamics[[223]](https://wonderdynamics.com/) Wonder Studio | NotebookLM Video Overview, Manim, GeoGebra 动画（课件 / 讲解视频生成） |
-| L33 通用对话 / 搜索 Agent | ChatGPT, Claude.ai[[224]](https://claude.ai/), Gemini, M365 Copilot[[225]](https://www.microsoft.com/en-us/microsoft-365-copilot), SAP Joule[[226]](https://www.sap.com/products/artificial-intelligence/ai-assistant.html) | — | — | — | — | — | — | — | — | ChatGPT Edu, Claude for Education (Learning Mode), Gemini for Education (Guided Learning), Microsoft Copilot for Education |
-| L34 垂直 Agent 应用 | Cursor, Devin, Salesforce Agentforce[[227]](https://www.salesforce.com/agentforce/), SAP Joule | AlphaFold Server, Schrödinger LiveDesign client | Tesla Optimus, Figure 02, 1X Neo, Unitree GD01 | Tesla FSD, Waymo One, Mobileye Chauffeur | World Labs Marble app, Genie 3 playground | Hikvision, Cognex, Aidoc, Standard AI | Bloomberg Terminal, FactSet Mercury, AlphaSense, Hebbia | Inworld 集成游戏, Replica Studios[[228]](https://replicastudios.com/), Skybox AI[[229]](https://skybox.blockadelabs.com/) | Cuebric[[230]](https://www.cuebric.com/), Captions[[231]](https://www.captions.ai/), Adobe Firefly Video[[232]](https://firefly.adobe.com/), ILM StageCraft[[233]](https://www.ilm.com/sandbox/stagecraft/) | Khanmigo, Duolingo Max, MagicSchool, Gradescope, Synthesis Tutor, 作业帮, 学而思九章 |
+| L29 Guardrails / 安全 | Guardrails AI[[195]](https://github.com/guardrails-ai/guardrails), NeMo Guardrails[[196]](https://github.com/NVIDIA-NeMo/Guardrails), Lakera[[197]](https://www.lakera.ai/) | — | ISO 13482[[198]](https://www.iso.org/standard/53820.html) 服务机器人安全 | ISO 26262[[199]](https://www.iso.org/standard/68383.html) + 21448 SOTIF + UNECE R157[[200]](https://unece.org/transport/documents/2021/03/standards/un-regulation-no-157-automated-lane-keeping-systems-alks) | — | — | — | 反作弊：BattlEye[[201]](https://www.battleye.com/), Easy Anti-Cheat[[202]](https://www.easy.ac/), VAC[[203]](https://help.steampowered.com/en/faqs/view/571A-97DA-70E9-FF74) | C2PA[[204]](https://c2pa.org/) 内容来源 + watermarking | COPPA[[948]](https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa), FERPA[[947]](https://studentprivacy.ed.gov/ferpa), GDPR Art. 8[[949]](https://gdpr-info.eu/art-8-gdpr/), EU AI Act Annex III[[950]](https://artificialintelligenceact.eu/annex/3/)；防作弊：Turnitin[[951]](https://www.turnitin.com/), GPTZero[[952]](https://gptzero.me/), Honorlock[[953]](https://honorlock.com/), Respondus LockDown[[954]](https://web.respondus.com/he/lockdownbrowser/), ProctorU[[956]](https://www.proctoru.com/) |
+| L30 LLM 评测 / 测试 | Promptfoo[[205]](https://www.promptfoo.dev/), DeepEval[[206]](https://github.com/confident-ai/deepeval), Ragas[[207]](https://github.com/explodinggradients/ragas) | — | — | — | — | — | — | — | — | 同 A + MathTutorBench[[936]](https://arxiv.org/abs/2502.18940)（评估教学对话质量而非答题正确率） |
+| L31 语音 (TTS / ASR) | ElevenLabs[[208]](https://elevenlabs.io/), Whisper[[209]](https://github.com/openai/whisper), Cartesia[[210]](https://cartesia.ai/), Deepgram[[211]](https://deepgram.com/) | — | Figure 接 ElevenLabs; NVIDIA Riva[[212]](https://developer.nvidia.com/riva) | Cerence[[213]](https://www.cerence.com/) 车载语音 | — | — | — | 与 A 共用 ElevenLabs / Riva 做 NPC 配音 | ElevenLabs, Descript[[214]](https://www.descript.com/), Adobe Podcast[[215]](https://podcast.adobe.com/) | ELSA Speak[[900]](https://elsaspeak.com/), Duolingo Video Call[[885]](https://www.duolingo.com/), Microsoft Reading Coach[[899]](https://coach.microsoft.com/)；通用底层 Whisper / Riva |
+| L32 图像 / 视频 / 3D 生成 | Midjourney[[216]](https://www.midjourney.com/), Sora[[217]](https://openai.com/sora/), FLUX[[218]](https://bfl.ai/), Runway[[219]](https://runwayml.com/) | — | — | — | 与 E 段相互渗透 | — | — | MetaHuman[[220]](https://www.unrealengine.com/en-US/metahuman), Reallusion[[221]](https://www.reallusion.com/) | 与 A 共用 + Topaz Video AI[[222]](https://www.topazlabs.com/topaz-video-ai), Wonder Dynamics[[223]](https://wonderdynamics.com/) Wonder Studio | NotebookLM Video Overviews[[962]](https://notebooklm.google/), Manim[[961]](https://github.com/3b1b/manim), GeoGebra[[958]](https://www.geogebra.org/)（教学动画 / 数学可视化） |
+| L33 通用对话 / 搜索 Agent | ChatGPT, Claude.ai[[224]](https://claude.ai/), Gemini, M365 Copilot[[225]](https://www.microsoft.com/en-us/microsoft-365-copilot), SAP Joule[[226]](https://www.sap.com/products/artificial-intelligence/ai-assistant.html) | — | — | — | — | — | — | — | — | ChatGPT Edu[[919]](https://openai.com/chatgpt/education/), Claude for Education[[920]](https://claude.com/solutions/education), Gemini in Classroom[[923]](https://blog.google/products-and-platforms/products/education/classroom-ai-features/), Microsoft Copilot for Education[[924]](https://www.microsoft.com/en-us/education/copilot) |
+| L34 垂直 Agent 应用 | Cursor, Devin, Salesforce Agentforce[[227]](https://www.salesforce.com/agentforce/), SAP Joule | AlphaFold Server, Schrödinger LiveDesign client | Tesla Optimus, Figure 02, 1X Neo, Unitree GD01 | Tesla FSD, Waymo One, Mobileye Chauffeur | World Labs Marble app, Genie 3 playground | Hikvision, Cognex, Aidoc, Standard AI | Bloomberg Terminal, FactSet Mercury, AlphaSense, Hebbia | Inworld 集成游戏, Replica Studios[[228]](https://replicastudios.com/), Skybox AI[[229]](https://skybox.blockadelabs.com/) | Cuebric[[230]](https://www.cuebric.com/), Captions[[231]](https://www.captions.ai/), Adobe Firefly Video[[232]](https://firefly.adobe.com/), ILM StageCraft[[233]](https://www.ilm.com/sandbox/stagecraft/) | Khanmigo[[884]](https://www.khanmigo.ai/), Duolingo Max[[885]](https://www.duolingo.com/), MagicSchool[[886]](https://www.magicschool.ai/), Gradescope[[888]](https://www.gradescope.com/), Synthesis Tutor[[887]](https://www.synthesis.com/tutor), 作业帮[[912]](https://www.zybang.com/), 学而思 AI 学[[916]](https://www.xueersi.com/), 猿辅导小猿[[913]](https://www.yuanfudao.com/), Squirrel AI[[914]](https://squirrelai.com/) |
 | L35 HPC 作业调度 / 工作流 | — | Slurm, PBS[[234]](https://www.altair.com/pbs-professional/), LSF, Spack[[235]](https://spack.io/), EasyBuild | — | — | — | — | — | — | — | — |
 | L36 机器人 / 实时中间件 | — | — | ROS 2, micro-ROS, MoveIt 2, NVIDIA Holoscan[[236]](https://developer.nvidia.com/holoscan-sdk), PX4, QNX | NVIDIA DriveWorks[[237]](https://developer.nvidia.com/drive/driveworks), AUTOSAR[[238]](https://www.autosar.org/) Classic / Adaptive | — | — | — | — | — | — |
-| L37 物理仿真 / 数字孪生引擎 | — | GROMACS, OpenMM[[239]](https://openmm.org/), LAMMPS, NAMD, JAX-CFD, PhiFlow | Isaac Sim[[240]](https://developer.nvidia.com/isaac/sim), MuJoCo, Gazebo, Genesis, Drake, Habitat | NVIDIA DRIVE Sim[[241]](https://developer.nvidia.com/drive/simulation), Applied Intuition, CARLA[[242]](https://carla.org/), AirSim | NVIDIA Omniverse[[243]](https://www.nvidia.com/en-us/omniverse/) + USD, Unity ML-Agents | — | — | Unity ML-Agents（与 E 共用） | V-Ray[[244]](https://www.chaos.com/vray), RenderMan[[245]](https://renderman.pixar.com/), Arnold[[246]](https://arnoldrenderer.com/) 渲染器；Houdini[[247]](https://www.sidefx.com/) 物理 | PhET, GeoGebra, Algodoo, Tinkercad（STEM 实验仿真） |
+| L37 物理仿真 / 数字孪生引擎 | — | GROMACS, OpenMM[[239]](https://openmm.org/), LAMMPS, NAMD, JAX-CFD, PhiFlow | Isaac Sim[[240]](https://developer.nvidia.com/isaac/sim), MuJoCo, Gazebo, Genesis, Drake, Habitat | NVIDIA DRIVE Sim[[241]](https://developer.nvidia.com/drive/simulation), Applied Intuition, CARLA[[242]](https://carla.org/), AirSim | NVIDIA Omniverse[[243]](https://www.nvidia.com/en-us/omniverse/) + USD, Unity ML-Agents | — | — | Unity ML-Agents（与 E 共用） | V-Ray[[244]](https://www.chaos.com/vray), RenderMan[[245]](https://renderman.pixar.com/), Arnold[[246]](https://arnoldrenderer.com/) 渲染器；Houdini[[247]](https://www.sidefx.com/) 物理 | PhET[[957]](https://phet.colorado.edu/), GeoGebra[[958]](https://www.geogebra.org/), Algodoo[[959]](http://www.algodoo.com/), Tinkercad[[960]](https://www.tinkercad.com/)（STEM 教学仿真） |
 | L38 高精地图 / 定位 | — | — | — | HERE[[248]](https://www.here.com/), TomTom[[249]](https://www.tomtom.com/), 四维图新, Mapbox[[250]](https://www.mapbox.com/) | — | — | — | — | — | — |
 
 ---
@@ -872,29 +872,46 @@ Captions（短视频 AI 工作室）、Submagic[[864]](https://www.submagic.co/)
 
 Adobe Firefly Video、ILM StageCraft、Marvel（已多次使用 AI 风格化）、Wonder Studios、Promise；Lightricks / LTX-Video[[867]](https://www.lightricks.com/) 模型；OpenAI Sora 自有 app
 
-### J 学习 / 教育栈：从辅导助手到 K-12 / 高等教育平台（与 L33 / L34 并行）
 
-AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。
+### J 学习 / 教育栈：从学生掌握状态到防作弊与教学仿真
 
-### J1 智能辅导 / 答疑（Tutor / Q&A）
+教育栈底层 L01–L17 大体沿用通用 LLM 栈，差异从 **L21 学生掌握状态模型**（BKT / DKT，区别于 LLM 长期记忆）起逐层独立：L11 / L30 评测对教学对话质量做双轨基准；L17 / L33 四大厂商（OpenAI / Anthropic / Google / Microsoft）都已分化出独立教育版 API 与课堂版客户端；L25 LMS 协议层 LTI / Canvas 是教育独有；L29 未成年人合规（COPPA / FERPA / GDPR Art. 8）+ 防作弊（Turnitin / Honorlock）成完整栈；L37 STEM 教学仿真（PhET / GeoGebra / Manim）与 B / C 段科研 / 机器人仿真同名实体明显不同（教学用、轻量、浏览器即跑）。中国 EdTech 形成独立子栈（学而思九章 / 网易有道子曰 / 讯飞星火教育版等垂直大模型 + AI 学习机硬件），驱动力是监管备案 + 家长付费 + 硬件出货，与海外 SaaS 订阅模式不同。
 
-Khanmigo[[884]](https://www.khanmigo.ai/)（Khan Academy + GPT-4，K-12 + 大学免费版 2024 推广）、Coursera Coach[[885]](https://www.coursera.org/coach)（课程内嵌问答 + 引用切片）、Photomath[[886]](https://photomath.com/)（拍照解题，2022 被 Google 收购）；中国：Squirrel AI（自适应 K-12）、作业帮 AI 答疑、猿辅导小猿口算
+### J1 终端辅导 / 学习产品
 
-### J2 教学内容生成 / 备课工具
+海外 K-12 / 高校 / 企业培训市场面向学生与教师的 AI 应用合集，覆盖辅导、答疑、备课、批改、语言学习与编程教学：
 
-NotebookLM[[887]](https://notebooklm.google/)（Google，源材料驱动 + 音频概览）、MagicSchool[[888]](https://www.magicschool.ai/)（北美最大教师工具集合，70+ 生成模板）、Curipod[[889]](https://curipod.com/)（互动课件 / 投票题生成）；同方向竞品：Eduaide.Ai、Diffit、Brisk Teaching
+Khanmigo[[884]](https://www.khanmigo.ai/)、Duolingo Max[[885]](https://www.duolingo.com/)、MagicSchool[[886]](https://www.magicschool.ai/)、Synthesis Tutor[[887]](https://www.synthesis.com/tutor)、Gradescope[[888]](https://www.gradescope.com/)、Quizlet Q-Chat[[889]](https://quizlet.com/)、Photomath[[890]](https://photomath.com/)、Brainly[[891]](https://brainly.com/)、Course Hero[[892]](https://www.coursehero.com/)、Chegg[[893]](https://www.chegg.com/)、Carnegie Learning[[894]](https://www.carnegielearning.com/)、ALEKS[[895]](https://www.aleks.com/)、Cengage GenAI Tutor[[896]](https://www.cengage.com/)、Pearson AI Study Tool[[897]](https://www.pearson.com/en-us/higher-education/products-services/aistudytool.html)、McGraw Hill Learning Coach[[898]](https://www.mheducation.com/)、Microsoft Reading Coach[[899]](https://coach.microsoft.com/)、ELSA Speak[[900]](https://elsaspeak.com/)、Speak[[901]](https://www.speak.com/)、Sana Learn[[902]](https://sanalabs.com/)、360Learning[[903]](https://360learning.com/)、Docebo[[904]](https://www.docebo.com/)、Codecademy[[905]](https://www.codecademy.com/)、Schoolhouse.world[[906]](https://schoolhouse.world/)。
 
-### J3 自动评估 / 形成性反馈
+### J2 中国教育垂直栈（垂直模型 + 学习机硬件）
 
-Gradescope[[890]](https://www.gradescope.com/)（Turnitin 旗下，AI 辅助批改主观题）、Carnegie Learning MATHia[[891]](https://www.carnegielearning.com/products/software-mathia/)（自适应数学，30 年实证基础）；研究 / 实验线：Cognii、Riiid、ETS e-rater 类作文评分
+中国本土教育垂直大模型与 AI 学习机硬件——双减政策、监管备案、家长付费、硬件出货是主要驱动力，与海外 SaaS 订阅模式形成对照。模型层到终端硬件一体：
 
-### J4 语言学习（专用栈）
+MathGPT 九章[[908]](https://www.mathgpt.com/)、网易有道子曰[[909]](https://aicenter.youdao.com/)、科大讯飞星火教育版[[910]](https://xinghuo.xfyun.cn/)、百度文心 (小度学习机)[[911]](https://yiyan.baidu.com/)、作业帮大模型[[912]](https://www.zybang.com/)、猿辅导小猿 AI[[913]](https://www.yuanfudao.com/)、Squirrel AI 松鼠 AI[[914]](https://squirrelai.com/)、小度学习机 Z30[[915]](https://www.dueros.ai/)、学而思 AI 学[[916]](https://www.xueersi.com/)、科大讯飞 AI 学习机[[917]](https://www.iflytek.com/)、网易有道学习机[[918]](https://www.youdao.com/)。
 
-Duolingo Max[[892]](https://www.duolingo.com/)（GPT-4 驱动 Roleplay + Explain My Answer）、Speak[[893]](https://www.speak.com/)（OpenAI 投资，端到端口语对话）、ELSA Speak[[894]](https://elsaspeak.com/)（发音 AI，音素级反馈）；竞品：Praktika、Quazel、Babbel + AI、Memrise AI
+### J3 教育版前沿 API & 课堂集成
 
-### J5 学习平台 / 编程教育
+四大 LLM 厂商（OpenAI / Anthropic / Google / Microsoft）的教育版企业产品线 + 校园级 LMS 集成栈。LTI 1.3 是教育独有的工具互操作协议：
 
-通用平台：Khan Academy[[895]](https://www.khanacademy.org/)、Coursera[[896]](https://www.coursera.org/)、edX、Udemy；编程教育：Replit Teams for Education[[897]](https://replit.com/teams-for-education)（云 IDE + 协作 + AI 助教）、Codecademy AI、CodeCombat；中国 K-12：作业帮[[898]](https://www.zybang.com/)、猿辅导[[899]](https://www.yuanfudao.com/)、好未来 / 学而思、新东方
+ChatGPT Edu[[919]](https://openai.com/chatgpt/education/)、Claude for Education[[920]](https://claude.com/solutions/education)、Claude Learning mode[[921]](https://www.anthropic.com/news/advancing-claude-for-education)、Gemini for Education[[922]](https://edu.google.com/intl/ALL_us/ai/gemini-for-education/)、Gemini in Classroom[[923]](https://blog.google/products-and-platforms/products/education/classroom-ai-features/)、Microsoft Copilot for Education[[924]](https://www.microsoft.com/en-us/education/copilot)、Instructure Canvas[[925]](https://www.instructure.com/canvas)、Open edX[[926]](https://openedx.org/)、Moodle[[927]](https://moodle.org/)、LTI 1.3[[928]](https://www.1edtech.org/standards/lti)、OpenAI Academy[[929]](https://academy.openai.com/)、Internet2[[930]](https://internet2.edu/)。
+
+### J4 教育数据集 & 学生模型 / 评测
+
+教学语料、对话基准、考试基准与学生知识掌握状态建模（BKT / DKT）——研究方向上与通用 LLM 评测分轨：
+
+MathDial[[931]](https://huggingface.co/datasets/eth-nlped/mathdial)、EdNet (Riiid Santa)[[932]](https://github.com/riiid/ednet)、ASSISTments[[933]](https://new.assistments.org/)、Junyi Academy dataset[[934]](https://www.junyiacademy.org/)、Eedi Misconception Map[[935]](https://www.eedi.com/)、MathTutorBench[[936]](https://arxiv.org/abs/2502.18940)、GSM8K[[937]](https://huggingface.co/datasets/openai/gsm8k)、MATH[[938]](https://github.com/hendrycks/math)、AGIEval[[939]](https://github.com/ruixiangcui/AGIEval)、GAOKAO-Bench[[940]](https://github.com/OpenLMLab/GAOKAO-Bench)、CMMLU[[941]](https://github.com/haonan-li/CMMLU)、OpenBookQA[[942]](https://allenai.org/data/open-book-qa)、SciQ[[943]](https://allenai.org/data/sciq)、ARC[[944]](https://allenai.org/data/arc)、pyBKT[[945]](https://github.com/CAHLR/pyBKT)、pyKT[[946]](https://github.com/pykt-team/pykt-toolkit)。
+
+### J5 合规 & 学术诚信（COPPA / FERPA / 防作弊）
+
+未成年人 / 学生数据法规（FERPA / COPPA / GDPR Art. 8 / EU AI Act 高风险条款）+ AI 防作弊 / 在线监考栈（Turnitin / GPTZero / Honorlock / ProctorU）：
+
+FERPA[[947]](https://studentprivacy.ed.gov/ferpa)、COPPA[[948]](https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa)、GDPR Art. 8[[949]](https://gdpr-info.eu/art-8-gdpr/)、EU AI Act Annex III[[950]](https://artificialintelligenceact.eu/annex/3/)、Turnitin[[951]](https://www.turnitin.com/)、GPTZero[[952]](https://gptzero.me/)、Honorlock[[953]](https://honorlock.com/)、Respondus LockDown Browser[[954]](https://web.respondus.com/he/lockdownbrowser/)、Respondus Monitor[[955]](https://web.respondus.com/he/monitor/)、ProctorU[[956]](https://www.proctoru.com/)。
+
+### J6 STEM 仿真 / 教学课件可视化
+
+面向教学的物理 / 数学 / 工程仿真与可视化生成——与 B 段科研级（GROMACS / OpenMM）、C 段机器人级（Isaac Sim / MuJoCo）的同名实体不同，特征是轻量、浏览器即跑、教学场景优先：
+
+PhET[[957]](https://phet.colorado.edu/)、GeoGebra[[958]](https://www.geogebra.org/)、Algodoo[[959]](http://www.algodoo.com/)、Tinkercad[[960]](https://www.tinkercad.com/)、Manim[[961]](https://github.com/3b1b/manim)、NotebookLM Video Overviews[[962]](https://notebooklm.google/)、Desmos[[963]](https://www.desmos.com/)、MERLOT[[964]](https://www.merlot.org/)、OER Commons[[965]](https://oercommons.org/)、OpenStax[[966]](https://openstax.org/)。
 
 ---
 
@@ -2684,32 +2701,168 @@ Duolingo Max[[892]](https://www.duolingo.com/)（GPT-4 驱动 Roleplay + Explain
 
 [884] Khan Academy, "Khanmigo," [Online]. Available: <https://www.khanmigo.ai/>
 
-[885] Coursera, "Coursera Coach," [Online]. Available: <https://www.coursera.org/coach>
+[885] Duolingo, "Duolingo Max," [Online]. Available: <https://www.duolingo.com/>
 
-[886] Photomath, "Photomath," [Online]. Available: <https://photomath.com/>
+[886] MagicSchool AI, "MagicSchool," [Online]. Available: <https://www.magicschool.ai/>
 
-[887] Google, "NotebookLM," [Online]. Available: <https://notebooklm.google/>
+[887] Synthesis, "Synthesis Tutor," [Online]. Available: <https://www.synthesis.com/tutor>
 
-[888] MagicSchool AI, "MagicSchool," [Online]. Available: <https://www.magicschool.ai/>
+[888] Turnitin, "Gradescope," [Online]. Available: <https://www.gradescope.com/>
 
-[889] Curipod, "Curipod," [Online]. Available: <https://curipod.com/>
+[889] Quizlet, "Quizlet Q-Chat," [Online]. Available: <https://quizlet.com/>
 
-[890] Turnitin, "Gradescope," [Online]. Available: <https://www.gradescope.com/>
+[890] Photomath, "Photomath," [Online]. Available: <https://photomath.com/>
 
-[891] Carnegie Learning, "MATHia," [Online]. Available: <https://www.carnegielearning.com/products/software-mathia/>
+[891] Brainly, "Brainly," [Online]. Available: <https://brainly.com/>
 
-[892] Duolingo, "Duolingo Max," [Online]. Available: <https://www.duolingo.com/>
+[892] Course Hero, "Course Hero," [Online]. Available: <https://www.coursehero.com/>
 
-[893] Speak, "Speak — AI language tutor," [Online]. Available: <https://www.speak.com/>
+[893] Chegg, "Chegg AI," [Online]. Available: <https://www.chegg.com/>
 
-[894] ELSA, "ELSA Speak," [Online]. Available: <https://elsaspeak.com/>
+[894] Carnegie Learning, "Carnegie Learning," [Online]. Available: <https://www.carnegielearning.com/>
 
-[895] Khan Academy, "Khan Academy," [Online]. Available: <https://www.khanacademy.org/>
+[895] McGraw Hill, "ALEKS," [Online]. Available: <https://www.aleks.com/>
 
-[896] Coursera, "Coursera," [Online]. Available: <https://www.coursera.org/>
+[896] Cengage, "Cengage GenAI Tutor," [Online]. Available: <https://www.cengage.com/>
 
-[897] Replit, "Replit Teams for Education," [Online]. Available: <https://replit.com/teams-for-education>
+[897] Pearson, "AI Study Tool," [Online]. Available: <https://www.pearson.com/en-us/higher-education/products-services/aistudytool.html>
 
-[898] 作业帮, "作业帮," [Online]. Available: <https://www.zybang.com/>
+[898] McGraw Hill, "Learning Coach," [Online]. Available: <https://www.mheducation.com/>
 
-[899] 猿辅导, "猿辅导," [Online]. Available: <https://www.yuanfudao.com/>
+[899] Microsoft, "Reading Coach," [Online]. Available: <https://coach.microsoft.com/>
+
+[900] ELSA, "ELSA Speak," [Online]. Available: <https://elsaspeak.com/>
+
+[901] Speak, "Speak — AI language tutor," [Online]. Available: <https://www.speak.com/>
+
+[902] Sana Labs, "Sana Learn," [Online]. Available: <https://sanalabs.com/>
+
+[903] 360Learning, "360Learning," [Online]. Available: <https://360learning.com/>
+
+[904] Docebo, "Docebo Learning Platform," [Online]. Available: <https://www.docebo.com/>
+
+[905] Codecademy, "Codecademy," [Online]. Available: <https://www.codecademy.com/>
+
+[906] Schoolhouse.world, "Schoolhouse.world," [Online]. Available: <https://schoolhouse.world/>
+
+[907] JDoodle, "JDoodle Online Compiler," [Online]. Available: <https://www.jdoodle.com/>
+
+[908] 学而思, "MathGPT 九章," [Online]. Available: <https://www.mathgpt.com/>
+
+[909] 网易有道, "子曰教育大模型," [Online]. Available: <https://aicenter.youdao.com/>
+
+[910] 科大讯飞, "星火认知大模型教育版," [Online]. Available: <https://xinghuo.xfyun.cn/>
+
+[911] 百度, "文心一言 / 小度学习机底模," [Online]. Available: <https://yiyan.baidu.com/>
+
+[912] 作业帮, "作业帮大模型," [Online]. Available: <https://www.zybang.com/>
+
+[913] 猿辅导, "小猿 AI / 猿力大模型," [Online]. Available: <https://www.yuanfudao.com/>
+
+[914] 松鼠 Ai, "Squirrel AI," [Online]. Available: <https://squirrelai.com/>
+
+[915] 百度小度, "小度学习机 Z30," [Online]. Available: <https://www.dueros.ai/>
+
+[916] 学而思, "学而思 AI 学," [Online]. Available: <https://www.xueersi.com/>
+
+[917] 科大讯飞, "AI 学习机," [Online]. Available: <https://www.iflytek.com/>
+
+[918] 网易有道, "网易有道学习机," [Online]. Available: <https://www.youdao.com/>
+
+[919] OpenAI, "ChatGPT Edu," [Online]. Available: <https://openai.com/chatgpt/education/>
+
+[920] Anthropic, "Claude for Education," [Online]. Available: <https://claude.com/solutions/education>
+
+[921] Anthropic, "Advancing Claude for Education (Learning mode)," [Online]. Available: <https://www.anthropic.com/news/advancing-claude-for-education>
+
+[922] Google, "Gemini for Education," [Online]. Available: <https://edu.google.com/intl/ALL_us/ai/gemini-for-education/>
+
+[923] Google, "Gemini in Classroom," [Online]. Available: <https://blog.google/products-and-platforms/products/education/classroom-ai-features/>
+
+[924] Microsoft, "Copilot for Education," [Online]. Available: <https://www.microsoft.com/en-us/education/copilot>
+
+[925] Instructure, "Canvas LMS," [Online]. Available: <https://www.instructure.com/canvas>
+
+[926] Axim Collaborative, "Open edX," [Online]. Available: <https://openedx.org/>
+
+[927] Moodle, "Moodle," [Online]. Available: <https://moodle.org/>
+
+[928] 1EdTech, "Learning Tools Interoperability (LTI) 1.3," [Online]. Available: <https://www.1edtech.org/standards/lti>
+
+[929] OpenAI, "OpenAI Academy," [Online]. Available: <https://academy.openai.com/>
+
+[930] Internet2, "Internet2," [Online]. Available: <https://internet2.edu/>
+
+[931] ETH NLPED, "MathDial Dataset," [Online]. Available: <https://huggingface.co/datasets/eth-nlped/mathdial>
+
+[932] Riiid, "EdNet," [Online]. Available: <https://github.com/riiid/ednet>
+
+[933] Worcester Polytechnic Institute, "ASSISTments," [Online]. Available: <https://new.assistments.org/>
+
+[934] 均一平台教育基金會, "Junyi Academy," [Online]. Available: <https://www.junyiacademy.org/>
+
+[935] Eedi, "Eedi Misconception Map," [Online]. Available: <https://www.eedi.com/>
+
+[936] Macina et al., "MathTutorBench," arXiv:2502.18940, [Online]. Available: <https://arxiv.org/abs/2502.18940>
+
+[937] OpenAI, "GSM8K," [Online]. Available: <https://huggingface.co/datasets/openai/gsm8k>
+
+[938] Hendrycks et al., "MATH dataset," [Online]. Available: <https://github.com/hendrycks/math>
+
+[939] Microsoft / Cui et al., "AGIEval," [Online]. Available: <https://github.com/ruixiangcui/AGIEval>
+
+[940] OpenLMLab, "GAOKAO-Bench," [Online]. Available: <https://github.com/OpenLMLab/GAOKAO-Bench>
+
+[941] Li et al., "CMMLU," [Online]. Available: <https://github.com/haonan-li/CMMLU>
+
+[942] Allen AI, "OpenBookQA," [Online]. Available: <https://allenai.org/data/open-book-qa>
+
+[943] Allen AI, "SciQ," [Online]. Available: <https://allenai.org/data/sciq>
+
+[944] Allen AI, "AI2 Reasoning Challenge (ARC)," [Online]. Available: <https://allenai.org/data/arc>
+
+[945] UC Berkeley CAHLR, "pyBKT," [Online]. Available: <https://github.com/CAHLR/pyBKT>
+
+[946] pyKT Team, "pyKT Toolkit," [Online]. Available: <https://github.com/pykt-team/pykt-toolkit>
+
+[947] U.S. Department of Education, "FERPA," [Online]. Available: <https://studentprivacy.ed.gov/ferpa>
+
+[948] U.S. FTC, "COPPA," [Online]. Available: <https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa>
+
+[949] EU, "GDPR Article 8 — Children's consent," [Online]. Available: <https://gdpr-info.eu/art-8-gdpr/>
+
+[950] EU, "AI Act Annex III high-risk education systems," [Online]. Available: <https://artificialintelligenceact.eu/annex/3/>
+
+[951] Turnitin, "Turnitin Originality / AI Detection," [Online]. Available: <https://www.turnitin.com/>
+
+[952] GPTZero, "GPTZero," [Online]. Available: <https://gptzero.me/>
+
+[953] Honorlock, "Honorlock Online Proctoring," [Online]. Available: <https://honorlock.com/>
+
+[954] Respondus, "LockDown Browser," [Online]. Available: <https://web.respondus.com/he/lockdownbrowser/>
+
+[955] Respondus, "Respondus Monitor," [Online]. Available: <https://web.respondus.com/he/monitor/>
+
+[956] Meazure Learning, "ProctorU," [Online]. Available: <https://www.proctoru.com/>
+
+[957] University of Colorado Boulder, "PhET Interactive Simulations," [Online]. Available: <https://phet.colorado.edu/>
+
+[958] GeoGebra GmbH, "GeoGebra," [Online]. Available: <https://www.geogebra.org/>
+
+[959] Algoryx Simulation, "Algodoo," [Online]. Available: <http://www.algodoo.com/>
+
+[960] Autodesk, "Tinkercad," [Online]. Available: <https://www.tinkercad.com/>
+
+[961] Sanderson, "Manim," [Online]. Available: <https://github.com/3b1b/manim>
+
+[962] Google, "NotebookLM Video Overviews," [Online]. Available: <https://notebooklm.google/>
+
+[963] Desmos, "Desmos Graphing Calculator," [Online]. Available: <https://www.desmos.com/>
+
+[964] California State University, "MERLOT," [Online]. Available: <https://www.merlot.org/>
+
+[965] ISKME, "OER Commons," [Online]. Available: <https://oercommons.org/>
+
+[966] Rice University, "OpenStax," [Online]. Available: <https://openstax.org/>
+
+[967] Apple, "Core ML," [Online]. Available: <https://developer.apple.com/machine-learning/core-ml/>
