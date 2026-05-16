@@ -142,7 +142,7 @@ REF_ENTRY_RE = re.compile(
     r"^\[(\d+)\]\s+(.+?)(?:\s*\[Online\]\.\s+Available:\s*<([^>]+)>)?\s*$"
 )
 LAYER_TITLE_RE = re.compile(r"^(L\d{2})\s+(.+)$")
-BRANCH_TITLE_RE = re.compile(r"^([A-I](?:\d+)?)\s+(.+)$")
+BRANCH_TITLE_RE = re.compile(r"^([A-Z](?:\d+)?)\s+(.+)$")
 VENDOR_BLOCK_RE = re.compile(r"^\*\*([^*]+)\*\*[:：]\s*$")
 GROUP_LABEL_RE = re.compile(r"^[-*]\s+\*\*([^*]+)\*\*[:：]\s*(.*)$")
 BARE_VENDOR_RE = re.compile(r"^[-*]\s+([^*：:\[]{1,24}?)[：:]\s*(.+)$")
@@ -162,6 +162,7 @@ MAIN_BRANCHES = [
     ("A", "LLM / Agent"), ("B", "科学计算"), ("C", "机器人"),
     ("D", "自动驾驶"), ("E", "世界模型 / 3D"), ("F", "经典 CV"),
     ("G", "量化金融"), ("H", "游戏"), ("I", "影视娱乐"),
+    ("J", "学习 / 教育"),
 ]
 
 
@@ -579,6 +580,21 @@ def cmd_append(args):
     print(f"appended {len(args.text)} chars to '{args.key}'")
 
 
+def cmd_set_body(args):
+    """整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。"""
+    conn = connect()
+    if get_block_body(conn, args.key) is None:
+        sys.exit(f"block '{args.key}' not found")
+    if args.file:
+        new_body = Path(args.file).read_text(encoding="utf-8")
+    else:
+        new_body = sys.stdin.read()
+    new_body = new_body.rstrip("\n")
+    conn.execute("UPDATE blocks SET body=? WHERE key=?", (new_body, args.key))
+    conn.commit()
+    print(f"set body of '{args.key}' to {len(new_body)} chars")
+
+
 def cmd_add_ref(args):
     """追加 [N] citation 行到 refs block，返回新 ref 号。"""
     conn = connect()
@@ -700,6 +716,12 @@ def main():
     pap.add_argument("key", help="block key")
     pap.add_argument("--text", required=True)
     pap.set_defaults(func=cmd_append)
+
+    psb = sub.add_parser("set-body",
+                         help="replace entire block.body from file or stdin")
+    psb.add_argument("key", help="block key")
+    psb.add_argument("--file", help="read new body from file; else stdin")
+    psb.set_defaults(func=cmd_set_body)
 
     par = sub.add_parser("add-ref")
     par.add_argument("--citation", required=True,
