@@ -241,7 +241,7 @@ python3 scripts/aiswstack_controller.py render
 - **block.body 末尾的 `---\n`** 是 H2 之间的分隔符，保留它。
 - **加内容前先 query 看 body**：盲改 `--old` 不在 body 中会报错，浪费 turn。
 
-## 完整示例：用户说"加上华为 MindStudio 到 L05 编译器层"
+## 完整示例 1：用户说"加上华为 MindStudio 到 L05 编译器层"
 
 ```bash
 # 1) 看 L05 当前 body，定位插入点
@@ -275,3 +275,67 @@ python3 scripts/aiswstack_controller.py query \
   "SELECT layer_code, vendor, name, url FROM entries WHERE name='MindStudio'"
 git diff chat/AISW-stack/README.md
 ```
+
+## 完整示例 2：用户说"加上 MindStudio 到合适的层"
+
+与示例 1 区别：层归属由 agent 判断。多两步：**了解产品功能**，**对照候选层挑最贴近的**。
+
+```bash
+# 1) 搞清楚 MindStudio 是什么
+# WebSearch: "Huawei MindStudio Ascend toolkit"
+# WebFetch:  https://www.hiascend.com/developer/devkit/mindstudio
+# → 华为昇腾的桌面 IDE，集成模型转换 / 算子开发与调优 / profiling /
+#   debugger / 推理部署辅助。定位类似 NVIDIA Nsight + TensorRT
+#   converter 的合体。属于 CANN 工具链前端。
+
+# 2) 看华为已经在哪些层有 entries，理解既有归属习惯
+python3 scripts/aiswstack_controller.py query "
+SELECT layer_code, name FROM entries WHERE vendor='华为' ORDER BY layer_code"
+# → L01 davinci_manager / HCCN driver / npu-smi / Ascend Docker Runtime（驱动）
+#   L02 HCCS / HCCL（互连 + 通信）
+#   L03 CANN / AscendC（编程模型）
+#   L04 CANN AOL / ACLNN（内核库）
+#   L05 CANN Graph Engine / MindSpore Graph Engine（编译器）
+#   L06 MindSpore（训练框架）
+#   L07 MindFormers / ModelLink（分布式训练）
+#   L13 MindIE / MindSpore Lite / Ascend vLLM（推理引擎）
+#   L14 MindCluster / MindX / ModelArts（模型服务）
+#   L15 华为云 ModelArts + Atlas 900（GPU 云）
+
+# 3) 列候选层 + 用对照判断
+#    MindStudio 含两类功能：
+#      a) 模型转换 / 算子编译 / 图编译 → 紧贴 L05 编译器
+#      b) profiling / debugger → 现有 38 层中没有专用"开发工具"层
+#    Nsight / Nsight Compute 在原 md 中没有独立条目，开发者工具
+#    历史上是和编译器一起归 L05（看 NVIDIA 那行：NVCC + NVRTC + PTX）。
+#    → 选 L05，与 CANN Graph Engine 同 vendor 块；与 NVIDIA Nsight 走法一致。
+
+# 4) 确认未存在 + 看 L05 当前结构定位插入点
+python3 scripts/aiswstack_controller.py query \
+  "SELECT layer_code, name FROM entries WHERE name LIKE '%MindStudio%'"
+python3 scripts/aiswstack_controller.py query \
+  "SELECT body FROM blocks WHERE key='L05'"
+# → 华为段："CANN Graph Engine[[309]](...)（GE）+ TBE / AscendC 算子编译器；
+#   MindSpore Graph Engine[[310]](...)（MindSpore IR / MindIR）"
+
+# 5) 后续与示例 1 相同
+NEW=$(python3 scripts/aiswstack_controller.py add-ref \
+  --citation 'Huawei, "MindStudio," [Online]. Available: <https://www.hiascend.com/developer/devkit/mindstudio>')
+
+python3 scripts/aiswstack_controller.py replace L05 \
+  --old '+ TBE / AscendC 算子编译器' \
+  --new "+ TBE / AscendC 算子编译器 + MindStudio[[${NEW}]](https://www.hiascend.com/developer/devkit/mindstudio)（IDE：模型转换 / 算子调优 / profiling）"
+
+python3 scripts/aiswstack_controller.py render
+
+python3 scripts/aiswstack_controller.py query \
+  "SELECT layer_code, vendor, name, url, notes FROM entries WHERE name='MindStudio'"
+```
+
+**判断层时的启发**：
+
+- 先搜清楚**产品的主要功能**（一句话能说清属于"训练 / 推理 / 编译 / 工具链 / ..."哪类）
+- 看**同 vendor 在其他层的归位习惯**，与之保持一致比"理论最准"重要
+- 看**同类竞品**已经归到哪一层（NVIDIA Nsight ↔ Huawei MindStudio；NCCL ↔ HCCL）
+- 候选层超过一个时，**告知用户两到三个选项 + 理由**，让用户选；不要静默挑一个
+- 没有合适层时，**先停下来询问**：是建议加新层（L39）还是放到最贴近的现有层并加注
