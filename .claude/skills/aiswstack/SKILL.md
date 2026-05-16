@@ -220,12 +220,15 @@ python3 scripts/aiswstack_controller.py render
 
 ### 加新主分支（结构性调整）
 
-⚠ 需要改 `scripts/aiswstack_controller.py`。先告知用户改动范围。
+⚠ 这是最重的一类任务，需要改 `scripts/aiswstack_controller.py` + 主表全表加列 + 新建总览 / 子分支块 + **逐层调研填新列**。先告知用户改动范围。**完整范例见文末"完整示例 3"**。骨架步骤：
 
-1. 在 Controller 文件改 `MAIN_BRANCHES` 加 `("J", "新主分支名")`
-2. 在 summary-table block 改表头加新列、每行加新单元格（用 replace 一行一行改）
-3. 用 add-block 新建 `### J 总览块` 与子分支 `### J1` 等
-4. `render`
+1. 改 `MAIN_BRANCHES` 加 `("J", "新主分支名")`；如果用了 `J` 之外的字母确认 `BRANCH_TITLE_RE` 字符类够宽（脚本默认 `[A-Z]` 已够）
+2. **必须**：扩展主表表头 + 分隔行 + 38 个 L 行末尾加新列。**不要全部默认填 `同 A`**——很多层在新分支有真实差异，需要起 subagent 逐层调研后再写入
+3. 改 `top` block 引介里 `B–I 8 条并列分支` → `B–J 9 条并列分支`；改 `summary-table` 引介里同款描述；改 `parallel-intro` 里 "6 条分支" / "C–G 用数字后缀" 这种历史措辞
+4. `add-block J --type branch` 总览段
+5. `add-block J1 / J2 / ...` 子分支段
+6. 把原"## 并列应用分支"H2 段尾的 `---` 分隔从原最末子分支移到新最末子分支
+7. `render`
 
 ### 修 entry 名字 / 多处替换
 
@@ -339,3 +342,198 @@ python3 scripts/aiswstack_controller.py query \
 - 看**同类竞品**已经归到哪一层（NVIDIA Nsight ↔ Huawei MindStudio；NCCL ↔ HCCL）
 - 候选层超过一个时，**告知用户两到三个选项 + 理由**，让用户选；不要静默挑一个
 - 没有合适层时，**先停下来询问**：是建议加新层（L39）还是放到最贴近的现有层并加注
+
+## 完整示例 3：用户说"加 J 学习 / 教育 主分支"
+
+加新主分支是最重的结构性调整，做错最容易留漏洞。三类典型漏洞：
+
+1. **改了 `MAIN_BRANCHES` 但忘了改 `BRANCH_TITLE_RE`**：`derive_indexes` 找不到 J 系子分支，render 失败（FOREIGN KEY 错误）
+2. **改了主表加 J 列但默认全填 `同 A`**：偷懒，没反映 J 分支真正的差异（教育栈 L08 / L10 / L11 / L21 / L24 / L29 / L31 / L33 / L34 / L37 都不是 `同 A`）
+3. **改了主表 + 子分支但漏改散文**：`top` block、`summary-table` 引介、`parallel-intro` 都会写"B–I" / "6 条分支"，必须同步
+
+### 标准流程（按此顺序执行）
+
+#### 第 1 步：改 Controller 源码
+
+```python
+# scripts/aiswstack_controller.py
+MAIN_BRANCHES = [
+    ("A", "LLM / Agent"), ..., ("I", "影视娱乐"),
+    ("J", "学习 / 教育"),     # ← 新加
+]
+
+BRANCH_TITLE_RE = re.compile(r"^([A-Z](?:\d+)?)\s+(.+)$")  # 确认是 [A-Z]，不是 [A-I]
+```
+
+#### 第 2 步：扩展主表（先全填占位 `同 A`）
+
+用脚本：表头加 J 列、分隔行加 `---`、L01–L38 每行末尾加 `同 A`：
+
+```bash
+python3 << 'EOF' > /dev/null
+import sqlite3, re
+conn = sqlite3.connect("chat/AISW-stack/index.sqlite3")
+body = conn.execute("SELECT body FROM blocks WHERE key='summary-table'").fetchone()[0]
+def append_col(line, cell):
+    return line.rstrip() + (" " if line.rstrip().endswith("|") else "") + cell + " |"
+out = []
+for ln in body.split("\n"):
+    if ln.startswith("| L |"):
+        out.append(append_col(ln, "J. 学习 / 教育"))
+    elif re.match(r"^\|---\|", ln):
+        out.append(append_col(ln, "---"))
+    elif re.match(r"^\| L\d{2}\b", ln):
+        out.append(append_col(ln, "同 A"))
+    else:
+        out.append(ln)
+open("/tmp/summary-J-placeholder.txt", "w").write("\n".join(out))
+EOF
+
+python3 scripts/aiswstack_controller.py set-body summary-table \
+  --file /tmp/summary-J-placeholder.txt
+```
+
+#### 第 3 步：起 subagent 逐层调研 J 列实际内容
+
+⚠ 这一步**绝对不能跳**。教育栈在 L08 数据集、L10 垂直模型、L11 考试基准、L21 学生模型 / 知识图谱、L24 Socratic 循环、L29 COPPA / FERPA / 防作弊、L31 发音 ASR、L33 ChatGPT Edu / Claude for Education / Gemini for Education、L34 J1–J5 产品集合、L37 PhET / GeoGebra / Tinkercad 都有真实差异。盲填 `同 A` 是骗用户。
+
+```bash
+# 准备 subagent 的输入资料（dump 主表 38 行 A-I 列）
+python3 << 'EOF' > /tmp/main-table-rows.md
+import sqlite3, re
+conn = sqlite3.connect("chat/AISW-stack/index.sqlite3")
+body = conn.execute("SELECT body FROM blocks WHERE key='summary-table'").fetchone()[0]
+for line in body.split("\n"):
+    if re.match(r"^\| L\d{2}\b", line):
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        L = cells[0]
+        labels = ["A. LLM/Agent", "B. 科学计算", "C. 机器人", "D. 自动驾驶",
+                  "E. 世界模型/3D", "F. 经典 CV", "G. 量化金融", "H. 游戏", "I. 影视娱乐"]
+        print(f"## {L}")
+        for lab, val in zip(labels, cells[1:10]):
+            print(f"  - {lab}: {val}")
+        print()
+EOF
+```
+
+然后用 `Agent` 工具发起 subagent（**类型必须是 general-purpose，能调 WebSearch / WebFetch**）。
+prompt 关键要点：
+
+- 给出新分支名 / 覆盖范围（"J 学习 / 教育，含 AI 辅导 / 备课 / 评估 / 语言学习 / K-12 / 高校"）
+- 给出 cell 写作约定（`同 A` / `同 A + 补丁` / 具体方案 / `—`）+ 现有 A–I 列的长度风格
+- 明列**重点调研层**（subagent 不会自己判断哪些层有差异）：见骨架说明里的 L08 / L10 / L11 / L17 / L20 / L21 / L24 / L29 / L31 / L32 / L33 / L34 / L37
+- 明令搜索语言：英文优先，中国实体（作业帮 / 学而思 / 科大讯飞等）用中文
+- 严格输出格式：38 行 `Lxx: <cell>` + 一段总结
+
+subagent 返回后逐行检查：太长的 cell（>6 个产品）精简到 4–6 个最有代表性的。
+
+#### 第 4 步：把调研结果写入主表 J 列
+
+```bash
+python3 << 'EOF' > /dev/null
+import sqlite3, re
+J_CELLS = {
+    "L01": "同 A",
+    "L02": "同 A（多为单卡 / 推理）",
+    ...
+    "L34": "Khanmigo, Duolingo Max, MagicSchool, Gradescope, ...",
+    "L37": "PhET, GeoGebra, Algodoo, Tinkercad（STEM 实验仿真）",
+    "L38": "—",
+}
+conn = sqlite3.connect("chat/AISW-stack/index.sqlite3")
+body = conn.execute("SELECT body FROM blocks WHERE key='summary-table'").fetchone()[0]
+out = []
+for line in body.split("\n"):
+    m = re.match(r"^\| (L\d{2})\b", line)
+    if m and line.rstrip().endswith("| 同 A |"):
+        lc = m.group(1)
+        new_line = line.rstrip()[:-len(" 同 A |")] + f" {J_CELLS[lc]} |"
+        out.append(new_line)
+    else:
+        out.append(line)
+open("/tmp/summary-J-final.txt", "w").write("\n".join(out))
+EOF
+
+python3 scripts/aiswstack_controller.py set-body summary-table \
+  --file /tmp/summary-J-final.txt
+```
+
+#### 第 5 步：改散文里所有"B–I / 8 条 / 6 条 / C–G"措辞
+
+```bash
+# top block: "B–I. 并列应用分支" → "B–J"
+python3 scripts/aiswstack_controller.py replace top \
+  --old '**B–I. 并列应用分支**：...（旧列表）...影视娱乐——共享...' \
+  --new '**B–J. 并列应用分支**：...（新列表，含 J 学习 / 教育）...共享...'
+
+# summary-table 引介："9 列 / B–I 8 条" → "10 列 / B–J 9 条"
+python3 scripts/aiswstack_controller.py replace summary-table \
+  --old '横轴 9 列对应 **A 主干 + B–I 8 条并列分支**。' \
+  --new '横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。'
+
+# parallel-intro: "6 条分支" / "C–G" 历史措辞
+python3 scripts/aiswstack_controller.py replace parallel-intro \
+  --old '下面 6 条分支（**B** 科学计算 ... / **G** 量化金融）与 L10–L34 ... C–G 用数字后缀（C1 / C2 / …）继续切。' \
+  --new '下面 9 条分支（**B** 科学计算 ... / **J** 学习 / 教育）与 L10–L34 ... C–J 用数字后缀（C1 / C2 / …）继续切。'
+```
+
+#### 第 6 步：新建 J 总览 + 子分支 + 引用
+
+```bash
+# 1) 加 J1–J5 的引用（按需要的数量循环 add-ref）
+NEW_J1_1=$(python3 scripts/aiswstack_controller.py add-ref \
+  --citation 'Khan Academy, "Khanmigo," [Online]. Available: <https://www.khanmigo.ai/>')
+# ...（每个 entry 一次）
+
+# 2) 加 J 总览（引介散文）
+python3 scripts/aiswstack_controller.py add-block J \
+  --type branch \
+  --title 'J 学习 / 教育栈：...（与 L33 / L34 并行）' \
+  --body 'AI 进入教育栈分两条线...' \
+  --branch-code J \
+  --after I9
+
+# 3) 加 J1–J5 子分支（每个 body 是 inline 列表，含 [[N]](url)）
+python3 scripts/aiswstack_controller.py add-block J1 \
+  --type subbranch \
+  --title 'J1 智能辅导 / 答疑（Tutor / Q&A）' \
+  --body "Khanmigo[[${NEW_J1_1}]](...)、..." \
+  --branch-code J1 --after J
+# ...（J2 / J3 / J4 / J5 类似，每个 --after 前一个）
+```
+
+#### 第 7 步：把 H2 段尾分隔移到新最末
+
+```bash
+# I9 原本是 H2 "## 并列应用分支" 段的末子分支，body 末尾有 "\n\n---"
+python3 scripts/aiswstack_controller.py replace I9 \
+  --old $'<I9 原末尾文字>\n\n---' \
+  --new '<I9 原末尾文字>'
+
+python3 scripts/aiswstack_controller.py append J5 --text $'\n---'
+```
+
+#### 第 8 步：render + 抽查
+
+```bash
+python3 scripts/aiswstack_controller.py render
+
+# 抽查 J 列 + J 段
+python3 scripts/aiswstack_controller.py query \
+  "SELECT branch_code, name, url FROM entries WHERE branch_code LIKE 'J%'"
+
+# 主表 J 列重点行
+grep "^| L08\|^| L10\|^| L11\|^| L29\|^| L33\|^| L34\|^| L37" chat/AISW-stack/README.md
+
+# 散文不再含 "B–I" / "8 条"
+grep -E 'B–I|B-I|8 条' chat/AISW-stack/README.md && echo "⚠ 还有遗漏" || echo "散文已更新"
+
+git diff --stat chat/AISW-stack/README.md
+```
+
+### 容易踩的坑
+
+- `[A-I]` 写死在 `BRANCH_TITLE_RE`：加 J 后 `derive_indexes` 找不到 J 子分支，`render` 报 FOREIGN KEY 错。修：放宽到 `[A-Z]`
+- 主表 J 列全 `同 A`：偷懒，不真。必须 subagent 调研
+- 散文里"B–I" / "8 条" / "C–G"：3 处至少，全部要 replace
+- `---` 分隔位置错：H2 段尾的 `---` 在原最末子分支 body 末尾，新加子分支后要挪到新最末
