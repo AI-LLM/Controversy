@@ -34783,19 +34783,1757 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 377,
+      "timestamp": "2026-05-16T12:57:00.237Z",
+      "source": "user",
+      "message": "把“A 主干 + B–J”、“B-G”之类的描述都去掉，A也不再是“主干”要特别描述",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 378,
+      "timestamp": "2026-05-16T12:57:21.532Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 381141,
+        "completion_tokens": 1168,
+        "cached_tokens": 381135,
+        "extra": {
+          "cache_creation_input_tokens": 1189,
+          "cache_read_input_tokens": 381135,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1189,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 1168,
+              "cache_read_input_tokens": 381135,
+              "cache_creation_input_tokens": 1189,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1189
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 379,
+      "timestamp": "2026-05-16T12:57:22.046Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "先找所有需要改的位置。",
+      "metrics": {
+        "prompt_tokens": 381141,
+        "completion_tokens": 1168,
+        "cached_tokens": 381135,
+        "extra": {
+          "cache_creation_input_tokens": 1189,
+          "cache_read_input_tokens": 381135,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1189,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 1168,
+              "cache_read_input_tokens": 381135,
+              "cache_creation_input_tokens": 1189,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1189
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 380,
+      "timestamp": "2026-05-16T12:57:23.163Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01TmVqCgjEYk3Vfx9SZUTME6",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01TmVqCgjEYk3Vfx9SZUTME6",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "set +e\ngrep -nE '主干|B–J|B-J|B–G|B-G|C–G|C-G|C–J|C-J|并列应用分支|并列分支|并列存在' chat/AISW-stack/README.md",
+            "description": "Locate all stale phrasing"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01TmVqCgjEYk3Vfx9SZUTME6",
+            "content": "7:- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n8:- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。\n12:横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n14:- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n16:- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。\n65:## A. LLM / Agent 主干 — 全栈总览（34 层）\n646:## 并列应用分支（共享 L01–L09，从 L10 起分叉）\n648:LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。\n810:### H1 游戏引擎（AI 是嵌入而非主干）\n880:AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用主干通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。\n914:- **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n915:- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。\n\n[stdout]\n7:- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n8:- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。\n12:横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n14:- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n16:- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。\n65:## A. LLM / Agent 主干 — 全栈总览（34 层）\n646:## 并列应用分支（共享 L01–L09，从 L10 起分叉）\n648:LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。\n810:### H1 游戏引擎（AI 是嵌入而非主干）\n880:AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用主干通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。\n914:- **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n915:- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 381141,
+        "completion_tokens": 1168,
+        "cached_tokens": 381135,
+        "extra": {
+          "cache_creation_input_tokens": 1189,
+          "cache_read_input_tokens": 381135,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1189,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 1168,
+              "cache_read_input_tokens": 381135,
+              "cache_creation_input_tokens": 1189,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1189
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "7:- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n8:- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。\n12:横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n14:- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n16:- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。\n65:## A. LLM / Agent 主干 — 全栈总览（34 层）\n646:## 并列应用分支（共享 L01–L09，从 L10 起分叉）\n648:LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。\n810:### H1 游戏引擎（AI 是嵌入而非主干）\n880:AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用主干通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。\n914:- **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n915:- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TmVqCgjEYk3Vfx9SZUTME6",
+            "type": "tool_result",
+            "content": "7:- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n8:- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。\n12:横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n14:- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n16:- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。\n65:## A. LLM / Agent 主干 — 全栈总览（34 层）\n646:## 并列应用分支（共享 L01–L09，从 L10 起分叉）\n648:LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。\n810:### H1 游戏引擎（AI 是嵌入而非主干）\n880:AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用主干通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。\n914:- **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n915:- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "7:- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n8:- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。\n12:横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n14:- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n16:- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。\n65:## A. LLM / Agent 主干 — 全栈总览（34 层）\n646:## 并列应用分支（共享 L01–L09，从 L10 起分叉）\n648:LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。\n810:### H1 游戏引擎（AI 是嵌入而非主干）\n880:AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用主干通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。\n914:- **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n915:- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TmVqCgjEYk3Vfx9SZUTME6",
+            "type": "tool_result",
+            "content": "7:- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n8:- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。\n12:横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n14:- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n16:- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。\n65:## A. LLM / Agent 主干 — 全栈总览（34 层）\n646:## 并列应用分支（共享 L01–L09，从 L10 起分叉）\n648:LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。\n810:### H1 游戏引擎（AI 是嵌入而非主干）\n880:AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用主干通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。\n914:- **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n915:- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "set +e\ngrep -nE '主干|B–J|B-J|B–G|B-G|C–G|C-G|C–J|C-J|并列应用分支|并列分支|并列存在' chat/AISW-stack/README.md",
+          "description": "Locate all stale phrasing"
+        }
+      }
+    },
+    {
+      "step_id": 381,
+      "timestamp": "2026-05-16T12:58:55.807Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 382325,
+        "completion_tokens": 7386,
+        "cached_tokens": 382324,
+        "extra": {
+          "cache_creation_input_tokens": 2617,
+          "cache_read_input_tokens": 382324,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2617,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 7386,
+              "cache_read_input_tokens": 382324,
+              "cache_creation_input_tokens": 2617,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2617
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 382,
+      "timestamp": "2026-05-16T12:58:56.582Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "10 处都要改。先给 controller 加 `set-title` 命令（block 标题修改用），再批量改。",
+      "metrics": {
+        "prompt_tokens": 382325,
+        "completion_tokens": 7386,
+        "cached_tokens": 382324,
+        "extra": {
+          "cache_creation_input_tokens": 2617,
+          "cache_read_input_tokens": 382324,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2617,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 7386,
+              "cache_read_input_tokens": 382324,
+              "cache_creation_input_tokens": 2617,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2617
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 383,
+      "timestamp": "2026-05-16T12:59:03.473Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Edit toolu_01YLckcapniqFycASSW7Qp66",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01YLckcapniqFycASSW7Qp66",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+            "old_string": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")",
+            "new_string": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")\n\n\ndef cmd_set_title(args):\n    \"\"\"改 block 的 H2 / H3 标题。\"\"\"\n    conn = connect()\n    if not conn.execute(\"SELECT 1 FROM blocks WHERE key=?\", (args.key,)).fetchone():\n        sys.exit(f\"block '{args.key}' not found\")\n    conn.execute(\"UPDATE blocks SET title=? WHERE key=?\", (args.title, args.key))\n    conn.commit()\n    print(f\"set title of '{args.key}' to '{args.title}'\")"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01YLckcapniqFycASSW7Qp66",
+            "content": "The file /Users/luwei/work/Controversy/scripts/aiswstack_controller.py has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/scripts/aiswstack_controller.py\", \"oldString\": \"def cmd_set_body(args):\\n    \\\"\\\"\\\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\\\"\\\"\\\"\\n    conn = connect()\\n    if get_block_body(conn, args.key) is None:\\n        sys.exit(f\\\"block '{args.key}' not found\\\")\\n    if args.file:\\n        new_body = Path(args.file).read_text(encoding=\\\"utf-8\\\")\\n    else:\\n        new_body = sys.stdin.read()\\n    new_body = new_body.rstrip(\\\"\\\\n\\\")\\n    conn.execute(\\\"UPDATE blocks SET body=? WHERE key=?\\\", (new_body, args.key))\\n    conn.commit()\\n    print(f\\\"set body of '{args.key}' to {len(new_body)} chars\\\")\", \"newString\": \"def cmd_set_body(args):\\n    \\\"\\\"\\\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\\\"\\\"\\\"\\n    conn = connect()\\n    if get_block_body(conn, args.key) is None:\\n        sys.exit(f\\\"block '{args.key}' not found\\\")\\n    if args.file:\\n        new_body = Path(args.file).read_text(encoding=\\\"utf-8\\\")\\n    else:\\n        new_body = sys.stdin.read()\\n    new_body = new_body.rstrip(\\\"\\\\n\\\")\\n    conn.execute(\\\"UPDATE blocks SET body=? WHERE key=?\\\", (new_body, args.key))\\n    conn.commit()\\n    print(f\\\"set body of '{args.key}' to {len(new_body)} chars\\\")\\n\\n\\ndef cmd_set_title(args):\\n    \\\"\\\"\\\"改 block 的 H2 / H3 标题。\\\"\\\"\\\"\\n    conn = connect()\\n    if not conn.execute(\\\"SELECT 1 FROM blocks WHERE key=?\\\", (args.key,)).fetchone():\\n        sys.exit(f\\\"block '{args.key}' not found\\\")\\n    conn.execute(\\\"UPDATE blocks SET title=? WHERE key=?\\\", (args.title, args.key))\\n    conn.commit()\\n    print(f\\\"set title of '{args.key}' to '{args.title}'\\\")\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 595, \"oldLines\": 6, \"newStart\": 595, \"newLines\": 16, \"lines\": [\"     print(f\\\"set body of '{args.key}' to {len(new_body)} chars\\\")\", \" \", \" \", \"+def cmd_set_title(args):\", \"+    \\\"\\\"\\\"改 block 的 H2 / H3 标题。\\\"\\\"\\\"\", \"+    conn = connect()\", \"+    if not conn.execute(\\\"SELECT 1 FROM blocks WHERE key=?\\\", (args.key,)).fetchone():\", \"+        sys.exit(f\\\"block '{args.key}' not found\\\")\", \"+    conn.execute(\\\"UPDATE blocks SET title=? WHERE key=?\\\", (args.title, args.key))\", \"+    conn.commit()\", \"+    print(f\\\"set title of '{args.key}' to '{args.title}'\\\")\", \"+\", \"+\", \" def cmd_add_ref(args):\", \"     \\\"\\\"\\\"追加 [N] citation 行到 refs block，返回新 ref 号。\\\"\\\"\\\"\", \"     conn = connect()\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 382325,
+        "completion_tokens": 7386,
+        "cached_tokens": 382324,
+        "extra": {
+          "cache_creation_input_tokens": 2617,
+          "cache_read_input_tokens": 382324,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2617,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 7386,
+              "cache_read_input_tokens": 382324,
+              "cache_creation_input_tokens": 2617,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2617
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+            "oldString": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")",
+            "newString": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")\n\n\ndef cmd_set_title(args):\n    \"\"\"改 block 的 H2 / H3 标题。\"\"\"\n    conn = connect()\n    if not conn.execute(\"SELECT 1 FROM blocks WHERE key=?\", (args.key,)).fetchone():\n        sys.exit(f\"block '{args.key}' not found\")\n    conn.execute(\"UPDATE blocks SET title=? WHERE key=?\", (args.title, args.key))\n    conn.commit()\n    print(f\"set title of '{args.key}' to '{args.title}'\")",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 595,
+                "oldLines": 6,
+                "newStart": 595,
+                "newLines": 16,
+                "lines": [
+                  "     print(f\"set body of '{args.key}' to {len(new_body)} chars\")",
+                  " ",
+                  " ",
+                  "+def cmd_set_title(args):",
+                  "+    \"\"\"改 block 的 H2 / H3 标题。\"\"\"",
+                  "+    conn = connect()",
+                  "+    if not conn.execute(\"SELECT 1 FROM blocks WHERE key=?\", (args.key,)).fetchone():",
+                  "+        sys.exit(f\"block '{args.key}' not found\")",
+                  "+    conn.execute(\"UPDATE blocks SET title=? WHERE key=?\", (args.title, args.key))",
+                  "+    conn.commit()",
+                  "+    print(f\"set title of '{args.key}' to '{args.title}'\")",
+                  "+",
+                  "+",
+                  " def cmd_add_ref(args):",
+                  "     \"\"\"追加 [N] citation 行到 refs block，返回新 ref 号。\"\"\"",
+                  "     conn = connect()"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01YLckcapniqFycASSW7Qp66",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/scripts/aiswstack_controller.py has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+            "oldString": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")",
+            "newString": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")\n\n\ndef cmd_set_title(args):\n    \"\"\"改 block 的 H2 / H3 标题。\"\"\"\n    conn = connect()\n    if not conn.execute(\"SELECT 1 FROM blocks WHERE key=?\", (args.key,)).fetchone():\n        sys.exit(f\"block '{args.key}' not found\")\n    conn.execute(\"UPDATE blocks SET title=? WHERE key=?\", (args.title, args.key))\n    conn.commit()\n    print(f\"set title of '{args.key}' to '{args.title}'\")",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 595,
+                "oldLines": 6,
+                "newStart": 595,
+                "newLines": 16,
+                "lines": [
+                  "     print(f\"set body of '{args.key}' to {len(new_body)} chars\")",
+                  " ",
+                  " ",
+                  "+def cmd_set_title(args):",
+                  "+    \"\"\"改 block 的 H2 / H3 标题。\"\"\"",
+                  "+    conn = connect()",
+                  "+    if not conn.execute(\"SELECT 1 FROM blocks WHERE key=?\", (args.key,)).fetchone():",
+                  "+        sys.exit(f\"block '{args.key}' not found\")",
+                  "+    conn.execute(\"UPDATE blocks SET title=? WHERE key=?\", (args.title, args.key))",
+                  "+    conn.commit()",
+                  "+    print(f\"set title of '{args.key}' to '{args.title}'\")",
+                  "+",
+                  "+",
+                  " def cmd_add_ref(args):",
+                  "     \"\"\"追加 [N] citation 行到 refs block，返回新 ref 号。\"\"\"",
+                  "     conn = connect()"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01YLckcapniqFycASSW7Qp66",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/scripts/aiswstack_controller.py has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+          "old_string": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")",
+          "new_string": "def cmd_set_body(args):\n    \"\"\"整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。\"\"\"\n    conn = connect()\n    if get_block_body(conn, args.key) is None:\n        sys.exit(f\"block '{args.key}' not found\")\n    if args.file:\n        new_body = Path(args.file).read_text(encoding=\"utf-8\")\n    else:\n        new_body = sys.stdin.read()\n    new_body = new_body.rstrip(\"\\n\")\n    conn.execute(\"UPDATE blocks SET body=? WHERE key=?\", (new_body, args.key))\n    conn.commit()\n    print(f\"set body of '{args.key}' to {len(new_body)} chars\")\n\n\ndef cmd_set_title(args):\n    \"\"\"改 block 的 H2 / H3 标题。\"\"\"\n    conn = connect()\n    if not conn.execute(\"SELECT 1 FROM blocks WHERE key=?\", (args.key,)).fetchone():\n        sys.exit(f\"block '{args.key}' not found\")\n    conn.execute(\"UPDATE blocks SET title=? WHERE key=?\", (args.title, args.key))\n    conn.commit()\n    print(f\"set title of '{args.key}' to '{args.title}'\")"
+        }
+      }
+    },
+    {
+      "step_id": 384,
+      "timestamp": "2026-05-16T12:59:10.286Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Edit toolu_01UukhethcJ7KA6Apkf8ioFr",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01UukhethcJ7KA6Apkf8ioFr",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+            "old_string": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)",
+            "new_string": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)\n\n    pst = sub.add_parser(\"set-title\", help=\"update the H2/H3 title of a block\")\n    pst.add_argument(\"key\", help=\"block key\")\n    pst.add_argument(\"--title\", required=True)\n    pst.set_defaults(func=cmd_set_title)"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01UukhethcJ7KA6Apkf8ioFr",
+            "content": "The file /Users/luwei/work/Controversy/scripts/aiswstack_controller.py has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/scripts/aiswstack_controller.py\", \"oldString\": \"    psb = sub.add_parser(\\\"set-body\\\",\\n                         help=\\\"replace entire block.body from file or stdin\\\")\\n    psb.add_argument(\\\"key\\\", help=\\\"block key\\\")\\n    psb.add_argument(\\\"--file\\\", help=\\\"read new body from file; else stdin\\\")\\n    psb.set_defaults(func=cmd_set_body)\", \"newString\": \"    psb = sub.add_parser(\\\"set-body\\\",\\n                         help=\\\"replace entire block.body from file or stdin\\\")\\n    psb.add_argument(\\\"key\\\", help=\\\"block key\\\")\\n    psb.add_argument(\\\"--file\\\", help=\\\"read new body from file; else stdin\\\")\\n    psb.set_defaults(func=cmd_set_body)\\n\\n    pst = sub.add_parser(\\\"set-title\\\", help=\\\"update the H2/H3 title of a block\\\")\\n    pst.add_argument(\\\"key\\\", help=\\\"block key\\\")\\n    pst.add_argument(\\\"--title\\\", required=True)\\n    pst.set_defaults(func=cmd_set_title)\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 733, \"oldLines\": 6, \"newStart\": 733, \"newLines\": 11, \"lines\": [\"     psb.add_argument(\\\"--file\\\", help=\\\"read new body from file; else stdin\\\")\", \"     psb.set_defaults(func=cmd_set_body)\", \" \", \"+    pst = sub.add_parser(\\\"set-title\\\", help=\\\"update the H2/H3 title of a block\\\")\", \"+    pst.add_argument(\\\"key\\\", help=\\\"block key\\\")\", \"+    pst.add_argument(\\\"--title\\\", required=True)\", \"+    pst.set_defaults(func=cmd_set_title)\", \"+\", \"     par = sub.add_parser(\\\"add-ref\\\")\", \"     par.add_argument(\\\"--citation\\\", required=True,\", \"                      help=\\\"IEEE-style citation, excluding [N] prefix\\\")\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 384942,
+        "completion_tokens": 446,
+        "cached_tokens": 384941,
+        "extra": {
+          "cache_creation_input_tokens": 7454,
+          "cache_read_input_tokens": 384941,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 7454,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 446,
+              "cache_read_input_tokens": 384941,
+              "cache_creation_input_tokens": 7454,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 7454
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+            "oldString": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)",
+            "newString": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)\n\n    pst = sub.add_parser(\"set-title\", help=\"update the H2/H3 title of a block\")\n    pst.add_argument(\"key\", help=\"block key\")\n    pst.add_argument(\"--title\", required=True)\n    pst.set_defaults(func=cmd_set_title)",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 733,
+                "oldLines": 6,
+                "newStart": 733,
+                "newLines": 11,
+                "lines": [
+                  "     psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")",
+                  "     psb.set_defaults(func=cmd_set_body)",
+                  " ",
+                  "+    pst = sub.add_parser(\"set-title\", help=\"update the H2/H3 title of a block\")",
+                  "+    pst.add_argument(\"key\", help=\"block key\")",
+                  "+    pst.add_argument(\"--title\", required=True)",
+                  "+    pst.set_defaults(func=cmd_set_title)",
+                  "+",
+                  "     par = sub.add_parser(\"add-ref\")",
+                  "     par.add_argument(\"--citation\", required=True,",
+                  "                      help=\"IEEE-style citation, excluding [N] prefix\")"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01UukhethcJ7KA6Apkf8ioFr",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/scripts/aiswstack_controller.py has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+            "oldString": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)",
+            "newString": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)\n\n    pst = sub.add_parser(\"set-title\", help=\"update the H2/H3 title of a block\")\n    pst.add_argument(\"key\", help=\"block key\")\n    pst.add_argument(\"--title\", required=True)\n    pst.set_defaults(func=cmd_set_title)",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 733,
+                "oldLines": 6,
+                "newStart": 733,
+                "newLines": 11,
+                "lines": [
+                  "     psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")",
+                  "     psb.set_defaults(func=cmd_set_body)",
+                  " ",
+                  "+    pst = sub.add_parser(\"set-title\", help=\"update the H2/H3 title of a block\")",
+                  "+    pst.add_argument(\"key\", help=\"block key\")",
+                  "+    pst.add_argument(\"--title\", required=True)",
+                  "+    pst.set_defaults(func=cmd_set_title)",
+                  "+",
+                  "     par = sub.add_parser(\"add-ref\")",
+                  "     par.add_argument(\"--citation\", required=True,",
+                  "                      help=\"IEEE-style citation, excluding [N] prefix\")"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01UukhethcJ7KA6Apkf8ioFr",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/scripts/aiswstack_controller.py has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/scripts/aiswstack_controller.py",
+          "old_string": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)",
+          "new_string": "    psb = sub.add_parser(\"set-body\",\n                         help=\"replace entire block.body from file or stdin\")\n    psb.add_argument(\"key\", help=\"block key\")\n    psb.add_argument(\"--file\", help=\"read new body from file; else stdin\")\n    psb.set_defaults(func=cmd_set_body)\n\n    pst = sub.add_parser(\"set-title\", help=\"update the H2/H3 title of a block\")\n    pst.add_argument(\"key\", help=\"block key\")\n    pst.add_argument(\"--title\", required=True)\n    pst.set_defaults(func=cmd_set_title)"
+        }
+      }
+    },
+    {
+      "step_id": 385,
+      "timestamp": "2026-05-16T12:59:19.813Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "现在批量应用 10 处改动。",
+      "metrics": {
+        "prompt_tokens": 392396,
+        "completion_tokens": 2267,
+        "cached_tokens": 392395,
+        "extra": {
+          "cache_creation_input_tokens": 514,
+          "cache_read_input_tokens": 392395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 514,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 2267,
+              "cache_read_input_tokens": 392395,
+              "cache_creation_input_tokens": 514,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 514
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 386,
+      "timestamp": "2026-05-16T12:59:47.776Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01X9TbJL8oyT3HogMTSeSSAT",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01X9TbJL8oyT3HogMTSeSSAT",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "set -e\n\n# 1. top block: 重写 line 5-8（去掉 \"文件分两大段\"，A 不再 \"主干\"）\npython3 scripts/aiswstack_controller.py replace top \\\n  --old '文件分两大段：\n\n- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。' \\\n  --new '总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。'\n\n# 2. summary-table 引介\npython3 scripts/aiswstack_controller.py replace summary-table \\\n  --old '横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。' \\\n  --new '横轴 10 列对应 **A–J 共 10 条领域分支**。'\n\n# 3. summary-table 规则行 \"同 A\"\npython3 scripts/aiswstack_controller.py replace summary-table \\\n  --old '- `同 A`：该层在该分支与主干基本沿用同款' \\\n  --new '- `同 A`：该层在该分支与 A 列基本沿用同款'\n\n# 4. summary-table L35–L38 描述\npython3 scripts/aiswstack_controller.py replace summary-table \\\n  --old '- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。' \\\n  --new '- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。'\n\n# 5. main-overview H2 标题\npython3 scripts/aiswstack_controller.py set-title main-overview \\\n  --title 'A. LLM / Agent — 全栈总览（34 层）'\n\n# 6. parallel-intro H2 标题\npython3 scripts/aiswstack_controller.py set-title parallel-intro \\\n  --title '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\n\n# 7. parallel-intro body\npython3 scripts/aiswstack_controller.py replace parallel-intro \\\n  --old 'LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。' \\\n  --new '以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。'\n\n# 8. J body：去掉\"沿用主干通用 LLM 栈\"中的\"主干\"\npython3 scripts/aiswstack_controller.py replace J \\\n  --old '底层 L01–L17 完全沿用主干通用 LLM 栈' \\\n  --new '底层 L01–L17 完全沿用通用 LLM 栈'\n\n# 9. crosscut bullet：B–G → B–J 各分支\npython3 scripts/aiswstack_controller.py replace crosscut \\\n  --old '**并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**' \\\n  --new '**B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**'\n\n# 9.1 crosscut 内 \"主干 Agent 框架\" → \"A 列 Agent 框架\"\npython3 scripts/aiswstack_controller.py replace crosscut \\\n  --old '用主干\"Agent 框架\"的话语去套是误读' \\\n  --new '用 A 列\"Agent 框架\"的话语去套是误读'\n\n# 10. crosscut 关于 NVIDIA 全分支占位\npython3 scripts/aiswstack_controller.py replace crosscut \\\n  --old '**NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**' \\\n  --new '**NVIDIA 是唯一在全部 10 条领域分支都占重要席位的供应商**'\n\necho \"all replacements done\"",
+            "description": "Apply all 10 phrasing fixes"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01X9TbJL8oyT3HogMTSeSSAT",
+            "content": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nset title of 'main-overview' to 'A. LLM / Agent — 全栈总览（34 层）'\nset title of 'parallel-intro' to '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\nreplaced 1 occurrence(s) in 'parallel-intro'\nreplaced 1 occurrence(s) in 'J'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nall replacements done\n\n[stdout]\nreplaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nset title of 'main-overview' to 'A. LLM / Agent — 全栈总览（34 层）'\nset title of 'parallel-intro' to '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\nreplaced 1 occurrence(s) in 'parallel-intro'\nreplaced 1 occurrence(s) in 'J'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nall replacements done\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 392396,
+        "completion_tokens": 2267,
+        "cached_tokens": 392395,
+        "extra": {
+          "cache_creation_input_tokens": 514,
+          "cache_read_input_tokens": 392395,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 514,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 2267,
+              "cache_read_input_tokens": 392395,
+              "cache_creation_input_tokens": 514,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 514
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nset title of 'main-overview' to 'A. LLM / Agent — 全栈总览（34 层）'\nset title of 'parallel-intro' to '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\nreplaced 1 occurrence(s) in 'parallel-intro'\nreplaced 1 occurrence(s) in 'J'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nall replacements done",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01X9TbJL8oyT3HogMTSeSSAT",
+            "type": "tool_result",
+            "content": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nset title of 'main-overview' to 'A. LLM / Agent — 全栈总览（34 层）'\nset title of 'parallel-intro' to '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\nreplaced 1 occurrence(s) in 'parallel-intro'\nreplaced 1 occurrence(s) in 'J'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nall replacements done",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nset title of 'main-overview' to 'A. LLM / Agent — 全栈总览（34 层）'\nset title of 'parallel-intro' to '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\nreplaced 1 occurrence(s) in 'parallel-intro'\nreplaced 1 occurrence(s) in 'J'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nall replacements done",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01X9TbJL8oyT3HogMTSeSSAT",
+            "type": "tool_result",
+            "content": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nreplaced 1 occurrence(s) in 'summary-table'\nset title of 'main-overview' to 'A. LLM / Agent — 全栈总览（34 层）'\nset title of 'parallel-intro' to '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\nreplaced 1 occurrence(s) in 'parallel-intro'\nreplaced 1 occurrence(s) in 'J'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nreplaced 1 occurrence(s) in 'crosscut'\nall replacements done",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "set -e\n\n# 1. top block: 重写 line 5-8（去掉 \"文件分两大段\"，A 不再 \"主干\"）\npython3 scripts/aiswstack_controller.py replace top \\\n  --old '文件分两大段：\n\n- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。\n- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。' \\\n  --new '总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。'\n\n# 2. summary-table 引介\npython3 scripts/aiswstack_controller.py replace summary-table \\\n  --old '横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。' \\\n  --new '横轴 10 列对应 **A–J 共 10 条领域分支**。'\n\n# 3. summary-table 规则行 \"同 A\"\npython3 scripts/aiswstack_controller.py replace summary-table \\\n  --old '- `同 A`：该层在该分支与主干基本沿用同款' \\\n  --new '- `同 A`：该层在该分支与 A 列基本沿用同款'\n\n# 4. summary-table L35–L38 描述\npython3 scripts/aiswstack_controller.py replace summary-table \\\n  --old '- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。' \\\n  --new '- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。'\n\n# 5. main-overview H2 标题\npython3 scripts/aiswstack_controller.py set-title main-overview \\\n  --title 'A. LLM / Agent — 全栈总览（34 层）'\n\n# 6. parallel-intro H2 标题\npython3 scripts/aiswstack_controller.py set-title parallel-intro \\\n  --title '各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）'\n\n# 7. parallel-intro body\npython3 scripts/aiswstack_controller.py replace parallel-intro \\\n  --old 'LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。' \\\n  --new '以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。'\n\n# 8. J body：去掉\"沿用主干通用 LLM 栈\"中的\"主干\"\npython3 scripts/aiswstack_controller.py replace J \\\n  --old '底层 L01–L17 完全沿用主干通用 LLM 栈' \\\n  --new '底层 L01–L17 完全沿用通用 LLM 栈'\n\n# 9. crosscut bullet：B–G → B–J 各分支\npython3 scripts/aiswstack_controller.py replace crosscut \\\n  --old '**并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**' \\\n  --new '**B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**'\n\n# 9.1 crosscut 内 \"主干 Agent 框架\" → \"A 列 Agent 框架\"\npython3 scripts/aiswstack_controller.py replace crosscut \\\n  --old '用主干\"Agent 框架\"的话语去套是误读' \\\n  --new '用 A 列\"Agent 框架\"的话语去套是误读'\n\n# 10. crosscut 关于 NVIDIA 全分支占位\npython3 scripts/aiswstack_controller.py replace crosscut \\\n  --old '**NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**' \\\n  --new '**NVIDIA 是唯一在全部 10 条领域分支都占重要席位的供应商**'\n\necho \"all replacements done\"",
+          "description": "Apply all 10 phrasing fixes"
+        }
+      }
+    },
+    {
+      "step_id": 387,
+      "timestamp": "2026-05-16T13:25:06.758Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01TaGLJsXXgB8Hnnm8rbiK4L",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01TaGLJsXXgB8Hnnm8rbiK4L",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "python3 scripts/aiswstack_controller.py render\necho \"--- 残留检查 ---\"\nset +e\nfor p in '主干' 'B–J' 'B-J' 'B–G' 'B-G' 'C–G' 'C-G' 'C–J' 'C-J' '并列应用分支' '并列分支' '并列存在' '8 条' '9 条并列'; do\n  n=$(grep -cF \"$p\" chat/AISW-stack/README.md)\n  if [ \"$n\" -gt 0 ]; then\n    echo \"$p: $n\"\n    grep -nF \"$p\" chat/AISW-stack/README.md | head -3\n  fi\ndone",
+            "description": "Render and check for residual stale wording"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01TaGLJsXXgB8Hnnm8rbiK4L",
+            "content": "rendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=771 refs=899 cells=380\n--- 残留检查 ---\n主干: 1\n807:### H1 游戏引擎（AI 是嵌入而非主干）\nB–J: 3\n5:总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。\n643:## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）\n911:- **B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用 A 列\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n\n[stdout]\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=771 refs=899 cells=380\n--- 残留检查 ---\n主干: 1\n807:### H1 游戏引擎（AI 是嵌入而非主干）\nB–J: 3\n5:总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。\n643:## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）\n911:- **B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用 A 列\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 392910,
+        "completion_tokens": 313,
+        "cached_tokens": 392909,
+        "extra": {
+          "cache_creation_input_tokens": 2561,
+          "cache_read_input_tokens": 392909,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2561,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 313,
+              "cache_read_input_tokens": 392909,
+              "cache_creation_input_tokens": 2561,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2561
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "rendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=771 refs=899 cells=380\n--- 残留检查 ---\n主干: 1\n807:### H1 游戏引擎（AI 是嵌入而非主干）\nB–J: 3\n5:总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。\n643:## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）\n911:- **B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用 A 列\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TaGLJsXXgB8Hnnm8rbiK4L",
+            "type": "tool_result",
+            "content": "rendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=771 refs=899 cells=380\n--- 残留检查 ---\n主干: 1\n807:### H1 游戏引擎（AI 是嵌入而非主干）\nB–J: 3\n5:总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。\n643:## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）\n911:- **B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用 A 列\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "rendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=771 refs=899 cells=380\n--- 残留检查 ---\n主干: 1\n807:### H1 游戏引擎（AI 是嵌入而非主干）\nB–J: 3\n5:总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。\n643:## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）\n911:- **B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用 A 列\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TaGLJsXXgB8Hnnm8rbiK4L",
+            "type": "tool_result",
+            "content": "rendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=771 refs=899 cells=380\n--- 残留检查 ---\n主干: 1\n807:### H1 游戏引擎（AI 是嵌入而非主干）\nB–J: 3\n5:总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。\n643:## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）\n911:- **B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用 A 列\"Agent 框架\"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "python3 scripts/aiswstack_controller.py render\necho \"--- 残留检查 ---\"\nset +e\nfor p in '主干' 'B–J' 'B-J' 'B–G' 'B-G' 'C–G' 'C-G' 'C–J' 'C-J' '并列应用分支' '并列分支' '并列存在' '8 条' '9 条并列'; do\n  n=$(grep -cF \"$p\" chat/AISW-stack/README.md)\n  if [ \"$n\" -gt 0 ]; then\n    echo \"$p: $n\"\n    grep -nF \"$p\" chat/AISW-stack/README.md | head -3\n  fi\ndone",
+          "description": "Render and check for residual stale wording"
+        }
+      }
+    },
+    {
+      "step_id": 388,
+      "timestamp": "2026-05-16T13:25:35.786Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 395471,
+        "completion_tokens": 1449,
+        "cached_tokens": 395470,
+        "extra": {
+          "cache_creation_input_tokens": 929,
+          "cache_read_input_tokens": 395470,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 929,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 1449,
+              "cache_read_input_tokens": 395470,
+              "cache_creation_input_tokens": 929,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 929
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 389,
+      "timestamp": "2026-05-16T13:25:36.891Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_019fPGLUy4VkJ8VxBagwwHc2",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_019fPGLUy4VkJ8VxBagwwHc2",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "set +e\nfor n in 1 2 3; do\n  echo \"[[ $n ]] occurrences:\"\n  grep -cF \"[[$n]]\" chat/AISW-stack/README.md\ndone",
+            "description": "Check ChatGPT/Cursor/Devin refs usage"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_019fPGLUy4VkJ8VxBagwwHc2",
+            "content": "[[ 1 ]] occurrences:\n1\n\n[stdout]\n[[ 1 ]] occurrences:\n1\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 395471,
+        "completion_tokens": 1449,
+        "cached_tokens": 395470,
+        "extra": {
+          "cache_creation_input_tokens": 929,
+          "cache_read_input_tokens": 395470,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 929,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 1449,
+              "cache_read_input_tokens": 395470,
+              "cache_creation_input_tokens": 929,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 929
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "[[ 1 ]] occurrences:\n1",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019fPGLUy4VkJ8VxBagwwHc2",
+            "type": "tool_result",
+            "content": "[[ 1 ]] occurrences:\n1",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "[[ 1 ]] occurrences:\n1",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019fPGLUy4VkJ8VxBagwwHc2",
+            "type": "tool_result",
+            "content": "[[ 1 ]] occurrences:\n1",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "set +e\nfor n in 1 2 3; do\n  echo \"[[ $n ]] occurrences:\"\n  grep -cF \"[[$n]]\" chat/AISW-stack/README.md\ndone",
+          "description": "Check ChatGPT/Cursor/Devin refs usage"
+        }
+      }
+    },
+    {
+      "step_id": 390,
+      "timestamp": "2026-05-16T13:32:24.581Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 396400,
+        "completion_tokens": 290,
+        "cached_tokens": 396399,
+        "extra": {
+          "cache_creation_input_tokens": 1477,
+          "cache_read_input_tokens": 396399,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1477,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 290,
+              "cache_read_input_tokens": 396399,
+              "cache_creation_input_tokens": 1477,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1477
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 391,
+      "timestamp": "2026-05-16T13:32:26.289Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01MsbUV9KkZBjrVwJHSz5ke6",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01MsbUV9KkZBjrVwJHSz5ke6",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "set +e\necho \"[[1]]: $(grep -cF '[[1]]' chat/AISW-stack/README.md)\"\necho \"[[2]]: $(grep -cF '[[2]]' chat/AISW-stack/README.md)\"\necho \"[[3]]: $(grep -cF '[[3]]' chat/AISW-stack/README.md)\"",
+            "description": "Each ref usage"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01MsbUV9KkZBjrVwJHSz5ke6",
+            "content": "[[1]]: 1\n[[2]]: 1\n[[3]]: 2\n\n[stdout]\n[[1]]: 1\n[[2]]: 1\n[[3]]: 2\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 396400,
+        "completion_tokens": 290,
+        "cached_tokens": 396399,
+        "extra": {
+          "cache_creation_input_tokens": 1477,
+          "cache_read_input_tokens": 396399,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1477,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 290,
+              "cache_read_input_tokens": 396399,
+              "cache_creation_input_tokens": 1477,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1477
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "[[1]]: 1\n[[2]]: 1\n[[3]]: 2",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01MsbUV9KkZBjrVwJHSz5ke6",
+            "type": "tool_result",
+            "content": "[[1]]: 1\n[[2]]: 1\n[[3]]: 2",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "[[1]]: 1\n[[2]]: 1\n[[3]]: 2",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01MsbUV9KkZBjrVwJHSz5ke6",
+            "type": "tool_result",
+            "content": "[[1]]: 1\n[[2]]: 1\n[[3]]: 2",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "set +e\necho \"[[1]]: $(grep -cF '[[1]]' chat/AISW-stack/README.md)\"\necho \"[[2]]: $(grep -cF '[[2]]' chat/AISW-stack/README.md)\"\necho \"[[3]]: $(grep -cF '[[3]]' chat/AISW-stack/README.md)\"",
+          "description": "Each ref usage"
+        }
+      }
+    },
+    {
+      "step_id": 392,
+      "timestamp": "2026-05-16T13:33:08.698Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 397877,
+        "completion_tokens": 3415,
+        "cached_tokens": 397876,
+        "extra": {
+          "cache_creation_input_tokens": 328,
+          "cache_read_input_tokens": 397876,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 328,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3415,
+              "cache_read_input_tokens": 397876,
+              "cache_creation_input_tokens": 328,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 328
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 393,
+      "timestamp": "2026-05-16T13:33:09.415Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "把 line 5 的 \"A 主线\" 特别描述也去掉，让 10 个分支真正平等。同时把 [[1]][[2]][[3]] 挪到 L33/L34（ChatGPT / Cursor / Devin 实际所在层）。",
+      "metrics": {
+        "prompt_tokens": 397877,
+        "completion_tokens": 3415,
+        "cached_tokens": 397876,
+        "extra": {
+          "cache_creation_input_tokens": 328,
+          "cache_read_input_tokens": 397876,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 328,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3415,
+              "cache_read_input_tokens": 397876,
+              "cache_creation_input_tokens": 328,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 328
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 394,
+      "timestamp": "2026-05-16T13:33:18.836Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_019J2PJX9cmnKhEV9x6hbBPf",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_019J2PJX9cmnKhEV9x6hbBPf",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "set -e\n\n# 重写 top body —— 不再\"特别描述\" A\npython3 scripts/aiswstack_controller.py replace top \\\n  --old '总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。' \\\n  --new '总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。'\n\n# 把 [[1]] ChatGPT 挂到 L33 实际名称上\npython3 scripts/aiswstack_controller.py replace L33 \\\n  --old '- **ChatGPT**（OpenAI；含 Tasks、Operator' \\\n  --new '- **ChatGPT**[[1]](https://chatgpt.com/)（OpenAI；含 Tasks、Operator'\n\n# 把 [[2]] Cursor / [[3]] Devin 挂到 L34 编码 Agent 行\npython3 scripts/aiswstack_controller.py replace L34 \\\n  --old '- **编码 Agent**：Cursor、Claude Code' \\\n  --new '- **编码 Agent**：Cursor[[2]](https://cursor.com/)、Claude Code'\n\npython3 scripts/aiswstack_controller.py replace L34 \\\n  --old 'Devin（Cognition）' \\\n  --new 'Devin[[3]](https://devin.ai/)（Cognition）'\n\npython3 scripts/aiswstack_controller.py render",
+            "description": "Rewrite top, relocate refs 1/2/3"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_019J2PJX9cmnKhEV9x6hbBPf",
+            "content": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'L33'\nreplaced 1 occurrence(s) in 'L34'\nreplaced 1 occurrence(s) in 'L34'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380\n\n[stdout]\nreplaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'L33'\nreplaced 1 occurrence(s) in 'L34'\nreplaced 1 occurrence(s) in 'L34'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 397877,
+        "completion_tokens": 3415,
+        "cached_tokens": 397876,
+        "extra": {
+          "cache_creation_input_tokens": 328,
+          "cache_read_input_tokens": 397876,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 328,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 3415,
+              "cache_read_input_tokens": 397876,
+              "cache_creation_input_tokens": 328,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 328
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'L33'\nreplaced 1 occurrence(s) in 'L34'\nreplaced 1 occurrence(s) in 'L34'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019J2PJX9cmnKhEV9x6hbBPf",
+            "type": "tool_result",
+            "content": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'L33'\nreplaced 1 occurrence(s) in 'L34'\nreplaced 1 occurrence(s) in 'L34'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'L33'\nreplaced 1 occurrence(s) in 'L34'\nreplaced 1 occurrence(s) in 'L34'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019J2PJX9cmnKhEV9x6hbBPf",
+            "type": "tool_result",
+            "content": "replaced 1 occurrence(s) in 'top'\nreplaced 1 occurrence(s) in 'L33'\nreplaced 1 occurrence(s) in 'L34'\nreplaced 1 occurrence(s) in 'L34'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "set -e\n\n# 重写 top body —— 不再\"特别描述\" A\npython3 scripts/aiswstack_controller.py replace top \\\n  --old '总表横轴 10 条领域分支：**A** LLM / Agent[[1]](https://chatgpt.com/)[[2]](https://cursor.com/)[[3]](https://devin.ai/)、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。A 的展开等同于 L01–L34 主线（下文单独呈现）；B–J 在并列章节里展开各自的 L10+ 细节。' \\\n  --new '总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。'\n\n# 把 [[1]] ChatGPT 挂到 L33 实际名称上\npython3 scripts/aiswstack_controller.py replace L33 \\\n  --old '- **ChatGPT**（OpenAI；含 Tasks、Operator' \\\n  --new '- **ChatGPT**[[1]](https://chatgpt.com/)（OpenAI；含 Tasks、Operator'\n\n# 把 [[2]] Cursor / [[3]] Devin 挂到 L34 编码 Agent 行\npython3 scripts/aiswstack_controller.py replace L34 \\\n  --old '- **编码 Agent**：Cursor、Claude Code' \\\n  --new '- **编码 Agent**：Cursor[[2]](https://cursor.com/)、Claude Code'\n\npython3 scripts/aiswstack_controller.py replace L34 \\\n  --old 'Devin（Cognition）' \\\n  --new 'Devin[[3]](https://devin.ai/)（Cognition）'\n\npython3 scripts/aiswstack_controller.py render",
+          "description": "Rewrite top, relocate refs 1/2/3"
+        }
+      }
+    },
+    {
+      "step_id": 395,
+      "timestamp": "2026-05-16T13:33:33.186Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01BhZc9Rasajj7wGEjXq8nxc",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01BhZc9Rasajj7wGEjXq8nxc",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "set +e\necho \"=== 残留 ===\"\nfor p in '主干' 'A 主' 'B–G' 'B-G' 'C–G' 'C-G' '8 条' '并列存在' '主线'; do\n  n=$(grep -cF \"$p\" chat/AISW-stack/README.md)\n  if [ \"$n\" -gt 0 ]; then\n    echo \"[$p]: $n 处\"\n    grep -nF \"$p\" chat/AISW-stack/README.md | head -3\n  fi\ndone\necho \"=== 头 13 行预览 ===\"\nhead -13 chat/AISW-stack/README.md",
+            "description": "Final residual check"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01BhZc9Rasajj7wGEjXq8nxc",
+            "content": "=== 残留 ===\n[主干]: 1 处\n807:### H1 游戏引擎（AI 是嵌入而非主干）\n[主线]: 2 处\n369:- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA[[13]](https://developer.nvidia.com/cuda) 主线 + ROCm / Intel / Ascend 后端）\n645:以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。\n=== 头 13 行预览 ===\n# AI 软件栈分层索引：从设备驱动到终端用户应用\n\n从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。\n\n## L 层 × 分支 总表\n\n横轴 10 列对应 **A–J 共 10 条领域分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n\n- `同 A`：该层在该分支与 A 列基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n- `—`：该层在该分支不存在或可忽略。\n- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。\n\n[stdout]\n=== 残留 ===\n[主干]: 1 处\n807:### H1 游戏引擎（AI 是嵌入而非主干）\n[主线]: 2 处\n369:- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA[[13]](https://developer.nvidia.com/cuda) 主线 + ROCm / Intel / Ascend 后端）\n645:以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。\n=== 头 13 行预览 ===\n# AI 软件栈分层索引：从设备驱动到终端用户应用\n\n从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。\n\n## L 层 × 分支 总表\n\n横轴 10 列对应 **A–J 共 10 条领域分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n\n- `同 A`：该层在该分支与 A 列基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n- `—`：该层在该分支不存在或可忽略。\n- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 398205,
+        "completion_tokens": 291,
+        "cached_tokens": 398204,
+        "extra": {
+          "cache_creation_input_tokens": 3713,
+          "cache_read_input_tokens": 398204,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3713,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 291,
+              "cache_read_input_tokens": 398204,
+              "cache_creation_input_tokens": 3713,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3713
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "=== 残留 ===\n[主干]: 1 处\n807:### H1 游戏引擎（AI 是嵌入而非主干）\n[主线]: 2 处\n369:- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA[[13]](https://developer.nvidia.com/cuda) 主线 + ROCm / Intel / Ascend 后端）\n645:以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。\n=== 头 13 行预览 ===\n# AI 软件栈分层索引：从设备驱动到终端用户应用\n\n从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。\n\n## L 层 × 分支 总表\n\n横轴 10 列对应 **A–J 共 10 条领域分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n\n- `同 A`：该层在该分支与 A 列基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n- `—`：该层在该分支不存在或可忽略。\n- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01BhZc9Rasajj7wGEjXq8nxc",
+            "type": "tool_result",
+            "content": "=== 残留 ===\n[主干]: 1 处\n807:### H1 游戏引擎（AI 是嵌入而非主干）\n[主线]: 2 处\n369:- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA[[13]](https://developer.nvidia.com/cuda) 主线 + ROCm / Intel / Ascend 后端）\n645:以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。\n=== 头 13 行预览 ===\n# AI 软件栈分层索引：从设备驱动到终端用户应用\n\n从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。\n\n## L 层 × 分支 总表\n\n横轴 10 列对应 **A–J 共 10 条领域分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n\n- `同 A`：该层在该分支与 A 列基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n- `—`：该层在该分支不存在或可忽略。\n- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "=== 残留 ===\n[主干]: 1 处\n807:### H1 游戏引擎（AI 是嵌入而非主干）\n[主线]: 2 处\n369:- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA[[13]](https://developer.nvidia.com/cuda) 主线 + ROCm / Intel / Ascend 后端）\n645:以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。\n=== 头 13 行预览 ===\n# AI 软件栈分层索引：从设备驱动到终端用户应用\n\n从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。\n\n## L 层 × 分支 总表\n\n横轴 10 列对应 **A–J 共 10 条领域分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n\n- `同 A`：该层在该分支与 A 列基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n- `—`：该层在该分支不存在或可忽略。\n- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01BhZc9Rasajj7wGEjXq8nxc",
+            "type": "tool_result",
+            "content": "=== 残留 ===\n[主干]: 1 处\n807:### H1 游戏引擎（AI 是嵌入而非主干）\n[主线]: 2 处\n369:- vLLM（UC Berkeley → 公司化；PagedAttention 发起者，开源吞吐量基准；CUDA[[13]](https://developer.nvidia.com/cuda) 主线 + ROCm / Intel / Ascend 后端）\n645:以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 等同于 L01–L34 主线，已在上文展开，本段不重复。\n=== 头 13 行预览 ===\n# AI 软件栈分层索引：从设备驱动到终端用户应用\n\n从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。\n\n总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的子层与终端产品。\n\n## L 层 × 分支 总表\n\n横轴 10 列对应 **A–J 共 10 条领域分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：\n\n- `同 A`：该层在该分支与 A 列基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。\n- `—`：该层在该分支不存在或可忽略。\n- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "set +e\necho \"=== 残留 ===\"\nfor p in '主干' 'A 主' 'B–G' 'B-G' 'C–G' 'C-G' '8 条' '并列存在' '主线'; do\n  n=$(grep -cF \"$p\" chat/AISW-stack/README.md)\n  if [ \"$n\" -gt 0 ]; then\n    echo \"[$p]: $n 处\"\n    grep -nF \"$p\" chat/AISW-stack/README.md | head -3\n  fi\ndone\necho \"=== 头 13 行预览 ===\"\nhead -13 chat/AISW-stack/README.md",
+          "description": "Final residual check"
+        }
+      }
+    },
+    {
+      "step_id": 396,
+      "timestamp": "2026-05-16T13:33:48.019Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 401918,
+        "completion_tokens": 817,
+        "cached_tokens": 401917,
+        "extra": {
+          "cache_creation_input_tokens": 1299,
+          "cache_read_input_tokens": 401917,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1299,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 817,
+              "cache_read_input_tokens": 401917,
+              "cache_creation_input_tokens": 1299,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1299
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 397,
+      "timestamp": "2026-05-16T13:33:49.660Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_01Gr1tZePa8HCHc8xf3U1zzS",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Gr1tZePa8HCHc8xf3U1zzS",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "python3 scripts/aiswstack_controller.py replace parallel-intro \\\n  --old 'A 等同于 L01–L34 主线，已在上文展开，本段不重复。' \\\n  --new 'A 分支无独立子层，其 L10+ 内容随 L01–L38 各层段直接呈现。' && \\\npython3 scripts/aiswstack_controller.py render",
+            "description": "Replace last 主线 mention"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Gr1tZePa8HCHc8xf3U1zzS",
+            "content": "replaced 1 occurrence(s) in 'parallel-intro'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380\n\n[stdout]\nreplaced 1 occurrence(s) in 'parallel-intro'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 401918,
+        "completion_tokens": 817,
+        "cached_tokens": 401917,
+        "extra": {
+          "cache_creation_input_tokens": 1299,
+          "cache_read_input_tokens": 401917,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1299,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 817,
+              "cache_read_input_tokens": 401917,
+              "cache_creation_input_tokens": 1299,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1299
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "replaced 1 occurrence(s) in 'parallel-intro'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Gr1tZePa8HCHc8xf3U1zzS",
+            "type": "tool_result",
+            "content": "replaced 1 occurrence(s) in 'parallel-intro'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "replaced 1 occurrence(s) in 'parallel-intro'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Gr1tZePa8HCHc8xf3U1zzS",
+            "type": "tool_result",
+            "content": "replaced 1 occurrence(s) in 'parallel-intro'\nrendered 98 blocks → /Users/luwei/work/Controversy/chat/AISW-stack/README.md\n  layers=38 branches=60 entries=774 refs=899 cells=380",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "python3 scripts/aiswstack_controller.py replace parallel-intro \\\n  --old 'A 等同于 L01–L34 主线，已在上文展开，本段不重复。' \\\n  --new 'A 分支无独立子层，其 L10+ 内容随 L01–L38 各层段直接呈现。' && \\\npython3 scripts/aiswstack_controller.py render",
+          "description": "Replace last 主线 mention"
+        }
+      }
+    },
+    {
+      "step_id": 398,
+      "timestamp": "2026-05-16T13:33:57.089Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "Executed Bash toolu_013JHj1r34yfX37AXxcuaZ9a",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_013JHj1r34yfX37AXxcuaZ9a",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "set +e\necho \"=== 残留检查 ===\"\nfor p in '主干' 'A 主线' 'A 主干' 'B–G' 'B-G' 'C–G' 'C-G' '8 条' '并列存在'; do\n  n=$(grep -cF \"$p\" chat/AISW-stack/README.md)\n  echo \"[$p]: $n\"\ndone\necho \"=== entries / refs ===\"\npython3 scripts/aiswstack_controller.py query \"SELECT COUNT(*) AS entries FROM entries\"\npython3 scripts/aiswstack_controller.py query \"SELECT num, citation FROM refs WHERE num IN (1,2,3)\"\npython3 scripts/aiswstack_controller.py query \"SELECT layer_code, name, url FROM entries WHERE slug IN ('l33-chatgpt', 'l34-cursor', 'l34-devin')\"",
+            "description": "Final verify"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_013JHj1r34yfX37AXxcuaZ9a",
+            "content": "=== 残留检查 ===\n[主干]: 1\n[A 主线]: 0\n[A 主干]: 0\n[B–G]: 0\n[B-G]: 0\n[C–G]: 0\n[C-G]: 0\n[8 条]: 0\n[并列存在]: 0\n=== entries / refs ===\nentries\n774\nnum\tcitation\n1\tOpenAI, \"ChatGPT,\"\n2\tAnysphere, \"Cursor: The best way to code with AI,\"\n3\tCognition, \"Devin: The AI Software Engineer,\"\nlayer_code\tname\turl\nL33\tChatGPT\thttps://chatgpt.com/\nL34\tCursor\thttps://cursor.com/\nL34\tDevin\thttps://devin.ai/\n\n[stdout]\n=== 残留检查 ===\n[主干]: 1\n[A 主线]: 0\n[A 主干]: 0\n[B–G]: 0\n[B-G]: 0\n[C–G]: 0\n[C-G]: 0\n[8 条]: 0\n[并列存在]: 0\n=== entries / refs ===\nentries\n774\nnum\tcitation\n1\tOpenAI, \"ChatGPT,\"\n2\tAnysphere, \"Cursor: The best way to code with AI,\"\n3\tCognition, \"Devin: The AI Software Engineer,\"\nlayer_code\tname\turl\nL33\tChatGPT\thttps://chatgpt.com/\nL34\tCursor\thttps://cursor.com/\nL34\tDevin\thttps://devin.ai/\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 403217,
+        "completion_tokens": 384,
+        "cached_tokens": 403216,
+        "extra": {
+          "cache_creation_input_tokens": 917,
+          "cache_read_input_tokens": 403216,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 917,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 384,
+              "cache_read_input_tokens": 403216,
+              "cache_creation_input_tokens": 917,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 917
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "=== 残留检查 ===\n[主干]: 1\n[A 主线]: 0\n[A 主干]: 0\n[B–G]: 0\n[B-G]: 0\n[C–G]: 0\n[C-G]: 0\n[8 条]: 0\n[并列存在]: 0\n=== entries / refs ===\nentries\n774\nnum\tcitation\n1\tOpenAI, \"ChatGPT,\"\n2\tAnysphere, \"Cursor: The best way to code with AI,\"\n3\tCognition, \"Devin: The AI Software Engineer,\"\nlayer_code\tname\turl\nL33\tChatGPT\thttps://chatgpt.com/\nL34\tCursor\thttps://cursor.com/\nL34\tDevin\thttps://devin.ai/",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013JHj1r34yfX37AXxcuaZ9a",
+            "type": "tool_result",
+            "content": "=== 残留检查 ===\n[主干]: 1\n[A 主线]: 0\n[A 主干]: 0\n[B–G]: 0\n[B-G]: 0\n[C–G]: 0\n[C-G]: 0\n[8 条]: 0\n[并列存在]: 0\n=== entries / refs ===\nentries\n774\nnum\tcitation\n1\tOpenAI, \"ChatGPT,\"\n2\tAnysphere, \"Cursor: The best way to code with AI,\"\n3\tCognition, \"Devin: The AI Software Engineer,\"\nlayer_code\tname\turl\nL33\tChatGPT\thttps://chatgpt.com/\nL34\tCursor\thttps://cursor.com/\nL34\tDevin\thttps://devin.ai/",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "=== 残留检查 ===\n[主干]: 1\n[A 主线]: 0\n[A 主干]: 0\n[B–G]: 0\n[B-G]: 0\n[C–G]: 0\n[C-G]: 0\n[8 条]: 0\n[并列存在]: 0\n=== entries / refs ===\nentries\n774\nnum\tcitation\n1\tOpenAI, \"ChatGPT,\"\n2\tAnysphere, \"Cursor: The best way to code with AI,\"\n3\tCognition, \"Devin: The AI Software Engineer,\"\nlayer_code\tname\turl\nL33\tChatGPT\thttps://chatgpt.com/\nL34\tCursor\thttps://cursor.com/\nL34\tDevin\thttps://devin.ai/",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013JHj1r34yfX37AXxcuaZ9a",
+            "type": "tool_result",
+            "content": "=== 残留检查 ===\n[主干]: 1\n[A 主线]: 0\n[A 主干]: 0\n[B–G]: 0\n[B-G]: 0\n[C–G]: 0\n[C-G]: 0\n[8 条]: 0\n[并列存在]: 0\n=== entries / refs ===\nentries\n774\nnum\tcitation\n1\tOpenAI, \"ChatGPT,\"\n2\tAnysphere, \"Cursor: The best way to code with AI,\"\n3\tCognition, \"Devin: The AI Software Engineer,\"\nlayer_code\tname\turl\nL33\tChatGPT\thttps://chatgpt.com/\nL34\tCursor\thttps://cursor.com/\nL34\tDevin\thttps://devin.ai/",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "set +e\necho \"=== 残留检查 ===\"\nfor p in '主干' 'A 主线' 'A 主干' 'B–G' 'B-G' 'C–G' 'C-G' '8 条' '并列存在'; do\n  n=$(grep -cF \"$p\" chat/AISW-stack/README.md)\n  echo \"[$p]: $n\"\ndone\necho \"=== entries / refs ===\"\npython3 scripts/aiswstack_controller.py query \"SELECT COUNT(*) AS entries FROM entries\"\npython3 scripts/aiswstack_controller.py query \"SELECT num, citation FROM refs WHERE num IN (1,2,3)\"\npython3 scripts/aiswstack_controller.py query \"SELECT layer_code, name, url FROM entries WHERE slug IN ('l33-chatgpt', 'l34-cursor', 'l34-devin')\"",
+          "description": "Final verify"
+        }
+      }
+    },
+    {
+      "step_id": 399,
+      "timestamp": "2026-05-16T13:34:09.116Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 404134,
+        "completion_tokens": 1405,
+        "cached_tokens": 404133,
+        "extra": {
+          "cache_creation_input_tokens": 639,
+          "cache_read_input_tokens": 404133,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 639,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 1405,
+              "cache_read_input_tokens": 404133,
+              "cache_creation_input_tokens": 639,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 639
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 400,
+      "timestamp": "2026-05-16T13:34:23.645Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "完成。除 H1 子分支标题里语义对照用法的\"主干\"（\"AI 是嵌入而非主干\"）外，所有\"A 主干 / 主线\"、\"B–G / C–G / 8 条 / 并列存在\"等措辞已清除；[[1]][[2]][[3]] 三个引用已从 top 移回 L33 ChatGPT / L34 Cursor / L34 Devin 实际所在层（entries 数从 771 → 774，三个新增 entry 入索引）。\n\n## 最终的修改\n\n**top block** — 不再\"分两大段\"，10 个分支并列呈现：\n```\n总表横轴 10 条领域分支：A LLM / Agent、B 科学计算 / AI4Science、C 机器人、\nD 自动驾驶、E 世界模型 / 3D、F 经典视觉、G 量化金融、H 游戏、I 影视娱乐、\nJ 学习 / 教育。所有分支共享 L01–L09 的硬件 / 内核 / 框架底座，从 L10 起在\n领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各\n层段呈现每层在各分支的样态；\"各领域分支细节\"一章按分支视角展开 L10+ 的\n子层与终端产品。\n```\n\n**summary-table 引介**：`9 列 / B–I 8 条` → `10 列 / A–J 共 10 条领域分支`；\"同 A\" 解释从\"与主干\"→\"与 A 列\"；L35–L38 描述从\"A 主干没有但 B–G 必需\"→\"A 没有、仅部分领域分支必需\"。\n\n**H2 标题**（用新加的 `set-title` 命令）：\n- `A. LLM / Agent 主干 — 全栈总览` → `A. LLM / Agent — 全栈总览`\n- `并列应用分支（共享 L01–L09，从 L10 起分叉）` → `各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）`\n\n**parallel-intro body**：去掉 \"LLM 不是 GPU 的唯一负载\" 这种暗含 A 主导的开头；改成 \"9 个领域分支共享 L01–L09 通用 GPU 栈\"；A 的特殊性只用中性事实表述：\"A 分支无独立子层，其 L10+ 内容随 L01–L38 各层段直接呈现\"。\n\n**J body** 中 \"L01–L17 完全沿用主干通用 LLM 栈\" → \"完全沿用通用 LLM 栈\"。\n\n**横切观察**：`并列分支 B–G 共享 L01–L09` → `B–J 各分支共享 L01–L09`；`用主干 Agent 框架的话语去套` → `用 A 列 Agent 框架的话语去套`；`NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位` → `NVIDIA 是唯一在全部 10 条领域分支都占重要席位`。\n\n**Controller 新增 `set-title` 命令**——改 block H2/H3 标题（之前 SKILL 没有这种能力，title 是 source 但只能改 body）。",
+      "metrics": {
+        "prompt_tokens": 404134,
+        "completion_tokens": 1405,
+        "cached_tokens": 404133,
+        "extra": {
+          "cache_creation_input_tokens": 639,
+          "cache_read_input_tokens": 404133,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 639,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [
+            {
+              "input_tokens": 1,
+              "output_tokens": 1405,
+              "cache_read_input_tokens": 404133,
+              "cache_creation_input_tokens": 639,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 639
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 78723201,
-    "total_completion_tokens": 564205,
-    "total_cached_tokens": 78722677,
-    "total_steps": 376,
+    "total_prompt_tokens": 87767142,
+    "total_completion_tokens": 614002,
+    "total_cached_tokens": 87766580,
+    "total_steps": 400,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 2155677,
-      "total_cache_read_input_tokens": 78722677
+      "total_cache_creation_input_tokens": 2192440,
+      "total_cache_read_input_tokens": 87766580
     }
   }
 }

@@ -595,6 +595,16 @@ def cmd_set_body(args):
     print(f"set body of '{args.key}' to {len(new_body)} chars")
 
 
+def cmd_set_title(args):
+    """改 block 的 H2 / H3 标题。"""
+    conn = connect()
+    if not conn.execute("SELECT 1 FROM blocks WHERE key=?", (args.key,)).fetchone():
+        sys.exit(f"block '{args.key}' not found")
+    conn.execute("UPDATE blocks SET title=? WHERE key=?", (args.title, args.key))
+    conn.commit()
+    print(f"set title of '{args.key}' to '{args.title}'")
+
+
 def cmd_add_ref(args):
     """追加 [N] citation 行到 refs block，返回新 ref 号。"""
     conn = connect()
@@ -722,6 +732,11 @@ def main():
     psb.add_argument("key", help="block key")
     psb.add_argument("--file", help="read new body from file; else stdin")
     psb.set_defaults(func=cmd_set_body)
+
+    pst = sub.add_parser("set-title", help="update the H2/H3 title of a block")
+    pst.add_argument("key", help="block key")
+    pst.add_argument("--title", required=True)
+    pst.set_defaults(func=cmd_set_title)
 
     par = sub.add_parser("add-ref")
     par.add_argument("--citation", required=True,

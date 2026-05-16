@@ -2,18 +2,15 @@
 
 从最底层的设备驱动 / 固件（GPU、NPU、加速卡），一直到最终用户接触的应用，完整一根栈。每层至少列 3 个代表性软件 / 项目 / 厂商；同层多个候选时尽量覆盖闭源前沿、开源主流、新兴挑战者三类。
 
-文件分两大段：
-
-- **A. LLM / Agent 主干（L01–L34）**：当前舆论焦点，从设备驱动到 ChatGPT[[1]](https://chatgpt.com/) / Cursor[[2]](https://cursor.com/) / Devin[[3]](https://devin.ai/) 一根通。
-- **B–J. 并列应用分支**：**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育——共享 **L01–L09** 的硬件 / 内核 / 框架底座，但从 L10 起走自己的领域模型 + 部署路径。
+总表横轴 10 条领域分支：**A** LLM / Agent、**B** 科学计算 / AI4Science、**C** 机器人、**D** 自动驾驶、**E** 世界模型 / 3D、**F** 经典视觉、**G** 量化金融、**H** 游戏、**I** 影视娱乐、**J** 学习 / 教育。所有分支共享 **L01–L09** 的硬件 / 内核 / 框架底座，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上分叉。本文按两个维度组织：L01–L38 各层段呈现每层在各分支的样态；"各领域分支细节"一章按分支视角展开 L10+ 的子层与终端产品。
 
 ## L 层 × 分支 总表
 
-横轴 10 列对应 **A 主干 + B–J 9 条并列分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：
+横轴 10 列对应 **A–J 共 10 条领域分支**。纵轴每一行是一个 L 层，每个条目**严格归属**到当行 L，不跨层。规则：
 
-- `同 A`：该层在该分支与主干基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。
+- `同 A`：该层在该分支与 A 列基本沿用同款（驱动 / 内核 / 编译器 / 实验追踪多数如此）。
 - `—`：该层在该分支不存在或可忽略。
-- **L35–L38** 是 A 主干没有、但 B–G 必需的新增层；A 列保持空。
+- **L35–L38** 是 A 没有、仅部分领域分支必需的扩展层；A 列保持空。
   - L35 HPC 作业调度 / 工作流（B 专属：Slurm[[4]](https://slurm.schedmd.com/) / PBS / Spack 这一段在 LLM 训练里被 K8s[[5]](https://kubernetes.io/) + Ray[[6]](https://docs.ray.io/en/latest/index.html) 取代）
   - L36 机器人 / 实时中间件（C / D 共用：ROS 2[[7]](https://www.ros.org/) / DriveWorks / AUTOSAR / Holoscan）
   - L37 物理仿真 / 数字孪生引擎（B / C / D / E 共用：Isaac Sim / MuJoCo[[8]](https://mujoco.org/) / GROMACS[[9]](https://www.gromacs.org/) / CARLA / Omniverse）
@@ -62,7 +59,7 @@
 
 ---
 
-## A. LLM / Agent 主干 — 全栈总览（34 层）
+## A. LLM / Agent — 全栈总览（34 层）
 
 按"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用"九大段组织。
 
@@ -620,7 +617,7 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 
 直接给非开发者用户用的"AI 助手"。
 
-- **ChatGPT**（OpenAI；含 Tasks、Operator[[183]](https://openai.com/index/introducing-operator/)、Codex、Connectors）
+- **ChatGPT**[[1]](https://chatgpt.com/)（OpenAI；含 Tasks、Operator[[183]](https://openai.com/index/introducing-operator/)、Codex、Connectors）
 - **Claude.ai**（Anthropic[[149]](https://www.anthropic.com/api)；含 Projects、Artifacts、Computer Use、Skills、Claude Memory、Claude Desktop）
 - **Gemini app[[584]](https://gemini.google.com/) / Gemini Advanced**（Google）
 - **Grok[[585]](https://grok.com/)**（xAI；X 内嵌 + grok.com）
@@ -633,7 +630,7 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 
 按行业 / 角色划分的 Agent；2025 在编码、设计、营销、客服、医疗、法律均跑出独立公司。
 
-- **编码 Agent**：Cursor、Claude Code[[604]](https://claude.ai/code)（Anthropic）、Devin（Cognition）、Windsurf[[605]](https://windsurf.com/)（被 OpenAI 收购）、Replit Agent[[606]](https://replit.com/products/agent)、Codex CLI[[607]](https://github.com/openai/codex)（OpenAI）、Aider[[608]](https://aider.chat/)、GitHub Copilot Workspace[[609]](https://githubnext.com/projects/copilot-workspace/)、Augment[[610]](https://www.augmentcode.com/)、Amp[[611]](https://ampcode.com/)（Sourcegraph）、Lovable[[612]](https://lovable.dev/)、Bolt.new[[613]](https://bolt.new/)、v0[[614]](https://v0.app/)（Vercel）、Manus
+- **编码 Agent**：Cursor[[2]](https://cursor.com/)、Claude Code[[604]](https://claude.ai/code)（Anthropic）、Devin[[3]](https://devin.ai/)（Cognition）、Windsurf[[605]](https://windsurf.com/)（被 OpenAI 收购）、Replit Agent[[606]](https://replit.com/products/agent)、Codex CLI[[607]](https://github.com/openai/codex)（OpenAI）、Aider[[608]](https://aider.chat/)、GitHub Copilot Workspace[[609]](https://githubnext.com/projects/copilot-workspace/)、Augment[[610]](https://www.augmentcode.com/)、Amp[[611]](https://ampcode.com/)（Sourcegraph）、Lovable[[612]](https://lovable.dev/)、Bolt.new[[613]](https://bolt.new/)、v0[[614]](https://v0.app/)（Vercel）、Manus
 - **设计 / 内容**：Figma AI[[615]](https://www.figma.com/ai/) / Make[[616]](https://www.figma.com/make/)、Galileo AI[[617]](https://www.figma.com/make/)、Framer AI[[618]](https://www.framer.com/ai/)、Canva Magic Studio[[619]](https://www.canva.com/canva-ai/)、Jasper[[620]](https://www.jasper.ai/)、Copy.ai[[621]](https://www.copy.ai/)、Notion AI
 - **销售 / 营销 / 客服**：Decagon[[622]](https://decagon.ai/)、Sierra[[623]](https://sierra.ai/)、Ada[[624]](https://www.ada.cx/)、Intercom Fin[[625]](https://fin.ai/)、Cresta[[626]](https://cresta.com/)、Clay[[627]](https://www.clay.com/)、11x.ai[[628]](https://www.11x.ai/)、AirOps[[629]](https://www.airops.com/)、**Salesforce Agentforce**（CRM 数据上的 Agent 平台，per-conversation $2 定价）
 - **企业知识 / 内部 IT**：Glean[[630]](https://www.glean.com/)、Moveworks[[631]](https://www.moveworks.com/)、Hebbia[[632]](https://www.hebbia.com/)、Harvey[[633]](https://www.harvey.ai/)（法律）、Casetext CoCounsel[[634]](https://cocounsel.thomsonreuters.com/)（被 Thomson Reuters 收购）
@@ -643,9 +640,9 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 
 ---
 
-## 并列应用分支（共享 L01–L09，从 L10 起分叉）
+## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）
 
-LLM 不是 GPU 的唯一负载。下面 9 条分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）与 L10–L34 并列存在，物理上跑在同一批 GPU 上，逻辑上各自独立。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；C–J 用数字后缀（C1 / C2 / …）继续切。
+以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 分支无独立子层，其 L10+ 内容随 L01–L38 各层段直接呈现。
 
 ### B1 科学计算 / HPC 通用底座（与 L06–L09 并行）
 
@@ -877,7 +874,7 @@ Adobe Firefly Video、ILM StageCraft、Marvel（已多次使用 AI 风格化）�
 
 ### J 学习 / 教育栈：从辅导助手到 K-12 / 高等教育平台（与 L33 / L34 并行）
 
-AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用主干通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。
+AI 进入教育栈分两条线：**学生端**（智能辅导 / 答疑、语言学习、自动批改）与**教师 / 平台端**（备课内容生成、评估反馈、自适应学习路径）。底层 L01–L17 完全沿用通用 LLM 栈；差异从 L33 起——产品要面对未成年人合规、家长 / 教师权限、考试公平性等专属约束。
 
 ### J1 智能辅导 / 答疑（Tutor / Q&A）
 
@@ -911,8 +908,8 @@ Duolingo Max[[892]](https://www.duolingo.com/)（GPT-4 驱动 Roleplay + Explain
 - **L9 后训练 + L11 评测 + L24 Agent 框架 形成 RL 闭环**：RLVR / GRPO 把 L11 的评测器当 reward，把 L24 的 agent rollout 当 trajectory，是 2025 训练范式的核心变化。
 - **L34 垂直 Agent 与 L24 Agent 框架的耦合方式分两类**：闭源垂直 Agent（Cursor、Devin、Sierra）几乎都不用第三方 Agent 框架，自己造控制循环；而中小垂直 Agent（Clay、Lovable 的部分组件）大量复用 LangGraph / Agents SDK。
 - **L18 LLM 应用框架 在 2025 出现 "去 LangChain[[153]](https://www.langchain.com/) 化"信号**：原生 SDK（OpenAI Agents SDK、Claude Agent SDK）抢占了 LangChain 早期的功能位；LangChain 通过 LangGraph + LangSmith 上移到 L24 + L28。
-- **并列分支 B–G 共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用主干"Agent 框架"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。
-- **NVIDIA 是唯一在 A 主干 + B–G 全部 6 个分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。
+- **B–J 各分支共享 L01–L09，但向上越走越像各自孤岛**：科学计算几乎不进 L13 推理服务（用 Slurm + 直接调脚本）；机器人 VLA / 自动驾驶端到端策略**根本不是 Agent**（没有 tool-loop、没有规划），用 A 列"Agent 框架"的话语去套是误读；只有 E 世界模型与 L32 视频生成在底层模型上真正同源。
+- **NVIDIA 是唯一在全部 10 条领域分支都占重要席位的供应商**：CUDA + cuDNN[[21]](https://developer.nvidia.com/cudnn)（L03–L04）→ Megatron / NeMo（L07）→ Triton Inference（L14）→ BioNeMo / Earth-2 / Modulus（B3）→ Isaac / Cosmos / GR00T（C）→ DRIVE（D）→ Omniverse + ACE（E）→ DeepStream（F）。这是 2025 估值溢价相对于纯 LLM 厂商更稳的结构性原因。
 - **移动 / 边缘 SoC 三巨头（高通 / 联发科 / 瑞芯微）走的是与 NVIDIA 正交的栈**：他们集中在 L01（自研 NPU 驱动）+ L03（QNN / NeuroPilot / RKNN 三套互不兼容的 SDK）+ L13（端侧 LLM 推理引擎 Genie / NeuroPilot / RKLLM），几乎不出现在 L06–L09 训练栈与 L18 以上 Agent 栈——他们卖的是"模型转出后跑在哪"的最后一公里。三家分工：高通占高端手机 / Copilot+ PC / 高端车载（Snapdragon Ride）、联发科占中高端手机 + 中端车机 + ChromeOS、瑞芯微占低成本边缘视觉 + 中低端国产车机 / IoT。共同对手是 Apple ANE + 内置 Core ML 闭环（Apple 自家硬件 / 自家 OS / 自家 SDK 不外销）。
 
 ---
