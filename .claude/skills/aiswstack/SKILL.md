@@ -1,30 +1,46 @@
 ---
 name: aiswstack
-description: Query and edit the AISW-stack knowledge base at chat/AISW-stack/. Use when the user asks about the layered AI software stack (L01–L38 × A–I branches × vendors like NVIDIA / 高通 / 联发科 / 瑞芯微), wants to add a new technology / product / layer / branch, edits an entry's URL or ref, or regenerates the README. The Model (index.sqlite3) is source of truth; the View (README.md) is rendered from it via the Controller (scripts/aiswstack_controller.py).
+description: Query and edit the AISW-stack knowledge base at chat/AISW-stack/. Use when the user asks about the layered AI software stack (L01–L38 × A–I branches × vendors like NVIDIA / 高通 / 联发科 / 瑞芯微), wants to add a new technology / product / layer / branch, edits an entry's URL or ref, or regenerates the README. The Model (index.sqlite3) is source of truth; the View (README.md) is rendered from it via the Controller (scripts/aiswstack_controller.py). All modifications go through Controller commands — never edit README.md by hand and never write SQL UPDATE/INSERT to the derived tables.
 ---
 
 # AISW-stack skill
 
-知识库：`chat/AISW-stack/` 下的 AI 软件栈分层索引。MVC 架构：
+知识库：`chat/AISW-stack/` 下的 AI 软件栈分层索引。**MVC 单向流**：
 
-| 角色 | 文件 |
-|---|---|
-| **Model** | `chat/AISW-stack/index.sqlite3` — source of truth |
-| **View** | `chat/AISW-stack/README.md` — 由 Model 渲染 |
-| **Controller** | `scripts/aiswstack_controller.py` — import / render / query |
+| 角色 | 文件 | 修改方式 |
+|---|---|---|
+| **Model** | `chat/AISW-stack/index.sqlite3` | 通过 Controller 命令 |
+| **Controller** | `scripts/aiswstack_controller.py` | 结构性调整时编辑此文件 |
+| **View** | `chat/AISW-stack/README.md` | **只读输出**，由 `render` 生成 |
 
-**核心不变量**：编辑只动 `blocks` 表的 `body` 字段（或新增 block 行）。其他表（layers / branches / entries / refs / branch_cells / entry_refs）是 import 时从 `blocks` 自动派生的查询索引，**不要直接 UPDATE / INSERT 它们**——会被下次 import 覆盖。
+**铁律**：
+
+1. **永远不要手工编辑 `README.md`**。它是 `render` 的产物，下次 `render` 会覆盖任何手工改动。
+2. **永远不要写 SQL `UPDATE` / `INSERT` 改 db**。所有写操作走 Controller 命令（`add-block` / `replace` / `append` / `add-ref` / `delete-block`）。
+3. **永远不要 UPDATE / INSERT 派生表**（layers / branches / entries / refs / branch_cells / entry_refs）——它们由 `render` 从 `blocks` 重建。
+4. **每次改完都跑 `render`**。它重建派生索引并写出 README.md。
 
 ## Controller 命令速查
 
 ```bash
 python3 scripts/aiswstack_controller.py <subcmd>
 
-  import        README.md → db（清空重建；只在结构性调整后或者首次用）
-  render        db → README.md（覆盖；改完 blocks 一定要跑）
-  query "SQL"   执行任意 SQL（SELECT / UPDATE / INSERT 均可）
-  stats         表行数 + 同步状态
-  next-ref      返回下一个可用引用号（max(refs.num) + 1）
+# 只读
+  stats                              表行数
+  query "SELECT ..."                 任意 SELECT（不要写 UPDATE / INSERT 到派生表）
+  next-ref                           看下一可用引用号
+
+# 写：所有修改必须通过下列命令
+  add-ref --citation "..."           追加新引用到 refs block；stdout 输出新 ref 号
+  add-block KEY --type T --title "..." --body "..." [--after KEY | --before KEY]
+                                     新建 block（自动 shift order_idx）
+  delete-block KEY                   删除 block
+  replace KEY --old X --new Y [--all]
+                                     在 block.body 中替换字符串（默认要求唯一匹配）
+  append KEY --text "..."            追加到 block.body 末尾
+
+# 输出
+  render                             重建派生索引 + 写 README.md
 ```
 
 ## Schema
@@ -33,230 +49,228 @@ python3 scripts/aiswstack_controller.py <subcmd>
 blocks(key PK, order_idx, block_type, title, body, layer_code, branch_code)
   block_type ∈ {doc_top, summary_table, main_overview, layer, branch_intro,
                 branch, subbranch, crosscut, refs, other}
-  - key 示例: 'top', 'summary-table', 'main-overview', 'L13', 'parallel-intro',
-              'C', 'C1', 'crosscut', 'refs'
+  key 示例: 'top', 'summary-table', 'main-overview', 'L13', 'parallel-intro',
+           'C', 'C1', 'crosscut', 'refs'
 
-# 派生索引（不要直接改）：
-layers(code PK, position, name)
-branches(code PK, parent_code, position, name)
-refs(num PK, citation, url)
-entries(id PK, slug UNIQUE, name, url, layer_code, branch_code, vendor,
-        category, notes, block_key, source_line)
+# 派生（不要直接改）：
+layers(code, position, name)
+branches(code, parent_code, position, name)
+refs(num, citation, url)
+entries(id, slug, name, url, layer_code, branch_code, vendor, category,
+        notes, block_key, source_line)
 entry_refs(entry_id, ref_num)
 branch_cells(layer_code, branch_code, raw_text, marker)
 ```
 
-## 工作流
+## 决策树
 
-1. 接到请求 → 判断是**查询**（只读）还是**修改**
-2. 修改类需要资料 → 必要时 `WebSearch` / `WebFetch` 找官方主页与名称
-3. 用 `query "UPDATE blocks SET body=... WHERE key='...'"` 改 Model
-4. `import` 重建派生索引
-5. `render` 输出新 README.md
-6. 用 `git diff chat/AISW-stack/README.md` 给用户看变更
+```
+用户请求
+├── 只是问问题（查询，没让改）
+│   └── 用 query SELECT；不要改 db
+├── 加 / 改 / 删一个 entry（已知信息）
+│   └── 按"加 entry"配方
+├── 加 entry 但用户没给名字 / 链接
+│   └── 先 WebSearch / WebFetch 找资料，再走"加 entry"
+├── 加 / 删一个子分支或一个 L 层
+│   └── 按"加子分支" / "加 L 层"配方
+└── 加新主分支 / 改 block 切分粒度 / 新 vendor 白名单
+    └── 结构性调整：先告知用户改动范围，编辑 aiswstack_controller.py
+```
 
-## 常见任务 cookbook
+## 常见任务配方
 
 ### 查询（只读）
 
 ```bash
-# 查某厂商所有 entries
+# 某厂商所有 entries
 python3 scripts/aiswstack_controller.py query \
   "SELECT layer_code, name, url FROM entries WHERE vendor='高通' ORDER BY layer_code"
 
 # 某层全部 entries
 python3 scripts/aiswstack_controller.py query \
-  "SELECT vendor, name, url FROM entries WHERE layer_code='L13' ORDER BY id"
+  "SELECT vendor, name, url FROM entries WHERE layer_code='L13'"
 
-# 找未被引用过的孤儿 refs
-python3 scripts/aiswstack_controller.py query \
-  "SELECT r.num, r.url FROM refs r
-   LEFT JOIN entry_refs er ON r.num = er.ref_num
-   WHERE er.entry_id IS NULL"
-
-# 看某 block 的原文
+# 查某 block 当前内容（修改前必须先看）
 python3 scripts/aiswstack_controller.py query \
   "SELECT body FROM blocks WHERE key='L13'"
+
+# 哪些 ref 未被引用过（孤儿）
+python3 scripts/aiswstack_controller.py query "
+SELECT r.num, r.url FROM refs r
+LEFT JOIN entry_refs er ON r.num = er.ref_num
+WHERE er.entry_id IS NULL"
 ```
 
-### 添加 entry —— 已知 name + url + 所属 layer/branch
-
-定位 block → 改 body → import → render。
+### 加 entry（已知 name / url / 所属 layer 或 branch）
 
 ```bash
-# 1) 取下一个 ref 号
-NEXTREF=$(python3 scripts/aiswstack_controller.py next-ref)
-
-# 2) 在 refs block 末尾追加引用条目（注意 IEEE 风格）
-python3 scripts/aiswstack_controller.py query "
-UPDATE blocks SET body = body || char(10) || char(10) ||
-  '[${NEXTREF}] VendorName, \"Product Name,\" [Online]. Available: <https://example.com/>'
-WHERE key='refs'"
-
-# 3) 在目标 layer block 的 body 里插入 `Name[[N]](url)`
-#    先看当前 body 决定插入位置：
+# 1) 看目标 block 当前内容，决定插入位置
 python3 scripts/aiswstack_controller.py query "SELECT body FROM blocks WHERE key='L13'"
-#    然后用 REPLACE 把 entry 加到合适的 vendor 块内：
-python3 scripts/aiswstack_controller.py query "
-UPDATE blocks SET body = REPLACE(body,
-  '+ Adreno SDK[[873]](https://developer.qualcomm.com/software/adreno-gpu-sdk)',
-  '+ Adreno SDK[[873]](https://developer.qualcomm.com/software/adreno-gpu-sdk) + Product Name[[${NEXTREF}]](https://example.com/)'
-) WHERE key='L13'"
 
-# 4) 重建派生索引并渲染
-python3 scripts/aiswstack_controller.py import
+# 2) 追加新引用条目，捕获新 ref 号
+NEW=$(python3 scripts/aiswstack_controller.py add-ref \
+  --citation 'VendorName, "Product Name," [Online]. Available: <https://product-home/>')
+echo "got ref num: $NEW"
+
+# 3) 找一个唯一锚点（最好是某个完整的 entry markdown 串）
+#    在它后面追加 " + Product[[N]](url)"
+python3 scripts/aiswstack_controller.py replace L13 \
+  --old 'Qualcomm Genie[[882]](https://www.qualcomm.com/developer/software/genie-sdk)' \
+  --new "Qualcomm Genie[[882]](https://www.qualcomm.com/developer/software/genie-sdk) + Product[[${NEW}]](https://product-home/)"
+
+# 4) 渲染（重建索引 + 写 README）
 python3 scripts/aiswstack_controller.py render
+
+# 5) 验证
+python3 scripts/aiswstack_controller.py query \
+  "SELECT layer_code, vendor, name, url FROM entries WHERE name='Product'"
+git diff chat/AISW-stack/README.md
 ```
 
-⚠ 用 SQL 字符串插入时，**单引号要转义** (`''`)，**`/` 不可作分隔符**（parser 会把 `A / B` 视为 entry 名而非两个 entry）。
+注意：
 
-### 添加 entry —— agent 需要先搜索
+- `--old` 必须在该 block 内唯一匹配，否则 `replace` 报错；这时把 `--old` 加更多上下文让它唯一，或加 `--all`（谨慎）
+- 用 `+` 把新 entry 接到现有 entry 后是约定格式（`A + B` 表示并列两个 entry；parser 把 ` + ` 视作分隔符）
+- 若想新起一行 bullet，`--new` 里嵌入 `\n- ` 即可
 
-1. `WebSearch` 找候选官方主页
-2. `WebFetch` 确认主页存在 + 抓产品全名 / 描述
-3. 走"已知 name + url"流程
+### 加 entry（agent 需要先搜索）
 
-### 修改 entry 的 url
+```bash
+# 1) WebSearch 找候选官方主页
+# 2) WebFetch 确认存在并抓产品全名
+# 3) 走"加 entry"流程
+```
+
+### 改 entry 的 url
 
 ```bash
 # 找该 entry 所在 block 与现 url
 python3 scripts/aiswstack_controller.py query \
   "SELECT block_key, url FROM entries WHERE slug='l13-vllm'"
 
-# REPLACE 旧 url 为新 url
-python3 scripts/aiswstack_controller.py query "
-UPDATE blocks SET body = REPLACE(body,
-  '](https://old-url/)',
-  '](https://new-url/)')
-WHERE key='L13'"
+# replace url 字符串（在 ](old) → ](new) 上做替换）
+python3 scripts/aiswstack_controller.py replace L13 \
+  --old '](https://old-url/)' \
+  --new '](https://new-url/)'
 
-python3 scripts/aiswstack_controller.py import && \
 python3 scripts/aiswstack_controller.py render
 ```
 
-### 添加新子分支（如 C6）
-
-子分支 = 新 `### Cn 名称` 三级标题块，归属 parent C。
+### 删 entry
 
 ```bash
-# 1) 计算插入位置：取当前 C5 的 order_idx，+1
-ORDER=$(python3 scripts/aiswstack_controller.py query \
-  "SELECT order_idx + 1 FROM blocks WHERE key='C5'" | tail -1)
-
-# 2) 把 order >= 新值的 block 全部后移
+# 1) 找 entry 所在 block 与精确 markdown 串
 python3 scripts/aiswstack_controller.py query \
-  "UPDATE blocks SET order_idx = order_idx + 1 WHERE order_idx >= ${ORDER}"
+  "SELECT block_key FROM entries WHERE slug='...'"
 
-# 3) 插入新 block
-python3 scripts/aiswstack_controller.py query "
-INSERT INTO blocks(key, order_idx, block_type, title, body, branch_code)
-VALUES ('C6', ${ORDER}, 'subbranch', 'C6 新子分支名',
-        'inline 内容，含至少一个 [[N]](url) 才会有 entries\n', 'C6')"
+# 2) replace 把 "、Name[[N]](url)" 替换为 ""
+python3 scripts/aiswstack_controller.py replace L13 \
+  --old '、Old Product[[N]](url)' --new ''
 
-python3 scripts/aiswstack_controller.py import && \
 python3 scripts/aiswstack_controller.py render
+
+# 注意：ref 号永不复用。如果该 ref 不再被任何 entry 引用，可以选择
+# 从 refs block 删除 [N] 条目；但留着也无害（会成为 orphan ref）。
 ```
 
-### 添加新 L 层（如 L39）
-
-涉及三处联动：新建 layer block + 更新主表 + 更新主干总览段表。
+### 加子分支（如 C6）
 
 ```bash
-# 1) 在合适位置（L38 之后）插入新 layer block —— 按"子分支"模式先腾位
-ORDER=$(python3 scripts/aiswstack_controller.py query \
-  "SELECT order_idx + 1 FROM blocks WHERE key='L38'" | tail -1)
-python3 scripts/aiswstack_controller.py query \
-  "UPDATE blocks SET order_idx = order_idx + 1 WHERE order_idx >= ${ORDER}"
-python3 scripts/aiswstack_controller.py query "
-INSERT INTO blocks(key, order_idx, block_type, title, body, layer_code)
-VALUES ('L39', ${ORDER}, 'layer', 'L39 新层名',
-        '一段引介散文。\n\n- **NVIDIA**: Item[[N]](url)\n', 'L39')"
+python3 scripts/aiswstack_controller.py add-block C6 \
+  --type subbranch \
+  --title 'C6 新子分支名' \
+  --body '一段 inline 列表内容，含至少一个 [[N]](url) 才会派生 entries。
+例：示例方案[[N]](https://example.com/)、另一方案[[M]](https://other.com/)' \
+  --branch-code C6 \
+  --after C5
 
-# 2) 在 summary-table block 末尾追加 L39 行（9 列 A–I cells）
-python3 scripts/aiswstack_controller.py query "
-UPDATE blocks SET body = body || char(10) ||
-  '| L39 新层名 | ... | 同 A | 同 A | 同 A | 同 A | 同 A | 同 A | 同 A | 同 A |'
-WHERE key='summary-table'"
-
-# 3) 在 main-overview block 段表里追加一行
-python3 scripts/aiswstack_controller.py query "
-UPDATE blocks SET body = REPLACE(body,
-  '| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |',
-  '| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |' || char(10) ||
-  '| 新段 | L39 | 新层名 | 一句话视角 |')
-WHERE key='main-overview'"
-
-python3 scripts/aiswstack_controller.py import && \
 python3 scripts/aiswstack_controller.py render
 ```
 
-### 添加新主分支（如在 I 之后加 J）
+### 加 L 层（如 L39）
 
-**结构性调整**——需要改 Controller。先告知用户改动范围再做。
+涉及三处联动：新 layer block + summary-table 加新行 + main-overview 段表加新行。
 
-1. 在 `scripts/aiswstack_controller.py` 修改：
-   - `MAIN_BRANCHES` 常量末尾加 `("J", "新分支名")`
-2. 在 summary-table block 改表头和每行（加新列）：
-   ```sql
-   UPDATE blocks SET body = REPLACE(body,
-     '| H. 游戏 | I. 影视娱乐 |',
-     '| H. 游戏 | I. 影视娱乐 | J. 新分支名 |') WHERE key='summary-table';
-   -- 每行 L01..L38 都得加一列
-   ```
-3. 新建 `### J 总览块` 和子分支 `### J1`/`### J2` block
-4. `import` + `render` + 检查 `branches` 表里有 J
+```bash
+# 1) 新 layer block，放在 L38 之后
+python3 scripts/aiswstack_controller.py add-block L39 \
+  --type layer \
+  --title 'L39 新层名' \
+  --body '一段引介散文。
 
-### 删除 entry
+**NVIDIA**：
+- Product A[[N]](url)
+- Product B[[M]](url)' \
+  --layer-code L39 \
+  --after L38
 
-不能直接删 entries 表（派生）。要从 blocks.body 删 `Name[[N]](url)` 子串，再 import / render。如果该 ref 不再被引用，可选择从 refs block 删 `[N]` 条目（注意会留洞，**不要重排现有 ref 号**）。
+# 2) summary-table 加一行（9 列 cells）
+python3 scripts/aiswstack_controller.py append summary-table \
+  --text '| L39 新层名 | NVIDIA 方案 | 同 A | 同 A | 同 A | 同 A | 同 A | 同 A | 同 A | 同 A |'
+
+# 3) main-overview 段表加一行
+python3 scripts/aiswstack_controller.py replace main-overview \
+  --old '| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |' \
+  --new '| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |
+| 新段名 | L39 | 新层名 | 一句话视角 |'
+
+python3 scripts/aiswstack_controller.py render
+```
+
+### 加新主分支（结构性调整）
+
+⚠ 需要改 `scripts/aiswstack_controller.py`。先告知用户改动范围。
+
+1. 在 Controller 文件改 `MAIN_BRANCHES` 加 `("J", "新主分支名")`
+2. 在 summary-table block 改表头加新列、每行加新单元格（用 replace 一行一行改）
+3. 用 add-block 新建 `### J 总览块` 与子分支 `### J1` 等
+4. `render`
+
+### 修 entry 名字 / 多处替换
+
+把 `--old` 写完整（含 `[[N]](url)` 链接），`--new` 写新版完整文本。replace 默认要求 `--old` 在 block 内唯一；不唯一时加 `--all` 或把 `--old` 加更多上下文。
 
 ## 边界与陷阱
 
-- **`/` 不作分隔符**：parser 把 `A / B` 当一个 entry 名。`A + B` 才视作两个 entry。
-- **ref 号永不复用**：`next-ref` 总返回 max+1。删除 ref 号会在序列留洞，正常。
-- **entry slug 由 (layer/branch_code, name) 决定**：改 name 会改 slug。
-- **vendor 字段靠白名单**：扩列表改 Controller 的 `KNOWN_VENDORS`，否则新 vendor 会归入 `category`。
-- **render 完全无损**：import → render 后 `diff` 应为空。若有 diff，是 parser 缺陷，反馈用户而非吞下。
-- **blocks 是切片不是模板**：渲染时直接拼接 `## title\n\nbody`，不重新生成主表 / 段表——这些表在对应 block 的 body 里。
-- **结构性改动后必须 import**：纯改 body 改完直接 render 也行（派生表只在 import 时重建），但若新增 / 删除 / 移动 block，必须 import。
+- **`/` 不作分隔符**：parser 把 `A / B` 当一个 entry 名。要表达两个 entry 用 `A + B`。
+- **ref 号永不复用**：`add-ref` 总用 max+1。删除 ref 号会在序列留洞，正常。
+- **entry slug 由 (layer/branch_code, name) 决定**：改 name 会改 slug，旧索引上的链接会断。
+- **vendor 字段靠白名单**：扩列表需改 Controller 的 `KNOWN_VENDORS`，否则新 vendor 会归入 `category`。
+- **render 完全无损**：连续两次 render 输出 md 应相同。若某次 render 让 md 变了别的（不是你想改的），说明 derive_indexes 与 render 之间的关系被破坏，反馈用户。
+- **block.body 末尾的 `---\n`** 是 H2 之间的分隔符，保留它。
+- **加内容前先 query 看 body**：盲改 `--old` 不在 body 中会报错，浪费 turn。
 
 ## 完整示例：用户说"加上华为 MindStudio 到 L05 编译器层"
 
 ```bash
-# 1) 搜资料
-WebSearch: "Huawei MindStudio Ascend developer tools site:hiascend.com"
-WebFetch: https://www.hiascend.com/developer/devkit/mindstudio
-# → 确认产品全名 "MindStudio"，官方页存在
+# 1) 看 L05 当前 body，定位插入点
+python3 scripts/aiswstack_controller.py query "SELECT body FROM blocks WHERE key='L05'"
+# → 看到 "华为：CANN Graph Engine[[309]](...) ... + TBE / AscendC 算子编译器"
 
-# 2) 检查是否已存在
+# 2) 搜索 + 确认资料
+# WebSearch: "Huawei MindStudio Ascend developer tools"
+# WebFetch:  https://www.hiascend.com/developer/devkit/mindstudio
+# → 产品全名 "MindStudio"，官方页存在
+
+# 3) 检查是否已存在
 python3 scripts/aiswstack_controller.py query \
   "SELECT * FROM entries WHERE name LIKE '%MindStudio%'"
 
-# 3) 取下一个 ref 号
-NEXTREF=$(python3 scripts/aiswstack_controller.py next-ref)
-echo $NEXTREF  # e.g. 884
-
 # 4) 加引用
-python3 scripts/aiswstack_controller.py query "
-UPDATE blocks SET body = body || char(10) || char(10) ||
-  '[${NEXTREF}] Huawei, \"MindStudio,\" [Online]. Available: <https://www.hiascend.com/developer/devkit/mindstudio>'
-WHERE key='refs'"
+NEW=$(python3 scripts/aiswstack_controller.py add-ref \
+  --citation 'Huawei, "MindStudio," [Online]. Available: <https://www.hiascend.com/developer/devkit/mindstudio>')
+echo "ref num: $NEW"
 
-# 5) 把 MindStudio 加到 L05 华为那一项（查现状定位插入点）
-python3 scripts/aiswstack_controller.py query "SELECT body FROM blocks WHERE key='L05'"
-# → 看到 "华为：CANN Graph Engine[[309]] ... + TBE / AscendC 算子编译器" 这一行
+# 5) 把 MindStudio 接在 "AscendC 算子编译器" 后
+python3 scripts/aiswstack_controller.py replace L05 \
+  --old '+ TBE / AscendC 算子编译器' \
+  --new "+ TBE / AscendC 算子编译器 + MindStudio[[${NEW}]](https://www.hiascend.com/developer/devkit/mindstudio)"
 
-python3 scripts/aiswstack_controller.py query "
-UPDATE blocks SET body = REPLACE(body,
-  '+ TBE / AscendC 算子编译器',
-  '+ TBE / AscendC 算子编译器 + MindStudio[[${NEXTREF}]](https://www.hiascend.com/developer/devkit/mindstudio)')
-WHERE key='L05'"
-
-# 6) 重建 + 渲染
-python3 scripts/aiswstack_controller.py import
+# 6) 渲染
 python3 scripts/aiswstack_controller.py render
 
-# 7) 检查
+# 7) 验证
 python3 scripts/aiswstack_controller.py query \
   "SELECT layer_code, vendor, name, url FROM entries WHERE name='MindStudio'"
 git diff chat/AISW-stack/README.md

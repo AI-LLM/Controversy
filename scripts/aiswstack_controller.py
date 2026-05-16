@@ -3,31 +3,34 @@
 
 架构：
   Model       chat/AISW-stack/index.sqlite3   （source of truth）
-  View        chat/AISW-stack/README.md        （由 Model 渲染）
+  View        chat/AISW-stack/README.md        （由 Model 单向渲染）
   Controller  scripts/aiswstack_controller.py （本文件）
 
-Model 的核心是 `blocks` 表——存按 ## / ### 拆段后的 md 原文切片。
+单向流：所有内容修改都通过本 Controller 进入 db。README.md 是只读
+渲染产物——不要手工编辑它，因为没有任何反向同步路径，下次 render
+就会把人工改动覆盖掉。
+
+Model 的核心是 `blocks` 表——存按 ## / ### 拆段后的 markdown 切片。
 其他表（layers / branches / entries / refs / branch_cells / entry_refs）
-是 import / render 时从 blocks 自动派生的查询索引，不要直接改它们。
+是 render 时从 `blocks` 自动派生的查询索引，**不要直接 UPDATE / INSERT
+它们**，会在下次 render 时被覆盖。
 
 子命令：
-  init        新建空 schema
-  import      把 README.md 一次性导入 db（清空重建）
-  render      从 db 重新生成 README.md（覆盖原文件）
-  stats       统计行数
-  query SQL   执行任意 SQL（包括 UPDATE / INSERT 到 blocks）
-  next-ref    返回下一个可用引用号（max ref num + 1）
+  init                          新建空 schema
+  render                        派生索引 + 写 README.md（每次改完都跑）
+  stats                         表行数
+  next-ref                      返回下一个可用引用号（max + 1）
+  query SQL                     执行任意 SQL（推荐只读 SELECT）
 
-日常工作流：
-  1. （仅一次）`import` 把 md 灌进 db
-  2. 编辑：query "UPDATE blocks SET body=... WHERE key='L13'"
-  3. render 重写 README.md
-  4. 查询派生索引：query "SELECT ... FROM entries WHERE vendor='高通'"
+  add-block KEY [..]            新建 block（自动 shift order_idx）
+  delete-block KEY              删除 block（自动 shift）
+  replace KEY --old X --new Y   在 block.body 中替换字符串
+  append KEY --text "..."       追加到 block.body 末尾
+  add-ref --citation "..."      追加引用到 refs block；输出新 ref 号
 
-结构性调整（需要改本 Controller 的场景）：
-  - 新增主分支（A–I 之外的顶级列）：扩展 MAIN_BRANCHES、调整主表渲染
-  - 改变 block 切分粒度（如把 vendor 块独立成 block）：
-    split_into_blocks / derive_indexes / render 三处需要联动
+需要改本 Controller 代码的场景（结构性调整）：
+  - 新增主分支（A–I 之外的顶级列）：MAIN_BRANCHES 与主表渲染逻辑
+  - 改变 block 切分粒度或新 block_type：derive_indexes / render
   - 新增 vendor 白名单：KNOWN_VENDORS / VENDOR_ALIASES
 """
 
@@ -128,7 +131,7 @@ CREATE INDEX IF NOT EXISTS idx_blocks_order   ON blocks(order_idx);
 
 
 # ---------------------------------------------------------------------------
-# helpers
+# constants & helpers
 
 _PUNCT_RE = re.compile(r"[\s/（）()，,、；;:：&+]+")
 _DECO_RE = re.compile(r"[*_`\"'·]")
@@ -138,8 +141,6 @@ REF_LINK_RE = re.compile(r"\[\[(\d+)\]\]\((https?://[^\s)]+)\)")
 REF_ENTRY_RE = re.compile(
     r"^\[(\d+)\]\s+(.+?)(?:\s*\[Online\]\.\s+Available:\s*<([^>]+)>)?\s*$"
 )
-H2_RE = re.compile(r"^##\s+(.+?)\s*$", re.MULTILINE)
-H3_RE = re.compile(r"^###\s+(.+?)\s*$", re.MULTILINE)
 LAYER_TITLE_RE = re.compile(r"^(L\d{2})\s+(.+)$")
 BRANCH_TITLE_RE = re.compile(r"^([A-I](?:\d+)?)\s+(.+)$")
 VENDOR_BLOCK_RE = re.compile(r"^\*\*([^*]+)\*\*[:：]\s*$")
@@ -216,7 +217,6 @@ def extract_trailing_notes(text: str, pos: int) -> str | None:
 
 
 def extract_entries_from_text(text: str):
-    """从一段文本中按 `Name[[N]](url)` 模式抽 entries。"""
     out = []
     for m in REF_LINK_RE.finditer(text):
         ref_num = int(m.group(1))
@@ -244,121 +244,7 @@ def classify_cell(text: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# md → blocks
-
-def split_into_blocks(text: str) -> list[dict]:
-    """把 md 按 H2 切；并列应用分支段进一步按 H3 切。"""
-    blocks = []
-    order = 0
-    h2_matches = list(H2_RE.finditer(text))
-
-    # top
-    if not h2_matches or h2_matches[0].start() > 0:
-        top_end = h2_matches[0].start() if h2_matches else len(text)
-        top_body = text[:top_end]
-        if top_body.strip():
-            blocks.append({
-                "key": "top", "order_idx": order, "block_type": "doc_top",
-                "title": None, "body": top_body.rstrip("\n"),
-                "layer_code": None, "branch_code": None,
-            })
-            order += 1
-
-    for i, m in enumerate(h2_matches):
-        title = m.group(1).strip()
-        body_start = m.end() + 1
-        body_end = h2_matches[i + 1].start() if i + 1 < len(h2_matches) else len(text)
-        body = text[body_start:body_end].rstrip("\n")
-
-        if title.startswith("L 层 × 分支 总表"):
-            blocks.append({
-                "key": "summary-table", "order_idx": order,
-                "block_type": "summary_table", "title": title, "body": body,
-                "layer_code": None, "branch_code": None,
-            })
-            order += 1
-        elif title.startswith("A. LLM / Agent 主干"):
-            blocks.append({
-                "key": "main-overview", "order_idx": order,
-                "block_type": "main_overview", "title": title, "body": body,
-                "layer_code": None, "branch_code": None,
-            })
-            order += 1
-        elif (lm := LAYER_TITLE_RE.match(title)):
-            lc = lm.group(1)
-            blocks.append({
-                "key": lc, "order_idx": order, "block_type": "layer",
-                "title": title, "body": body,
-                "layer_code": lc, "branch_code": None,
-            })
-            order += 1
-        elif title.startswith("并列应用分支"):
-            h3_matches = list(H3_RE.finditer(body))
-            if h3_matches:
-                intro_body = body[:h3_matches[0].start()].rstrip("\n")
-                blocks.append({
-                    "key": "parallel-intro", "order_idx": order,
-                    "block_type": "branch_intro", "title": title,
-                    "body": intro_body, "layer_code": None, "branch_code": None,
-                })
-                order += 1
-                for j, hm in enumerate(h3_matches):
-                    h3_title = hm.group(1).strip()
-                    h3_start = hm.end() + 1
-                    h3_end = h3_matches[j + 1].start() if j + 1 < len(h3_matches) else len(body)
-                    h3_body = body[h3_start:h3_end].rstrip("\n")
-                    bm = BRANCH_TITLE_RE.match(h3_title)
-                    if bm:
-                        code = bm.group(1)
-                        is_sub = bool(re.search(r"\d", code))
-                        blocks.append({
-                            "key": code, "order_idx": order,
-                            "block_type": "subbranch" if is_sub else "branch",
-                            "title": h3_title, "body": h3_body,
-                            "layer_code": None, "branch_code": code,
-                        })
-                        order += 1
-                    else:
-                        blocks.append({
-                            "key": f"h3-other-{order}", "order_idx": order,
-                            "block_type": "other", "title": h3_title,
-                            "body": h3_body, "layer_code": None, "branch_code": None,
-                        })
-                        order += 1
-            else:
-                blocks.append({
-                    "key": "parallel-intro", "order_idx": order,
-                    "block_type": "branch_intro", "title": title, "body": body,
-                    "layer_code": None, "branch_code": None,
-                })
-                order += 1
-        elif title.startswith("几条横切的观察"):
-            blocks.append({
-                "key": "crosscut", "order_idx": order, "block_type": "crosscut",
-                "title": title, "body": body,
-                "layer_code": None, "branch_code": None,
-            })
-            order += 1
-        elif title == "参考文献":
-            blocks.append({
-                "key": "refs", "order_idx": order, "block_type": "refs",
-                "title": title, "body": body,
-                "layer_code": None, "branch_code": None,
-            })
-            order += 1
-        else:
-            blocks.append({
-                "key": f"h2-other-{order}", "order_idx": order,
-                "block_type": "other", "title": title, "body": body,
-                "layer_code": None, "branch_code": None,
-            })
-            order += 1
-
-    return blocks
-
-
-# ---------------------------------------------------------------------------
-# blocks → derived indexes
+# derive indexes (blocks → layers / branches / refs / entries / cells)
 
 def derive_indexes(blocks: list[dict]) -> dict:
     layers: dict[str, dict] = {}
@@ -366,12 +252,10 @@ def derive_indexes(blocks: list[dict]) -> dict:
                                   for i, (b, n) in enumerate(MAIN_BRANCHES, 1)}
     refs: dict[int, dict] = {}
     entries: dict[str, dict] = {}
-    entry_branches: set[tuple[str, str]] = set()
     entry_refs: set[tuple[str, int]] = set()
     branch_cells: list[dict] = []
     sub_pos = 100
 
-    # 第一遍：从 block titles 注册 layers / branches
     for blk in blocks:
         if blk["block_type"] == "layer" and blk["title"]:
             m = LAYER_TITLE_RE.match(blk["title"])
@@ -389,7 +273,6 @@ def derive_indexes(blocks: list[dict]) -> dict:
                 }
                 sub_pos += 1
 
-    # 第二遍：从 blocks body 解析 refs / cells / entries
     for blk in blocks:
         body = blk["body"]
         if blk["block_type"] == "refs":
@@ -408,26 +291,19 @@ def derive_indexes(blocks: list[dict]) -> dict:
 
         layer_code = blk.get("layer_code")
         branch_code = blk.get("branch_code")
-        if blk["block_type"] == "branch":
-            # 单字母总览块，本身的 entries 归 branch_code
-            pass
-        if blk["block_type"] == "subbranch":
-            # 子分支块，entries 归 subbranch_code
-            pass
         if not layer_code and not branch_code:
             continue
         parse_block_entries(blk, layer_code, branch_code,
-                            entries, entry_branches, entry_refs)
+                            entries, entry_refs)
 
     return {
         "layers": layers, "branches": branches, "refs": refs,
-        "entries": entries, "entry_branches": list(entry_branches),
-        "entry_refs": list(entry_refs), "branch_cells": branch_cells,
+        "entries": entries, "entry_refs": list(entry_refs),
+        "branch_cells": branch_cells,
     }
 
 
 def parse_summary_table_cells(body: str, layers: dict, branch_cells: list):
-    """从主表 body 提取 layer 名 + cell 标记。"""
     for line in body.split("\n"):
         if not line.startswith("|"):
             continue
@@ -449,9 +325,9 @@ def parse_summary_table_cells(body: str, layers: dict, branch_cells: list):
             })
 
 
-def parse_block_entries(blk: dict, layer_code: str | None, branch_code: str | None,
-                        entries: dict, entry_branches: set, entry_refs: set):
-    """扫 block body，提取所有 entries。"""
+def parse_block_entries(blk: dict, layer_code: str | None,
+                        branch_code: str | None,
+                        entries: dict, entry_refs: set):
     body = blk["body"]
     block_key = blk["key"]
     state_vendor = None
@@ -459,7 +335,6 @@ def parse_block_entries(blk: dict, layer_code: str | None, branch_code: str | No
     slug_prefix = layer_code or branch_code
     if not slug_prefix:
         return
-
     for ln_idx, line in enumerate(body.split("\n"), 1):
         m = VENDOR_BLOCK_RE.match(line)
         if m:
@@ -470,14 +345,11 @@ def parse_block_entries(blk: dict, layer_code: str | None, branch_code: str | No
             else:
                 state_category, state_vendor = label, None
             continue
-
         if not REF_LINK_RE.search(line):
             continue
-
         local_vendor = state_vendor
         local_category = state_category
         rest = line
-
         if line.lstrip().startswith(("-", "*")):
             rest = line.lstrip()[1:].strip()
             m = GROUP_LABEL_RE.match(line)
@@ -492,7 +364,6 @@ def parse_block_entries(blk: dict, layer_code: str | None, branch_code: str | No
                 if m2 and (cv := canonical_vendor(m2.group(1).strip())):
                     local_vendor = cv
                     rest = m2.group(2)
-
         for e in extract_entries_from_text(rest):
             slug = slugify(slug_prefix, e["name"])
             if slug not in entries:
@@ -503,8 +374,6 @@ def parse_block_entries(blk: dict, layer_code: str | None, branch_code: str | No
                     "notes": e["notes"], "block_key": block_key,
                     "source_line": ln_idx,
                 }
-            if branch_code:
-                entry_branches.add((slug, branch_code))
             entry_refs.add((slug, e["ref"]))
 
 
@@ -512,52 +381,57 @@ def parse_block_entries(blk: dict, layer_code: str | None, branch_code: str | No
 # db io
 
 def connect() -> sqlite3.Connection:
+    if not DB_PATH.exists():
+        sys.exit(f"db not found: {DB_PATH}; run `init` first.")
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
 
-def init_db(conn: sqlite3.Connection):
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA foreign_keys = ON")
     conn.executescript(SCHEMA)
     conn.commit()
+    return conn
 
 
-def write_db(conn: sqlite3.Connection, blocks: list, data: dict):
+def read_blocks(conn) -> list[dict]:
+    rows = conn.execute(
+        "SELECT key, order_idx, block_type, title, body, layer_code, branch_code "
+        "FROM blocks ORDER BY order_idx"
+    ).fetchall()
+    return [
+        {"key": r[0], "order_idx": r[1], "block_type": r[2],
+         "title": r[3], "body": r[4],
+         "layer_code": r[5], "branch_code": r[6]}
+        for r in rows
+    ]
+
+
+def write_derived(conn, data: dict):
     cur = conn.cursor()
     cur.executescript(
         "DELETE FROM entry_refs; DELETE FROM entries;"
         "DELETE FROM branch_cells; DELETE FROM refs;"
         "DELETE FROM branches; DELETE FROM layers;"
-        "DELETE FROM blocks;"
     )
-
-    for b in blocks:
-        cur.execute(
-            "INSERT INTO blocks(key, order_idx, block_type, title, body, layer_code, branch_code) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (b["key"], b["order_idx"], b["block_type"], b["title"],
-             b["body"], b.get("layer_code"), b.get("branch_code")),
-        )
-
     for l in sorted(data["layers"].values(), key=lambda x: x["position"]):
         cur.execute(
             "INSERT INTO layers(code, position, name) VALUES (?, ?, ?)",
             (l["code"], l["position"], l["name"]),
         )
-
     for b in sorted(data["branches"].values(), key=lambda x: x["pos"]):
         cur.execute(
             "INSERT INTO branches(code, parent_code, position, name) "
             "VALUES (?, ?, ?, ?)",
             (b["code"], b.get("parent"), b["pos"], b["name"]),
         )
-
     for r in data["refs"].values():
         cur.execute(
             "INSERT INTO refs(num, citation, url) VALUES (?, ?, ?)",
             (r["num"], r["citation"], r["url"]),
         )
-
     slug_to_id: dict[str, int] = {}
     for slug, e in data["entries"].items():
         cur.execute(
@@ -569,7 +443,6 @@ def write_db(conn: sqlite3.Connection, blocks: list, data: dict):
              e.get("block_key"), e.get("source_line")),
         )
         slug_to_id[slug] = cur.lastrowid
-
     for slug, ref_num in data["entry_refs"]:
         if slug not in slug_to_id or ref_num not in data["refs"]:
             continue
@@ -577,7 +450,6 @@ def write_db(conn: sqlite3.Connection, blocks: list, data: dict):
             "INSERT OR IGNORE INTO entry_refs(entry_id, ref_num) VALUES (?, ?)",
             (slug_to_id[slug], ref_num),
         )
-
     for c in data["branch_cells"]:
         if c["layer"] not in data["layers"] or c["branch"] not in data["branches"]:
             continue
@@ -586,59 +458,161 @@ def write_db(conn: sqlite3.Connection, blocks: list, data: dict):
             "VALUES (?, ?, ?, ?)",
             (c["layer"], c["branch"], c["raw"], c["marker"]),
         )
-
     cur.execute(
         "INSERT OR REPLACE INTO sync_meta(key, value) VALUES (?, ?)",
-        ("last_import_ts", str(int(time.time()))),
+        ("last_render_ts", str(int(time.time()))),
     )
     conn.commit()
 
 
-# ---------------------------------------------------------------------------
-# render: db blocks → md
+def rebuild_derived(conn):
+    blocks = read_blocks(conn)
+    data = derive_indexes(blocks)
+    write_derived(conn, data)
+    return data
 
-def cmd_render(args):
-    conn = connect()
+
+def render_md(conn) -> str:
     rows = conn.execute(
-        "SELECT key, order_idx, block_type, title, body FROM blocks ORDER BY order_idx"
+        "SELECT block_type, title, body FROM blocks ORDER BY order_idx"
     ).fetchall()
-    if not rows:
-        print("no blocks in db; run `import` first.", file=sys.stderr)
-        sys.exit(1)
-
-    out_parts: list[str] = []
-    for key, order_idx, btype, title, body in rows:
+    parts: list[str] = []
+    for btype, title, body in rows:
         if btype == "doc_top":
-            out_parts.append(body)
+            parts.append(body)
             continue
         prefix = "###" if btype in ("branch", "subbranch") else "##"
-        out_parts.append(f"\n\n{prefix} {title}\n\n{body}")
-
-    rendered = "".join(out_parts).rstrip() + "\n"
-    MD_PATH.write_text(rendered, encoding="utf-8")
-    print(f"rendered {len(rows)} blocks → {MD_PATH}")
+        parts.append(f"\n\n{prefix} {title}\n\n{body}")
+    return "".join(parts).rstrip() + "\n"
 
 
 # ---------------------------------------------------------------------------
-# CLI
+# block mutators
+
+def get_block_body(conn, key: str) -> str | None:
+    row = conn.execute("SELECT body FROM blocks WHERE key=?", (key,)).fetchone()
+    return row[0] if row else None
+
+
+def get_block_row(conn, key: str):
+    return conn.execute(
+        "SELECT order_idx FROM blocks WHERE key=?", (key,)
+    ).fetchone()
+
+
+def cmd_add_block(args):
+    conn = connect()
+    cur = conn.cursor()
+    if cur.execute("SELECT 1 FROM blocks WHERE key=?", (args.key,)).fetchone():
+        sys.exit(f"block '{args.key}' already exists")
+
+    if args.after:
+        row = cur.execute("SELECT order_idx FROM blocks WHERE key=?",
+                          (args.after,)).fetchone()
+        if not row:
+            sys.exit(f"--after key '{args.after}' not found")
+        new_order = row[0] + 1
+    elif args.before:
+        row = cur.execute("SELECT order_idx FROM blocks WHERE key=?",
+                          (args.before,)).fetchone()
+        if not row:
+            sys.exit(f"--before key '{args.before}' not found")
+        new_order = row[0]
+    else:
+        row = cur.execute(
+            "SELECT COALESCE(MAX(order_idx), -1) FROM blocks"
+        ).fetchone()
+        new_order = row[0] + 1
+
+    cur.execute(
+        "UPDATE blocks SET order_idx = order_idx + 1 WHERE order_idx >= ?",
+        (new_order,),
+    )
+    cur.execute(
+        "INSERT INTO blocks(key, order_idx, block_type, title, body, "
+        "layer_code, branch_code) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        (args.key, new_order, args.type, args.title, args.body or "",
+         args.layer_code, args.branch_code),
+    )
+    conn.commit()
+    print(f"added block '{args.key}' at order_idx={new_order}")
+
+
+def cmd_delete_block(args):
+    conn = connect()
+    row = conn.execute("SELECT order_idx FROM blocks WHERE key=?",
+                       (args.key,)).fetchone()
+    if not row:
+        sys.exit(f"block '{args.key}' not found")
+    conn.execute("DELETE FROM blocks WHERE key=?", (args.key,))
+    conn.execute("UPDATE blocks SET order_idx = order_idx - 1 WHERE order_idx > ?",
+                 (row[0],))
+    conn.commit()
+    print(f"deleted block '{args.key}'")
+
+
+def cmd_replace(args):
+    conn = connect()
+    body = get_block_body(conn, args.key)
+    if body is None:
+        sys.exit(f"block '{args.key}' not found")
+    count = body.count(args.old)
+    if count == 0:
+        sys.exit(f"--old text not found in block '{args.key}'")
+    if count > 1 and not args.all:
+        sys.exit(f"--old appears {count} times in '{args.key}'; "
+                 f"use --all to replace all, or include more context.")
+    new_body = body.replace(args.old, args.new, -1 if args.all else 1)
+    conn.execute("UPDATE blocks SET body=? WHERE key=?", (new_body, args.key))
+    conn.commit()
+    print(f"replaced {count if args.all else 1} occurrence(s) in '{args.key}'")
+
+
+def cmd_append(args):
+    conn = connect()
+    body = get_block_body(conn, args.key)
+    if body is None:
+        sys.exit(f"block '{args.key}' not found")
+    new_body = body.rstrip("\n") + "\n" + args.text
+    conn.execute("UPDATE blocks SET body=? WHERE key=?", (new_body, args.key))
+    conn.commit()
+    print(f"appended {len(args.text)} chars to '{args.key}'")
+
+
+def cmd_add_ref(args):
+    """追加 [N] citation 行到 refs block，返回新 ref 号。"""
+    conn = connect()
+    body = get_block_body(conn, "refs")
+    if body is None:
+        sys.exit("refs block not found")
+    nums = [int(m.group(1)) for m in re.finditer(r"^\[(\d+)\]", body, re.MULTILINE)]
+    next_num = max(nums) + 1 if nums else 1
+    new_line = f"\n\n[{next_num}] {args.citation}"
+    new_body = body.rstrip("\n") + new_line
+    conn.execute("UPDATE blocks SET body=? WHERE key='refs'", (new_body,))
+    conn.commit()
+    print(next_num)
+
+
+# ---------------------------------------------------------------------------
+# read-only commands
 
 def cmd_init(args):
-    conn = connect()
-    init_db(conn)
+    init_db()
     print(f"initialized {DB_PATH}")
 
 
-def cmd_import(args):
-    text = MD_PATH.read_text(encoding="utf-8")
+def cmd_render(args):
     conn = connect()
-    init_db(conn)
-    blocks = split_into_blocks(text)
-    data = derive_indexes(blocks)
-    write_db(conn, blocks, data)
+    data = rebuild_derived(conn)
+    md = render_md(conn)
+    MD_PATH.write_text(md, encoding="utf-8")
+    rows = conn.execute("SELECT COUNT(*) FROM blocks").fetchone()[0]
     print(
-        f"blocks={len(blocks)} layers={len(data['layers'])} "
-        f"branches={len(data['branches'])} entries={len(data['entries'])} "
-        f"refs={len(data['refs'])} cells={len(data['branch_cells'])}"
+        f"rendered {rows} blocks → {MD_PATH}\n"
+        f"  layers={len(data['layers'])} branches={len(data['branches'])} "
+        f"entries={len(data['entries'])} refs={len(data['refs'])} "
+        f"cells={len(data['branch_cells'])}"
     )
 
 
@@ -659,7 +633,10 @@ def cmd_query(args):
         print(f"sql error: {e}", file=sys.stderr)
         sys.exit(1)
     if not rows:
-        print("(no rows)")
+        if args.sql.strip().lower().startswith("select"):
+            print("(no rows)")
+        else:
+            conn.commit()
         return
     cols = rows[0].keys()
     print("\t".join(cols))
@@ -669,21 +646,66 @@ def cmd_query(args):
 
 def cmd_next_ref(args):
     conn = connect()
-    row = conn.execute("SELECT COALESCE(MAX(num), 0) + 1 FROM refs").fetchone()
-    print(row[0])
+    body = get_block_body(conn, "refs")
+    if body is None:
+        sys.exit("refs block not found")
+    nums = [int(m.group(1)) for m in re.finditer(r"^\[(\d+)\]", body, re.MULTILINE)]
+    print(max(nums) + 1 if nums else 1)
 
+
+# ---------------------------------------------------------------------------
 
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = p.add_subparsers(dest="cmd", required=True)
+
     sub.add_parser("init").set_defaults(func=cmd_init)
-    sub.add_parser("import").set_defaults(func=cmd_import)
     sub.add_parser("render").set_defaults(func=cmd_render)
     sub.add_parser("stats").set_defaults(func=cmd_stats)
     sub.add_parser("next-ref").set_defaults(func=cmd_next_ref)
+
     pq = sub.add_parser("query")
     pq.add_argument("sql")
     pq.set_defaults(func=cmd_query)
+
+    pa = sub.add_parser("add-block")
+    pa.add_argument("key")
+    pa.add_argument("--type", required=True,
+                    choices=["doc_top", "summary_table", "main_overview",
+                             "layer", "branch_intro", "branch", "subbranch",
+                             "crosscut", "refs", "other"])
+    pa.add_argument("--title", default=None,
+                    help="excluding '## ' or '### ' prefix; None for doc_top")
+    pa.add_argument("--body", default="")
+    pa.add_argument("--layer-code", default=None)
+    pa.add_argument("--branch-code", default=None)
+    g = pa.add_mutually_exclusive_group()
+    g.add_argument("--after", help="insert after this block key")
+    g.add_argument("--before", help="insert before this block key")
+    pa.set_defaults(func=cmd_add_block)
+
+    pd = sub.add_parser("delete-block")
+    pd.add_argument("key")
+    pd.set_defaults(func=cmd_delete_block)
+
+    pr = sub.add_parser("replace")
+    pr.add_argument("key", help="block key")
+    pr.add_argument("--old", required=True)
+    pr.add_argument("--new", required=True)
+    pr.add_argument("--all", action="store_true",
+                    help="replace all occurrences (default: require unique)")
+    pr.set_defaults(func=cmd_replace)
+
+    pap = sub.add_parser("append")
+    pap.add_argument("key", help="block key")
+    pap.add_argument("--text", required=True)
+    pap.set_defaults(func=cmd_append)
+
+    par = sub.add_parser("add-ref")
+    par.add_argument("--citation", required=True,
+                     help="IEEE-style citation, excluding [N] prefix")
+    par.set_defaults(func=cmd_add_ref)
+
     args = p.parse_args()
     args.func(args)
 
