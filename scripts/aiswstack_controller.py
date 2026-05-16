@@ -1,37 +1,101 @@
 #!/usr/bin/env python3
-"""AISW-stack MVC Controller。
+"""AISW-stack MVC Controller —— 类层级 API + 结构化定位（slug / num / (L,B)）。
 
 架构：
-  Model       chat/AISW-stack/index.sqlite3   （source of truth）
-  View        chat/AISW-stack/README.md        （由 Model 单向渲染）
-  Controller  scripts/aiswstack_controller.py （本文件）
+  Model       chat/AISW-stack/index.sqlite3
+  View        chat/AISW-stack/README.md
+  Controller  scripts/aiswstack_controller.py（本文件）
 
-单向流：所有内容修改都通过本 Controller 进入 db。README.md 是只读
-渲染产物——不要手工编辑它，因为没有任何反向同步路径，下次 render
-就会把人工改动覆盖掉。
+## 数据模型
 
-Model 的核心是 `blocks` 表——存按 ## / ### 拆段后的 markdown 切片。
-其他表（layers / branches / entries / refs / branch_cells / entry_refs）
-是 render 时从 `blocks` 自动派生的查询索引，**不要直接 UPDATE / INSERT
-它们**，会在下次 render 时被覆盖。
+  sections      key PK, position, section_type, heading, body, layer_code, branch_code
+                  body 是 markdown 原貌（**source of truth**）。
+  entries       slug PK, name, url, notes, section_key, vendor, category, position
+                  作为查询索引 + 定位锚（slug 唯一）。可由 `refresh-index` 重建。
+  entry_refs    entry_id, ref_num, position
+  refs          num PK, citation, url（source of truth）
+  cells         layer_code, branch_code, text, marker（source of truth）
+  layers        code PK, position, name
+  branches      code PK, parent_code, position, name
 
-子命令：
-  init                          新建空 schema
-  render                        派生索引 + 写 README.md（每次改完都跑）
+## 类层级（公开 API；定位全部走 key / slug / num / (L,B)，不用字符串搜索）
+
+  Document
+    section(key)                          → Section
+    entry(slug)                           → Entry
+    ref(num)                              → Ref
+
+  Section（抽象）
+    set_heading(text)
+    render() → str
+    + 各子类：
+
+  DocTop / MainOverview / BranchIntro / Branch / Crosscut / Other
+    get_body() / set_body(text)
+
+  Layer / SubBranch
+    get_body() / set_body(text)
+    add_entry(vb_label, name, url, ref_num, notes=None, separator=None)
+                                          → Entry（按 vendor 标签插入 body）
+    remove_entry(slug)                    在 body 里精确剔除该 entry token
+    set_entry_url(slug, url)              `[[N]](old)` → `[[N]](new)`
+    set_entry_name(slug, name)            `OldName[[N]]` → `NewName[[N]]`
+    set_entry_notes(slug, notes)          替换 `[[N]](url)（…）` 后的注解
+
+  SummaryTable
+    get_intro() / set_intro(text)
+    get_cell(L, B) / set_cell(L, B, text)
+    rendered table 从 cells 表重建。
+
+  Refs
+    next_num() → int
+    add(citation, url=None) → int         自动 max+1；按 url 去重
+    get(num) / set(num, …) / remove(num)
+
+## CLI 一览
+
+  init                          建表
+  migrate-from-blocks           一次性把旧 blocks 表搬到 sections
+  render                        重建 README.md
+  refresh-index                 从 sections.body 重建 entries / refs / cells 索引
   stats                         表行数
-  next-ref                      返回下一个可用引用号（max + 1）
-  query SQL                     执行任意 SQL（推荐只读 SELECT）
+  query SQL                     只读 SELECT
 
-  add-block KEY [..]            新建 block（自动 shift order_idx）
-  delete-block KEY              删除 block（自动 shift）
-  replace KEY --old X --new Y   在 block.body 中替换字符串
-  append KEY --text "..."       追加到 block.body 末尾
-  add-ref --citation "..."      追加引用到 refs block；输出新 ref 号
+  section list
+  section show KEY
+  section set-heading KEY --heading TEXT
+  section set-body KEY (--body TEXT | --file F)        prose-only 与 layer/sub
+                                                       都可整段替换
 
-需要改本 Controller 代码的场景（结构性调整）：
-  - 新增主分支（A–I 之外的顶级列）：MAIN_BRANCHES 与主表渲染逻辑
-  - 改变 block 切分粒度或新 block_type：derive_indexes / render
-  - 新增 vendor 白名单：KNOWN_VENDORS / VENDOR_ALIASES
+  entry list [--section K] [--layer L] [--branch B] [--vendor V]
+  entry show SLUG
+  entry add KEY --vb-label LBL --name N --url U --ref R [--notes T]
+              [--separator SEP]
+  entry remove SLUG
+  entry set-url SLUG --url U
+  entry set-name SLUG --name N
+  entry set-notes SLUG --notes T
+
+  ref list [--orphan]
+  ref show NUM
+  ref add --citation TXT [--url URL]    去重，返回 num
+  ref set NUM [--citation T] [--url U]
+  ref remove NUM
+  ref next-num
+
+  cell get LAYER BRANCH
+  cell set LAYER BRANCH --text TEXT
+
+## 设计要点
+
+1. `section.body` 是 markdown 原貌。render 对绝大多数 section 直接吐出 body；
+   只有 summary_table 与 refs 走"按结构表重建"的渲染路径。
+2. entries 是 derived 索引：每次 mutation 通过 `refresh-index` 重建；slug 在
+   重建后稳定（slug 由 layer/branch code + 名字归一）。
+3. mutation 不接受 `--old/--new` 字符串。set-url 之类内部用 `[[N]](current_url)`
+   token 在 body 里做唯一替换——(ref_num, url) 全局唯一，不会误匹配。
+4. add-entry 时按 vb 标签（如 `**NVIDIA**：`）定位插入点；标签在一个 section
+   内本就唯一。layout 由现状推断（bullets 行 vs inline 列表）。
 """
 
 from __future__ import annotations
@@ -43,109 +107,23 @@ import sqlite3
 import sys
 import time
 import unicodedata
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Iterable
 
 ROOT = Path(__file__).resolve().parent.parent
 MD_PATH = ROOT / "chat/AISW-stack/README.md"
 DB_PATH = ROOT / "chat/AISW-stack/index.sqlite3"
 
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS blocks (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    key         TEXT NOT NULL UNIQUE,
-    order_idx   INTEGER NOT NULL,
-    block_type  TEXT NOT NULL,
-    title       TEXT,
-    body        TEXT NOT NULL,
-    layer_code  TEXT,
-    branch_code TEXT
-);
-
-CREATE TABLE IF NOT EXISTS layers (
-    code        TEXT PRIMARY KEY,
-    position    INTEGER NOT NULL,
-    name        TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS branches (
-    code         TEXT PRIMARY KEY,
-    parent_code  TEXT,
-    position     INTEGER NOT NULL,
-    name         TEXT NOT NULL,
-    FOREIGN KEY (parent_code) REFERENCES branches(code)
-);
-
-CREATE TABLE IF NOT EXISTS refs (
-    num      INTEGER PRIMARY KEY,
-    citation TEXT NOT NULL,
-    url      TEXT
-);
-
-CREATE TABLE IF NOT EXISTS entries (
-    id           INTEGER PRIMARY KEY AUTOINCREMENT,
-    slug         TEXT NOT NULL UNIQUE,
-    name         TEXT NOT NULL,
-    url          TEXT,
-    layer_code   TEXT,
-    branch_code  TEXT,
-    vendor       TEXT,
-    category     TEXT,
-    notes        TEXT,
-    block_key    TEXT,
-    source_line  INTEGER,
-    FOREIGN KEY (layer_code)  REFERENCES layers(code),
-    FOREIGN KEY (branch_code) REFERENCES branches(code),
-    FOREIGN KEY (block_key)   REFERENCES blocks(key)
-);
-
-CREATE TABLE IF NOT EXISTS entry_refs (
-    entry_id  INTEGER NOT NULL,
-    ref_num   INTEGER NOT NULL,
-    PRIMARY KEY (entry_id, ref_num),
-    FOREIGN KEY (entry_id) REFERENCES entries(id) ON DELETE CASCADE,
-    FOREIGN KEY (ref_num)  REFERENCES refs(num)
-);
-
-CREATE TABLE IF NOT EXISTS branch_cells (
-    layer_code   TEXT NOT NULL,
-    branch_code  TEXT NOT NULL,
-    raw_text     TEXT,
-    marker       TEXT,
-    PRIMARY KEY (layer_code, branch_code),
-    FOREIGN KEY (layer_code)  REFERENCES layers(code),
-    FOREIGN KEY (branch_code) REFERENCES branches(code)
-);
-
-CREATE TABLE IF NOT EXISTS sync_meta (
-    key   TEXT PRIMARY KEY,
-    value TEXT
-);
-
-CREATE INDEX IF NOT EXISTS idx_entries_layer  ON entries(layer_code);
-CREATE INDEX IF NOT EXISTS idx_entries_branch ON entries(branch_code);
-CREATE INDEX IF NOT EXISTS idx_entries_vendor ON entries(vendor);
-CREATE INDEX IF NOT EXISTS idx_entries_block  ON entries(block_key);
-CREATE INDEX IF NOT EXISTS idx_entry_refs_ref ON entry_refs(ref_num);
-CREATE INDEX IF NOT EXISTS idx_blocks_order   ON blocks(order_idx);
-"""
-
-
 # ---------------------------------------------------------------------------
-# constants & helpers
+# constants
 
-_PUNCT_RE = re.compile(r"[\s/（）()，,、；;:：&+]+")
-_DECO_RE = re.compile(r"[*_`\"'·]")
-SEP_CHARS = "、，,；;|。：:"
-NAME_SPLIT_RE = re.compile(r"[" + re.escape(SEP_CHARS) + r"]|(?<=[）)\s])\+\s")
-REF_LINK_RE = re.compile(r"\[\[(\d+)\]\]\((https?://[^\s)]+)\)")
-REF_ENTRY_RE = re.compile(
-    r"^\[(\d+)\]\s+(.+?)(?:\s*\[Online\]\.\s+Available:\s*<([^>]+)>)?\s*$"
-)
-LAYER_TITLE_RE = re.compile(r"^(L\d{2})\s+(.+)$")
-BRANCH_TITLE_RE = re.compile(r"^([A-Z](?:\d+)?)\s+(.+)$")
-VENDOR_BLOCK_RE = re.compile(r"^\*\*([^*]+)\*\*[:：]\s*$")
-GROUP_LABEL_RE = re.compile(r"^[-*]\s+\*\*([^*]+)\*\*[:：]\s*(.*)$")
-BARE_VENDOR_RE = re.compile(r"^[-*]\s+([^*：:\[]{1,24}?)[：:]\s*(.+)$")
+MAIN_BRANCHES = [
+    ("A", "LLM / Agent"), ("B", "科学计算"), ("C", "机器人"),
+    ("D", "自动驾驶"), ("E", "世界模型 / 3D"), ("F", "经典 CV"),
+    ("G", "量化金融"), ("H", "游戏"), ("I", "影视娱乐"),
+    ("J", "学习 / 教育"),
+]
 
 KNOWN_VENDORS = {
     "NVIDIA", "AMD", "Intel", "Apple", "AWS", "Google", "Microsoft", "Meta",
@@ -156,26 +134,132 @@ KNOWN_VENDORS = {
     "高通", "Qualcomm", "联发科", "MediaTek", "瑞芯微", "Rockchip",
 }
 
-VENDOR_ALIASES = {"华为昇腾": "华为", "Hugging Face": "HuggingFace"}
+VENDOR_ALIASES = {
+    "华为昇腾": "华为",
+    "华为昇腾（Ascend）": "华为",
+    "Hugging Face": "HuggingFace",
+    "Qualcomm": "高通",
+    "MediaTek": "联发科",
+    "Rockchip": "瑞芯微",
+}
 
-MAIN_BRANCHES = [
-    ("A", "LLM / Agent"), ("B", "科学计算"), ("C", "机器人"),
-    ("D", "自动驾驶"), ("E", "世界模型 / 3D"), ("F", "经典 CV"),
-    ("G", "量化金融"), ("H", "游戏"), ("I", "影视娱乐"),
-    ("J", "学习 / 教育"),
-]
+PROSE_ONLY_TYPES = {"doc_top", "main_overview", "branch_intro", "branch",
+                    "crosscut", "other"}
+LAYER_LIKE_TYPES = {"layer", "subbranch"}
+
+# ---------------------------------------------------------------------------
+# schema
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS sections (
+    key           TEXT PRIMARY KEY,
+    position      INTEGER NOT NULL,
+    section_type  TEXT NOT NULL,
+    heading       TEXT,
+    body          TEXT NOT NULL DEFAULT '',
+    layer_code    TEXT,
+    branch_code   TEXT
+);
+
+CREATE TABLE IF NOT EXISTS entries (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug         TEXT NOT NULL UNIQUE,
+    name         TEXT NOT NULL,
+    url          TEXT,
+    notes        TEXT,
+    section_key  TEXT NOT NULL,
+    layer_code   TEXT,
+    branch_code  TEXT,
+    vendor       TEXT,
+    category     TEXT,
+    position     INTEGER NOT NULL,
+    FOREIGN KEY (section_key) REFERENCES sections(key) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS entry_refs (
+    entry_id  INTEGER NOT NULL,
+    ref_num   INTEGER NOT NULL,
+    position  INTEGER NOT NULL,
+    PRIMARY KEY (entry_id, ref_num),
+    FOREIGN KEY (entry_id) REFERENCES entries(id) ON DELETE CASCADE,
+    FOREIGN KEY (ref_num)  REFERENCES refs(num)
+);
+
+CREATE TABLE IF NOT EXISTS refs (
+    num      INTEGER PRIMARY KEY,
+    citation TEXT NOT NULL,
+    url      TEXT
+);
+
+CREATE TABLE IF NOT EXISTS cells (
+    layer_code   TEXT NOT NULL,
+    branch_code  TEXT NOT NULL,
+    text         TEXT,
+    marker       TEXT,
+    PRIMARY KEY (layer_code, branch_code)
+);
+
+CREATE TABLE IF NOT EXISTS layers (
+    code     TEXT PRIMARY KEY,
+    position INTEGER NOT NULL,
+    name     TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS branches (
+    code        TEXT PRIMARY KEY,
+    parent_code TEXT,
+    position    INTEGER NOT NULL,
+    name        TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sync_meta (
+    key   TEXT PRIMARY KEY,
+    value TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_entries_section ON entries(section_key);
+CREATE INDEX IF NOT EXISTS idx_entries_layer   ON entries(layer_code);
+CREATE INDEX IF NOT EXISTS idx_entries_branch  ON entries(branch_code);
+CREATE INDEX IF NOT EXISTS idx_entries_vendor  ON entries(vendor);
+CREATE INDEX IF NOT EXISTS idx_entry_refs_ref  ON entry_refs(ref_num);
+CREATE INDEX IF NOT EXISTS idx_sections_position ON sections(position);
+"""
+
+# ---------------------------------------------------------------------------
+# regex helpers
+
+_PUNCT_RE = re.compile(r"[\s/（）()，,、；;:：&+]+")
+_SLUG_DECO_RE = re.compile(r"[*_`\"'·]")
+SEP_CHARS = "、，,；;|。：:"
+NAME_SPLIT_RE = re.compile(r"[" + re.escape(SEP_CHARS) + r"]|(?<=[）)\s])\+\s")
+REF_LINK_RE = re.compile(r"\[\[(\d+)\]\]\((https?://[^\s)]+)\)")
+REF_ENTRY_RE = re.compile(
+    r"^\[(\d+)\]\s+(.+?)(?:\s*\[Online\]\.\s+Available:\s*<([^>]+)>)?\s*$"
+)
+LAYER_TITLE_RE = re.compile(r"^(L\d{2})\s+(.+)$")
+BRANCH_TITLE_RE = re.compile(r"^([A-Z](?:\d+)?)\s+(.+)$")
+VENDOR_BLOCK_RE = re.compile(r"^\*\*([^*]+)\*\*[:：]\s*$")
+VENDOR_INLINE_RE = re.compile(r"^\*\*([^*]+)\*\*[:：]\s*(\S.*)$")
+GROUP_LABEL_RE = re.compile(r"^([-*])\s+\*\*([^*]+)\*\*[:：]\s*(.*)$")
+BARE_VENDOR_RE = re.compile(r"^[-*]\s+([^*：:\[]{1,24}?)[：:]\s*(.+)$")
 
 
-def canonical_vendor(label: str) -> str | None:
-    plain = re.sub(r"（[^）]*）|\([^)]*\)", "", label).strip()
-    if plain in KNOWN_VENDORS:
-        return VENDOR_ALIASES.get(plain, plain)
+def canonical_vendor(label: str | None) -> str | None:
+    if not label:
+        return None
+    plain = label.strip()
+    bare = re.sub(r"（[^）]*）|\([^)]*\)", "", plain).strip()
+    for cand in (plain, bare):
+        if cand in VENDOR_ALIASES:
+            return VENDOR_ALIASES[cand]
+        if cand in KNOWN_VENDORS:
+            return cand
     return None
 
 
 def slugify(prefix: str, name: str) -> str:
     s = unicodedata.normalize("NFKC", name)
-    s = _DECO_RE.sub("", s)
+    s = _SLUG_DECO_RE.sub("", s)
     s = _PUNCT_RE.sub("-", s)
     s = re.sub(r"-+", "-", s).strip("-").lower()
     if not s:
@@ -183,8 +267,10 @@ def slugify(prefix: str, name: str) -> str:
     return f"{prefix.lower()}-{s}"
 
 
-def clean_name(s: str) -> str:
-    s = _DECO_RE.sub("", s)
+def clean_display_name(raw: str) -> str:
+    """Strip leading bullet decorations and trailing separators but preserve
+    backticks, underscores, asterisks (bold), and other intra-name characters."""
+    s = raw
     s = re.sub(r"^[\s\-+]+|[\s\-+:：]+$", "", s)
     return s.strip()
 
@@ -192,11 +278,14 @@ def clean_name(s: str) -> str:
 def is_valid_name(name: str) -> bool:
     if not name:
         return False
-    if name.startswith(("//", ")", "）", "/")):
+    plain = re.sub(r"[*_`]", "", name).strip()
+    if not plain:
         return False
-    if "://" in name:
+    if plain.startswith(("//", ")", "）", "/")):
         return False
-    if re.fullmatch(r"[（(].*[）)]", name):
+    if "://" in plain:
+        return False
+    if re.fullmatch(r"[（(].*[）)]", plain):
         return False
     return True
 
@@ -217,25 +306,9 @@ def extract_trailing_notes(text: str, pos: int) -> str | None:
     return None
 
 
-def extract_entries_from_text(text: str):
-    out = []
-    for m in REF_LINK_RE.finditer(text):
-        ref_num = int(m.group(1))
-        url = m.group(2)
-        before = text[:m.start()]
-        parts = NAME_SPLIT_RE.split(before)
-        raw_name = parts[-1] if parts else ""
-        name = clean_name(raw_name)
-        if not is_valid_name(name):
-            continue
-        notes = extract_trailing_notes(text, m.end())
-        out.append({"name": name, "url": url, "ref": ref_num, "notes": notes})
-    return out
-
-
-def classify_cell(text: str) -> str:
-    t = text.strip()
-    if t in ("—", "-", "–"):
+def classify_cell_marker(text: str) -> str:
+    t = (text or "").strip()
+    if not t or t in ("—", "-", "–"):
         return "none"
     if t.startswith("同 A"):
         return "same_a"
@@ -245,66 +318,150 @@ def classify_cell(text: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# derive indexes (blocks → layers / branches / refs / entries / cells)
+# dataclasses
 
-def derive_indexes(blocks: list[dict]) -> dict:
-    layers: dict[str, dict] = {}
-    branches: dict[str, dict] = {b: {"code": b, "name": n, "parent": None, "pos": i}
-                                  for i, (b, n) in enumerate(MAIN_BRANCHES, 1)}
-    refs: dict[int, dict] = {}
-    entries: dict[str, dict] = {}
-    entry_refs: set[tuple[str, int]] = set()
-    branch_cells: list[dict] = []
-    sub_pos = 100
+@dataclass
+class Ref:
+    num: int
+    citation: str
+    url: str | None
 
-    for blk in blocks:
-        if blk["block_type"] == "layer" and blk["title"]:
-            m = LAYER_TITLE_RE.match(blk["title"])
-            if m:
-                lc, lname = m.group(1), m.group(2).strip()
-                layers[lc] = {"code": lc, "position": int(lc[1:]), "name": lname}
-        elif blk["block_type"] in ("branch", "subbranch") and blk["title"]:
-            m = BRANCH_TITLE_RE.match(blk["title"])
-            if m:
-                code, bname = m.group(1), m.group(2).strip()
-                parent = code[0] if len(code) > 1 else None
-                branches[code] = {
-                    "code": code, "name": bname, "parent": parent,
-                    "pos": sub_pos,
-                }
-                sub_pos += 1
+    def render(self) -> str:
+        if self.url:
+            return f"[{self.num}] {self.citation} [Online]. Available: <{self.url}>"
+        return f"[{self.num}] {self.citation}"
 
-    for blk in blocks:
-        body = blk["body"]
-        if blk["block_type"] == "refs":
-            for line in body.split("\n"):
-                m = REF_ENTRY_RE.match(line)
-                if m:
-                    refs[int(m.group(1))] = {
-                        "num": int(m.group(1)),
-                        "citation": m.group(2).strip(),
-                        "url": m.group(3),
-                    }
+
+@dataclass
+class Entry:
+    id: int
+    slug: str
+    name: str
+    url: str | None
+    notes: str | None
+    section_key: str
+    layer_code: str | None
+    branch_code: str | None
+    vendor: str | None
+    category: str | None
+    position: int
+    ref_nums: list[int] = field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
+# index: extract entries / refs / cells from sections.body
+
+def extract_entries_from_text(text: str):
+    out = []
+    for m in REF_LINK_RE.finditer(text):
+        ref_num = int(m.group(1))
+        url = m.group(2)
+        before = text[:m.start()]
+        parts = NAME_SPLIT_RE.split(before)
+        raw_name = parts[-1] if parts else ""
+        name = clean_display_name(raw_name)
+        if not is_valid_name(name):
             continue
-        if blk["block_type"] == "summary_table":
-            parse_summary_table_cells(body, layers, branch_cells)
+        notes = extract_trailing_notes(text, m.end())
+        out.append({"name": name, "url": url, "ref": ref_num, "notes": notes})
+    return out
+
+
+def index_section_body(conn: sqlite3.Connection, section_key: str,
+                       section_type: str, body: str,
+                       layer_code: str | None, branch_code: str | None,
+                       slug_seen: set[str]):
+    """Walk a layer/subbranch body and write derived entries + entry_refs."""
+    if section_type not in LAYER_LIKE_TYPES:
+        return
+    slug_prefix = layer_code or branch_code or section_key
+    if not slug_prefix:
+        return
+    state_vendor: str | None = None
+    state_category: str | None = None
+    position = 0
+    cur = conn.cursor()
+    for line in body.split("\n"):
+        m = VENDOR_BLOCK_RE.match(line.strip())
+        if m:
+            label = m.group(1).strip()
+            cv = canonical_vendor(label)
+            if cv:
+                state_vendor, state_category = cv, None
+            else:
+                state_category, state_vendor = label, None
             continue
-
-        layer_code = blk.get("layer_code")
-        branch_code = blk.get("branch_code")
-        if not layer_code and not branch_code:
+        m_inline = VENDOR_INLINE_RE.match(line.strip())
+        if m_inline:
+            label = m_inline.group(1).strip()
+            cv = canonical_vendor(label)
+            local_vendor = cv
+            local_category = label if not cv else None
+            rest = m_inline.group(2)
+            state_vendor = cv if cv else None
+            state_category = label if not cv else None
+            for e in extract_entries_from_text(rest):
+                position = _emit_entry(
+                    cur, e, section_key, slug_prefix,
+                    layer_code, branch_code,
+                    local_vendor, local_category, position, slug_seen)
             continue
-        parse_block_entries(blk, layer_code, branch_code,
-                            entries, entry_refs)
+        if not REF_LINK_RE.search(line):
+            continue
+        local_vendor = state_vendor
+        local_category = state_category
+        rest = line
+        if line.lstrip().startswith(("-", "*")):
+            rest = line.lstrip()[1:].strip()
+            g = GROUP_LABEL_RE.match(line)
+            if g:
+                label = g.group(2).strip()
+                cv = canonical_vendor(label)
+                if cv:
+                    local_vendor = cv
+                local_category = label
+                rest = g.group(3)
+            else:
+                b = BARE_VENDOR_RE.match(line)
+                if b and (cv := canonical_vendor(b.group(1).strip())):
+                    local_vendor = cv
+                    rest = b.group(2)
+        for e in extract_entries_from_text(rest):
+            position = _emit_entry(
+                cur, e, section_key, slug_prefix,
+                layer_code, branch_code,
+                local_vendor, local_category, position, slug_seen)
 
-    return {
-        "layers": layers, "branches": branches, "refs": refs,
-        "entries": entries, "entry_refs": list(entry_refs),
-        "branch_cells": branch_cells,
-    }
+
+def _emit_entry(cur, e: dict, section_key: str, slug_prefix: str,
+                layer_code: str | None, branch_code: str | None,
+                vendor: str | None, category: str | None,
+                position: int, slug_seen: set[str]) -> int:
+    base = slugify(slug_prefix, e["name"])
+    slug = base
+    n = 2
+    while slug in slug_seen:
+        slug = f"{base}-{n}"; n += 1
+    slug_seen.add(slug)
+    cur.execute(
+        "INSERT INTO entries(slug, name, url, notes, section_key, "
+        "layer_code, branch_code, vendor, category, position) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (slug, e["name"], e["url"], e["notes"], section_key,
+         layer_code, branch_code, vendor, category, position),
+    )
+    entry_id = cur.lastrowid
+    cur.execute(
+        "INSERT OR IGNORE INTO entry_refs(entry_id, ref_num, position) "
+        "VALUES (?, ?, 0)",
+        (entry_id, e["ref"]),
+    )
+    return position + 1
 
 
-def parse_summary_table_cells(body: str, layers: dict, branch_cells: list):
+def index_summary_table(conn: sqlite3.Connection, body: str):
+    """Walk the summary-table body, populate `cells` + `layers`."""
+    cur = conn.cursor()
     for line in body.split("\n"):
         if not line.startswith("|"):
             continue
@@ -314,82 +471,704 @@ def parse_summary_table_cells(body: str, layers: dict, branch_cells: list):
         m = re.match(r"^(L\d{2})\s+(.+)$", cells[0])
         if not m:
             continue
-        lc, lname = m.group(1), m.group(2).strip()
-        layers.setdefault(lc, {"code": lc, "position": int(lc[1:]), "name": lname})
+        lc = m.group(1); lname = m.group(2).strip()
+        cur.execute(
+            "INSERT OR REPLACE INTO layers(code, position, name) VALUES (?, ?, ?)",
+            (lc, int(lc[1:]), lname),
+        )
         for i, raw_cell in enumerate(cells[1:]):
             if i >= len(MAIN_BRANCHES):
                 break
             bcode = MAIN_BRANCHES[i][0]
-            branch_cells.append({
-                "layer": lc, "branch": bcode,
-                "raw": raw_cell, "marker": classify_cell(raw_cell),
-            })
+            cur.execute(
+                "INSERT OR REPLACE INTO cells(layer_code, branch_code, "
+                "text, marker) VALUES (?, ?, ?, ?)",
+                (lc, bcode, raw_cell, classify_cell_marker(raw_cell)),
+            )
 
 
-def parse_block_entries(blk: dict, layer_code: str | None,
-                        branch_code: str | None,
-                        entries: dict, entry_refs: set):
-    body = blk["body"]
-    block_key = blk["key"]
-    state_vendor = None
-    state_category = None
-    slug_prefix = layer_code or branch_code
-    if not slug_prefix:
-        return
-    for ln_idx, line in enumerate(body.split("\n"), 1):
-        m = VENDOR_BLOCK_RE.match(line)
-        if m:
-            label = m.group(1).strip()
-            cv = canonical_vendor(label)
-            if cv:
-                state_vendor, state_category = cv, None
-            else:
-                state_category, state_vendor = label, None
+def index_refs(conn: sqlite3.Connection, body: str):
+    cur = conn.cursor()
+    for line in body.split("\n"):
+        m = REF_ENTRY_RE.match(line)
+        if not m:
             continue
-        if not REF_LINK_RE.search(line):
-            continue
-        local_vendor = state_vendor
-        local_category = state_category
-        rest = line
-        if line.lstrip().startswith(("-", "*")):
-            rest = line.lstrip()[1:].strip()
-            m = GROUP_LABEL_RE.match(line)
+        num = int(m.group(1))
+        cit = m.group(2).strip()
+        url = m.group(3)
+        try:
+            cur.execute(
+                "INSERT INTO refs(num, citation, url) VALUES (?, ?, ?)",
+                (num, cit, url),
+            )
+        except sqlite3.IntegrityError:
+            cur.execute(
+                "UPDATE refs SET citation=?, url=? WHERE num=?",
+                (cit, url, num),
+            )
+
+
+def refresh_all_indexes(conn: sqlite3.Connection):
+    """Rebuild entries / entry_refs / refs / cells / layers / branches from
+    sections.body. Idempotent; safe to call after any body mutation."""
+    cur = conn.cursor()
+    cur.executescript("""
+        DELETE FROM entry_refs;
+        DELETE FROM entries;
+        DELETE FROM cells;
+        DELETE FROM refs;
+        DELETE FROM layers;
+        DELETE FROM branches;
+    """)
+    # branches: seed main + populate sub from sections of type branch/subbranch
+    for i, (code, name) in enumerate(MAIN_BRANCHES, start=1):
+        cur.execute(
+            "INSERT OR REPLACE INTO branches(code, parent_code, position, "
+            "name) VALUES (?, NULL, ?, ?)",
+            (code, i, name),
+        )
+    rows = cur.execute(
+        "SELECT key, section_type, heading, body, layer_code, branch_code "
+        "FROM sections ORDER BY position"
+    ).fetchall()
+    # refs first, so FK targets exist
+    for key, stype, heading, body, lc, bc in rows:
+        if stype == "refs":
+            index_refs(conn, body)
+    for key, stype, heading, body, lc, bc in rows:
+        if stype == "summary_table":
+            index_summary_table(conn, body)
+        if stype in ("branch", "subbranch") and heading:
+            m = BRANCH_TITLE_RE.match(heading)
             if m:
-                label = m.group(1).strip()
-                if (cv := canonical_vendor(label)):
-                    local_vendor = cv
-                local_category = label
-                rest = m.group(2)
-            else:
-                m2 = BARE_VENDOR_RE.match(line)
-                if m2 and (cv := canonical_vendor(m2.group(1).strip())):
-                    local_vendor = cv
-                    rest = m2.group(2)
-        for e in extract_entries_from_text(rest):
-            slug = slugify(slug_prefix, e["name"])
-            if slug not in entries:
-                entries[slug] = {
-                    "slug": slug, "name": e["name"], "url": e["url"],
-                    "layer": layer_code, "branch": branch_code,
-                    "vendor": local_vendor, "category": local_category,
-                    "notes": e["notes"], "block_key": block_key,
-                    "source_line": ln_idx,
-                }
-            entry_refs.add((slug, e["ref"]))
+                bc = m.group(1)
+                parent = bc[0] if len(bc) > 1 else None
+                pos = 100 + sum(1 for _ in cur.execute(
+                    "SELECT 1 FROM branches WHERE parent_code IS NOT NULL"
+                ).fetchall())
+                cur.execute(
+                    "INSERT OR REPLACE INTO branches(code, parent_code, "
+                    "position, name) VALUES (?, ?, ?, ?)",
+                    (bc, parent, pos, m.group(2).strip()),
+                )
+    slug_seen: set[str] = set()
+    for key, stype, heading, body, lc, bc in rows:
+        if stype in LAYER_LIKE_TYPES:
+            index_section_body(conn, key, stype, body, lc, bc, slug_seen)
+    cur.execute(
+        "INSERT OR REPLACE INTO sync_meta(key, value) VALUES (?, ?)",
+        ("last_refresh_ts", str(int(time.time()))),
+    )
+    conn.commit()
 
 
 # ---------------------------------------------------------------------------
-# db io
+# repo helpers
+
+def get_section_row(conn, key: str):
+    return conn.execute(
+        "SELECT key, position, section_type, heading, body, layer_code, "
+        "branch_code FROM sections WHERE key=?", (key,)
+    ).fetchone()
+
+
+def load_entry(conn, slug: str = None, entry_id: int = None) -> Entry | None:
+    if slug is not None:
+        row = conn.execute(
+            "SELECT id, slug, name, url, notes, section_key, layer_code, "
+            "branch_code, vendor, category, position FROM entries WHERE slug=?",
+            (slug,),
+        ).fetchone()
+    else:
+        row = conn.execute(
+            "SELECT id, slug, name, url, notes, section_key, layer_code, "
+            "branch_code, vendor, category, position FROM entries WHERE id=?",
+            (entry_id,),
+        ).fetchone()
+    if not row:
+        return None
+    e = Entry(
+        id=row[0], slug=row[1], name=row[2], url=row[3], notes=row[4],
+        section_key=row[5], layer_code=row[6], branch_code=row[7],
+        vendor=row[8], category=row[9], position=row[10],
+    )
+    e.ref_nums = [
+        r[0] for r in conn.execute(
+            "SELECT ref_num FROM entry_refs WHERE entry_id=? ORDER BY position",
+            (e.id,),
+        ).fetchall()
+    ]
+    return e
+
+
+def load_ref(conn, num: int) -> Ref | None:
+    row = conn.execute(
+        "SELECT num, citation, url FROM refs WHERE num=?", (num,)
+    ).fetchone()
+    return Ref(num=row[0], citation=row[1], url=row[2]) if row else None
+
+
+# ---------------------------------------------------------------------------
+# Document + Section class hierarchy
+
+class Section:
+    section_type: str = "other"
+
+    def __init__(self, doc: "Document", key: str, position: int,
+                 heading: str | None, body: str,
+                 layer_code: str | None, branch_code: str | None):
+        self.doc = doc
+        self.conn = doc.conn
+        self.key = key
+        self.position = position
+        self.heading = heading
+        self.body = body
+        self.layer_code = layer_code
+        self.branch_code = branch_code
+
+    def get_body(self) -> str:
+        return self.body
+
+    def set_body(self, body: str):
+        self.body = body
+        self.conn.execute("UPDATE sections SET body=? WHERE key=?",
+                          (body, self.key))
+
+    def set_heading(self, heading: str):
+        self.heading = heading
+        self.conn.execute("UPDATE sections SET heading=? WHERE key=?",
+                          (heading, self.key))
+
+    def render(self) -> str:
+        body = self._render_body()
+        if self.section_type == "doc_top":
+            return body
+        prefix = "###" if self.section_type in ("branch", "subbranch") else "##"
+        return f"\n\n{prefix} {self.heading}\n\n{body}"
+
+    def _render_body(self) -> str:
+        return self.body
+
+
+class DocTop(Section):       section_type = "doc_top"
+class MainOverview(Section): section_type = "main_overview"
+class BranchIntro(Section):  section_type = "branch_intro"
+class Branch(Section):       section_type = "branch"
+class Crosscut(Section):     section_type = "crosscut"
+class Other(Section):        section_type = "other"
+
+
+class _LayerLike(Section):
+    """Layer / SubBranch: body is markdown, but offers entry-level methods
+    that locate by slug and patch body via stable [[N]](url) tokens."""
+
+    # --- entry mutations (operate on section.body) ----------------------
+
+    def _entry_or_die(self, slug: str) -> Entry:
+        e = load_entry(self.conn, slug=slug)
+        if not e:
+            raise KeyError(f"entry slug='{slug}' not found")
+        if e.section_key != self.key:
+            raise ValueError(
+                f"entry '{slug}' belongs to section '{e.section_key}', "
+                f"not '{self.key}'")
+        return e
+
+    def _patch_body_unique(self, old: str, new: str):
+        count = self.body.count(old)
+        if count == 0:
+            raise ValueError(
+                f"internal: token {old!r} not found in section '{self.key}'. "
+                f"index out of sync — run `refresh-index`.")
+        if count > 1:
+            raise ValueError(
+                f"internal: token {old!r} appears {count} times in "
+                f"section '{self.key}' — ambiguous patch.")
+        self.set_body(self.body.replace(old, new, 1))
+
+    def set_entry_url(self, slug: str, url: str):
+        e = self._entry_or_die(slug)
+        if not e.ref_nums:
+            raise ValueError(f"entry '{slug}' has no refs — can't locate token")
+        n = e.ref_nums[0]
+        old_tok = f"[[{n}]]({e.url})"
+        new_tok = f"[[{n}]]({url})"
+        # apply to ALL occurrences of this exact (N, url) token (some entries
+        # appear in multiple cells; for layer/sub body it's typically 1 hit)
+        if old_tok not in self.body:
+            raise ValueError(
+                f"entry '{slug}' token {old_tok!r} not in body — "
+                f"run refresh-index.")
+        self.set_body(self.body.replace(old_tok, new_tok))
+        self.conn.execute("UPDATE entries SET url=? WHERE id=?", (url, e.id))
+
+    def set_entry_name(self, slug: str, name: str):
+        e = self._entry_or_die(slug)
+        if not e.ref_nums:
+            raise ValueError(f"entry '{slug}' has no refs")
+        n = e.ref_nums[0]
+        # token in body: <name>[[N]](url) — match name + immediate `[[N]]`
+        old_pat = re.compile(
+            r"(?P<name>[^\s|，,、；;（(\[\]]+(?:\s[^\s|，,、；;（(\[\]]+)*)"
+            + re.escape(f"[[{n}]]"))
+        # we expect exactly one match where group('name') equals e.name (after
+        # stripping bold wrap). Find candidates whose name token == e.name.
+        target = None
+        for m in old_pat.finditer(self.body):
+            cand = m.group("name").lstrip("*").rstrip("*").strip()
+            if cand == e.name or cand.endswith(e.name):
+                target = m; break
+        if not target:
+            raise ValueError(
+                f"could not locate name token for entry '{slug}'. "
+                f"Use `section set-body` to edit manually.")
+        old_full = target.group(0)
+        # preserve bold wrap if present
+        prefix = ""
+        suffix = ""
+        body_name = target.group("name")
+        if body_name.startswith("**") and body_name.endswith("**"):
+            prefix = "**"; suffix = "**"
+            inner = body_name[2:-2]
+            old_full = f"{prefix}{inner}[[{n}]]"
+            new_full = f"{prefix}{name}{suffix}[[{n}]]"
+        else:
+            new_full = old_full.replace(e.name, name, 1)
+        self._patch_body_unique(old_full, new_full)
+        self.conn.execute("UPDATE entries SET name=? WHERE id=?", (name, e.id))
+
+    def set_entry_notes(self, slug: str, notes: str | None):
+        e = self._entry_or_die(slug)
+        if not e.ref_nums:
+            raise ValueError(f"entry '{slug}' has no refs")
+        n = e.ref_nums[0]
+        anchor = f"[[{n}]]({e.url})" if e.url else f"[[{n}]]"
+        idx = self.body.find(anchor)
+        if idx < 0:
+            raise ValueError(f"anchor {anchor!r} not in body")
+        end = idx + len(anchor)
+        tail = self.body[end:]
+        # Existing parenthetical immediately after?
+        m_open = re.match(r"^\s*[（(]", tail)
+        if m_open:
+            # find matching close
+            opener = tail.lstrip()[0]
+            closer = "）" if opener == "（" else ")"
+            depth = 0; close_idx = None
+            scan_start = end + (len(tail) - len(tail.lstrip()))
+            for i in range(scan_start, len(self.body)):
+                ch = self.body[i]
+                if ch == opener:
+                    depth += 1
+                elif ch == closer:
+                    depth -= 1
+                    if depth == 0:
+                        close_idx = i; break
+            if close_idx is None:
+                raise ValueError(f"unbalanced parens after {anchor}")
+            old_segment = self.body[end:close_idx + 1]
+            new_segment = f"（{notes}）" if notes else ""
+            self.set_body(self.body[:end] + new_segment +
+                          self.body[close_idx + 1:])
+        else:
+            if not notes:
+                pass  # nothing to remove
+            else:
+                self.set_body(self.body[:end] + f"（{notes}）" + self.body[end:])
+        self.conn.execute("UPDATE entries SET notes=? WHERE id=?",
+                          (notes, e.id))
+
+    def add_entry(self, vb_label: str | None, name: str, url: str,
+                  ref_num: int, notes: str | None = None,
+                  separator: str | None = None) -> Entry:
+        """Insert a new entry into the body under the given vendor-block
+        label. Layout (bullets vs inline) is auto-detected. Returns the
+        freshly-indexed Entry."""
+        # render the new token
+        note_part = f"（{notes}）" if notes else ""
+        tok = f"{name}[[{ref_num}]]({url}){note_part}"
+
+        if vb_label is None:
+            # append as new bullet at end of body
+            new_body = self.body.rstrip() + f"\n- {tok}"
+        else:
+            new_body = self._insert_in_vendor_block(vb_label, tok, separator)
+        self.set_body(new_body)
+        # update derived index for just this section
+        refresh_section_index(self.conn, self.key)
+        # locate the new entry
+        slug = slugify(self.layer_code or self.branch_code or self.key, name)
+        e = load_entry(self.conn, slug=slug)
+        if e is None:
+            # slug may have collided; pick most recent matching name in section
+            row = self.conn.execute(
+                "SELECT slug FROM entries WHERE section_key=? AND name=? "
+                "ORDER BY id DESC LIMIT 1", (self.key, name)
+            ).fetchone()
+            if row:
+                e = load_entry(self.conn, slug=row[0])
+        return e
+
+    def remove_entry(self, slug: str):
+        e = self._entry_or_die(slug)
+        if not e.ref_nums:
+            raise ValueError(f"entry '{slug}' has no refs")
+        n = e.ref_nums[0]
+        anchor = f"[[{n}]]({e.url})" if e.url else f"[[{n}]]"
+        # find the line containing the anchor
+        lines = self.body.split("\n")
+        target_idx = None
+        for i, ln in enumerate(lines):
+            if anchor in ln:
+                target_idx = i; break
+        if target_idx is None:
+            raise ValueError(f"could not locate entry '{slug}' for removal")
+        line = lines[target_idx]
+        if line.lstrip().startswith(("-", "*")) and line.count("[[") == 1:
+            # whole bullet is this single entry → drop the line
+            del lines[target_idx]
+        else:
+            # remove just this entry token + adjacent separator
+            new_line = _remove_entry_token(line, e.name, n, e.url, e.notes)
+            lines[target_idx] = new_line
+        self.set_body("\n".join(lines))
+        # delete from index
+        self.conn.execute("DELETE FROM entries WHERE id=?", (e.id,))
+
+    # --- internal: insert into vendor block -----------------------------
+
+    def _insert_in_vendor_block(self, vb_label: str, tok: str,
+                                separator: str | None) -> str:
+        """Locate `**vb_label**：` header in body and append tok. Layout is
+        auto-detected: bullets vs inline."""
+        # standalone header: `**LBL**：\n - ...` (bullets)
+        header_full = f"**{vb_label}**："
+        # try halfwidth colon too
+        header_alt = f"**{vb_label}**:"
+        lines = self.body.split("\n")
+        # find header line
+        header_idx = None
+        for i, ln in enumerate(lines):
+            s = ln.strip()
+            if s == header_full or s == header_alt:
+                header_idx = i; break
+            # inline form: header at start of line
+            if s.startswith(header_full) or s.startswith(header_alt):
+                header_idx = i; break
+        if header_idx is None:
+            raise KeyError(
+                f"vendor-block label '{vb_label}' not found in section "
+                f"'{self.key}'. Edit body manually via `section set-body`.")
+
+        header_line = lines[header_idx]
+        s = header_line.strip()
+        if s == header_full or s == header_alt:
+            # bullets layout — find last bullet line in this group
+            end = header_idx + 1
+            while end < len(lines) and lines[end].lstrip().startswith(("-", "*")):
+                end += 1
+            insert_at = end
+            indent = "- "
+            lines.insert(insert_at, f"{indent}{tok}")
+            return "\n".join(lines)
+        # inline layout — append to header line
+        sep = separator or _infer_inline_separator(header_line)
+        lines[header_idx] = header_line.rstrip() + sep + tok
+        return "\n".join(lines)
+
+
+def _infer_inline_separator(line: str) -> str:
+    # try to detect from existing entry separators
+    if "、" in line:
+        return "、"
+    if " + " in line:
+        return " + "
+    if ", " in line:
+        return ", "
+    return "、"
+
+
+def _remove_entry_token(line: str, name: str, ref_num: int,
+                        url: str | None, notes: str | None) -> str:
+    """Strip the entry token + an adjoining separator from a single line."""
+    note_part = f"（{notes}）" if notes else ""
+    suffix = f"[[{ref_num}]]" + (f"({url})" if url else "") + note_part
+    # build target substring: name + suffix
+    target = name + suffix
+    idx = line.find(target)
+    if idx < 0:
+        # try without notes (notes may have escaped chars)
+        target = name + f"[[{ref_num}]]" + (f"({url})" if url else "")
+        idx = line.find(target)
+        if idx < 0:
+            return line  # silent no-op; caller can refresh-index
+    # absorb adjoining separator on left (preferred) or right
+    seps = ["、", " + ", ", ", "；", "; "]
+    before = line[:idx]; after = line[idx + len(target):]
+    for sep in seps:
+        if before.endswith(sep):
+            before = before[:-len(sep)]; break
+        if after.startswith(sep):
+            after = after[len(sep):]; break
+    return before + after
+
+
+class Layer(_LayerLike):    section_type = "layer"
+class SubBranch(_LayerLike): section_type = "subbranch"
+
+
+class SummaryTable(Section):
+    section_type = "summary_table"
+
+    def get_intro(self) -> str:
+        """The prose paragraph before the markdown table."""
+        for i, line in enumerate(self.body.split("\n")):
+            if line.startswith("|"):
+                return "\n".join(self.body.split("\n")[:i]).rstrip()
+        return self.body.rstrip()
+
+    def set_intro(self, text: str):
+        lines = self.body.split("\n")
+        table_start = None
+        for i, line in enumerate(lines):
+            if line.startswith("|"):
+                table_start = i; break
+        new_body = text.rstrip() + ("\n\n" + "\n".join(lines[table_start:])
+                                    if table_start is not None else "")
+        self.set_body(new_body)
+
+    def get_cell(self, layer_code: str, branch_code: str) -> str | None:
+        row = self.conn.execute(
+            "SELECT text FROM cells WHERE layer_code=? AND branch_code=?",
+            (layer_code, branch_code)
+        ).fetchone()
+        return row[0] if row else None
+
+    def set_cell(self, layer_code: str, branch_code: str, text: str | None):
+        marker = classify_cell_marker(text or "")
+        self.conn.execute(
+            "INSERT OR REPLACE INTO cells(layer_code, branch_code, text, marker) "
+            "VALUES (?, ?, ?, ?)",
+            (layer_code, branch_code, text, marker),
+        )
+        # rebuild body so render is byte-faithful even if we never re-render
+        self._rebuild_table_body()
+
+    def _rebuild_table_body(self):
+        """Rebuild the markdown table from cells. Preserve any prose
+        before / after the table (intro / outro) from the current body."""
+        lines = self.body.split("\n")
+        first_tbl = last_tbl = None
+        for i, ln in enumerate(lines):
+            if ln.startswith("|"):
+                if first_tbl is None:
+                    first_tbl = i
+                last_tbl = i
+        intro = "\n".join(lines[:first_tbl]).rstrip() if first_tbl else ""
+        outro = "\n".join(lines[last_tbl + 1:]) if last_tbl is not None else ""
+
+        header = "| L | " + " | ".join(f"{c}. {n}" for c, n in MAIN_BRANCHES) + " |"
+        sep = "|---|" + "---|" * len(MAIN_BRANCHES)
+        rows = [header, sep]
+        layers = self.conn.execute(
+            "SELECT code, name FROM layers ORDER BY position"
+        ).fetchall()
+        for code, name in layers:
+            cells = {b: "" for b, _ in MAIN_BRANCHES}
+            for br, txt in self.conn.execute(
+                "SELECT branch_code, text FROM cells WHERE layer_code=?",
+                (code,),
+            ).fetchall():
+                cells[br] = txt or ""
+            row_cells = " | ".join(cells[b] for b, _ in MAIN_BRANCHES)
+            rows.append(f"| {code} {name} | {row_cells} |")
+        new_body = intro + "\n\n" + "\n".join(rows)
+        # outro starts at lines[last_tbl+1] — the "\n" between the table row
+        # and lines[last_tbl+1] is implicit, so we always add it back here
+        if outro:
+            new_body += "\n" + outro
+        self.set_body(new_body)
+
+
+class Refs(Section):
+    section_type = "refs"
+
+    def next_num(self) -> int:
+        row = self.conn.execute(
+            "SELECT COALESCE(MAX(num), 0) FROM refs"
+        ).fetchone()
+        return row[0] + 1
+
+    def add(self, citation: str, url: str | None = None) -> int:
+        # Strip the trailing "[Online]. Available: <...>" if user pasted a
+        # full IEEE-style citation AND also supplied --url; Ref.render adds
+        # this suffix from the url field on its own.
+        citation = re.sub(
+            r"\s*\[Online\]\.\s+Available:\s*<[^>]+>\s*$", "", citation
+        ).strip()
+        if url:
+            row = self.conn.execute(
+                "SELECT num FROM refs WHERE url=?", (url,)
+            ).fetchone()
+            if row:
+                return row[0]
+        num = self.next_num()
+        self.conn.execute(
+            "INSERT INTO refs(num, citation, url) VALUES (?, ?, ?)",
+            (num, citation, url),
+        )
+        self._rebuild_body()
+        return num
+
+    def get(self, num: int) -> Ref | None:
+        return load_ref(self.conn, num)
+
+    def set(self, num: int, citation: str | None = None, url: str | None = None):
+        fields, vals = [], []
+        if citation is not None:
+            citation = re.sub(
+                r"\s*\[Online\]\.\s+Available:\s*<[^>]+>\s*$", "", citation
+            ).strip()
+            fields.append("citation=?"); vals.append(citation)
+        if url is not None:
+            fields.append("url=?"); vals.append(url)
+        if fields:
+            vals.append(num)
+            self.conn.execute(
+                f"UPDATE refs SET {', '.join(fields)} WHERE num=?", vals)
+            self._rebuild_body()
+
+    def remove(self, num: int):
+        self.conn.execute("DELETE FROM refs WHERE num=?", (num,))
+        self._rebuild_body()
+
+    def _rebuild_body(self):
+        rows = self.conn.execute(
+            "SELECT num, citation, url FROM refs ORDER BY num"
+        ).fetchall()
+        rendered = "\n\n".join(
+            Ref(num=r[0], citation=r[1], url=r[2]).render() for r in rows
+        )
+        self.set_body(rendered)
+
+
+SECTION_CLASSES = {
+    "doc_top": DocTop,
+    "summary_table": SummaryTable,
+    "main_overview": MainOverview,
+    "layer": Layer,
+    "branch_intro": BranchIntro,
+    "branch": Branch,
+    "subbranch": SubBranch,
+    "crosscut": Crosscut,
+    "refs": Refs,
+    "other": Other,
+}
+
+
+class Document:
+    def __init__(self, conn: sqlite3.Connection):
+        self.conn = conn
+
+    def section(self, key: str) -> Section:
+        row = get_section_row(self.conn, key)
+        if not row:
+            raise KeyError(f"section '{key}' not found")
+        return self._instantiate(row)
+
+    def sections(self) -> Iterable[Section]:
+        rows = self.conn.execute(
+            "SELECT key, position, section_type, heading, body, layer_code, "
+            "branch_code FROM sections ORDER BY position"
+        ).fetchall()
+        for row in rows:
+            yield self._instantiate(row)
+
+    def _instantiate(self, row) -> Section:
+        key, position, stype, heading, body, lc, bc = row
+        cls = SECTION_CLASSES.get(stype, Other)
+        return cls(self, key=key, position=position, heading=heading,
+                   body=body or "", layer_code=lc, branch_code=bc)
+
+    def entry(self, slug: str) -> Entry | None:
+        return load_entry(self.conn, slug=slug)
+
+    def ref(self, num: int) -> Ref | None:
+        return load_ref(self.conn, num)
+
+    def render(self) -> str:
+        out: list[str] = []
+        for s in self.sections():
+            out.append(s.render())
+        return "".join(out).rstrip() + "\n"
+
+    def commit(self):
+        self.conn.commit()
+
+
+def refresh_section_index(conn: sqlite3.Connection, section_key: str):
+    """Rebuild entries for a single section after a body mutation."""
+    row = get_section_row(conn, section_key)
+    if not row:
+        return
+    _, _, stype, _, body, lc, bc = row
+    if stype not in LAYER_LIKE_TYPES:
+        return
+    # delete this section's entries (cascade drops entry_refs)
+    conn.execute("DELETE FROM entries WHERE section_key=?", (section_key,))
+    # rebuild slug_seen by collecting globally-existing slugs
+    slug_seen = {r[0] for r in conn.execute(
+        "SELECT slug FROM entries").fetchall()}
+    index_section_body(conn, section_key, stype, body, lc, bc, slug_seen)
+
+
+# ---------------------------------------------------------------------------
+# migration from legacy `blocks` table
+
+def migrate_from_blocks(conn: sqlite3.Connection):
+    cur = conn.cursor()
+    has_blocks = cur.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='blocks'"
+    ).fetchone()
+    if not has_blocks:
+        sys.exit("legacy `blocks` table not found — nothing to migrate.")
+    conn.execute("PRAGMA foreign_keys = OFF")
+    # wipe new tables
+    cur.executescript("""
+        DELETE FROM entry_refs;
+        DELETE FROM entries;
+        DELETE FROM cells;
+        DELETE FROM refs;
+        DELETE FROM layers;
+        DELETE FROM branches;
+        DELETE FROM sections;
+    """)
+    rows = cur.execute(
+        "SELECT key, order_idx, block_type, title, body, layer_code, "
+        "branch_code FROM blocks ORDER BY order_idx"
+    ).fetchall()
+    for key, order_idx, btype, title, body, lc, bc in rows:
+        cur.execute(
+            "INSERT INTO sections(key, position, section_type, heading, "
+            "body, layer_code, branch_code) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (key, order_idx, btype, title, body or "", lc, bc),
+        )
+    refresh_all_indexes(conn)
+    conn.execute("PRAGMA foreign_keys = ON")
+
+
+# ---------------------------------------------------------------------------
+# db lifecycle
 
 def connect() -> sqlite3.Connection:
     if not DB_PATH.exists():
-        sys.exit(f"db not found: {DB_PATH}; run `init` first.")
+        sys.exit(f"db not found: {DB_PATH}; run `init`.")
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
 
-def init_db():
+def init_db() -> sqlite3.Connection:
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA foreign_keys = ON")
     conn.executescript(SCHEMA)
@@ -397,262 +1176,60 @@ def init_db():
     return conn
 
 
-def read_blocks(conn) -> list[dict]:
-    rows = conn.execute(
-        "SELECT key, order_idx, block_type, title, body, layer_code, branch_code "
-        "FROM blocks ORDER BY order_idx"
-    ).fetchall()
-    return [
-        {"key": r[0], "order_idx": r[1], "block_type": r[2],
-         "title": r[3], "body": r[4],
-         "layer_code": r[5], "branch_code": r[6]}
-        for r in rows
-    ]
-
-
-def write_derived(conn, data: dict):
-    cur = conn.cursor()
-    cur.executescript(
-        "DELETE FROM entry_refs; DELETE FROM entries;"
-        "DELETE FROM branch_cells; DELETE FROM refs;"
-        "DELETE FROM branches; DELETE FROM layers;"
-    )
-    for l in sorted(data["layers"].values(), key=lambda x: x["position"]):
-        cur.execute(
-            "INSERT INTO layers(code, position, name) VALUES (?, ?, ?)",
-            (l["code"], l["position"], l["name"]),
-        )
-    for b in sorted(data["branches"].values(), key=lambda x: x["pos"]):
-        cur.execute(
-            "INSERT INTO branches(code, parent_code, position, name) "
-            "VALUES (?, ?, ?, ?)",
-            (b["code"], b.get("parent"), b["pos"], b["name"]),
-        )
-    for r in data["refs"].values():
-        cur.execute(
-            "INSERT INTO refs(num, citation, url) VALUES (?, ?, ?)",
-            (r["num"], r["citation"], r["url"]),
-        )
-    slug_to_id: dict[str, int] = {}
-    for slug, e in data["entries"].items():
-        cur.execute(
-            "INSERT INTO entries(slug, name, url, layer_code, branch_code, "
-            "vendor, category, notes, block_key, source_line) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (slug, e["name"], e["url"], e.get("layer"), e.get("branch"),
-             e.get("vendor"), e.get("category"), e.get("notes"),
-             e.get("block_key"), e.get("source_line")),
-        )
-        slug_to_id[slug] = cur.lastrowid
-    for slug, ref_num in data["entry_refs"]:
-        if slug not in slug_to_id or ref_num not in data["refs"]:
-            continue
-        cur.execute(
-            "INSERT OR IGNORE INTO entry_refs(entry_id, ref_num) VALUES (?, ?)",
-            (slug_to_id[slug], ref_num),
-        )
-    for c in data["branch_cells"]:
-        if c["layer"] not in data["layers"] or c["branch"] not in data["branches"]:
-            continue
-        cur.execute(
-            "INSERT INTO branch_cells(layer_code, branch_code, raw_text, marker) "
-            "VALUES (?, ?, ?, ?)",
-            (c["layer"], c["branch"], c["raw"], c["marker"]),
-        )
-    cur.execute(
-        "INSERT OR REPLACE INTO sync_meta(key, value) VALUES (?, ?)",
-        ("last_render_ts", str(int(time.time()))),
-    )
-    conn.commit()
-
-
-def rebuild_derived(conn):
-    blocks = read_blocks(conn)
-    data = derive_indexes(blocks)
-    write_derived(conn, data)
-    return data
-
-
-def render_md(conn) -> str:
-    rows = conn.execute(
-        "SELECT block_type, title, body FROM blocks ORDER BY order_idx"
-    ).fetchall()
-    parts: list[str] = []
-    for btype, title, body in rows:
-        if btype == "doc_top":
-            parts.append(body)
-            continue
-        prefix = "###" if btype in ("branch", "subbranch") else "##"
-        parts.append(f"\n\n{prefix} {title}\n\n{body}")
-    return "".join(parts).rstrip() + "\n"
-
-
 # ---------------------------------------------------------------------------
-# block mutators
-
-def get_block_body(conn, key: str) -> str | None:
-    row = conn.execute("SELECT body FROM blocks WHERE key=?", (key,)).fetchone()
-    return row[0] if row else None
-
-
-def get_block_row(conn, key: str):
-    return conn.execute(
-        "SELECT order_idx FROM blocks WHERE key=?", (key,)
-    ).fetchone()
-
-
-def cmd_add_block(args):
-    conn = connect()
-    cur = conn.cursor()
-    if cur.execute("SELECT 1 FROM blocks WHERE key=?", (args.key,)).fetchone():
-        sys.exit(f"block '{args.key}' already exists")
-
-    if args.after:
-        row = cur.execute("SELECT order_idx FROM blocks WHERE key=?",
-                          (args.after,)).fetchone()
-        if not row:
-            sys.exit(f"--after key '{args.after}' not found")
-        new_order = row[0] + 1
-    elif args.before:
-        row = cur.execute("SELECT order_idx FROM blocks WHERE key=?",
-                          (args.before,)).fetchone()
-        if not row:
-            sys.exit(f"--before key '{args.before}' not found")
-        new_order = row[0]
-    else:
-        row = cur.execute(
-            "SELECT COALESCE(MAX(order_idx), -1) FROM blocks"
-        ).fetchone()
-        new_order = row[0] + 1
-
-    cur.execute(
-        "UPDATE blocks SET order_idx = order_idx + 1 WHERE order_idx >= ?",
-        (new_order,),
-    )
-    cur.execute(
-        "INSERT INTO blocks(key, order_idx, block_type, title, body, "
-        "layer_code, branch_code) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        (args.key, new_order, args.type, args.title, args.body or "",
-         args.layer_code, args.branch_code),
-    )
-    conn.commit()
-    print(f"added block '{args.key}' at order_idx={new_order}")
-
-
-def cmd_delete_block(args):
-    conn = connect()
-    row = conn.execute("SELECT order_idx FROM blocks WHERE key=?",
-                       (args.key,)).fetchone()
-    if not row:
-        sys.exit(f"block '{args.key}' not found")
-    # 先清掉派生表里 FK 指向此 block 的行（entries.block_key）
-    conn.execute(
-        "DELETE FROM entry_refs WHERE entry_id IN "
-        "(SELECT id FROM entries WHERE block_key=?)", (args.key,))
-    conn.execute("DELETE FROM entries WHERE block_key=?", (args.key,))
-    conn.execute("DELETE FROM blocks WHERE key=?", (args.key,))
-    conn.execute("UPDATE blocks SET order_idx = order_idx - 1 WHERE order_idx > ?",
-                 (row[0],))
-    conn.commit()
-    print(f"deleted block '{args.key}'")
-
-
-def cmd_replace(args):
-    conn = connect()
-    body = get_block_body(conn, args.key)
-    if body is None:
-        sys.exit(f"block '{args.key}' not found")
-    count = body.count(args.old)
-    if count == 0:
-        sys.exit(f"--old text not found in block '{args.key}'")
-    if count > 1 and not args.all:
-        sys.exit(f"--old appears {count} times in '{args.key}'; "
-                 f"use --all to replace all, or include more context.")
-    new_body = body.replace(args.old, args.new, -1 if args.all else 1)
-    conn.execute("UPDATE blocks SET body=? WHERE key=?", (new_body, args.key))
-    conn.commit()
-    print(f"replaced {count if args.all else 1} occurrence(s) in '{args.key}'")
-
-
-def cmd_append(args):
-    conn = connect()
-    body = get_block_body(conn, args.key)
-    if body is None:
-        sys.exit(f"block '{args.key}' not found")
-    new_body = body.rstrip("\n") + "\n" + args.text
-    conn.execute("UPDATE blocks SET body=? WHERE key=?", (new_body, args.key))
-    conn.commit()
-    print(f"appended {len(args.text)} chars to '{args.key}'")
-
-
-def cmd_set_body(args):
-    """整体替换 block.body（从文件或 stdin 读）。适合大段内容如主表。"""
-    conn = connect()
-    if get_block_body(conn, args.key) is None:
-        sys.exit(f"block '{args.key}' not found")
-    if args.file:
-        new_body = Path(args.file).read_text(encoding="utf-8")
-    else:
-        new_body = sys.stdin.read()
-    new_body = new_body.rstrip("\n")
-    conn.execute("UPDATE blocks SET body=? WHERE key=?", (new_body, args.key))
-    conn.commit()
-    print(f"set body of '{args.key}' to {len(new_body)} chars")
-
-
-def cmd_set_title(args):
-    """改 block 的 H2 / H3 标题。"""
-    conn = connect()
-    if not conn.execute("SELECT 1 FROM blocks WHERE key=?", (args.key,)).fetchone():
-        sys.exit(f"block '{args.key}' not found")
-    conn.execute("UPDATE blocks SET title=? WHERE key=?", (args.title, args.key))
-    conn.commit()
-    print(f"set title of '{args.key}' to '{args.title}'")
-
-
-def cmd_add_ref(args):
-    """追加 [N] citation 行到 refs block，返回新 ref 号。"""
-    conn = connect()
-    body = get_block_body(conn, "refs")
-    if body is None:
-        sys.exit("refs block not found")
-    nums = [int(m.group(1)) for m in re.finditer(r"^\[(\d+)\]", body, re.MULTILINE)]
-    next_num = max(nums) + 1 if nums else 1
-    new_line = f"\n\n[{next_num}] {args.citation}"
-    new_body = body.rstrip("\n") + new_line
-    conn.execute("UPDATE blocks SET body=? WHERE key='refs'", (new_body,))
-    conn.commit()
-    print(next_num)
-
-
-# ---------------------------------------------------------------------------
-# read-only commands
+# CLI
 
 def cmd_init(args):
     init_db()
     print(f"initialized {DB_PATH}")
 
 
+def cmd_migrate(args):
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA foreign_keys = OFF")
+    # drop any leftover v1/v2 tables
+    conn.executescript("""
+        DROP TABLE IF EXISTS section_parts;
+        DROP TABLE IF EXISTS vendor_blocks;
+        DROP TABLE IF EXISTS entry_refs;
+        DROP TABLE IF EXISTS entries;
+        DROP TABLE IF EXISTS refs;
+        DROP TABLE IF EXISTS cells;
+        DROP TABLE IF EXISTS branch_cells;
+        DROP TABLE IF EXISTS layers;
+        DROP TABLE IF EXISTS branches;
+        DROP TABLE IF EXISTS sections;
+        DROP TABLE IF EXISTS sync_meta;
+    """)
+    conn.executescript(SCHEMA)
+    migrate_from_blocks(conn)
+    for table in ("sections", "entries", "entry_refs", "refs", "cells",
+                  "layers", "branches"):
+        n = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
+        print(f"  {table:14s} {n}")
+    conn.close()
+
+
 def cmd_render(args):
     conn = connect()
-    data = rebuild_derived(conn)
-    md = render_md(conn)
+    doc = Document(conn)
+    md = doc.render()
     MD_PATH.write_text(md, encoding="utf-8")
-    rows = conn.execute("SELECT COUNT(*) FROM blocks").fetchone()[0]
-    print(
-        f"rendered {rows} blocks → {MD_PATH}\n"
-        f"  layers={len(data['layers'])} branches={len(data['branches'])} "
-        f"entries={len(data['entries'])} refs={len(data['refs'])} "
-        f"cells={len(data['branch_cells'])}"
-    )
+    print(f"rendered → {MD_PATH}  ({len(md):,} chars)")
+
+
+def cmd_refresh_index(args):
+    conn = connect()
+    refresh_all_indexes(conn)
+    print("rebuilt entries / refs / cells / layers / branches from sections.body")
 
 
 def cmd_stats(args):
     conn = connect()
-    for table in ("blocks", "layers", "branches", "entries", "entry_refs",
-                  "refs", "branch_cells"):
+    for table in ("sections", "entries", "entry_refs", "refs", "cells",
+                  "layers", "branches"):
         n = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
-        print(f"{table:18s} {n}")
+        print(f"{table:14s} {n}")
 
 
 def cmd_query(args):
@@ -661,27 +1238,248 @@ def cmd_query(args):
     try:
         rows = conn.execute(args.sql).fetchall()
     except sqlite3.Error as e:
-        print(f"sql error: {e}", file=sys.stderr)
-        sys.exit(1)
+        print(f"sql error: {e}", file=sys.stderr); sys.exit(1)
     if not rows:
-        if args.sql.strip().lower().startswith("select"):
-            print("(no rows)")
-        else:
-            conn.commit()
-        return
+        print("(no rows)"); return
     cols = rows[0].keys()
     print("\t".join(cols))
     for r in rows:
         print("\t".join("" if r[c] is None else str(r[c]) for c in cols))
 
 
-def cmd_next_ref(args):
+# ---- section subcommands --------------------------------------------------
+
+def cmd_section_list(args):
     conn = connect()
-    body = get_block_body(conn, "refs")
-    if body is None:
-        sys.exit("refs block not found")
-    nums = [int(m.group(1)) for m in re.finditer(r"^\[(\d+)\]", body, re.MULTILINE)]
-    print(max(nums) + 1 if nums else 1)
+    rows = conn.execute(
+        "SELECT position, key, section_type, heading FROM sections "
+        "ORDER BY position"
+    ).fetchall()
+    for r in rows:
+        print(f"{r[0]:3d}  {r[1]:18s}  {r[2]:14s}  {r[3] or ''}")
+
+
+def cmd_section_show(args):
+    conn = connect()
+    row = get_section_row(conn, args.key)
+    if not row:
+        sys.exit(f"section '{args.key}' not found")
+    key, position, stype, heading, body, lc, bc = row
+    print(f"key={key}  type={stype}  position={position}")
+    print(f"heading={heading!r}")
+    print(f"layer_code={lc}  branch_code={bc}")
+    print(f"body ({len(body)} chars):")
+    print("-" * 60)
+    print(body)
+
+
+def cmd_section_set_heading(args):
+    conn = connect()
+    doc = Document(conn)
+    s = doc.section(args.key)
+    s.set_heading(args.heading)
+    doc.commit()
+    print(f"set heading of '{args.key}' → {args.heading!r}")
+
+
+def cmd_section_set_body(args):
+    conn = connect()
+    doc = Document(conn)
+    s = doc.section(args.key)
+    if args.file:
+        body = Path(args.file).read_text(encoding="utf-8").rstrip()
+    elif args.body is not None:
+        body = args.body
+    else:
+        body = sys.stdin.read().rstrip()
+    s.set_body(body)
+    if s.section_type in LAYER_LIKE_TYPES:
+        refresh_section_index(conn, args.key)
+    doc.commit()
+    print(f"set body of '{args.key}' ({len(body)} chars)")
+
+
+# ---- entry subcommands ----------------------------------------------------
+
+def cmd_entry_list(args):
+    conn = connect()
+    sql = ("SELECT slug, name, vendor, layer_code, branch_code, url "
+           "FROM entries WHERE 1=1")
+    params = []
+    if args.section: sql += " AND section_key=?"; params.append(args.section)
+    if args.layer:   sql += " AND layer_code=?";  params.append(args.layer)
+    if args.branch:  sql += " AND branch_code=?"; params.append(args.branch)
+    if args.vendor:  sql += " AND vendor=?";      params.append(args.vendor)
+    sql += " ORDER BY layer_code, branch_code, position"
+    for slug, name, vendor, lc, bc, url in conn.execute(sql, params).fetchall():
+        print(f"{slug:40s}  {(lc or bc or ''):4s}  {vendor or '':12s}  {name}  {url or ''}")
+
+
+def cmd_entry_show(args):
+    conn = connect()
+    doc = Document(conn)
+    e = doc.entry(args.slug)
+    if not e:
+        sys.exit(f"entry slug='{args.slug}' not found")
+    print(f"slug={e.slug}")
+    print(f"name={e.name!r}")
+    print(f"url={e.url}")
+    print(f"section={e.section_key}  layer={e.layer_code}  branch={e.branch_code}")
+    print(f"vendor={e.vendor}  category={e.category}")
+    print(f"notes={e.notes!r}")
+    print(f"refs={e.ref_nums}")
+
+
+def cmd_entry_set_url(args):
+    conn = connect()
+    doc = Document(conn)
+    e = doc.entry(args.slug)
+    if not e:
+        sys.exit(f"entry '{args.slug}' not found")
+    s = doc.section(e.section_key)
+    if not isinstance(s, _LayerLike):
+        sys.exit(f"entry's section is not Layer/SubBranch — can't patch body")
+    s.set_entry_url(args.slug, args.url)
+    doc.commit()
+    print(f"set url of '{args.slug}' → {args.url}")
+
+
+def cmd_entry_set_name(args):
+    conn = connect()
+    doc = Document(conn)
+    e = doc.entry(args.slug)
+    if not e:
+        sys.exit(f"entry '{args.slug}' not found")
+    s = doc.section(e.section_key)
+    if not isinstance(s, _LayerLike):
+        sys.exit("entry's section is not Layer/SubBranch")
+    s.set_entry_name(args.slug, args.name)
+    refresh_section_index(conn, e.section_key)
+    doc.commit()
+    print(f"set name of '{args.slug}' → {args.name!r}")
+
+
+def cmd_entry_set_notes(args):
+    conn = connect()
+    doc = Document(conn)
+    e = doc.entry(args.slug)
+    if not e:
+        sys.exit(f"entry '{args.slug}' not found")
+    s = doc.section(e.section_key)
+    if not isinstance(s, _LayerLike):
+        sys.exit("entry's section is not Layer/SubBranch")
+    s.set_entry_notes(args.slug, args.notes)
+    doc.commit()
+    print(f"set notes of '{args.slug}' → {args.notes!r}")
+
+
+def cmd_entry_add(args):
+    conn = connect()
+    doc = Document(conn)
+    s = doc.section(args.section_key)
+    if not isinstance(s, _LayerLike):
+        sys.exit(f"section '{args.section_key}' is not Layer/SubBranch")
+    e = s.add_entry(args.vb_label, args.name, args.url, args.ref,
+                    notes=args.notes, separator=args.separator)
+    doc.commit()
+    if e:
+        print(f"added entry slug={e.slug} → {e.name}[[{args.ref}]]({args.url})")
+    else:
+        print("entry inserted but index lookup didn't find it; run refresh-index")
+
+
+def cmd_entry_remove(args):
+    conn = connect()
+    doc = Document(conn)
+    e = doc.entry(args.slug)
+    if not e:
+        sys.exit(f"entry '{args.slug}' not found")
+    s = doc.section(e.section_key)
+    if not isinstance(s, _LayerLike):
+        sys.exit("entry's section is not Layer/SubBranch")
+    s.remove_entry(args.slug)
+    doc.commit()
+    print(f"removed entry '{args.slug}'")
+
+
+# ---- ref subcommands ------------------------------------------------------
+
+def cmd_ref_list(args):
+    conn = connect()
+    if args.orphan:
+        rows = conn.execute("""
+            SELECT r.num, r.url FROM refs r
+            LEFT JOIN entry_refs er ON r.num = er.ref_num
+            WHERE er.entry_id IS NULL ORDER BY r.num
+        """).fetchall()
+    else:
+        rows = conn.execute(
+            "SELECT num, url, citation FROM refs ORDER BY num"
+        ).fetchall()
+    for r in rows:
+        print("\t".join("" if v is None else str(v) for v in r))
+
+
+def cmd_ref_show(args):
+    conn = connect()
+    doc = Document(conn)
+    r = doc.ref(args.num)
+    if not r:
+        sys.exit(f"ref [{args.num}] not found")
+    print(r.render())
+
+
+def cmd_ref_add(args):
+    conn = connect()
+    doc = Document(conn)
+    refs = doc.section("refs")
+    num = refs.add(args.citation, args.url)
+    doc.commit()
+    print(num)
+
+
+def cmd_ref_set(args):
+    conn = connect()
+    doc = Document(conn)
+    refs = doc.section("refs")
+    refs.set(args.num, args.citation, args.url)
+    doc.commit()
+    print(f"updated ref [{args.num}]")
+
+
+def cmd_ref_remove(args):
+    conn = connect()
+    doc = Document(conn)
+    refs = doc.section("refs")
+    refs.remove(args.num)
+    doc.commit()
+    print(f"removed ref [{args.num}]")
+
+
+def cmd_ref_next(args):
+    conn = connect()
+    doc = Document(conn)
+    refs = doc.section("refs")
+    print(refs.next_num())
+
+
+# ---- cell subcommands -----------------------------------------------------
+
+def cmd_cell_get(args):
+    conn = connect()
+    doc = Document(conn)
+    summary = doc.section("summary-table")
+    text = summary.get_cell(args.layer, args.branch)
+    print(text if text is not None else "(empty)")
+
+
+def cmd_cell_set(args):
+    conn = connect()
+    doc = Document(conn)
+    summary = doc.section("summary-table")
+    summary.set_cell(args.layer, args.branch, args.text)
+    doc.commit()
+    print(f"set cell ({args.layer}, {args.branch}) → {args.text!r}")
 
 
 # ---------------------------------------------------------------------------
@@ -691,62 +1489,79 @@ def main():
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("init").set_defaults(func=cmd_init)
+    sub.add_parser("migrate-from-blocks").set_defaults(func=cmd_migrate)
     sub.add_parser("render").set_defaults(func=cmd_render)
+    sub.add_parser("refresh-index").set_defaults(func=cmd_refresh_index)
     sub.add_parser("stats").set_defaults(func=cmd_stats)
-    sub.add_parser("next-ref").set_defaults(func=cmd_next_ref)
-
-    pq = sub.add_parser("query")
-    pq.add_argument("sql")
+    pq = sub.add_parser("query"); pq.add_argument("sql")
     pq.set_defaults(func=cmd_query)
 
-    pa = sub.add_parser("add-block")
-    pa.add_argument("key")
-    pa.add_argument("--type", required=True,
-                    choices=["doc_top", "summary_table", "main_overview",
-                             "layer", "branch_intro", "branch", "subbranch",
-                             "crosscut", "refs", "other"])
-    pa.add_argument("--title", default=None,
-                    help="excluding '## ' or '### ' prefix; None for doc_top")
-    pa.add_argument("--body", default="")
-    pa.add_argument("--layer-code", default=None)
-    pa.add_argument("--branch-code", default=None)
-    g = pa.add_mutually_exclusive_group()
-    g.add_argument("--after", help="insert after this block key")
-    g.add_argument("--before", help="insert before this block key")
-    pa.set_defaults(func=cmd_add_block)
+    # section
+    ps = sub.add_parser("section")
+    pss = ps.add_subparsers(dest="section_cmd", required=True)
+    pss.add_parser("list").set_defaults(func=cmd_section_list)
+    psh = pss.add_parser("show"); psh.add_argument("key")
+    psh.set_defaults(func=cmd_section_show)
+    pH = pss.add_parser("set-heading"); pH.add_argument("key")
+    pH.add_argument("--heading", required=True)
+    pH.set_defaults(func=cmd_section_set_heading)
+    pB = pss.add_parser("set-body"); pB.add_argument("key")
+    pB.add_argument("--body"); pB.add_argument("--file")
+    pB.set_defaults(func=cmd_section_set_body)
 
-    pd = sub.add_parser("delete-block")
-    pd.add_argument("key")
-    pd.set_defaults(func=cmd_delete_block)
+    # entry
+    pe = sub.add_parser("entry")
+    pes = pe.add_subparsers(dest="entry_cmd", required=True)
+    pel = pes.add_parser("list")
+    pel.add_argument("--section"); pel.add_argument("--layer")
+    pel.add_argument("--branch");  pel.add_argument("--vendor")
+    pel.set_defaults(func=cmd_entry_list)
+    peshow = pes.add_parser("show"); peshow.add_argument("slug")
+    peshow.set_defaults(func=cmd_entry_show)
+    pea = pes.add_parser("add"); pea.add_argument("section_key")
+    pea.add_argument("--vb-label", dest="vb_label")
+    pea.add_argument("--name", required=True)
+    pea.add_argument("--url", required=True)
+    pea.add_argument("--ref", type=int, required=True)
+    pea.add_argument("--notes")
+    pea.add_argument("--separator")
+    pea.set_defaults(func=cmd_entry_add)
+    per = pes.add_parser("remove"); per.add_argument("slug")
+    per.set_defaults(func=cmd_entry_remove)
+    peu = pes.add_parser("set-url"); peu.add_argument("slug")
+    peu.add_argument("--url", required=True)
+    peu.set_defaults(func=cmd_entry_set_url)
+    pen = pes.add_parser("set-name"); pen.add_argument("slug")
+    pen.add_argument("--name", required=True)
+    pen.set_defaults(func=cmd_entry_set_name)
+    pet = pes.add_parser("set-notes"); pet.add_argument("slug")
+    pet.add_argument("--notes")
+    pet.set_defaults(func=cmd_entry_set_notes)
 
-    pr = sub.add_parser("replace")
-    pr.add_argument("key", help="block key")
-    pr.add_argument("--old", required=True)
-    pr.add_argument("--new", required=True)
-    pr.add_argument("--all", action="store_true",
-                    help="replace all occurrences (default: require unique)")
-    pr.set_defaults(func=cmd_replace)
+    # ref
+    pr = sub.add_parser("ref")
+    prs = pr.add_subparsers(dest="ref_cmd", required=True)
+    prl = prs.add_parser("list"); prl.add_argument("--orphan", action="store_true")
+    prl.set_defaults(func=cmd_ref_list)
+    prsh = prs.add_parser("show"); prsh.add_argument("num", type=int)
+    prsh.set_defaults(func=cmd_ref_show)
+    pra = prs.add_parser("add"); pra.add_argument("--citation", required=True)
+    pra.add_argument("--url"); pra.set_defaults(func=cmd_ref_add)
+    prset = prs.add_parser("set"); prset.add_argument("num", type=int)
+    prset.add_argument("--citation"); prset.add_argument("--url")
+    prset.set_defaults(func=cmd_ref_set)
+    prrm = prs.add_parser("remove"); prrm.add_argument("num", type=int)
+    prrm.set_defaults(func=cmd_ref_remove)
+    prs.add_parser("next-num").set_defaults(func=cmd_ref_next)
 
-    pap = sub.add_parser("append")
-    pap.add_argument("key", help="block key")
-    pap.add_argument("--text", required=True)
-    pap.set_defaults(func=cmd_append)
-
-    psb = sub.add_parser("set-body",
-                         help="replace entire block.body from file or stdin")
-    psb.add_argument("key", help="block key")
-    psb.add_argument("--file", help="read new body from file; else stdin")
-    psb.set_defaults(func=cmd_set_body)
-
-    pst = sub.add_parser("set-title", help="update the H2/H3 title of a block")
-    pst.add_argument("key", help="block key")
-    pst.add_argument("--title", required=True)
-    pst.set_defaults(func=cmd_set_title)
-
-    par = sub.add_parser("add-ref")
-    par.add_argument("--citation", required=True,
-                     help="IEEE-style citation, excluding [N] prefix")
-    par.set_defaults(func=cmd_add_ref)
+    # cell
+    pc = sub.add_parser("cell")
+    pcs = pc.add_subparsers(dest="cell_cmd", required=True)
+    pcg = pcs.add_parser("get"); pcg.add_argument("layer")
+    pcg.add_argument("branch"); pcg.set_defaults(func=cmd_cell_get)
+    pcset = pcs.add_parser("set"); pcset.add_argument("layer")
+    pcset.add_argument("branch"); pcset.add_argument("--text", required=True)
+    pcset.set_defaults(func=cmd_cell_set)
 
     args = p.parse_args()
     args.func(args)
