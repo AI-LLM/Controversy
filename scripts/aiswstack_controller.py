@@ -114,6 +114,7 @@ from typing import Iterable
 ROOT = Path(__file__).resolve().parent.parent
 MD_PATH = ROOT / "chat/AISW-stack/README.md"
 DB_PATH = ROOT / "chat/AISW-stack/index.sqlite3"
+TEMPLATES_DIR = ROOT / "chat/AISW-stack/templates"
 
 # ---------------------------------------------------------------------------
 # constants
@@ -1211,9 +1212,75 @@ def cmd_migrate(args):
 
 
 def cmd_render(args):
+    """Render README.md from templates/ + db data via Jinja2.
+
+    Inputs:
+      - chat/AISW-stack/templates/readme.md.j2   主模版
+      - chat/AISW-stack/templates/_macros.j2      渲染宏
+      - chat/AISW-stack/templates/prose/<key>.md  各 section 散文（source of truth）
+      - index.sqlite3                              layers / branches / refs / cells /
+                                                   sections.body（entries 部分）
+
+    After migration sections.body for layer/subbranch holds ONLY the entries
+    markdown (intro prose moved to templates/prose/<key>.md). prose-only
+    section types have empty body.
+    """
+    try:
+        import jinja2
+    except ModuleNotFoundError:
+        sys.exit("jinja2 not installed. Run: .venv/bin/pip install jinja2")
     conn = connect()
-    doc = Document(conn)
-    md = doc.render()
+
+    # ---- load data ----------------------------------------------------
+    layers = [{"code": r[0], "position": r[1], "name": r[2]}
+              for r in conn.execute(
+                  "SELECT code, position, name FROM layers ORDER BY position"
+              ).fetchall()]
+    short_map = {code: name for code, name in MAIN_BRANCHES}
+    branches_all = [{"code": r[0], "parent_code": r[1], "position": r[2],
+                     "name": r[3], "name_short": short_map.get(r[0], r[3])}
+                    for r in conn.execute(
+                        "SELECT code, parent_code, position, name FROM branches "
+                        "ORDER BY position"
+                    ).fetchall()]
+    branches = [b for b in branches_all if b["parent_code"] is None]
+    sub_branches = [b for b in branches_all if b["parent_code"] is not None]
+    refs = [{"num": r[0], "citation": r[1], "url": r[2]}
+            for r in conn.execute(
+                "SELECT num, citation, url FROM refs ORDER BY num"
+            ).fetchall()]
+    cells = {(r[0], r[1]): r[2] or "" for r in conn.execute(
+        "SELECT layer_code, branch_code, text FROM cells").fetchall()}
+    section_body = {r[0]: r[1] or "" for r in conn.execute(
+        "SELECT key, body FROM sections").fetchall()}
+    section_heading = {r[0]: r[1] or "" for r in conn.execute(
+        "SELECT key, heading FROM sections").fetchall()}
+
+    # prose from templates/prose/*.md
+    prose = {}
+    prose_dir = TEMPLATES_DIR / "prose"
+    if prose_dir.exists():
+        for p in prose_dir.glob("*.md"):
+            prose[p.stem] = p.read_text(encoding="utf-8").rstrip("\n")
+
+    # ---- render -------------------------------------------------------
+    env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(str(TEMPLATES_DIR)),
+        keep_trailing_newline=False,
+    )
+    env.globals["cells"] = cells
+    tpl = env.get_template("readme.md.j2")
+    md = tpl.render(
+        layers=layers,
+        branches=branches,
+        sub_branches=sub_branches,
+        section_body=section_body,
+        section_heading=section_heading,
+        prose=prose,
+        refs=refs,
+        cells=cells,
+    )
+    md = md.rstrip() + "\n"
     MD_PATH.write_text(md, encoding="utf-8")
     print(f"rendered → {MD_PATH}  ({len(md):,} chars)")
 
@@ -1286,6 +1353,15 @@ def cmd_section_set_body(args):
     conn = connect()
     doc = Document(conn)
     s = doc.section(args.key)
+    if s.section_type in PROSE_ONLY_TYPES or s.section_type == "summary_table":
+        sys.exit(
+            f"section '{args.key}' is prose-only — its body lives in "
+            f"chat/AISW-stack/templates/prose/{args.key}.md. "
+            f"Edit that file directly, then `render`."
+        )
+    if s.section_type == "refs":
+        sys.exit("refs body is rebuilt from the refs table — use `ref add` / "
+                 "`ref set` / `ref remove`.")
     if args.file:
         body = Path(args.file).read_text(encoding="utf-8").rstrip()
     elif args.body is not None:
@@ -1297,6 +1373,34 @@ def cmd_section_set_body(args):
         refresh_section_index(conn, args.key)
     doc.commit()
     print(f"set body of '{args.key}' ({len(body)} chars)")
+
+
+# ---- prose subcommands ----------------------------------------------------
+
+def cmd_prose_list(args):
+    """List prose templates that exist on disk."""
+    prose_dir = TEMPLATES_DIR / "prose"
+    if not prose_dir.exists():
+        sys.exit(f"prose dir not found: {prose_dir}")
+    for p in sorted(prose_dir.glob("*.md")):
+        size = p.stat().st_size
+        first = p.read_text(encoding="utf-8").splitlines()[:1]
+        snippet = first[0][:60] if first else ""
+        print(f"{p.stem:18s} {size:5d}  {snippet}")
+
+
+def cmd_prose_path(args):
+    """Print the absolute path of a prose file for a given section key."""
+    p = TEMPLATES_DIR / "prose" / f"{args.key}.md"
+    print(p)
+
+
+def cmd_prose_show(args):
+    """Dump the contents of a prose template file."""
+    p = TEMPLATES_DIR / "prose" / f"{args.key}.md"
+    if not p.exists():
+        sys.exit(f"prose file not found: {p}")
+    sys.stdout.write(p.read_text(encoding="utf-8"))
 
 
 # ---- entry subcommands ----------------------------------------------------
@@ -1508,6 +1612,15 @@ def main():
     pB = pss.add_parser("set-body"); pB.add_argument("key")
     pB.add_argument("--body"); pB.add_argument("--file")
     pB.set_defaults(func=cmd_section_set_body)
+
+    # prose
+    pp = sub.add_parser("prose")
+    pps = pp.add_subparsers(dest="prose_cmd", required=True)
+    pps.add_parser("list").set_defaults(func=cmd_prose_list)
+    ppp = pps.add_parser("path"); ppp.add_argument("key")
+    ppp.set_defaults(func=cmd_prose_path)
+    ppsh = pps.add_parser("show"); ppsh.add_argument("key")
+    ppsh.set_defaults(func=cmd_prose_show)
 
     # entry
     pe = sub.add_parser("entry")

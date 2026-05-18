@@ -1,0 +1,43 @@
+{%- from '_macros.j2' import render_summary_table, render_refs, section_block with context -%}
+{#- 主模版。散文从 prose[]（templates/prose/<key>.md）来；entries
+    部分从 section_body[]（sections.body）来；层级标题从
+    section_heading[]（sections.heading）来。-#}
+{{ prose.get('top', '') | trim }}
+
+{%- set st = prose.get('summary-table', '') %}
+{%- if '---OUTRO---' in st %}
+{%- set st_intro, st_outro = st.split('\n\n---OUTRO---\n', 1) %}
+{%- else %}
+{%- set st_intro, st_outro = st, '' %}
+{%- endif %}
+
+{{ st_intro | trim }}
+
+{{ render_summary_table(layers, branches, cells) | trim }}
+{% if st_outro.strip() %}
+{{ st_outro | trim }}
+{%- endif %}
+
+{{ prose.get('main-overview', '') | trim }}
+{%- for lyr in layers if lyr.code in section_heading %}
+
+{{ section_block(lyr.code, section_heading[lyr.code], '##') }}
+{%- endfor %}
+
+{{ prose.get('parallel-intro', '') | trim }}
+{%- for br in branches if br.code != 'A' %}
+{%- if br.code in prose %}
+
+{{ prose[br.code] | trim }}
+{%- endif %}
+{%- for sub in sub_branches if sub.parent_code == br.code %}
+
+{{ section_block(sub.code, section_heading.get(sub.code, sub.code ~ ' ' ~ sub.name), '###') }}
+{%- endfor %}
+{%- endfor %}
+
+{{ prose.get('crosscut', '') | trim }}
+
+## 参考文献
+
+{{ render_refs(refs) }}

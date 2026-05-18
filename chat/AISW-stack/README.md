@@ -17,7 +17,7 @@
   - L38 高精地图 / 定位（D 专属）
 
 | L | A. LLM / Agent | B. 科学计算 | C. 机器人 | D. 自动驾驶 | E. 世界模型 / 3D | F. 经典 CV | G. 量化金融 | H. 游戏 | I. 影视娱乐 | J. 学习 / 教育 |
-|---|---|---|---|---|---|---|--- | --- | --- | --- |
+|---|---|---|---|---|---|---|---|---|---|---|
 | L01 GPU 驱动 / 固件 | NVIDIA / ROCm / Metal / Gaudi driver | 同 A | 同 A | 同 A + NVIDIA DRIVE OS driver | 同 A | 同 A + Hailo / Qualcomm QNN driver | 同 A | 同 A | 同 A | 同 A |
 | L02 互连 / 集合通信 | NVLink[[10]](https://www.nvidia.com/en-us/data-center/nvlink/), NCCL[[11]](https://developer.nvidia.com/nccl), InfiniBand[[12]](https://www.nvidia.com/en-us/networking/products/infiniband/) | 同 A，重 MPI + InfiniBand | NVLink for AGI rig；车端 PCIe | NVLink-C2C 整车 + 仿真集群 IB | 同 A | 边缘多无互连 | 同 A | 同 A（单节点为主） | 同 A（渲染农场用 10–100 GbE / IB） | 同 A（多单卡 / 单节点训练） |
 | L03 GPU 编程模型 | CUDA[[13]](https://developer.nvidia.com/cuda), ROCm[[14]](https://www.amd.com/en/products/software/rocm.html), Metal[[15]](https://developer.apple.com/metal/), SYCL[[16]](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html), DirectML[[17]](https://learn.microsoft.com/en-us/windows/ai/directml/dml) | 同 A + Julia CUDA.jl[[18]](https://github.com/JuliaGPU/CUDA.jl) | 同 A | 同 A | 同 A | 同 A + Apple Metal + DirectML | 同 A + RAPIDS[[19]](https://rapids.ai/) | 同 A + DirectX 12（PC / Xbox）, Metal（Mac / iOS） | 同 A + Metal（Mac DCC） | 同 A + DirectML / Metal（学习机 / 平板端推理） |
@@ -871,7 +871,6 @@ Captions（短视频 AI 工作室）、Submagic[[864]](https://www.submagic.co/)
 ### I9 AI-first 影视工作室 / 终端品牌
 
 Adobe Firefly Video、ILM StageCraft、Marvel（已多次使用 AI 风格化）、Wonder Studios、Promise；Lightricks / LTX-Video[[867]](https://www.lightricks.com/) 模型；OpenAI Sora 自有 app
-
 
 ### J 学习 / 教育栈：从学生掌握状态到防作弊与教学仿真
 

@@ -1,0 +1,40 @@
+{#- Shared rendering macros.
+
+Data layout passed by aiswstack_controller.py:
+  layers          = [{code, position, name}]
+  branches        = main branches [{code, name, name_short, parent_code, position}]
+  sub_branches    = subbranches [{code, name, parent_code, position}]
+  section_body    = {section_key: markdown_blob}  — entries part only
+  section_heading = {section_key: heading_text}
+  prose           = {section_key: markdown_text}  — narrative
+  refs            = [{num, citation, url}]
+  cells           = {(layer_code, branch_code): text}
+-#}
+
+{#- Emit "## heading\n\n<prose>\n\n<body>" with only ONE blank line
+    between each non-empty piece. Used for layer / subbranch sections. -#}
+{%- macro section_block(key, heading, depth) -%}
+{{ depth }} {{ heading }}
+
+{% set p = (prose.get(key) or '').strip() -%}
+{% set b = (section_body.get(key) or '').strip() -%}
+{% if p %}{{ p }}{% if b %}
+
+{% endif %}{% endif -%}
+{% if b %}{{ b }}{% endif %}
+{%- endmacro -%}
+
+{%- macro render_summary_table(layers, branches, cells) -%}
+| L | {% for b in branches %}{{ b.code }}. {{ b.name_short or b.name }}{% if not loop.last %} | {% endif %}{% endfor %} |
+|---|{% for b in branches %}---|{% endfor %}
+{% for lyr in layers -%}
+| {{ lyr.code }} {{ lyr.name }} | {% for b in branches %}{{ cells.get((lyr.code, b.code), '') }}{% if not loop.last %} | {% endif %}{% endfor %} |
+{% endfor -%}
+{%- endmacro -%}
+
+{%- macro render_refs(refs) -%}
+{% for r in refs -%}
+[{{ r.num }}] {{ r.citation }}{% if r.url %} [Online]. Available: <{{ r.url }}>{% endif %}
+
+{% endfor -%}
+{%- endmacro -%}
