@@ -65,9 +65,20 @@ entries    slug PK, name, url, notes, section_key, layer_code, branch_code,
 refs       num PK, citation, url                  source of truth
 cells      layer_code, branch_code, text, marker  source of truth
 
-layers     code PK, position, name      派生（layers.name 是总表用的短名）
-branches   code PK, parent_code, ...    派生
+layers     code PK, position, name, segment, view
+             name     = 总表用的短名（如 "互连 / 集合通信"）
+             segment  = main-overview 表第 1 列段名（如 "底层运行时"）
+             view     = main-overview 表第 4 列描述（如 "让 OS 看到 GPU"）
+             segment / view 仅 L01–L34 有值；L35–L38 为 NULL
+             编辑：layer set-name / set-segment / set-view
+
+branches   code PK, parent_code, position, name, name_short
+             name        = 全名（用于二级标题）
+             name_short  = 总表列头 + 文档前言用的短名（如 "科学计算 / AI4Science"）
+             编辑：branch set-name / set-name-short
 ```
+
+**重要**：prose 文件被作为 Jinja2 模版渲染，所有 layers/branches/entries 字段都可在 prose 文件里用 `{{ }}` 表达式实时读取。修改这些字段（用 Controller 命令）后跑 `render` 即可看到新值。
 
 ## Render 流程
 
@@ -111,6 +122,15 @@ branches   code PK, parent_code, ...    派生
   prose list                    列所有 prose 文件 + 首行预览
   prose path KEY                打印 templates/prose/<KEY>.md 的绝对路径
   prose show KEY                dump prose 文件内容
+  branch list
+  layer list
+
+# 写 branches / layers 字段（被 prose 模版以 Jinja2 表达式读取）
+  branch set-name CODE --name TEXT          (用于 ### 二级标题的全名)
+  branch set-name-short CODE --name TEXT    (前言 + 总表列头用的短名)
+  layer  set-name CODE --name TEXT          (总表 L 列短名)
+  layer  set-segment CODE --segment TEXT    (main-overview 段名)
+  layer  set-view CODE --view TEXT          (main-overview "自然视角" 描述)
 
 # 写 entries / refs / cells（不涉及散文）
   entry add SECTION_KEY --vb-label LBL --name N --url U --ref R
@@ -344,6 +364,7 @@ git diff chat/AISW-stack/README.md
 ## 边界与陷阱
 
 - **render 通过 Jinja2**：模版变量为 `layers` / `branches` / `sub_branches` / `section_body` / `section_heading` / `prose` / `refs` / `cells`。改模版后要保证这些变量名 / 结构没变。
+- **prose .md 文件也是 Jinja2 模版**：可以在 prose 文件里用 `{{ branches | length }}`、`{% for br in branches %}` 等表达式实时读 DB 数据。前言里的"10 条领域分支、A LLM/Agent、B ...、L01–L09、L01–L38"等等都从 db 算 / 读，不在 prose 文件里写死。修改这些值用 Controller 的 `branch set-name-short` / `layer set-segment` 等命令。
 - **section.body 现在只放 entries 部分**：layer/sub 的 intro 散文已搬到 prose 文件；改散文请改 prose 文件。
 - **派生表 refresh-index 重建**：entries / layers / branches / entry_refs 都从 sections.body 派生。
 - **ref 号永不复用**：`ref add` 总用 max+1。

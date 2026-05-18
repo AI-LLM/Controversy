@@ -1232,16 +1232,29 @@ def cmd_render(args):
     conn = connect()
 
     # ---- load data ----------------------------------------------------
-    layers = [{"code": r[0], "position": r[1], "name": r[2]}
+    lcols = {r[1] for r in conn.execute("PRAGMA table_info(layers)").fetchall()}
+    lsel = "code, position, name"
+    if "segment" in lcols: lsel += ", segment"
+    else:                   lsel += ", NULL AS segment"
+    if "view"    in lcols: lsel += ", view"
+    else:                   lsel += ", NULL AS view"
+    layers = [{"code": r[0], "position": r[1], "name": r[2],
+               "segment": r[3], "view": r[4]}
               for r in conn.execute(
-                  "SELECT code, position, name FROM layers ORDER BY position"
+                  f"SELECT {lsel} FROM layers ORDER BY position"
               ).fetchall()]
+    # branches.name_short — fall back to MAIN_BRANCHES constant if the column
+    # hasn't been populated yet (idempotent for older dbs)
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(branches)").fetchall()}
+    has_ns = "name_short" in cols
+    sel = ("code, parent_code, position, name, name_short" if has_ns
+           else "code, parent_code, position, name, NULL")
     short_map = {code: name for code, name in MAIN_BRANCHES}
     branches_all = [{"code": r[0], "parent_code": r[1], "position": r[2],
-                     "name": r[3], "name_short": short_map.get(r[0], r[3])}
+                     "name": r[3],
+                     "name_short": r[4] or short_map.get(r[0], r[3])}
                     for r in conn.execute(
-                        "SELECT code, parent_code, position, name FROM branches "
-                        "ORDER BY position"
+                        f"SELECT {sel} FROM branches ORDER BY position"
                     ).fetchall()]
     branches = [b for b in branches_all if b["parent_code"] is None]
     sub_branches = [b for b in branches_all if b["parent_code"] is not None]
@@ -1256,19 +1269,31 @@ def cmd_render(args):
     section_heading = {r[0]: r[1] or "" for r in conn.execute(
         "SELECT key, heading FROM sections").fetchall()}
 
-    # prose from templates/prose/*.md
-    prose = {}
-    prose_dir = TEMPLATES_DIR / "prose"
-    if prose_dir.exists():
-        for p in prose_dir.glob("*.md"):
-            prose[p.stem] = p.read_text(encoding="utf-8").rstrip("\n")
-
     # ---- render -------------------------------------------------------
     env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(str(TEMPLATES_DIR)),
         keep_trailing_newline=False,
     )
     env.globals["cells"] = cells
+
+    # prose: load each templates/prose/<key>.md as a Jinja2 template so that
+    # data-driven expressions (e.g. `{{ branches | length }}`) work inside
+    # prose files. Templates that have no Jinja syntax just pass through.
+    prose_ctx = {
+        "layers": layers, "branches": branches,
+        "sub_branches": sub_branches, "refs": refs, "cells": cells,
+        "section_heading": section_heading, "section_body": section_body,
+    }
+    prose = {}
+    prose_dir = TEMPLATES_DIR / "prose"
+    if prose_dir.exists():
+        for p in prose_dir.glob("*.md"):
+            raw = p.read_text(encoding="utf-8").rstrip("\n")
+            try:
+                tpl_p = env.from_string(raw)
+                prose[p.stem] = tpl_p.render(**prose_ctx)
+            except jinja2.TemplateError as e:
+                sys.exit(f"jinja2 error in prose/{p.name}: {e}")
     tpl = env.get_template("readme.md.j2")
     md = tpl.render(
         layers=layers,
@@ -1373,6 +1398,101 @@ def cmd_section_set_body(args):
         refresh_section_index(conn, args.key)
     doc.commit()
     print(f"set body of '{args.key}' ({len(body)} chars)")
+
+
+# ---- branch / layer field edit ---------------------------------------------
+
+def cmd_branch_list(args):
+    conn = connect()
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(branches)").fetchall()}
+    sel = "code, parent_code, position, name"
+    if "name_short" in cols:
+        sel += ", name_short"
+    for r in conn.execute(
+        f"SELECT {sel} FROM branches ORDER BY position"
+    ).fetchall():
+        if len(r) >= 5:
+            print(f"{r[0]:4s}  parent={r[1] or '-':4s}  pos={r[2]:3d}  "
+                  f"short={r[4] or '':20s}  {r[3]}")
+        else:
+            print(f"{r[0]:4s}  parent={r[1] or '-':4s}  pos={r[2]:3d}  {r[3]}")
+
+
+def cmd_branch_set_name(args):
+    conn = connect()
+    cur = conn.execute("UPDATE branches SET name=? WHERE code=?",
+                       (args.name, args.code))
+    if cur.rowcount == 0:
+        sys.exit(f"branch '{args.code}' not found")
+    conn.commit()
+    print(f"branches[{args.code}].name = {args.name!r}")
+
+
+def cmd_branch_set_short(args):
+    conn = connect()
+    # ensure column exists
+    cols = {r[1] for r in conn.execute(
+        "PRAGMA table_info(branches)").fetchall()}
+    if "name_short" not in cols:
+        conn.execute("ALTER TABLE branches ADD COLUMN name_short TEXT")
+    cur = conn.execute(
+        "UPDATE branches SET name_short=? WHERE code=?",
+        (args.name, args.code))
+    if cur.rowcount == 0:
+        sys.exit(f"branch '{args.code}' not found")
+    conn.commit()
+    print(f"branches[{args.code}].name_short = {args.name!r}")
+
+
+def cmd_layer_list(args):
+    conn = connect()
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(layers)").fetchall()}
+    sel = "code, position, name"
+    if "segment" in cols: sel += ", segment"
+    else:                  sel += ", NULL"
+    if "view"    in cols: sel += ", view"
+    else:                  sel += ", NULL"
+    for r in conn.execute(f"SELECT {sel} FROM layers ORDER BY position").fetchall():
+        print(f"{r[0]:4s}  pos={r[1]:3d}  seg={(r[3] or '')[:14]:14s}  "
+              f"name={r[2]:30s}  view={r[4] or ''}")
+
+
+def cmd_layer_set_name(args):
+    conn = connect()
+    cur = conn.execute("UPDATE layers SET name=? WHERE code=?",
+                       (args.name, args.code))
+    if cur.rowcount == 0:
+        sys.exit(f"layer '{args.code}' not found")
+    conn.commit()
+    print(f"layers[{args.code}].name = {args.name!r}")
+
+
+def cmd_layer_set_segment(args):
+    conn = connect()
+    cols = {r[1] for r in conn.execute(
+        "PRAGMA table_info(layers)").fetchall()}
+    if "segment" not in cols:
+        conn.execute("ALTER TABLE layers ADD COLUMN segment TEXT")
+    cur = conn.execute("UPDATE layers SET segment=? WHERE code=?",
+                       (args.segment, args.code))
+    if cur.rowcount == 0:
+        sys.exit(f"layer '{args.code}' not found")
+    conn.commit()
+    print(f"layers[{args.code}].segment = {args.segment!r}")
+
+
+def cmd_layer_set_view(args):
+    conn = connect()
+    cols = {r[1] for r in conn.execute(
+        "PRAGMA table_info(layers)").fetchall()}
+    if "view" not in cols:
+        conn.execute("ALTER TABLE layers ADD COLUMN view TEXT")
+    cur = conn.execute("UPDATE layers SET view=? WHERE code=?",
+                       (args.view, args.code))
+    if cur.rowcount == 0:
+        sys.exit(f"layer '{args.code}' not found")
+    conn.commit()
+    print(f"layers[{args.code}].view = {args.view!r}")
 
 
 # ---- prose subcommands ----------------------------------------------------
@@ -1612,6 +1732,27 @@ def main():
     pB = pss.add_parser("set-body"); pB.add_argument("key")
     pB.add_argument("--body"); pB.add_argument("--file")
     pB.set_defaults(func=cmd_section_set_body)
+
+    # branch
+    pb = sub.add_parser("branch")
+    pbs = pb.add_subparsers(dest="branch_cmd", required=True)
+    pbs.add_parser("list").set_defaults(func=cmd_branch_list)
+    pbn = pbs.add_parser("set-name"); pbn.add_argument("code")
+    pbn.add_argument("--name", required=True); pbn.set_defaults(func=cmd_branch_set_name)
+    pbsn = pbs.add_parser("set-name-short"); pbsn.add_argument("code")
+    pbsn.add_argument("--name", required=True)
+    pbsn.set_defaults(func=cmd_branch_set_short)
+
+    # layer
+    pl = sub.add_parser("layer")
+    pls = pl.add_subparsers(dest="layer_cmd", required=True)
+    pls.add_parser("list").set_defaults(func=cmd_layer_list)
+    pln = pls.add_parser("set-name"); pln.add_argument("code")
+    pln.add_argument("--name", required=True); pln.set_defaults(func=cmd_layer_set_name)
+    plg = pls.add_parser("set-segment"); plg.add_argument("code")
+    plg.add_argument("--segment", required=True); plg.set_defaults(func=cmd_layer_set_segment)
+    plv = pls.add_parser("set-view"); plv.add_argument("code")
+    plv.add_argument("--view", required=True); plv.set_defaults(func=cmd_layer_set_view)
 
     # prose
     pp = sub.add_parser("prose")

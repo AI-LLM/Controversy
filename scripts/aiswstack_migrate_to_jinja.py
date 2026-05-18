@@ -89,7 +89,103 @@ def split_summary_intro(body: str) -> tuple[str, str, str]:
     return intro, table, outro
 
 
+def add_data_columns(conn: sqlite3.Connection):
+    """Idempotent column-add for the new data fields branches.name_short /
+    layers.segment / layers.view that prose templates consume."""
+    bcols = {r[1] for r in conn.execute("PRAGMA table_info(branches)").fetchall()}
+    if "name_short" not in bcols:
+        conn.execute("ALTER TABLE branches ADD COLUMN name_short TEXT")
+        print("  added branches.name_short")
+    lcols = {r[1] for r in conn.execute("PRAGMA table_info(layers)").fetchall()}
+    if "segment" not in lcols:
+        conn.execute("ALTER TABLE layers ADD COLUMN segment TEXT")
+        print("  added layers.segment")
+    if "view" not in lcols:
+        conn.execute("ALTER TABLE layers ADD COLUMN view TEXT")
+        print("  added layers.view")
+    conn.commit()
+
+
+# Short branch names as they appear in the document's preamble. These are
+# **stored in db** so render reads them from db. Edit via Controller's
+# `branch set-name-short` command.
+PREAMBLE_BRANCH_NAMES = {
+    "A": "LLM / Agent",
+    "B": "科学计算 / AI4Science",
+    "C": "机器人",
+    "D": "自动驾驶",
+    "E": "世界模型 / 3D",
+    "F": "经典视觉",
+    "G": "量化金融",
+    "H": "游戏",
+    "I": "影视娱乐",
+    "J": "学习 / 教育",
+}
+
+
+def populate_branch_short_names(conn: sqlite3.Connection):
+    for code, name in PREAMBLE_BRANCH_NAMES.items():
+        cur = conn.execute(
+            "UPDATE branches SET name_short=? WHERE code=? AND name_short IS NULL",
+            (name, code),
+        )
+        if cur.rowcount:
+            print(f"  set branches[{code}].name_short = {name!r}")
+    conn.commit()
+
+
+def populate_layer_segment_view(conn: sqlite3.Connection):
+    """Parse the main-overview table (originally in sections.body for
+    'main-overview'; now in templates/prose/main-overview.md) to populate
+    layers.segment and layers.view."""
+    candidates = [
+        TEMPLATES_DIR / "prose" / "main-overview.md",
+    ]
+    row = conn.execute(
+        "SELECT body FROM sections WHERE key='main-overview' AND body!=''"
+    ).fetchone()
+    text = ""
+    if row:
+        text = row[0]
+    if not text:
+        for c in candidates:
+            if c.exists():
+                text = c.read_text(encoding="utf-8")
+                break
+    if not text:
+        print("  ! main-overview table not found; skipping segment/view")
+        return
+    cur_segment = None
+    n = 0
+    for line in text.split("\n"):
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        if len(cells) < 4:
+            continue
+        # skip header + separator rows
+        if cells[1] in ("层号", "---"):
+            continue
+        m = re.match(r"^L\d{2}$", cells[1])
+        if not m:
+            continue
+        if cells[0]:
+            cur_segment = cells[0]
+        view = cells[3]
+        conn.execute(
+            "UPDATE layers SET segment=COALESCE(segment, ?), "
+            "view=COALESCE(view, ?) WHERE code=?",
+            (cur_segment, view, cells[1]),
+        )
+        n += 1
+    conn.commit()
+    print(f"  populated segment/view for {n} layers")
+
+
 def migrate(conn: sqlite3.Connection):
+    add_data_columns(conn)
+    populate_branch_short_names(conn)
+    populate_layer_segment_view(conn)
     # NOTE: layers.name is the abbreviated form (e.g. "互连 / 集合通信") used
     # in the summary-table column. The full layer heading lives on
     # sections.heading (e.g. "L02 GPU 互连 / 集合通信") — render() loads it

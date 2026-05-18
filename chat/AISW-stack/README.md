@@ -16,7 +16,7 @@
   - L37 物理仿真 / 数字孪生引擎（B / C / D / E 共用：Isaac Sim / MuJoCo[[8]](https://mujoco.org/) / GROMACS[[9]](https://www.gromacs.org/) / CARLA / Omniverse）
   - L38 高精地图 / 定位（D 专属）
 
-| L | A. LLM / Agent | B. 科学计算 | C. 机器人 | D. 自动驾驶 | E. 世界模型 / 3D | F. 经典 CV | G. 量化金融 | H. 游戏 | I. 影视娱乐 | J. 学习 / 教育 |
+| L | A. LLM / Agent | B. 科学计算 / AI4Science | C. 机器人 | D. 自动驾驶 | E. 世界模型 / 3D | F. 经典视觉 | G. 量化金融 | H. 游戏 | I. 影视娱乐 | J. 学习 / 教育 |
 |---|---|---|---|---|---|---|---|---|---|---|
 | L01 GPU 驱动 / 固件 | NVIDIA / ROCm / Metal / Gaudi driver | 同 A | 同 A | 同 A + NVIDIA DRIVE OS driver | 同 A | 同 A + Hailo / Qualcomm QNN driver | 同 A | 同 A | 同 A | 同 A |
 | L02 互连 / 集合通信 | NVLink[[10]](https://www.nvidia.com/en-us/data-center/nvlink/), NCCL[[11]](https://developer.nvidia.com/nccl), InfiniBand[[12]](https://www.nvidia.com/en-us/networking/products/infiniband/) | 同 A，重 MPI + InfiniBand | NVLink for AGI rig；车端 PCIe | NVLink-C2C 整车 + 仿真集群 IB | 同 A | 边缘多无互连 | 同 A | 同 A（单节点为主） | 同 A（渲染农场用 10–100 GbE / IB） | 同 A（多单卡 / 单节点训练） |
@@ -61,14 +61,14 @@
 
 ## A. LLM / Agent — 全栈总览（34 层）
 
-按"运行时 → 框架 → 模型 → 推理服务 → 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端应用"九大段组织。
+按"底层运行时 → 框架 → 模型 → 推理服务 → LLM 应用中间件 → Agent 核心 → 可观测 / 安全 → 多模态外围 → 终端用户 Agent 应用"九大段组织。
 
 | 段 | 层号 | 层名 | 自然视角 / 解决的事 |
 | --- | --- | --- | --- |
 | 底层运行时 | L01 | GPU 驱动 / 固件 | 让 OS 看到 GPU |
 | | L02 | GPU 互连 / 集合通信 | 多 GPU、多机之间搬数据 |
 | | L03 | GPU 编程模型 / 计算 API | 让程序员写 kernel |
-| | L04 | GPU 内核库（DNN / BLAS / 通信） | 别人写好的高性能算子 |
+| | L04 | GPU 内核库（DNN / BLAS / 通信 / Attention） | 别人写好的高性能算子 |
 | | L05 | 编译器 / IR | 把模型图编译成 GPU 代码 |
 | 框架 | L06 | 张量 / 训练框架 | 写模型与训练循环 |
 | | L07 | 分布式训练框架 | 千卡 / 万卡并行 |
@@ -78,27 +78,27 @@
 | | L11 | 评测 / 基准 | 能力打分 |
 | | L12 | 实验追踪 / MLOps | run / sweep / artifact 管理 |
 | 推理服务 | L13 | 推理引擎 | KV cache、batching、speculative |
-| | L14 | 模型服务 / 编排 | 把引擎包成 service |
+| | L14 | 模型服务 / 编排（GPU orchestration） | 把引擎包成 service |
 | | L15 | GPU 云 / 算力市场 | 谁来出 GPU |
-| | L16 | 模型 API 聚合 / 路由 | 一个 endpoint 调多家模型 |
-| | L17 | 前沿模型 API | 直接调闭源旗舰模型 |
+| | L16 | 模型 API 聚合 / 路由（推理服务市场） | 一个 endpoint 调多家模型 |
+| | L17 | 前沿模型 API（闭源 / 半闭源） | 直接调闭源旗舰模型 |
 | LLM 应用中间件 | L18 | LLM 应用框架 | prompt 链 / 工作流 |
-| | L19 | Embedding / 重排序模型 | 把文本变向量 |
-| | L20 | 向量数据库 / 检索 | 存与查向量 |
+| | L19 | Embedding / 重排序模型与服务 | 把文本变向量 |
+| | L20 | 向量数据库 / 检索引擎 | 存与查向量 |
 | | L21 | 长期记忆系统 | Agent 跨会话状态 |
 | | L22 | LLM 网关 / 路由 | 限流 / 配额 / fallback |
-| | L23 | Prompt 管理 / 缓存 | prompt 版本、cache 命中 |
+| | L23 | Prompt 管理 / 提示缓存 | prompt 版本、cache 命中 |
 | Agent 核心 | L24 | Agent 框架 | tool-loop、规划、多 agent |
-| | L25 | 工具协议 / MCP / 集成 | Agent 怎么调外部世界 |
-| | L26 | 浏览器 / Computer Use | Agent 操作 GUI |
+| | L25 | 工具协议 / MCP / 集成市场 | Agent 怎么调外部世界 |
+| | L26 | 浏览器 / Computer Use Agent | Agent 操作 GUI |
 | | L27 | 代码 / Agent 沙箱 | Agent 跑代码的安全环境 |
-| 可观测 / 安全 | L28 | LLM 观测 / 追踪 | trace、token、成本 |
+| 可观测 / 安全 | L28 | LLM 观测 / 追踪（LLM Observability） | trace、token、成本 |
 | | L29 | Guardrails / 安全 / 红队 | 注入防御、PII、越狱 |
-| | L30 | LLM 评测 / 测试 | CI 里跑 prompt 测试 |
-| 多模态外围 | L31 | 语音（TTS / ASR） | 听 / 说 |
-| | L32 | 图像 / 视频生成 | 画 / 拍 |
-| 终端用户 Agent 应用 | L33 | 通用对话 / 搜索 Agent | 给所有人用 |
-| | L34 | 垂直 Agent 应用 | 给开发者 / 设计师 / 等用 |
+| | L30 | LLM 评测 / 测试（CI 中的 prompt 测试） | CI 里跑 prompt 测试 |
+| 多模态外围 | L31 | 语音（TTS / ASR / 实时对话） | 听 / 说 |
+| | L32 | 图像 / 视频 / 3D 生成 | 画 / 拍 |
+| 终端用户 Agent 应用 | L33 | 通用对话 / 搜索 Agent（终端用户） | 给所有人用 |
+| | L34 | 垂直 Agent 应用（终端用户） | 给开发者 / 设计师 / 等用 |
 
 ---
 
@@ -640,9 +640,7 @@ trace、span、token / 成本、prompt / completion 日志，是 agent 时代的
 
 ---
 
-## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）
-
-以下 9 个领域分支（**B** 科学计算 / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典 CV / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 分支无独立子层，其 L10+ 内容随 L01–L38 各层段直接呈现。
+## 各领域分支细节（B–J，共享 L01–L09，从 L10 起分叉）以下 9 个领域分支（**B** 科学计算 / AI4Science / **C** 机器人 / **D** 自动驾驶 / **E** 世界模型 / 3D / **F** 经典视觉 / **G** 量化金融 / **H** 游戏 / **I** 影视娱乐 / **J** 学习 / 教育）共享 L01–L09 通用 GPU 栈，从 L10 起在领域模型 / 数据 / 部署 / 终端产品上各自分叉。B 因为最早成形而拆出 B1 / B2 / B3 三个子层；其余分支用数字后缀（C1 / C2 / …）继续切。A 分支无独立子层，其 L10+ 内容随 L01–L38 各层段直接呈现。
 
 ### B1 科学计算 / HPC 通用底座（与 L06–L09 并行）
 
