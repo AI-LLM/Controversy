@@ -4,12 +4,25 @@
 
 ## 工作产物
 
-每个任务目录里：
+### 文件命名规则
 
-- `description.md`：使用 CLI-Anything CLI 完成相同业务目标的新版任务说明（**已替换**）。
-- `meta.json`：`sites` 改为 CLI 名字数组；新增 `cli_substitution = {original_sites, rationale}`；移除 `require_login`（CLI 用 env var）。（**已替换**）
-- `description.saas.md`、`meta.saas.json`：原 SaaS 版本备份（**未动**）。
-- `verify.py`：**未动**——原 verify 直接 `docker exec` 调用 SaaS 容器内 DB/API，CLI 替代后这些断言一律会失败。**这是已知风险**，本次未解决；要让 verify 通过需重写 verify.py 为读取 obsidian/calibre/chromadb/seaclip CLI 输出 + 文件断言（见末尾"verify.py 风险"）。
+每个任务目录（`chat/SaaS-Bench/tasks/.../<task_id>/`）里现含：
+
+- `description.md`：**原 SaaS 版本**（上游 SaaS-Bench repo 的原始任务说明，未动）。
+- `meta.json`：**原 SaaS 版本**（上游原始，`sites` 仍指向 docker 镜像键，未动）。
+- `description_cli.md`：**CLI 版本**（用 CLI-Anything CLI 完成同样业务目标的重写版）。
+- `meta_cli.json`：**CLI 版本**（`sites` 改为 CLI 名字数组，新增 `cli_substitution = {original_sites, rationale}`，删除 `require_login`，CLI 用 env var）。
+- `verify.py`：**未动**。
+
+### 文件归属
+
+- `chat/SaaS-Bench/` 是父 repo `./` 中的 **gitlink/submodule**，自身是独立 git repo。
+- 全部 4 类文件（`description.md` / `meta.json` / `description_cli.md` / `meta_cli.json` / `verify.py`）都 tracked 在 **inner repo（chat/SaaS-Bench）** 内，不在父 repo 的 tree 中。
+- 父 repo `./` 只跟踪：① `chat/SaaS-Bench` 的 gitlink SHA，② `chat/SaaS2CLI.md` 本文档。
+
+### verify.py 风险（已知未解决）
+
+原 verify.py 直接 `docker exec` 调用 SaaS 容器内 DB/API。**`meta_cli.json` 把 `sites` 改成 CLI 名后，原 verify 一律会失败**（容器不再启动，env var 也对不上）。要让 CLI 版任务可 verify，需新写 `verify_cli.py`：读 obsidian vault 文件 + frontmatter、calibre `calibredb list --search`、chromadb HTTP API、seaclip CLI 输出、stata 脚本生成的 `.gph`、libreoffice 输出文件结构等。详见末尾"verify.py 风险"。
 
 ## 体量
 
@@ -261,15 +274,19 @@ Software 类 31 个任务大量依赖 baserow 的强类型 schema（single-selec
   2. 改 `saas_bench/apps.yaml`：为新 CLI 增加"非 docker app"占位条目（或在 loader 里放宽 `Unknown app keys are ignored with a warning`，让 verify.py 直接读 env var 找 CLI 服务地址）。
   3. 改 `saas_bench/run.py` / `slot.py`：跳过 docker 启动，改为 `pre_task_cmd` 准备 vault/chromadb namespace/seaclip 工作目录。
 
-## 备份还原
+## 切换 CLI 版 / 还原 SaaS 版
+
+CLI 版和 SaaS 版**并列存放**，无须还原。如要让 SaaS-Bench harness 实际跑 CLI 版任务，需让 `loader.py` / `verify_runner.py` 读 `description_cli.md` 和 `meta_cli.json` 而不是 `description.md` / `meta.json`（例如新增 `SAAS_BENCH_VARIANT=cli` env 切换文件名后缀）；或在 evaluation 前先把 CLI 版覆盖到默认文件名：
 
 ```bash
 cd /Users/luwei/work/Controversy/chat/SaaS-Bench/tasks
-for d in $(find . -name description.saas.md -exec dirname {} \;); do
-  cp "$d/description.saas.md" "$d/description.md"
-  cp "$d/meta.saas.json" "$d/meta.json"
+for d in $(find . -name description_cli.md -exec dirname {} \;); do
+  cp "$d/description_cli.md" "$d/description.md"
+  cp "$d/meta_cli.json"      "$d/meta.json"
 done
 ```
+
+要回到 SaaS 版只需 `git checkout HEAD -- chat/SaaS-Bench`（inner repo 内）即可，因为 SaaS 原版的 `description.md` / `meta.json` 一直是 tracked 干净状态。
 
 ## 文件清单
 
@@ -282,4 +299,8 @@ tasks/uni-m/Software/software_{002,004,005,006,008,009,012,014,018,021,023,024,0
 tasks/uni-m/Teamwork/teamwork_{009,011,014,020,030,032,042,043,052,074,082,083}/ (12)
 ```
 
-每个目录现含 `description.md`（CLI 版）+ `description.saas.md`（备份）+ `meta.json`（CLI 版）+ `meta.saas.json`（备份）+ `verify.py`（未动）。
+每个目录现含 `description.md`（SaaS 原版）+ `meta.json`（SaaS 原版）+ `description_cli.md`（CLI 版）+ `meta_cli.json`（CLI 版）+ `verify.py`（未动）。
+
+## CLI 池来源
+
+本次替代池 = `cli-hub list` 全部 80 个 CLI = `chat/CLI-Anything/registry.json`（64 个 in-repo CLI）+ `chat/CLI-Anything/public_registry.json`（16 个公共 CLI）。其中实际被映射使用的约 35 个；剩余约 45 个（如 godot / sbox / blender / freecad / qgis / 3mf / cloudcompare / renderdoc / nsight-graphics / unrealinsights / ueatelier / slay_the_spire_ii / eth2-quickstart / inkstitch / musescore / krita / ……）与 SaaS-Bench 的 23 个 SaaS app 业务面不重叠（3D / CAD / 游戏 / 区块链 / 刺绣 / 乐谱等垂直工具），未进入替代映射。
