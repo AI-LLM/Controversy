@@ -363,7 +363,7 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 
 ###### 软件工程组织：Harness engineering 把"平台 / SRE / Tech Lead"工种平民化
 
-软件工程组织是"组织内部精细化治理"被 LLM Agent 改写的典型例子。Thoughtworks 的 Birgitta Böckeler 在 2026 年 4 月的 *Harness engineering for coding agent users* 中提出一个清晰的心智模型：**Agent = Model + Harness**——coding agent 用得好不好，瓶颈不在模型而在"用户为自己的系统搭建的外层 harness"[[63]](https://martinfowler.com/articles/harness-engineering.html)。她把这个外层 harness 拆成两类控制：**Guides（feedforward 控制）** 在 agent 行动前引导——principles、coding conventions、ref docs、how-tos、language servers、CLIs/scripts、code modifications；**Sensors（feedback 控制）** 在 agent 行动后观察——custom linters、static analysis、review agents、logs、browser 探查。两类控制又各分 **computational**（确定性、CPU 跑、毫秒级，如 linters/类型检查/结构分析）和 **inferential**（LLM 作 judge、慢且贵、非确定）。
+软件工程组织是"组织内部精细化治理"被 LLM Agent 改写的典型例子。Thoughtworks 的 Birgitta Böckeler 在 2026 年 4 月的 *Harness engineering for coding agent users* 中提出一个清晰的心智模型：**Agent = Model + Harness**——coding agent 用得好不好，瓶颈不在模型而在"用户为自己的系统搭建的外层 harness"[[63]](https://martinfowler.com/articles/harness-engineering.html)。她把这个外层 harness 拆成两类控制：**Guides（feedforward 控制）** 在 agent 行动前引导——principles、coding conventions、ref docs、how-tos、language servers、CLIs/scripts、code modifications；**Sensors（feedback 控制）** 在 agent 行动后观察——custom linters、static analysis、review agents、logs、browser 探查。两类控制又各分 **computational**（确定性、CPU 跑、毫秒级，如 linters/类型检查/结构分析）和 **inferential**（LLM 作 judge、慢且贵、非确定）。基于以上论证，本文无意将LLM Model或Agent = Model + Harness视为计算工具，讨论如何令其可靠运行的架构和方法，而是为这整个系统建立一个分析模型，视之为传统人力、AI人力使用计算机协同工作。
 
 **核心洞察**：harness 的每一个组件，在传统软件工程组织里都对应着**一种专门的工程师工种**——而这些工种在中小企业根本配不起。LLM Agent 让 harness 第一次可以被批量生成与持续维护，相当于给每个开发团队"装上一组过去只有大企业才有的中级工程师"。映射如下：
 
