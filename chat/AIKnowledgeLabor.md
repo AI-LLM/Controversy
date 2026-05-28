@@ -333,6 +333,36 @@ AI 知识劳动力的一个高价值出口，是过去由于人类大脑算力�
 
 Stanford HAI 2026 年 4 月发布的 *AI Index Report 2026* 给出了 AI for Science 在 2025–2026 年的全景：前沿模型在 PhD 级科学问答上的准确率为 93%（人类专家基线 81.2%）；在 ChemBench 2,700+ 化学题上超过化学家平均水平；Sakana AI Scientist-v2 生成的论文已被 ICLR workshop 与 *Nature* 接收。但报告同时强调"jagged frontier"——AI 在天体物理实验复现仅 <20%、地球观测 33%[[50]](https://hai.stanford.edu/ai-index/2026-ai-index-report)。换言之，这股劳动力把人类大脑在算力和体力上完全干不动的"上帝禁区"（$10^{60}$ 量级的分子空间、12.8 万个全基因组、220 万个候选晶体）变成了可以并行扫描的工作量，**但能力分布是凹凸不均的**——不是"全面替代人类科学家"，而是"在某些维度上把可行域扩大数个数量级"。
 
+##### 3.2.1.4 清偿技术债：COBOL、Fortran 与几十年没人敢动的代码
+
+技术债不是一个抽象概念——它是几千亿行真实运行的老代码：上世纪 60 年代写的 COBOL 仍跑着美国社保系统、各大银行的核心账务、IRS 的税务系统；50 年代设计的 Fortran 仍驱动核电站模拟、气象预报、航空气动；80–90 年代的 C/C++ 仍在底层操作系统、网络协议栈、嵌入式控制器里默默工作。**这些代码没有"过时退役"——它们承担着现代社会运转的关键负载——但没人敢动它们**。这是一类极特殊的脑力缺口：不是"新工作没人做"，而是"几十年前一代人留下的工作量后人接不住"。
+
+**规模：被锁死的几千亿行老代码**
+
+Reuters 2017 年的 *COBOL Blues* 调查给出了行业沿用至今的核心数字——全球约 **2,200 亿行 COBOL** 仍在运行；**43% 的银行系统、95% 的 ATM 刷卡交易、每天约 3 万亿美元的商业活动**走在 COBOL 之上[[52]](https://fingfx.thomsonreuters.com/gfx/rngs/USA-BANKS-COBOL/010040KH18J/index.html)。具象案例的量级更直观：美国社保署（SSA）维护**6,000 万行以上 COBOL 代码**；IRS 的核心 Individual Master File 是 1960 年代 IBM System/360 时代的产物，IRS 自 2009 年启动现代化，到 2024 年已投入**20 亿美元**仍未完工，2025 年 3 月被迫暂停重新评估[[53]](https://www.gao.gov/products/gao-25-107611)。澳大利亚联邦银行 2012 年完成的核心系统替换耗时 5 年、最终成本约 **7.5 亿美元**——这是行业内被反复引用的"传统现代化代价"参照[[52]](https://fingfx.thomsonreuters.com/gfx/rngs/USA-BANKS-COBOL/010040KH18J/index.html)。
+
+**断代：写它的人和懂它的人都在退休**
+
+GAO 在 GAO-19-471 与 GAO-23-106821 两份报告中反复警告："具备 COBOL 与 Assembly 技能的人员日益稀缺，构成关键风险"[[54]](https://www.gao.gov/products/gao-19-471)。AFCEA Signal 的行业共识：COBOL 开发者平均 55 岁、每年约 10% 退休；Micro Focus / OpenText 的调研显示 **60% 使用 COBOL 的组织把"找不到开发者"列为最大挑战**[[55]](https://www.afcea.org/signal-media/cyber-edge/aging-workforce-brings-cobol-crisis)。最具象征性的事件是 2020 年 4 月：新泽西州长 Phil Murphy 在新闻发布会上紧急呼吁 COBOL 志愿者支援疫情期间瘫痪的失业金系统——一周内涌入 36.2 万条申请，但州里运行 40 年的 mainframe 已经无人能改[[56]](https://www.cnbc.com/2020/04/06/new-jersey-seeks-cobol-programmers-to-fix-unemployment-system.html)。**这不是"技术过时"问题，是"懂它的人正在生物意义上消失"问题**。
+
+**Fortran 的特殊形态：科研系统里"动不得也走不动"**
+
+Fortran 没有 COBOL 那样的总盘子数字，但具象案例同样惊人：NASA Johnson 航天中心 1990 年代的 ROSE 项目从**逾 200 万行 Fortran** 飞行分析系统重构为 C++；NCAR 的旗舰气候模型 CESM 至今仍是 **130–150 万行 Fortran**，部分代码可追溯到 1950–70 年代[[57]](https://files01.core.ac.uk/download/pdf/301044137.pdf)。核电站模拟、空气动力学、分子动力学领域沿用 Fortran 已成定式——主要不是因为"技术上更好"，而是因为编译器对数值代码的优化加上几十年监管验证的可信度让"重写一遍"在法律和监管上几乎不可行。
+
+**AI 第一次让"安全重写"变成可批量工序**
+
+过去清偿这类技术债只有两条路：要么返聘退休员工，要么花数亿美元做"大爆炸式重写"。AI 第一次让这件事的单价下来了——下面是 2024–2026 年最具说服力的几个案例：
+
+- **Google 内部代码迁移**（arXiv 2501.06972，2025-01）——这是当前最严肃、最被业界引用的"AI 大规模代码迁移"报告：基于 fine-tuned Gemini，JUnit3 → JUnit4 迁移在 3 个月内改 **5,359 个文件、14.9 万行代码、87% AI 生成代码直接合入**；Joda → java.time 估计节省 89% 人力；int32 → int64 ID 类型迁移省下"数百工程师·年"[[58]](https://arxiv.org/abs/2501.06972)。
+- **Spotify × Anthropic Claude**（Spotify Engineering 2026-04）——通过 Claude Agent SDK 自动化代码迁移：**工程时间减少 90%、每月超过 650 个 AI 生成的代码改动落地、约一半全公司变更走自动管线**[[59]](https://engineering.atspotify.com/2026/4/anthropic-agentic-development)。
+- **Mechanical Orchard 与 Imogen**（旧金山，2025-04 旗舰产品发布）——Alphabet GV 2024 年 8 月领投 Series B 5,000 万美元、累计融资 7,400 万美元。Imogen 不靠"翻译代码"而靠"重放数据流、对照行为重写"；公司公开数据是"**每位工程师每周稳定重写 1 万行以上 COBOL，生成代码经过生产数据等价验证**"；与 Thoughtworks 合作的两个最大型 mainframe 应用预计 2026 年 1 月前完成现代化，比传统办法快约 65%[[60]](https://www.mechanical-orchard.com/insights/mechanical-orchard-ignites-major-shift-in-enterprise-it-transformation-with-imogen)。
+- **IBM watsonx Code Assistant for Z**（2023-08 发布、持续演化）——交互式 COBOL → Java 重构。埃及社会保险机构 NOSI 报告把 **COBOL 分析时间从 8 小时压到 30 分钟（94% 缩减）**[[61]](https://www.ibm.com/products/watsonx-code-assistant-z)。
+- **DARPA TRACTOR**（2024-08 启动）——美国政府层面最具旗号意义的项目：用 LLM + 形式化方法把 **C 代码自动转 Rust**，目标"消除内存安全漏洞"[[62]](https://www.darpa.mil/research/programs/translating-all-c-to-rust)。
+
+**对照值得点一笔：Fortran 现代化目前仍停留在 arXiv 论文与开源原型阶段**（如 2024 年的 ChatGPT 译 Earth System Model 概念验证、2025 年的 LLM-Assisted Fortran→C++ 跨平台研究），还没有像 Mechanical Orchard / IBM watsonx for Z 那样的旗舰商业产品。这一不对称暴露了 AI 现代化的真实边界——**它最擅长清偿的，是有大量训练数据和清晰业务规则可学的代码**（COBOL 是业务规则丰富的金融账务，AI 学得很快），而对数值模拟代码的语义理解仍显薄弱。
+
+⚠ 解读：AI 在技术债清偿中的角色，不是"自动重写一切"，而是**把过去需要返聘退休员工才能解码的隐性知识，转译成现代团队能维护的形式**。Google 内迁、Spotify × Anthropic、Mechanical Orchard、IBM watsonx for Z 这些案例的共同结构都是：AI 负责规模化生成与等价验证，人负责定义任务边界与最终审核。COBOL / Fortran 的瓶颈从来不是语法，而是"现在没人懂这段业务规则了"——AI 第一次让"理解一段 1970 年代代码并安全重写"变成可以批量执行的工序，而不是一次几亿美元、五年才完工的豪赌。技术债不会因此一夜清零，但**清偿单价首次明显下降**——这是这股新劳动力对现代社会运转底层的第一次直接体力贡献。
+
 #### 3.2.2 价值实现路径
 
 需求存在不等于价值自动兑现。AI 产出的文字、代码、晶体结构、分子序列不能直接吃也不能直接住——它们要变成 GDP、提高人类福祉，必须经过三条转化路径。
@@ -463,3 +493,25 @@ Microsoft Research 的 *New Future of Work Report 2025* 测算，使用 AI 的�
 [50] Stanford HAI, *AI Index Report 2026*, Apr. 2026. (前沿模型 PhD 级科学问答 93% vs 人类 81.2%；天体物理实验复现 <20%；地球观测 33%) [Online]. Available: <https://hai.stanford.edu/ai-index/2026-ai-index-report>
 
 [51] A. Challapally, C. Pease, R. Raskar, P. Chari (MIT NANDA), *The GenAI Divide: State of AI in Business 2025*, MIT Project NANDA, Jul. 2025. (基于 300+ 公开 AI 项目复盘、52 次结构化访谈、153 份高管调研；约 95% 企业 GenAI 试点未带来可衡量的 P&L 影响) [Online]. Available: <https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf>
+
+[52] Reuters Graphics, "COBOL Blues," *Reuters Investigates*, Apr. 2017. (220 billion lines of COBOL; 43% of US banking systems; $3 trillion in daily commerce; 95% of ATM transactions; CBA core replacement ~$750M / 5 years) [Online]. Available: <https://fingfx.thomsonreuters.com/gfx/rngs/USA-BANKS-COBOL/010040KH18J/index.html>
+
+[53] U.S. Government Accountability Office, "IRS Modernization: Actions Needed to Address Persistent IT Risks," GAO-25-107611, Sep. 2025. (IRS Individual Master File modernization: $2B invested through 2024; paused March 2025) [Online]. Available: <https://www.gao.gov/products/gao-25-107611>
+
+[54] U.S. Government Accountability Office, "Information Technology: Agencies Need to Develop Modernization Plans for Critical Legacy Systems," GAO-19-471, Jun. 2019. (COBOL/Assembly skills shortage flagged as critical risk to federal legacy systems) [Online]. Available: <https://www.gao.gov/products/gao-19-471>
+
+[55] AFCEA Signal, "The Aging Workforce Brings COBOL Crisis to the Forefront," 2024. (COBOL devs avg 55, ~10% retire annually; 60% of COBOL-using organizations cite hiring as top challenge) [Online]. Available: <https://www.afcea.org/signal-media/cyber-edge/aging-workforce-brings-cobol-crisis>
+
+[56] R. Browne, "New Jersey is looking for COBOL programmers to fix its unemployment system," *CNBC*, Apr. 6, 2020. (Gov. Phil Murphy emergency COBOL volunteer call during COVID-19 surge of 362,000 weekly unemployment claims) [Online]. Available: <https://www.cnbc.com/2020/04/06/new-jersey-seeks-cobol-programmers-to-fix-unemployment-system.html>
+
+[57] J. C. McKinney et al., "Modernization of the NASA Engineering and Safety Center's Software Engineering Capability," NASA Technical Report, 2011. (NASA Johnson ROSE project: 2M+ lines of Fortran refactored to C++) [Online]. Available: <https://files01.core.ac.uk/download/pdf/301044137.pdf>
+
+[58] C. Maddila et al., "How is Google using AI for internal code migrations?" *arXiv preprint*, arXiv:2501.06972, Jan. 2025. (Fine-tuned Gemini; JUnit3→JUnit4: 5,359 files / 149K lines / 87% AI-generated code merged; Joda→java.time: 89% effort saved) [Online]. Available: <https://arxiv.org/abs/2501.06972>
+
+[59] Spotify Engineering, "Agentic Development with Anthropic," Apr. 2026. (Claude Agent SDK migration: 90% engineering time reduction; 650+ AI-generated changes/month; ~50% of company-wide changes via automated pipeline) [Online]. Available: <https://engineering.atspotify.com/2026/4/anthropic-agentic-development>
+
+[60] Mechanical Orchard, "Mechanical Orchard Ignites Major Shift in Enterprise IT Transformation with Imogen," press release, Apr. 3, 2025. (10,000+ lines/week COBOL rewrite throughput per engineer with production-data equivalence validation; ~65% faster than traditional; Thoughtworks partnership) [Online]. Available: <https://www.mechanical-orchard.com/insights/mechanical-orchard-ignites-major-shift-in-enterprise-it-transformation-with-imogen>
+
+[61] IBM, "watsonx Code Assistant for Z," product page, 2024. (Egyptian NOSI case: COBOL analysis time compressed from 8 hours to ~30 minutes / 94% reduction) [Online]. Available: <https://www.ibm.com/products/watsonx-code-assistant-z>
+
+[62] DARPA, "Translating All C to Rust (TRACTOR)," program page, launched Aug. 2024. (LLM + formal methods to automatically convert C code to memory-safe Rust) [Online]. Available: <https://www.darpa.mil/research/programs/translating-all-c-to-rust>
