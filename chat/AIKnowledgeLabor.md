@@ -151,7 +151,13 @@ Guo 等人 2017 年在 ICML 的论文《On Calibration of Modern Neural Networks
 
 #### 2.9.4 多次采样 + 验证器：错误率指数级衰减
 
-OpenAI 在 2023 年的《Let's Verify Step by Step》（Lightman 等）证明：基于步骤的过程奖励模型（Process Reward Model, PRM）显著优于结果奖励模型，使最佳采样模型在 MATH 测试集子集上达到 78% 准确率[[27]](https://arxiv.org/abs/2305.20050)。理论上，只要验证器的准确率 $p>0.5$，通过投票或蒙特卡洛树搜索增加采样次数 $K$，整体错误率呈指数级衰减——就像 5 个独立打字员互相校对能让最终错误率趋近于 0。
+OpenAI 在 2023 年的《Let's Verify Step by Step》（Lightman 等）证明：基于步骤的过程奖励模型（Process Reward Model, PRM）显著优于结果奖励模型，使最佳采样模型在 MATH 测试集子集上达到 78% 准确率[[27]](https://arxiv.org/abs/2305.20050)。
+
+理论上，只要验证器的准确率 $p > 0.5$（即分清对错的能力高于抛硬币），通过投票机制（Majority Voting）或蒙特卡洛树搜索（MCTS）增加采样次数 $K$，整体错误率将呈指数级衰减：
+
+$$\text{Error Rate} \propto e^{-K \cdot D_{\text{KL}}}$$
+
+其中 $D_{\text{KL}}$ 为验证器分布与目标分布之间的 KL 散度。直觉解释：即便每个打字员都有 10% 的错误率，让 5 个打字员互相校对、投票，最终成文的错误率就会在数学上被压到接近 0。
 
 ### 2.10 纠错的计算量非对称性：必须靠"传统骨骼"重建
 
