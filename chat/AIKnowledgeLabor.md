@@ -122,9 +122,9 @@ LLM 每次前向传播都是一次密集矩阵乘法。要求 LLM "检查并纠�
 
 通过三种架构性手段：
 
-1. **形式化验证器与代码沙盒**：让 LLM 写代码（昂贵），把代码丢进 Python/Lean/Z3 等传统执行环境运行（极廉价）。LLM 读取确定性报错，迭代修正。求解贵、验证廉价。（例：[Regology Reggi](https://www.regology.com/reggi)，部分对应）
-2. **过程奖励模型（PRM）**：一个比生成模型小 1–2 个数量级的 Critic 模型对每一步推导打分。"大模型冲锋、小模型把关"，纠错成本压到求解的 10–1%[[27]](https://arxiv.org/abs/2305.20050)。（例：[Block Party](https://www.blockpartyapp.com/)，部分对应）
-3. **推测式解码（Speculative Decoding）**：Leviathan 等 2023 年提出，用小"草稿模型"廉价生成候选 token 串，再用大"目标模型"一次性并行验证。由于 Transformer 注意力机制的特性，**并行验证一串文本的计算量远低于逐字生成**。在 T5-XXL 上实现 2–3× 推理加速，输出与原模型完全一致[[28]](https://arxiv.org/abs/2211.17192)。（例：[Vendavo Agentic Pricing](https://www.vendavo.com/)，部分对应）
+1. **形式化验证器与代码沙盒**：让 LLM 写代码（昂贵），把代码丢进 Python/Lean/Z3 等传统执行环境运行（极廉价）。LLM 读取确定性报错，迭代修正。求解贵、验证廉价。
+2. **过程奖励模型（PRM）**：一个比生成模型小 1–2 个数量级的 Critic 模型对每一步推导打分。"大模型冲锋、小模型把关"，纠错成本压到求解的 10–1%[[27]](https://arxiv.org/abs/2305.20050)。
+3. **推测式解码（Speculative Decoding）**：Leviathan 等 2023 年提出，用小"草稿模型"廉价生成候选 token 串，再用大"目标模型"一次性并行验证。由于 Transformer 注意力机制的特性，**并行验证一串文本的计算量远低于逐字生成**。在 T5-XXL 上实现 2–3× 推理加速，输出与原模型完全一致[[28]](https://arxiv.org/abs/2211.17192)。
 
 ⚠ 解读：未来的 AI 不可能是孤立的神经大网，它必须是**深度嵌入传统计算机代码、沙盒和规则的复合系统**。
 
@@ -193,11 +193,11 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 AI 劳动力让小微企业获得了跨国巨头的智囊团，让大企业实现了毫米级的精细化运营。
 
-1. **形式化验证器与代码沙盒**：让 LLM 写代码（昂贵），把代码丢进 Python/Lean/Z3 等传统执行环境运行（极廉价）。LLM 读取确定性报错，迭代修正。求解贵、验证廉价。（例：[Regology Reggi](https://www.regology.com/reggi)，部分对应）
+1. **跨境电商"千国千面"合规官**：针对出海小企业，AI 智能体实时根据具体商品的材质、出口国的最新法规（如欧盟 2026 绿色新政微调）以及当地宗教习俗，动态定制包装说明书与合规申报文本。（例：[Regology Reggi](https://www.regology.com/reggi)，部分对应）
 
-2. **过程奖励模型（PRM）**：一个比生成模型小 1–2 个数量级的 Critic 模型对每一步推导打分。"大模型冲锋、小模型把关"，纠错成本压到求解的 10–1%[[27]](https://arxiv.org/abs/2305.20050)。（例：[Block Party](https://www.blockpartyapp.com/)，部分对应）
+2. **个人专属隐私精算师**：扫描个人手机上的所有 App 服务条款（T&C），根据用户对隐私敏感度的特定偏好，自动生成个性化的权限拒绝方案和反追踪脚本。（例：[Block Party](https://www.blockpartyapp.com/)，部分对应）
 
-3. **推测式解码（Speculative Decoding）**：Leviathan 等 2023 年提出，用小"草稿模型"廉价生成候选 token 串，再用大"目标模型"一次性并行验证。由于 Transformer 注意力机制的特性，**并行验证一串文本的计算量远低于逐字生成**。在 T5-XXL 上实现 2–3× 推理加速，输出与原模型完全一致[[28]](https://arxiv.org/abs/2211.17192)。（例：[Vendavo Agentic Pricing](https://www.vendavo.com/)，部分对应）
+3. **动态博弈定价专家**：在 B2B 国际贸易中，AI 自动分析特定买家的历史采购周期、当日汇率波动、甚至是对方港口的实时天气，为单笔订单定制最容易成交的"滑准定价策略"。（例：[Vendavo Agentic Pricing](https://www.vendavo.com/)，部分对应）
 
 4. **小微企业无代码全自动化财税顾问**：根据店主随手拍的各种非结构化收据照片，AI 自动匹配主营业务代码，精准计算个性化的合法避税路径，并自动填写申报表。（例：[Intuit Intuit Assist](https://investors.intuit.com/news-events/press-releases/detail/1229/intuits-ai-driven-expert-platform-redefines-tax-filing-with-done-for-you-experiences)）
 
@@ -215,7 +215,7 @@ AI 劳动力让小微企业获得了跨国巨头的智囊团，让大企业实�
 
 **二、创作者经济与泛娱乐**
 
-从"千人一面"的广播时代走向"一人一剧本"的共创时代——这里只列 LLM 语义层为核心驱动的场景；纯视觉/音频生成（动态广告视频、AI 特效大片、3D 玩具建模、情绪定制音乐等）属于扩散/生成模型而非 LLM 知识工作，不归入本节。
+从"千人一面"的广播时代走向"一人一剧本"的共创时代。
 
 11. **动态自适应游戏 NPC 编剧**：游戏中的 NPC 拥有独立的 LLM 大脑。它们根据玩家在游戏里展现出的真实性格、道德选择甚至对话语气，实时生成独特的剧情支线与情感羁绊。（例：[Ubisoft NEO NPCs + Inworld AI](https://www.gamedeveloper.com/design/how-do-ubisoft-s-ai-driven-npcs-handle-dynamic-player-interactions-)）
 
@@ -245,7 +245,7 @@ AI 劳动力让小微企业获得了跨国巨头的智囊团，让大企业实�
 
 **四、工业知识与商业决策**
 
-把老师傅的脑子、跨国供应链的算盘、商业地产的直觉编码进 AI 劳动力——纯视觉巡检（桥梁裂缝、农田巡检）和工程数值优化（电网自愈、芯片布线、加装电梯设计）另行论述。
+把老师傅的脑子、跨国供应链的算盘、商业地产的直觉编码进 AI 劳动力。
 
 22. **老师傅经验"数字克隆"工业顾问**：把工厂里即将退休的高级技工几十年的维修日志、随手画的草图输入模型。AI 克隆出这位"老师傅"的直觉，指导年轻工人维修复杂的特种设备。（例：[Siemens Industrial Copilot](https://www.siemens.com/en-us/company/insights/generative-ai-industrial-copilot/)，部分对应）
 
@@ -255,7 +255,7 @@ AI 劳动力让小微企业获得了跨国巨头的智囊团，让大企业实�
 
 **五、专业技术、科研与技能升级**
 
-打破行业壁垒，让专业技能的深度边界被拓宽——纯科学计算（气动 CFD、暗物质模拟、考古 3D 拼接、天文 CV 洗刷）属于物理仿真与视觉处理，不归入本节。
+打破行业壁垒，让专业技能的深度边界被拓宽。
 
 25. **个人终身技能树"动态评测与微修补"教练**：24 小时监控程序员的代码提交或工程师的设计图纸，精准发现其知识体系中某一个微小的逻辑盲区，并自动推送一段只有 5 分钟、刚好能补齐这个盲区的微型课程。（例：[Squirrel AI](https://is4.ai/blog/our-blog-1/top-10-ai-tutoring-systems-2026-learning-outcomes-208)，部分对应）
 
