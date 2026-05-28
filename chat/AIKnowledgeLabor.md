@@ -311,7 +311,7 @@ Stanford HAI 2026 年 4 月发布的 *AI Index Report 2026* 给出了 AI for Sci
 
 ##### 3.2.2.1 物理 AI 闭环：算力转化为物质
 
-Deloitte 的 *State of AI in the Enterprise – 2026 AI report*（2025 年 8–9 月在 24 国 6 行业调研 3,235 名高管）报告：**58% 的企业已经在使用"物理 AI"**，并预计两年内达到 80%。最具长期影响的子类别：智能安防/监控 21%、协作机器人 20%、数字孪生 19%；制造、物流、国防三个行业领先[[49]](https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html)。这是 §4.4 的科学暴力破解走出屏幕的关键一步——AI 算出的最佳晶体结构通过自动化工厂变成固态电池电芯、AI 设计的抗体通过 GMP 工厂变成针剂、AI 优化的物流路径通过自动驾驶卡车变成真实的运输。
+Deloitte 的 *State of AI in the Enterprise – 2026 AI report*（2025 年 8–9 月在 24 国 6 行业调研 3,235 名高管）报告：**58% 的企业已经在使用"物理 AI"**，并预计两年内达到 80%。最具长期影响的子类别：智能安防/监控 21%、协作机器人 20%、数字孪生 19%；制造、物流、国防三个行业领先[[49]](https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html)。这是 §3.2.1.3 的科学暴力破解走出屏幕的关键一步——AI 算出的最佳晶体结构通过自动化工厂变成固态电池电芯、AI 设计的抗体通过 GMP 工厂变成针剂、AI 优化的物流路径通过自动驾驶卡车变成真实的运输。
 
 ##### 3.2.2.2 决策链路的"降维打击"：消除社会的系统性内耗
 
