@@ -83,7 +83,7 @@ DeepMind 2023 年 10 月的论文《Large Language Models Cannot Self-Correct Re
 
 ### 2.9 错误率可以被数学控制吗
 
-可以。AI 系统的错误率证明，不像传统软件那样用形式化方法证明"错误率为 0"，而是建立在统计学习理论、信息论和随机过程之上。四个互补的数学框架值得了解：
+可以，但AI 系统的错误率证明，不像传统软件那样用形式化方法证明"错误率为 0"，而是建立在统计学习理论、信息论和随机过程之上。四个互补的数学框架值得了解：
 
 #### 2.9.1 PAC 学习理论：可可能近似正确
 
@@ -106,8 +106,6 @@ Guo 等人 2017 年在 ICML 的论文《On Calibration of Modern Neural Networks
 OpenAI 在 2023 年的《Let's Verify Step by Step》（Lightman 等）证明：基于步骤的过程奖励模型（Process Reward Model, PRM）显著优于结果奖励模型，使最佳采样模型在 MATH 测试集子集上达到 78% 准确率[[27]](https://arxiv.org/abs/2305.20050)。理论上，只要验证器的准确率 $p>0.5$，通过投票或蒙特卡洛树搜索增加采样次数 $K$，整体错误率呈指数级衰减——就像 5 个独立打字员互相校对能让最终错误率趋近于 0。
 
 ### 2.10 纠错的计算量非对称性：必须靠"传统骨骼"重建
-
-这是这场变革里**最具技术哲学含量的一点**。
 
 #### 2.10.1 传统计算机的天然优势：纠错远比求解便宜
 
@@ -142,24 +140,18 @@ GPU 无法自主引导系统，每个 AI 算力机架都必须配备 x86 CPU 处
 
 Microsoft、Amazon、Google、Meta 四家 2025 年的资本开支分别约为：MSFT FY2025 ~800 亿、Google ~750 亿（从 2024 年 520 亿增长 44%）、AWS ~1,050 亿+、Meta 600–650 亿，合计接近 3,000–3,800 亿美元；含 Oracle 的"五大"接近 5,000 亿，**2026 年预期突破 6,000 亿美元**[[34]](https://epoch.ai/data-insights/hyperscaler-capex-trend)[[35]](https://techblog.comsoc.org/2025/12/22/hyperscaler-capex-600-bn-in-2026-a-36-increase-over-2025-while-global-spending-on-cloud-infrastructure-services-skyrockets/)。这些钱里很大一部分流向了传统存储、高速网络和交换机硬件——AI Agent 每发出一条指令，背后都是一连串确定性代码在传统基础设施上跑。
 
-#### 2.11.3 NVIDIA AI 机架：Blackwell 到 Rubin 的迭代节奏
+#### 2.11.3 边缘 AI 与端侧大模型：传统 PC 组件被迫"内卷升级"
 
-- **GB200 NVL72**（2024 GTC 发布、2024 年底起出货）：72 颗 Blackwell GPU + 36 颗 Grace CPU 液冷机架。
-- **Vera Rubin 平台**（CES 2026 正式发布，2026 量产）：测试样片 2025 年 9 月出样；典型 DGX 节点 = 1 颗 Vera CPU + 2 颗 Rubin GPU（NVLink-C2C 互连）。
-- **Rubin NVL72** 对比 GB200 NVL72：推理性能 5×、训练 3.5×；3.6 EFLOPS 推理 / 2.5 EFLOPS 训练；54 TB LPDDR5X（2.5×）+ 20.7 TB HBM4（1.5×）；HBM4 带宽 1.6 PB/s（2.8×）；改为全无线缆模块化托盘设计[[36]](https://www.servethehome.com/nvidia-launches-next-generation-rubin-ai-compute-platform-at-ces-2026/)。
+COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布已经清晰指向：针对 AI PC、Agent 主机、嵌入式 AI 终端的高带宽内存和 PCIe Gen4/Gen5 mSSD 成为绝对主角。江波龙（Longsys）在展前以 "Edge AI Storage, Integrated Implementation" 为主题发布两款新内存与高速 SSD[[36]](https://www.manilatimes.net/2026/05/28/tmt-newswire/pr-newswire/longsys-to-showcase-innovative-edge-ai-storage-solutions-at-computex-2026/2353319)。
 
-#### 2.11.4 边缘 AI 与端侧大模型：传统 PC 组件被迫"内卷升级"
-
-COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布已经清晰指向：针对 AI PC、Agent 主机、嵌入式 AI 终端的高带宽内存和 PCIe Gen4/Gen5 mSSD 成为绝对主角。江波龙（Longsys）在展前以 "Edge AI Storage, Integrated Implementation" 为主题发布两款新内存与高速 SSD[[37]](https://www.manilatimes.net/2026/05/28/tmt-newswire/pr-newswire/longsys-to-showcase-innovative-edge-ai-storage-solutions-at-computex-2026/2353319)。
-
-#### 2.11.5 存储芯片短缺：AI 算力胃口挤压消费电子供应
+#### 2.11.4 存储芯片短缺：AI 算力胃口挤压消费电子供应
 
 更剧烈的反应在内存价格上。Samsung、SK Hynix、Micron 把有限的洁净室产能和资本开支几乎全部倾斜向 HBM 等高毛利企业级器件，挤压了传统 DDR5/LPDDR/NAND 供给：
 
-- NAND 价格自 2025 年初到 12 月累计上涨 246%[[38]](https://www.trendforce.com/presscenter/news/20251211-12831.html)；
-- TrendForce 预测 2026 Q1 DRAM 合约价环比再涨 90–95%，NAND 同期环比 55–60%[[38]](https://www.trendforce.com/presscenter/news/20251211-12831.html)；
-- IDC 测算 2026 PC ASP 上升 4–6%（温和情景）到 6–8%（悲观情景）；低端智能手机基础款 2026 年可能回退到 4GB DRAM；供应紧张预计持续到 2027 年[[39]](https://www.idc.com/resource-center/blog/global-memory-shortage-crisis-market-analysis-and-the-potential-impact-on-the-smartphone-and-pc-markets-in-2026/)；
-- Samsung 已在 2026 年公开警告行业级价格暴涨[[40]](https://www.networkworld.com/article/4113772/samsung-warns-of-memory-shortages-driving-industry-wide-price-surge-in-2026.html)。
+- NAND 价格自 2025 年初到 12 月累计上涨 246%[[37]](https://www.trendforce.com/presscenter/news/20251211-12831.html)；
+- TrendForce 预测 2026 Q1 DRAM 合约价环比再涨 90–95%，NAND 同期环比 55–60%[[37]](https://www.trendforce.com/presscenter/news/20251211-12831.html)；
+- IDC 测算 2026 PC ASP 上升 4–6%（温和情景）到 6–8%（悲观情景）；低端智能手机基础款 2026 年可能回退到 4GB DRAM；供应紧张预计持续到 2027 年[[38]](https://www.idc.com/resource-center/blog/global-memory-shortage-crisis-market-analysis-and-the-potential-impact-on-the-smartphone-and-pc-markets-in-2026/)；
+- Samsung 已在 2026 年公开警告行业级价格暴涨[[39]](https://www.networkworld.com/article/4113772/samsung-warns-of-memory-shortages-driving-industry-wide-price-surge-in-2026.html)。
 
 ⚠ 解读：英国圈地运动时期，棉花和蒸汽机的暴增并没有让铁矿石、煤炭和铁轨消失，反而让后者的需求量发生数个数量级的爆发——因为新动力必须建立在更坚固的传统工业底座之上。今天的 AI 释放的虚拟知识劳动力越是无处不在，人类就越需要更庞大、更快、更稳定的传统计算机作为它们的容器和工具。**传统计算机没有被 AI 杀死，它变成了 AI 的"骨骼"和"高频输入外设"**。
 
@@ -189,35 +181,35 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 ### 4.1 蛋白质结构与新药设计
 
-**AlphaFold 系列**：2024 年 10 月 9 日，诺贝尔化学奖授予 David Baker（表彰其计算蛋白质设计工作，核心工具 Rosetta / RoseTTAFold）与 Demis Hassabis、John M. Jumper（表彰 AlphaFold 2 在蛋白质结构预测上的工作）[[41]](https://www.nobelprize.org/prizes/chemistry/2024/press-release/)。**注意**：获奖工作的实质是 AlphaFold 2（2020 年 CASP14、2021 年 Nature）；**AlphaFold 3** 是 2024 年 5 月 8 日在 Nature 发表的后续升级，把预测对象从蛋白质扩展到"蛋白质 + DNA/RNA + 小分子配体 + 离子 + 共价修饰"等复合物，对蛋白—非蛋白相互作用精度比已有方法至少提升 50%[[42]](https://www.nature.com/articles/s41586-024-07487-w)。
+**AlphaFold 系列**：2024 年 10 月 9 日，诺贝尔化学奖授予 David Baker（表彰其计算蛋白质设计工作，核心工具 Rosetta / RoseTTAFold）与 Demis Hassabis、John M. Jumper（表彰 AlphaFold 2 在蛋白质结构预测上的工作）[[40]](https://www.nobelprize.org/prizes/chemistry/2024/press-release/)。**注意**：获奖工作的实质是 AlphaFold 2（2020 年 CASP14、2021 年 Nature）；**AlphaFold 3** 是 2024 年 5 月 8 日在 Nature 发表的后续升级，把预测对象从蛋白质扩展到"蛋白质 + DNA/RNA + 小分子配体 + 离子 + 共价修饰"等复合物，对蛋白—非蛋白相互作用精度比已有方法至少提升 50%[[41]](https://www.nature.com/articles/s41586-024-07487-w)。
 
-**AI 端到端设计药物的首个 Phase 2a 阳性**：Insilico Medicine 的 **Rentosertib (ISM001-055)**，靶点 TNIK，适应症是**特发性肺纤维化（IPF），不是 ALS**。2024 年 11 月公布 Phase IIa 顶线结果（71 名 IPF 患者、21 个中国研究中心、安慰剂对照），用力肺活量呈剂量依赖性改善；2025 年 6 月 3 日相关结果在 *Nature Medicine* 发表，业界称之为"AI 驱动药物研发的首个 PoC 临床验证"[[43]](https://insilico.com/news/tnrecuxsc1-insilico-announces-nature-medicine-publi)。
+**AI 端到端设计药物的首个 Phase 2a 阳性**：Insilico Medicine 的 **Rentosertib (ISM001-055)**，靶点 TNIK，适应症是**特发性肺纤维化（IPF），不是 ALS**。2024 年 11 月公布 Phase IIa 顶线结果（71 名 IPF 患者、21 个中国研究中心、安慰剂对照），用力肺活量呈剂量依赖性改善；2025 年 6 月 3 日相关结果在 *Nature Medicine* 发表，业界称之为"AI 驱动药物研发的首个 PoC 临床验证"[[42]](https://insilico.com/news/tnrecuxsc1-insilico-announces-nature-medicine-publi)。
 
 **"研发周期从 10 年压缩到几个月"是被严重夸大的版本**。BCG 受 Wellcome Trust 委托对 2018–2022 年 AI 制药公司管线的研究给出的真实区间是：AI 把"立项到 Proof-of-Concept"阶段缩短约 35%–50%（对应 1–4 年节省）；整体新药研发时间从 12–15 年压到约 8–10 年（约 25–35%）。Insilico 的 Rentosertib 案例里，从靶点发现到提名临床前候选约 18 个月（传统约 4–6 年），但"提名候选→Phase IIa 读出"仍走了正常临床流程的几年。**"几个月"只适用于早期发现阶段**，而非完整研发周期。
 
 ### 4.2 新材料发现：自驱动实验室与争议
 
-**DeepMind GNoME**（Merchant 等，*Nature*，2023 年 11 月 29 日）生成 220 万个低于凸包的候选结构，其中 38.1 万个被预测为稳定新材料；外部实验室独立合成了 736 个；其中 528 个潜在锂离子导体，比此前工作多 25 倍[[44]](https://www.nature.com/articles/s41586-023-06735-9)。
+**DeepMind GNoME**（Merchant 等，*Nature*，2023 年 11 月 29 日）生成 220 万个低于凸包的候选结构，其中 38.1 万个被预测为稳定新材料；外部实验室独立合成了 736 个；其中 528 个潜在锂离子导体，比此前工作多 25 倍[[43]](https://www.nature.com/articles/s41586-023-06735-9)。
 
-**Berkeley A-Lab**（Szymanski 等，*Nature*，2023 年 11 月 29 日）演示了端到端闭环：AI 提议结构 → 自动合成 → X 射线表征 → 失败后由 AI 修正配方。17 天内对 58 个目标合成出 41 个新无机化合物（成功率 71%）[[45]](https://www.nature.com/articles/s41586-023-06734-w)。
+**Berkeley A-Lab**（Szymanski 等，*Nature*，2023 年 11 月 29 日）演示了端到端闭环：AI 提议结构 → 自动合成 → X 射线表征 → 失败后由 AI 修正配方。17 天内对 58 个目标合成出 41 个新无机化合物（成功率 71%）[[44]](https://www.nature.com/articles/s41586-023-06734-w)。
 
-⚠ 但 A-Lab 在 2024–2026 年遭遇了严重的方法学质疑：UCL 的 Robert Palgrave 与 Princeton 的 Schoop Lab 在 2024 年 1 月的 ChemRxiv 分析中指出，论文宣称的 41 个"新材料"中相当一部分实际已存在于 Inorganic Crystal Structure Database (ICSD)，且 XRD 拟合质量不佳[[46]](https://www.chemistryworld.com/news/new-analysis-raises-doubts-over-autonomous-labs-materials-discoveries/4018791.article)；2026 年 1 月，*Nature* 对原论文发布**更正（correction）**，承认所合成材料"不一定对科学界是新的"[[47]](https://cen.acs.org/research-integrity/Nature-robot-chemist-paper-corrected/104/web/2026/01)。
+⚠ 但 A-Lab 在 2024–2026 年遭遇了严重的方法学质疑：UCL 的 Robert Palgrave 与 Princeton 的 Schoop Lab 在 2024 年 1 月的 ChemRxiv 分析中指出，论文宣称的 41 个"新材料"中相当一部分实际已存在于 Inorganic Crystal Structure Database (ICSD)，且 XRD 拟合质量不佳[[45]](https://www.chemistryworld.com/news/new-analysis-raises-doubts-over-autonomous-labs-materials-discoveries/4018791.article)；2026 年 1 月，*Nature* 对原论文发布**更正（correction）**，承认所合成材料"不一定对科学界是新的"[[46]](https://cen.acs.org/research-integrity/Nature-robot-chemist-paper-corrected/104/web/2026/01)。
 
 ⚠ 解读：候选生成的数量级是真实的（GNoME 38 万稳定结构、736 已合成），但"新材料"标签经过同行复核后被显著打折。"AI 让材料发现提速 50–100 倍"是当事团队设定的目标，**不是已被复核的事实**。这本身就是 §2.8、§2.10 讲的"求解贵、纠错也贵"的现实案例：没有传统的人类同行评审、独立复现、晶体学数据库交叉核对——这套"传统计算机骨骼"——AI 的"暴力破解"很容易变成"暴力幻觉"。
 
 ### 4.3 基因编辑与生命语言模型
 
-**Evo 2**（Arc Institute + NVIDIA + Stanford/Berkeley/UCSF，2025 年 2 月 19 日发布）：40B 参数，训练于 12.8 万个跨三域生命的基因组、9.3 万亿核苷酸，单序列上下文 100 万 nt。能识别人类致病突变，并能从头生成与简单细菌全基因组等长的 DNA 序列[[48]](https://arcinstitute.org/news/evo2)。
+**Evo 2**（Arc Institute + NVIDIA + Stanford/Berkeley/UCSF，2025 年 2 月 19 日发布）：40B 参数，训练于 12.8 万个跨三域生命的基因组、9.3 万亿核苷酸，单序列上下文 100 万 nt。能识别人类致病突变，并能从头生成与简单细菌全基因组等长的 DNA 序列[[47]](https://arcinstitute.org/news/evo2)。
 
-**Profluent OpenCRISPR-1**（2024 年 4 月发布）：用蛋白质 LLM 从零生成数百万 CRISPR-like 蛋白，最终的 OpenCRISPR-1 与天然 SpCas9 相差数百个突变，**在人类细胞中实现精准基因编辑，脱靶率低于 SpCas9**，开源可商用授权——这是第一个 "AI 从零设计 + 实验验证编辑人类基因组" 的 CRISPR 系统[[49]](https://crisprmedicinenews.com/press-release-service/card/profluent-successfully-edits-human-genome-with-opencrispr-1-the-worlds-first-ai-created-and-open-s/)。
+**Profluent OpenCRISPR-1**（2024 年 4 月发布）：用蛋白质 LLM 从零生成数百万 CRISPR-like 蛋白，最终的 OpenCRISPR-1 与天然 SpCas9 相差数百个突变，**在人类细胞中实现精准基因编辑，脱靶率低于 SpCas9**，开源可商用授权——这是第一个 "AI 从零设计 + 实验验证编辑人类基因组" 的 CRISPR 系统[[48]](https://crisprmedicinenews.com/press-release-service/card/profluent-successfully-edits-human-genome-with-opencrispr-1-the-worlds-first-ai-created-and-open-s/)。
 
 ### 4.4 "物理 AI"的全行业落地
 
-Deloitte 的 *State of AI in the Enterprise – 2026 AI report*（2025 年 8–9 月在 24 国 6 行业调研 3,235 名高管）报告：**58% 的企业已经在使用"物理 AI"**，并预计两年内达到 80%。最具长期影响的子类别：智能安防/监控 21%、协作机器人 20%、数字孪生 19%；制造、物流、国防三个行业领先[[50]](https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html)。这说明 AI 知识劳动力的产出已经不再只停留在屏幕上的文字与代码——它正在通过工业机器人、自动驾驶、数字孪生、新材料合成，向物理世界传导。
+Deloitte 的 *State of AI in the Enterprise – 2026 AI report*（2025 年 8–9 月在 24 国 6 行业调研 3,235 名高管）报告：**58% 的企业已经在使用"物理 AI"**，并预计两年内达到 80%。最具长期影响的子类别：智能安防/监控 21%、协作机器人 20%、数字孪生 19%；制造、物流、国防三个行业领先[[49]](https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html)。这说明 AI 知识劳动力的产出已经不再只停留在屏幕上的文字与代码——它正在通过工业机器人、自动驾驶、数字孪生、新材料合成，向物理世界传导。
 
 ### 4.5 AI for Science 的整体节奏
 
-Stanford HAI 2026 年 4 月发布的 *AI Index Report 2026* 确认：前沿模型在 PhD 级科学问答上的准确率为 93%（人类专家基线 81.2%）；在 ChemBench 2,700+ 化学题上超过化学家平均水平；Sakana AI Scientist-v2 生成的论文被 ICLR workshop 与 *Nature* 接收。但报告同时强调"jagged frontier"——AI 在天体物理实验复现仅 <20%、地球观测 33%[[51]](https://hai.stanford.edu/ai-index/2026-ai-index-report)。
+Stanford HAI 2026 年 4 月发布的 *AI Index Report 2026* 确认：前沿模型在 PhD 级科学问答上的准确率为 93%（人类专家基线 81.2%）；在 ChemBench 2,700+ 化学题上超过化学家平均水平；Sakana AI Scientist-v2 生成的论文被 ICLR workshop 与 *Nature* 接收。但报告同时强调"jagged frontier"——AI 在天体物理实验复现仅 <20%、地球观测 33%[[50]](https://hai.stanford.edu/ai-index/2026-ai-index-report)。
 
 ⚠ 解读：这是过去三次劳动力激增的脑力版本——AI 不只是把脑力做得更便宜，它把人类大脑在算力和体力上完全干不动的"上帝禁区"（$10^{60}$ 量级的分子空间、12.8 万个全基因组、220 万个候选晶体）变成了可以并行扫描的工作量。这是这股新劳动力**最不可替代的真实社会价值**。
 
@@ -301,34 +293,33 @@ Stanford HAI 2026 年 4 月发布的 *AI Index Report 2026* 确认：前沿模�
 
 [35] A. S. Weissberger, "Hyperscaler capex > $600 bn in 2026, a 36% increase over 2025," *IEEE ComSoc Technology Blog*, Dec. 22, 2025. [Online]. Available: <https://techblog.comsoc.org/2025/12/22/hyperscaler-capex-600-bn-in-2026-a-36-increase-over-2025-while-global-spending-on-cloud-infrastructure-services-skyrockets/>
 
-[36] ServeTheHome, "NVIDIA Launches Next-Generation Rubin AI Compute Platform at CES 2026," Jan. 2026. (Rubin NVL72: 推理 5×、训练 3.5×；3.6 EFLOPS 推理 / 2.5 EFLOPS 训练；HBM4 20.7 TB / 1.6 PB/s) [Online]. Available: <https://www.servethehome.com/nvidia-launches-next-generation-rubin-ai-compute-platform-at-ces-2026/>
 
-[37] Longsys (via Manila Times / PR Newswire), "Longsys to Showcase Innovative Edge AI Storage Solutions at COMPUTEX 2026," May 28, 2026. [Online]. Available: <https://www.manilatimes.net/2026/05/28/tmt-newswire/pr-newswire/longsys-to-showcase-innovative-edge-ai-storage-solutions-at-computex-2026/2353319>
+[36] Longsys (via Manila Times / PR Newswire), "Longsys to Showcase Innovative Edge AI Storage Solutions at COMPUTEX 2026," May 28, 2026. [Online]. Available: <https://www.manilatimes.net/2026/05/28/tmt-newswire/pr-newswire/longsys-to-showcase-innovative-edge-ai-storage-solutions-at-computex-2026/2353319>
 
-[38] TrendForce, "Memory Price Surge to Persist in 1Q26; Smartphone and Notebook Brands Begin Raising Prices and Downgrading Specs," Dec. 11, 2025. (NAND 2025 全年 +246%；DRAM 1Q26 环比 +90–95%；NAND 同期 +55–60%) [Online]. Available: <https://www.trendforce.com/presscenter/news/20251211-12831.html>
+[37] TrendForce, "Memory Price Surge to Persist in 1Q26; Smartphone and Notebook Brands Begin Raising Prices and Downgrading Specs," Dec. 11, 2025. (NAND 2025 全年 +246%；DRAM 1Q26 环比 +90–95%；NAND 同期 +55–60%) [Online]. Available: <https://www.trendforce.com/presscenter/news/20251211-12831.html>
 
-[39] IDC, "Global Memory Shortage Crisis: Market Analysis and the Potential Impact on the Smartphone and PC Markets in 2026," IDC Blog, 2026. [Online]. Available: <https://www.idc.com/resource-center/blog/global-memory-shortage-crisis-market-analysis-and-the-potential-impact-on-the-smartphone-and-pc-markets-in-2026/>
+[38] IDC, "Global Memory Shortage Crisis: Market Analysis and the Potential Impact on the Smartphone and PC Markets in 2026," IDC Blog, 2026. [Online]. Available: <https://www.idc.com/resource-center/blog/global-memory-shortage-crisis-market-analysis-and-the-potential-impact-on-the-smartphone-and-pc-markets-in-2026/>
 
-[40] Network World, "Samsung warns of memory shortages driving industry-wide price surge in 2026," 2026. [Online]. Available: <https://www.networkworld.com/article/4113772/samsung-warns-of-memory-shortages-driving-industry-wide-price-surge-in-2026.html>
+[39] Network World, "Samsung warns of memory shortages driving industry-wide price surge in 2026," 2026. [Online]. Available: <https://www.networkworld.com/article/4113772/samsung-warns-of-memory-shortages-driving-industry-wide-price-surge-in-2026.html>
 
-[41] The Royal Swedish Academy of Sciences, "The Nobel Prize in Chemistry 2024: Press release," Oct. 9, 2024. (Baker / Hassabis / Jumper; AlphaFold 2 + Rosetta/RoseTTAFold) [Online]. Available: <https://www.nobelprize.org/prizes/chemistry/2024/press-release/>
+[40] The Royal Swedish Academy of Sciences, "The Nobel Prize in Chemistry 2024: Press release," Oct. 9, 2024. (Baker / Hassabis / Jumper; AlphaFold 2 + Rosetta/RoseTTAFold) [Online]. Available: <https://www.nobelprize.org/prizes/chemistry/2024/press-release/>
 
-[42] J. Abramson et al., "Accurate structure prediction of biomolecular interactions with AlphaFold 3," *Nature*, vol. 630, pp. 493–500, May 8, 2024. [Online]. Available: <https://www.nature.com/articles/s41586-024-07487-w>
+[41] J. Abramson et al., "Accurate structure prediction of biomolecular interactions with AlphaFold 3," *Nature*, vol. 630, pp. 493–500, May 8, 2024. [Online]. Available: <https://www.nature.com/articles/s41586-024-07487-w>
 
-[43] Insilico Medicine, "Insilico Announces *Nature Medicine* Publication of Phase IIa Results of Rentosertib (ISM001-055) in IPF," Jun. 3, 2025. (TNIK 抑制剂；71 名 IPF 患者；FVC 剂量依赖性改善) [Online]. Available: <https://insilico.com/news/tnrecuxsc1-insilico-announces-nature-medicine-publi>
+[42] Insilico Medicine, "Insilico Announces *Nature Medicine* Publication of Phase IIa Results of Rentosertib (ISM001-055) in IPF," Jun. 3, 2025. (TNIK 抑制剂；71 名 IPF 患者；FVC 剂量依赖性改善) [Online]. Available: <https://insilico.com/news/tnrecuxsc1-insilico-announces-nature-medicine-publi>
 
-[44] A. Merchant et al., "Scaling deep learning for materials discovery," *Nature*, vol. 624, pp. 80–85, Nov. 29, 2023. (GNoME: 220 万候选 / 38.1 万稳定 / 736 已合成 / 528 潜在锂离子导体) [Online]. Available: <https://www.nature.com/articles/s41586-023-06735-9>
+[43] A. Merchant et al., "Scaling deep learning for materials discovery," *Nature*, vol. 624, pp. 80–85, Nov. 29, 2023. (GNoME: 220 万候选 / 38.1 万稳定 / 736 已合成 / 528 潜在锂离子导体) [Online]. Available: <https://www.nature.com/articles/s41586-023-06735-9>
 
-[45] N. J. Szymanski et al., "An autonomous laboratory for the accelerated synthesis of inorganic materials," *Nature*, vol. 624, pp. 86–91, Nov. 29, 2023. (Berkeley A-Lab: 17 天合成 41 个化合物) [Online]. Available: <https://www.nature.com/articles/s41586-023-06734-w>
+[44] N. J. Szymanski et al., "An autonomous laboratory for the accelerated synthesis of inorganic materials," *Nature*, vol. 624, pp. 86–91, Nov. 29, 2023. (Berkeley A-Lab: 17 天合成 41 个化合物) [Online]. Available: <https://www.nature.com/articles/s41586-023-06734-w>
 
-[46] Chemistry World, "New analysis raises doubts over autonomous lab's materials 'discoveries'," Jan. 2024. (UCL Palgrave + Princeton Schoop Lab 质疑：多个'新材料'已存在于 ICSD) [Online]. Available: <https://www.chemistryworld.com/news/new-analysis-raises-doubts-over-autonomous-labs-materials-discoveries/4018791.article>
+[45] Chemistry World, "New analysis raises doubts over autonomous lab's materials 'discoveries'," Jan. 2024. (UCL Palgrave + Princeton Schoop Lab 质疑：多个'新材料'已存在于 ICSD) [Online]. Available: <https://www.chemistryworld.com/news/new-analysis-raises-doubts-over-autonomous-labs-materials-discoveries/4018791.article>
 
-[47] *Chemical & Engineering News*, "'Nature' robot chemist paper corrected, but some questions remain unanswered," Jan. 2026. (Nature 对 A-Lab 论文发布更正：所合成材料"不一定对科学界是新的") [Online]. Available: <https://cen.acs.org/research-integrity/Nature-robot-chemist-paper-corrected/104/web/2026/01>
+[46] *Chemical & Engineering News*, "'Nature' robot chemist paper corrected, but some questions remain unanswered," Jan. 2026. (Nature 对 A-Lab 论文发布更正：所合成材料"不一定对科学界是新的") [Online]. Available: <https://cen.acs.org/research-integrity/Nature-robot-chemist-paper-corrected/104/web/2026/01>
 
-[48] G. Brixi et al., "Genome modeling and design across all domains of life with Evo 2," Arc Institute / NVIDIA preprint, Feb. 19, 2025. (40B 参数；9.3 万亿核苷酸；100 万 nt 上下文) [Online]. Available: <https://arcinstitute.org/news/evo2>
+[47] G. Brixi et al., "Genome modeling and design across all domains of life with Evo 2," Arc Institute / NVIDIA preprint, Feb. 19, 2025. (40B 参数；9.3 万亿核苷酸；100 万 nt 上下文) [Online]. Available: <https://arcinstitute.org/news/evo2>
 
-[49] CRISPR Medicine News, "Profluent Successfully Edits Human Genome with OpenCRISPR-1, the World's First AI-Created and Open-Sourced CRISPR Gene Editor," Apr. 2024. [Online]. Available: <https://crisprmedicinenews.com/press-release-service/card/profluent-successfully-edits-human-genome-with-opencrispr-1-the-worlds-first-ai-created-and-open-s/>
+[48] CRISPR Medicine News, "Profluent Successfully Edits Human Genome with OpenCRISPR-1, the World's First AI-Created and Open-Sourced CRISPR Gene Editor," Apr. 2024. [Online]. Available: <https://crisprmedicinenews.com/press-release-service/card/profluent-successfully-edits-human-genome-with-opencrispr-1-the-worlds-first-ai-created-and-open-s/>
 
-[50] Deloitte, "From Ambition to Activation: Organizations Stand at the Untapped Edge of AI's Potential" (*State of AI in the Enterprise – 2026 AI report*), 2026. (24 国 6 行业 3,235 名高管；58% 已使用物理 AI；预计两年内 80%) [Online]. Available: <https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html>
+[49] Deloitte, "From Ambition to Activation: Organizations Stand at the Untapped Edge of AI's Potential" (*State of AI in the Enterprise – 2026 AI report*), 2026. (24 国 6 行业 3,235 名高管；58% 已使用物理 AI；预计两年内 80%) [Online]. Available: <https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html>
 
-[51] Stanford HAI, *AI Index Report 2026*, Apr. 2026. (前沿模型 PhD 级科学问答 93% vs 人类 81.2%；天体物理实验复现 <20%；地球观测 33%) [Online]. Available: <https://hai.stanford.edu/ai-index/2026-ai-index-report>
+[50] Stanford HAI, *AI Index Report 2026*, Apr. 2026. (前沿模型 PhD 级科学问答 93% vs 人类 81.2%；天体物理实验复现 <20%；地球观测 33%) [Online]. Available: <https://hai.stanford.edu/ai-index/2026-ai-index-report>
