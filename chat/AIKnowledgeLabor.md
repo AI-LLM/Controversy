@@ -395,7 +395,13 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 
 **Harnessability 的不对称值得点一笔**：Böckeler 强调 "Not every codebase is equally amenable to harnessing"——强类型语言天然带类型检查这种 sensor、清晰模块边界提供架构约束、Spring 这类框架隐式提升 agent 成功率。**Greenfield 项目可以从第一天就把 harnessability 设计进去；legacy 项目恰恰是 harness 最需要、却最难建的地方**——这一点与 §3.2.1.7 技术债清偿章节呼应：旧代码不仅缺人维护，更缺"可让 agent 有效介入的结构特征"，需要先做一层 environment shaping 才能让 harness 立得起来。
 
-⚠ 解读：把 §3.2.1.5 这一层从"传统企业内部润滑剂"延伸到"软件工程组织内部"，能看到 LLM Agent 对工程师人力市场的真实形态——**它不是替代某个特定职位，而是让"每个项目都能装上一组过去只有大企业才有的中级工程师"**。这才是软件工程在 2026 年"精细化治理"的具体形状：每个开发者背后多了一支由 guides 和 sensors 组成的"无形班子"，每一次 commit 都被一组前所未有规模的工程脑力反复检视、修正、推动向前。
+⚠ 关键判断：把 Agent 完全建模为"AI 人力"之后，能看到一个反直觉的事实——**Harness engineering 里并没有出现以往软件工程中没有的本质新方法**。它列举的每一个元素，在传统软件工程组织里都有对应的人力工种与实践；那些看起来"新"的特征，全部是 AI 人力廉价化让旧方法第一次变得可操作的产物：
+
+- **Inferential sensor 常驻流水线 / 每个 commit 都过一次语义评审**——本质就是"每个 PR 都让一位 senior engineer 评审"。这件事软件工程一直希望做到，但传统人力做不到（贵 + 慢），所以退化成"每周抽 1–2 个 PR 评审"。AI 人力让"每个 commit 都被语义评审"第一次成为日常工序——是数量级的成本变化，不是方法学创新。
+- **错误消息同时作为 prompt（"positive prompt injection"）**——error message 一直是给工程师看的"修复指令"，工程师本来就是 prompt 的接收者。AI 人力在多模态（界面截图、白板手绘、UI 布局）上的能力暂时弱于视力正常的人，因而倾向于更纯文本、更结构化的反馈渠道——这是 AI 当前的能力边界，不是方法的本质变化。
+- **Agent self-correcting loop 取代人闭环**——大公司里 QA 团队 7×24 跑测试、SRE 24×7 处理 alert、junior engineer 持续修小 PR——"自闭环"在低价人力充足的组织里早就是默认配置。AI 人力把这种自闭环的成本拉到中小企业也可负担的水平——还是数量级的成本变化。
+
+这与 §3.2.1 的核心论点完全自洽：**这股新劳动力的真实形态不是方法学革命，而是人力供给革命**——它把"过去只有大企业才配得起的中级工程师建制"第一次推送到每个项目里。每个开发者背后多了一支由 guides 和 sensors 组成的"无形班子"，每一次 commit 都被一组前所未有规模的工程脑力反复检视、修正、推动向前——**但这套班子做的事并不新，只是过去做不起**。Harness engineering 的整套词汇（Guides、Sensors、computational/inferential、steering loop、harnessability、ambient affordances）之所以现在才被命名、被系统化整理成框架，正是因为 AI 人力让"每个项目都能配齐这套工种"——而过去只有大企业能。**词汇的诞生本身就是人力供给曲线变平的产物**。
 
 ##### 3.2.1.6 科学研究和技术开发的新范式——"暴力破解"
 
