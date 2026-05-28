@@ -201,51 +201,51 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 6. **个人遗嘱与家族信托动态起草员**：根据家庭成员关系变化、名下资产动态（股票波动、房产变更）及当事人最新的情感倾向，实时迭代、法律合规地重写个性化遗嘱框架。（例：[Trust & Will EstateOS](https://trustandwill.com/learn/estateos-launch-announcement)）
 
-7. **跨国并购语言与文化"解码器"**：在谈判桌上不仅翻译字面意思，还实时提示对方国家（如中东或拉美）谈判者的语调、身体语言背后的隐性商业文化意图。（例：[Cultural Bridge AI](https://dev.to/yooi/cultural-bridge-ai-cultural-bridge-ai-transforming-cross-cultural-communication-through-1idm)，部分对应）
+7. **跨国并购语言与文化"解码器"**：在谈判桌上不仅翻译字面意思，还实时提示对方国家（如中东或拉美）谈判者的语调、身体语言背后的隐性商业文化意图。（例：[Cultural Bridge AI](https://dev.to/yooi/cultural-bridge-ai-cultural-bridge-ai-transforming-cross-cultural-communication-through-1idm)，部分实现）
 
-8. **个人终身技能树"动态评测与微修补"教练**：24 小时监控程序员的代码提交或工程师的设计图纸，精准发现其知识体系中某一个微小的逻辑盲区，并自动推送一段只有 5 分钟、刚好能补齐这个盲区的微型课程。（例：[Squirrel AI](https://is4.ai/blog/our-blog-1/top-10-ai-tutoring-systems-2026-learning-outcomes-208)，部分对应）
+8. **个人终身技能树"动态评测与微修补"教练**：24 小时监控程序员的代码提交或工程师的设计图纸，精准发现其知识体系中某一个微小的逻辑盲区，并自动推送一段只有 5 分钟、刚好能补齐这个盲区的微型课程。（例：[Squirrel AI](https://is4.ai/blog/our-blog-1/top-10-ai-tutoring-systems-2026-learning-outcomes-208)，部分实现）
 
-9. **个人专属多语种"同步口译风格化"拟真器**：在跨国会议中，AI 不仅将你的话翻译成对方的语言，还能保留你独特的声线、喘气习惯、幽默感以及你特有的修辞风格，让对方感觉你是在用他的母语流利表达。（例：[Kyutai Hibiki](https://github.com/kyutai-labs/hibiki)，部分对应）
+9. **个人专属多语种"同步口译风格化"拟真器**：在跨国会议中，AI 不仅将你的话翻译成对方的语言，还能保留你独特的声线、喘气习惯、幽默感以及你特有的修辞风格，让对方感觉你是在用他的母语流利表达。（例：[Kyutai Hibiki](https://github.com/kyutai-labs/hibiki)，部分实现）
 
-10. **工业软件（如 CAD/CAE）"自然语言"专家级操纵杆**：工程师不再需要去点选复杂的上千个二级菜单，只需像跟资深助理聊天一样说："把这个支架的抗扭刚度提高 15%，同时减重 5%"，AI 自动完成全套参数化建模。（例：[Leo AI for SOLIDWORKS / CATIA](https://www.getleo.ai/)，部分对应）
+10. **工业软件（如 CAD/CAE）"自然语言"专家级操纵杆**：工程师不再需要去点选复杂的上千个二级菜单，只需像跟资深助理聊天一样说："把这个支架的抗扭刚度提高 15%，同时减重 5%"，AI 自动完成全套参数化建模。（例：[Leo AI for SOLIDWORKS / CATIA](https://www.getleo.ai/)，部分实现）
 
-11. **专属长辈"科技无障碍"数字翻译官**：针对不懂手机复杂操作的老人，他们只需用家乡话下达模糊指令，AI 自动在后台将其转化为复杂的 App 点击流，跨越数字鸿沟。（例：[百度小度长辈模式](https://dueros.baidu.com/business/emp/view/elderHome)，部分对应）
+11. **专属长辈"科技无障碍"数字翻译官**：针对不懂手机复杂操作的老人，他们只需用家乡话下达模糊指令，AI 自动在后台将其转化为复杂的 App 点击流，跨越数字鸿沟。（例：[百度小度长辈模式](https://dueros.baidu.com/business/emp/view/elderHome)，部分实现）
 
-12. **精准抗衰老智能主厨（AI Chef）**：结合用户当周的血液生化指标、肠道菌群报告以及当天的口味偏好，自动生成精确到克（g）的动态食谱，并联动厨房智能家电完成精准控温烹饪。（例：[ZOE 精准营养](https://zoe.com/)，部分对应）
+12. **精准抗衰老智能主厨（AI Chef）**：结合用户当周的血液生化指标、肠道菌群报告以及当天的口味偏好，自动生成精确到克（g）的动态食谱，并联动厨房智能家电完成精准控温烹饪。（例：[ZOE 精准营养](https://zoe.com/)，部分实现）
 
-13. **动态行程"反内卷"旅行规划师**：实时监控目的地景区的突发人流、特定天气（如下雨、起雾）以及用户当下的疲劳指数，动态在几秒内重写接下来的旅行路线与酒店预订。（例：[Trip Planner AI](https://tripplanner.ai/)，部分对应）
+13. **动态行程"反内卷"旅行规划师**：实时监控目的地景区的突发人流、特定天气（如下雨、起雾）以及用户当下的疲劳指数，动态在几秒内重写接下来的旅行路线与酒店预订。（例：[Trip Planner AI](https://tripplanner.ai/)，部分实现）
 
-14. **个性化电子书智能摘要与导读员**：针对一本 50 万字的专业书籍，根据读者的知识背景（如：对懂计算机但不懂金融的读者），自动用计算机领域的类比来重写金融书籍的导读。（例：[NoteGPT Book Summarizer + persona prompt](https://notegpt.io/book-summary)，部分对应）
+14. **个性化电子书智能摘要与导读员**：针对一本 50 万字的专业书籍，根据读者的知识背景（如：对懂计算机但不懂金融的读者），自动用计算机领域的类比来重写金融书籍的导读。（例：[NoteGPT Book Summarizer + persona prompt](https://notegpt.io/book-summary)，部分实现）
 
 15. **个人数字遗产智能清理信托**：在用户离世后，根据其生前设定的极其复杂的隐私保密遗愿，AI 自动识别并个性化销毁、加密或移交其散落在全网数百个平台的数字痕迹。（例：[GoodTrust](https://mygoodtrust.com/)）
 
-16. **社区抱团养老"微型互助圈"匹配员**：深度分析社区内老人的健康状况、年轻时的职业背景、性格合拍度，自动撮合形成高黏性、能实现智力与情感互补的居家养老微单元。（例：[Silvernest](https://www.silvernest.com/)，部分对应）
+16. **社区抱团养老"微型互助圈"匹配员**：深度分析社区内老人的健康状况、年轻时的职业背景、性格合拍度，自动撮合形成高黏性、能实现智力与情感互补的居家养老微单元。（例：[Silvernest](https://www.silvernest.com/)，部分实现）
 
 17. **动态自适应游戏 NPC 编剧**：游戏中的 NPC 拥有独立的 LLM 大脑。它们根据玩家在游戏里展现出的真实性格、道德选择甚至对话语气，实时生成独特的剧情支线与情感羁绊。（例：[Ubisoft NEO NPCs + Inworld AI](https://www.gamedeveloper.com/design/how-do-ubisoft-s-ai-driven-npcs-handle-dynamic-player-interactions-)）
 
-18. **无限流个性化互动小说家**：读者不再是被动阅读，而是输入自己的真实经历或幻想，AI 以每秒数千字的速度实时生成一本以读者为主角、逻辑严密、文笔优美的百万字长篇小说。（例：[AI Dungeon](https://aidungeon.com/)，部分对应）
+18. **无限流个性化互动小说家**：读者不再是被动阅读，而是输入自己的真实经历或幻想，AI 以每秒数千字的速度实时生成一本以读者为主角、逻辑严密、文笔优美的百万字长篇小说。（例：[AI Dungeon](https://aidungeon.com/)，部分实现）
 
-19. **智能虚拟偶像"一对一"心理陪伴者**：虚拟偶像不再只是一对多的直播，而是能记住与每一个粉丝过去数年来的所有聊天细节，提供真正具备深度长时记忆的死忠粉情感陪伴。（例：[Clawra (OpenClaw)](https://openclaws.io/blog/clawra-ai-idol)，部分对应）
+19. **智能虚拟偶像"一对一"心理陪伴者**：虚拟偶像不再只是一对多的直播，而是能记住与每一个粉丝过去数年来的所有聊天细节，提供真正具备深度长时记忆的死忠粉情感陪伴。（例：[Clawra (OpenClaw)](https://openclaws.io/blog/clawra-ai-idol)，部分实现）
 
 ##### 3.2.1.2 事中监督与持续决策支持
 
 社会的很多损失发生在"事中没人看"——化工厂排污、政策走样、慢病失控、设备劣化、合同执行偏离、市场需求骤变。事中监督需要 24×7 的脑力工作量，过去因为单位时间贵根本不可能配备人力，只能靠"事后查"或"季度盘点"，损失早已发生。这恰好是 LLM 劳动力最便宜的形态。
 
-20. **中小企业的常态化内审 / 风控员**：大企业有内审部门，中小企业没有——事后查账远比事中防控贵。绝大多数中小企业的财务流水、关联交易、合同执行长期处于"裸奔"状态，过去这一类岗位因为人力贵根本无法配备。（例：[MindBridge AI Auditor](https://www.openledger.com/ai-audit-software-for-compliance-fraud-detection/the-future-of-ai-audit-transforming-financial-oversight-in-2025)，部分对应）
+20. **中小企业的常态化内审 / 风控员**：大企业有内审部门，中小企业没有——事后查账远比事中防控贵。绝大多数中小企业的财务流水、关联交易、合同执行长期处于"裸奔"状态，过去这一类岗位因为人力贵根本无法配备。（例：[MindBridge AI Auditor](https://www.openledger.com/ai-audit-software-for-compliance-fraud-detection/the-future-of-ai-audit-transforming-financial-oversight-in-2025)，部分实现）
 
 21. **慢病患者的依从性管理员**：全球 5–8 亿糖尿病和高血压患者，每天根据血糖、血压、饮食调整用药 / 行为——但医生时间稀缺，绝大多数患者只能靠"季度复诊 + 自我管理"，依从率长期低于 50%。（例：[Omada Health](https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2025.1689911/full)）
 
-22. **政策实施的事后跟踪与反馈员**：政府发布的政策很多，但实施效果如何、有哪些副作用、需要哪些微调——这种"政策事后评估"长期缺乏专业人力，新政上线后基本没人盯。（例：[FiscalNote PolicyNote](https://www.businesswire.com/news/home/20251203133008/en/FiscalNote-Unveils-New-Breakthrough-in-PolicyNote-AI-Powered-Personalized-Impact-Summaries)，部分对应）
+22. **政策实施的事后跟踪与反馈员**：政府发布的政策很多，但实施效果如何、有哪些副作用、需要哪些微调——这种"政策事后评估"长期缺乏专业人力，新政上线后基本没人盯。（例：[FiscalNote PolicyNote](https://www.businesswire.com/news/home/20251203133008/en/FiscalNote-Unveils-New-Breakthrough-in-PolicyNote-AI-Powered-Personalized-Impact-Summaries)，部分实现）
 
 23. **环境监测与处置巡查员**：化工厂、垃圾填埋场、污染源的常态化监测需要 24×7 现场关注，过去靠地面人力做不到全覆盖——大量污染事件在事后才被发现。（例：[Climate TRACE](https://climatetrace.org/)）
 
 24. **推测式解码（Speculative Decoding）**：Leviathan 等 2023 年提出，用小"草稿模型"廉价生成候选 token 串，再用大"目标模型"一次性并行验证。由于 Transformer 注意力机制的特性，**并行验证一串文本的计算量远低于逐字生成**。在 T5-XXL 上实现 2–3× 推理加速，输出与原模型完全一致[[28]](https://arxiv.org/abs/2211.17192)。
 
-25. **智能仓储"微秒级"需求预测员**：为每一种长尾商品分配一个 Agent，根据周边社区微观人群的突发情绪（如某个本地社交媒体热搜），预测未来 12 小时内的备货量。（例：[ToolsGroup SO99+](https://www.toolsgroup.com/blog/forecasting-the-long-tail-and-intermittent-demand/)，部分对应）
+25. **智能仓储"微秒级"需求预测员**：为每一种长尾商品分配一个 Agent，根据周边社区微观人群的突发情绪（如某个本地社交媒体热搜），预测未来 12 小时内的备货量。（例：[ToolsGroup SO99+](https://www.toolsgroup.com/blog/forecasting-the-long-tail-and-intermittent-demand/)，部分实现）
 
 26. **虚拟企业"红蓝对抗"压力测试员**：模拟成极其挑剔、带有各种偏见和极端情绪的虚拟客户，对企业的公关团队、客服系统进行无底线的压力测试，寻找管理漏洞。（例：[Giskard Continuous Red Teaming](https://www.giskard.ai/use-cases/ai-red-teaming)）
 
-27. **供应链突发黑天鹅事件"秒级"重构专家**：当全球某个海峡发生突发封锁，AI 智能体瞬间计算出成千上万种替代海运、铁运方案，并自动与沿线数十个国家的独立物流商完成询价和订舱。（例：[project44 Decision Intelligence Platform](https://www.project44.com/blog/the-red-sea-crisis-and-its-global-supply-chain-repercussions/)，部分对应）
+27. **供应链突发黑天鹅事件"秒级"重构专家**：当全球某个海峡发生突发封锁，AI 智能体瞬间计算出成千上万种替代海运、铁运方案，并自动与沿线数十个国家的独立物流商完成询价和订舱。（例：[project44 Decision Intelligence Platform](https://www.project44.com/blog/the-red-sea-crisis-and-its-global-supply-chain-repercussions/)，部分实现）
 
 28. **商业地产非对称"业态引力"规划师**：根据周边居民步行五分钟内的真实消费意愿光谱，为特定空置商铺定制出最能引发邻近店铺协同效应的"非直觉"业态推荐。（例：[Placer.ai Void Analysis](https://www.placer.ai/guides/void-analysis)）
 
@@ -253,17 +253,17 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 个体面对大平台、大政府、大保险、大医院、大企业时长期处于信息和能力不对称的位置。过去能请律师、顾问、经纪人的人是少数，绝大多数个体处于"裸奔"状态——大量合法权利就这么被放弃了。这一类需求的本质是**让普通个体获得过去只有有钱人才能买到的"代理人能力"**。
 
-29. **个人面对算法的"反算法顾问"**：求职被简历筛选系统拒（ATS 过滤 75% 简历）、被风控模型拒贷、被外卖派单算法压榨——普通人不知道为什么被拒、怎么应对，请律师 / 咨询师太贵。（例：[Jobscan](https://www.jobscan.co/)，部分对应：目前仅成熟于 ATS 反向工程）
+29. **个人面对算法的"反算法顾问"**：求职被简历筛选系统拒（ATS 过滤 75% 简历）、被风控模型拒贷、被外卖派单算法压榨——普通人不知道为什么被拒、怎么应对，请律师 / 咨询师太贵。（例：[Jobscan](https://www.jobscan.co/)，部分实现：目前仅成熟于 ATS 反向工程）
 
-30. **公民信息公开 / 行政复议代办员**：申请政府信息公开、提起行政复议、起草信访材料——程序复杂、个人无力应付，每年大量合法诉求因"门槛太高"被放弃（2024 年美国联邦 FOIA 请求超 150 万份、同比 +25%）。（例：[MITRE FOIA Assistant](https://www.mitre.org/news-insights/impact-story/mitre-tool-simplifies-freedom-information-act-requests)，部分对应）
+30. **公民信息公开 / 行政复议代办员**：申请政府信息公开、提起行政复议、起草信访材料——程序复杂、个人无力应付，每年大量合法诉求因"门槛太高"被放弃（2024 年美国联邦 FOIA 请求超 150 万份、同比 +25%）。（例：[MITRE FOIA Assistant](https://www.mitre.org/news-insights/impact-story/mitre-tool-simplifies-freedom-information-act-requests)，部分实现）
 
 31. **保险理赔与拒赔申诉员**：医疗险、车险、寿险拒赔率高，多数人不会申诉，合法权利就此放弃。缺的就是"为每个被拒人写好申诉信"这种工作量。（例：[Counterforce Health](https://www.counterforcehealth.org/)，70% 申诉成功率）
 
-32. **个人养老金 / 福利领取规划师**：养老金、医保、各种补贴的领取规则极其复杂，老人和低收入群体经常领不全——缺的是"个性化梳理你能领什么"的咨询员。（例：[美国 HHS Public Benefits and AI 指南](https://www.hhs.gov/sites/default/files/public-benefits-and-ai.pdf)，部分对应）
+32. **个人养老金 / 福利领取规划师**：养老金、医保、各种补贴的领取规则极其复杂，老人和低收入群体经常领不全——缺的是"个性化梳理你能领什么"的咨询员。（例：[美国 HHS Public Benefits and AI 指南](https://www.hhs.gov/sites/default/files/public-benefits-and-ai.pdf)，部分实现）
 
-33. **个人专属隐私精算师**：扫描个人手机上的所有 App 服务条款（T&C），根据用户对隐私敏感度的特定偏好，自动生成个性化的权限拒绝方案和反追踪脚本。（例：[Block Party](https://www.blockpartyapp.com/)，部分对应）
+33. **个人专属隐私精算师**：扫描个人手机上的所有 App 服务条款（T&C），根据用户对隐私敏感度的特定偏好，自动生成个性化的权限拒绝方案和反追踪脚本。（例：[Block Party](https://www.blockpartyapp.com/)，部分实现）
 
-34. **动态劳动合同谈判 Agent**：代表零工经济从业者（如网约车司机、自由设计师），自动向不同的平台算法实时发起谈判，争取最符合其当日体能状况与收入预期的分成条款。（例：[Driver's Seat Cooperative](https://www.rockefellerfoundation.org/grantee-impact-stories/drivers-seat-puts-data-and-power-in-gig-workers-hands/)，部分对应）
+34. **动态劳动合同谈判 Agent**：代表零工经济从业者（如网约车司机、自由设计师），自动向不同的平台算法实时发起谈判，争取最符合其当日体能状况与收入预期的分成条款。（例：[Driver's Seat Cooperative](https://www.rockefellerfoundation.org/grantee-impact-stories/drivers-seat-puts-data-and-power-in-gig-workers-hands/)，部分实现）
 
 35. **侵权证据自动溯源与维权律师**：为独立艺术家服务，全网 24 小时监控其作品。一旦发现抄袭，自动根据侵权者的所在国法律，生成个性化的律师函并完成区块链存证。（例：[ScoreDetect](https://www.scoredetect.com/solutions/ai-art-copyright-protection)）
 
@@ -277,19 +277,19 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 38. **古籍 / 档案 / 口述史的标注整理员**：全球数百亿页古籍、档案、地方史志、口述史等待 OCR、断句、注释、互相校对——靠人工要几百年，绝大部分注定永远不会被现代知识库吸收。（例：[Vesuvius Challenge](https://scrollprize.org/)）
 
-39. **行业 / 国家标准的本地化制定员**：每个国家、每个细分行业都需要本地标准，现在主要靠几十家标准化组织，覆盖严重不足——大量"行业潜规则"长期没人写成可执行的标准。（例：[中国《国家人工智能产业综合标准化体系建设指南（2024 版）》](https://www.akingump.com/en/insights/ai-law-and-regulation-tracker/guidelines-for-the-development-of-a-comprehensive-system-of-national-standards-for-the-ai-industry-(2024-edition))，部分对应）
+39. **行业 / 国家标准的本地化制定员**：每个国家、每个细分行业都需要本地标准，现在主要靠几十家标准化组织，覆盖严重不足——大量"行业潜规则"长期没人写成可执行的标准。（例：[中国《国家人工智能产业综合标准化体系建设指南（2024 版）》](https://www.akingump.com/en/insights/ai-law-and-regulation-tracker/guidelines-for-the-development-of-a-comprehensive-system-of-national-standards-for-the-ai-industry-(2024-edition))，部分实现）
 
 40. **法规 / 条例的实时更新与对照员**：法律法规年年更新，但企业 / 公民对自己面临的"现行规则"长期跟不上节奏——更新本身有人写，但"我和我的业务对得上哪条新规则"这一层始终缺人。（例：[RegASK](https://regask.com/)，覆盖 160+ 国家 / 地区）
 
 41. **设备 / 软件的维护手册撰写员**：80% 工业设备靠老师傅口口相传，缺乏完整的故障树、备件清单、维护手册；约 40% 维护熟手将在 5 年内退休，意味着大量"维修经验"会随之消失——撰写文档的脑力工作量长期没人做。（例：[Siemens Industrial Copilot for Maintenance / Senseye](https://press.siemens.com/global/en/pressrelease/siemens-expands-industrial-copilot-new-generative-ai-powered-maintenance-offering)）
 
-42. **个人方言与俚语保护/翻译官**：针对世界上即将消失的微观方言，AI 建立专属的语义映射网，让哪怕只有几百人懂的方言也能完美对接全球现代知识库。（例：[NushuRescue (arXiv 2412.00218)](https://arxiv.org/pdf/2412.00218)，部分对应）
+42. **个人方言与俚语保护/翻译官**：针对世界上即将消失的微观方言，AI 建立专属的语义映射网，让哪怕只有几百人懂的方言也能完美对接全球现代知识库。（例：[NushuRescue (arXiv 2412.00218)](https://arxiv.org/pdf/2412.00218)，部分实现）
 
-43. **老师傅经验"数字克隆"工业顾问**：把工厂里即将退休的高级技工几十年的维修日志、随手画的草图输入模型。AI 克隆出这位"老师傅"的直觉，指导年轻工人维修复杂的特种设备。（例：[Siemens Industrial Copilot](https://www.siemens.com/en-us/company/insights/generative-ai-industrial-copilot/)，部分对应）
+43. **老师傅经验"数字克隆"工业顾问**：把工厂里即将退休的高级技工几十年的维修日志、随手画的草图输入模型。AI 克隆出这位"老师傅"的直觉，指导年轻工人维修复杂的特种设备。（例：[Siemens Industrial Copilot](https://www.siemens.com/en-us/company/insights/generative-ai-industrial-copilot/)，部分实现）
 
-44. **专利文献"降维打击"对抗性检索员**：在研发新产品前，AI 深度理解该产品的核心底层逻辑，用极其隐蔽的上位概念或跨行业同义词，去全网检索竞争对手是否埋下了专利陷阱。（例：[PatSnap Eureka AI](https://www.patsnap.com/resources/blog/articles/ai-novelty-search-strategies-2025/)，部分对应）
+44. **专利文献"降维打击"对抗性检索员**：在研发新产品前，AI 深度理解该产品的核心底层逻辑，用极其隐蔽的上位概念或跨行业同义词，去全网检索竞争对手是否埋下了专利陷阱。（例：[PatSnap Eureka AI](https://www.patsnap.com/resources/blog/articles/ai-novelty-search-strategies-2025/)，部分实现）
 
-45. **跨境电商"千国千面"合规官**：针对出海小企业，AI 智能体实时根据具体商品的材质、出口国的最新法规（如欧盟 2026 绿色新政微调）以及当地宗教习俗，动态定制包装说明书与合规申报文本。（例：[Regology Reggi](https://www.regology.com/reggi)，部分对应）
+45. **跨境电商"千国千面"合规官**：针对出海小企业，AI 智能体实时根据具体商品的材质、出口国的最新法规（如欧盟 2026 绿色新政微调）以及当地宗教习俗，动态定制包装说明书与合规申报文本。（例：[Regology Reggi](https://www.regology.com/reggi)，部分实现）
 
 ⚠ 解读：把这 45 个缺口放在一张图上看，能读出一个一致的规律——**LLM 释放的虚拟劳动力不是去抢现有岗位的饭碗，而是去填补社会长期想做但请不起、做不起、做不完的事**。基层医疗、罕见病诊断、政策事后评估、信息公开代办、跨学科综述、维护文档撰写、长尾合规、个人面对算法时的反制——这些活儿不是"新的工作机会"，是**一直存在但被人力成本压制成"非工作"的工作**。这才是这股劳动力增量与既有就业市场的真实关系：**先填补真空，再竞争稀缺**。每一个场景的背后，传统计算机（CPU、传统数据库、高带宽存储）依然是绝对的承载底座——它要去调取海量的传统冷热数据（历史记录、合规条文、对话日志、知识图谱），并在传统沙盒里运行无数次的确定性验证——这与 §2.11 IT 产业反向印证里看到的资本流向完全一一对应。
 
