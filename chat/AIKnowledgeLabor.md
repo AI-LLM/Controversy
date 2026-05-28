@@ -401,6 +401,8 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 
 这与 §3.2.1 的核心论点完全自洽：**这股新劳动力的真实形态不是方法学革命，而是人力供给革命**——它把"过去只有大企业才配得起的团队建制"第一次推送到每个项目里。每个开发者背后多了一支由 guides 和 sensors 组成的"无形班子"，每一次 commit 都被一组前所未有规模的工程脑力反复检视、修正、推动向前——**但这套班子做的事并不新，只是过去做不起**。Harness engineering 的整套词汇（Guides、Sensors、computational/inferential、steering loop、harnessability、ambient affordances）之所以现在才被命名、被系统化整理成框架，正是因为 AI 人力让"每个项目都能配齐这套工种"——而过去只有大企业在核心项目上有足够的预算。**词汇的诞生本身就是人力供给曲线变平的产物**。
 
+除了以上讨论到的多模态能力外，在不同的任务类型中，“AI 人力”与人类劳动力也存在差异，例如[此处](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)或[此处](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)的讨论。技术上如何扬长避短，或者如何使其更逼近人类，不在本文讨论范围。
+
 ##### 3.2.1.6 科学研究和技术开发的新范式——"暴力破解"
 
 AI 知识劳动力的一个高价值出口，是过去由于人类大脑算力和体力的双重限制只能望洋兴叹的领域——动辄需要探索 $10^{60}$ 量级分子空间的科学和技术难题。
