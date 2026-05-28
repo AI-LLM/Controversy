@@ -99,7 +99,7 @@ AI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且�
 
 ### 2.2 理解模糊、自然语言的指令
 
-传统软件接收结构化输入；JSON 少一个逗号就 crash。人类同事接收"帮我把这周的销售数据做一份摘要给老板，重点放在华南区的下滑"这种模糊请求，能自己补全前提、估算口径、问回来澄清。LLM 在这一点上**像人，不像 API**——它能容忍错别字、方言、不完整的请求，能从上下文里推断意图。这也是为什么 PwC 的 *2026 AI Business Predictions* 强调："技术本身只贡献 20% 的价值，剩下 80% 来自工作流的重新设计"[[28]](https://www.pwc.com/us/en/tech-effect/ai-analytics/ai-predictions.html)——原本按 API 设计的流程，现在按"对话"设计。
+传统软件接收结构化输入；JSON 少一个逗号就 crash。人类同事接收"帮我把这周的销售数据做一份摘要给老板，重点放在华南区的下滑"这种模糊请求，能自己补全前提、估算口径、问回来澄清。LLM 在这一点上**像人，不像 API**——它能容忍错别字、方言、不完整的请求，能从上下文里推断意图。这也是为什么 PwC 的 *2026 AI Business Predictions* 强调："技术本身只贡献 20% 的价值，剩下 80% 来自工作流的重新设计"[[32]](https://www.pwc.com/us/en/tech-effect/ai-analytics/ai-predictions.html)——原本按 API 设计的流程，现在按"对话"设计。
 
 ### 2.3 Few-shot 学习与跨任务泛化
 
@@ -301,7 +301,7 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 23. **环境监测与处置巡查员**：化工厂、垃圾填埋场、污染源的常态化监测需要 24×7 现场关注，过去靠地面人力做不到全覆盖——大量污染事件在事后才被发现。（例：[Climate TRACE](https://climatetrace.org/)）
 
-24. **推测式解码（Speculative Decoding）**：Leviathan 等 2023 年提出，用小"草稿模型"廉价生成候选 token 串，再用大"目标模型"一次性并行验证。由于 Transformer 注意力机制的特性，**并行验证一串文本的计算量远低于逐字生成**。在 T5-XXL 上实现 2–3× 推理加速，输出与原模型完全一致[[28]](https://arxiv.org/abs/2211.17192)。
+24. **动态博弈定价专家**：在 B2B 国际贸易中，AI 自动分析特定买家的历史采购周期、当日汇率波动、甚至是对方港口的实时天气，为单笔订单定制最容易成交的"滑准定价策略"。（例：[Vendavo Agentic Pricing](https://www.vendavo.com/)，部分实现）
 
 25. **智能仓储"微秒级"需求预测员**：为每一种长尾商品分配一个 Agent，根据周边社区微观人群的突发情绪（如某个本地社交媒体热搜），预测未来 12 小时内的备货量。（例：[ToolsGroup SO99+](https://www.toolsgroup.com/blog/forecasting-the-long-tail-and-intermittent-demand/)，部分实现）
 
