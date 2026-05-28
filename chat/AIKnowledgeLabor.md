@@ -261,33 +261,35 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 32. **个人养老金 / 福利领取规划师**：养老金、医保、各种补贴的领取规则极其复杂，老人和低收入群体经常领不全——缺的是"个性化梳理你能领什么"的咨询员。（例：[美国 HHS Public Benefits and AI 指南](https://www.hhs.gov/sites/default/files/public-benefits-and-ai.pdf)，部分对应）
 
-33. **动态劳动合同谈判 Agent**：代表零工经济从业者（如网约车司机、自由设计师），自动向不同的平台算法实时发起谈判，争取最符合其当日体能状况与收入预期的分成条款。（例：[Driver's Seat Cooperative](https://www.rockefellerfoundation.org/grantee-impact-stories/drivers-seat-puts-data-and-power-in-gig-workers-hands/)，部分对应）
+33. **个人专属隐私精算师**：扫描个人手机上的所有 App 服务条款（T&C），根据用户对隐私敏感度的特定偏好，自动生成个性化的权限拒绝方案和反追踪脚本。（例：[Block Party](https://www.blockpartyapp.com/)，部分对应）
 
-34. **侵权证据自动溯源与维权律师**：为独立艺术家服务，全网 24 小时监控其作品。一旦发现抄袭，自动根据侵权者的所在国法律，生成个性化的律师函并完成区块链存证。（例：[ScoreDetect](https://www.scoredetect.com/solutions/ai-art-copyright-protection)）
+34. **动态劳动合同谈判 Agent**：代表零工经济从业者（如网约车司机、自由设计师），自动向不同的平台算法实时发起谈判，争取最符合其当日体能状况与收入预期的分成条款。（例：[Driver's Seat Cooperative](https://www.rockefellerfoundation.org/grantee-impact-stories/drivers-seat-puts-data-and-power-in-gig-workers-hands/)，部分对应）
 
-35. **个人智能谈判官（代砍价/代维权）**：面对宽带运营商、健身房的霸王条款，AI 自动搜集过往的维权成功案例，代表用户自动发送话术最优的申诉邮件或在线与对方客服博弈。（例：[Pine AI](https://www.19pine.ai/)）
+35. **侵权证据自动溯源与维权律师**：为独立艺术家服务，全网 24 小时监控其作品。一旦发现抄袭，自动根据侵权者的所在国法律，生成个性化的律师函并完成区块链存证。（例：[ScoreDetect](https://www.scoredetect.com/solutions/ai-art-copyright-protection)）
+
+36. **个人智能谈判官（代砍价/代维权）**：面对宽带运营商、健身房的霸王条款，AI 自动搜集过往的维权成功案例，代表用户自动发送话术最优的申诉邮件或在线与对方客服博弈。（例：[Pine AI](https://www.19pine.ai/)）
 
 ##### 3.2.1.4 知识合成、传承与基础设施维护
 
 知识工作的一大类是"把多源、多语种、多时代的零散知识合成为可用判断"，另一类是维持现代社会运转所需的"幕后脑力"（标准制定、法规更新、维护手册、跨域合规）——它们费时、不出新意、不能赚快钱，长期处于"没人愿意做但又不能没人做"的窘境。
 
-36. **跨学科文献综述合成员**：跨学科研究爆发，但谁来梳理几十个不同领域的文献？传统综述需要专人一年才能写一篇，根本跟不上新方向的涌现速度。（例：[Elicit](https://elicit.com/)）
+37. **跨学科文献综述合成员**：跨学科研究爆发，但谁来梳理几十个不同领域的文献？传统综述需要专人一年才能写一篇，根本跟不上新方向的涌现速度。（例：[Elicit](https://elicit.com/)）
 
-37. **古籍 / 档案 / 口述史的标注整理员**：全球数百亿页古籍、档案、地方史志、口述史等待 OCR、断句、注释、互相校对——靠人工要几百年，绝大部分注定永远不会被现代知识库吸收。（例：[Vesuvius Challenge](https://scrollprize.org/)）
+38. **古籍 / 档案 / 口述史的标注整理员**：全球数百亿页古籍、档案、地方史志、口述史等待 OCR、断句、注释、互相校对——靠人工要几百年，绝大部分注定永远不会被现代知识库吸收。（例：[Vesuvius Challenge](https://scrollprize.org/)）
 
-38. **行业 / 国家标准的本地化制定员**：每个国家、每个细分行业都需要本地标准，现在主要靠几十家标准化组织，覆盖严重不足——大量"行业潜规则"长期没人写成可执行的标准。（例：[中国《国家人工智能产业综合标准化体系建设指南（2024 版）》](https://www.akingump.com/en/insights/ai-law-and-regulation-tracker/guidelines-for-the-development-of-a-comprehensive-system-of-national-standards-for-the-ai-industry-(2024-edition))，部分对应）
+39. **行业 / 国家标准的本地化制定员**：每个国家、每个细分行业都需要本地标准，现在主要靠几十家标准化组织，覆盖严重不足——大量"行业潜规则"长期没人写成可执行的标准。（例：[中国《国家人工智能产业综合标准化体系建设指南（2024 版）》](https://www.akingump.com/en/insights/ai-law-and-regulation-tracker/guidelines-for-the-development-of-a-comprehensive-system-of-national-standards-for-the-ai-industry-(2024-edition))，部分对应）
 
-39. **法规 / 条例的实时更新与对照员**：法律法规年年更新，但企业 / 公民对自己面临的"现行规则"长期跟不上节奏——更新本身有人写，但"我和我的业务对得上哪条新规则"这一层始终缺人。（例：[RegASK](https://regask.com/)，覆盖 160+ 国家 / 地区）
+40. **法规 / 条例的实时更新与对照员**：法律法规年年更新，但企业 / 公民对自己面临的"现行规则"长期跟不上节奏——更新本身有人写，但"我和我的业务对得上哪条新规则"这一层始终缺人。（例：[RegASK](https://regask.com/)，覆盖 160+ 国家 / 地区）
 
-40. **设备 / 软件的维护手册撰写员**：80% 工业设备靠老师傅口口相传，缺乏完整的故障树、备件清单、维护手册；约 40% 维护熟手将在 5 年内退休，意味着大量"维修经验"会随之消失——撰写文档的脑力工作量长期没人做。（例：[Siemens Industrial Copilot for Maintenance / Senseye](https://press.siemens.com/global/en/pressrelease/siemens-expands-industrial-copilot-new-generative-ai-powered-maintenance-offering)）
+41. **设备 / 软件的维护手册撰写员**：80% 工业设备靠老师傅口口相传，缺乏完整的故障树、备件清单、维护手册；约 40% 维护熟手将在 5 年内退休，意味着大量"维修经验"会随之消失——撰写文档的脑力工作量长期没人做。（例：[Siemens Industrial Copilot for Maintenance / Senseye](https://press.siemens.com/global/en/pressrelease/siemens-expands-industrial-copilot-new-generative-ai-powered-maintenance-offering)）
 
-41. **个人方言与俚语保护/翻译官**：针对世界上即将消失的微观方言，AI 建立专属的语义映射网，让哪怕只有几百人懂的方言也能完美对接全球现代知识库。（例：[NushuRescue (arXiv 2412.00218)](https://arxiv.org/pdf/2412.00218)，部分对应）
+42. **个人方言与俚语保护/翻译官**：针对世界上即将消失的微观方言，AI 建立专属的语义映射网，让哪怕只有几百人懂的方言也能完美对接全球现代知识库。（例：[NushuRescue (arXiv 2412.00218)](https://arxiv.org/pdf/2412.00218)，部分对应）
 
-42. **老师傅经验"数字克隆"工业顾问**：把工厂里即将退休的高级技工几十年的维修日志、随手画的草图输入模型。AI 克隆出这位"老师傅"的直觉，指导年轻工人维修复杂的特种设备。（例：[Siemens Industrial Copilot](https://www.siemens.com/en-us/company/insights/generative-ai-industrial-copilot/)，部分对应）
+43. **老师傅经验"数字克隆"工业顾问**：把工厂里即将退休的高级技工几十年的维修日志、随手画的草图输入模型。AI 克隆出这位"老师傅"的直觉，指导年轻工人维修复杂的特种设备。（例：[Siemens Industrial Copilot](https://www.siemens.com/en-us/company/insights/generative-ai-industrial-copilot/)，部分对应）
 
-43. **专利文献"降维打击"对抗性检索员**：在研发新产品前，AI 深度理解该产品的核心底层逻辑，用极其隐蔽的上位概念或跨行业同义词，去全网检索竞争对手是否埋下了专利陷阱。（例：[PatSnap Eureka AI](https://www.patsnap.com/resources/blog/articles/ai-novelty-search-strategies-2025/)，部分对应）
+44. **专利文献"降维打击"对抗性检索员**：在研发新产品前，AI 深度理解该产品的核心底层逻辑，用极其隐蔽的上位概念或跨行业同义词，去全网检索竞争对手是否埋下了专利陷阱。（例：[PatSnap Eureka AI](https://www.patsnap.com/resources/blog/articles/ai-novelty-search-strategies-2025/)，部分对应）
 
-44. **跨境电商"千国千面"合规官**：针对出海小企业，AI 智能体实时根据具体商品的材质、出口国的最新法规（如欧盟 2026 绿色新政微调）以及当地宗教习俗，动态定制包装说明书与合规申报文本。（例：[Regology Reggi](https://www.regology.com/reggi)，部分对应）
+45. **跨境电商"千国千面"合规官**：针对出海小企业，AI 智能体实时根据具体商品的材质、出口国的最新法规（如欧盟 2026 绿色新政微调）以及当地宗教习俗，动态定制包装说明书与合规申报文本。（例：[Regology Reggi](https://www.regology.com/reggi)，部分对应）
 
 ⚠ 解读：把这 45 个缺口放在一张图上看，能读出一个一致的规律——**LLM 释放的虚拟劳动力不是去抢现有岗位的饭碗，而是去填补社会长期想做但请不起、做不起、做不完的事**。基层医疗、罕见病诊断、政策事后评估、信息公开代办、跨学科综述、维护文档撰写、长尾合规、个人面对算法时的反制——这些活儿不是"新的工作机会"，是**一直存在但被人力成本压制成"非工作"的工作**。这才是这股劳动力增量与既有就业市场的真实关系：**先填补真空，再竞争稀缺**。每一个场景的背后，传统计算机（CPU、传统数据库、高带宽存储）依然是绝对的承载底座——它要去调取海量的传统冷热数据（历史记录、合规条文、对话日志、知识图谱），并在传统沙盒里运行无数次的确定性验证——这与 §2.11 IT 产业反向印证里看到的资本流向完全一一对应。
 
