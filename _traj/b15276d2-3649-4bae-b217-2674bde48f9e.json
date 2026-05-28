@@ -24852,19 +24852,118 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 376,
+      "timestamp": "2026-05-28T15:18:33.962Z",
+      "source": "user",
+      "message": "Harness engineering中是否出现了以往软件工程中没有出现的本质上的新方法？",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 377,
+      "timestamp": "2026-05-28T15:19:56.636Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 578290,
+        "completion_tokens": 6417,
+        "cached_tokens": 578284,
+        "extra": {
+          "cache_creation_input_tokens": 36,
+          "cache_read_input_tokens": 578284,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 36,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 6417,
+              "cache_read_input_tokens": 578284,
+              "cache_creation_input_tokens": 36,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 36
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 378,
+      "timestamp": "2026-05-28T15:20:30.204Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-7",
+      "message": "一句话判断：**90% 是旧概念的重新命名整理，10% 有真正本质性的新方法**。让我按三个层次拆开看：\n\n## 第一层：纯粹的旧概念（不新，只是被重新装裱）\n\n- **Cybernetic governor 框架 / Guides + Sensors / Steering loop** — 控制论是 Wiener 1948 年的，feedforward/feedback 是控制理论基本词汇；软件工程里的 Kaizen 持续改进、PDCA 循环、XP 的 feedback loops 早就用同样的结构\n- **Keep quality left（shift-left）** — 2000 年代 continuous integration 时代就成熟了\n- **Architecture fitness functions** — Neal Ford 等 2017 *Building Evolutionary Architectures* 已系统化（Böckeler 直接引用）\n- **Maintainability / Architecture / Behaviour 三类** — 是分类整理，不是新方法\n- **Ashby's Law** — 1956 年的定理，Böckeler 借来论证 harness 必要性\n- **Harness templates** — 是 service template / scaffolding 的延伸\n- **Harnessability / Ambient affordances** — 新名词，内核是 testability + observability + convention-over-configuration 的合并\n\n## 第二层：旧问题被廉价化（成本降几个数量级，但方法本质不变）\n\n- **Inferential code review**（语义级评审）— 高级工程师做 PR review 一直在做，但过去稀缺、慢、贵。现在它变成 24×7 在每个 commit 跑。**这是数量级的成本变化，不是方法上的新东西**——只是\"高级工程师评审\"的劳动力供给曲线从陡变平。\n- **Continuous drift detection、dead code scanner、dependency drift** — 工具早有（FindBugs、Sonar、Dependabot），现在 LLM 让覆盖面更广。仍然是量变。\n\n## 第三层：本质上的新方法（这是真正值得关注的）\n\n我认为只有 **3 个真正新的**，外加 **1 个范式转换**：\n\n### 新方法 1：Inferential sensor 作为流水线一等公民\n\n传统软件工程的反馈机制**必须是确定性的**——linter 给布尔判断、编译器给明确错误、测试给 pass/fail。**允许概率性、不可靠的语义判断者常驻在流水线中**——这在软件工程史上是没有的。背后理论支撑是 §2.8.2.4 的\"多次采样 + 验证器错误率指数级衰减\"：以前要求 sensor 准确率 100%，现在接受 sensor 准确率 80%、用投票/重采样补偿。这是质量控制工程哲学的根本切换。\n\n### 新方法 2：Positive prompt injection（错误消息成为 prompt）\n\nBöckeler 文中明确点出：\"custom linter messages that include instructions for self-correction — a positive kind of prompt injection\"。**错误消息从\"告诉人哪里错了\"变成\"告诉 agent 怎么修\"**。同一条消息有双重受众。这意味着工具链的输出格式要为下游 LLM agent 的认知特点做设计——一个全新的工程要求。传统软件工程里 error messages 是被动的人类可读文本，新一代 error messages 是主动塑造下一轮 agent 行为的 prompt 工程产物。\n\n### 新方法 3：Agent self-correcting loop 成为质量控制默认形态\n\n传统：检测错误 → 报错 → **人**修复 → 验证 → 完成（人在控制流的核心节点）。\n新：检测错误 → 生成 prompt → **agent** 自动修复 → 自动重试 → 直到 sensor 收敛（**人退到系统外，只设计 sensor 和退出条件**）。\n\"测试—评审—修复\"从串行的离散人为事件变成异步的连续机器过程。这意味着代码库的演化速度可以脱离人的注意力带宽。\n\n### 范式转换：Harness 本身成为最重要的工程资产\n\nOpenAI 的原话：\"Our most difficult challenges now center on designing environments, feedback loops, and control systems\"——**工程师的核心产出从应用代码转移到\"控制 agent 的环境\"**。以前 Tooling Team 是支持角色，Application Team 是主角；现在 Harness Engineer 才是主角，应用代码是 agent 生产的副产品。这与\"DevOps 是文化不是工具\"的级别相当——它不是新方法，但它是工程师**注意力分配的根本性重置**。\n\n---\n\n**总判断**：Harness engineering 的论述框架几乎全是控制论 + 软件工程已有概念的重组，**但有 3 个真正的本质新东西从这个重组里浮出来**：概率性传感器进入流水线、错误消息变成 prompt、agent 自闭环替代人闭环。这三件事**单独看都是小变化，叠加起来就是软件工程的\"工种重心从写代码到写控制代码\"的范式转换**——而这一转换的工程基底，正是 §3.2.1.5 这一节论证的 LLM Agent 把\"过去只有大企业才配得起的中级工程师建制\"平民化。\n\n要不要把这层\"哪些是本质新方法 / 哪些只是旧瓶装新酒\"的分析也加进文档（作为 §3.2.1.5 软件工程子节的补充判断段落）？",
+      "metrics": {
+        "prompt_tokens": 578290,
+        "completion_tokens": 6417,
+        "cached_tokens": 578284,
+        "extra": {
+          "cache_creation_input_tokens": 36,
+          "cache_read_input_tokens": 578284,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 36,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 6,
+              "output_tokens": 6417,
+              "cache_read_input_tokens": 578284,
+              "cache_creation_input_tokens": 36,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 36
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 110536658,
-    "total_completion_tokens": 942474,
-    "total_cached_tokens": 110524337,
-    "total_steps": 375,
+    "total_prompt_tokens": 111693238,
+    "total_completion_tokens": 955308,
+    "total_cached_tokens": 111680905,
+    "total_steps": 378,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 3693085,
-      "total_cache_read_input_tokens": 110524337
+      "total_cache_creation_input_tokens": 3693157,
+      "total_cache_read_input_tokens": 111680905
     }
   }
 }
