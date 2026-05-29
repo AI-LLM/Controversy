@@ -235,8 +235,6 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 2026年的研究表明AI劳动力至少在目前也并非完全等价人类知识工作者的平均能力，在现有工作上直接替换人类目前不能，未来也不应是主要方向。
 
-**1. UC Berkeley 出处**：关于"AI 采用与生产力提升无稳健相关性（工作反遭深化）"
-
 UC Berkeley 哈斯商学院（Haas School of Business）的Xingqi Maggie Ye团队在主题为"AI promised to free up workers' time. UC Berkeley Haas researchers find the opposite."（AI 承诺释放员工时间，柏克莱哈斯研究员发现了相反的结果）的研究中对一家中型科技公司进行了为期 8 个月的深入实地观察与访谈。结果发现，企业引入生成式 AI 后，**并没有真正提升客观的整体生产力，反而引发了"工作量攀升"（Workload Creep）与员工过劳**。短期内看似"员工动得更快"的生产力假象，在长期是不可持续的，AI 的采用与企业真正追求的"稳健生产力提升"之间存在着巨大的鸿沟[[64]](https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/)。
 
 MIT 计算机科学与人工智慧实验室（CSAIL）旗下的 **MIT FutureTech** 研究团队在主题为"Crashing Waves vs. Rising Tides: Preliminary Findings on AI Automation from Thousands of Worker Evaluations of Labor Market Tasks"*（疯狗浪还是疯长潮：基于数千名劳工对劳动力市场任务评估的 AI 自动化初步发现）的研究中发现AI Agent 到 2029 年才能在文字任务达到 80-95% 的'勉强胜任'度。
