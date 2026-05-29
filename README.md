@@ -6,6 +6,7 @@
 
 | 日期 | 主题 | 文件 |
 | --- | --- | --- |
+| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪"AI 突袭式替代白领"——2029 年才能在 80–95% 文字任务上"勉强胜任" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |
 | 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |
 | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |
 | 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |
