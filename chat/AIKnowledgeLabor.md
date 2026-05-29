@@ -233,8 +233,29 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 2026年的研究表明AI劳动力至少在目前也并非完全等价人类知识工作者的平均能力，在现有工作上直接替换人类目前不能，未来也不应是主要方向。
 
-- **UC Berkeley Haas（2026 年 2 月）**——Xingqi Maggie Ye（叶星启，博士生研究员）与副教授 Aruna Ranganathan 在一家约 200 人的美国科技公司做了 **8 个月人种志研究**（*Harvard Business Review* 收录）。结论与"AI 解放时间"的流行假设相反——生成式 AI 并未腾出时间，反而引发了**"工作强化"（intensification）与员工过劳**：员工出于自愿使用 AI 想缩短工时，但主管和同僚的"期待"随之被拉高（要求更快、更多）；员工在回复邮件、写代码、开会时**同时在背景运行多个 AI agents**——"人和机器同时持续运动"（both the human and the machine were constantly in motion），节奏更密集、认知负荷更重。研究者明确指出，**很难把这种强度下的"产出增加"分离为"真实的生产力增长"与"不可持续的过度强度"**——副作用包括工作—生活边界模糊、burnout、认知疲劳、潜在的输出质量下降[[64]](https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/)。
-- **MIT FutureTech（2026 年 4 月，arXiv:2604.01363）**——Matthias Mertens、Neil Thompson 等针对美国劳工部 O\*NET 数据库中 **3,000+ 项文字/认知任务**做了**超过 17,000 次 LLM/Agent 评估**，由各领域的经理人与领域专家双盲打分。明确**反驳 METR 风格的"crashing waves"叙事**（能力在小批任务上突然 surge），结论是 AI 自动化主要是 **"rising tides"**——连续、广泛、可预测的渐进推进。量化基线：2024-Q2 时 AI 完成"人类约需 3–4 小时"的任务有 50% 成功率，2025-Q3 升至约 65%；任务时长 doubling time 估算 3.8 个月。**2029 预测线**：按当前硬件与算法进步速度推算，要到 **2029 年** AI Agents 才能在 **80–95% 的文字工作任务**上达到"勉强胜任（minimally sufficient）"——即勉强及格、不需要人类从头重做的水平。在法律、金融、医疗等**对错误零容忍**的严肃商业领域，"达到接近 100% 的成功率，或在更高质量水准（superior quality）上达到同等成功率，**还需要再往后推迟好几年**"——与企业高层、投资人预期 AI 能在 1–2 年内完全接管白领工作的激进想象，存在极大的现实差距[[65]](https://arxiv.org/abs/2604.01363)。
+**1. UC Berkeley 出处**：关于"AI 采用与生产力提升无稳健相关性（工作反遭深化）"
+
+* **研究机构**：UC Berkeley 哈斯商学院（Haas School of Business）
+* **主要作者**：Xingqi Maggie Ye（叶星启，博士生研究员）
+* **报告/文章标题**：*"AI promised to free up workers' time. UC Berkeley Haas researchers find the opposite."*（AI 承诺释放员工时间，柏克莱哈斯研究员发现了相反的结果）
+* **发布时间**：2026 年 2 月
+
+**核心发现**：研究人员对一家中型科技公司进行了为期 8 个月的深入实地观察与访谈。结果发现，企业引入生成式 AI 后，**并没有真正提升客观的整体生产力，反而引发了"工作量攀升"（Workload Creep）与员工过劳**：
+
+* **"帮 AI 擦屁股"的时间变多**：工程师和员工回报，他们花费了大量时间在校正、修改同事们用 AI 生成的次级内容，跨团队的沟通与信任成本不减反增。
+* **结论**：短期内看似"员工动得更快"的生产力假象，在长期是不可持续的，AI 的采用与企业真正追求的"稳健生产力提升"之间存在着巨大的鸿沟[[64]](https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/)。
+
+**2. MIT 出处**：关于"AI Agent 到 2029 年才能在文字任务达到 80-95% 的'勉强胜任'度"
+
+* **研究机构**：MIT 计算机科学与人工智慧实验室（CSAIL）旗下的 **MIT FutureTech** 研究团队
+* **论文标题**：*"Crashing Waves vs. Rising Tides: Preliminary Findings on AI Automation from Thousands of Worker Evaluations of Labor Market Tasks"*（疯狗浪还是疯长潮：基于数千名劳工对劳动力市场任务评估的 AI 自动化初步发现）
+* **发布时间**：2026 年 3 月底 / 4 月初
+
+**核心发现**：这项研究被称为目前对 AI 实际工作能力最全面的检验。团队针对美国劳工部 O*NET 资料库中 **3,000 多项"文字/认知相关任务"** 进行了超过 17,000 次的实际大型语言模型（LLM）与 Agents 的评估，并由各领域的经理人与专家进行评分（1 至 9 分）。
+
+* **现状的残酷天花板（60%）**：即使在"给予完全正确且充分的资讯"这种理想的测试环境下，目前的 AI Agent 也**只有 60% 的任务能达到经理人眼中的"勉强胜任（Minimally Sufficient）"**（即勉强及格、不需要人类从头重做的水准）；而能达到"优秀（Superior）"水准的任务仅占 **26%**。
+* **2029 的预测线**：根据目前的硬体与算法进步速度推估，AI 进步的轨迹如同缓慢爬升的"潮水（Rising Tide）"，而非一夕颠覆的"疯狗浪（Crashing Wave）"。预计要到 **2029 年**，AI Agents 才能在 **80% 到 95%** 的文字工作任务中，达到"勉强胜任"（Minimally Sufficient）的门槛。
+* **与高层期待的悬殊差距**：研究资深作者 Neil Thompson 团队特别强调，在法律、金融、医疗等"对错误零容忍（Low tolerance for errors）"的严肃商业领域，想要达到接近 100% 的完美准确率或优异品质，2029 年根本不可能，还需要再往后推迟许多年。这与当前企业高层、投资人预期 AI 能在 1、2 年内完全接管白领工作、实现组织精简的激进想像，存在极大的现实差距[[65]](https://arxiv.org/abs/2604.01363)。
 
 
 如果不是在现有工作中替换人力，那社会中实际存在这么大的知识工作需求吗？这些劳动力如何转换为真实的社会价值？这个问题直击这场技术变革最本质、也最让人焦虑的核心——社会真的需要这么多"虚拟白领"吗？他们每天在代码、文案和报表里疯狂空转，到底算不算真正的社会价值？
