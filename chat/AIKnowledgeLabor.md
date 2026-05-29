@@ -414,7 +414,7 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 
 这与 §3.2.1 的核心论点完全自洽：**这股新劳动力的真实形态不是方法学革命，而是劳动力供给革命**——它把"过去只有大企业才配得起的团队建制"第一次推送到每个项目里。每个开发者背后多了一支由 guides 和 sensors 组成的"无形班子"，每一次 commit 都被一组前所未有规模的工程脑力反复检视、修正、推动向前——**但这套班子做的事并不新，只是过去做不起**。Harness engineering 的整套词汇（Guides、Sensors、computational/inferential、steering loop、harnessability、ambient affordances）之所以现在才被命名、被系统化整理成框架，正是因为 AI 劳动力让"每个项目都能配齐这套工种"——而过去只有大企业在核心项目上有足够的预算。**词汇的诞生本身就是劳动力供给曲线变平的产物**。
 
-基于这个“AI 劳动力”模型，在LLM模型稳定——等价于人员稳定——的基础上，有广泛的管理学和工程学的方法论和工具来组织和维护一个在特定任务上稳定表现的系统。
+基于这个“AI 劳动力”模型，在LLM模型稳定——等价于人员稳定——的基础上，有广泛的管理学和工程学的方法论和工具来组织和维护一个在特定任务上稳定表现的系统。而预期AI能在广泛的需求和任务上像传统计算机系统一样稳定可靠地自主地生产软件，在此方向上投入研发力量都是不合理的。
 
 除了以上讨论到的多模态能力外，在不同的任务类型中，“AI 劳动力”与人类劳动力也存在差异，例如[此处](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)或[此处](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)的讨论。技术上如何扬长避短，或者如何使其更逼近人类，不在本文讨论范围。
 
