@@ -231,6 +231,13 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 ### 3.2 机遇
 
+**前置警示**：2026 年两份独立研究表明，AI 劳动力即便在今天也并非完全等价于人类知识工作者的平均能力——**"在现有工作上直接替换人类"目前做不到、未来也不应是主要方向**。
+
+- **UC Berkeley Haas（2026 年 2 月）**：博士生 Xingqi Maggie Ye 与副教授 Aruna Ranganathan 在一家约 200 人的美国科技公司做了 8 个月的人种志研究，结论与"AI 解放时间"的流行假设相反——生成式 AI 并未腾出时间，反而**让员工以更快节奏工作、承担更广泛任务、把工作延伸到一天更多时间**，常常没有被要求；副作用包括工作—生活边界模糊、burnout、认知疲劳、潜在的输出质量下降。研究被 *Harvard Business Review* 引用[[64]](https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/)。
+- **MIT FutureTech（2026 年）**：Mertens、Neil Thompson 等用 **41 个 LLM 在 3,000+ 个 O*NET 真实劳动力任务上、收集 17,000+ 来自人类领域专家的双盲评估**，明确**反驳 METR 风格的"crashing waves"叙事**（能力在小批任务上突然 surge），认为 AI 自动化主要是"rising tides"——连续、广泛、可预测的渐进推进。量化结果：2024-Q2 时 AI 完成"人类约需 3–4 小时"的任务有 50% 成功率，2025-Q3 升至约 65%；任务时长 doubling time 估算 3.8 个月[[65]](https://arxiv.org/abs/2604.01363)。
+
+两份研究合在一起的提示是：**讨论"机遇"必须先排除"直接替换人类"这个伪命题**——目前 AI 在大多数任务上仍是人类的延伸而非替代，过度乐观的"AI 自动替代"叙事在工人侧的真实表现是过劳与质量下降，宏观侧的真实速度是渐进而非突变。这正是 §3.2 接下来讨论"增量需求"与"价值转化路径"的前置：**机遇不在替代，而在过去因人力贵被压制的脑力工作第一次变得可操作**。
+
 社会中实际存在这么大的知识工作需求吗？这些劳动力如何转换为真实的社会价值？这个问题直击这场技术变革最本质、也最让人焦虑的核心——社会真的需要这么多"虚拟白领"吗？他们每天在代码、文案和报表里疯狂空转，到底算不算真正的社会价值？
 
 从 2025–2026 年的企业治理与宏观经济数据来看，**需求确实存在，但"需求的形态"和"价值转化的路径"正在经历一场剧烈的洗牌**——MIT、PwC 与 BCG 三家研究的口径放在一起，最能读出这场洗牌的张力：
@@ -238,16 +245,8 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 - **MIT NANDA** 在 2025 年 7 月的 *The GenAI Divide: State of AI in Business 2025* 报告，企业在 GenAI 上累计支出 300–400 亿美元，但**只有约 5% 的组织把试点转化为可衡量的 P&L 影响——95% 看不到任何回报**[[51]](https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf)；
 - **PwC** 在 *2026 AI Business Predictions* 中报告了相反的乐观面：**已经规模化部署 Agentic AI 的企业里大多数都拿到了显著正向效果**（具体数据见下方"企业内部的精细化治理"小节）[[32]](https://www.pwc.com/us/en/tech-effect/ai-analytics/ai-predictions.html)；
 - **BCG** 的 *AI Will Reshape More Jobs Than It Replaces* 测算 AI 将**重塑**远多于**替代**的岗位[[29]](https://www.bcg.com/publications/2026/ai-will-reshape-more-jobs-than-it-replaces)。
-- **MIT FutureTech**（MIT CSAIL 旗下）2026 年 4 月发布的 *Crashing Waves vs. Rising Tides*：对 41 个 LLM 在 O\*NET 3,000+ 真实劳动任务上做了 17,000+ 次领域专家双盲评估，结果是**2024 Q2 AI 在需要人类约 3–4 小时的任务上成功率仅约 50%，2025 Q3 升到约 65%**——意味着 35% 的关键任务 AI 仍然做不到；研究的核心论断是"rising tides"（缓慢、广泛、平行地改进）而非"crashing waves"（突然在小范围超越人类）[[64]](https://arxiv.org/abs/2604.01363)。
-- **UC Berkeley Haas**（哈斯商学院）2026 年 2 月发表的研究 *AI promised to free up workers' time. UC Berkeley Haas researchers found the opposite*：博士生 Xingqi Maggie Ye 与副教授 Aruna Ranganathan 对一家 200 人公司做 8 个月人种学研究（成果发于 *Harvard Business Review*）。结论：**生成式 AI 没有释放员工时间，反而让员工自发承担更多任务、加快节奏、延长工作时间**——短期是生产力提升，长期累积成 burnout、认知疲劳、工作/非工作边界模糊[[65]](https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/)。
 
-把五条研究并排读，可以读出三层一致的判断：
-
-1. **宏观需求侧的容纳能力远大于已被释放的部分**——少数组织找到了正确的兑现路径，多数仍在试错（MIT NANDA / PwC / BCG）。
-2. **AI 当前还远没有达到等价于人类知识工作者平均能力的水平**——在需要人类 3–4 小时完成的任务上，2025 Q3 AI 成功率仍只约 65%，35% 的关键任务做不到；改进形态是"rising tides"而非"crashing waves"（MIT FutureTech）。
-3. **即使在 AI 能完成的部分，"替代"也不是有效的应用模式**——它真实的作用是扩大人类能承担的工作范围，而不是替人减负；强行套用替代模式会反向制造 burnout 与认知疲劳（UC Berkeley Haas）。
-
-结合起来推出一个明确结论：**用 AI 直接替代现有岗位在 2026 年既不可行，未来也不应是 AI 落地的主要方向**。这股新劳动力真正的去处，是**填补过去因人力贵被压制的脑力缺口**——这正是下文 §3.2.1 的核心命题。下面分两部分展开——一是社会对这些新增劳动力的**容纳能力**（四类长期被高昂人力成本压制的隐性需求），二是这些劳动力如何兑现为真实世界的**面包、药品和效率**（三条价值转化路径）。
+综合得到初步结论：**宏观需求侧的容纳能力远大于已被释放的部分，少数组织找到了正确的兑现路径，多数还在试错**。以下分为两部分讨论——一是社会对这些新增劳动力的**容纳能力**（四类长期被高昂人力成本压制的隐性需求），二是这些劳动力如何兑现为真实世界的**面包、药品和效率**（三条价值转化路径）。
 
 #### 3.2.1 寻找知识工作的需求增量
 
@@ -630,6 +629,6 @@ Microsoft Research 的 *New Future of Work Report 2025* 测算，使用 AI 的�
 
 [63] B. Böckeler, "Harness engineering for coding agent users," *martinfowler.com*, Apr. 2, 2026. (Agent = Model + Harness 心智模型；guides + sensors × computational + inferential 四象限；OpenAI/Stripe/Thoughtworks 案例) [Online]. Available: <https://martinfowler.com/articles/harness-engineering.html>
 
-[64] M. Mertens, N. Thompson et al., "Crashing Waves vs. Rising Tides: Preliminary Findings on AI Automation from Thousands of Worker Evaluations of Labor Market Tasks," *arXiv preprint*, arXiv:2604.01363, Apr. 2026. (MIT FutureTech / MIT CSAIL; 41 LLMs × 3,000+ O*NET tasks × 17,000+ expert evaluations; 2024 Q2 ~50% / 2025 Q3 ~65% success on 3-4 hour human tasks; "rising tides" not "crashing waves") [Online]. Available: <https://arxiv.org/abs/2604.01363>
+[64] X. M. Ye and A. Ranganathan, "AI promised to free up workers' time. UC Berkeley Haas researchers found the opposite.," *Haas Newsroom / Harvard Business Review*, Feb. 2026. (8-month ethnographic study at ~200-person US tech company; GenAI expanded scope and pace of work rather than freeing time; risks: blurred work-life boundary, burnout, cognitive fatigue, lower output quality) [Online]. Available: <https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/>
 
-[65] X. M. Ye, A. Ranganathan, "AI promised to free up workers' time. UC Berkeley Haas researchers found the opposite," Haas Newsroom (research featured in *Harvard Business Review*), Feb. 2026. (8-month ethnographic study at 200-person company; GenAI expanded scope/pace/hours rather than freeing time; sustained risk of burnout and cognitive fatigue) [Online]. Available: <https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/>
+[65] M. Mertens, N. Thompson, et al., "Crashing Waves vs. Rising Tides: Preliminary Findings on AI Automation from Thousands of Worker Evaluations of Labor Market Tasks," *arXiv preprint*, arXiv:2604.01363, 2026. (MIT FutureTech / CSAIL; 41 LLMs × 3000+ O*NET tasks × 17,000+ double-blind expert evaluations; refutes "crashing waves" view in favor of "rising tides" — gradual, broad-based AI automation with task-duration doubling time ≈ 3.8 months) [Online]. Available: <https://arxiv.org/abs/2604.01363>
