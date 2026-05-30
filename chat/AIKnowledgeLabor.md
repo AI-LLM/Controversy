@@ -232,7 +232,7 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 ### 2.10 AI 能力的"锯齿状边界" (Jagged Frontier)
 
-以上论述了“AI 劳动力”与人类劳动力在区别于传统计算工具方面的关键性质是相似的，同时二者之间也存在差异，例如[此处](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)或[此处](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)进行了深入分析，并以软件工程任务为例建立了对比模型。
+以上论述了“AI 劳动力”与人类劳动力在区别于传统计算工具方面的关键性质是相似的，同时二者之间也存在差异，[此处](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)或[此处](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)进行了深入分析，并以软件工程任务为例建立了对比模型。
 
 ```mermaid
 ---
@@ -252,7 +252,7 @@ radar-beta
   min 0
 ```
 
-2026年开始流行的Harness engineering概念也可以被建模为一个综合了人力、AI劳动力和传统计算工具的系统工程，根据AI劳动力在具体任务上的差异化能力来调整工作流程，适配计算工具。基于以上论证的不确定性、成本结构和能力模型，可以得到新的视角来分析和设计AI系统。
+2026年开始流行的Harness engineering概念也可以被建模为一个综合了人力、AI劳动力和传统计算工具的系统工程，根据AI劳动力在具体任务上的差异化能力来调整工作流程，适配计算工具。基于以上论证的不确定性、成本结构和能力模型，可以得到新的视角来分析和设计AI系统，§3.2.1.6给出了一个示例。
 
 ## 三、知识劳动力暴增的问题与机遇
 
