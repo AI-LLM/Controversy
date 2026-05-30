@@ -538,6 +538,8 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 
 这与 §3.2.1 的核心论点完全自洽：**这股新劳动力的真实形态不是方法学革命，而是劳动力供给革命**——它把"过去只有大企业才配得起的团队建制"第一次推送到每个项目里。每个开发者背后多了一支由 guides 和 sensors 组成的"无形班子"，每一次 commit 都被一组前所未有规模的工程脑力反复检视、修正、推动向前——**但这套班子做的事并不新，只是过去做不起**。Harness engineering 的整套词汇（Guides、Sensors、computational/inferential、steering loop、harnessability、ambient affordances）之所以现在才被命名、被系统化整理成框架，正是因为 AI 劳动力让"每个项目都能配齐这套工种"——而过去只有大企业在核心项目上有足够的预算。**词汇的诞生本身就是劳动力供给曲线变平的产物**。
 
+一个直接的实证落点来自 Anthropic 自家：2025 年 8 月，它对内部 132 名工程师与研究员做了一次调查（外加 53 场深度访谈、约 20 万条 Claude Code 会话记录），受访者估计，派给 Claude 的活里大约 **27% 是"原本压根不会发生的工作"**——补文档、铺测试覆盖、修 UI、搭交互式数据看板这类"锦上添花、过去不值得花人力去做"的事；另有 8.6% 属于"修 papercut"（为可维护性重构、做性能可视化小工具等小修小补）[[88]](https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic)。这些不是把现有工作提了速，而是过去因为人力成本太高、根本不会去做的新工作，现在做得起了——正是 §3.2.1"需求增量"在一家 AI 公司内部留下的直接读数。
+
 基于这个“AI 劳动力”模型，在LLM模型稳定——等价于人员稳定——的基础上，有广泛的管理学和工程学的方法论和工具来组织和维护一个在特定任务上稳定表现的系统。而预期AI能在广泛的需求和任务上像传统计算机系统一样稳定可靠地自主地生产软件，在此方向上投入研发力量都是不合理的。
 
 ##### 3.2.1.7 科学研究和技术开发的新范式——"暴力破解"
@@ -804,3 +806,5 @@ Microsoft Research 的 *New Future of Work Report 2025* 测算，使用 AI 的�
 [86] Z. Ling, Y. Fang, X. Li, Z. Huang, M. Lee, R. Memisevic, H. Su, "Deductive Verification of Chain-of-Thought Reasoning," *37th Conf. on Neural Information Processing Systems (NeurIPS 2023)*; arXiv:2306.03872. (UCSD/Qualcomm；整链一次性自验约 52%≈随机，逐步只喂最小前提升至 69%；答案对≠推理对。) [Online]. Available: <https://arxiv.org/abs/2306.03872>
 
 [87] A. Karpathy and D. Patel, "Andrej Karpathy — AGI is still a decade away," *Dwarkesh Podcast*, Oct. 17, 2025. (RL"等于拿吸管吸监督信号"；model collapse 使 LLM 学不成人类式持续学习；AGI 将融入已持续约两个半世纪的每年约 2% GDP 增长，而非断崖式跳变。) [Online]. Available: <https://www.dwarkesh.com/p/andrej-karpathy>
+
+[88] Anthropic, "How AI Is Transforming Work at Anthropic," Anthropic Research, 2025. (2025 年 8 月调查 132 名工程师/研究员 + 53 场深度访谈 + 约 20 万条 Claude Code 会话记录；受访者估计 27% 的 Claude 辅助工作"原本不会发生"——含补文档、补测试、做 UI、交互式数据看板等；8.6% 为修 papercut；Claude 覆盖约 60% 工作、自报告 +50% 生产力，较一年前 28%/+20% 增长 2–3×。) [Online]. Available: <https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic>
