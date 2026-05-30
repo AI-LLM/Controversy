@@ -230,6 +230,30 @@ COMPUTEX 2026（2026 年 6 月 2–5 日，台北南港）展前的厂商发布�
 
 ⚠ 解读：这套成本结构直接决定用法。把 LLM 当工具用、指望每次输出严格可重现、完全符合规格，并且低运行成本——必然失望；把它当新雇员用，给入职文档（system prompt）、工作样例（few-shot）、反馈机制（RLHF / iteration）、监督流程（验证器 / 多 Agent / 沙盒）——它才成为前所未有的人力杠杆。
 
+### 2.10 AI 能力的"锯齿状边界" (Jagged Frontier)
+
+以上论述了“AI 劳动力”与人类劳动力在区别于传统计算工具方面的关键性质是相似的，同时二者之间也存在差异，例如[此处](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)或[此处](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)进行了深入分析，并以软件工程任务为例建立了对比模型。
+
+```mermaid
+---
+title: "AI 前沿模型 (2025) vs. 人类平均水平的锯齿状能力剖面"
+config:
+  radar:
+    showValues: false
+---
+radar-beta
+  axis t["A 吞吐/并行"], s["B 风格一致*"], b["C 显式样板"], r["D 算法/测试/API"], v["E 扫盲/漏洞"], w["F 解释性写作"], k["G 脚手架/环境"]
+  axis p["a 长程规划"], g["b 现实 Grounding"], c["c 信任与责任"], q["d 审美品味"], n["e 需求引出"], m["f 人员协调"]
+
+  curve h["人类平均"]{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}
+  curve x["AI (2025)"]{10, 8, 9, 8, 9, 9, 9, 3, 2, 1, 3, 2, 2}
+
+  max 10
+  min 0
+```
+
+2026年开始流行的Harness engineering概念也可以被建模为一个综合了人力、AI劳动力和传统计算工具的系统工程，根据AI劳动力在具体任务上的差异化能力来调整工作流程，适配计算工具。基于以上论证的不确定性、成本结构和能力模型，可以得到新的视角来分析和设计AI系统。
+
 ## 三、知识劳动力暴增的问题与机遇
 
 ### 3.1 阵痛
@@ -462,8 +486,6 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 这与 §3.2.1 的核心论点完全自洽：**这股新劳动力的真实形态不是方法学革命，而是劳动力供给革命**——它把"过去只有大企业才配得起的团队建制"第一次推送到每个项目里。每个开发者背后多了一支由 guides 和 sensors 组成的"无形班子"，每一次 commit 都被一组前所未有规模的工程脑力反复检视、修正、推动向前——**但这套班子做的事并不新，只是过去做不起**。Harness engineering 的整套词汇（Guides、Sensors、computational/inferential、steering loop、harnessability、ambient affordances）之所以现在才被命名、被系统化整理成框架，正是因为 AI 劳动力让"每个项目都能配齐这套工种"——而过去只有大企业在核心项目上有足够的预算。**词汇的诞生本身就是劳动力供给曲线变平的产物**。
 
 基于这个“AI 劳动力”模型，在LLM模型稳定——等价于人员稳定——的基础上，有广泛的管理学和工程学的方法论和工具来组织和维护一个在特定任务上稳定表现的系统。而预期AI能在广泛的需求和任务上像传统计算机系统一样稳定可靠地自主地生产软件，在此方向上投入研发力量都是不合理的。
-
-除了以上讨论到的多模态能力外，在不同的任务类型中，“AI 劳动力”与人类劳动力也存在差异，例如[此处](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)或[此处](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)的讨论。技术上如何扬长避短，或者如何使其更逼近人类，不在本文讨论范围。
 
 ##### 3.2.1.7 科学研究和技术开发的新范式——"暴力破解"
 
