@@ -15924,19 +15924,465 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 217,
+      "timestamp": "2026-05-30T13:16:21.921Z",
+      "source": "user",
+      "message": "主表增加最后一列：实际股价涨跌幅度",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 218,
+      "timestamp": "2026-05-30T13:17:24.735Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 369641,
+        "completion_tokens": 11372,
+        "cached_tokens": 369639,
+        "extra": {
+          "cache_creation_input_tokens": 22,
+          "cache_read_input_tokens": 369639,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 22,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 11372,
+              "cache_read_input_tokens": 369639,
+              "cache_creation_input_tokens": 22,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 22
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 219,
+      "timestamp": "2026-05-30T13:17:26.122Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "数据都在源文件名单里。我把实际涨跌幅作为最后一列加进主表（faithful 取名单里的标头数字，标注时间窗）。\n\n整表替换：",
+      "metrics": {
+        "prompt_tokens": 369641,
+        "completion_tokens": 11372,
+        "cached_tokens": 369639,
+        "extra": {
+          "cache_creation_input_tokens": 22,
+          "cache_read_input_tokens": 369639,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 22,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 11372,
+              "cache_read_input_tokens": 369639,
+              "cache_creation_input_tokens": 22,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 22
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 220,
+      "timestamp": "2026-05-30T13:18:09.863Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01NyuK5i5JJJbPRGsasa5XLd",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01NyuK5i5JJJbPRGsasa5XLd",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md",
+            "old_string": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |\n|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |",
+            "new_string": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |\n|---|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01NyuK5i5JJJbPRGsasa5XLd",
+            "content": "The file /Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md\", \"oldString\": \"| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\\\"AI 劳动力\\\" | 进入类型 | 守 / 塌 |\\n|---|---|---|---|---|---|\\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |\", \"newString\": \"| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\\\"AI 劳动力\\\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |\\n|---|---|---|---|---|---|---|\\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |\\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |\\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |\\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |\\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |\\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |\\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |\\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |\\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |\\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |\\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |\\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |\\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |\\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |\\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |\\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |\\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |\\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |\\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |\\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |\\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |\\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |\\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |\\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |\\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |\\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |\\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |\\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |\\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |\\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |\\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |\\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |\\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |\\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |\\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |\\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |\\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |\\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |\\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |\\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |\", \"originalFile\": \"# 软件股若改造成\\\"卖 AI 劳动力\\\"会落进哪一类（2026-05-30）\\n\\n> 取 [美股软件股近期重挫 (2026-05-13).md](美股软件股近期重挫%20(2026-05-13).md) 的**企业列表**（仅用名单与各家业务，不引用该文其余分析），套用 [AIKnowledgeLabor.md](AIKnowledgeLabor.md) §3.2.1.1 的 A/B/C + 七类护城河框架（明细见 [moat-classification.md](moat-classification.md)）。\\n>\\n> **重构问题**：这些公司过去卖\\\"席位 + UI\\\"。若把旧业务改造成卖\\\"AI 劳动力做完的活/结果\\\"，它会进入哪一类——靠哪种 C 护城河守住，还是只剩一层 UI、塌向 B 被通用 Agent 直接绕过？\\n\\n## 框架与重构判据\\n\\n- **A 大企业自建 / 深度锁定**：需求集中在大组织内部，靠 system-of-record 深嵌、迁移成本极高守住。\\n- **B 个体自助（被去中介化）**：需求分散且无残余护城河，价值只剩\\\"会用模型推理\\\"——通用 Agent 一来就被绕过。**这是 SaaSpocalypse 的靶心**。\\n- **C 代理归集成生意**，七种护城河：C1 担责兜底 / C2 持牌·授权签字 / C3 数据网络·独占输入 / C4 双边归集 / C5 归集即立案 / C6 中立鉴真 / C7 纵向数据锁定。\\n- **判据（剥离 AI）**：假设人人都有免费天才 Agent，这家公司卖的东西还剩什么？剩护城河 → 守得住的 C/A；只剩\\\"那层操作界面\\\" → 塌 B。\\n- **另有一类不在 A/B/C 里**：**基础设施\\\"卖铲子\\\"**——它不是知识劳动力，而是 AI 劳动力运行其上的\\\"骨骼\\\"（算力、数据、网络、安全身份）。AI 劳动力越多，它越被消耗。\\n\\n## 主表：40 家的类型归属\\n\\n| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\\\"AI 劳动力\\\" | 进入类型 | 守 / 塌 |\\n|---|---|---|---|---|---|\\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |\\n\\n## 分组解读\\n\\n### 一、塌向 B：只剩\\\"那层 UI\\\"，被 Agent 直接绕过\\n**ASAN / MNDY / SMAR / TEAM / GTLB / PEGA / HUBS / BRZE。** 它们卖的核心价值是\\\"一个让人协调工作的界面\\\"。剥离 AI 后什么都不剩——通用 Agent 直接读写底层数据、自己排期派单写文档，根本不需要中间这层界面。这类是 SaaSpocalypse 最直接的靶心：**护城河等于零，所以模型越强它越薄**。能不能自救，取决于能不能往下一格抓住数据（C3）或往上抓住信任，否则只能塌。\\n\\n### 二、System of Record / 数据重力：C3（+A）\\n**SAP / ORCL / NOW / WDAY / CRM / PLTR。** 它们真正的护城河从来不是 UI，而是**\\\"那份别人拿不到、且 AI 必须写回去的企业数据\\\"**（C3 独占输入）+ 深度集成造成的迁移成本（A 锁定）。改造后它们卖的是\\\"可审计的写入端 / 决策端\\\"——Agent 越多，越需要一个可信的落账点，核心反而被**加固**。但挂在核心外围的按席位模块（SAP 的 Concur/SuccessFactors、Salesforce 的销售席位、Workday 的分析席位）没有这层保护，照样塌 B。这解释了它们\\\"跌但没崩\\\"的中间态。\\n\\n### 三、双边网络：C4\\n**TOST / PCOR / BILL / APP（+ Ariba 类）。** 护城河是**同时归集了供需两侧**：Toast 攥着餐厅 × 支付、Procore 攥着总包 × 分包 × 业主、BILL 攥着 SMB × 其供应商付款网络、AppLovin 攥着广告主 × 发行商。Agent 能替代里面的工作流，但替代不了\\\"两侧都已经在这张网上\\\"的跨边网络效应。改造后它们把 Agent 嵌进网络做撮合/自动化，网络本身仍是壁垒。AppLovin 是最纯的赢家样本（C3 广告数据 + C4 市场双护城河）。\\n\\n### 四、信任 / 合规 / 担责：C6 · C2 · C1\\n- **OKTA / TENB / DOCU**：身份认证、漏洞核验、合同存证——本质都是**中立第三方出具可被各方采信的核验（C6）**，Agent 再强也得有人盖这个章。Okta 因此是抗跌赢家。\\n- **CRWD / S / ZS / FTNT**：安全的护城河是**威胁数据网络（C3，越多端点越准）+ 为漏防担责（C1）**——AI 不能在\\\"被攻破我赔\\\"的承诺上签字。所以安全板块整体跌幅远小于应用层。\\n- **VEEV / SNPS / CDNS**：垂直监管 / 认证流程（C2）+ 行业独占数据（C3）。Veeva 的 GxP 验证、EDA 的代工认证流程，都是\\\"必须由被授权体系签字才生效\\\"——监管护城河跟模型强弱无关。\\n- **ADBE**：是这组里最摇摆的。创意工具本体高度暴露于生成式 AI（塌 B 风险，YTD −31%），但 Firefly 的**商用版权赔付（C1）+ Content Credentials 来源凭证（C6）**是一条真出路——前提是它把价值从\\\"工具\\\"挪到\\\"可放心商用的担保层\\\"。\\n\\n### 五、基础设施\\\"卖铲子\\\"：AI 劳动力的骨骼，不在 A/B/C 里\\n**SNOW / MDB / CFLT / DDOG / NET / FSLY / AKAM / DOCN / MSFT/ORCL/SNPS 的底座部分。** 它们不是知识劳动力，是 AI 劳动力**运行其上的算力、数据、网络、可观测性**。AI 劳动力越泛滥，骨骼被消耗得越多——所以这一格几乎全是抗跌或上涨（FSLY +147、APP +89、OKTA/NET/DDOG +30 档、SNOW 基本持平）。其中数据底座（SNOW/MDB）还额外占着 C3 数据重力：企业数据在哪，AI 劳动力的独占输入就在哪。Cloudflare 的 pay-per-crawl 更进一步——直接演化出\\\"向 Agent 流量收过路费\\\"的新 C4 tollbooth。\\n\\n### 六、平台巨头：A / 聚合者之王\\n**MSFT（+ ORCL）。** Copilot 是企业默认 Agent 入口，靠的是企业全栈锁定（A）+ 自有云底座（基础设施）。它不靠单一护城河，而是把上面五类同时占一部分——所以回撤最浅（−22%）。\\n\\n## 框架 vs 股价：一次顺带的验证\\n\\n把\\\"进入类型\\\"与名单里的跌幅并排，相关性很直接：\\n\\n- **塌 B 组**（ASAN −50、DOCU −52、HUBS −51、MNDY/SMAR −39、GTLB/TEAM/PEGA/BRZE 深跌）= **跌得最狠**。\\n- **守得住的 C / 骨骼组**（SNOW ≈0、OKTA +35、NET +30、DDOG +30、APP +89、FSLY +147、CRWD −16、SNPS −11、CDNS −8）= **抗跌或上涨**。\\n- **System-of-Record 中间态**（SAP −38、NOW −40、CRM −31、WDAY −40、VEEV −37）= **跌但没崩**——正是\\\"核心守得住、外围席位塌 B\\\"两股力量相抵的定价。\\n\\n也就是说，**市场这半年在做的，本质就是按\\\"剥离 AI 后还剩什么护城河\\\"给软件股重新排座次**——这恰好是本框架 B vs C 的判据。框架预测的塌 B 名单，与跌幅最深的名单高度重合。\\n\\n## 几条判断\\n\\n1. **\\\"卖席位\\\"≈ 押注 B，\\\"卖护城河\\\"≈ 守住 C**。同样被 Agent 冲击，结局取决于剥离 AI 后手里还攥着什么：数据（C3）、网络（C4）、信任/合规/担责（C6/C2/C1）、还是只剩一层界面。\\n2. **多数 system-of-record 公司不会整体塌，但会\\\"瘦身\\\"**：核心写入端加固，外围按席位模块塌 B。它们的改造任务是把计价从\\\"席位\\\"换成\\\"per-outcome/per-token\\\"，把价值显性地钉在护城河那一格。\\n3. **最干净的赢家是骨骼层和数据/网络层**——它们被 AI 劳动力消耗而非替代，所以是结构性受益方，而不只是\\\"少跌\\\"。\\n4. **垂直 + 监管 = 天然抗体**：Veeva、EDA 这类靠 C2/C3 的，受冲击最小；通用、水平、无合规壁垒的工作流 SaaS 受冲击最大。\\n\", \"structuredPatch\": [{\"oldStart\": 14, \"oldLines\": 48, \"newStart\": 14, \"newLines\": 48, \"lines\": [\" \", \" ## 主表：40 家的类型归属\", \" \", \"-| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\\\"AI 劳动力\\\" | 进入类型 | 守 / 塌 |\", \"-|---|---|---|---|---|---|\", \"-| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\", \"-| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\", \"-| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\", \"-| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\", \"-| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\", \"-| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\", \"-| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\", \"-| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\", \"-| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\", \"-| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\", \"-| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\", \"-| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\", \"-| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\", \"-| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\", \"-| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\", \"-| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\", \"-| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\", \"-| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\", \"-| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\", \"-| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\", \"-| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\", \"-| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\", \"-| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\", \"-| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\", \"-| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\", \"-| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\", \"-| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\", \"-| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\", \"-| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\", \"-| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\", \"-| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\", \"-| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\", \"-| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\", \"-| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\", \"-| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\", \"-| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\", \"-| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\", \"-| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\", \"-| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\", \"-| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |\", \"+| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\\\"AI 劳动力\\\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |\", \"+|---|---|---|---|---|---|---|\", \"+| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |\", \"+| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |\", \"+| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |\", \"+| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |\", \"+| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |\", \"+| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |\", \"+| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |\", \"+| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |\", \"+| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |\", \"+| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |\", \"+| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |\", \"+| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |\", \"+| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |\", \"+| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |\", \"+| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |\", \"+| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |\", \"+| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |\", \"+| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |\", \"+| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |\", \"+| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |\", \"+| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |\", \"+| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |\", \"+| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |\", \"+| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |\", \"+| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |\", \"+| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |\", \"+| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |\", \"+| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |\", \"+| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |\", \"+| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |\", \"+| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |\", \"+| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |\", \"+| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |\", \"+| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |\", \"+| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |\", \"+| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |\", \"+| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |\", \"+| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |\", \"+| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |\", \"+| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |\", \" \", \" ## 分组解读\", \" \"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 369641,
+        "completion_tokens": 11372,
+        "cached_tokens": 369639,
+        "extra": {
+          "cache_creation_input_tokens": 22,
+          "cache_read_input_tokens": 369639,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 22,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 11372,
+              "cache_read_input_tokens": 369639,
+              "cache_creation_input_tokens": 22,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 22
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md",
+            "oldString": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |\n|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |",
+            "newString": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |\n|---|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |",
+            "originalFile": "# 软件股若改造成\"卖 AI 劳动力\"会落进哪一类（2026-05-30）\n\n> 取 [美股软件股近期重挫 (2026-05-13).md](美股软件股近期重挫%20(2026-05-13).md) 的**企业列表**（仅用名单与各家业务，不引用该文其余分析），套用 [AIKnowledgeLabor.md](AIKnowledgeLabor.md) §3.2.1.1 的 A/B/C + 七类护城河框架（明细见 [moat-classification.md](moat-classification.md)）。\n>\n> **重构问题**：这些公司过去卖\"席位 + UI\"。若把旧业务改造成卖\"AI 劳动力做完的活/结果\"，它会进入哪一类——靠哪种 C 护城河守住，还是只剩一层 UI、塌向 B 被通用 Agent 直接绕过？\n\n## 框架与重构判据\n\n- **A 大企业自建 / 深度锁定**：需求集中在大组织内部，靠 system-of-record 深嵌、迁移成本极高守住。\n- **B 个体自助（被去中介化）**：需求分散且无残余护城河，价值只剩\"会用模型推理\"——通用 Agent 一来就被绕过。**这是 SaaSpocalypse 的靶心**。\n- **C 代理归集成生意**，七种护城河：C1 担责兜底 / C2 持牌·授权签字 / C3 数据网络·独占输入 / C4 双边归集 / C5 归集即立案 / C6 中立鉴真 / C7 纵向数据锁定。\n- **判据（剥离 AI）**：假设人人都有免费天才 Agent，这家公司卖的东西还剩什么？剩护城河 → 守得住的 C/A；只剩\"那层操作界面\" → 塌 B。\n- **另有一类不在 A/B/C 里**：**基础设施\"卖铲子\"**——它不是知识劳动力，而是 AI 劳动力运行其上的\"骨骼\"（算力、数据、网络、安全身份）。AI 劳动力越多，它越被消耗。\n\n## 主表：40 家的类型归属\n\n| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |\n|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |\n\n## 分组解读\n\n### 一、塌向 B：只剩\"那层 UI\"，被 Agent 直接绕过\n**ASAN / MNDY / SMAR / TEAM / GTLB / PEGA / HUBS / BRZE。** 它们卖的核心价值是\"一个让人协调工作的界面\"。剥离 AI 后什么都不剩——通用 Agent 直接读写底层数据、自己排期派单写文档，根本不需要中间这层界面。这类是 SaaSpocalypse 最直接的靶心：**护城河等于零，所以模型越强它越薄**。能不能自救，取决于能不能往下一格抓住数据（C3）或往上抓住信任，否则只能塌。\n\n### 二、System of Record / 数据重力：C3（+A）\n**SAP / ORCL / NOW / WDAY / CRM / PLTR。** 它们真正的护城河从来不是 UI，而是**\"那份别人拿不到、且 AI 必须写回去的企业数据\"**（C3 独占输入）+ 深度集成造成的迁移成本（A 锁定）。改造后它们卖的是\"可审计的写入端 / 决策端\"——Agent 越多，越需要一个可信的落账点，核心反而被**加固**。但挂在核心外围的按席位模块（SAP 的 Concur/SuccessFactors、Salesforce 的销售席位、Workday 的分析席位）没有这层保护，照样塌 B。这解释了它们\"跌但没崩\"的中间态。\n\n### 三、双边网络：C4\n**TOST / PCOR / BILL / APP（+ Ariba 类）。** 护城河是**同时归集了供需两侧**：Toast 攥着餐厅 × 支付、Procore 攥着总包 × 分包 × 业主、BILL 攥着 SMB × 其供应商付款网络、AppLovin 攥着广告主 × 发行商。Agent 能替代里面的工作流，但替代不了\"两侧都已经在这张网上\"的跨边网络效应。改造后它们把 Agent 嵌进网络做撮合/自动化，网络本身仍是壁垒。AppLovin 是最纯的赢家样本（C3 广告数据 + C4 市场双护城河）。\n\n### 四、信任 / 合规 / 担责：C6 · C2 · C1\n- **OKTA / TENB / DOCU**：身份认证、漏洞核验、合同存证——本质都是**中立第三方出具可被各方采信的核验（C6）**，Agent 再强也得有人盖这个章。Okta 因此是抗跌赢家。\n- **CRWD / S / ZS / FTNT**：安全的护城河是**威胁数据网络（C3，越多端点越准）+ 为漏防担责（C1）**——AI 不能在\"被攻破我赔\"的承诺上签字。所以安全板块整体跌幅远小于应用层。\n- **VEEV / SNPS / CDNS**：垂直监管 / 认证流程（C2）+ 行业独占数据（C3）。Veeva 的 GxP 验证、EDA 的代工认证流程，都是\"必须由被授权体系签字才生效\"——监管护城河跟模型强弱无关。\n- **ADBE**：是这组里最摇摆的。创意工具本体高度暴露于生成式 AI（塌 B 风险，YTD −31%），但 Firefly 的**商用版权赔付（C1）+ Content Credentials 来源凭证（C6）**是一条真出路——前提是它把价值从\"工具\"挪到\"可放心商用的担保层\"。\n\n### 五、基础设施\"卖铲子\"：AI 劳动力的骨骼，不在 A/B/C 里\n**SNOW / MDB / CFLT / DDOG / NET / FSLY / AKAM / DOCN / MSFT/ORCL/SNPS 的底座部分。** 它们不是知识劳动力，是 AI 劳动力**运行其上的算力、数据、网络、可观测性**。AI 劳动力越泛滥，骨骼被消耗得越多——所以这一格几乎全是抗跌或上涨（FSLY +147、APP +89、OKTA/NET/DDOG +30 档、SNOW 基本持平）。其中数据底座（SNOW/MDB）还额外占着 C3 数据重力：企业数据在哪，AI 劳动力的独占输入就在哪。Cloudflare 的 pay-per-crawl 更进一步——直接演化出\"向 Agent 流量收过路费\"的新 C4 tollbooth。\n\n### 六、平台巨头：A / 聚合者之王\n**MSFT（+ ORCL）。** Copilot 是企业默认 Agent 入口，靠的是企业全栈锁定（A）+ 自有云底座（基础设施）。它不靠单一护城河，而是把上面五类同时占一部分——所以回撤最浅（−22%）。\n\n## 框架 vs 股价：一次顺带的验证\n\n把\"进入类型\"与名单里的跌幅并排，相关性很直接：\n\n- **塌 B 组**（ASAN −50、DOCU −52、HUBS −51、MNDY/SMAR −39、GTLB/TEAM/PEGA/BRZE 深跌）= **跌得最狠**。\n- **守得住的 C / 骨骼组**（SNOW ≈0、OKTA +35、NET +30、DDOG +30、APP +89、FSLY +147、CRWD −16、SNPS −11、CDNS −8）= **抗跌或上涨**。\n- **System-of-Record 中间态**（SAP −38、NOW −40、CRM −31、WDAY −40、VEEV −37）= **跌但没崩**——正是\"核心守得住、外围席位塌 B\"两股力量相抵的定价。\n\n也就是说，**市场这半年在做的，本质就是按\"剥离 AI 后还剩什么护城河\"给软件股重新排座次**——这恰好是本框架 B vs C 的判据。框架预测的塌 B 名单，与跌幅最深的名单高度重合。\n\n## 几条判断\n\n1. **\"卖席位\"≈ 押注 B，\"卖护城河\"≈ 守住 C**。同样被 Agent 冲击，结局取决于剥离 AI 后手里还攥着什么：数据（C3）、网络（C4）、信任/合规/担责（C6/C2/C1）、还是只剩一层界面。\n2. **多数 system-of-record 公司不会整体塌，但会\"瘦身\"**：核心写入端加固，外围按席位模块塌 B。它们的改造任务是把计价从\"席位\"换成\"per-outcome/per-token\"，把价值显性地钉在护城河那一格。\n3. **最干净的赢家是骨骼层和数据/网络层**——它们被 AI 劳动力消耗而非替代，所以是结构性受益方，而不只是\"少跌\"。\n4. **垂直 + 监管 = 天然抗体**：Veeva、EDA 这类靠 C2/C3 的，受冲击最小；通用、水平、无合规壁垒的工作流 SaaS 受冲击最大。\n",
+            "structuredPatch": [
+              {
+                "oldStart": 14,
+                "oldLines": 48,
+                "newStart": 14,
+                "newLines": 48,
+                "lines": [
+                  " ",
+                  " ## 主表：40 家的类型归属",
+                  " ",
+                  "-| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |",
+                  "-|---|---|---|---|---|---|",
+                  "-| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |",
+                  "-| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |",
+                  "-| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |",
+                  "-| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |",
+                  "-| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |",
+                  "-| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |",
+                  "-| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |",
+                  "-| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |",
+                  "-| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |",
+                  "-| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |",
+                  "-| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |",
+                  "-| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |",
+                  "-| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |",
+                  "-| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |",
+                  "-| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |",
+                  "-| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |",
+                  "-| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |",
+                  "-| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |",
+                  "-| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |",
+                  "-| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |",
+                  "-| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |",
+                  "-| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |",
+                  "-| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |",
+                  "-| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |",
+                  "-| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |",
+                  "-| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |",
+                  "-| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |",
+                  "-| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |",
+                  "-| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |",
+                  "-| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |",
+                  "-| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |",
+                  "-| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |",
+                  "-| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |",
+                  "-| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |",
+                  "-| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |",
+                  "-| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |",
+                  "-| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |",
+                  "-| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |",
+                  "-| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |",
+                  "-| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |",
+                  "+| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |",
+                  "+|---|---|---|---|---|---|---|",
+                  "+| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |",
+                  "+| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |",
+                  "+| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |",
+                  "+| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |",
+                  "+| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |",
+                  "+| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |",
+                  "+| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |",
+                  "+| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |",
+                  "+| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |",
+                  "+| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |",
+                  "+| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |",
+                  "+| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |",
+                  "+| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |",
+                  "+| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |",
+                  "+| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |",
+                  "+| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |",
+                  "+| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |",
+                  "+| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |",
+                  "+| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |",
+                  "+| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |",
+                  "+| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |",
+                  "+| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |",
+                  "+| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |",
+                  "+| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |",
+                  "+| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |",
+                  "+| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |",
+                  "+| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |",
+                  "+| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |",
+                  "+| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |",
+                  "+| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |",
+                  "+| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |",
+                  "+| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |",
+                  "+| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |",
+                  "+| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |",
+                  "+| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |",
+                  "+| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |",
+                  "+| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |",
+                  "+| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |",
+                  "+| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |",
+                  "+| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |",
+                  " ",
+                  " ## 分组解读",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NyuK5i5JJJbPRGsasa5XLd",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md",
+            "oldString": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |\n|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |",
+            "newString": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |\n|---|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |",
+            "originalFile": "# 软件股若改造成\"卖 AI 劳动力\"会落进哪一类（2026-05-30）\n\n> 取 [美股软件股近期重挫 (2026-05-13).md](美股软件股近期重挫%20(2026-05-13).md) 的**企业列表**（仅用名单与各家业务，不引用该文其余分析），套用 [AIKnowledgeLabor.md](AIKnowledgeLabor.md) §3.2.1.1 的 A/B/C + 七类护城河框架（明细见 [moat-classification.md](moat-classification.md)）。\n>\n> **重构问题**：这些公司过去卖\"席位 + UI\"。若把旧业务改造成卖\"AI 劳动力做完的活/结果\"，它会进入哪一类——靠哪种 C 护城河守住，还是只剩一层 UI、塌向 B 被通用 Agent 直接绕过？\n\n## 框架与重构判据\n\n- **A 大企业自建 / 深度锁定**：需求集中在大组织内部，靠 system-of-record 深嵌、迁移成本极高守住。\n- **B 个体自助（被去中介化）**：需求分散且无残余护城河，价值只剩\"会用模型推理\"——通用 Agent 一来就被绕过。**这是 SaaSpocalypse 的靶心**。\n- **C 代理归集成生意**，七种护城河：C1 担责兜底 / C2 持牌·授权签字 / C3 数据网络·独占输入 / C4 双边归集 / C5 归集即立案 / C6 中立鉴真 / C7 纵向数据锁定。\n- **判据（剥离 AI）**：假设人人都有免费天才 Agent，这家公司卖的东西还剩什么？剩护城河 → 守得住的 C/A；只剩\"那层操作界面\" → 塌 B。\n- **另有一类不在 A/B/C 里**：**基础设施\"卖铲子\"**——它不是知识劳动力，而是 AI 劳动力运行其上的\"骨骼\"（算力、数据、网络、安全身份）。AI 劳动力越多，它越被消耗。\n\n## 主表：40 家的类型归属\n\n| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |\n|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |\n\n## 分组解读\n\n### 一、塌向 B：只剩\"那层 UI\"，被 Agent 直接绕过\n**ASAN / MNDY / SMAR / TEAM / GTLB / PEGA / HUBS / BRZE。** 它们卖的核心价值是\"一个让人协调工作的界面\"。剥离 AI 后什么都不剩——通用 Agent 直接读写底层数据、自己排期派单写文档，根本不需要中间这层界面。这类是 SaaSpocalypse 最直接的靶心：**护城河等于零，所以模型越强它越薄**。能不能自救，取决于能不能往下一格抓住数据（C3）或往上抓住信任，否则只能塌。\n\n### 二、System of Record / 数据重力：C3（+A）\n**SAP / ORCL / NOW / WDAY / CRM / PLTR。** 它们真正的护城河从来不是 UI，而是**\"那份别人拿不到、且 AI 必须写回去的企业数据\"**（C3 独占输入）+ 深度集成造成的迁移成本（A 锁定）。改造后它们卖的是\"可审计的写入端 / 决策端\"——Agent 越多，越需要一个可信的落账点，核心反而被**加固**。但挂在核心外围的按席位模块（SAP 的 Concur/SuccessFactors、Salesforce 的销售席位、Workday 的分析席位）没有这层保护，照样塌 B。这解释了它们\"跌但没崩\"的中间态。\n\n### 三、双边网络：C4\n**TOST / PCOR / BILL / APP（+ Ariba 类）。** 护城河是**同时归集了供需两侧**：Toast 攥着餐厅 × 支付、Procore 攥着总包 × 分包 × 业主、BILL 攥着 SMB × 其供应商付款网络、AppLovin 攥着广告主 × 发行商。Agent 能替代里面的工作流，但替代不了\"两侧都已经在这张网上\"的跨边网络效应。改造后它们把 Agent 嵌进网络做撮合/自动化，网络本身仍是壁垒。AppLovin 是最纯的赢家样本（C3 广告数据 + C4 市场双护城河）。\n\n### 四、信任 / 合规 / 担责：C6 · C2 · C1\n- **OKTA / TENB / DOCU**：身份认证、漏洞核验、合同存证——本质都是**中立第三方出具可被各方采信的核验（C6）**，Agent 再强也得有人盖这个章。Okta 因此是抗跌赢家。\n- **CRWD / S / ZS / FTNT**：安全的护城河是**威胁数据网络（C3，越多端点越准）+ 为漏防担责（C1）**——AI 不能在\"被攻破我赔\"的承诺上签字。所以安全板块整体跌幅远小于应用层。\n- **VEEV / SNPS / CDNS**：垂直监管 / 认证流程（C2）+ 行业独占数据（C3）。Veeva 的 GxP 验证、EDA 的代工认证流程，都是\"必须由被授权体系签字才生效\"——监管护城河跟模型强弱无关。\n- **ADBE**：是这组里最摇摆的。创意工具本体高度暴露于生成式 AI（塌 B 风险，YTD −31%），但 Firefly 的**商用版权赔付（C1）+ Content Credentials 来源凭证（C6）**是一条真出路——前提是它把价值从\"工具\"挪到\"可放心商用的担保层\"。\n\n### 五、基础设施\"卖铲子\"：AI 劳动力的骨骼，不在 A/B/C 里\n**SNOW / MDB / CFLT / DDOG / NET / FSLY / AKAM / DOCN / MSFT/ORCL/SNPS 的底座部分。** 它们不是知识劳动力，是 AI 劳动力**运行其上的算力、数据、网络、可观测性**。AI 劳动力越泛滥，骨骼被消耗得越多——所以这一格几乎全是抗跌或上涨（FSLY +147、APP +89、OKTA/NET/DDOG +30 档、SNOW 基本持平）。其中数据底座（SNOW/MDB）还额外占着 C3 数据重力：企业数据在哪，AI 劳动力的独占输入就在哪。Cloudflare 的 pay-per-crawl 更进一步——直接演化出\"向 Agent 流量收过路费\"的新 C4 tollbooth。\n\n### 六、平台巨头：A / 聚合者之王\n**MSFT（+ ORCL）。** Copilot 是企业默认 Agent 入口，靠的是企业全栈锁定（A）+ 自有云底座（基础设施）。它不靠单一护城河，而是把上面五类同时占一部分——所以回撤最浅（−22%）。\n\n## 框架 vs 股价：一次顺带的验证\n\n把\"进入类型\"与名单里的跌幅并排，相关性很直接：\n\n- **塌 B 组**（ASAN −50、DOCU −52、HUBS −51、MNDY/SMAR −39、GTLB/TEAM/PEGA/BRZE 深跌）= **跌得最狠**。\n- **守得住的 C / 骨骼组**（SNOW ≈0、OKTA +35、NET +30、DDOG +30、APP +89、FSLY +147、CRWD −16、SNPS −11、CDNS −8）= **抗跌或上涨**。\n- **System-of-Record 中间态**（SAP −38、NOW −40、CRM −31、WDAY −40、VEEV −37）= **跌但没崩**——正是\"核心守得住、外围席位塌 B\"两股力量相抵的定价。\n\n也就是说，**市场这半年在做的，本质就是按\"剥离 AI 后还剩什么护城河\"给软件股重新排座次**——这恰好是本框架 B vs C 的判据。框架预测的塌 B 名单，与跌幅最深的名单高度重合。\n\n## 几条判断\n\n1. **\"卖席位\"≈ 押注 B，\"卖护城河\"≈ 守住 C**。同样被 Agent 冲击，结局取决于剥离 AI 后手里还攥着什么：数据（C3）、网络（C4）、信任/合规/担责（C6/C2/C1）、还是只剩一层界面。\n2. **多数 system-of-record 公司不会整体塌，但会\"瘦身\"**：核心写入端加固，外围按席位模块塌 B。它们的改造任务是把计价从\"席位\"换成\"per-outcome/per-token\"，把价值显性地钉在护城河那一格。\n3. **最干净的赢家是骨骼层和数据/网络层**——它们被 AI 劳动力消耗而非替代，所以是结构性受益方，而不只是\"少跌\"。\n4. **垂直 + 监管 = 天然抗体**：Veeva、EDA 这类靠 C2/C3 的，受冲击最小；通用、水平、无合规壁垒的工作流 SaaS 受冲击最大。\n",
+            "structuredPatch": [
+              {
+                "oldStart": 14,
+                "oldLines": 48,
+                "newStart": 14,
+                "newLines": 48,
+                "lines": [
+                  " ",
+                  " ## 主表：40 家的类型归属",
+                  " ",
+                  "-| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |",
+                  "-|---|---|---|---|---|---|",
+                  "-| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |",
+                  "-| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |",
+                  "-| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |",
+                  "-| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |",
+                  "-| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |",
+                  "-| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |",
+                  "-| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |",
+                  "-| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |",
+                  "-| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |",
+                  "-| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |",
+                  "-| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |",
+                  "-| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |",
+                  "-| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |",
+                  "-| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |",
+                  "-| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |",
+                  "-| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |",
+                  "-| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |",
+                  "-| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |",
+                  "-| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |",
+                  "-| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |",
+                  "-| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |",
+                  "-| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |",
+                  "-| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |",
+                  "-| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |",
+                  "-| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |",
+                  "-| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |",
+                  "-| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |",
+                  "-| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |",
+                  "-| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |",
+                  "-| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |",
+                  "-| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |",
+                  "-| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |",
+                  "-| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |",
+                  "-| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |",
+                  "-| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |",
+                  "-| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |",
+                  "-| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |",
+                  "-| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |",
+                  "-| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |",
+                  "-| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |",
+                  "+| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |",
+                  "+|---|---|---|---|---|---|---|",
+                  "+| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |",
+                  "+| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |",
+                  "+| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |",
+                  "+| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |",
+                  "+| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |",
+                  "+| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |",
+                  "+| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |",
+                  "+| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |",
+                  "+| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |",
+                  "+| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |",
+                  "+| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |",
+                  "+| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |",
+                  "+| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |",
+                  "+| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |",
+                  "+| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |",
+                  "+| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |",
+                  "+| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |",
+                  "+| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |",
+                  "+| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |",
+                  "+| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |",
+                  "+| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |",
+                  "+| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |",
+                  "+| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |",
+                  "+| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |",
+                  "+| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |",
+                  "+| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |",
+                  "+| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |",
+                  "+| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |",
+                  "+| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |",
+                  "+| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |",
+                  "+| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |",
+                  "+| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |",
+                  "+| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |",
+                  "+| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |",
+                  "+| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |",
+                  "+| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |",
+                  "+| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |",
+                  "+| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |",
+                  "+| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |",
+                  "+| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |",
+                  " ",
+                  " ## 分组解读",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NyuK5i5JJJbPRGsasa5XLd",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/软件股AI劳动力改造类型 (2026-05-30).md",
+          "old_string": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 |\n|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） |",
+          "new_string": "| 代码 | 公司 | 现业务（卖席位的是什么） | 改造后卖的\"AI 劳动力\" | 进入类型 | 守 / 塌 | 实际股价涨跌 |\n|---|---|---|---|---|---|---|\n| ASAN | Asana | 工作 / 项目管理 UI | 直接替你协调项目的 Agent | **B** | 塌（只剩 UI） | −50% YTD |\n| MNDY | Monday.com | 工作流 UI | 同上 | **B** | 塌 | −39% YTD |\n| SMAR | Smartsheet | 表格 / 项目管理 | 同上 | **B** | 塌 | −39% YTD |\n| TEAM | Atlassian | Jira/Confluence 协作 | 跑工单 / 写文档的 Agent | **B**（弱 C3 项目数据） | 偏塌 | <−20% YTD |\n| GTLB | GitLab | DevOps 流水线 | AI coding / CI Agent | **B**（弱 C3 代码数据） | 偏塌 | −33%（2025），续跌 |\n| PEGA | Pegasystems | BPM / 低代码工作流 | 跑业务流程的 Agent | **B**（弱 A 流程锁定） | 偏塌 | YTD 走低（未核） |\n| HUBS | HubSpot | SMB CRM / 营销自动化 | 直接做外联的 Agent | **B**（弱 C3 客户数据） | 偏塌 | −51%（1y） |\n| BRZE | Braze | 客户互动 / 推送 | 自动写并发活动的 Agent | **B**（弱 C3/C7） | 偏塌 | <−20% YTD |\n| DOCU | DocuSign | 电子签 + 合同流 | 起草+签署+存证的 Agent | **C6 + C2** | 守信任层，流程塌 | −52%（TTM） |\n| KVYO | Klaviyo | 电商邮件 / 短信营销 | 自动生成并投放的 Agent | **C3 + C7**（商家客户数据 / 送达） | 守数据层，内容塌 | −30%（财报单日） |\n| TWLO | Twilio | 通信 API（CPaaS） | 端到端通信 Agent | **C4 + C3**（运营商供给 / 路由数据） | 守供给层，API 塌 | −12.3% YTD |\n| CRM | Salesforce | CRM 席位 | 跑销售 / 客服的 Agent | **C3 + C4**（客户数据模型 + 生态） | 守记录层，席位塌 | −31% YTD |\n| WDAY | Workday | HCM + 财务席位 | 跑薪酬 / 招聘 / 对账 Agent | **C3 + C2 + C7**（员工记录 / 薪酬合规 / 纵向档案） | 守核心，席位塌 | −40%+（距高点） |\n| NOW | ServiceNow | IT 服务管理 / 工作流 | 跑企业工单的 Agent | **A + C3**（流程 system-of-record 深嵌） | 守核心，席位塌 | −40% YTD |\n| SAP | SAP | ERP system of record | 写回企业数据的 Agent 入口 | **C3 + A**（可审计写入点 + 独占交易数据） | 守核心，外围模块塌 | −38%（6m）；YTD −28% |\n| ORCL | Oracle | ERP + DB + 云 | 同上 + 数据底座 | **C3 + A + 基础设施** | 守 | −20%+ YTD（TTM +18%） |\n| VEEV | Veeva | 生命科学垂直 SaaS | 跑药企合规 / 临床流程 Agent | **C2 + C3**（GxP 验证系统 + 行业数据） | 守（监管护城河） | −37%（6m）；YTD −30% |\n| PCOR | Procore | 建筑垂直 SaaS | 跑工程项目协同的 Agent | **C4 + C3**（总包/分包/业主网络 + 项目数据） | 守 | −30%（12m） |\n| TOST | Toast | 餐饮 POS | 跑餐厅前后台 + 支付的 Agent | **C4 + C3**（餐厅×支付生态 + 交易数据） | 守 | −25% YTD（盘中曾 −43%） |\n| BILL | BILL Holdings | SMB 应付/应收/费控 | 代 SMB 跑完账务 + 付款 Agent | **C4 + C1**（供应商付款网络 + 经手资金担责） | 守网络，后台塌 | −86%（距 ATH）；YTD −25% |\n| ADBE | Adobe | 创意工具席位 | 生成内容 + 商用赔付的 Agent | **C1 + C6**（Firefly 版权赔付 + 内容凭证）/ 否则 **B** | 看是否发力信任层 | −31% YTD |\n| PLTR | Palantir | 决策 / 作战平台 | 本体化数据 + 决策 Agent | **C3 + C2 + A**（数据整合 + 政府密级授权 + 深嵌） | 守 | −34%（6m，距 ATH） |\n| CRWD | CrowdStrike | 端点安全席位 | 自动检测 / 处置的安全 Agent | **C3 + C1**（威胁数据网络越多越准 + 担责） | 守（强） | −16% YTD |\n| S | SentinelOne | 端点安全 | 同上 | **C3 + C1** | 守 | −14.7%（1y） |\n| ZS | Zscaler | 零信任 | 自动管控流量的 Agent | **C3 + C1**（流量威胁数据 + 安全担责） | 守 | −36% YTD |\n| FTNT | Fortinet | 网络安全 + 硬件 | 同上 | **C3 + C1 + 硬件** | 守 | YTD 为负（未核） |\n| TENB | Tenable | 漏洞管理 | 自动扫描 + 出具核验报告 | **C3 + C6**（漏洞数据 + 扫描即中立鉴真） | 守 | −12%（单日，随板块） |\n| OKTA | Okta | 身份认证 | 身份信任 / 授权中介 Agent | **C6 + C4**（用户×应用 信任网络） | 守（强） | +35% YTD（后回吐） |\n| SNPS | Synopsys | EDA 芯片设计工具 | AI 驱动的芯片设计 Agent | **C3 + C2 + 骨骼**（PDK/IP 库 + 代工认证流程） | 守 | −11.1% YTD |\n| CDNS | Cadence | EDA | 同上 | **C3 + C2 + 骨骼** | 守 | −7.8% YTD |\n| MSFT | Microsoft | 平台 / Copilot 入口 | 企业默认 Agent 入口 | **A + 基础设施**（聚合者之王） | 守 | −22% YTD |\n| APP | AppLovin | 广告 AI / 游戏变现 | 自动投放 + 变现 Agent | **C3 + C4**（广告效果数据网络 + 双边广告市场） | 守（强，已涨） | +89%（TTM） |\n| SNOW | Snowflake | 数据云 | AI 劳动力的数据底座 | **基础设施 + C3**（数据重力 = 独占输入） | 守（强） | −1.9%（TTM，≈持平） |\n| MDB | MongoDB | 文档数据库 | 同上 | **基础设施 + C3** | 守 | 走势分歧（未核） |\n| CFLT | Confluent | 实时数据流（已被 IBM 收购） | 流式数据底座 | **基础设施** | 守（并购退出） | IBM 收购，+35% 溢价 |\n| DDOG | Datadog | 可观测性 | AI 工作负载的遥测底座 | **基础设施 + C3**（遥测数据网络） | 守（已涨） | +30%（财报单日） |\n| NET | Cloudflare | 边缘平台 | 边缘算力 + 向 Agent 收过路费 | **基础设施 + C4 新 tollbooth**（pay-per-crawl） | 守（已涨） | +30% YTD（TTM +106%） |\n| FSLY | Fastly | CDN / 边缘推理 | 边缘算力底座 | **基础设施** | 守（已涨） | +147% YTD |\n| AKAM | Akamai | CDN / 安全 | 同上 | **基础设施** | 守 | +11.3% YTD |\n| DOCN | DigitalOcean | 开发者云 | 开发者算力底座 | **基础设施** | 守（已涨） | +12% YTD（财报后 +40%） |"
+        }
+      }
+    },
+    {
+      "step_id": 221,
+      "timestamp": "2026-05-30T13:18:19.167Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "已加好。主表现在是 7 列，末列「实际股价涨跌」取自源名单的标头数字，标注了时间窗口（YTD / 6m / TTM / 1y / 单日），未核的标\"未核\"。\n\n一眼能看出框架与股价的对应：\n\n- **塌 B 段集中在最深跌幅**：ASAN −50、DOCU −52、HUBS −51、MNDY/SMAR −39。\n- **守得住的 C / 骨骼段抗跌或上涨**：OKTA +35、NET +30、DDOG +30、APP +89、FSLY +147、SNOW ≈0、CRWD −16、SNPS −11、CDNS −8。\n- **system-of-record 中间态\"跌但没崩\"**：SAP −38、NOW −40、WDAY −40、CRM −31、VEEV −37。\n\n这列正好把后面\"框架 vs 股价\"那一节的论证在表内坐实了。",
+      "metrics": {
+        "prompt_tokens": 369792,
+        "completion_tokens": 319,
+        "cached_tokens": 369661,
+        "extra": {
+          "cache_creation_input_tokens": 11469,
+          "cache_read_input_tokens": 369661,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 11469,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 319,
+              "cache_read_input_tokens": 369661,
+              "cache_creation_input_tokens": 11469,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 11469
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 27472868,
-    "total_completion_tokens": 746216,
-    "total_cached_tokens": 27452763,
-    "total_steps": 216,
+    "total_prompt_tokens": 28951583,
+    "total_completion_tokens": 780651,
+    "total_cached_tokens": 28931341,
+    "total_steps": 221,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 1571181,
-      "total_cache_read_input_tokens": 27452763
+      "total_cache_creation_input_tokens": 1582716,
+      "total_cache_read_input_tokens": 28931341
     }
   }
 }
