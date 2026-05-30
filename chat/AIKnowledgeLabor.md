@@ -39,18 +39,19 @@
   - [3.1 阵痛](#31-阵痛)
   - [3.2 机遇](#32-机遇)
     - [3.2.1 寻找知识工作的需求增量](#321-寻找知识工作的需求增量)
-      - [3.2.1.1 专家服务下沉给个体与基层组织](#3211-专家服务下沉给个体与基层组织)
-      - [3.2.1.2 事中监督与持续决策支持](#3212-事中监督与持续决策支持)
-      - [3.2.1.3 个体主体性与反结构性力量](#3213-个体主体性与反结构性力量)
-      - [3.2.1.4 知识合成、传承与基础设施维护](#3214-知识合成传承与基础设施维护)
-      - [3.2.1.5 组织内部的"精细化治理"](#3215-组织内部的精细化治理)
+      - [3.2.1.1 需求的经济性分类](#3211-需求的经济性分类)
+      - [3.2.1.2 专家服务下沉给个体与基层组织](#3212-专家服务下沉给个体与基层组织)
+      - [3.2.1.3 事中监督与持续决策支持](#3213-事中监督与持续决策支持)
+      - [3.2.1.4 个体主体性与反结构性力量](#3214-个体主体性与反结构性力量)
+      - [3.2.1.5 知识合成、传承与基础设施维护](#3215-知识合成传承与基础设施维护)
+      - [3.2.1.6 组织内部的"精细化治理"](#3216-组织内部的精细化治理)
         - [软件工程组织：Harness engineering 把"平台 / SRE / Tech Lead"工种平民化](#软件工程组织harness-engineering-把平台-sre-tech-lead工种平民化)
-      - [3.2.1.6 科学研究和技术开发的新范式——"暴力破解"](#3216-科学研究和技术开发的新范式-暴力破解)
+      - [3.2.1.7 科学研究和技术开发的新范式——"暴力破解"](#3217-科学研究和技术开发的新范式-暴力破解)
         - [蛋白质结构与新药设计](#蛋白质结构与新药设计)
         - [新材料发现：自驱动实验室与争议](#新材料发现自驱动实验室与争议)
         - [基因编辑与生命语言模型](#基因编辑与生命语言模型)
         - [整体节奏与"jagged frontier"](#整体节奏与jagged-frontier)
-      - [3.2.1.7 清偿技术债：COBOL、Fortran 与几十年没人敢动的代码](#3217-清偿技术债cobolfortran-与几十年没人敢动的代码)
+      - [3.2.1.8 清偿技术债：COBOL、Fortran 与几十年没人敢动的代码](#3218-清偿技术债cobolfortran-与几十年没人敢动的代码)
     - [3.2.2 价值实现路径](#322-价值实现路径)
       - [3.2.2.1 物理 AI 闭环：算力转化为物质](#3221-物理-ai-闭环算力转化为物质)
       - [3.2.2.2 决策链路的"降维打击"：消除社会的系统性内耗](#3222-决策链路的降维打击消除社会的系统性内耗)
@@ -260,7 +261,27 @@ MIT 计算机科学与人工智慧实验室（CSAIL）旗下的 **MIT FutureTech
 
 把 LLM 视为一种"无限复制且近乎零边际成本的知识劳动力"，它本质上是在商业、生活、公共治理等所有领域为每个人和每个长尾群体配备一个由"全知专家"组成的庞大后援团。下面按需求侧逻辑列出**45 个长期缺人的脑力工作场景**，分为七大类——每一类下面的具体场景都是"过去没人愿意做、做不起、做不完，现在被 AI 劳动力一一接住"的真实案例（视觉 AI、工程数值优化、物理模拟为核心的场景另行论述）。
 
-##### 3.2.1.1 专家服务下沉给个体与基层组织
+##### 3.2.1.1 需求的经济性分类
+
+后面七类是按**领域**（医疗、法律、教育、监督、治理、科研、技术债）给 45 个场景归类——回答"缺口在哪里"。但还有一个正交的问题：同一个缺口，**由谁来填、填它能不能变成一门生意**？这取决于需求的经济结构，而不取决于它属于哪个领域。
+
+判据来自这股劳动力独特的成本曲线（§2.7）：**把一个 AI 方案"一次性做对"——验证可靠性、接入现实系统、满足合规与担责——固定成本很高；方案做对之后，多服务一个对象的边际成本却趋近于零**。于是每个需求都坍缩成同一个问题：**谁来承担那笔一次性的固定成本，又靠多大的量把它摊薄**？这正是 Coase 在《企业的性质》里给出的"自己做还是去市场买"的老问题[[66]](https://doi.org/10.1111/j.1468-0335.1937.tb00002.x)——只是当"预测 / 认知"本身的价格被 AI 压到接近普通投入品的水平[[72]](https://hbr.org/2022/11/from-prediction-to-transformation)，这条边界要重新划。按这个判据，需求分成三类。
+
+**A 类——大型组织的集中需求：内部自建。** 当同一种脑力工作在一个组织边界内高频重复、且高度依赖该组织专有的数据与流程（资产专用性[[67]](https://doi.org/10.1086/227496)），组织自身的体量就足以独自摊薄"做对一次"的固定成本，自建比外购划算。但 AI 时代这块在收缩：Menlo Ventures 的企业调研显示，生成式 AI 用例选择"买"而非"自建"的比例从 2024 年的 53% 跳到 2025 年的 76%[[76]](https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/)——大组织正把越来越多的共性需求外包出去，自建只留给两三个真正构成护城河的差异化工作流。
+
+**B 类——个人 / 小组织的分散且异质需求：个体直接自助。** 这类需求散落在无数互不相同的个体身上，彼此差异太大，归集不成一个标准产品。过去它们因此被 Baumol"成本病"长期压制——看病、咨询、辅导、起草这些人力密集的专家服务生产率提不上来，单位成本只会越涨越高，"私人专家"于是成了富人专属[[69]](https://piketty.pse.ens.fr/files/Baumol1967.pdf)。AI 把这一层击穿：固定成本由基础模型厂商一次性替所有人付掉，个体每次自助的边际成本几乎为零，长尾里那些过去养不活任何供给方的零碎需求，第一次可以被本人直接接住[[70]](https://www.wired.com/2004/10/tail/)。这里**没有中间商，因为没有足够共性的东西值得归集**。
+
+**C 类——个人 / 小组织的分散但有共性、易归集需求：代理归集，成为生意。** 需求同样散落在大量小买家身上，但内核共通、可标准化。这时一个第三方可以**把固定成本一次付清**——做出经过验证、合规、可担责、与现实系统打通的 AI 产品——再摊到所有被归集起来的买家头上。这是中间商的经典角色，也是 Stigler"分工受制于市场规模"的反向运作：归集把原本太小、养不活专门供给方的市场撑到了可盈利的规模[[68]](https://www.sfu.ca/~allen/stigler.pdf)。要害在于，这门生意的价值**不来自 AI 能力本身**——那一层正在迅速商品化，"代码从来不是价值所在"[[74]](https://a16z.com/good-news-ai-will-eat-application-software/)——而来自个体各自付不起、AI 又不自带的那层残余固定成本：信任、合规、担责、数据网络效应、分发渠道、与线下系统的最后一公里集成（当归集层同时连接两类相互依赖的用户、靠跨边网络效应运转时，它就具备了双边平台属性[[71]](https://www.tse-fr.eu/sites/default/files/medias/doc/wp/2002/platform.pdf)）。垂直 AI 的经济学正是如此：用 AI 把单客户 LTV 抬高、把获客成本压低，让过去"太小不值得做"的垂直市场变成可盈利的生意[[75]](https://a16z.com/vsaas-vertical-saas-ai-opens-new-markets/)。
+
+**三条边界都在移动，争议也在这里。**
+
+- **B 与 C 之间**：AI 大幅降低"定制"的边际成本，过去"必须高度标准化才能归集"的约束随之松动，C 类得以服务越来越异质的长尾——Stigler 门槛下移，更细、更小的垂直生意变得可盈利[[73]](https://www.nber.org/papers/w34316)。但同一股力量也在降低自助门槛：若一门 C 类生意的全部价值就是"包一层 LLM"，用户会直接自助绕过它（去中介化），它就退回 B 类。**C 能不能站住，判据只有一条：是否存在一层 AI 不自带、个体又无法各自承担的残余护城河**[[74]](https://a16z.com/good-news-ai-will-eat-application-software/)。
+- **A 与 C 之间**：买 / 建边界整体向"买"滑动（上述 53%→76%[[76]](https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/)），而企业真正付费的地方集中在编程、客服、搜索这类输出可验证、ROI 清晰的第三方专门工具[[78]](https://a16z.com/where-enterprises-are-actually-adopting-ai/)。当外部专门方案的固定成本被全行业摊薄、质量超过任何单一企业的内部自建，Coase 边界就重新划定——make 让位于 buy，A 类收缩、C 类扩张。
+- **再中介化悖论**：几十年的数字化去中介，本意是让买卖双方直连，结果反而为更强的算法中介（agentic AI）铺好了路——AI agent 正成为个人与机构之间新的归集层，这层"再中介化"既是 C 类最大的机会，也是既有平台被重新中介掉的风险[[77]](https://cmr.berkeley.edu/2026/04/the-rise-of-ai-intermediaries-how-agentic-systems-are-rewiring-customer-relationships/)。
+
+下面七类里的 45 个场景，绝大多数落在 B 与 C：它们之所以长期空缺，恰恰因为过去没有任何单一买家能摊薄"做对一次"的成本。每个场景最终会沉淀成一个自助功能（B）、还是长成一门独立生意（C），要看它头顶那层护城河立不立得住——而不是看它属于哪个领域。
+
+##### 3.2.1.2 专家服务下沉给个体与基层组织
 
 顶级专家集中在大都市的大机构里，但服务对象散布在全球——县医院、村卫生室、村小、小作坊、小农户、普通家庭。专家时间是稀缺资源，没法服务所有人，于是医疗、教育、法律、文化、生活管家这些**本来只有富豪能享受的"私人专家"服务**长期下沉不到大众。这股新劳动力的第一类落点，就是把这种"专家时间稀缺"打破。
 
@@ -302,7 +323,7 @@ MIT 计算机科学与人工智慧实验室（CSAIL）旗下的 **MIT FutureTech
 
 19. **智能虚拟偶像"一对一"心理陪伴者**：虚拟偶像不再只是一对多的直播，而是能记住与每一个粉丝过去数年来的所有聊天细节，提供真正具备深度长时记忆的死忠粉情感陪伴。（例：[Clawra (OpenClaw)](https://openclaws.io/blog/clawra-ai-idol)，部分实现）
 
-##### 3.2.1.2 事中监督与持续决策支持
+##### 3.2.1.3 事中监督与持续决策支持
 
 社会的很多损失发生在"事中没人看"——化工厂排污、政策走样、慢病失控、设备劣化、合同执行偏离、市场需求骤变。事中监督需要 24×7 的脑力工作量，过去因为单位时间贵根本不可能配备人力，只能靠"事后查"或"季度盘点"，损失早已发生。这恰好是 LLM 劳动力最便宜的形态。
 
@@ -324,7 +345,7 @@ MIT 计算机科学与人工智慧实验室（CSAIL）旗下的 **MIT FutureTech
 
 28. **商业地产非对称"业态引力"规划师**：根据周边居民步行五分钟内的真实消费意愿光谱，为特定空置商铺定制出最能引发邻近店铺协同效应的"非直觉"业态推荐。（例：[Placer.ai Void Analysis](https://www.placer.ai/guides/void-analysis)）
 
-##### 3.2.1.3 个体主体性与反结构性力量
+##### 3.2.1.4 个体主体性与反结构性力量
 
 个体面对大平台、大政府、大保险、大医院、大企业时长期处于信息和能力不对称的位置。过去能请律师、顾问、经纪人的人是少数，绝大多数个体处于"裸奔"状态——大量合法权利就这么被放弃了。这一类需求的本质是**让普通个体获得过去只有有钱人才能买到的"代理人能力"**。
 
@@ -344,7 +365,7 @@ MIT 计算机科学与人工智慧实验室（CSAIL）旗下的 **MIT FutureTech
 
 36. **个人智能谈判官（代砍价/代维权）**：面对宽带运营商、健身房的霸王条款，AI 自动搜集过往的维权成功案例，代表用户自动发送话术最优的申诉邮件或在线与对方客服博弈。（例：[Pine AI](https://www.19pine.ai/)）
 
-##### 3.2.1.4 知识合成、传承与基础设施维护
+##### 3.2.1.5 知识合成、传承与基础设施维护
 
 知识工作的一大类是"把多源、多语种、多时代的零散知识合成为可用判断"，另一类是维持现代社会运转所需的"幕后脑力"（标准制定、法规更新、维护手册、跨域合规）——它们费时、不出新意、不能赚快钱，长期处于"没人愿意做但又不能没人做"的窘境。
 
@@ -368,7 +389,7 @@ MIT 计算机科学与人工智慧实验室（CSAIL）旗下的 **MIT FutureTech
 
 ⚠ 解读：把这 45 个缺口放在一张图上看，能读出一个一致的规律——**LLM 释放的虚拟劳动力不是去抢现有岗位的饭碗，而是去填补社会长期想做但请不起、做不起、做不完的事**。基层医疗、罕见病诊断、政策事后评估、信息公开代办、跨学科综述、维护文档撰写、长尾合规、个人面对算法时的反制——这些活儿不是"新的工作机会"，是**一直存在但被人力成本压制成"非工作"的工作**。这才是这股劳动力增量与既有就业市场的真实关系：**先填补真空，再竞争稀缺**。每一个场景的背后，传统计算机（CPU、传统数据库、高带宽存储）依然是绝对的承载底座——它要去调取海量的传统冷热数据（历史记录、合规条文、对话日志、知识图谱），并在传统沙盒里运行无数次的确定性验证——这与 §2.9 IT 产业反向印证里看到的资本流向完全一一对应。
 
-##### 3.2.1.5 组织内部的"精细化治理"
+##### 3.2.1.6 组织内部的"精细化治理"
 
 跨国企业和大型政府机构内部，长期堆积着无数效率摩擦：部门间沟通不畅、历史文档无法被有效检索、市场感知滞后、合规审计跑不动。过去没人去做这些事，因为雇人来做太不划算。
 
@@ -404,7 +425,7 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 2. **维护工具链的工程师**：自定义 linter、自定义 codemod、自定义类型检查——大企业才有 DevX 团队专门写这些。LLM Agent 让"为每个仓库定制一套 linter + codemod + 静态规则"变得人人能做。
 3. **持续做代码评审的高级工程师**：绝大多数初级 PR 拿不到深度评审。Inferential review agent + computational sensors 让每个 PR 都能获得"高级工程师风格"的评审反馈。
 4. **巡查代码债务的清洁工**：dead code detection、dependency drift、test coverage 质量分析——这种"卫生工"过去要专门组建团队，现在变成 24×7 跑的 janitor army。
-5. **写迁移脚本的平台工程师**：Java 8→17、React 16→18、Python 2→3 这类迁移过去是"集中花一年时间的大项目"——参见 §2.8.1 与 §3.2.1.7 的 Google 内部迁移、Spotify×Anthropic、Mechanical Orchard 案例。
+5. **写迁移脚本的平台工程师**：Java 8→17、React 16→18、Python 2→3 这类迁移过去是"集中花一年时间的大项目"——参见 §2.8.1 与 §3.2.1.8 的 Google 内部迁移、Spotify×Anthropic、Mechanical Orchard 案例。
 
 ⚠ 关键判断：把 Agent 完全建模为"AI 劳动力"之后，能看到一个反直觉的事实——**Harness engineering 里并没有出现以往软件工程中没有的本质新方法**。它列举的每一个元素，在传统软件工程组织里都有对应的人力工种与实践；那些看起来"新"的特征，全部是 AI 劳动力廉价化让旧方法第一次变得可操作的产物：
 
@@ -418,7 +439,7 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 
 除了以上讨论到的多模态能力外，在不同的任务类型中，“AI 劳动力”与人类劳动力也存在差异，例如[此处](https://gitcode.com/airesearch/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)或[此处](https://github.com/AI-LLM/AIM4SD/blob/dev/chapter-01-introduction.md#1421-ai-能力的锯齿状边界-jagged-frontier)的讨论。技术上如何扬长避短，或者如何使其更逼近人类，不在本文讨论范围。
 
-##### 3.2.1.6 科学研究和技术开发的新范式——"暴力破解"
+##### 3.2.1.7 科学研究和技术开发的新范式——"暴力破解"
 
 AI 知识劳动力的一个高价值出口，是过去由于人类大脑算力和体力的双重限制只能望洋兴叹的领域——动辄需要探索 $10^{60}$ 量级分子空间的科学和技术难题。
 
@@ -450,7 +471,7 @@ AI 知识劳动力的一个高价值出口，是过去由于人类大脑算力�
 
 Stanford HAI 2026 年 4 月发布的 *AI Index Report 2026* 给出了 AI for Science 在 2025–2026 年的全景：前沿模型在 PhD 级科学问答上的准确率为 93%（人类专家基线 81.2%）；在 ChemBench 2,700+ 化学题上超过化学家平均水平；Sakana AI Scientist-v2 生成的论文已被 ICLR workshop 与 *Nature* 接收。但报告同时强调"jagged frontier"——AI 在天体物理实验复现仅 <20%、地球观测 33%[[50]](https://hai.stanford.edu/ai-index/2026-ai-index-report)。换言之，这股劳动力把人类大脑在算力和体力上完全干不动的"上帝禁区"（$10^{60}$ 量级的分子空间、12.8 万个全基因组、220 万个候选晶体）变成了可以并行扫描的工作量，**但能力分布是凹凸不均的**——不是"全面替代人类科学家"，而是"在某些维度上把可行域扩大数个数量级"。
 
-##### 3.2.1.7 清偿技术债：COBOL、Fortran 与几十年没人敢动的代码
+##### 3.2.1.8 清偿技术债：COBOL、Fortran 与几十年没人敢动的代码
 
 技术债不是一个抽象概念——它是几千亿行真实运行的老代码：上世纪 60 年代写的 COBOL 仍跑着美国社保系统、各大银行的核心账务、IRS 的税务系统；50 年代设计的 Fortran 仍驱动核电站模拟、气象预报、航空气动；80–90 年代的 C/C++ 仍在底层操作系统、网络协议栈、嵌入式控制器里默默工作。**这些代码没有"过时退役"——它们承担着现代社会运转的关键负载——但没人敢动它们**。这是一类极特殊的脑力缺口：不是"新工作没人做"，而是"几十年前一代人留下的工作量后人接不住"。
 
@@ -486,7 +507,7 @@ Fortran 没有 COBOL 那样的总盘子数字，但具象案例同样惊人：NA
 
 ##### 3.2.2.1 物理 AI 闭环：算力转化为物质
 
-Deloitte 的 *State of AI in the Enterprise – 2026 AI report*（2025 年 8–9 月在 24 国 6 行业调研 3,235 名高管）报告：**58% 的企业已经在使用"物理 AI"**，并预计两年内达到 80%。最具长期影响的子类别：智能安防/监控 21%、协作机器人 20%、数字孪生 19%；制造、物流、国防三个行业领先[[49]](https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html)。这是 §3.2.1.6 的科学暴力破解走出屏幕的关键一步——AI 算出的最佳晶体结构通过自动化工厂变成固态电池电芯、AI 设计的抗体通过 GMP 工厂变成针剂、AI 优化的物流路径通过自动驾驶卡车变成真实的运输。
+Deloitte 的 *State of AI in the Enterprise – 2026 AI report*（2025 年 8–9 月在 24 国 6 行业调研 3,235 名高管）报告：**58% 的企业已经在使用"物理 AI"**，并预计两年内达到 80%。最具长期影响的子类别：智能安防/监控 21%、协作机器人 20%、数字孪生 19%；制造、物流、国防三个行业领先[[49]](https://www.deloitte.com/us/en/about/press-room/state-of-ai-report-2026.html)。这是 §3.2.1.7 的科学暴力破解走出屏幕的关键一步——AI 算出的最佳晶体结构通过自动化工厂变成固态电池电芯、AI 设计的抗体通过 GMP 工厂变成针剂、AI 优化的物流路径通过自动驾驶卡车变成真实的运输。
 
 ##### 3.2.2.2 决策链路的"降维打击"：消除社会的系统性内耗
 
@@ -638,3 +659,29 @@ Microsoft Research 的 *New Future of Work Report 2025* 测算，使用 AI 的�
 [64] X. M. Ye and A. Ranganathan, "AI promised to free up workers' time. UC Berkeley Haas researchers found the opposite.," *Haas Newsroom / Harvard Business Review*, Feb. 2026. (8-month ethnographic study at ~200-person US tech company; GenAI expanded scope and pace of work rather than freeing time; risks: blurred work-life boundary, burnout, cognitive fatigue, lower output quality) [Online]. Available: <https://newsroom.haas.berkeley.edu/ai-promised-to-free-up-workers-time-uc-berkeley-haas-researchers-found-the-opposite/>
 
 [65] M. Mertens, N. Thompson, et al., "Crashing Waves vs. Rising Tides: Preliminary Findings on AI Automation from Thousands of Worker Evaluations of Labor Market Tasks," *arXiv preprint*, arXiv:2604.01363, 2026. (MIT FutureTech / CSAIL; 41 LLMs × 3000+ O*NET tasks × 17,000+ double-blind expert evaluations; refutes "crashing waves" view in favor of "rising tides" — gradual, broad-based AI automation with task-duration doubling time ≈ 3.8 months) [Online]. Available: <https://arxiv.org/abs/2604.01363>
+
+[66] R. H. Coase, "The Nature of the Firm," *Economica*, vol. 4, no. 16, pp. 386–405, Nov. 1937. (交易成本决定企业边界与 make-vs-buy 的分界。) [Online]. Available: <https://doi.org/10.1111/j.1468-0335.1937.tb00002.x>
+
+[67] O. E. Williamson, "The Economics of Organization: The Transaction Cost Approach," *American Journal of Sociology*, vol. 87, no. 3, pp. 548–577, Nov. 1981. (资产专用性越高，纵向一体化/内部自建越占优。) [Online]. Available: <https://doi.org/10.1086/227496>
+
+[68] G. J. Stigler, "The Division of Labor is Limited by the Extent of the Market," *Journal of Political Economy*, vol. 59, no. 3, pp. 185–193, Jun. 1951. (分工/专门中间商能否出现，取决于市场规模是否足够。) [Online]. Available: <https://www.sfu.ca/~allen/stigler.pdf>
+
+[69] W. J. Baumol, "Macroeconomics of Unbalanced Growth: The Anatomy of Urban Crisis," *The American Economic Review*, vol. 57, no. 3, pp. 415–426, Jun. 1967. (成本病：生产率难提升的人力密集型服务，相对成本被结构性持续推高。) [Online]. Available: <https://piketty.pse.ens.fr/files/Baumol1967.pdf>
+
+[70] C. Anderson, "The Long Tail," *Wired*, vol. 12, no. 10, Oct. 2004. (分发/边际成本趋零，使海量小众长尾需求变得可被服务。) [Online]. Available: <https://www.wired.com/2004/10/tail/>
+
+[71] J.-C. Rochet and J. Tirole, "Platform Competition in Two-Sided Markets," *Journal of the European Economic Association*, vol. 1, no. 4, pp. 990–1029, Jun. 2003. (双边平台靠跨边网络外部性运转，价格在两边的分配比总价更关键。) [Online]. Available: <https://www.tse-fr.eu/sites/default/files/medias/doc/wp/2002/platform.pdf>
+
+[72] A. Agrawal, J. Gans, and A. Goldfarb, "From Prediction to Transformation," *Harvard Business Review*, vol. 100, no. 6, Nov.–Dec. 2022. (AI 价值在重设整个决策系统的 system solutions，而非替换单点环节的 point solutions；廉价预测重塑组织边界。) [Online]. Available: <https://hbr.org/2022/11/from-prediction-to-transformation>
+
+[73] A. Agrawal, J. Gans, and A. Goldfarb, "Genius on Demand: The Value of Transformative Artificial Intelligence," *NBER Working Paper No. 34316*, Oct. 2025. (AI 把专家级认知变成按需供给的廉价投入，重新配置 routine 与 genius 知识劳动。) [Online]. Available: <https://www.nber.org/papers/w34316>
+
+[74] A. Immerman and S. Rodriguez, "Good news: AI Will Eat Application Software," *Andreessen Horowitz (a16z)*, Mar. 2026. (纯"套壳"无护城河；价值来自嵌入式工作流、专有数据、网络效应，从 system of record 走向 system of action。) [Online]. Available: <https://a16z.com/good-news-ai-will-eat-application-software/>
+
+[75] A. Strange, J. da Costa, et al., "\"AI Inside\" Opens New Markets for Vertical SaaS," *Andreessen Horowitz (a16z)*, Dec. 2024. (垂直 AI 抬高单客户 LTV、压低 CAC，把过去太小不值得做的垂直市场变成可盈利生意。) [Online]. Available: <https://a16z.com/vsaas-vertical-saas-ai-opens-new-markets/>
+
+[76] Menlo Ventures, "2025: The State of Generative AI in the Enterprise," *Menlo Ventures*, Dec. 2025. (企业 AI 用例"买 vs 自建"一年内从 53/47 翻转到 76/24。) [Online]. Available: <https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/>
+
+[77] D. Chauhan and M. Jayswal, "The Rise of AI Intermediaries: How Agentic Systems Are Rewiring Customer Relationships," *California Management Review (UC Berkeley Haas)*, Apr. 2026. (再中介化悖论：数十年去中介反为更强的算法中介 agentic AI 铺路，AI agent 成为新的归集层。) [Online]. Available: <https://cmr.berkeley.edu/2026/04/the-rise-of-ai-intermediaries-how-agentic-systems-are-rewiring-customer-relationships/>
+
+[78] K. Tan, "Where Enterprises are Actually Adopting AI," *Andreessen Horowitz (a16z)*, Apr. 2026. (企业实际付费集中在编程/客服/搜索等输出可验证、ROI 清晰的第三方专门工具。) [Online]. Available: <https://a16z.com/where-enterprises-are-actually-adopting-ai/>
