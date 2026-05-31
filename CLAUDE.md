@@ -92,13 +92,17 @@
 ### Mermaid 骨架
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 graph TD
     classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;
     classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;
     classDef argument fill:#f0f0f0,stroke:#777,stroke-width:1px,color:#333;
 ```
 
-节点定义后跟 `:::issue` / `:::position` / `:::argument` 指定类型。
+节点定义后跟 `:::issue` / `:::position` / `:::argument` 指定类型。`layout: elk` 用 ELK 引擎排版——节点多、交叉边多（论据一身二任时尤甚）时布局更清晰。
 
 ### 收尾必做
 
