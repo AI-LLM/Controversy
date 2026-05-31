@@ -168,8 +168,115 @@ graph TD
 
 ⚠ 解读：附录这一段在 IBIS 里很特别——它既是支撑 P0 的强论据（生产边界的盲区由来已久、即将被 AI 放大），又内含一条作者主动提出的自我反对（A8con），承认自身框架继承了同一缺陷。这种「自带反方」的诚实，是这篇文章相对一般 AI 多空论战更克制的地方。
 
+## 反向议题：这笔支出会不会根本没产生价值？
+
+原文整条论证有一个**未明说的前提**：当我们「看见 token 支出、却看不见账面产出」时，产出一定是**存在但被统计藏起来了**（Dark Output）。但同一个观测——支出上升、GDP／生产率却没动——也完全兼容另一个解释：**相当一部分支出根本没产生价值**，缺口不是计漏，而是真实的浪费。
+
+⚠ 方法论要害：「看不见 X」对「X 存在但隐形」和「X 不存在」是**对称**地成立的。原文用「服务业生产率在原理上就统计不到」来论证缺口是隐形价值，但这只证明了缺口**可能**是隐形价值，并没有排除它是浪费。要在两者间下判断，必须拿出**独立于「支出本身」**的证据。
+
+```mermaid
+graph TD
+    classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;
+    classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;
+    classDef pro fill:#e7f6ea,stroke:#2e7d32,color:#1b5e20;
+    classDef con fill:#fdeaea,stroke:#c62828,color:#8e1414;
+
+    RI{{"反向议题：当 AI／token 支出上升、账面产出却未现，这一缺口是『被计漏的真实产出』还是『根本没产生价值的浪费支出』？"}}:::issue
+    RPa("立场 A（原文 P0）：是计漏——价值真实存在，只是服务业产出在原理上统计不到（Dark Output）"):::position
+    RPb("立场 B（本文追问）：相当部分缺口是真实浪费，并非计漏——支出没产生净价值（Wasted Output）"):::position
+    RPc("立场 C（折中）：两种情形并存；两套框架对同一观测等价，真问题是比例与时间路径"):::position
+    RI --> RPa
+    RI --> RPb
+    RI --> RPc
+
+    B1["＋ 推理对称性：『看不见产出』同时兼容『存在但隐形』与『根本不存在』；Dark Output 若不能独立证明价值已实现，近乎不可证伪"]:::pro
+    B2["＋ 原文自承证据薄：新增型量级 opaque、佐证多为 anecdotal、迄今以 augmentation 为主、未见 Tier 5／6"]:::pro
+    B3["＋ 资本回报实测为负：FT／Panmure 在『零成本』最宽松假设下，5 家 hyperscaler 有 4 家负回报，仅 Amazon ＋7.2%"]:::pro
+    B4["＋ 失控浪费实例：某 Fortune 20 花 2 亿美元 token 仅换来微小节省后被砍预算；某客户因忘设上限单月烧 5 亿美元"]:::pro
+    B5["＋ 用量≠产出：企业按 token 数搞内部排行榜、刷分，Amazon 已撤榜；GPU 租金三周 −40%，OpenAI 关停 Sora、GitHub 暂停 Copilot 订阅"]:::pro
+    RPb --> B1
+    RPb --> B2
+    RPb --> B3
+    RPb --> B4
+    RPb --> B5
+
+    C1["－ 服务业生产率滞后确有先例（Solow 悖论；2013 把研发计入 GDP 后补记 1990s 约 3.6 万亿美元）：看不见≠不存在"]:::con
+    C2["－ 持续付费、续订与企业重复采购是 revealed preference（Anthropic 本季度仍盈利）"]:::con
+    C3["－ 消费者剩余真实：文献综述从 2000 美元降到 2 美元的效用真实存在，不入账正是 Dark Output 的定义"]:::con
+    C4["－ 资本回报为负≠单位产出价值为零：FT 测的是 capex 回报；dot-com 技术真实但资本错配，多数公司没回本（Cisco 约 26 年终恢复）"]:::con
+    RPb --> C1
+    RPb --> C2
+    RPb --> C3
+    RPb --> C4
+
+    SI{{"派生子议题：用什么经验指标，才能把『隐形真实产出』与『浪费支出』区分开？"}}:::issue
+    SIp("候选检验：补贴退坡后用量是否崩塌／留存与复购率／是否沉淀进可复用工作流／下游返工比例／是否出现承保·判例等高层级市场信号"):::position
+    RPc -.-> SI
+    SI --> SIp
+```
+
+图中红色节点是「**反对立场 B**」的论据（即同时在支持原文的计漏说）；本节按这个方向把支持与反对逐条展开。
+
+### 三个立场
+
+- **立场 A（原文 P0）**：缺口是计漏，价值真实存在，只是服务业产出原理上就统计不到 [1]。
+- **立场 B（本文追问）**：相当部分缺口是真实浪费，支出没产生净价值，缺口不需要任何「隐形产出」来解释。
+- **立场 C（折中，⚠ 本人判断）**：两种情形并存。在「支出↑、账面产出平」这一观测点上，Dark Output 与 Wasted Output **观测等价**，光凭这个观测无法区分；真正的经验问题是二者的比例，以及它随补贴退坡／技术成熟如何变化。
+
+### 支持「是浪费，不是计漏」（＋）
+
+1. **推理的对称性（最根本的一条）**。原文核心推断是「看见支出、看不见产出 ⇒ 产出被藏起来了」。但「看不见 X」对「X 存在但隐形」与「X 不存在」是对称成立的。Dark Output 框架若拿不出独立于支出本身的「价值已实现」证据，就可以把任何一笔浪费重新贴成「暗产出」，逼近不可证伪。⚠ 这是对原文方法论的批评，非原文观点。
+
+2. **原文自己的让步，恰说明硬证据稀薄**。原文承认：新增型暗产出量级「opaque」、佐证多为「anecdotal」；迄今多数证据指向 augmentation 而非 replacement；尚未见 Tier 5／6 证据；1.5 万亿美元是「暴露劳动」而非「缺失产出」[[1]](https://newsletter.semianalysis.com/p/ai-dark-output-the-visible-cost-of)。即原文对「价值已实现」几乎全靠结构性的「统计看不见」来论证，而非直接证据——这正是立场 B 的入口。
+
+3. **连「零成本」假设下，资本回报都是负的**。FT 联合 Panmure Liberum 测算 2025–2030 年超大规模厂商 AI 投资的隐含回报，在**假设零成本、只用收入对冲 capex** 的最宽松情形下：Microsoft −9.2%、Alphabet −15.7%、Meta −28.8%、Oracle −35.6%，**5 家中仅 Amazon（+7.2%）转正** [[4]](https://x.com/ThierryBorgeat/status/2060069195975422281)、[[5]](https://garymarcus.substack.com/p/what-happens-next-after-the-decline)，原始测算来自 FT／Panmure Liberum [6]。⚠ 两点保留：(a) 这组逐家百分比来自第三方对推文配图的转述，FT 一手图未直接核验；(b)「资本回报为负」严格说不等于「价值为零」，它也兼容「单位产出有真实价值、但配不上天量 capex」（见反方 C4）。但它至少说明：把整个支出—产出缺口都算作「被漏掉的正价值产出」是站不住的。
+
+4. **失控／纯浪费的直接实例**。一家 Fortune 20 公司为追逐 10 亿美元 AI 运营节省，在 token 上花掉 2 亿美元，结果只换来「适度的客服成本节省 + 略减工程招聘」，CEO 因「ROI 不存在」下令大砍 token 预算；另有客户因忘记给员工的 Claude license 设使用上限，**单月烧掉 5 亿美元** [[4]](https://x.com/ThierryBorgeat/status/2060069195975422281)。⚠ 两段轶事在原帖里只点了来源方（Garipalli、Axios）而无可核验链接，需回溯。但其指向的是**真实的失控支出**，而非「被 GDP 漏算的隐形价值」。
+
+5. **用量被当成 KPI，而非产出**。这正是「tokenmaxxing」一词的由来：企业搞内部排行榜按员工 token 用量排名，Nature 社论直指「token 用量绝不是衡量生产力的好指标」[[3]](https://doi.org/10.1038/s42256-026-01253-5)；Amazon 的用量排行榜甚至诱使员工「派 AI agent 去做不必要的任务、纯刷分」，事后被撤掉以「阻止员工追逐用量分数」[[5]](https://garymarcus.substack.com/p/what-happens-next-after-the-decline)；Fortune 的判语更直白——「tokenmaxxing is over……它从未度量真正能带来 ROI 的东西」[[5]](https://garymarcus.substack.com/p/what-happens-next-after-the-decline)。当支出由排行榜、FOMO、补贴驱动，它会**系统性地高于**真实产出。
+
+6. **价格信号同时从两端发声**。其一，新增型工作「以前没人付费做」——市场此前不愿付费本身就是低价值信号，「便宜到能做」不等于「值得做」。其二，作为整条叙事底层商品的 GPU，H200 租金三周内从约 7 美元／时跌到约 4 美元／时（−40%）[[5]](https://garymarcus.substack.com/p/what-happens-next-after-the-decline)；底层算力价格崩塌通常指向需求／预期回调，而非真实产出在扩张。⚠ 推文所引「H200 INDEX」是否为真实可交易指数存疑，需核。
+
+7. **部分产出是负价值（slop）**。Nature 社论强调「生成结果很容易（直到 token 预算烧光），但输出的验证不容易」，可靠产出仍需大量人力核验 [[3]](https://doi.org/10.1038/s42256-026-01253-5)。需要返工的草稿、低质内容、合规风险，不仅零产出，还消耗下游人力——净价值可能为负，与「隐形正价值」恰恰相反。
+
+8. **厂商层面的回撤**。OpenAI 在宣布与迪士尼 10 亿美元合作仅数月后突然关停 Sora；GitHub 暂停 Copilot 新订阅并自 6 月改为按量计费 [[3]](https://doi.org/10.1038/s42256-026-01253-5)。若价值在稳定兑现，通常不会出现产品与激励层面的收缩。
+
+### 反对「是浪费」／支持「是计漏」（－）
+
+1. **服务业生产率滞后确有先例**。Solow 悖论（计算机时代不现于生产率统计）后来部分被追认，2013 年把研发计入 GDP 一次就给 1990s 补记约 3.6 万亿美元 [[1]](https://newsletter.semianalysis.com/p/ai-dark-output-the-visible-cost-of)。「现在看不见」不必然「不存在」——这是原文最硬的结构性论据，也是立场 B 必须正面回应的。
+
+2. **持续付费是 revealed preference**。用户续订、扩大用量、企业重复采购，若纯属浪费理应快速流失；Gary Marcus 自己也承认 Anthropic「本季度仍在盈利」[[5]](https://garymarcus.substack.com/p/what-happens-next-after-the-decline)。⚠ 但这条对「被捕获型／订阅制」强，对「内部 token／新增型／补贴驱动的刷量」弱——后者恰恰是浪费假说的主场。
+
+3. **消费者剩余真实存在**。文献综述从 2000 美元降到 2 美元，用户获得的效用是真的，只是不进 GDP——这正是 Dark Output 的定义 [[1]](https://newsletter.semianalysis.com/p/ai-dark-output-the-visible-cost-of)，也呼应原文附录的 care economics 类比。效用不入账 ≠ 效用不存在。
+
+4. **资本回报为负 ≠ 单位价值为零**。FT 测的是 capex 回报。dot-com 是现成对照：互联网价值千真万确，但多数公司没能回本，Cisco 用了约 26 年才回到 2000 年高点 [[4]](https://x.com/ThierryBorgeat/status/2060069195975422281)。技术价值真实 + 资本严重错配完全可以并存——这一条同时**削弱了上面的支持论据 3**，提醒「ROI 难看」证明的是错配，未必是「无价值」。
+
+### 怎么经验地区分二者（派生子议题）
+
+光看「支出↑、产出平」无法分辨 Dark Output 与 Wasted Output；要分辨，得找**独立于支出**的指标：
+
+- **补贴退坡后的用量弹性**：GPU 租金已 −40%，若 token 价格回归真实成本后用量崩塌，说明先前用量靠补贴而非价值。
+- **留存与复购率**：真实价值→高留存；浪费／试验→流失。
+- **是否沉淀进可复用工作流**，而非一次性试点或刷分。
+- **下游返工比例**：返工越高，净价值越低甚至为负。
+- **高层级市场信号是否出现**：生产环境长期使用、法庭辩护胜诉、保险承保（即原文证据阶梯的 Tier 4–6）。原文承认这些目前稀少 [1]，这本身对浪费假说有利。
+
+### 综合判断 ⚠（本人解读）
+
+原文与上述反方材料**观测的是同一现象**（支出涨、账面产出不涨），Dark Output 与 Wasted Output 在这一点上观测等价。原文用「服务业生产率原理上统计不到」证明了缺口**可以**是隐形价值，但没有排除它**也可以**是浪费；而同目录的 ROI 材料（FT 隐含回报、2 亿／5 亿美元案例、Amazon 撤榜、GPU 跌价、厂商回撤）恰好补上了原文最缺的、指向「浪费」一侧的硬实例。
+
+最站得住的结论不是二选一，而是：**缺口 = 隐形真实价值 + 浪费支出 + 资本错配 的混合**，比例未知，且会随补贴退坡和技术成熟而变。把整个缺口都算作「被计漏的产出」是乐观的一端（原文），把它全算作「泡沫」是悲观的一端（Marcus 一派）；在 ROI 普遍为负、补贴正在退坡的当下，**举证责任更应落在「价值已实现」一方**——也就是说，原文若要成立，需要的恰是它自己承认尚不充分的那种 Tier 4–6 证据，而非「统计看不见」这一不可证伪的结构性论证。
+
 ## 信源
 
 [1] M. Spittler, "AI Dark Output: The Visible Cost of Invisible Output," *SemiAnalysis Newsletter*, May 29, 2026. [Online]. Available: <https://newsletter.semianalysis.com/p/ai-dark-output-the-visible-cost-of>
 
 [2] SemiAnalysis, "Tokenomics: Dark Output," *SemiAnalysis (Institutional)*. [Online]. Available: <https://semianalysis.com/institutional/dark-output/>
+
+[3] "Stop 'tokenmaxxing' and deploy AI sensibly instead," *Nature Machine Intelligence*, vol. 8, p. 641, May 2026. (社论；定义 tokenmaxxing 与内部 token 排行榜；Jensen Huang 预期高级工程师每月消耗 25 万美元 token；OpenAI 关停 Sora；GitHub Copilot 转按量计费；输出验证仍需大量人力。) [Online]. Available: <https://doi.org/10.1038/s42256-026-01253-5>
+
+[4] T. Borgeat (@ThierryBorgeat), "The AI ROI numbers are starting to look very ugly," *X*, May 28, 2026. (转引 FT／Panmure Liberum 隐含回报：MSFT −9.2%、GOOGL −15.7%、AMZN +7.2%、META −28.8%、ORCL −35.6%；Garipalli 2 亿美元 token、Axios 单月 5 亿美元两段轶事，原帖未附可核验链接。) [Online]. Available: <https://x.com/ThierryBorgeat/status/2060069195975422281>
+
+[5] G. Marcus, "What happens next, after the decline of tokenmaxxing?," *Marcus on AI (Substack)*, May 2026. (H200 租金三周 −40%（约 7→4 美元／时）；Amazon 撤用量排行榜；Fortune"tokenmaxxing is over"；FT"仅一家转正"；作者悲观预测列表。) [Online]. Available: <https://garymarcus.substack.com/p/what-happens-next-after-the-decline>
+
+[6] Financial Times / Panmure Liberum, "Implied return on hyperscaler AI investment, 2025–30 (assuming zero costs)." 转引自 [4]、[5]。⚠ 一手 FT 图表未直接核验，逐家百分比为第三方对配图的转述。
