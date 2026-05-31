@@ -132,6 +132,12 @@ graph TD
     AR20["AR20 部分产出是负价值 slop：生成易、验证难，返工消耗下游人力，净价值或为负"]:::argument
     AR21["AR21 厂商回撤：OpenAI 关停 Sora；GitHub 暂停 Copilot 订阅转按量计费　【证据 T4·价值未兑现】"]:::argument
     AR22["AR22 资本回报为负≠单位价值为零：FT 测的是 capex 回报；dot-com 技术真实但资本错配，Cisco 约 26 年才回本（专门削弱 AR16 的推断）"]:::argument
+    AR23["AR23 Uber 四个月烧光 2026 全年 AI 预算（Claude Code＋Cursor）；COO Andrew Macdonald：画不出与产品改进的直接联系，这笔投入『harder to justify』　【证据 T4·价值未兑现】"]:::argument
+    AR24["AR24 用量被刻意工程化：Meta『Claudeonomics』排行榜（8.5万员工、30天 60.2 万亿 token、前250名，遭抨击后撤下）；Amazon 最高档每 PR 烧约 10× token 仅换约 2× 产出，据 The Information 有人写 agent 专门刷量　【证据 T4·价值未兑现】"]:::argument
+    AR25["AR25 用量规模：Visa 每月近 2 万亿 token（3月 1.9T、环比翻倍；89%员工用 AI 并奖励『用得快』）　【证据 T4·但 magnitude≠value】"]:::argument
+    AR26["AR26 留存崩塌（实测）：Waydev 跟踪 50 公司逾 1 万工程师，AI 代码表面接受率 80–90%，数周返工后真实留存率仅 10–30%　【证据 T4·价值未兑现】"]:::argument
+    AR27["AR27 返工激增（实测）：GitClear 研究，重度 AI 用户代码 churn 是非 AI 用户的 9.4 倍　【证据 T4·价值未兑现】"]:::argument
+    AR28["AR28 综述：TechCrunch 2026-04-17『更多代码被写出来了，但不成比例的大量代码留不住』（综合 AR26／AR27）　【综述·T4 测量】"]:::argument
 
     AR14 -- 支持 --> PO15
     AR4 -- 支持 --> PO15
@@ -146,6 +152,14 @@ graph TD
     AR20 -- 支持 --> PO15
     AR21 -- 支持 --> PO15
     AR22 -- 反对 --> PO15
+    AR23 -- 支持 --> PO15
+    AR24 -- 支持 --> PO15
+    AR25 -- 支持 --> PO15
+    AR26 -- 支持 --> PO15
+    AR27 -- 支持 --> PO15
+    AR28 -- 支持 --> PO15
+    AR26 -- 支持 --> PO17
+    AR27 -- 支持 --> PO17
 
     IS10{{"IS10 子议题：用什么经验指标，才能把『隐形真实产出』与『浪费支出』区分开？"}}:::issue
     PO17("PO17 候选检验——补贴退坡后用量弹性／留存复购／可复用工作流／返工比例／承保·判例"):::position
@@ -270,6 +284,22 @@ IS7 与 IS5 同源——两者都是对 PO6 市场信号方法（验证阶梯支
 
 9. **【AR4｜反对 PO7·支持 PO15｜阶梯天花板 T4】顶层市场信号稀少**。原文承认尚未见 T5（经裁决／审计）／T6（保险承保）级活动；生产环境长期使用、法庭胜诉、保险承保这些「价值已实现／已担责」的高强度信号目前都稀少 [1]，这本身对 PO15 有利。
 
+下面六条是 2026 年 4–5 月的产业实测证据，前三条加固「用量飙升」一侧、后三条提供「留存崩塌」这一**独立于支出的价值度量**（也正是 PO17 所提的检验）：
+
+10. **【AR23｜支持 PO15｜证据 T4·价值未兑现】Uber：烧光预算却画不出价值线**。Uber 四个月就烧光 2026 全年用于 Claude Code＋Cursor 的预算（4 月由 CTO Praveen Neppalli Naga 披露），COO Andrew Macdonald 在 Rapid Response 播客（2026-05-23）称这是「head-exploding moment」：尽管工程团队近乎全员用 AI（用 Claude Code 占比 2 月约 1/3→3 月 84%、人均月账单 150–250 美元），却画不出与「向用户交付的功能」之间的直接联系，于是这笔投入「harder to justify」[[7]](https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/)。这是 T4 级真实部署、读数却是价值无法归因。
+
+11. **【AR24｜支持 PO15｜证据 T4·价值未兑现】用量被刻意工程化**。Meta 内部搞了个「Claudeonomics」排行榜，聚合 8.5 万员工的 token 用量、列前 250 名（头衔如「Token Legend」），30 天烧掉 60.2 万亿 token（按 Anthropic API 价约合 9 亿美元），遭舆论抨击后撤下；据 The Information，Amazon 最高用量档工程师每个 PR 消耗约 10 倍 token、产出却只有约 2 倍，并有人写 agent 专门抬高用量 [[8]](https://fortune.com/2026/05/12/amazon-tokenmaxxing-claude-ai-capex-meta-gil-luria/)。与 AR18 同机制（用量当 KPI），但这里证据更进一步：刷量是**被刻意工程化**的。
+
+12. **【AR25｜支持 PO15｜证据 T4·但 magnitude≠value】用量规模**。Visa 每月消耗近 2 万亿 token（3 月约 1.9 万亿、环比翻倍），89% 员工用 AI，且对「用得快」的团队给予奖励 [[9]](https://letsdatascience.com/news/visa-burns-through-almost-2-trillion-ai-tokens-monthly-f6a83981)。⚠ 两点保留：(a) Visa 这组数字目前只见于二三线聚合站、未见一手财报，信源较弱；(b) 巨量 token 本身只证明「规模」、不证明「价值」——它之所以归到 PO15 一侧，是因为「奖励用得快」正是把用量当 KPI 的激励机制，会系统性地把支出推到价值之上。
+
+13. **【AR26｜支持 PO15·支持 PO17｜证据 T4·价值未兑现】留存崩塌（实测，非轶事）**。Waydev 跟踪 50 家公司、逾 1 万名工程师：AI 生成代码的**表面接受率 80–90%** 很漂亮，但计入数周内的返工后，**真实留存率只有 10–30%**（CEO Alex Circei）[[10]](https://techcrunch.com/2026/04/17/tokenmaxxing-is-making-developers-less-productive-than-they-think/)。这是测量级证据，且直接落在 PO17 的「留存率」检验上。
+
+14. **【AR27｜支持 PO15·支持 PO17｜证据 T4·价值未兑现】返工激增（实测）**。GitClear 研究：重度 AI 用户的代码 **churn 是非 AI 用户的 9.4 倍**[[11]](https://www.gitclear.com/ai_assistant_code_quality_2025_research)。churn（短期内被改写／删除的代码）越高、净沉淀越低——这正是 PO17 的「下游返工比例」检验，结果指向「大量产出留不住」。
+
+15. **【AR28｜支持 PO15｜综述·T4 测量】一句话总结**。TechCrunch（2026-04-17）综合上述测量：「更多代码被写出来了，但不成比例的大量代码留不住」（More code is being written, but a disproportionate amount of it isn't sticking）[[10]](https://techcrunch.com/2026/04/17/tokenmaxxing-is-making-developers-less-productive-than-they-think/)。它是 AR26／AR27 的综述，不是独立证据。
+
+⚠ 这六条（尤其 AR26／AR27）的份量：它们集中在**编程**这一最大 token 类别（参见前文 Anthropic 经济指数 37% token 用于计算机与数学），且是**测量**而非轶事；它们提供的「留存／churn」恰是此前所说"缺位"的**独立于支出的价值度量**——见下文综合判断的更新。
+
 ### 反对 PO15 的论据（－ 边指向 PO15，多为同时支持 PO1）
 
 1. **【AR9｜支持 PO1·反对 PO15】服务业生产率滞后确有先例**。Solow 悖论（计算机时代不现于生产率统计）后来部分被追认，2013 年把研发计入 GDP 一次就给 1990s 补记约 3.6 万亿美元 [[1]](https://newsletter.semianalysis.com/p/ai-dark-output-the-visible-cost-of)。「现在看不见」不必然「不存在」——这是原文最硬的结构性论据，也是 PO15 必须正面回应的。
@@ -285,14 +315,14 @@ IS7 与 IS5 同源——两者都是对 PO6 市场信号方法（验证阶梯支
 光看「支出↑、产出平」无法分辨 PO1（隐形价值）与 PO15（浪费）；要分辨，得找**独立于支出**的指标（即 PO17 的候选检验）：
 
 - **补贴退坡后的用量弹性**：GPU 租金已 −40%，若 token 价格回归真实成本后用量崩塌，说明先前用量靠补贴而非价值。
-- **留存与复购率**：真实价值→高留存；浪费／试验→流失。
+- **留存与复购率**：真实价值→高留存；浪费／试验→流失。**编程域已有实测**：AI 代码真实留存率仅 10–30%（AR26）。
 - **是否沉淀进可复用工作流**，而非一次性试点或刷分。
-- **下游返工比例**：返工越高，净价值越低甚至为负。
+- **下游返工比例**：返工越高，净价值越低甚至为负。**编程域已有实测**：AI 用户 churn 是非 AI 用户的 9.4 倍（AR27）。
 - **高层级市场信号是否出现**：生产环境长期使用、法庭辩护胜诉、保险承保（即 AR2 验证阶梯的 T4–T6）。原文承认这些目前稀少（AR4），这本身对 PO15 有利。
 
 ### 综合判断（PO16）⚠（本人解读）
 
-原文（PO1）与上述反方材料**观测的是同一现象**（支出涨、账面产出不涨），隐形价值与浪费在这一点上观测等价。原文用「服务业生产率原理上统计不到」（AR10）证明了缺口**可以**是隐形价值，但 AR14 指出它**也可以**是浪费；而同目录的 ROI 材料（AR16 的 FT 隐含回报、AR17 的 2 亿／5 亿美元案例、AR18 的 Amazon 撤榜、AR19 的 GPU 跌价、AR21 的厂商回撤）恰好补上了原文最缺的、指向「浪费」一侧的硬实例。
+原文（PO1）与上述反方材料**观测的是同一现象**（支出涨、账面产出不涨），隐形价值与浪费在这一点上观测等价。原文用「服务业生产率原理上统计不到」（AR10）证明了缺口**可以**是隐形价值，但 AR14 指出它**也可以**是浪费；而同目录的 ROI 材料（AR16 的 FT 隐含回报、AR17 的 2 亿／5 亿美元案例、AR18 的 Amazon 撤榜、AR19 的 GPU 跌价、AR21 的厂商回撤）以及产业实测（AR23 的 Uber 烧光预算、AR24 的 Meta／Amazon 刷量、AR26 的 Waydev 留存崩塌、AR27 的 GitClear churn 9.4 倍）恰好补上了原文最缺的、指向「浪费」一侧的硬实例。**其中 AR26／AR27 尤为关键：它们是对价值兑现的直接测量，而非"有人花钱"的间接信号**，在编程这一最大 token 类别上把天平推向「浪费」。
 
 最站得住的结论是 PO16，而非二选一：**缺口 = 隐形真实价值 + 浪费支出 + 资本错配 的混合**，比例未知，且会随补贴退坡和技术成熟而变。把整个缺口都算作「被计漏的产出」是乐观的一端（原文 PO1），把它全算作「泡沫」是悲观的一端（Marcus 一派）；在 ROI 普遍为负、补贴正在退坡的当下，**举证责任更应落在「价值已实现」一方**——也就是说，原文若要成立，需要的恰是它自己承认尚不充分的那种 T4–T6 证据（AR2 验证阶梯顶端），而非「统计看不见」这一不可证伪的结构性论证（AR14 所指）。
 
@@ -310,10 +340,18 @@ IS7 与 IS5 同源——两者都是对 PO6 市场信号方法（验证阶梯支
 | AR18 | 支持 PO15 | **T4** | Amazon 生产环境真实做法（按 token 排名／刷量），读数为用量≠产出 |
 | AR21 | 支持 PO15 | **T4** | 厂商生产级决策（关停 Sora、Copilot 转按量），读数为回撤 |
 | AR4 | 反对 PO7·支持 PO15 | **天花板 T4** | 明确指出尚无 T5（裁决）／T6（承保）级活动 |
+| AR23 | 支持 PO15 | **T4·价值未兑现** | Uber 生产环境全员部署，COO 称画不出价值线、harder to justify |
+| AR24 | 支持 PO15 | **T4·价值未兑现** | Meta／Amazon 生产环境用量被刻意工程化（刷量），用量与产出脱钩 |
+| AR25 | 支持 PO15 | **T4·magnitude≠value** | Visa 近 2 万亿 token／月——T4 部署规模，但量级本身不证明价值；⚠ 信源较弱 |
+| AR26 | 支持 PO15·支持 PO17 | **T4·价值未兑现** | Waydev 测量：表面接受 80–90% → 真实留存 10–30%（直接量到价值流失） |
+| AR27 | 支持 PO15·支持 PO17 | **T4·价值未兑现** | GitClear 测量：AI 用户 churn 9.4× 非 AI 用户 |
+| AR28 | 支持 PO15 | **综述·T4 测量** | TechCrunch 对 AR26／AR27 的综述，非独立证据 |
 
 **不在阶梯上（N/A）**：AR1（基准方法批评）、AR2（阶梯本身）、AR5（类比告诫）、AR6／AR7（学术统计引用）、AR8（作者自承）、AR9（历史经济事实）、AR10（统计口径）、AR11（概念类比）、AR12（经济学理论 + 举例）、AR14（纯逻辑）、AR15（元观察：自陈证据多 anecdotal ≈ T0–T1）、AR16（投行资本回报测算，属另一坐标轴）、AR19（GPU 商品价格）、AR20（Nature 专家对「验证负担」的论断，为负向、不在正向阶梯上）、AR22（dot-com／Cisco 类比）。
 
-**评级浮现的判断** ⚠（本人解读）：按阶梯定义，**T4 仅指「真实部署 + 有钱在流动」，并不等于价值已兑现**——所以正反双方都握有 T4 级证据：支持「价值真实」的 AR3／AR13 证明 AI 被广泛采用与付费，支持「浪费」的 AR17／AR18／AR21 证明「用了、付了 ≠ 值了」。能真正裁定价值是否兑现的 **T5（经裁决）、T6（承保）两级至今全空**（AR4）。也就是说：**PO1 与 PO15 之争在阶梯上还无法判定**——双方在 T4 打平、顶层无证据，于是只能退回到无法用阶梯检验的结构性论证（AR9／AR10／AR14 等）。这正是 PO16、以及「举证责任落在『价值已实现』一方」的由来。
+**评级浮现的判断** ⚠（本人解读）：按阶梯定义，**T4 仅指「真实部署 + 有钱在流动」，并不等于价值已兑现**——所以正反双方都握有 T4 级证据：支持「价值真实」的 AR3／AR13 证明 AI 被广泛采用与付费，支持「浪费」的 AR17／AR18／AR21／AR23／AR24／AR25 证明「用了、付了 ≠ 值了」。能真正裁定价值是否兑现的 **T5（经裁决）、T6（承保）两级至今全空**（AR4）。
+
+但 T4 内部并非铁板一块。新增的 AR26／AR27 是**对价值兑现本身的直接测量**（代码留存率、churn），而非「有人在花钱」这种间接信号——它们在 T4 这一层里**进一步把「部署了」与「兑现了」拆开**：表面接受 80–90% vs 真实留存 10–30%、churn 9.4 倍，量到的恰是「部署后价值没沉淀下来」。换言之，虽然 T5／T6 仍空，但 PO1／PO15 之争**不再只能退回结构性论证**——在编程这一最大 token 类别上，已经有测量级证据，且方向偏向 PO15（大量产出留不住）。这把天平在该子领域明显推向「浪费」一侧，同时不改变其他领域（被捕获型、消费者剩余）仍可能是真价值的判断——故整体仍是 PO16 的混合，只是混合比例在编程域更偏浪费。
 
 ## 信源
 
@@ -328,3 +366,13 @@ IS7 与 IS5 同源——两者都是对 PO6 市场信号方法（验证阶梯支
 [5] G. Marcus, "What happens next, after the decline of tokenmaxxing?," *Marcus on AI (Substack)*, May 2026. (H200 租金三周 −40%（约 7→4 美元／时）；Amazon 撤用量排行榜；Fortune"tokenmaxxing is over"；FT"仅一家转正"；作者悲观预测列表。) [Online]. Available: <https://garymarcus.substack.com/p/what-happens-next-after-the-decline>
 
 [6] Financial Times / Panmure Liberum, "Implied return on hyperscaler AI investment, 2025–30 (assuming zero costs)." 转引自 [4]、[5]。⚠ 一手 FT 图表未直接核验，逐家百分比为第三方对配图的转述。
+
+[7] "Uber burned through its entire 2026 AI budget in four months. Now its COO is questioning whether it's worth it," *Fortune*, May 26, 2026. (COO Andrew Macdonald 在 Rapid Response 播客 2026-05-23 称烧光 Claude Code＋Cursor 预算为 head-exploding moment、AI 投入 harder to justify；4 月由 CTO Praveen Neppalli Naga 披露；用 Claude Code 工程师占比 2 月约 1/3→3 月 84%，人均月账单 150–250 美元、重度用户 500–2000。) [Online]. Available: <https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/>
+
+[8] "'That doesn't sound very healthy': Amazon's reported tokenmaxxing might gamify AI usage / Meta's 'Claudeonomics' leaderboard," *Fortune*, May 2026. (据 The Information：Meta 聚合 8.5 万员工 token 用量、列前 250、30 天 60.2 万亿 token（≈9 亿美元 API 价），遭抨击后撤下；Amazon 最高档每 PR 约 10× token 仅 2× 产出，有人写 agent 刷量。) [Online]. Available: <https://fortune.com/2026/05/12/amazon-tokenmaxxing-claude-ai-capex-meta-gil-luria/>
+
+[9] "Visa Burns Through Almost 2 Trillion AI Tokens Monthly," *Let's Data Science*, 2026. (Visa 3 月约 1.9 万亿 token／月、环比翻倍；89% 员工用 AI、44% 为 power user。) ⚠ 仅见于二三线聚合站，未见 Visa 一手财报，信源较弱。 [Online]. Available: <https://letsdatascience.com/news/visa-burns-through-almost-2-trillion-ai-tokens-monthly-f6a83981>
+
+[10] R. Bracken, "'Tokenmaxxing' is making developers less productive than they think," *TechCrunch*, Apr. 17, 2026. (Waydev：50 公司逾 1 万工程师，AI 代码表面接受 80–90% → 真实留存 10–30%（CEO Alex Circei）；"More code is being written, but a disproportionate amount of it isn't sticking"；Faros AI churn +861%；某商 2× 产出／10× token 成本。) [Online]. Available: <https://techcrunch.com/2026/04/17/tokenmaxxing-is-making-developers-less-productive-than-they-think/>
+
+[11] GitClear, "AI Copilot Code Quality: 2025 Data Suggests 4x Growth in Code Clones," Jan. 2026. (重度 AI 用户代码 churn 为非 AI 用户的 9.4 倍；分析逾 1.5 亿行代码。) [Online]. Available: <https://www.gitclear.com/ai_assistant_code_quality_2025_research>
