@@ -20,6 +20,10 @@
 ⚠ 说明：IBIS 的拆解是本人对原文论证结构的重构方式，并非原文自身的章节划分；下方两节文字逐条对应这些节点 ID 与原文数据。
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 graph TD
     classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;
     classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;
