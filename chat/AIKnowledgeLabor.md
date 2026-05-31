@@ -115,7 +115,7 @@ AI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且�
 
 ### 2.1 从数据归纳，而不是从规则编译
 
-传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的"苦涩教训"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是"预测下一词的错误率"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种"教育投入"精细化为"每参数对应约 20 token"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。
+传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的"苦涩教训"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是"预测下一词的错误率"）上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种"教育投入"精细化为"每参数对应约 20 token"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。
 
 ### 2.2 理解模糊、自然语言的指令
 

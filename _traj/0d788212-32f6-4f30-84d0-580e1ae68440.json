@@ -6246,19 +6246,932 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 68,
+      "timestamp": "2026-05-31T06:32:01.896Z",
+      "source": "user",
+      "message": "2.1中的数学表达式显示不正确",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 69,
+      "timestamp": "2026-05-31T06:32:05.587Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Let me look at the math expressions in section 2.1.",
+      "metrics": {
+        "prompt_tokens": 16426,
+        "completion_tokens": 140,
+        "cached_tokens": 16295,
+        "extra": {
+          "cache_creation_input_tokens": 150090,
+          "cache_read_input_tokens": 16295,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 150090,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 140,
+              "cache_read_input_tokens": 16295,
+              "cache_creation_input_tokens": 150090,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 150090
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 70,
+      "timestamp": "2026-05-31T06:32:06.321Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01H2xxqjkTKAwV96ipYWVtAW",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01H2xxqjkTKAwV96ipYWVtAW",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+            "offset": 100,
+            "limit": 4
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01H2xxqjkTKAwV96ipYWVtAW",
+            "content": "100\tAI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且规模、速度、可复制性都是历史最高水平。\n101\t\n102\t## 二、LLM Agent 的能力轮廓：为什么它是\"劳动力\"，而不是工具\n103\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md\", \"content\": \"AI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且规模、速度、可复制性都是历史最高水平。\\n\\n## 二、LLM Agent 的能力轮廓：为什么它是\\\"劳动力\\\"，而不是工具\\n\", \"numLines\": 4, \"startLine\": 100, \"totalLines\": 821}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16426,
+        "completion_tokens": 140,
+        "cached_tokens": 16295,
+        "extra": {
+          "cache_creation_input_tokens": 150090,
+          "cache_read_input_tokens": 16295,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 150090,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 140,
+              "cache_read_input_tokens": 16295,
+              "cache_creation_input_tokens": 150090,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 150090
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+              "content": "AI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且规模、速度、可复制性都是历史最高水平。\n\n## 二、LLM Agent 的能力轮廓：为什么它是\"劳动力\"，而不是工具\n",
+              "numLines": 4,
+              "startLine": 100,
+              "totalLines": 821
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01H2xxqjkTKAwV96ipYWVtAW",
+            "type": "tool_result",
+            "content": "100\tAI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且规模、速度、可复制性都是历史最高水平。\n101\t\n102\t## 二、LLM Agent 的能力轮廓：为什么它是\"劳动力\"，而不是工具\n103\t"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+              "content": "AI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且规模、速度、可复制性都是历史最高水平。\n\n## 二、LLM Agent 的能力轮廓：为什么它是\"劳动力\"，而不是工具\n",
+              "numLines": 4,
+              "startLine": 100,
+              "totalLines": 821
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01H2xxqjkTKAwV96ipYWVtAW",
+            "type": "tool_result",
+            "content": "100\tAI 释放的虚拟知识劳动力，是上述剧本的脑力版本——而且规模、速度、可复制性都是历史最高水平。\n101\t\n102\t## 二、LLM Agent 的能力轮廓：为什么它是\"劳动力\"，而不是工具\n103\t"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+          "offset": 100,
+          "limit": 4
+        }
+      }
+    },
+    {
+      "step_id": 71,
+      "timestamp": "2026-05-31T06:32:09.075Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01AbWijcatTx7SfekXzi1ndm",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01AbWijcatTx7SfekXzi1ndm",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+            "offset": 106,
+            "limit": 4
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01AbWijcatTx7SfekXzi1ndm",
+            "content": "106\t| 关键属性 | 人力 | AI劳动力 | 经典计算工具 |\n107\t| --- | --- | --- | --- |\n108\t| 行为规律 | 混合 | 从数据归纳 | 确定性规则 |\n109\t| I/O形态 | 自然、模糊 | 自然、模糊 | 机械、单一 |\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md\", \"content\": \"| 关键属性 | 人力 | AI劳动力 | 经典计算工具 |\\n| --- | --- | --- | --- |\\n| 行为规律 | 混合 | 从数据归纳 | 确定性规则 |\\n| I/O形态 | 自然、模糊 | 自然、模糊 | 机械、单一 |\", \"numLines\": 4, \"startLine\": 106, \"totalLines\": 821}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 166387,
+        "completion_tokens": 122,
+        "cached_tokens": 166385,
+        "extra": {
+          "cache_creation_input_tokens": 372,
+          "cache_read_input_tokens": 166385,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 372,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 122,
+              "cache_read_input_tokens": 166385,
+              "cache_creation_input_tokens": 372,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 372
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+              "content": "| 关键属性 | 人力 | AI劳动力 | 经典计算工具 |\n| --- | --- | --- | --- |\n| 行为规律 | 混合 | 从数据归纳 | 确定性规则 |\n| I/O形态 | 自然、模糊 | 自然、模糊 | 机械、单一 |",
+              "numLines": 4,
+              "startLine": 106,
+              "totalLines": 821
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AbWijcatTx7SfekXzi1ndm",
+            "type": "tool_result",
+            "content": "106\t| 关键属性 | 人力 | AI劳动力 | 经典计算工具 |\n107\t| --- | --- | --- | --- |\n108\t| 行为规律 | 混合 | 从数据归纳 | 确定性规则 |\n109\t| I/O形态 | 自然、模糊 | 自然、模糊 | 机械、单一 |"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+              "content": "| 关键属性 | 人力 | AI劳动力 | 经典计算工具 |\n| --- | --- | --- | --- |\n| 行为规律 | 混合 | 从数据归纳 | 确定性规则 |\n| I/O形态 | 自然、模糊 | 自然、模糊 | 机械、单一 |",
+              "numLines": 4,
+              "startLine": 106,
+              "totalLines": 821
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01AbWijcatTx7SfekXzi1ndm",
+            "type": "tool_result",
+            "content": "106\t| 关键属性 | 人力 | AI劳动力 | 经典计算工具 |\n107\t| --- | --- | --- | --- |\n108\t| 行为规律 | 混合 | 从数据归纳 | 确定性规则 |\n109\t| I/O形态 | 自然、模糊 | 自然、模糊 | 机械、单一 |"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+          "offset": 106,
+          "limit": 4
+        }
+      }
+    },
+    {
+      "step_id": 72,
+      "timestamp": "2026-05-31T06:32:11.815Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 166759,
+        "completion_tokens": 215,
+        "cached_tokens": 166757,
+        "extra": {
+          "cache_creation_input_tokens": 245,
+          "cache_read_input_tokens": 166757,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 245,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 215,
+              "cache_read_input_tokens": 166757,
+              "cache_creation_input_tokens": 245,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 245
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 73,
+      "timestamp": "2026-05-31T06:32:13.013Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01GyECNYD9RydJHUwhjc42FK",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01GyECNYD9RydJHUwhjc42FK",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "grep -n \"### 2.1\\|### 2.2\\|\\$N\\$\\|\\$D\\$\\|\\$C\\$\\|幂律\\|交叉熵\" chat/AIKnowledgeLabor.md | head",
+            "description": "Find section 2.1 and math expressions"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01GyECNYD9RydJHUwhjc42FK",
+            "content": "25:      - [2.7.2.2 标度律：错误率与算力/参数量的幂律](#2722-标度律错误率与算力参数量的幂律)\n116:### 2.1 从数据归纳，而不是从规则编译\n118:传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\n120:### 2.2 理解模糊、自然语言的指令\n166:##### 2.7.2.2 标度律：错误率与算力/参数量的幂律\n296:### 2.10 AI 能力的\"锯齿状边界\" (Jagged Frontier)\n\n[stdout]\n25:      - [2.7.2.2 标度律：错误率与算力/参数量的幂律](#2722-标度律错误率与算力参数量的幂律)\n116:### 2.1 从数据归纳，而不是从规则编译\n118:传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\n120:### 2.2 理解模糊、自然语言的指令\n166:##### 2.7.2.2 标度律：错误率与算力/参数量的幂律\n296:### 2.10 AI 能力的\"锯齿状边界\" (Jagged Frontier)\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 166759,
+        "completion_tokens": 215,
+        "cached_tokens": 166757,
+        "extra": {
+          "cache_creation_input_tokens": 245,
+          "cache_read_input_tokens": 166757,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 245,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 215,
+              "cache_read_input_tokens": 166757,
+              "cache_creation_input_tokens": 245,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 245
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "25:      - [2.7.2.2 标度律：错误率与算力/参数量的幂律](#2722-标度律错误率与算力参数量的幂律)\n116:### 2.1 从数据归纳，而不是从规则编译\n118:传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\n120:### 2.2 理解模糊、自然语言的指令\n166:##### 2.7.2.2 标度律：错误率与算力/参数量的幂律\n296:### 2.10 AI 能力的\"锯齿状边界\" (Jagged Frontier)",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GyECNYD9RydJHUwhjc42FK",
+            "type": "tool_result",
+            "content": "25:      - [2.7.2.2 标度律：错误率与算力/参数量的幂律](#2722-标度律错误率与算力参数量的幂律)\n116:### 2.1 从数据归纳，而不是从规则编译\n118:传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\n120:### 2.2 理解模糊、自然语言的指令\n166:##### 2.7.2.2 标度律：错误率与算力/参数量的幂律\n296:### 2.10 AI 能力的\"锯齿状边界\" (Jagged Frontier)",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "25:      - [2.7.2.2 标度律：错误率与算力/参数量的幂律](#2722-标度律错误率与算力参数量的幂律)\n116:### 2.1 从数据归纳，而不是从规则编译\n118:传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\n120:### 2.2 理解模糊、自然语言的指令\n166:##### 2.7.2.2 标度律：错误率与算力/参数量的幂律\n296:### 2.10 AI 能力的\"锯齿状边界\" (Jagged Frontier)",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GyECNYD9RydJHUwhjc42FK",
+            "type": "tool_result",
+            "content": "25:      - [2.7.2.2 标度律：错误率与算力/参数量的幂律](#2722-标度律错误率与算力参数量的幂律)\n116:### 2.1 从数据归纳，而不是从规则编译\n118:传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\n120:### 2.2 理解模糊、自然语言的指令\n166:##### 2.7.2.2 标度律：错误率与算力/参数量的幂律\n296:### 2.10 AI 能力的\"锯齿状边界\" (Jagged Frontier)",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "grep -n \"### 2.1\\|### 2.2\\|\\$N\\$\\|\\$D\\$\\|\\$C\\$\\|幂律\\|交叉熵\" chat/AIKnowledgeLabor.md | head",
+          "description": "Find section 2.1 and math expressions"
+        }
+      }
+    },
+    {
+      "step_id": 74,
+      "timestamp": "2026-05-31T06:33:19.374Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 167004,
+        "completion_tokens": 4835,
+        "cached_tokens": 167002,
+        "extra": {
+          "cache_creation_input_tokens": 869,
+          "cache_read_input_tokens": 167002,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 869,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 4835,
+              "cache_read_input_tokens": 167002,
+              "cache_creation_input_tokens": 869,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 869
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 75,
+      "timestamp": "2026-05-31T06:33:20.331Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "The math in 2.1 is the inline `$N$`、`$D$`、`$C$`. Let me check how inline math is written elsewhere in the doc to pinpoint why only 2.1 breaks.",
+      "metrics": {
+        "prompt_tokens": 167004,
+        "completion_tokens": 4835,
+        "cached_tokens": 167002,
+        "extra": {
+          "cache_creation_input_tokens": 869,
+          "cache_read_input_tokens": 167002,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 869,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 4835,
+              "cache_read_input_tokens": 167002,
+              "cache_creation_input_tokens": 869,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 869
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 76,
+      "timestamp": "2026-05-31T06:33:21.662Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_013FCMReD8tjtqeTnZqyARAJ",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_013FCMReD8tjtqeTnZqyARAJ",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "grep -noE '\\$[^$]+\\$.' chat/AIKnowledgeLabor.md | head -40",
+            "description": "Find inline math spans and the char following each"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_013FCMReD8tjtqeTnZqyARAJ",
+            "content": "118:$N$、\n118:$D$、\n118:$C$ \n160:$1-\\delta$ \n160:$\\epsilon$ \n162:$N \\ge \\frac{1}{\\epsilon}\\left(\\ln\\frac{1}{\\delta} + \\text{VC}(H)\\right)$$\n164:$N$ \n164:$\\epsilon$ \n178:$p > 0.5$（\n178:$K$，\n180:$\\text{Error Rate} \\propto e^{-K \\cdot D_{\\text{KL}}}$$\n182:$D_{\\text{KL}}$ \n557:$10^{60}$ \n585:$10^{60}$ \n748:$3 trillion in daily commerce; 95% of ATM transactions; CBA core replacement ~$7\n\n[stdout]\n118:$N$、\n118:$D$、\n118:$C$ \n160:$1-\\delta$ \n160:$\\epsilon$ \n162:$N \\ge \\frac{1}{\\epsilon}\\left(\\ln\\frac{1}{\\delta} + \\text{VC}(H)\\right)$$\n164:$N$ \n164:$\\epsilon$ \n178:$p > 0.5$（\n178:$K$，\n180:$\\text{Error Rate} \\propto e^{-K \\cdot D_{\\text{KL}}}$$\n182:$D_{\\text{KL}}$ \n557:$10^{60}$ \n585:$10^{60}$ \n748:$3 trillion in daily commerce; 95% of ATM transactions; CBA core replacement ~$7\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 167004,
+        "completion_tokens": 4835,
+        "cached_tokens": 167002,
+        "extra": {
+          "cache_creation_input_tokens": 869,
+          "cache_read_input_tokens": 167002,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 869,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 4835,
+              "cache_read_input_tokens": 167002,
+              "cache_creation_input_tokens": 869,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 869
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "118:$N$、\n118:$D$、\n118:$C$ \n160:$1-\\delta$ \n160:$\\epsilon$ \n162:$N \\ge \\frac{1}{\\epsilon}\\left(\\ln\\frac{1}{\\delta} + \\text{VC}(H)\\right)$$\n164:$N$ \n164:$\\epsilon$ \n178:$p > 0.5$（\n178:$K$，\n180:$\\text{Error Rate} \\propto e^{-K \\cdot D_{\\text{KL}}}$$\n182:$D_{\\text{KL}}$ \n557:$10^{60}$ \n585:$10^{60}$ \n748:$3 trillion in daily commerce; 95% of ATM transactions; CBA core replacement ~$7",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013FCMReD8tjtqeTnZqyARAJ",
+            "type": "tool_result",
+            "content": "118:$N$、\n118:$D$、\n118:$C$ \n160:$1-\\delta$ \n160:$\\epsilon$ \n162:$N \\ge \\frac{1}{\\epsilon}\\left(\\ln\\frac{1}{\\delta} + \\text{VC}(H)\\right)$$\n164:$N$ \n164:$\\epsilon$ \n178:$p > 0.5$（\n178:$K$，\n180:$\\text{Error Rate} \\propto e^{-K \\cdot D_{\\text{KL}}}$$\n182:$D_{\\text{KL}}$ \n557:$10^{60}$ \n585:$10^{60}$ \n748:$3 trillion in daily commerce; 95% of ATM transactions; CBA core replacement ~$7",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "118:$N$、\n118:$D$、\n118:$C$ \n160:$1-\\delta$ \n160:$\\epsilon$ \n162:$N \\ge \\frac{1}{\\epsilon}\\left(\\ln\\frac{1}{\\delta} + \\text{VC}(H)\\right)$$\n164:$N$ \n164:$\\epsilon$ \n178:$p > 0.5$（\n178:$K$，\n180:$\\text{Error Rate} \\propto e^{-K \\cdot D_{\\text{KL}}}$$\n182:$D_{\\text{KL}}$ \n557:$10^{60}$ \n585:$10^{60}$ \n748:$3 trillion in daily commerce; 95% of ATM transactions; CBA core replacement ~$7",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013FCMReD8tjtqeTnZqyARAJ",
+            "type": "tool_result",
+            "content": "118:$N$、\n118:$D$、\n118:$C$ \n160:$1-\\delta$ \n160:$\\epsilon$ \n162:$N \\ge \\frac{1}{\\epsilon}\\left(\\ln\\frac{1}{\\delta} + \\text{VC}(H)\\right)$$\n164:$N$ \n164:$\\epsilon$ \n178:$p > 0.5$（\n178:$K$，\n180:$\\text{Error Rate} \\propto e^{-K \\cdot D_{\\text{KL}}}$$\n182:$D_{\\text{KL}}$ \n557:$10^{60}$ \n585:$10^{60}$ \n748:$3 trillion in daily commerce; 95% of ATM transactions; CBA core replacement ~$7",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "grep -noE '\\$[^$]+\\$.' chat/AIKnowledgeLabor.md | head -40",
+          "description": "Find inline math spans and the char following each"
+        }
+      }
+    },
+    {
+      "step_id": 77,
+      "timestamp": "2026-05-31T06:33:54.635Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 167873,
+        "completion_tokens": 2790,
+        "cached_tokens": 167871,
+        "extra": {
+          "cache_creation_input_tokens": 5077,
+          "cache_read_input_tokens": 167871,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 5077,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2790,
+              "cache_read_input_tokens": 167871,
+              "cache_creation_input_tokens": 5077,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 5077
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 78,
+      "timestamp": "2026-05-31T06:33:57.405Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Found it. The inline math at line 118 is the only place where a `$...$` span is immediately followed by a CJK comma (`$N$、`, `$D$、`) with no trailing space — unlike the math in 2.7.2, which is always followed by a space. Many markdown/KaTeX renderers fail to close an inline `$...$` span when it butts directly against a full-width CJK punctuation mark, so `$N$` shows up as literal text.\n\nSince these are just single-letter variable names (not formulas), the robust fix is to use markdown italics instead of LaTeX:",
+      "metrics": {
+        "prompt_tokens": 167873,
+        "completion_tokens": 2790,
+        "cached_tokens": 167871,
+        "extra": {
+          "cache_creation_input_tokens": 5077,
+          "cache_read_input_tokens": 167871,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 5077,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2790,
+              "cache_read_input_tokens": 167871,
+              "cache_creation_input_tokens": 5077,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 5077
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 79,
+      "timestamp": "2026-05-31T06:33:58.980Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01EtSmZ4H9HWbAiQ8R5mbtAe",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01EtSmZ4H9HWbAiQ8R5mbtAe",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+            "old_string": "上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布",
+            "new_string": "上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01EtSmZ4H9HWbAiQ8R5mbtAe",
+            "content": "The file /Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md\", \"oldString\": \"上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布\", \"newString\": \"上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 115, \"oldLines\": 7, \"newStart\": 115, \"newLines\": 7, \"lines\": [\" \", \" ### 2.1 从数据归纳，而不是从规则编译\", \" \", \"-传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\\\"苦涩教训\\\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\\\"预测下一词的错误率\\\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\\\"教育投入\\\"精细化为\\\"每参数对应约 20 token\\\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\", \"+传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\\\"苦涩教训\\\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\\\"预测下一词的错误率\\\"）上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\\\"教育投入\\\"精细化为\\\"每参数对应约 20 token\\\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。\", \" \", \" ### 2.2 理解模糊、自然语言的指令\", \" \"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 167873,
+        "completion_tokens": 2790,
+        "cached_tokens": 167871,
+        "extra": {
+          "cache_creation_input_tokens": 5077,
+          "cache_read_input_tokens": 167871,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 5077,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2790,
+              "cache_read_input_tokens": 167871,
+              "cache_creation_input_tokens": 5077,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 5077
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+            "oldString": "上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布",
+            "newString": "上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 115,
+                "oldLines": 7,
+                "newStart": 115,
+                "newLines": 7,
+                "lines": [
+                  " ",
+                  " ### 2.1 从数据归纳，而不是从规则编译",
+                  " ",
+                  "-传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。",
+                  "+传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。",
+                  " ",
+                  " ### 2.2 理解模糊、自然语言的指令",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01EtSmZ4H9HWbAiQ8R5mbtAe",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+            "oldString": "上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布",
+            "newString": "上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 115,
+                "oldLines": 7,
+                "newStart": 115,
+                "newLines": 7,
+                "lines": [
+                  " ",
+                  " ### 2.1 从数据归纳，而不是从规则编译",
+                  " ",
+                  "-传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。",
+                  "+传统软件 = 人类工程师写出的 if-else 规则，代码行数受人脑管理极限约束。LLM = 从万亿 token 的语料里隐式归纳模式——这是人类婴儿学语言、成年人学新行业的方式。Richard Sutton 在 2019 年那篇被反复引用的短文 *The Bitter Lesson* 里总结了 AI 研究 70 年的\"苦涩教训\"：基于人类领域知识的方法长期都败给基于通用学习与算力规模的方法[[18]](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)。Kaplan 等人 2020 年的 *Scaling Laws for Neural Language Models* 给出了量化版本：LLM 在交叉熵损失（本质上是\"预测下一词的错误率\"）上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布，跨 7 个以上的数量级——也就是说，LLM 像一个能从经验中持续进步、且**进步曲线可被数学预测**的劳动者[[19]](https://arxiv.org/abs/2001.08361)。DeepMind 2022 年的 Chinchilla 论文进一步把这种\"教育投入\"精细化为\"每参数对应约 20 token\"的最优配比[[20]](https://arxiv.org/abs/2203.15556)。",
+                  " ",
+                  " ### 2.2 理解模糊、自然语言的指令",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01EtSmZ4H9HWbAiQ8R5mbtAe",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/AIKnowledgeLabor.md",
+          "old_string": "上的下降与参数量 $N$、数据集大小 $D$、算力 $C$ 满足严格的幂律分布",
+          "new_string": "上的下降与参数量 *N*、数据集大小 *D*、算力 *C* 满足严格的幂律分布"
+        }
+      }
+    },
+    {
+      "step_id": 80,
+      "timestamp": "2026-05-31T06:34:05.207Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 172950,
+        "completion_tokens": 689,
+        "cached_tokens": 172948,
+        "extra": {
+          "cache_creation_input_tokens": 2853,
+          "cache_read_input_tokens": 172948,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2853,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 689,
+              "cache_read_input_tokens": 172948,
+              "cache_creation_input_tokens": 2853,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2853
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 81,
+      "timestamp": "2026-05-31T06:34:12.190Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "改好了。\n\n**根因**：2.1 里写的是 `参数量 $N$、数据集大小 $D$、算力 $C$`——`$N$` 这种行内 LaTeX 紧贴着全角逗号 `、`、中间没有空格。很多 markdown / KaTeX 渲染器在这种\"闭合 `$` 直接撞上 CJK 标点\"的情况下无法正确闭合行内公式，于是 `$N$` 就按字面显示了。对比 2.7.2 里的行内公式（`$\\epsilon$ 以下`、`$1-\\delta$ 把`）后面都跟着空格，所以那些能正常渲染——这也解释了为什么只有 2.1 出问题。\n\n**改法**：N、D、C 只是单字母变量、不是真公式，没必要用 LaTeX，直接换成 markdown 斜体 `*N*`、`*D*`、`*C*`，在任何渲染器里都稳定显示。\n\n**顺带提醒**：同样的\"`$...$` 后紧跟 CJK 标点\"模式在 §2.7.2.4（line 178）还有两处——`$p > 0.5$（` 和 `$K$，`。如果你的渲染器在那里也露馅，我可以一并把它们后面补个空格或同样处理；不过那一段是真·公式语境，我先没动。要我也改吗？",
+      "metrics": {
+        "prompt_tokens": 172950,
+        "completion_tokens": 689,
+        "cached_tokens": 172948,
+        "extra": {
+          "cache_creation_input_tokens": 2853,
+          "cache_read_input_tokens": 172948,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2853,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 689,
+              "cache_read_input_tokens": 172948,
+              "cache_creation_input_tokens": 2853,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2853
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 6522854,
-    "total_completion_tokens": 213501,
-    "total_cached_tokens": 6514371,
-    "total_steps": 67,
+    "total_prompt_tokens": 8406142,
+    "total_completion_tokens": 238586,
+    "total_cached_tokens": 8397375,
+    "total_steps": 81,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 641489,
-      "total_cache_read_input_tokens": 6514371
+      "total_cache_creation_input_tokens": 966075,
+      "total_cache_read_input_tokens": 8397375
     }
   }
 }
