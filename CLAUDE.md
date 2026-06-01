@@ -169,55 +169,95 @@ md 文件应当作为**最终成品**呈现给读者，**修改史不留正文**
 - **当代论点配近 1–2 年 arXiv / 顶会 / 顶级博客**（Karpathy, Mollick, Chollet, Anthropic / OpenAI 官方等）。
 - **数据来源** 以行业垂直网站、主流财经平台为主。
 
-## Reddit 数据处理流程（`data/reddit/`）
+## Reddit 数据处理方法论（`data/reddit/`）
 
-数据来自 https://arctic-shift.photon-reddit.com/download-tool 下载的频道 JSONL（posts + comments）。
+从 Reddit 帖子/评论中提取结构化信息的通用方法。价格和退市只是已实现的两个例子，
+同一套流程适用于任何信息提取任务。
 
-### 目录结构
+### 数据来源
 
-- `data/reddit/r_*_posts.jsonl` — 帖子（submissions），字段：title, selftext, created_utc, score, permalink…
-- `data/reddit/r_*_comments.jsonl` — 评论，字段：body（替代 selftext），无 title，link_id 关联父帖
-- `data/reddit/price_mentions.csv` — 价格信号抽取结果（`--mode price`）
-- `data/reddit/deprecation_events.csv` — 退市事件抽取结果（`--mode deprecation`）
-- `data/reddit/_dep_batch_*.json` — Haiku 分类的批次文件（临时）
+https://arctic-shift.photon-reddit.com/download-tool 下载频道 JSONL：
+- `r_*_posts.jsonl`：帖子，字段 title / selftext / created_utc / score / permalink
+- `r_*_comments.jsonl`：评论，用 body 替代 selftext，无 title，link_id 关联父帖
 
-### 脚本：`scripts/analyze_reddit_prices.py`
+新频道文件放入 `data/reddit/` 后脚本直接重跑，无需改代码。
 
-两种模式：
-- `--mode price`：正则抽取美元金额 / token 费率 / 用量上限 / premium request
-- `--mode deprecation`：正则抽取模型退市/下架事件
+### 两级抽取流程：按信号噪声比选择方法
 
-统一处理 posts 和 comments（`body` 替代 `selftext`），放入 `data/reddit/` 后直接重跑即可。
+**判断依据**：目标信息在帖子文本中的**信噪比**。
 
-### 退市事件的 LLM 分类
+#### Level 1：纯正则（信号明确、噪声低）
 
-正则抽出的退市帖噪声大（"removed by moderator" / "feature removed" / rate limit 变动都会误命中）。
-**不用时间规则过滤**，而是用 Haiku subagent 判断每条帖子实际在说什么：
+适用于：帖子里有**结构化字面量**的信息——金额、费率、配额数字等。
+正则抽得出、误命中少，不需要 LLM。
 
-1. 从 `deprecation_events.csv` 筛 score>=5、有模型名的帖（~2000 条）
-2. 分批（每批 40 条）发给 Haiku subagent（`Agent({model: 'haiku', schema: ...})`，通过 Workflow pipeline）
-3. Haiku 分类为：`model_retirement`（模型本身下线）/ `model_replacement`（被新版替代）/ `feature_change` / `rate_limit_change` / `price_change` / `general_discussion` / `other`
-4. 结果写回 CSV 的 `llm_verdict` + `llm_confidence` 列
-5. `chat/model-lifecycle.py` 只读 `llm_verdict == "model_retirement"` 的行来确定退市日期
+- 脚本：`scripts/analyze_reddit_prices.py --mode <name>`
+- 统一处理 posts + comments（comments 用 body 替代 selftext）
+- 廉价预过滤（小写子串判断），只对可能命中的帖跑正则，避免百万行回溯
+- 输出 CSV 含抽取值 + 帖子元数据（date / score / permalink / snippet）
 
-**重要**：调用 LLM 模型用 Claude Code subagent（Agent tool + model 参数），不要 `pip install anthropic` 走 API。
+已实现例：`--mode price`（美元金额 / token 费率 / 用量上限 / premium request）
 
-### 价格信号回填 `chat/token-price.csv` 的规范
+#### Level 2：正则粗筛 + LLM 精分类 + LLM 结构化抽取（信号模糊、噪声高）
 
-- `token-price.csv` 只存价格相关数据（API 定价、订阅价、用量上限）,不存退市日期
-- 从 Reddit 发现的新价格点先在对话中跟现有 CSV 交叉比对,无冲突才加入
-- 加入时在 `notes` 列追加 `confirmed/corroborated YYYY-MM-DD (Reddit r/SubName)`
-- 在 `source` 列追加 ` | https://reddit.com/comments/XXXXX`（用 ` | ` 分隔多源）
-- Reddit 帖的 `created_utc` 是"在野"证据日期,不等于价格生效日期——两者分别标注
+适用于：关键词命中多但语义歧义大——"removed" 可能是模型退市、版主删帖、功能下架、
+rate limit 变更……正则无法区分。
 
-### 模型生命周期分析（`chat/model-lifecycle.py`）
+三步流程：
 
-多数据源：
-- `token-price.csv` → 发布日期
-- `deprecation_events.csv` + LLM verdict → 退市日期
-- `DEPRECATED_BASELINE` 字典 → 退市日期兜底（官方公告源）
+**第 1 步：正则粗筛**（同 Level 1 的脚本）
+- 用宽松正则捞出所有*可能*相关的帖（宁多勿漏）
+- 输出候选 CSV，每行一个帖
 
-退市日期优先级：LLM 判为 `model_retirement` 的 Reddit 最早帖 > DEPRECATED_BASELINE > 推断。
+**第 2 步：Haiku 快速分类**（大批量、低成本、过滤噪声）
+- 从候选 CSV 筛 score>=5 且有实体名的帖（~2000 条量级）
+- 分批（每批 30–40 条）通过 Workflow pipeline 发给 Haiku subagent
+- Haiku 只做**分类**（是/否/哪一类），不抽取细节
+- 结果写回 CSV 的 `llm_verdict` + `llm_confidence` 列
+- 这步的目的是**把 70–80% 的噪声廉价地过滤掉**
+
+**第 3 步：Sonnet 结构化抽取**（少量、高质量、抽取细节）
+- 只对 Haiku 判为目标类别的帖（~300–400 条）发给 Sonnet
+- Sonnet 同时做两件事：**校验 Haiku 判定**（推翻约 20–30% 假阳性）+
+  **从帖子内容抽取结构化字段**
+- 用 JSON Schema 强制输出结构（structured output），每条帖返回一个 events 数组
+- 结果写回 CSV 的 `llm_events` JSON 列
+
+**调用 LLM 一律用 Claude Code subagent**（Workflow + `Agent({model: 'haiku'/'sonnet', schema: ...})`），
+不要 `pip install anthropic` 走 API。
+
+### 退市事件抽取（已实现的 Level 2 例子）
+
+第 1 步正则：`--mode deprecation`，关键词 deprecat/sunset/retired/removed 等
+第 2 步 Haiku 分类为：`model_retirement` / `model_replacement` / `feature_change` /
+  `rate_limit_change` / `price_change` / `general_discussion` / `other`
+第 3 步 Sonnet 对每条帖抽取 `events[]`，每个 event 含：
+  - `model`：精确模型名（如 gpt-3.5-turbo-0301，不是 GPT-3.5）
+  - `provider`：OpenAI / Anthropic / Google / DeepSeek / ...
+  - `timing`：
+    - `immediate`：帖子日期 = 退市生效日
+    - `announced_future`：官方预告，退市日在未来（看 effective_date）
+    - `already_happened`：追溯讨论，帖子日期晚于退市日
+    - `speculative`：推测/担忧/传闻，不可作为证据
+  - `effective_date`：帖子里明确提到的退市生效日（YYYY-MM-DD），无则空
+
+### 通用 schema 设计原则
+
+设计 LLM 抽取的 schema 时注意：
+- **帖子日期（created_utc）≠ 事件生效日期**：Reddit 帖可能在预告、追溯、推测。
+  必须让 LLM 区分 timing，不能直接拿帖子日期当事件日期
+- **模型/实体名要精确**：让 LLM 抽出具体版本号（gpt-4-0314 而非 GPT-4），
+  模糊名会导致下游匹配到错误实体
+- **events 是数组**：一条帖子可能讨论多个事件，schema 设计为数组
+- **Haiku 用平面分类（enum）,Sonnet 用嵌套结构（object array）**：
+  Haiku 抽不好复杂嵌套，只让它做 verdict；结构化抽取留给 Sonnet
+
+### 结果回填其他数据文件的规范
+
+- 从 Reddit 发现的新数据点先在对话中**跟现有数据交叉比对**,无冲突才加入
+- 加入时在 notes 列追加 `confirmed/corroborated YYYY-MM-DD (Reddit r/SubName)`
+- 在 source 列追加 ` | https://reddit.com/comments/XXXXX`（` | ` 分隔多源）
+- Reddit 帖的 `created_utc` 是"在野"证据日期,不等于事件生效日期——两者分别标注
 
 ## 关键陷阱（来自此前的失败）
 
