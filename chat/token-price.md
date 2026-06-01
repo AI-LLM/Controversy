@@ -9,7 +9,7 @@
 
 ![各品牌最贵 API 价 + 套餐榨满折合](token-price.png)
 
-- 左轴（实线）：各家 API 目录中在售最贵模型的 blended 价（(input+output)/2，USD/1M tokens）。
+- 左轴（实线）：各家 API 目录中在售最贵模型的 blended 价（(input+output)/2，$/1M tokens）。
   线上标注了当期最贵模型名。
 - 右轴（虚线）：套餐把配额用满后的折合 per-token。每条消息按 2000 token 折算。
   - 最高折合（最便宜套餐榨满）= 折扣率低、单价高。
@@ -168,12 +168,12 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 净影响：用户实际净支出仍在涨——单任务花钱量级是 6 年前的 ~10–100 倍。这与各家平台
 吞吐 20–50× / 年的增长是同源现象（更长任务 + 更多用户 + 更高频调用）。
 
-## 单 task 实际花费 USD（task-price）
+## 单 task 实际花费 $（task-price）
 
 把 tokens/task 和 单价 按品牌相乘，得到"用该家旗舰跑一个 task 要花多少钱"的
 季度演变。与 token-price.png 同风格：4 家 API 实线 + 3 条套餐摊销虚线/点线，X 轴季度。
 
-![单 task 实际花费 USD](task-price.png)
+![单 task 实际花费 $](task-price.png)
 
 - 实线（4 条 API 旗舰）：task price = 该家季度旗舰 blended × 该家季度 tokens/task 中位数 ÷ 1e6。
 - 虚/点线（3 条套餐摊销）：
@@ -190,20 +190,20 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 ——这就是 ChatGPT Plus / Claude Pro / Cursor $20–$200 套餐 2025–2026 年纷纷加套使用限制
 （周限、autocompact、premium request 配额）的根因。
 
-## USD/task 与商业计算机 $/MIPS、互联网 $/Mbps 的等比叠加
+## $/task 与商业计算机 $/MIPS、互联网 $/Mbps 的等比叠加
 
 用与 token 单价等比叠加图相同的方法（计算机 1975-01、互联网 1993-09、token 2020-06 三起点
-平移到同一 Y 高度，Y 轴 log），把"按 API 价计算的 USD/task"作为 token 端的对照量替进去。
+平移到同一 Y 高度，Y 轴 log），把"按 API 价计算的 $/task"作为 token 端的对照量替进去。
 锚点：2020-06 GPT-3 API typical task ≈ $0.03/task（$60/1M × 500 tokens）。
 
-![USD/task vs 互联网 vs 计算机 等比叠加](task-price-vs-internet-pc.png)
+![$/task vs 互联网 vs 计算机 等比叠加](task-price-vs-internet-pc.png)
 
 - 红虚线：商业计算机 $/MIPS，从 1975 Altair 8800 起（更早的大型机仅在数据表中）。
 - 灰虚线：互联网 $/Mbps。
 - 彩实线：4 家 API 旗舰 task price，2020-06 OpenAI 起 $0.03，2024–2026 agentic 后蹿到 $1–$45。
 
 核心反差：商业计算机 45 年 $/MIPS 跌 ~8400 万倍、互联网 33 年 $/Mbps 跌 ~4400×——
-这两条都是指数下行；而 USD/task 6 年从 $0.03 反向上行到 $20–$45（≈1000×）。
+这两条都是指数下行；而 $/task 6 年从 $0.03 反向上行到 $20–$45（≈1000×）。
 **历史上"单位资源价格 → 0"的模式在 AI 时代仍未呈现**。
 
 ## 假设与局限

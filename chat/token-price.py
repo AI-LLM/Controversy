@@ -36,14 +36,14 @@ USAGE_CSV = os.path.join(HERE, "token-usage-amount.csv")
 
 TOKENS_PER_MESSAGE = 2000
 
-# 美国互联网接入服务历史价格（年/月 -> 名义月费 USD, 典型下行速率 Mbps）
+# 美国互联网接入服务历史价格（年/月 -> 名义月费 $, 典型下行速率 Mbps）
 # 来源：EH.Net, NYT, Computerworld, CNET, Smithsonian, Pew, FCC, WSJ,
 #       Bruce Kushnick / Teletruth, USTelecom BPI, NCTA, BLS CPI
 # 早期高频段以月为单位，2015 后用 USTelecom BPI 年度报告值。
 # 拨号年代速率为该时段主流 modem 标准（14.4k → 28.8k → V.90 56k）；
 # 宽带初期速率为入门 tier 典型；2015+ 用 BPI avg 下行速率。
 INTERNET_PRICES = [
-    # (日期, 月费 USD, 速率 Mbps, 备注)
+    # (日期, 月费 $, 速率 Mbps, 备注)
     ("1993-09",  9.95, 0.0144, "AOL $9.95/5h + $3.50/h；14.4k modem"),
     ("1994-12",  9.95, 0.0144, "AOL 跟进 Prodigy；14.4k 仍主流"),
     ("1995-02", 24.95, 0.0288, "CompuServe $24.95/20h；28.8k modem"),
@@ -68,13 +68,13 @@ INTERNET_ORIGIN = "1993-09"
 PC_ORIGIN = "1975-01"   # 画图起点（Altair 8800 商业微型机），早于此的 PC 数据仅在 md 表格里保留
 PC_FULL_HISTORY_ORIGIN = "1951-03"
 
-# 商业化计算机历史价格（日期, 整机售价 USD, MIPS, 备注）
+# 商业化计算机历史价格（日期, 整机售价 $, MIPS, 备注）
 # 通缩指标 = 整机售价 ÷ MIPS = $/MIPS
 # 早期 KIPS → MIPS；2015+ 用 GFLOPS（含 SIMD/NPU）近似为 MIPS 同量级
 # 来源：US Census Bureau (UNIVAC), IBM Archives, Computer History Museum,
 #       Smithsonian, IEEE Spectrum, Stanford, BLS, Intel ARK
 PC_PRICES = [
-    # (date, 整机价 USD, MIPS, 备注)
+    # (date, 整机价 $, MIPS, 备注)
     ("1951-03", 1000000.0,    0.00190,  "UNIVAC I：5000 电子管 @ 2.25 MHz；1.9 KIPS"),
     ("1959-10",  150000.0,    0.0115,   "IBM 1401：晶体管 @ 87 KHz；11.5 KIPS"),
     ("1964-04",  133000.0,    0.0345,   "IBM System/360 M30：SLT @ 1 MHz；34.5 KIPS"),
@@ -358,7 +358,7 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     ax.set_xticks(tick_months)
     ax.set_xticklabels(tick_labels, fontsize=7)
 
-    ax.set_ylabel("USD / 1M tokens（PC $/MIPS、互联网 $/Mbps 均按 1975/1993 起点 ≡ "
+    ax.set_ylabel("$ / 1M tokens（PC $/MIPS、互联网 $/Mbps 均按 1975/1993 起点 ≡ "
                   "2020-06 GPT-3 Davinci $60 缩放）", fontsize=9.5)
     ax.set_xlabel("token 真实日期 / 互联网真实年份 / PC 真实年份"
                   "（1975-01 PC、1993-09 互联网 → 2020-06 token 平移对齐）", fontsize=9)
@@ -612,7 +612,7 @@ def compute_task_price_series():
 
     # 4 家各自 forward-fill 系列：tokens/task[本家中位数→全平台中位数→上一季度]
     series_tpt = {b: [] for b in providers}    # tokens/task per quarter
-    series_usd = {b: [] for b in providers}    # USD/task per quarter
+    series_usd = {b: [] for b in providers}    # $/task per quarter
 
     last_seen = {b: None for b in providers}
     last_global_tpt = None
@@ -630,7 +630,7 @@ def compute_task_price_series():
             else:
                 tpt = last_seen[b] if last_seen[b] is not None else last_global_tpt
             series_tpt[b].append(tpt)
-            # 价格 × tokens / 1e6 = USD
+            # 价格 × tokens / 1e6 = $
             price = price_at(b, qe)
             if tpt is None or price <= 0:
                 series_usd[b].append(float("nan"))
@@ -648,7 +648,7 @@ def plot_task_price(plus, pro_pt, max20):
         return
     series_usd, series_tpt, providers, price_at, price_rows = bundle
 
-    # 套餐 per-token 折合（USD / 1M tokens）按季度展开
+    # 套餐 per-token 折合（$ / 1M tokens）按季度展开
     # OpenAI Plus：从 plus 列表 forward-fill
     plus_per_token_q = forward_fill(sorted(plus))   # 长度 = QEND
     # Anthropic Pro：从 Claude Pro 上线日起 forward-fill 单值
@@ -690,7 +690,7 @@ def plot_task_price(plus, pro_pt, max20):
         ax1.plot(x, series_usd[b], "-", color=api_colors[b], lw=2.2,
                  marker="o", ms=4, label=f"{b} API max", zorder=3)
 
-    ax1.set_ylabel("API 旗舰 task price (USD/task)", fontsize=10)
+    ax1.set_ylabel("API 旗舰 task price ($/task)", fontsize=10)
     api_max = max((v for b in providers for v in series_usd[b] if v == v), default=50)
     ax1.set_ylim(-2, api_max * 1.1)
     ax1.set_xticks(x)
@@ -711,7 +711,7 @@ def plot_task_price(plus, pro_pt, max20):
     sub_max = max((v for series in (plus_task, pro_task, max20_task)
                    for v in series if v == v), default=2)
     ax2.set_ylim(-sub_max * 0.05, sub_max * 1.15)
-    ax2.set_ylabel("套餐摊销 task price (USD/task)", fontsize=10)
+    ax2.set_ylabel("套餐摊销 task price ($/task)", fontsize=10)
 
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
@@ -731,7 +731,7 @@ def plot_task_price(plus, pro_pt, max20):
 
 
 def plot_task_price_vs_internet_pc():
-    """token-price-vs-internet-pc.png 风格：把"USD/task"和 PC $/MIPS、
+    """token-price-vs-internet-pc.png 风格：把"$/task"和 PC $/MIPS、
     互联网 $/Mbps 三条等比叠加。
     锚定：2020-06 GPT-3 API typical task = $60/1M × 500 tokens / 1e6 = $0.03
     PC 1975-01 → 2020-06；互联网 1993-09 → 2020-06。
@@ -742,7 +742,7 @@ def plot_task_price_vs_internet_pc():
         return
     series_usd, _series_tpt, providers, _price_at, _price_rows = bundle
 
-    # 三方锚点都对齐到 task price 2020-06 的 OpenAI USD/task
+    # 三方锚点都对齐到 task price 2020-06 的 OpenAI $/task
     # （取 series_usd["OpenAI"] 第一个有效值）
     oai_first = next((v for v in series_usd["OpenAI"] if v == v and v > 0), None)
     if oai_first is None:
@@ -840,7 +840,7 @@ def plot_task_price_vs_internet_pc():
     ax.set_xticks(tick_months)
     ax.set_xticklabels(tick_labels, fontsize=7)
 
-    ax.set_ylabel(f"USD/task（PC $/MIPS、互联网 $/Mbps 均按 1975/1993 起点 ≡ "
+    ax.set_ylabel(f"$/task（PC $/MIPS、互联网 $/Mbps 均按 1975/1993 起点 ≡ "
                   f"2020-06 GPT-3 API task ${task_anchor:.3f} 缩放）", fontsize=9.5)
     ax.set_xlabel("token 真实日期 / 互联网真实年份 / PC 真实年份"
                   "（1975-01 PC、1993-09 互联网 → 2020-06 task 平移对齐）", fontsize=9)
@@ -868,13 +868,13 @@ def plot_task_price_vs_internet_pc():
     final_inet = inet_per_mbps[-1][1]
     task_now = max(v for b in providers for v in series_usd[b] if v == v)
     ax.set_title(
-        f"USD/task vs 互联网 $/Mbps vs 商业化计算机 $/MIPS（Y log，三条等比叠加）\n"
+        f"$/task vs 互联网 $/Mbps vs 商业化计算机 $/MIPS（Y log，三条等比叠加）\n"
         f"锚定：1975-01 Altair 8800 ${pc_anchor_per_unit:,.0f}/MIPS、"
         f"1993-09 互联网 ${inet_anchor_per_mbps:.0f}/Mbps、"
         f"2020-06 GPT-3 API task ${task_anchor:.3f} 三点同高\n"
         f"商业计算机 75 年跌 ~{pc_anchor_per_unit/final_pc:.0e}×；"
         f"互联网 33 年跌 ~{inet_anchor_per_mbps/final_inet:,.0f}×；"
-        f"USD/task 6 年从 ${task_anchor:.3f} 涨到 ${task_now:.1f}（≈{task_now/task_anchor:,.0f}× 反向上行）",
+        f"$/task 6 年从 ${task_anchor:.3f} 涨到 ${task_now:.1f}（≈{task_now/task_anchor:,.0f}× 反向上行）",
         fontsize=10.5, pad=12)
 
     fig.tight_layout()
@@ -932,7 +932,7 @@ def main():
                  label=f"{b} API max", zorder=3)
         annotate_changes(ax1, x, masked, names, c, yoffset=3)
 
-    ax1.set_ylabel("API most-expensive model blended (USD / 1M tokens)", fontsize=10)
+    ax1.set_ylabel("API most-expensive model blended ($ / 1M tokens)", fontsize=10)
     api_max = max(max(env[b][0]) for b in order)
     ax1.set_ylim(-2, api_max * 1.1)
     ax1.yaxis.set_major_locator(mticker.MultipleLocator(10))
@@ -951,7 +951,7 @@ def main():
              alpha=0.8, label="Anthropic Pro $20 maxed (highest)")
     ax2.plot(x, anth_low, ":", color="#d97706", lw=1.5, marker="v", ms=3,
              alpha=0.6, label="Anthropic Max20x $200 maxed (lowest)")
-    ax2.set_ylabel("Subscription maxed-out per-token (USD / 1M tokens)", fontsize=10)
+    ax2.set_ylabel("Subscription maxed-out per-token ($ / 1M tokens)", fontsize=10)
     sub_max = max(max(plus_line), max(anth_high), max(anth_low))
     ax2.set_ylim(-0.05, sub_max * 1.3)
     ax2.yaxis.set_major_locator(mticker.MultipleLocator(0.2))
