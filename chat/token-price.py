@@ -585,7 +585,9 @@ def plot_task_price():
     price_rows = load_rows()
     price_at = _monthly_price_lookup(price_rows, providers)
 
-    # 把每条 usage row 归到季度 + 4 家映射
+    # 把每条 usage row 归到季度 + 4 家映射。
+    # 季度键用 QUARTERS 中的 (y, q)（q 是 1-indexed Q1=1…Q4=4），从 month 计算 q 时
+    # 注意 1-indexed: m=1,2,3→Q1；m=4,5,6→Q2；m=7,8,9→Q3；m=10,11,12→Q4
     import statistics
     from collections import defaultdict
     per_provider_q = {b: defaultdict(list) for b in providers}
@@ -593,7 +595,7 @@ def plot_task_price():
     for r in usage_rows:
         ym = r["effective_date"][:7]
         y, m = ym.split("-")
-        q = (int(m) - 1) // 3
+        q = (int(m) - 1) // 3 + 1
         qkey = (int(y), q)
         v = float(r["value"])
         all_q[qkey].append(v)
