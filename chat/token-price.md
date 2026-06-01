@@ -152,9 +152,9 @@ NCTA、BLS CPI (Internet Access Services)。
 
 token 单价跌了，但单任务消耗的 token 量同期也涨了——这是判断"用户实际净支出"是否真降的
 关键变量。数据来自 `token-usage-amount.csv`（含 agent web 研究 + 从 Reddit 三步法挖出的
-163 个高置信度数据点），其中 `unit=tokens_per_task` 原始 51 条，**剔除"累积/窗口"语义异常点
+163 个高置信度数据点），其中 `unit=tokens_per_task` 原始 51 条，剔除"累积/窗口"语义异常点
 （如 Claude Code 5h 窗口聚合 20–40M、Cursor agent loop 单 message 241M、Claude Code app dev
-累积 2.2B 等）后剩 45 个有效数据点，时间跨 2020-06 → 2026-04**。
+累积 2.2B 等）后剩 45 个有效数据点，时间跨 2020-06 → 2026-04。
 
 ![单任务 token 消耗](tokens-per-task.png)
 
