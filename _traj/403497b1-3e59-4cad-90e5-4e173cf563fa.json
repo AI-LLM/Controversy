@@ -15756,19 +15756,1637 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 206,
+      "timestamp": "2026-06-01T06:41:02.569Z",
+      "source": "user",
+      "message": "直接用美元，不要log。各家套餐最高最低折合/token，各家API/token全部画在一张图里",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 207,
+      "timestamp": "2026-06-01T06:45:21.735Z",
+      "source": "user",
+      "message": "直接用美元，不要log。套餐最高折合价的意思是最便宜的套餐（所以折扣率应该低，单价应该高）按用量限制用满，折合每token多少钱，不考虑有人用得少有人用得多。最低折合价的意思是最贵的套餐，按用量限制用满，折合每token多少钱。各家套餐最高最低折合/token，各家API/token全部都画在一张图里才能比较，不要分开",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 208,
+      "timestamp": "2026-06-01T06:48:52.159Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 240514,
+        "completion_tokens": 15781,
+        "cached_tokens": 240512,
+        "extra": {
+          "cache_creation_input_tokens": 152,
+          "cache_read_input_tokens": 240512,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 152,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 15781,
+              "cache_read_input_tokens": 240512,
+              "cache_creation_input_tokens": 152,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 152
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 209,
+      "timestamp": "2026-06-01T06:48:55.321Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "明白,三处都改:① 去掉 log,直接美元;② 重新定义折算——**最高折合价 = 最便宜的套餐榨满配额**(折扣率低、单价高),**最低折合价 = 最贵的套餐榨满配额**(批量折扣大、单价低),都按用量上限用满、不分轻重用户;③ 各家 API + 各家套餐最高/最低**全画在一张图**。\n\n先确认 Anthropic 的 Max 是「N× Pro」相对配额(这样最贵套餐才能榨满折算):",
+      "metrics": {
+        "prompt_tokens": 240514,
+        "completion_tokens": 15781,
+        "cached_tokens": 240512,
+        "extra": {
+          "cache_creation_input_tokens": 152,
+          "cache_read_input_tokens": 240512,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 152,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 15781,
+              "cache_read_input_tokens": 240512,
+              "cache_creation_input_tokens": 152,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 152
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 210,
+      "timestamp": "2026-06-01T06:48:56.980Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01Vk9VNcBP6Me134NAGLtzsb",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Vk9VNcBP6Me134NAGLtzsb",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cd /Users/luwei/work/Controversy; grep -E \"Claude Pro,|Claude Max\" chat/token-price.csv | sed 's/,\"[^\"]*\",http.*//' ",
+            "description": "Check Claude Pro/Max usage fields"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Vk9VNcBP6Me134NAGLtzsb",
+            "content": "2023-09,Anthropic,Subscription,Claude Pro,,,,,20,17,\"~5x Free usage; >=100 msgs / 8h (fewer with long convos/attachments)\"\n2025-04,Anthropic,Subscription,Claude Max 5x,,,,,100,,\"5x Pro usage; priority access to new models/features incl Claude Code & voice; ~5h rolling window\"\n2025-04,Anthropic,Subscription,Claude Max 20x,,,,,200,,\"20x Pro usage; rivals OpenAI $200 ChatGPT Pro\"\n\n[stdout]\n2023-09,Anthropic,Subscription,Claude Pro,,,,,20,17,\"~5x Free usage; >=100 msgs / 8h (fewer with long convos/attachments)\"\n2025-04,Anthropic,Subscription,Claude Max 5x,,,,,100,,\"5x Pro usage; priority access to new models/features incl Claude Code & voice; ~5h rolling window\"\n2025-04,Anthropic,Subscription,Claude Max 20x,,,,,200,,\"20x Pro usage; rivals OpenAI $200 ChatGPT Pro\"\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 240514,
+        "completion_tokens": 15781,
+        "cached_tokens": 240512,
+        "extra": {
+          "cache_creation_input_tokens": 152,
+          "cache_read_input_tokens": 240512,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 152,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 15781,
+              "cache_read_input_tokens": 240512,
+              "cache_creation_input_tokens": 152,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 152
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "2023-09,Anthropic,Subscription,Claude Pro,,,,,20,17,\"~5x Free usage; >=100 msgs / 8h (fewer with long convos/attachments)\"\n2025-04,Anthropic,Subscription,Claude Max 5x,,,,,100,,\"5x Pro usage; priority access to new models/features incl Claude Code & voice; ~5h rolling window\"\n2025-04,Anthropic,Subscription,Claude Max 20x,,,,,200,,\"20x Pro usage; rivals OpenAI $200 ChatGPT Pro\"",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Vk9VNcBP6Me134NAGLtzsb",
+            "type": "tool_result",
+            "content": "2023-09,Anthropic,Subscription,Claude Pro,,,,,20,17,\"~5x Free usage; >=100 msgs / 8h (fewer with long convos/attachments)\"\n2025-04,Anthropic,Subscription,Claude Max 5x,,,,,100,,\"5x Pro usage; priority access to new models/features incl Claude Code & voice; ~5h rolling window\"\n2025-04,Anthropic,Subscription,Claude Max 20x,,,,,200,,\"20x Pro usage; rivals OpenAI $200 ChatGPT Pro\"",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "2023-09,Anthropic,Subscription,Claude Pro,,,,,20,17,\"~5x Free usage; >=100 msgs / 8h (fewer with long convos/attachments)\"\n2025-04,Anthropic,Subscription,Claude Max 5x,,,,,100,,\"5x Pro usage; priority access to new models/features incl Claude Code & voice; ~5h rolling window\"\n2025-04,Anthropic,Subscription,Claude Max 20x,,,,,200,,\"20x Pro usage; rivals OpenAI $200 ChatGPT Pro\"",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Vk9VNcBP6Me134NAGLtzsb",
+            "type": "tool_result",
+            "content": "2023-09,Anthropic,Subscription,Claude Pro,,,,,20,17,\"~5x Free usage; >=100 msgs / 8h (fewer with long convos/attachments)\"\n2025-04,Anthropic,Subscription,Claude Max 5x,,,,,100,,\"5x Pro usage; priority access to new models/features incl Claude Code & voice; ~5h rolling window\"\n2025-04,Anthropic,Subscription,Claude Max 20x,,,,,200,,\"20x Pro usage; rivals OpenAI $200 ChatGPT Pro\"",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "cd /Users/luwei/work/Controversy; grep -E \"Claude Pro,|Claude Max\" chat/token-price.csv | sed 's/,\"[^\"]*\",http.*//' ",
+          "description": "Check Claude Pro/Max usage fields"
+        }
+      }
+    },
+    {
+      "step_id": 211,
+      "timestamp": "2026-06-01T06:49:00.962Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 240795,
+        "completion_tokens": 5548,
+        "cached_tokens": 240664,
+        "extra": {
+          "cache_creation_input_tokens": 15984,
+          "cache_read_input_tokens": 240664,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 15984,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 5548,
+              "cache_read_input_tokens": 240664,
+              "cache_creation_input_tokens": 15984,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 15984
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 212,
+      "timestamp": "2026-06-01T06:49:01.915Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Claude Pro=100/8h、Max 5x/20x 是「N× Pro」相对配额,可榨满折算。重写脚本:",
+      "metrics": {
+        "prompt_tokens": 240795,
+        "completion_tokens": 5548,
+        "cached_tokens": 240664,
+        "extra": {
+          "cache_creation_input_tokens": 15984,
+          "cache_read_input_tokens": 240664,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 15984,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 5548,
+              "cache_read_input_tokens": 240664,
+              "cache_creation_input_tokens": 15984,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 15984
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 213,
+      "timestamp": "2026-06-01T06:50:00.076Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Write toolu_01VKR8pTMPFgZzFv1Yn5h4ZP",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01VKR8pTMPFgZzFv1Yn5h4ZP",
+          "function_name": "Write",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/token-price.py",
+            "content": "#!/usr/bin/env python3\n\"\"\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。\n\n把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：\n\nA. 各家旗舰 API blended 价 =（input + output）/ 2。\nB. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token\n   （折扣率低 → 单价高）。\nC. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token\n   （批量折扣大 → 单价低）。\n\n套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设\n每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。\n\"\"\"\nfrom __future__ import annotations\n\nimport csv\nimport os\nimport re\n\nHERE = os.path.dirname(os.path.abspath(__file__))\nCSV = os.path.join(HERE, \"chat\", \"token-price.csv\")\nOUT = os.path.join(HERE, \"token-price.md\")\n\nTOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）\n\nFLAGSHIP = {\n    \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",\n               \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],\n    \"Anthropic\": [\"Claude 2.1\", \"Claude 3 Opus\", \"Claude Opus 4\", \"Claude Opus 4.1\",\n                  \"Claude Opus 4.5\", \"Claude Opus 4.6\", \"Claude Opus 4.7\", \"Claude Opus 4.8\"],\n    \"Google\": [\"Gemini 1.0 Pro\", \"Gemini 1.5 Pro (<=128K)\", \"Gemini 1.5 Pro (<=128K cut)\",\n               \"Gemini 2.5 Pro (<=200K)\", \"Gemini 3.1 Pro (<=200K)\"],\n    \"DeepSeek\": [\"DeepSeek-V2 (deepseek-chat)\", \"deepseek-chat V2 + context caching\",\n                 \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",\n                 \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],\n}\n# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）\nOPENAI_CHAT_PLUS = [\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",\n                    \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"]\n\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\nQLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]\nQEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]\n\n\ndef load_rows():\n    with open(CSV, encoding=\"utf-8\") as fh:\n        return list(csv.DictReader(fh))\n\n\ndef fnum(s):\n    s = (s or \"\").strip()\n    return float(s) if s else None\n\n\ndef forward_fill(points):\n    pts = sorted(points, key=lambda x: x[0])\n    first, vals = pts[0][1], []\n    for qe in QEND:\n        cur = first\n        for ym, v in pts:\n            if ym <= qe:\n                cur = v\n            else:\n                break\n        vals.append(cur)\n    return vals\n\n\nCAP_RE = re.compile(\n    r\"(\\d[\\d,]*)\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\s*\"\n    r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",\n    re.IGNORECASE,\n)\nPER_MONTH = {\"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}\n\n\ndef cap_msgs_per_month(text):\n    m = CAP_RE.search(text or \"\")\n    if not m:\n        return None\n    count = float(m.group(1).replace(\",\", \"\"))\n    n = float(m.group(2)) if m.group(2) else 1.0\n    unit = m.group(3).lower().rstrip(\"s\")\n    if unit in (\"h\", \"hour\", \"hr\"):\n        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7\n    return count * PER_MONTH[unit] / n\n\n\ndef per_token(price, tokens_per_month):\n    return price / tokens_per_month * 1e6        # USD per 1M tokens\n\n\ndef flagship_blended(rows):\n    out = {}\n    for brand, names in FLAGSHIP.items():\n        pts = []\n        for r in rows:\n            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:\n                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])\n                if i is not None and o is not None:\n                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))\n        out[brand] = sorted(pts, key=lambda x: x[0])\n    return out\n\n\ndef main():\n    rows = load_rows()\n    fs = flagship_blended(rows)\n    order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]\n\n    # ---- 套餐折合 per-token ----\n    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）\n    plus = []\n    for r in rows:\n        if r[\"product_or_model\"] in OPENAI_CHAT_PLUS:\n            p, cap = fnum(r[\"monthly_price_usd\"]), cap_msgs_per_month(r[\"usage_limit\"])\n            if p and cap:\n                plus.append((r[\"effective_date\"], per_token(p, cap * TOKENS_PER_MESSAGE)))\n    plus = sorted(plus)\n\n    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）\n    pro_row = next(r for r in rows if r[\"product_or_model\"] == \"Claude Pro\")\n    pro_tokens = cap_msgs_per_month(pro_row[\"usage_limit\"]) * TOKENS_PER_MESSAGE\n    pro_price = fnum(pro_row[\"monthly_price_usd\"])\n    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合\n    anth_plans = []   # (date, name, price, tokens, per_token)\n    anth_plans.append((pro_row[\"effective_date\"], \"Claude Pro\", pro_price, pro_tokens, pro_pt))\n    for r in rows:\n        m = re.match(r\"Claude Max (\\d+)x\", r[\"product_or_model\"])\n        if m:\n            mult = int(m.group(1))\n            p = fnum(r[\"monthly_price_usd\"])\n            tok = mult * pro_tokens\n            anth_plans.append((r[\"effective_date\"], r[\"product_or_model\"], p, tok, per_token(p, tok)))\n    anth_plans.sort(key=lambda x: (x[0], x[2]))\n    max20 = next(x for x in anth_plans if x[1] == \"Claude Max 20x\")\n    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro\n    anth_high = forward_fill([(pro_row[\"effective_date\"], pro_pt)])\n    anth_low = forward_fill([(pro_row[\"effective_date\"], pro_pt), (max20[0], max20[4])])\n\n    # ---- 组装单张图（线性 USD/1M） ----\n    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}\n    plus_line = forward_fill(plus)\n\n    series = [\n        (\"OpenAI API\", api_lines[\"OpenAI\"]),\n        (\"Anthropic API\", api_lines[\"Anthropic\"]),\n        (\"Google API\", api_lines[\"Google\"]),\n        (\"DeepSeek API\", api_lines[\"DeepSeek\"]),\n        (\"OpenAI 套餐 Plus 榨满\", plus_line),\n        (\"Anthropic 套餐最高 (Pro 榨满)\", anth_high),\n        (\"Anthropic 套餐最低 (Max20x 榨满)\", anth_low),\n    ]\n    ymax = max(max(v) for _, v in series)\n    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数\n\n    chart = [\"```mermaid\", \"xychart-beta\",\n             '    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"',\n             \"    x-axis [\" + \", \".join(QLABEL) + \"]\",\n             f'    y-axis \"USD per 1M tokens\" 0 --> {ymax}']\n    for _, vals in series:\n        chart.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")\n    chart.append(\"```\")\n    chart = \"\\n\".join(chart)\n\n    legend = []\n    for i, (label, vals) in enumerate(series, 1):\n        legend.append(f\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\")\n\n    # 旗舰明细表\n    appendix = []\n    for b in order:\n        for ym, bl, i, o, model in fs[b]:\n            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\")\n\n    # 套餐折合表\n    sub_tbl = []\n    for ym, pt in plus:\n        sub_tbl.append(f\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\")\n    for ym, name, p, tok, pt in anth_plans:\n        sub_tbl.append(f\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\")\n\n    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）\n\n各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴\n（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。\n数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\n\n## 折算口径\n\n- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。\n  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。\n- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，\n  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。\n  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。\n  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。\n  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。\n\n## 对比图\n\n线序（颜色按此顺序）：\n\n{chr(10).join(legend)}\n\n{chart}\n\n## 套餐榨满折合明细\n\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n|---|---|---|---|---|\n{chr(10).join(sub_tbl)}\n\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\n\n## 旗舰 API 数据明细（blended 来源）\n\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(appendix)}\n\n## 假设与局限\n\n- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，\n  但不改品牌间相对关系。\n- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，\n  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。\n  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）\n  无法独立折算，未入图。\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\n  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。\n- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。\n- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满\n  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于\n  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。\n\"\"\"\n    with open(OUT, \"w\", encoding=\"utf-8\") as fh:\n        fh.write(md)\n    print(f\"写入 {OUT}\")\n    print(f\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \"\n          f\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\")\n    print(f\"图 y 轴上限 {ymax}；线数 {len(series)}\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01VKR8pTMPFgZzFv1Yn5h4ZP",
+            "content": "The file /Users/luwei/work/Controversy/token-price.py has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"type\": \"update\", \"filePath\": \"/Users/luwei/work/Controversy/token-price.py\", \"content\": \"#!/usr/bin/env python3\\n\\\"\\\"\\\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。\\n\\n把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：\\n\\nA. 各家旗舰 API blended 价 =（input + output）/ 2。\\nB. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token\\n   （折扣率低 → 单价高）。\\nC. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token\\n   （批量折扣大 → 单价低）。\\n\\n套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设\\n每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。\\n\\\"\\\"\\\"\\nfrom __future__ import annotations\\n\\nimport csv\\nimport os\\nimport re\\n\\nHERE = os.path.dirname(os.path.abspath(__file__))\\nCSV = os.path.join(HERE, \\\"chat\\\", \\\"token-price.csv\\\")\\nOUT = os.path.join(HERE, \\\"token-price.md\\\")\\n\\nTOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）\\n\\nFLAGSHIP = {\\n    \\\"OpenAI\\\": [\\\"gpt-4 (8K)\\\", \\\"gpt-4-turbo (1106-preview)\\\", \\\"gpt-4o-2024-05-13\\\",\\n               \\\"gpt-4o-2024-08-06\\\", \\\"gpt-4.1\\\", \\\"gpt-5\\\", \\\"gpt-5.4\\\", \\\"gpt-5.5\\\"],\\n    \\\"Anthropic\\\": [\\\"Claude 2.1\\\", \\\"Claude 3 Opus\\\", \\\"Claude Opus 4\\\", \\\"Claude Opus 4.1\\\",\\n                  \\\"Claude Opus 4.5\\\", \\\"Claude Opus 4.6\\\", \\\"Claude Opus 4.7\\\", \\\"Claude Opus 4.8\\\"],\\n    \\\"Google\\\": [\\\"Gemini 1.0 Pro\\\", \\\"Gemini 1.5 Pro (<=128K)\\\", \\\"Gemini 1.5 Pro (<=128K cut)\\\",\\n               \\\"Gemini 2.5 Pro (<=200K)\\\", \\\"Gemini 3.1 Pro (<=200K)\\\"],\\n    \\\"DeepSeek\\\": [\\\"DeepSeek-V2 (deepseek-chat)\\\", \\\"deepseek-chat V2 + context caching\\\",\\n                 \\\"DeepSeek-V3 (promo)\\\", \\\"DeepSeek-V3 (standard)\\\", \\\"DeepSeek-V3.1 (unified)\\\",\\n                 \\\"DeepSeek-V3.2-Exp\\\", \\\"DeepSeek-V4 Pro (promo 75% off)\\\", \\\"DeepSeek-V4 Pro (standard)\\\"],\\n}\\n# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）\\nOPENAI_CHAT_PLUS = [\\\"ChatGPT Plus (GPT-4)\\\", \\\"ChatGPT Plus (GPT-4o)\\\",\\n                    \\\"ChatGPT Plus (GPT-5 era)\\\", \\\"ChatGPT Plus (2026)\\\"]\\n\\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\\nQLABEL = [f\\\"{y % 100}Q{q}\\\" for (y, q) in QUARTERS]\\nQEND = [f\\\"{y}-{q*3:02d}\\\" for (y, q) in QUARTERS]\\n\\n\\ndef load_rows():\\n    with open(CSV, encoding=\\\"utf-8\\\") as fh:\\n        return list(csv.DictReader(fh))\\n\\n\\ndef fnum(s):\\n    s = (s or \\\"\\\").strip()\\n    return float(s) if s else None\\n\\n\\ndef forward_fill(points):\\n    pts = sorted(points, key=lambda x: x[0])\\n    first, vals = pts[0][1], []\\n    for qe in QEND:\\n        cur = first\\n        for ym, v in pts:\\n            if ym <= qe:\\n                cur = v\\n            else:\\n                break\\n        vals.append(cur)\\n    return vals\\n\\n\\nCAP_RE = re.compile(\\n    r\\\"(\\\\d[\\\\d,]*)\\\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\\\s*\\\"\\n    r\\\"(?:/|per|every|a|each)?\\\\s*(\\\\d*)\\\\s*(hours?|hrs?|h|days?|weeks?|months?)\\\",\\n    re.IGNORECASE,\\n)\\nPER_MONTH = {\\\"day\\\": 30.0, \\\"week\\\": 30.0 / 7, \\\"month\\\": 1.0}\\n\\n\\ndef cap_msgs_per_month(text):\\n    m = CAP_RE.search(text or \\\"\\\")\\n    if not m:\\n        return None\\n    count = float(m.group(1).replace(\\\",\\\", \\\"\\\"))\\n    n = float(m.group(2)) if m.group(2) else 1.0\\n    unit = m.group(3).lower().rstrip(\\\"s\\\")\\n    if unit in (\\\"h\\\", \\\"hour\\\", \\\"hr\\\"):\\n        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7\\n    return count * PER_MONTH[unit] / n\\n\\n\\ndef per_token(price, tokens_per_month):\\n    return price / tokens_per_month * 1e6        # USD per 1M tokens\\n\\n\\ndef flagship_blended(rows):\\n    out = {}\\n    for brand, names in FLAGSHIP.items():\\n        pts = []\\n        for r in rows:\\n            if r[\\\"provider\\\"] == brand and r[\\\"category\\\"] == \\\"API\\\" and r[\\\"product_or_model\\\"] in names:\\n                i, o = fnum(r[\\\"input_per_1m_usd\\\"]), fnum(r[\\\"output_per_1m_usd\\\"])\\n                if i is not None and o is not None:\\n                    pts.append((r[\\\"effective_date\\\"], (i + o) / 2, i, o, r[\\\"product_or_model\\\"]))\\n        out[brand] = sorted(pts, key=lambda x: x[0])\\n    return out\\n\\n\\ndef main():\\n    rows = load_rows()\\n    fs = flagship_blended(rows)\\n    order = [\\\"OpenAI\\\", \\\"Anthropic\\\", \\\"Google\\\", \\\"DeepSeek\\\"]\\n\\n    # ---- 套餐折合 per-token ----\\n    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）\\n    plus = []\\n    for r in rows:\\n        if r[\\\"product_or_model\\\"] in OPENAI_CHAT_PLUS:\\n            p, cap = fnum(r[\\\"monthly_price_usd\\\"]), cap_msgs_per_month(r[\\\"usage_limit\\\"])\\n            if p and cap:\\n                plus.append((r[\\\"effective_date\\\"], per_token(p, cap * TOKENS_PER_MESSAGE)))\\n    plus = sorted(plus)\\n\\n    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）\\n    pro_row = next(r for r in rows if r[\\\"product_or_model\\\"] == \\\"Claude Pro\\\")\\n    pro_tokens = cap_msgs_per_month(pro_row[\\\"usage_limit\\\"]) * TOKENS_PER_MESSAGE\\n    pro_price = fnum(pro_row[\\\"monthly_price_usd\\\"])\\n    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合\\n    anth_plans = []   # (date, name, price, tokens, per_token)\\n    anth_plans.append((pro_row[\\\"effective_date\\\"], \\\"Claude Pro\\\", pro_price, pro_tokens, pro_pt))\\n    for r in rows:\\n        m = re.match(r\\\"Claude Max (\\\\d+)x\\\", r[\\\"product_or_model\\\"])\\n        if m:\\n            mult = int(m.group(1))\\n            p = fnum(r[\\\"monthly_price_usd\\\"])\\n            tok = mult * pro_tokens\\n            anth_plans.append((r[\\\"effective_date\\\"], r[\\\"product_or_model\\\"], p, tok, per_token(p, tok)))\\n    anth_plans.sort(key=lambda x: (x[0], x[2]))\\n    max20 = next(x for x in anth_plans if x[1] == \\\"Claude Max 20x\\\")\\n    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro\\n    anth_high = forward_fill([(pro_row[\\\"effective_date\\\"], pro_pt)])\\n    anth_low = forward_fill([(pro_row[\\\"effective_date\\\"], pro_pt), (max20[0], max20[4])])\\n\\n    # ---- 组装单张图（线性 USD/1M） ----\\n    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}\\n    plus_line = forward_fill(plus)\\n\\n    series = [\\n        (\\\"OpenAI API\\\", api_lines[\\\"OpenAI\\\"]),\\n        (\\\"Anthropic API\\\", api_lines[\\\"Anthropic\\\"]),\\n        (\\\"Google API\\\", api_lines[\\\"Google\\\"]),\\n        (\\\"DeepSeek API\\\", api_lines[\\\"DeepSeek\\\"]),\\n        (\\\"OpenAI 套餐 Plus 榨满\\\", plus_line),\\n        (\\\"Anthropic 套餐最高 (Pro 榨满)\\\", anth_high),\\n        (\\\"Anthropic 套餐最低 (Max20x 榨满)\\\", anth_low),\\n    ]\\n    ymax = max(max(v) for _, v in series)\\n    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数\\n\\n    chart = [\\\"```mermaid\\\", \\\"xychart-beta\\\",\\n             '    title \\\"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\\\"',\\n             \\\"    x-axis [\\\" + \\\", \\\".join(QLABEL) + \\\"]\\\",\\n             f'    y-axis \\\"USD per 1M tokens\\\" 0 --> {ymax}']\\n    for _, vals in series:\\n        chart.append(\\\"    line [\\\" + \\\", \\\".join(f\\\"{v:.2f}\\\" for v in vals) + \\\"]\\\")\\n    chart.append(\\\"```\\\")\\n    chart = \\\"\\\\n\\\".join(chart)\\n\\n    legend = []\\n    for i, (label, vals) in enumerate(series, 1):\\n        legend.append(f\\\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\\\")\\n\\n    # 旗舰明细表\\n    appendix = []\\n    for b in order:\\n        for ym, bl, i, o, model in fs[b]:\\n            appendix.append(f\\\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\\\")\\n\\n    # 套餐折合表\\n    sub_tbl = []\\n    for ym, pt in plus:\\n        sub_tbl.append(f\\\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\\\")\\n    for ym, name, p, tok, pt in anth_plans:\\n        sub_tbl.append(f\\\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\\\")\\n\\n    md = f\\\"\\\"\\\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）\\n\\n各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴\\n（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。\\n数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\\n\\n## 折算口径\\n\\n- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。\\n  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。\\n- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，\\n  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。\\n  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。\\n  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。\\n  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。\\n\\n## 对比图\\n\\n线序（颜色按此顺序）：\\n\\n{chr(10).join(legend)}\\n\\n{chart}\\n\\n## 套餐榨满折合明细\\n\\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\\n|---|---|---|---|---|\\n{chr(10).join(sub_tbl)}\\n\\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\\n\\n## 旗舰 API 数据明细（blended 来源）\\n\\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\\n|---|---|---|---|---|---|\\n{chr(10).join(appendix)}\\n\\n## 假设与局限\\n\\n- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，\\n  但不改品牌间相对关系。\\n- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，\\n  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。\\n  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）\\n  无法独立折算，未入图。\\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\\n  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。\\n- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。\\n- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满\\n  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于\\n  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。\\n\\\"\\\"\\\"\\n    with open(OUT, \\\"w\\\", encoding=\\\"utf-8\\\") as fh:\\n        fh.write(md)\\n    print(f\\\"写入 {OUT}\\\")\\n    print(f\\\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \\\"\\n          f\\\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\\\")\\n    print(f\\\"图 y 轴上限 {ymax}；线数 {len(series)}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"structuredPatch\": [{\"oldStart\": 1, \"oldLines\": 21, \"newStart\": 1, \"newLines\": 20, \"lines\": [\" #!/usr/bin/env python3\", \"-\\\"\\\"\\\"根据 chat/token-price.csv 生成 token-price.md 中的对比图表。\", \"+\\\"\\\"\\\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。\", \" \", \"-把两类价格归一到同一根轴 —— **USD / 1M tokens(blended，取输入输出均值)**，\", \"-再取 log10，便于跨品牌横向、跨时间纵向比较：\", \"+把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：\", \" \", \"-1. 各家旗舰模型 API blended 价随时间变化（log10 $/1M）。\", \"-2. 消费套餐按用量折合的 per-token 区间 [最低, 最高]（log10 $/1M）：\", \"-   - 套餐不按 token 计费，故设「每条消息 = TOKENS_PER_MESSAGE token」。\", \"-   - 最低（地板）= 月价 ÷ 把配额用满时的月 token 数（重度用户）。\", \"-   - 最高（天花板）= 月价 ÷ 轻度基线 CASUAL_MSGS_PER_MONTH 条的 token 数。\", \"+A. 各家旗舰 API blended 价 =（input + output）/ 2。\", \"+B. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token\", \"+   （折扣率低 → 单价高）。\", \"+C. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token\", \"+   （批量折扣大 → 单价低）。\", \" \", \"-图表用 mermaid xychart-beta。xychart-beta 无图例，故每图正文标注线序与终值。\", \"+套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设\", \"+每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。\", \" \\\"\\\"\\\"\", \" from __future__ import annotations\", \" \", \" import csv\", \"-import math\", \" import os\", \" import re\", \" \"]}, {\"oldStart\": 23, \"oldLines\": 11, \"newStart\": 22, \"newLines\": 8, \"lines\": [\" CSV = os.path.join(HERE, \\\"chat\\\", \\\"token-price.csv\\\")\", \" OUT = os.path.join(HERE, \\\"token-price.md\\\")\", \" \", \"-# ---- 折算假设（全部可调，已在正文披露） ----\", \"-TOKENS_PER_MESSAGE = 2000       # 每条消息折合 token（1k 入 + 1k 出，blended）\", \"-CASUAL_MSGS_PER_MONTH = 30      # 轻度用户基线：约每天 1 条\", \"+TOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）\", \" \", \"-# ---- 旗舰模型链（按 product_or_model 精确匹配 CSV，单一数据源） ----\", \" FLAGSHIP = {\", \"     \\\"OpenAI\\\": [\\\"gpt-4 (8K)\\\", \\\"gpt-4-turbo (1106-preview)\\\", \\\"gpt-4o-2024-05-13\\\",\", \"                \\\"gpt-4o-2024-08-06\\\", \\\"gpt-4.1\\\", \\\"gpt-5\\\", \\\"gpt-5.4\\\", \\\"gpt-5.5\\\"],\"]}, {\"oldStart\": 39, \"oldLines\": 12, \"newStart\": 35, \"newLines\": 14, \"lines\": [\"                  \\\"DeepSeek-V3 (promo)\\\", \\\"DeepSeek-V3 (standard)\\\", \\\"DeepSeek-V3.1 (unified)\\\",\", \"                  \\\"DeepSeek-V3.2-Exp\\\", \\\"DeepSeek-V4 Pro (promo 75% off)\\\", \\\"DeepSeek-V4 Pro (standard)\\\"],\", \" }\", \"+# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）\", \"+OPENAI_CHAT_PLUS = [\\\"ChatGPT Plus (GPT-4)\\\", \\\"ChatGPT Plus (GPT-4o)\\\",\", \"+                    \\\"ChatGPT Plus (GPT-5 era)\\\", \\\"ChatGPT Plus (2026)\\\"]\", \" \", \"-# 季度时间轴 2023Q1 .. 2026Q2\", \" QUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\", \" QUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\", \" QLABEL = [f\\\"{y % 100}Q{q}\\\" for (y, q) in QUARTERS]\", \"-QEND = [f\\\"{y}-{q*3:02d}\\\" for (y, q) in QUARTERS]   # 每季度末月 YYYY-MM\", \"+QEND = [f\\\"{y}-{q*3:02d}\\\" for (y, q) in QUARTERS]\", \" \", \" \", \" def load_rows():\"]}, {\"oldStart\": 57, \"oldLines\": 24, \"newStart\": 55, \"newLines\": 9, \"lines\": [\"     return float(s) if s else None\", \" \", \" \", \"-def flagship_series(rows):\", \"-    \\\"\\\"\\\"返回 {brand: [(ym, blended, in, out, model), ...]} 按日期排序。\\\"\\\"\\\"\", \"-    out = {}\", \"-    for brand, names in FLAGSHIP.items():\", \"-        pts = []\", \"-        for r in rows:\", \"-            if r[\\\"provider\\\"] == brand and r[\\\"category\\\"] == \\\"API\\\" and r[\\\"product_or_model\\\"] in names:\", \"-                i, o = fnum(r[\\\"input_per_1m_usd\\\"]), fnum(r[\\\"output_per_1m_usd\\\"])\", \"-                if i is not None and o is not None:\", \"-                    pts.append((r[\\\"effective_date\\\"], (i + o) / 2, i, o, r[\\\"product_or_model\\\"]))\", \"-        out[brand] = sorted(pts, key=lambda x: x[0])\", \"-    return out\", \"-\", \"-\", \" def forward_fill(points):\", \"-    \\\"\\\"\\\"points=[(ym, val)] -> 每个季度一个值（取 <= 季末的最近值；季前 pad 首值）。\\\"\\\"\\\"\", \"     pts = sorted(points, key=lambda x: x[0])\", \"-    vals, first = [], pts[0][1]\", \"+    first, vals = pts[0][1], []\", \"     for qe in QEND:\", \"         cur = first\", \"         for ym, v in pts:\"]}, {\"oldStart\": 91, \"oldLines\": 146, \"newStart\": 74, \"newLines\": 148, \"lines\": [\"     r\\\"(?:/|per|every|a|each)?\\\\s*(\\\\d*)\\\\s*(hours?|hrs?|h|days?|weeks?|months?)\\\",\", \"     re.IGNORECASE,\", \" )\", \"-PERIOD_PER_MONTH = {\\\"h\\\": None, \\\"hour\\\": None, \\\"hr\\\": None,\", \"-                    \\\"day\\\": 30.0, \\\"week\\\": 30.0 / 7, \\\"month\\\": 1.0}\", \"+PER_MONTH = {\\\"day\\\": 30.0, \\\"week\\\": 30.0 / 7, \\\"month\\\": 1.0}\", \" \", \" \", \"-def cap_to_msgs_per_month(text):\", \"-    \\\"\\\"\\\"从 usage_limit 文本解析「消息/月」上限；解析不出返回 None。\\\"\\\"\\\"\", \"+def cap_msgs_per_month(text):\", \"     m = CAP_RE.search(text or \\\"\\\")\", \"     if not m:\", \"         return None\", \"     count = float(m.group(1).replace(\\\",\\\", \\\"\\\"))\", \"     n = float(m.group(2)) if m.group(2) else 1.0\", \"     unit = m.group(3).lower().rstrip(\\\"s\\\")\", \"-    if unit in (\\\"h\\\", \\\"hour\\\", \\\"hr\\\"):                 # 每 n 小时：理论满载（24/7）\", \"-        windows = (30 * 24) / n\", \"-        return count * windows\", \"-    return count * PERIOD_PER_MONTH[unit] / n\", \"+    if unit in (\\\"h\\\", \\\"hour\\\", \\\"hr\\\"):\", \"+        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7\", \"+    return count * PER_MONTH[unit] / n\", \" \", \" \", \"-def per_token_band(price, msgs_per_month):\", \"-    \\\"\\\"\\\"返回 (min_per_1M, max_per_1M)：下限=榨满配额，上限=轻度基线。\\\"\\\"\\\"\", \"-    floor = price / (msgs_per_month * TOKENS_PER_MESSAGE) * 1e6\", \"-    casual_msgs = min(CASUAL_MSGS_PER_MONTH, msgs_per_month)\", \"-    ceil = price / (casual_msgs * TOKENS_PER_MESSAGE) * 1e6\", \"-    return floor, ceil\", \"+def per_token(price, tokens_per_month):\", \"+    return price / tokens_per_month * 1e6        # USD per 1M tokens\", \" \", \" \", \"-def lg(v):\", \"-    return round(math.log10(v), 3)\", \"+def flagship_blended(rows):\", \"+    out = {}\", \"+    for brand, names in FLAGSHIP.items():\", \"+        pts = []\", \"+        for r in rows:\", \"+            if r[\\\"provider\\\"] == brand and r[\\\"category\\\"] == \\\"API\\\" and r[\\\"product_or_model\\\"] in names:\", \"+                i, o = fnum(r[\\\"input_per_1m_usd\\\"]), fnum(r[\\\"output_per_1m_usd\\\"])\", \"+                if i is not None and o is not None:\", \"+                    pts.append((r[\\\"effective_date\\\"], (i + o) / 2, i, o, r[\\\"product_or_model\\\"]))\", \"+        out[brand] = sorted(pts, key=lambda x: x[0])\", \"+    return out\", \" \", \" \", \"-def sub_series(rows, prefix):\", \"-    \\\"\\\"\\\"挑选 product_or_model 以 prefix 开头、可解析配额的套餐行。\\\"\\\"\\\"\", \"-    pts = []\", \"-    for r in rows:\", \"-        if r[\\\"product_or_model\\\"].startswith(prefix):\", \"-            price = fnum(r[\\\"monthly_price_usd\\\"])\", \"-            cap = cap_to_msgs_per_month(r[\\\"usage_limit\\\"])\", \"-            if price and cap:\", \"-                lo, hi = per_token_band(price, cap)\", \"-                pts.append((r[\\\"effective_date\\\"], r[\\\"product_or_model\\\"], price, cap, lo, hi))\", \"-    return sorted(pts, key=lambda x: x[0])\", \"-\", \"-\", \"-def xychart(title, yaxis, ymin, ymax, lines):\", \"-    \\\"\\\"\\\"lines=[(label, [values...])]，返回 mermaid 代码块字符串。\\\"\\\"\\\"\", \"-    out = [\\\"```mermaid\\\", \\\"xychart-beta\\\", f'    title \\\"{title}\\\"',\", \"-           \\\"    x-axis [\\\" + \\\", \\\".join(QLABEL) + \\\"]\\\",\", \"-           f'    y-axis \\\"{yaxis}\\\" {ymin} --> {ymax}']\", \"-    for _, vals in lines:\", \"-        out.append(\\\"    line [\\\" + \\\", \\\".join(f\\\"{v:.2f}\\\" for v in vals) + \\\"]\\\")\", \"-    out.append(\\\"```\\\")\", \"-    return \\\"\\\\n\\\".join(out)\", \"-\", \"-\", \" def main():\", \"     rows = load_rows()\", \"-\", \"-    # ===== 图1：旗舰 API blended（log10） =====\", \"-    fs = flagship_series(rows)\", \"+    fs = flagship_blended(rows)\", \"     order = [\\\"OpenAI\\\", \\\"Anthropic\\\", \\\"Google\\\", \\\"DeepSeek\\\"]\", \"-    lines1, legend1, appendix = [], [], []\", \"-    for b in order:\", \"-        pts = fs[b]\", \"-        vals = forward_fill([(ym, blend) for ym, blend, *_ in pts])\", \"-        lines1.append((b, [lg(v) for v in vals]))\", \"-        last_ym, last_blend, last_in, last_out, last_model = pts[-1]\", \"-        first_ym = pts[0][0]\", \"-        legend1.append(f\\\"- **{b}**：{first_ym} 起；终值（{last_model}）blended ${last_blend:.2f}/1M\\\"\", \"-                       f\\\"（in ${last_in:g} / out ${last_out:g}），log10={lg(last_blend)}\\\")\", \"-        for ym, blend, i, o, model in pts:\", \"-            appendix.append(f\\\"| {b} | {ym} | {model} | {i:g} | {o:g} | {blend:.2f} |\\\")\", \" \", \"-    chart1 = xychart(\\\"旗舰模型 API 价格（blended, log10 USD per 1M tokens）\\\",\", \"-                     \\\"log10($/1M)\\\", -1, 2, lines1)\", \"+    # ---- 套餐折合 per-token ----\", \"+    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）\", \"+    plus = []\", \"+    for r in rows:\", \"+        if r[\\\"product_or_model\\\"] in OPENAI_CHAT_PLUS:\", \"+            p, cap = fnum(r[\\\"monthly_price_usd\\\"]), cap_msgs_per_month(r[\\\"usage_limit\\\"])\", \"+            if p and cap:\", \"+                plus.append((r[\\\"effective_date\\\"], per_token(p, cap * TOKENS_PER_MESSAGE)))\", \"+    plus = sorted(plus)\", \" \", \"-    # ===== 图2：ChatGPT Plus 折合 per-token 区间（log10） =====\", \"-    # 只用「通用聊天旗舰」配额线，排除 o1/o3 等推理模型的周配额（语义不同）\", \"-    CHAT_PLUS = {\\\"ChatGPT Plus (GPT-4)\\\", \\\"ChatGPT Plus (GPT-4o)\\\",\", \"-                 \\\"ChatGPT Plus (GPT-5 era)\\\", \\\"ChatGPT Plus (2026)\\\"}\", \"-    plus = [p for p in sub_series(rows, \\\"ChatGPT Plus\\\") if p[1] in CHAT_PLUS]\", \"-    lo_vals = forward_fill([(ym, lo) for ym, _, _, _, lo, _ in plus])\", \"-    hi_vals = forward_fill([(ym, hi) for ym, _, _, _, _, hi in plus])\", \"-    chart2 = xychart(\\\"ChatGPT Plus（$20）折合 per-token 区间（log10 USD per 1M tokens）\\\",\", \"-                     \\\"log10($/1M)\\\", -0.5, 2.7,\", \"-                     [(\\\"min\\\", [lg(v) for v in lo_vals]), (\\\"max\\\", [lg(v) for v in hi_vals])])\", \"+    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）\", \"+    pro_row = next(r for r in rows if r[\\\"product_or_model\\\"] == \\\"Claude Pro\\\")\", \"+    pro_tokens = cap_msgs_per_month(pro_row[\\\"usage_limit\\\"]) * TOKENS_PER_MESSAGE\", \"+    pro_price = fnum(pro_row[\\\"monthly_price_usd\\\"])\", \"+    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合\", \"+    anth_plans = []   # (date, name, price, tokens, per_token)\", \"+    anth_plans.append((pro_row[\\\"effective_date\\\"], \\\"Claude Pro\\\", pro_price, pro_tokens, pro_pt))\", \"+    for r in rows:\", \"+        m = re.match(r\\\"Claude Max (\\\\d+)x\\\", r[\\\"product_or_model\\\"])\", \"+        if m:\", \"+            mult = int(m.group(1))\", \"+            p = fnum(r[\\\"monthly_price_usd\\\"])\", \"+            tok = mult * pro_tokens\", \"+            anth_plans.append((r[\\\"effective_date\\\"], r[\\\"product_or_model\\\"], p, tok, per_token(p, tok)))\", \"+    anth_plans.sort(key=lambda x: (x[0], x[2]))\", \"+    max20 = next(x for x in anth_plans if x[1] == \\\"Claude Max 20x\\\")\", \"+    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro\", \"+    anth_high = forward_fill([(pro_row[\\\"effective_date\\\"], pro_pt)])\", \"+    anth_low = forward_fill([(pro_row[\\\"effective_date\\\"], pro_pt), (max20[0], max20[4])])\", \" \", \"-    # ===== 套餐折合对照表（所有可解析配额的套餐） =====\", \"-    sub_table = []\", \"-    for prefix in (\\\"ChatGPT Plus\\\", \\\"ChatGPT Agent\\\", \\\"ChatGPT Go\\\", \\\"Claude Pro\\\", \\\"Cursor\\\"):\", \"-        for ym, model, price, cap, lo, hi in sub_series(rows, prefix):\", \"-            sub_table.append(f\\\"| {ym} | {model} | ${price:g} | {cap:,.0f} | \\\"\", \"-                             f\\\"${lo:.2f} | ${hi:.0f} |\\\")\", \"+    # ---- 组装单张图（线性 USD/1M） ----\", \"+    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}\", \"+    plus_line = forward_fill(plus)\", \" \", \"-    # ===== 写 md =====\", \"-    md = f\\\"\\\"\\\"# AI 价格对比：旗舰 API 与套餐折合 per-token（2023–2026）\", \"+    series = [\", \"+        (\\\"OpenAI API\\\", api_lines[\\\"OpenAI\\\"]),\", \"+        (\\\"Anthropic API\\\", api_lines[\\\"Anthropic\\\"]),\", \"+        (\\\"Google API\\\", api_lines[\\\"Google\\\"]),\", \"+        (\\\"DeepSeek API\\\", api_lines[\\\"DeepSeek\\\"]),\", \"+        (\\\"OpenAI 套餐 Plus 榨满\\\", plus_line),\", \"+        (\\\"Anthropic 套餐最高 (Pro 榨满)\\\", anth_high),\", \"+        (\\\"Anthropic 套餐最低 (Max20x 榨满)\\\", anth_low),\", \"+    ]\", \"+    ymax = max(max(v) for _, v in series)\", \"+    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数\", \" \", \"-把两类价格归一到同一根轴 —— **USD / 1M tokens（blended，输入输出均值）**，取 log10，\", \"-便于跨品牌横向、跨时间纵向比较。数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\", \"+    chart = [\\\"```mermaid\\\", \\\"xychart-beta\\\",\", \"+             '    title \\\"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\\\"',\", \"+             \\\"    x-axis [\\\" + \\\", \\\".join(QLABEL) + \\\"]\\\",\", \"+             f'    y-axis \\\"USD per 1M tokens\\\" 0 --> {ymax}']\", \"+    for _, vals in series:\", \"+        chart.append(\\\"    line [\\\" + \\\", \\\".join(f\\\"{v:.2f}\\\" for v in vals) + \\\"]\\\")\", \"+    chart.append(\\\"```\\\")\", \"+    chart = \\\"\\\\n\\\".join(chart)\", \" \", \"-## 折算算法\", \"+    legend = []\", \"+    for i, (label, vals) in enumerate(series, 1):\", \"+        legend.append(f\\\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\\\")\", \" \", \"-- **旗舰 API blended**：每家取「通用旗舰」模型链（OpenAI 的 GPT-4→GPT-5.5、Anthropic 的 Opus 线、\", \"-  Google 的 Gemini Pro 线、DeepSeek 的 chat 线），blended =（input + output）/ 2，按季度 forward-fill\", \"-  （价格在下次变动前保持有效）。DeepSeek input 取 cache-miss。\", \"-- **套餐折合 per-token**：套餐不按 token 计费，设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。\", \"-  - **最低（地板，重度用户）** = 月价 ÷（把配额用满时的月 token 数）。按 /N 小时 的配额取理论满载（24×7）。\", \"-  - **最高（天花板，轻度用户）** = 月价 ÷（轻度基线 **{CASUAL_MSGS_PER_MONTH} 条/月** 的 token 数）。\", \"-  - 区间 [最低, 最高] 夹住该套餐相对 API 逐 token 价的位置：榨满时通常比 API 便宜（被补贴），\", \"-    轻用时远贵于 API。\", \"-- **对数轴**：价格跨约三个数量级（DeepSeek ~$0.2/1M 到 GPT-4 ~$45/1M），故 Y 轴为 log10($/1M)。\", \"-  xychart-beta 无图例，线序见每图正文。\", \"+    # 旗舰明细表\", \"+    appendix = []\", \"+    for b in order:\", \"+        for ym, bl, i, o, model in fs[b]:\", \"+            appendix.append(f\\\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\\\")\", \" \", \"-## 图1：旗舰模型 API 价格随时间变化\", \"+    # 套餐折合表\", \"+    sub_tbl = []\", \"+    for ym, pt in plus:\", \"+        sub_tbl.append(f\\\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\\\")\", \"+    for ym, name, p, tok, pt in anth_plans:\", \"+        sub_tbl.append(f\\\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\\\")\", \" \", \"-线序（自上而下按图例）：{\\\" / \\\".join(order)}。\", \"+    md = f\\\"\\\"\\\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）\", \" \", \"-{chart1}\", \"+各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴\", \"+（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。\", \"+数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\", \" \", \"-{chr(10).join(legend1)}\", \"+## 折算口径\", \" \", \"-## 图2：ChatGPT Plus 折合 per-token 区间\", \"+- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。\", \"+  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。\", \"+- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，\", \"+  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。\", \"+  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。\", \"+  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。\", \"+  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。\", \" \", \"-两条线：上 = max（轻度天花板），下 = min（榨满地板）。Plus 月价始终 $20，故天花板恒为\", \"-${plus[0][5]:.0f}/1M（轻度用户严重溢价）；地板随配额放宽而下探，榨满时一度低至\", \"-${min(lo for *_, lo, _ in plus):.2f}/1M（比同期旗舰 API 更便宜，即套餐补贴）。\", \"+## 对比图\", \" \", \"-{chart2}\", \"+线序（颜色按此顺序）：\", \" \", \"-## 套餐折合 per-token 对照表\", \"+{chr(10).join(legend)}\", \" \", \"-每条消息按 {TOKENS_PER_MESSAGE} token 折算；月配额为理论满载；下限=榨满，上限=轻度（{CASUAL_MSGS_PER_MONTH} 条/月）。\", \"+{chart}\", \" \", \"-| 生效 | 套餐 | 月价 | 月配额(消息) | 折合下限 $/1M | 折合上限 $/1M |\", \"-|---|---|---|---|---|---|\", \"-{chr(10).join(sub_table)}\", \"+## 套餐榨满折合明细\", \" \", \"-**不可折算的套餐**（配额为「无限」或相对量）：ChatGPT Pro $200、Claude Max 5x/20x（$100/$200）、\", \"-Cursor Ultra $200 等标称无限或「N× Pro」，地板随用量趋近于 0、无固定上限，故不入表。\", \"-示意：$200 套餐若月推 50M token → $4/1M；月推 200M → $1/1M —— 完全取决于用量。\", \"+| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\", \"+|---|---|---|---|---|\", \"+{chr(10).join(sub_tbl)}\", \" \", \"+Anthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\", \"+（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\", \"+\", \" ## 旗舰 API 数据明细（blended 来源）\", \" \", \" | 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\"]}, {\"oldStart\": 239, \"oldLines\": 21, \"newStart\": 224, \"newLines\": 25, \"lines\": [\" \", \" ## 假设与局限\", \" \", \"-- **每条消息 {TOKENS_PER_MESSAGE} token、轻度基线 {CASUAL_MSGS_PER_MONTH} 条/月** 是折算口径，非厂商口径；\", \"-  改这两个常数会整体平移套餐曲线，但不改变品牌间相对关系（横向比较稳健）。\", \"-- **/N 小时配额按 24×7 满载折算**，是理论地板，真实重度用户达不到；用于界定区间下界。\", \"+- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，\", \"+  但不改品牌间相对关系。\", \"+- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，\", \"+  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。\", \"+  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）\", \"+  无法独立折算，未入图。\", \" - 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\", \"-  非厂商公布的稳定值；详见 CSV 中标 FLAG 的行。\", \"-- 旗舰链为「通用旗舰」判断：刻意排除一次性高价款（gpt-4.5-preview $75/$150）与推理专用款\", \"-  （o 系列、DeepSeek-R1），以保持各家可比的主力对话模型曲线。\", \"-- forward-fill 在模型未更新期间保持上次价格；各家曲线仅在其首个数据点之后有意义\", \"-  （季前为 pad 的平线）。\", \"+  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。\", \"+- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。\", \"+- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满\", \"+  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于\", \"+  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。\", \" \\\"\\\"\\\"\", \"     with open(OUT, \\\"w\\\", encoding=\\\"utf-8\\\") as fh:\", \"         fh.write(md)\", \"     print(f\\\"写入 {OUT}\\\")\", \"-    print(f\\\"旗舰链数据点：\\\" + \\\", \\\".join(f\\\"{b}={len(fs[b])}\\\" for b in order))\", \"-    print(f\\\"ChatGPT Plus 折算点：{len(plus)}；套餐表行数：{len(sub_table)}\\\")\", \"+    print(f\\\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \\\"\", \"+          f\\\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\\\")\", \"+    print(f\\\"图 y 轴上限 {ymax}；线数 {len(series)}\\\")\", \" \", \" \", \" if __name__ == \\\"__main__\\\":\"]}], \"originalFile\": \"#!/usr/bin/env python3\\n\\\"\\\"\\\"根据 chat/token-price.csv 生成 token-price.md 中的对比图表。\\n\\n把两类价格归一到同一根轴 —— **USD / 1M tokens(blended，取输入输出均值)**，\\n再取 log10，便于跨品牌横向、跨时间纵向比较：\\n\\n1. 各家旗舰模型 API blended 价随时间变化（log10 $/1M）。\\n2. 消费套餐按用量折合的 per-token 区间 [最低, 最高]（log10 $/1M）：\\n   - 套餐不按 token 计费，故设「每条消息 = TOKENS_PER_MESSAGE token」。\\n   - 最低（地板）= 月价 ÷ 把配额用满时的月 token 数（重度用户）。\\n   - 最高（天花板）= 月价 ÷ 轻度基线 CASUAL_MSGS_PER_MONTH 条的 token 数。\\n\\n图表用 mermaid xychart-beta。xychart-beta 无图例，故每图正文标注线序与终值。\\n\\\"\\\"\\\"\\nfrom __future__ import annotations\\n\\nimport csv\\nimport math\\nimport os\\nimport re\\n\\nHERE = os.path.dirname(os.path.abspath(__file__))\\nCSV = os.path.join(HERE, \\\"chat\\\", \\\"token-price.csv\\\")\\nOUT = os.path.join(HERE, \\\"token-price.md\\\")\\n\\n# ---- 折算假设（全部可调，已在正文披露） ----\\nTOKENS_PER_MESSAGE = 2000       # 每条消息折合 token（1k 入 + 1k 出，blended）\\nCASUAL_MSGS_PER_MONTH = 30      # 轻度用户基线：约每天 1 条\\n\\n# ---- 旗舰模型链（按 product_or_model 精确匹配 CSV，单一数据源） ----\\nFLAGSHIP = {\\n    \\\"OpenAI\\\": [\\\"gpt-4 (8K)\\\", \\\"gpt-4-turbo (1106-preview)\\\", \\\"gpt-4o-2024-05-13\\\",\\n               \\\"gpt-4o-2024-08-06\\\", \\\"gpt-4.1\\\", \\\"gpt-5\\\", \\\"gpt-5.4\\\", \\\"gpt-5.5\\\"],\\n    \\\"Anthropic\\\": [\\\"Claude 2.1\\\", \\\"Claude 3 Opus\\\", \\\"Claude Opus 4\\\", \\\"Claude Opus 4.1\\\",\\n                  \\\"Claude Opus 4.5\\\", \\\"Claude Opus 4.6\\\", \\\"Claude Opus 4.7\\\", \\\"Claude Opus 4.8\\\"],\\n    \\\"Google\\\": [\\\"Gemini 1.0 Pro\\\", \\\"Gemini 1.5 Pro (<=128K)\\\", \\\"Gemini 1.5 Pro (<=128K cut)\\\",\\n               \\\"Gemini 2.5 Pro (<=200K)\\\", \\\"Gemini 3.1 Pro (<=200K)\\\"],\\n    \\\"DeepSeek\\\": [\\\"DeepSeek-V2 (deepseek-chat)\\\", \\\"deepseek-chat V2 + context caching\\\",\\n                 \\\"DeepSeek-V3 (promo)\\\", \\\"DeepSeek-V3 (standard)\\\", \\\"DeepSeek-V3.1 (unified)\\\",\\n                 \\\"DeepSeek-V3.2-Exp\\\", \\\"DeepSeek-V4 Pro (promo 75% off)\\\", \\\"DeepSeek-V4 Pro (standard)\\\"],\\n}\\n\\n# 季度时间轴 2023Q1 .. 2026Q2\\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\\nQLABEL = [f\\\"{y % 100}Q{q}\\\" for (y, q) in QUARTERS]\\nQEND = [f\\\"{y}-{q*3:02d}\\\" for (y, q) in QUARTERS]   # 每季度末月 YYYY-MM\\n\\n\\ndef load_rows():\\n    with open(CSV, encoding=\\\"utf-8\\\") as fh:\\n        return list(csv.DictReader(fh))\\n\\n\\ndef fnum(s):\\n    s = (s or \\\"\\\").strip()\\n    return float(s) if s else None\\n\\n\\ndef flagship_series(rows):\\n    \\\"\\\"\\\"返回 {brand: [(ym, blended, in, out, model), ...]} 按日期排序。\\\"\\\"\\\"\\n    out = {}\\n    for brand, names in FLAGSHIP.items():\\n        pts = []\\n        for r in rows:\\n            if r[\\\"provider\\\"] == brand and r[\\\"category\\\"] == \\\"API\\\" and r[\\\"product_or_model\\\"] in names:\\n                i, o = fnum(r[\\\"input_per_1m_usd\\\"]), fnum(r[\\\"output_per_1m_usd\\\"])\\n                if i is not None and o is not None:\\n                    pts.append((r[\\\"effective_date\\\"], (i + o) / 2, i, o, r[\\\"product_or_model\\\"]))\\n        out[brand] = sorted(pts, key=lambda x: x[0])\\n    return out\\n\\n\\ndef forward_fill(points):\\n    \\\"\\\"\\\"points=[(ym, val)] -> 每个季度一个值（取 <= 季末的最近值；季前 pad 首值）。\\\"\\\"\\\"\\n    pts = sorted(points, key=lambda x: x[0])\\n    vals, first = [], pts[0][1]\\n    for qe in QEND:\\n        cur = first\\n        for ym, v in pts:\\n            if ym <= qe:\\n                cur = v\\n            else:\\n                break\\n        vals.append(cur)\\n    return vals\\n\\n\\nCAP_RE = re.compile(\\n    r\\\"(\\\\d[\\\\d,]*)\\\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\\\s*\\\"\\n    r\\\"(?:/|per|every|a|each)?\\\\s*(\\\\d*)\\\\s*(hours?|hrs?|h|days?|weeks?|months?)\\\",\\n    re.IGNORECASE,\\n)\\nPERIOD_PER_MONTH = {\\\"h\\\": None, \\\"hour\\\": None, \\\"hr\\\": None,\\n                    \\\"day\\\": 30.0, \\\"week\\\": 30.0 / 7, \\\"month\\\": 1.0}\\n\\n\\ndef cap_to_msgs_per_month(text):\\n    \\\"\\\"\\\"从 usage_limit 文本解析「消息/月」上限；解析不出返回 None。\\\"\\\"\\\"\\n    m = CAP_RE.search(text or \\\"\\\")\\n    if not m:\\n        return None\\n    count = float(m.group(1).replace(\\\",\\\", \\\"\\\"))\\n    n = float(m.group(2)) if m.group(2) else 1.0\\n    unit = m.group(3).lower().rstrip(\\\"s\\\")\\n    if unit in (\\\"h\\\", \\\"hour\\\", \\\"hr\\\"):                 # 每 n 小时：理论满载（24/7）\\n        windows = (30 * 24) / n\\n        return count * windows\\n    return count * PERIOD_PER_MONTH[unit] / n\\n\\n\\ndef per_token_band(price, msgs_per_month):\\n    \\\"\\\"\\\"返回 (min_per_1M, max_per_1M)：下限=榨满配额，上限=轻度基线。\\\"\\\"\\\"\\n    floor = price / (msgs_per_month * TOKENS_PER_MESSAGE) * 1e6\\n    casual_msgs = min(CASUAL_MSGS_PER_MONTH, msgs_per_month)\\n    ceil = price / (casual_msgs * TOKENS_PER_MESSAGE) * 1e6\\n    return floor, ceil\\n\\n\\ndef lg(v):\\n    return round(math.log10(v), 3)\\n\\n\\ndef sub_series(rows, prefix):\\n    \\\"\\\"\\\"挑选 product_or_model 以 prefix 开头、可解析配额的套餐行。\\\"\\\"\\\"\\n    pts = []\\n    for r in rows:\\n        if r[\\\"product_or_model\\\"].startswith(prefix):\\n            price = fnum(r[\\\"monthly_price_usd\\\"])\\n            cap = cap_to_msgs_per_month(r[\\\"usage_limit\\\"])\\n            if price and cap:\\n                lo, hi = per_token_band(price, cap)\\n                pts.append((r[\\\"effective_date\\\"], r[\\\"product_or_model\\\"], price, cap, lo, hi))\\n    return sorted(pts, key=lambda x: x[0])\\n\\n\\ndef xychart(title, yaxis, ymin, ymax, lines):\\n    \\\"\\\"\\\"lines=[(label, [values...])]，返回 mermaid 代码块字符串。\\\"\\\"\\\"\\n    out = [\\\"```mermaid\\\", \\\"xychart-beta\\\", f'    title \\\"{title}\\\"',\\n           \\\"    x-axis [\\\" + \\\", \\\".join(QLABEL) + \\\"]\\\",\\n           f'    y-axis \\\"{yaxis}\\\" {ymin} --> {ymax}']\\n    for _, vals in lines:\\n        out.append(\\\"    line [\\\" + \\\", \\\".join(f\\\"{v:.2f}\\\" for v in vals) + \\\"]\\\")\\n    out.append(\\\"```\\\")\\n    return \\\"\\\\n\\\".join(out)\\n\\n\\ndef main():\\n    rows = load_rows()\\n\\n    # ===== 图1：旗舰 API blended（log10） =====\\n    fs = flagship_series(rows)\\n    order = [\\\"OpenAI\\\", \\\"Anthropic\\\", \\\"Google\\\", \\\"DeepSeek\\\"]\\n    lines1, legend1, appendix = [], [], []\\n    for b in order:\\n        pts = fs[b]\\n        vals = forward_fill([(ym, blend) for ym, blend, *_ in pts])\\n        lines1.append((b, [lg(v) for v in vals]))\\n        last_ym, last_blend, last_in, last_out, last_model = pts[-1]\\n        first_ym = pts[0][0]\\n        legend1.append(f\\\"- **{b}**：{first_ym} 起；终值（{last_model}）blended ${last_blend:.2f}/1M\\\"\\n                       f\\\"（in ${last_in:g} / out ${last_out:g}），log10={lg(last_blend)}\\\")\\n        for ym, blend, i, o, model in pts:\\n            appendix.append(f\\\"| {b} | {ym} | {model} | {i:g} | {o:g} | {blend:.2f} |\\\")\\n\\n    chart1 = xychart(\\\"旗舰模型 API 价格（blended, log10 USD per 1M tokens）\\\",\\n                     \\\"log10($/1M)\\\", -1, 2, lines1)\\n\\n    # ===== 图2：ChatGPT Plus 折合 per-token 区间（log10） =====\\n    # 只用「通用聊天旗舰」配额线，排除 o1/o3 等推理模型的周配额（语义不同）\\n    CHAT_PLUS = {\\\"ChatGPT Plus (GPT-4)\\\", \\\"ChatGPT Plus (GPT-4o)\\\",\\n                 \\\"ChatGPT Plus (GPT-5 era)\\\", \\\"ChatGPT Plus (2026)\\\"}\\n    plus = [p for p in sub_series(rows, \\\"ChatGPT Plus\\\") if p[1] in CHAT_PLUS]\\n    lo_vals = forward_fill([(ym, lo) for ym, _, _, _, lo, _ in plus])\\n    hi_vals = forward_fill([(ym, hi) for ym, _, _, _, _, hi in plus])\\n    chart2 = xychart(\\\"ChatGPT Plus（$20）折合 per-token 区间（log10 USD per 1M tokens）\\\",\\n                     \\\"log10($/1M)\\\", -0.5, 2.7,\\n                     [(\\\"min\\\", [lg(v) for v in lo_vals]), (\\\"max\\\", [lg(v) for v in hi_vals])])\\n\\n    # ===== 套餐折合对照表（所有可解析配额的套餐） =====\\n    sub_table = []\\n    for prefix in (\\\"ChatGPT Plus\\\", \\\"ChatGPT Agent\\\", \\\"ChatGPT Go\\\", \\\"Claude Pro\\\", \\\"Cursor\\\"):\\n        for ym, model, price, cap, lo, hi in sub_series(rows, prefix):\\n            sub_table.append(f\\\"| {ym} | {model} | ${price:g} | {cap:,.0f} | \\\"\\n                             f\\\"${lo:.2f} | ${hi:.0f} |\\\")\\n\\n    # ===== 写 md =====\\n    md = f\\\"\\\"\\\"# AI 价格对比：旗舰 API 与套餐折合 per-token（2023–2026）\\n\\n把两类价格归一到同一根轴 —— **USD / 1M tokens（blended，输入输出均值）**，取 log10，\\n便于跨品牌横向、跨时间纵向比较。数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\\n\\n## 折算算法\\n\\n- **旗舰 API blended**：每家取「通用旗舰」模型链（OpenAI 的 GPT-4→GPT-5.5、Anthropic 的 Opus 线、\\n  Google 的 Gemini Pro 线、DeepSeek 的 chat 线），blended =（input + output）/ 2，按季度 forward-fill\\n  （价格在下次变动前保持有效）。DeepSeek input 取 cache-miss。\\n- **套餐折合 per-token**：套餐不按 token 计费，设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。\\n  - **最低（地板，重度用户）** = 月价 ÷（把配额用满时的月 token 数）。按 /N 小时 的配额取理论满载（24×7）。\\n  - **最高（天花板，轻度用户）** = 月价 ÷（轻度基线 **{CASUAL_MSGS_PER_MONTH} 条/月** 的 token 数）。\\n  - 区间 [最低, 最高] 夹住该套餐相对 API 逐 token 价的位置：榨满时通常比 API 便宜（被补贴），\\n    轻用时远贵于 API。\\n- **对数轴**：价格跨约三个数量级（DeepSeek ~$0.2/1M 到 GPT-4 ~$45/1M），故 Y 轴为 log10($/1M)。\\n  xychart-beta 无图例，线序见每图正文。\\n\\n## 图1：旗舰模型 API 价格随时间变化\\n\\n线序（自上而下按图例）：{\\\" / \\\".join(order)}。\\n\\n{chart1}\\n\\n{chr(10).join(legend1)}\\n\\n## 图2：ChatGPT Plus 折合 per-token 区间\\n\\n两条线：上 = max（轻度天花板），下 = min（榨满地板）。Plus 月价始终 $20，故天花板恒为\\n${plus[0][5]:.0f}/1M（轻度用户严重溢价）；地板随配额放宽而下探，榨满时一度低至\\n${min(lo for *_, lo, _ in plus):.2f}/1M（比同期旗舰 API 更便宜，即套餐补贴）。\\n\\n{chart2}\\n\\n## 套餐折合 per-token 对照表\\n\\n每条消息按 {TOKENS_PER_MESSAGE} token 折算；月配额为理论满载；下限=榨满，上限=轻度（{CASUAL_MSGS_PER_MONTH} 条/月）。\\n\\n| 生效 | 套餐 | 月价 | 月配额(消息) | 折合下限 $/1M | 折合上限 $/1M |\\n|---|---|---|---|---|---|\\n{chr(10).join(sub_table)}\\n\\n**不可折算的套餐**（配额为「无限」或相对量）：ChatGPT Pro $200、Claude Max 5x/20x（$100/$200）、\\nCursor Ultra $200 等标称无限或「N× Pro」，地板随用量趋近于 0、无固定上限，故不入表。\\n示意：$200 套餐若月推 50M token → $4/1M；月推 200M → $1/1M —— 完全取决于用量。\\n\\n## 旗舰 API 数据明细（blended 来源）\\n\\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\\n|---|---|---|---|---|---|\\n{chr(10).join(appendix)}\\n\\n## 假设与局限\\n\\n- **每条消息 {TOKENS_PER_MESSAGE} token、轻度基线 {CASUAL_MSGS_PER_MONTH} 条/月** 是折算口径，非厂商口径；\\n  改这两个常数会整体平移套餐曲线，但不改变品牌间相对关系（横向比较稳健）。\\n- **/N 小时配额按 24×7 满载折算**，是理论地板，真实重度用户达不到；用于界定区间下界。\\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\\n  非厂商公布的稳定值；详见 CSV 中标 FLAG 的行。\\n- 旗舰链为「通用旗舰」判断：刻意排除一次性高价款（gpt-4.5-preview $75/$150）与推理专用款\\n  （o 系列、DeepSeek-R1），以保持各家可比的主力对话模型曲线。\\n- forward-fill 在模型未更新期间保持上次价格；各家曲线仅在其首个数据点之后有意义\\n  （季前为 pad 的平线）。\\n\\\"\\\"\\\"\\n    with open(OUT, \\\"w\\\", encoding=\\\"utf-8\\\") as fh:\\n        fh.write(md)\\n    print(f\\\"写入 {OUT}\\\")\\n    print(f\\\"旗舰链数据点：\\\" + \\\", \\\".join(f\\\"{b}={len(fs[b])}\\\" for b in order))\\n    print(f\\\"ChatGPT Plus 折算点：{len(plus)}；套餐表行数：{len(sub_table)}\\\")\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\", \"userModified\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 240795,
+        "completion_tokens": 5548,
+        "cached_tokens": 240664,
+        "extra": {
+          "cache_creation_input_tokens": 15984,
+          "cache_read_input_tokens": 240664,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 15984,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 5548,
+              "cache_read_input_tokens": 240664,
+              "cache_creation_input_tokens": 15984,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 15984
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Write",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "update",
+            "filePath": "/Users/luwei/work/Controversy/token-price.py",
+            "content": "#!/usr/bin/env python3\n\"\"\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。\n\n把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：\n\nA. 各家旗舰 API blended 价 =（input + output）/ 2。\nB. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token\n   （折扣率低 → 单价高）。\nC. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token\n   （批量折扣大 → 单价低）。\n\n套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设\n每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。\n\"\"\"\nfrom __future__ import annotations\n\nimport csv\nimport os\nimport re\n\nHERE = os.path.dirname(os.path.abspath(__file__))\nCSV = os.path.join(HERE, \"chat\", \"token-price.csv\")\nOUT = os.path.join(HERE, \"token-price.md\")\n\nTOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）\n\nFLAGSHIP = {\n    \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",\n               \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],\n    \"Anthropic\": [\"Claude 2.1\", \"Claude 3 Opus\", \"Claude Opus 4\", \"Claude Opus 4.1\",\n                  \"Claude Opus 4.5\", \"Claude Opus 4.6\", \"Claude Opus 4.7\", \"Claude Opus 4.8\"],\n    \"Google\": [\"Gemini 1.0 Pro\", \"Gemini 1.5 Pro (<=128K)\", \"Gemini 1.5 Pro (<=128K cut)\",\n               \"Gemini 2.5 Pro (<=200K)\", \"Gemini 3.1 Pro (<=200K)\"],\n    \"DeepSeek\": [\"DeepSeek-V2 (deepseek-chat)\", \"deepseek-chat V2 + context caching\",\n                 \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",\n                 \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],\n}\n# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）\nOPENAI_CHAT_PLUS = [\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",\n                    \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"]\n\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\nQLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]\nQEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]\n\n\ndef load_rows():\n    with open(CSV, encoding=\"utf-8\") as fh:\n        return list(csv.DictReader(fh))\n\n\ndef fnum(s):\n    s = (s or \"\").strip()\n    return float(s) if s else None\n\n\ndef forward_fill(points):\n    pts = sorted(points, key=lambda x: x[0])\n    first, vals = pts[0][1], []\n    for qe in QEND:\n        cur = first\n        for ym, v in pts:\n            if ym <= qe:\n                cur = v\n            else:\n                break\n        vals.append(cur)\n    return vals\n\n\nCAP_RE = re.compile(\n    r\"(\\d[\\d,]*)\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\s*\"\n    r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",\n    re.IGNORECASE,\n)\nPER_MONTH = {\"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}\n\n\ndef cap_msgs_per_month(text):\n    m = CAP_RE.search(text or \"\")\n    if not m:\n        return None\n    count = float(m.group(1).replace(\",\", \"\"))\n    n = float(m.group(2)) if m.group(2) else 1.0\n    unit = m.group(3).lower().rstrip(\"s\")\n    if unit in (\"h\", \"hour\", \"hr\"):\n        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7\n    return count * PER_MONTH[unit] / n\n\n\ndef per_token(price, tokens_per_month):\n    return price / tokens_per_month * 1e6        # USD per 1M tokens\n\n\ndef flagship_blended(rows):\n    out = {}\n    for brand, names in FLAGSHIP.items():\n        pts = []\n        for r in rows:\n            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:\n                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])\n                if i is not None and o is not None:\n                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))\n        out[brand] = sorted(pts, key=lambda x: x[0])\n    return out\n\n\ndef main():\n    rows = load_rows()\n    fs = flagship_blended(rows)\n    order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]\n\n    # ---- 套餐折合 per-token ----\n    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）\n    plus = []\n    for r in rows:\n        if r[\"product_or_model\"] in OPENAI_CHAT_PLUS:\n            p, cap = fnum(r[\"monthly_price_usd\"]), cap_msgs_per_month(r[\"usage_limit\"])\n            if p and cap:\n                plus.append((r[\"effective_date\"], per_token(p, cap * TOKENS_PER_MESSAGE)))\n    plus = sorted(plus)\n\n    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）\n    pro_row = next(r for r in rows if r[\"product_or_model\"] == \"Claude Pro\")\n    pro_tokens = cap_msgs_per_month(pro_row[\"usage_limit\"]) * TOKENS_PER_MESSAGE\n    pro_price = fnum(pro_row[\"monthly_price_usd\"])\n    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合\n    anth_plans = []   # (date, name, price, tokens, per_token)\n    anth_plans.append((pro_row[\"effective_date\"], \"Claude Pro\", pro_price, pro_tokens, pro_pt))\n    for r in rows:\n        m = re.match(r\"Claude Max (\\d+)x\", r[\"product_or_model\"])\n        if m:\n            mult = int(m.group(1))\n            p = fnum(r[\"monthly_price_usd\"])\n            tok = mult * pro_tokens\n            anth_plans.append((r[\"effective_date\"], r[\"product_or_model\"], p, tok, per_token(p, tok)))\n    anth_plans.sort(key=lambda x: (x[0], x[2]))\n    max20 = next(x for x in anth_plans if x[1] == \"Claude Max 20x\")\n    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro\n    anth_high = forward_fill([(pro_row[\"effective_date\"], pro_pt)])\n    anth_low = forward_fill([(pro_row[\"effective_date\"], pro_pt), (max20[0], max20[4])])\n\n    # ---- 组装单张图（线性 USD/1M） ----\n    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}\n    plus_line = forward_fill(plus)\n\n    series = [\n        (\"OpenAI API\", api_lines[\"OpenAI\"]),\n        (\"Anthropic API\", api_lines[\"Anthropic\"]),\n        (\"Google API\", api_lines[\"Google\"]),\n        (\"DeepSeek API\", api_lines[\"DeepSeek\"]),\n        (\"OpenAI 套餐 Plus 榨满\", plus_line),\n        (\"Anthropic 套餐最高 (Pro 榨满)\", anth_high),\n        (\"Anthropic 套餐最低 (Max20x 榨满)\", anth_low),\n    ]\n    ymax = max(max(v) for _, v in series)\n    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数\n\n    chart = [\"```mermaid\", \"xychart-beta\",\n             '    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"',\n             \"    x-axis [\" + \", \".join(QLABEL) + \"]\",\n             f'    y-axis \"USD per 1M tokens\" 0 --> {ymax}']\n    for _, vals in series:\n        chart.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")\n    chart.append(\"```\")\n    chart = \"\\n\".join(chart)\n\n    legend = []\n    for i, (label, vals) in enumerate(series, 1):\n        legend.append(f\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\")\n\n    # 旗舰明细表\n    appendix = []\n    for b in order:\n        for ym, bl, i, o, model in fs[b]:\n            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\")\n\n    # 套餐折合表\n    sub_tbl = []\n    for ym, pt in plus:\n        sub_tbl.append(f\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\")\n    for ym, name, p, tok, pt in anth_plans:\n        sub_tbl.append(f\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\")\n\n    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）\n\n各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴\n（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。\n数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\n\n## 折算口径\n\n- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。\n  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。\n- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，\n  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。\n  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。\n  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。\n  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。\n\n## 对比图\n\n线序（颜色按此顺序）：\n\n{chr(10).join(legend)}\n\n{chart}\n\n## 套餐榨满折合明细\n\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n|---|---|---|---|---|\n{chr(10).join(sub_tbl)}\n\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\n\n## 旗舰 API 数据明细（blended 来源）\n\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(appendix)}\n\n## 假设与局限\n\n- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，\n  但不改品牌间相对关系。\n- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，\n  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。\n  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）\n  无法独立折算，未入图。\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\n  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。\n- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。\n- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满\n  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于\n  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。\n\"\"\"\n    with open(OUT, \"w\", encoding=\"utf-8\") as fh:\n        fh.write(md)\n    print(f\"写入 {OUT}\")\n    print(f\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \"\n          f\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\")\n    print(f\"图 y 轴上限 {ymax}；线数 {len(series)}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+            "structuredPatch": [
+              {
+                "oldStart": 1,
+                "oldLines": 21,
+                "newStart": 1,
+                "newLines": 20,
+                "lines": [
+                  " #!/usr/bin/env python3",
+                  "-\"\"\"根据 chat/token-price.csv 生成 token-price.md 中的对比图表。",
+                  "+\"\"\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。",
+                  " ",
+                  "-把两类价格归一到同一根轴 —— **USD / 1M tokens(blended，取输入输出均值)**，",
+                  "-再取 log10，便于跨品牌横向、跨时间纵向比较：",
+                  "+把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：",
+                  " ",
+                  "-1. 各家旗舰模型 API blended 价随时间变化（log10 $/1M）。",
+                  "-2. 消费套餐按用量折合的 per-token 区间 [最低, 最高]（log10 $/1M）：",
+                  "-   - 套餐不按 token 计费，故设「每条消息 = TOKENS_PER_MESSAGE token」。",
+                  "-   - 最低（地板）= 月价 ÷ 把配额用满时的月 token 数（重度用户）。",
+                  "-   - 最高（天花板）= 月价 ÷ 轻度基线 CASUAL_MSGS_PER_MONTH 条的 token 数。",
+                  "+A. 各家旗舰 API blended 价 =（input + output）/ 2。",
+                  "+B. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token",
+                  "+   （折扣率低 → 单价高）。",
+                  "+C. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token",
+                  "+   （批量折扣大 → 单价低）。",
+                  " ",
+                  "-图表用 mermaid xychart-beta。xychart-beta 无图例，故每图正文标注线序与终值。",
+                  "+套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设",
+                  "+每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。",
+                  " \"\"\"",
+                  " from __future__ import annotations",
+                  " ",
+                  " import csv",
+                  "-import math",
+                  " import os",
+                  " import re",
+                  " "
+                ]
+              },
+              {
+                "oldStart": 23,
+                "oldLines": 11,
+                "newStart": 22,
+                "newLines": 8,
+                "lines": [
+                  " CSV = os.path.join(HERE, \"chat\", \"token-price.csv\")",
+                  " OUT = os.path.join(HERE, \"token-price.md\")",
+                  " ",
+                  "-# ---- 折算假设（全部可调，已在正文披露） ----",
+                  "-TOKENS_PER_MESSAGE = 2000       # 每条消息折合 token（1k 入 + 1k 出，blended）",
+                  "-CASUAL_MSGS_PER_MONTH = 30      # 轻度用户基线：约每天 1 条",
+                  "+TOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）",
+                  " ",
+                  "-# ---- 旗舰模型链（按 product_or_model 精确匹配 CSV，单一数据源） ----",
+                  " FLAGSHIP = {",
+                  "     \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",",
+                  "                \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],"
+                ]
+              },
+              {
+                "oldStart": 39,
+                "oldLines": 12,
+                "newStart": 35,
+                "newLines": 14,
+                "lines": [
+                  "                  \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",",
+                  "                  \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],",
+                  " }",
+                  "+# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）",
+                  "+OPENAI_CHAT_PLUS = [\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",",
+                  "+                    \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"]",
+                  " ",
+                  "-# 季度时间轴 2023Q1 .. 2026Q2",
+                  " QUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]",
+                  " QUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]",
+                  " QLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]",
+                  "-QEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]   # 每季度末月 YYYY-MM",
+                  "+QEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]",
+                  " ",
+                  " ",
+                  " def load_rows():"
+                ]
+              },
+              {
+                "oldStart": 57,
+                "oldLines": 24,
+                "newStart": 55,
+                "newLines": 9,
+                "lines": [
+                  "     return float(s) if s else None",
+                  " ",
+                  " ",
+                  "-def flagship_series(rows):",
+                  "-    \"\"\"返回 {brand: [(ym, blended, in, out, model), ...]} 按日期排序。\"\"\"",
+                  "-    out = {}",
+                  "-    for brand, names in FLAGSHIP.items():",
+                  "-        pts = []",
+                  "-        for r in rows:",
+                  "-            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:",
+                  "-                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])",
+                  "-                if i is not None and o is not None:",
+                  "-                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))",
+                  "-        out[brand] = sorted(pts, key=lambda x: x[0])",
+                  "-    return out",
+                  "-",
+                  "-",
+                  " def forward_fill(points):",
+                  "-    \"\"\"points=[(ym, val)] -> 每个季度一个值（取 <= 季末的最近值；季前 pad 首值）。\"\"\"",
+                  "     pts = sorted(points, key=lambda x: x[0])",
+                  "-    vals, first = [], pts[0][1]",
+                  "+    first, vals = pts[0][1], []",
+                  "     for qe in QEND:",
+                  "         cur = first",
+                  "         for ym, v in pts:"
+                ]
+              },
+              {
+                "oldStart": 91,
+                "oldLines": 146,
+                "newStart": 74,
+                "newLines": 148,
+                "lines": [
+                  "     r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",",
+                  "     re.IGNORECASE,",
+                  " )",
+                  "-PERIOD_PER_MONTH = {\"h\": None, \"hour\": None, \"hr\": None,",
+                  "-                    \"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}",
+                  "+PER_MONTH = {\"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}",
+                  " ",
+                  " ",
+                  "-def cap_to_msgs_per_month(text):",
+                  "-    \"\"\"从 usage_limit 文本解析「消息/月」上限；解析不出返回 None。\"\"\"",
+                  "+def cap_msgs_per_month(text):",
+                  "     m = CAP_RE.search(text or \"\")",
+                  "     if not m:",
+                  "         return None",
+                  "     count = float(m.group(1).replace(\",\", \"\"))",
+                  "     n = float(m.group(2)) if m.group(2) else 1.0",
+                  "     unit = m.group(3).lower().rstrip(\"s\")",
+                  "-    if unit in (\"h\", \"hour\", \"hr\"):                 # 每 n 小时：理论满载（24/7）",
+                  "-        windows = (30 * 24) / n",
+                  "-        return count * windows",
+                  "-    return count * PERIOD_PER_MONTH[unit] / n",
+                  "+    if unit in (\"h\", \"hour\", \"hr\"):",
+                  "+        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7",
+                  "+    return count * PER_MONTH[unit] / n",
+                  " ",
+                  " ",
+                  "-def per_token_band(price, msgs_per_month):",
+                  "-    \"\"\"返回 (min_per_1M, max_per_1M)：下限=榨满配额，上限=轻度基线。\"\"\"",
+                  "-    floor = price / (msgs_per_month * TOKENS_PER_MESSAGE) * 1e6",
+                  "-    casual_msgs = min(CASUAL_MSGS_PER_MONTH, msgs_per_month)",
+                  "-    ceil = price / (casual_msgs * TOKENS_PER_MESSAGE) * 1e6",
+                  "-    return floor, ceil",
+                  "+def per_token(price, tokens_per_month):",
+                  "+    return price / tokens_per_month * 1e6        # USD per 1M tokens",
+                  " ",
+                  " ",
+                  "-def lg(v):",
+                  "-    return round(math.log10(v), 3)",
+                  "+def flagship_blended(rows):",
+                  "+    out = {}",
+                  "+    for brand, names in FLAGSHIP.items():",
+                  "+        pts = []",
+                  "+        for r in rows:",
+                  "+            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:",
+                  "+                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])",
+                  "+                if i is not None and o is not None:",
+                  "+                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))",
+                  "+        out[brand] = sorted(pts, key=lambda x: x[0])",
+                  "+    return out",
+                  " ",
+                  " ",
+                  "-def sub_series(rows, prefix):",
+                  "-    \"\"\"挑选 product_or_model 以 prefix 开头、可解析配额的套餐行。\"\"\"",
+                  "-    pts = []",
+                  "-    for r in rows:",
+                  "-        if r[\"product_or_model\"].startswith(prefix):",
+                  "-            price = fnum(r[\"monthly_price_usd\"])",
+                  "-            cap = cap_to_msgs_per_month(r[\"usage_limit\"])",
+                  "-            if price and cap:",
+                  "-                lo, hi = per_token_band(price, cap)",
+                  "-                pts.append((r[\"effective_date\"], r[\"product_or_model\"], price, cap, lo, hi))",
+                  "-    return sorted(pts, key=lambda x: x[0])",
+                  "-",
+                  "-",
+                  "-def xychart(title, yaxis, ymin, ymax, lines):",
+                  "-    \"\"\"lines=[(label, [values...])]，返回 mermaid 代码块字符串。\"\"\"",
+                  "-    out = [\"```mermaid\", \"xychart-beta\", f'    title \"{title}\"',",
+                  "-           \"    x-axis [\" + \", \".join(QLABEL) + \"]\",",
+                  "-           f'    y-axis \"{yaxis}\" {ymin} --> {ymax}']",
+                  "-    for _, vals in lines:",
+                  "-        out.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")",
+                  "-    out.append(\"```\")",
+                  "-    return \"\\n\".join(out)",
+                  "-",
+                  "-",
+                  " def main():",
+                  "     rows = load_rows()",
+                  "-",
+                  "-    # ===== 图1：旗舰 API blended（log10） =====",
+                  "-    fs = flagship_series(rows)",
+                  "+    fs = flagship_blended(rows)",
+                  "     order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]",
+                  "-    lines1, legend1, appendix = [], [], []",
+                  "-    for b in order:",
+                  "-        pts = fs[b]",
+                  "-        vals = forward_fill([(ym, blend) for ym, blend, *_ in pts])",
+                  "-        lines1.append((b, [lg(v) for v in vals]))",
+                  "-        last_ym, last_blend, last_in, last_out, last_model = pts[-1]",
+                  "-        first_ym = pts[0][0]",
+                  "-        legend1.append(f\"- **{b}**：{first_ym} 起；终值（{last_model}）blended ${last_blend:.2f}/1M\"",
+                  "-                       f\"（in ${last_in:g} / out ${last_out:g}），log10={lg(last_blend)}\")",
+                  "-        for ym, blend, i, o, model in pts:",
+                  "-            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {blend:.2f} |\")",
+                  " ",
+                  "-    chart1 = xychart(\"旗舰模型 API 价格（blended, log10 USD per 1M tokens）\",",
+                  "-                     \"log10($/1M)\", -1, 2, lines1)",
+                  "+    # ---- 套餐折合 per-token ----",
+                  "+    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）",
+                  "+    plus = []",
+                  "+    for r in rows:",
+                  "+        if r[\"product_or_model\"] in OPENAI_CHAT_PLUS:",
+                  "+            p, cap = fnum(r[\"monthly_price_usd\"]), cap_msgs_per_month(r[\"usage_limit\"])",
+                  "+            if p and cap:",
+                  "+                plus.append((r[\"effective_date\"], per_token(p, cap * TOKENS_PER_MESSAGE)))",
+                  "+    plus = sorted(plus)",
+                  " ",
+                  "-    # ===== 图2：ChatGPT Plus 折合 per-token 区间（log10） =====",
+                  "-    # 只用「通用聊天旗舰」配额线，排除 o1/o3 等推理模型的周配额（语义不同）",
+                  "-    CHAT_PLUS = {\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",",
+                  "-                 \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"}",
+                  "-    plus = [p for p in sub_series(rows, \"ChatGPT Plus\") if p[1] in CHAT_PLUS]",
+                  "-    lo_vals = forward_fill([(ym, lo) for ym, _, _, _, lo, _ in plus])",
+                  "-    hi_vals = forward_fill([(ym, hi) for ym, _, _, _, _, hi in plus])",
+                  "-    chart2 = xychart(\"ChatGPT Plus（$20）折合 per-token 区间（log10 USD per 1M tokens）\",",
+                  "-                     \"log10($/1M)\", -0.5, 2.7,",
+                  "-                     [(\"min\", [lg(v) for v in lo_vals]), (\"max\", [lg(v) for v in hi_vals])])",
+                  "+    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）",
+                  "+    pro_row = next(r for r in rows if r[\"product_or_model\"] == \"Claude Pro\")",
+                  "+    pro_tokens = cap_msgs_per_month(pro_row[\"usage_limit\"]) * TOKENS_PER_MESSAGE",
+                  "+    pro_price = fnum(pro_row[\"monthly_price_usd\"])",
+                  "+    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合",
+                  "+    anth_plans = []   # (date, name, price, tokens, per_token)",
+                  "+    anth_plans.append((pro_row[\"effective_date\"], \"Claude Pro\", pro_price, pro_tokens, pro_pt))",
+                  "+    for r in rows:",
+                  "+        m = re.match(r\"Claude Max (\\d+)x\", r[\"product_or_model\"])",
+                  "+        if m:",
+                  "+            mult = int(m.group(1))",
+                  "+            p = fnum(r[\"monthly_price_usd\"])",
+                  "+            tok = mult * pro_tokens",
+                  "+            anth_plans.append((r[\"effective_date\"], r[\"product_or_model\"], p, tok, per_token(p, tok)))",
+                  "+    anth_plans.sort(key=lambda x: (x[0], x[2]))",
+                  "+    max20 = next(x for x in anth_plans if x[1] == \"Claude Max 20x\")",
+                  "+    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro",
+                  "+    anth_high = forward_fill([(pro_row[\"effective_date\"], pro_pt)])",
+                  "+    anth_low = forward_fill([(pro_row[\"effective_date\"], pro_pt), (max20[0], max20[4])])",
+                  " ",
+                  "-    # ===== 套餐折合对照表（所有可解析配额的套餐） =====",
+                  "-    sub_table = []",
+                  "-    for prefix in (\"ChatGPT Plus\", \"ChatGPT Agent\", \"ChatGPT Go\", \"Claude Pro\", \"Cursor\"):",
+                  "-        for ym, model, price, cap, lo, hi in sub_series(rows, prefix):",
+                  "-            sub_table.append(f\"| {ym} | {model} | ${price:g} | {cap:,.0f} | \"",
+                  "-                             f\"${lo:.2f} | ${hi:.0f} |\")",
+                  "+    # ---- 组装单张图（线性 USD/1M） ----",
+                  "+    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}",
+                  "+    plus_line = forward_fill(plus)",
+                  " ",
+                  "-    # ===== 写 md =====",
+                  "-    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐折合 per-token（2023–2026）",
+                  "+    series = [",
+                  "+        (\"OpenAI API\", api_lines[\"OpenAI\"]),",
+                  "+        (\"Anthropic API\", api_lines[\"Anthropic\"]),",
+                  "+        (\"Google API\", api_lines[\"Google\"]),",
+                  "+        (\"DeepSeek API\", api_lines[\"DeepSeek\"]),",
+                  "+        (\"OpenAI 套餐 Plus 榨满\", plus_line),",
+                  "+        (\"Anthropic 套餐最高 (Pro 榨满)\", anth_high),",
+                  "+        (\"Anthropic 套餐最低 (Max20x 榨满)\", anth_low),",
+                  "+    ]",
+                  "+    ymax = max(max(v) for _, v in series)",
+                  "+    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数",
+                  " ",
+                  "-把两类价格归一到同一根轴 —— **USD / 1M tokens（blended，输入输出均值）**，取 log10，",
+                  "-便于跨品牌横向、跨时间纵向比较。数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。",
+                  "+    chart = [\"```mermaid\", \"xychart-beta\",",
+                  "+             '    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"',",
+                  "+             \"    x-axis [\" + \", \".join(QLABEL) + \"]\",",
+                  "+             f'    y-axis \"USD per 1M tokens\" 0 --> {ymax}']",
+                  "+    for _, vals in series:",
+                  "+        chart.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")",
+                  "+    chart.append(\"```\")",
+                  "+    chart = \"\\n\".join(chart)",
+                  " ",
+                  "-## 折算算法",
+                  "+    legend = []",
+                  "+    for i, (label, vals) in enumerate(series, 1):",
+                  "+        legend.append(f\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\")",
+                  " ",
+                  "-- **旗舰 API blended**：每家取「通用旗舰」模型链（OpenAI 的 GPT-4→GPT-5.5、Anthropic 的 Opus 线、",
+                  "-  Google 的 Gemini Pro 线、DeepSeek 的 chat 线），blended =（input + output）/ 2，按季度 forward-fill",
+                  "-  （价格在下次变动前保持有效）。DeepSeek input 取 cache-miss。",
+                  "-- **套餐折合 per-token**：套餐不按 token 计费，设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。",
+                  "-  - **最低（地板，重度用户）** = 月价 ÷（把配额用满时的月 token 数）。按 /N 小时 的配额取理论满载（24×7）。",
+                  "-  - **最高（天花板，轻度用户）** = 月价 ÷（轻度基线 **{CASUAL_MSGS_PER_MONTH} 条/月** 的 token 数）。",
+                  "-  - 区间 [最低, 最高] 夹住该套餐相对 API 逐 token 价的位置：榨满时通常比 API 便宜（被补贴），",
+                  "-    轻用时远贵于 API。",
+                  "-- **对数轴**：价格跨约三个数量级（DeepSeek ~$0.2/1M 到 GPT-4 ~$45/1M），故 Y 轴为 log10($/1M)。",
+                  "-  xychart-beta 无图例，线序见每图正文。",
+                  "+    # 旗舰明细表",
+                  "+    appendix = []",
+                  "+    for b in order:",
+                  "+        for ym, bl, i, o, model in fs[b]:",
+                  "+            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\")",
+                  " ",
+                  "-## 图1：旗舰模型 API 价格随时间变化",
+                  "+    # 套餐折合表",
+                  "+    sub_tbl = []",
+                  "+    for ym, pt in plus:",
+                  "+        sub_tbl.append(f\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\")",
+                  "+    for ym, name, p, tok, pt in anth_plans:",
+                  "+        sub_tbl.append(f\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\")",
+                  " ",
+                  "-线序（自上而下按图例）：{\" / \".join(order)}。",
+                  "+    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）",
+                  " ",
+                  "-{chart1}",
+                  "+各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴",
+                  "+（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。",
+                  "+数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。",
+                  " ",
+                  "-{chr(10).join(legend1)}",
+                  "+## 折算口径",
+                  " ",
+                  "-## 图2：ChatGPT Plus 折合 per-token 区间",
+                  "+- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。",
+                  "+  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。",
+                  "+- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，",
+                  "+  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。",
+                  "+  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。",
+                  "+  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。",
+                  "+  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。",
+                  " ",
+                  "-两条线：上 = max（轻度天花板），下 = min（榨满地板）。Plus 月价始终 $20，故天花板恒为",
+                  "-${plus[0][5]:.0f}/1M（轻度用户严重溢价）；地板随配额放宽而下探，榨满时一度低至",
+                  "-${min(lo for *_, lo, _ in plus):.2f}/1M（比同期旗舰 API 更便宜，即套餐补贴）。",
+                  "+## 对比图",
+                  " ",
+                  "-{chart2}",
+                  "+线序（颜色按此顺序）：",
+                  " ",
+                  "-## 套餐折合 per-token 对照表",
+                  "+{chr(10).join(legend)}",
+                  " ",
+                  "-每条消息按 {TOKENS_PER_MESSAGE} token 折算；月配额为理论满载；下限=榨满，上限=轻度（{CASUAL_MSGS_PER_MONTH} 条/月）。",
+                  "+{chart}",
+                  " ",
+                  "-| 生效 | 套餐 | 月价 | 月配额(消息) | 折合下限 $/1M | 折合上限 $/1M |",
+                  "-|---|---|---|---|---|---|",
+                  "-{chr(10).join(sub_table)}",
+                  "+## 套餐榨满折合明细",
+                  " ",
+                  "-**不可折算的套餐**（配额为「无限」或相对量）：ChatGPT Pro $200、Claude Max 5x/20x（$100/$200）、",
+                  "-Cursor Ultra $200 等标称无限或「N× Pro」，地板随用量趋近于 0、无固定上限，故不入表。",
+                  "-示意：$200 套餐若月推 50M token → $4/1M；月推 200M → $1/1M —— 完全取决于用量。",
+                  "+| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |",
+                  "+|---|---|---|---|---|",
+                  "+{chr(10).join(sub_tbl)}",
+                  " ",
+                  "+Anthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半",
+                  "+（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。",
+                  "+",
+                  " ## 旗舰 API 数据明细（blended 来源）",
+                  " ",
+                  " | 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |"
+                ]
+              },
+              {
+                "oldStart": 239,
+                "oldLines": 21,
+                "newStart": 224,
+                "newLines": 25,
+                "lines": [
+                  " ",
+                  " ## 假设与局限",
+                  " ",
+                  "-- **每条消息 {TOKENS_PER_MESSAGE} token、轻度基线 {CASUAL_MSGS_PER_MONTH} 条/月** 是折算口径，非厂商口径；",
+                  "-  改这两个常数会整体平移套餐曲线，但不改变品牌间相对关系（横向比较稳健）。",
+                  "-- **/N 小时配额按 24×7 满载折算**，是理论地板，真实重度用户达不到；用于界定区间下界。",
+                  "+- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，",
+                  "+  但不改品牌间相对关系。",
+                  "+- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，",
+                  "+  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。",
+                  "+  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）",
+                  "+  无法独立折算，未入图。",
+                  " - 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），",
+                  "-  非厂商公布的稳定值；详见 CSV 中标 FLAG 的行。",
+                  "-- 旗舰链为「通用旗舰」判断：刻意排除一次性高价款（gpt-4.5-preview $75/$150）与推理专用款",
+                  "-  （o 系列、DeepSeek-R1），以保持各家可比的主力对话模型曲线。",
+                  "-- forward-fill 在模型未更新期间保持上次价格；各家曲线仅在其首个数据点之后有意义",
+                  "-  （季前为 pad 的平线）。",
+                  "+  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。",
+                  "+- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。",
+                  "+- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满",
+                  "+  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于",
+                  "+  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。",
+                  " \"\"\"",
+                  "     with open(OUT, \"w\", encoding=\"utf-8\") as fh:",
+                  "         fh.write(md)",
+                  "     print(f\"写入 {OUT}\")",
+                  "-    print(f\"旗舰链数据点：\" + \", \".join(f\"{b}={len(fs[b])}\" for b in order))",
+                  "-    print(f\"ChatGPT Plus 折算点：{len(plus)}；套餐表行数：{len(sub_table)}\")",
+                  "+    print(f\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \"",
+                  "+          f\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\")",
+                  "+    print(f\"图 y 轴上限 {ymax}；线数 {len(series)}\")",
+                  " ",
+                  " ",
+                  " if __name__ == \"__main__\":"
+                ]
+              }
+            ],
+            "originalFile": "#!/usr/bin/env python3\n\"\"\"根据 chat/token-price.csv 生成 token-price.md 中的对比图表。\n\n把两类价格归一到同一根轴 —— **USD / 1M tokens(blended，取输入输出均值)**，\n再取 log10，便于跨品牌横向、跨时间纵向比较：\n\n1. 各家旗舰模型 API blended 价随时间变化（log10 $/1M）。\n2. 消费套餐按用量折合的 per-token 区间 [最低, 最高]（log10 $/1M）：\n   - 套餐不按 token 计费，故设「每条消息 = TOKENS_PER_MESSAGE token」。\n   - 最低（地板）= 月价 ÷ 把配额用满时的月 token 数（重度用户）。\n   - 最高（天花板）= 月价 ÷ 轻度基线 CASUAL_MSGS_PER_MONTH 条的 token 数。\n\n图表用 mermaid xychart-beta。xychart-beta 无图例，故每图正文标注线序与终值。\n\"\"\"\nfrom __future__ import annotations\n\nimport csv\nimport math\nimport os\nimport re\n\nHERE = os.path.dirname(os.path.abspath(__file__))\nCSV = os.path.join(HERE, \"chat\", \"token-price.csv\")\nOUT = os.path.join(HERE, \"token-price.md\")\n\n# ---- 折算假设（全部可调，已在正文披露） ----\nTOKENS_PER_MESSAGE = 2000       # 每条消息折合 token（1k 入 + 1k 出，blended）\nCASUAL_MSGS_PER_MONTH = 30      # 轻度用户基线：约每天 1 条\n\n# ---- 旗舰模型链（按 product_or_model 精确匹配 CSV，单一数据源） ----\nFLAGSHIP = {\n    \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",\n               \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],\n    \"Anthropic\": [\"Claude 2.1\", \"Claude 3 Opus\", \"Claude Opus 4\", \"Claude Opus 4.1\",\n                  \"Claude Opus 4.5\", \"Claude Opus 4.6\", \"Claude Opus 4.7\", \"Claude Opus 4.8\"],\n    \"Google\": [\"Gemini 1.0 Pro\", \"Gemini 1.5 Pro (<=128K)\", \"Gemini 1.5 Pro (<=128K cut)\",\n               \"Gemini 2.5 Pro (<=200K)\", \"Gemini 3.1 Pro (<=200K)\"],\n    \"DeepSeek\": [\"DeepSeek-V2 (deepseek-chat)\", \"deepseek-chat V2 + context caching\",\n                 \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",\n                 \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],\n}\n\n# 季度时间轴 2023Q1 .. 2026Q2\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\nQLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]\nQEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]   # 每季度末月 YYYY-MM\n\n\ndef load_rows():\n    with open(CSV, encoding=\"utf-8\") as fh:\n        return list(csv.DictReader(fh))\n\n\ndef fnum(s):\n    s = (s or \"\").strip()\n    return float(s) if s else None\n\n\ndef flagship_series(rows):\n    \"\"\"返回 {brand: [(ym, blended, in, out, model), ...]} 按日期排序。\"\"\"\n    out = {}\n    for brand, names in FLAGSHIP.items():\n        pts = []\n        for r in rows:\n            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:\n                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])\n                if i is not None and o is not None:\n                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))\n        out[brand] = sorted(pts, key=lambda x: x[0])\n    return out\n\n\ndef forward_fill(points):\n    \"\"\"points=[(ym, val)] -> 每个季度一个值（取 <= 季末的最近值；季前 pad 首值）。\"\"\"\n    pts = sorted(points, key=lambda x: x[0])\n    vals, first = [], pts[0][1]\n    for qe in QEND:\n        cur = first\n        for ym, v in pts:\n            if ym <= qe:\n                cur = v\n            else:\n                break\n        vals.append(cur)\n    return vals\n\n\nCAP_RE = re.compile(\n    r\"(\\d[\\d,]*)\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\s*\"\n    r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",\n    re.IGNORECASE,\n)\nPERIOD_PER_MONTH = {\"h\": None, \"hour\": None, \"hr\": None,\n                    \"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}\n\n\ndef cap_to_msgs_per_month(text):\n    \"\"\"从 usage_limit 文本解析「消息/月」上限；解析不出返回 None。\"\"\"\n    m = CAP_RE.search(text or \"\")\n    if not m:\n        return None\n    count = float(m.group(1).replace(\",\", \"\"))\n    n = float(m.group(2)) if m.group(2) else 1.0\n    unit = m.group(3).lower().rstrip(\"s\")\n    if unit in (\"h\", \"hour\", \"hr\"):                 # 每 n 小时：理论满载（24/7）\n        windows = (30 * 24) / n\n        return count * windows\n    return count * PERIOD_PER_MONTH[unit] / n\n\n\ndef per_token_band(price, msgs_per_month):\n    \"\"\"返回 (min_per_1M, max_per_1M)：下限=榨满配额，上限=轻度基线。\"\"\"\n    floor = price / (msgs_per_month * TOKENS_PER_MESSAGE) * 1e6\n    casual_msgs = min(CASUAL_MSGS_PER_MONTH, msgs_per_month)\n    ceil = price / (casual_msgs * TOKENS_PER_MESSAGE) * 1e6\n    return floor, ceil\n\n\ndef lg(v):\n    return round(math.log10(v), 3)\n\n\ndef sub_series(rows, prefix):\n    \"\"\"挑选 product_or_model 以 prefix 开头、可解析配额的套餐行。\"\"\"\n    pts = []\n    for r in rows:\n        if r[\"product_or_model\"].startswith(prefix):\n            price = fnum(r[\"monthly_price_usd\"])\n            cap = cap_to_msgs_per_month(r[\"usage_limit\"])\n            if price and cap:\n                lo, hi = per_token_band(price, cap)\n                pts.append((r[\"effective_date\"], r[\"product_or_model\"], price, cap, lo, hi))\n    return sorted(pts, key=lambda x: x[0])\n\n\ndef xychart(title, yaxis, ymin, ymax, lines):\n    \"\"\"lines=[(label, [values...])]，返回 mermaid 代码块字符串。\"\"\"\n    out = [\"```mermaid\", \"xychart-beta\", f'    title \"{title}\"',\n           \"    x-axis [\" + \", \".join(QLABEL) + \"]\",\n           f'    y-axis \"{yaxis}\" {ymin} --> {ymax}']\n    for _, vals in lines:\n        out.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")\n    out.append(\"```\")\n    return \"\\n\".join(out)\n\n\ndef main():\n    rows = load_rows()\n\n    # ===== 图1：旗舰 API blended（log10） =====\n    fs = flagship_series(rows)\n    order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]\n    lines1, legend1, appendix = [], [], []\n    for b in order:\n        pts = fs[b]\n        vals = forward_fill([(ym, blend) for ym, blend, *_ in pts])\n        lines1.append((b, [lg(v) for v in vals]))\n        last_ym, last_blend, last_in, last_out, last_model = pts[-1]\n        first_ym = pts[0][0]\n        legend1.append(f\"- **{b}**：{first_ym} 起；终值（{last_model}）blended ${last_blend:.2f}/1M\"\n                       f\"（in ${last_in:g} / out ${last_out:g}），log10={lg(last_blend)}\")\n        for ym, blend, i, o, model in pts:\n            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {blend:.2f} |\")\n\n    chart1 = xychart(\"旗舰模型 API 价格（blended, log10 USD per 1M tokens）\",\n                     \"log10($/1M)\", -1, 2, lines1)\n\n    # ===== 图2：ChatGPT Plus 折合 per-token 区间（log10） =====\n    # 只用「通用聊天旗舰」配额线，排除 o1/o3 等推理模型的周配额（语义不同）\n    CHAT_PLUS = {\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",\n                 \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"}\n    plus = [p for p in sub_series(rows, \"ChatGPT Plus\") if p[1] in CHAT_PLUS]\n    lo_vals = forward_fill([(ym, lo) for ym, _, _, _, lo, _ in plus])\n    hi_vals = forward_fill([(ym, hi) for ym, _, _, _, _, hi in plus])\n    chart2 = xychart(\"ChatGPT Plus（$20）折合 per-token 区间（log10 USD per 1M tokens）\",\n                     \"log10($/1M)\", -0.5, 2.7,\n                     [(\"min\", [lg(v) for v in lo_vals]), (\"max\", [lg(v) for v in hi_vals])])\n\n    # ===== 套餐折合对照表（所有可解析配额的套餐） =====\n    sub_table = []\n    for prefix in (\"ChatGPT Plus\", \"ChatGPT Agent\", \"ChatGPT Go\", \"Claude Pro\", \"Cursor\"):\n        for ym, model, price, cap, lo, hi in sub_series(rows, prefix):\n            sub_table.append(f\"| {ym} | {model} | ${price:g} | {cap:,.0f} | \"\n                             f\"${lo:.2f} | ${hi:.0f} |\")\n\n    # ===== 写 md =====\n    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐折合 per-token（2023–2026）\n\n把两类价格归一到同一根轴 —— **USD / 1M tokens（blended，输入输出均值）**，取 log10，\n便于跨品牌横向、跨时间纵向比较。数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\n\n## 折算算法\n\n- **旗舰 API blended**：每家取「通用旗舰」模型链（OpenAI 的 GPT-4→GPT-5.5、Anthropic 的 Opus 线、\n  Google 的 Gemini Pro 线、DeepSeek 的 chat 线），blended =（input + output）/ 2，按季度 forward-fill\n  （价格在下次变动前保持有效）。DeepSeek input 取 cache-miss。\n- **套餐折合 per-token**：套餐不按 token 计费，设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。\n  - **最低（地板，重度用户）** = 月价 ÷（把配额用满时的月 token 数）。按 /N 小时 的配额取理论满载（24×7）。\n  - **最高（天花板，轻度用户）** = 月价 ÷（轻度基线 **{CASUAL_MSGS_PER_MONTH} 条/月** 的 token 数）。\n  - 区间 [最低, 最高] 夹住该套餐相对 API 逐 token 价的位置：榨满时通常比 API 便宜（被补贴），\n    轻用时远贵于 API。\n- **对数轴**：价格跨约三个数量级（DeepSeek ~$0.2/1M 到 GPT-4 ~$45/1M），故 Y 轴为 log10($/1M)。\n  xychart-beta 无图例，线序见每图正文。\n\n## 图1：旗舰模型 API 价格随时间变化\n\n线序（自上而下按图例）：{\" / \".join(order)}。\n\n{chart1}\n\n{chr(10).join(legend1)}\n\n## 图2：ChatGPT Plus 折合 per-token 区间\n\n两条线：上 = max（轻度天花板），下 = min（榨满地板）。Plus 月价始终 $20，故天花板恒为\n${plus[0][5]:.0f}/1M（轻度用户严重溢价）；地板随配额放宽而下探，榨满时一度低至\n${min(lo for *_, lo, _ in plus):.2f}/1M（比同期旗舰 API 更便宜，即套餐补贴）。\n\n{chart2}\n\n## 套餐折合 per-token 对照表\n\n每条消息按 {TOKENS_PER_MESSAGE} token 折算；月配额为理论满载；下限=榨满，上限=轻度（{CASUAL_MSGS_PER_MONTH} 条/月）。\n\n| 生效 | 套餐 | 月价 | 月配额(消息) | 折合下限 $/1M | 折合上限 $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(sub_table)}\n\n**不可折算的套餐**（配额为「无限」或相对量）：ChatGPT Pro $200、Claude Max 5x/20x（$100/$200）、\nCursor Ultra $200 等标称无限或「N× Pro」，地板随用量趋近于 0、无固定上限，故不入表。\n示意：$200 套餐若月推 50M token → $4/1M；月推 200M → $1/1M —— 完全取决于用量。\n\n## 旗舰 API 数据明细（blended 来源）\n\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(appendix)}\n\n## 假设与局限\n\n- **每条消息 {TOKENS_PER_MESSAGE} token、轻度基线 {CASUAL_MSGS_PER_MONTH} 条/月** 是折算口径，非厂商口径；\n  改这两个常数会整体平移套餐曲线，但不改变品牌间相对关系（横向比较稳健）。\n- **/N 小时配额按 24×7 满载折算**，是理论地板，真实重度用户达不到；用于界定区间下界。\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\n  非厂商公布的稳定值；详见 CSV 中标 FLAG 的行。\n- 旗舰链为「通用旗舰」判断：刻意排除一次性高价款（gpt-4.5-preview $75/$150）与推理专用款\n  （o 系列、DeepSeek-R1），以保持各家可比的主力对话模型曲线。\n- forward-fill 在模型未更新期间保持上次价格；各家曲线仅在其首个数据点之后有意义\n  （季前为 pad 的平线）。\n\"\"\"\n    with open(OUT, \"w\", encoding=\"utf-8\") as fh:\n        fh.write(md)\n    print(f\"写入 {OUT}\")\n    print(f\"旗舰链数据点：\" + \", \".join(f\"{b}={len(fs[b])}\" for b in order))\n    print(f\"ChatGPT Plus 折算点：{len(plus)}；套餐表行数：{len(sub_table)}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VKR8pTMPFgZzFv1Yn5h4ZP",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/token-price.py has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "update",
+            "filePath": "/Users/luwei/work/Controversy/token-price.py",
+            "content": "#!/usr/bin/env python3\n\"\"\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。\n\n把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：\n\nA. 各家旗舰 API blended 价 =（input + output）/ 2。\nB. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token\n   （折扣率低 → 单价高）。\nC. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token\n   （批量折扣大 → 单价低）。\n\n套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设\n每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。\n\"\"\"\nfrom __future__ import annotations\n\nimport csv\nimport os\nimport re\n\nHERE = os.path.dirname(os.path.abspath(__file__))\nCSV = os.path.join(HERE, \"chat\", \"token-price.csv\")\nOUT = os.path.join(HERE, \"token-price.md\")\n\nTOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）\n\nFLAGSHIP = {\n    \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",\n               \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],\n    \"Anthropic\": [\"Claude 2.1\", \"Claude 3 Opus\", \"Claude Opus 4\", \"Claude Opus 4.1\",\n                  \"Claude Opus 4.5\", \"Claude Opus 4.6\", \"Claude Opus 4.7\", \"Claude Opus 4.8\"],\n    \"Google\": [\"Gemini 1.0 Pro\", \"Gemini 1.5 Pro (<=128K)\", \"Gemini 1.5 Pro (<=128K cut)\",\n               \"Gemini 2.5 Pro (<=200K)\", \"Gemini 3.1 Pro (<=200K)\"],\n    \"DeepSeek\": [\"DeepSeek-V2 (deepseek-chat)\", \"deepseek-chat V2 + context caching\",\n                 \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",\n                 \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],\n}\n# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）\nOPENAI_CHAT_PLUS = [\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",\n                    \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"]\n\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\nQLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]\nQEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]\n\n\ndef load_rows():\n    with open(CSV, encoding=\"utf-8\") as fh:\n        return list(csv.DictReader(fh))\n\n\ndef fnum(s):\n    s = (s or \"\").strip()\n    return float(s) if s else None\n\n\ndef forward_fill(points):\n    pts = sorted(points, key=lambda x: x[0])\n    first, vals = pts[0][1], []\n    for qe in QEND:\n        cur = first\n        for ym, v in pts:\n            if ym <= qe:\n                cur = v\n            else:\n                break\n        vals.append(cur)\n    return vals\n\n\nCAP_RE = re.compile(\n    r\"(\\d[\\d,]*)\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\s*\"\n    r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",\n    re.IGNORECASE,\n)\nPER_MONTH = {\"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}\n\n\ndef cap_msgs_per_month(text):\n    m = CAP_RE.search(text or \"\")\n    if not m:\n        return None\n    count = float(m.group(1).replace(\",\", \"\"))\n    n = float(m.group(2)) if m.group(2) else 1.0\n    unit = m.group(3).lower().rstrip(\"s\")\n    if unit in (\"h\", \"hour\", \"hr\"):\n        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7\n    return count * PER_MONTH[unit] / n\n\n\ndef per_token(price, tokens_per_month):\n    return price / tokens_per_month * 1e6        # USD per 1M tokens\n\n\ndef flagship_blended(rows):\n    out = {}\n    for brand, names in FLAGSHIP.items():\n        pts = []\n        for r in rows:\n            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:\n                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])\n                if i is not None and o is not None:\n                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))\n        out[brand] = sorted(pts, key=lambda x: x[0])\n    return out\n\n\ndef main():\n    rows = load_rows()\n    fs = flagship_blended(rows)\n    order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]\n\n    # ---- 套餐折合 per-token ----\n    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）\n    plus = []\n    for r in rows:\n        if r[\"product_or_model\"] in OPENAI_CHAT_PLUS:\n            p, cap = fnum(r[\"monthly_price_usd\"]), cap_msgs_per_month(r[\"usage_limit\"])\n            if p and cap:\n                plus.append((r[\"effective_date\"], per_token(p, cap * TOKENS_PER_MESSAGE)))\n    plus = sorted(plus)\n\n    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）\n    pro_row = next(r for r in rows if r[\"product_or_model\"] == \"Claude Pro\")\n    pro_tokens = cap_msgs_per_month(pro_row[\"usage_limit\"]) * TOKENS_PER_MESSAGE\n    pro_price = fnum(pro_row[\"monthly_price_usd\"])\n    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合\n    anth_plans = []   # (date, name, price, tokens, per_token)\n    anth_plans.append((pro_row[\"effective_date\"], \"Claude Pro\", pro_price, pro_tokens, pro_pt))\n    for r in rows:\n        m = re.match(r\"Claude Max (\\d+)x\", r[\"product_or_model\"])\n        if m:\n            mult = int(m.group(1))\n            p = fnum(r[\"monthly_price_usd\"])\n            tok = mult * pro_tokens\n            anth_plans.append((r[\"effective_date\"], r[\"product_or_model\"], p, tok, per_token(p, tok)))\n    anth_plans.sort(key=lambda x: (x[0], x[2]))\n    max20 = next(x for x in anth_plans if x[1] == \"Claude Max 20x\")\n    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro\n    anth_high = forward_fill([(pro_row[\"effective_date\"], pro_pt)])\n    anth_low = forward_fill([(pro_row[\"effective_date\"], pro_pt), (max20[0], max20[4])])\n\n    # ---- 组装单张图（线性 USD/1M） ----\n    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}\n    plus_line = forward_fill(plus)\n\n    series = [\n        (\"OpenAI API\", api_lines[\"OpenAI\"]),\n        (\"Anthropic API\", api_lines[\"Anthropic\"]),\n        (\"Google API\", api_lines[\"Google\"]),\n        (\"DeepSeek API\", api_lines[\"DeepSeek\"]),\n        (\"OpenAI 套餐 Plus 榨满\", plus_line),\n        (\"Anthropic 套餐最高 (Pro 榨满)\", anth_high),\n        (\"Anthropic 套餐最低 (Max20x 榨满)\", anth_low),\n    ]\n    ymax = max(max(v) for _, v in series)\n    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数\n\n    chart = [\"```mermaid\", \"xychart-beta\",\n             '    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"',\n             \"    x-axis [\" + \", \".join(QLABEL) + \"]\",\n             f'    y-axis \"USD per 1M tokens\" 0 --> {ymax}']\n    for _, vals in series:\n        chart.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")\n    chart.append(\"```\")\n    chart = \"\\n\".join(chart)\n\n    legend = []\n    for i, (label, vals) in enumerate(series, 1):\n        legend.append(f\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\")\n\n    # 旗舰明细表\n    appendix = []\n    for b in order:\n        for ym, bl, i, o, model in fs[b]:\n            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\")\n\n    # 套餐折合表\n    sub_tbl = []\n    for ym, pt in plus:\n        sub_tbl.append(f\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\")\n    for ym, name, p, tok, pt in anth_plans:\n        sub_tbl.append(f\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\")\n\n    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）\n\n各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴\n（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。\n数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\n\n## 折算口径\n\n- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。\n  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。\n- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，\n  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。\n  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。\n  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。\n  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。\n\n## 对比图\n\n线序（颜色按此顺序）：\n\n{chr(10).join(legend)}\n\n{chart}\n\n## 套餐榨满折合明细\n\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n|---|---|---|---|---|\n{chr(10).join(sub_tbl)}\n\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\n\n## 旗舰 API 数据明细（blended 来源）\n\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(appendix)}\n\n## 假设与局限\n\n- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，\n  但不改品牌间相对关系。\n- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，\n  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。\n  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）\n  无法独立折算，未入图。\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\n  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。\n- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。\n- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满\n  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于\n  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。\n\"\"\"\n    with open(OUT, \"w\", encoding=\"utf-8\") as fh:\n        fh.write(md)\n    print(f\"写入 {OUT}\")\n    print(f\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \"\n          f\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\")\n    print(f\"图 y 轴上限 {ymax}；线数 {len(series)}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+            "structuredPatch": [
+              {
+                "oldStart": 1,
+                "oldLines": 21,
+                "newStart": 1,
+                "newLines": 20,
+                "lines": [
+                  " #!/usr/bin/env python3",
+                  "-\"\"\"根据 chat/token-price.csv 生成 token-price.md 中的对比图表。",
+                  "+\"\"\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。",
+                  " ",
+                  "-把两类价格归一到同一根轴 —— **USD / 1M tokens(blended，取输入输出均值)**，",
+                  "-再取 log10，便于跨品牌横向、跨时间纵向比较：",
+                  "+把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：",
+                  " ",
+                  "-1. 各家旗舰模型 API blended 价随时间变化（log10 $/1M）。",
+                  "-2. 消费套餐按用量折合的 per-token 区间 [最低, 最高]（log10 $/1M）：",
+                  "-   - 套餐不按 token 计费，故设「每条消息 = TOKENS_PER_MESSAGE token」。",
+                  "-   - 最低（地板）= 月价 ÷ 把配额用满时的月 token 数（重度用户）。",
+                  "-   - 最高（天花板）= 月价 ÷ 轻度基线 CASUAL_MSGS_PER_MONTH 条的 token 数。",
+                  "+A. 各家旗舰 API blended 价 =（input + output）/ 2。",
+                  "+B. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token",
+                  "+   （折扣率低 → 单价高）。",
+                  "+C. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token",
+                  "+   （批量折扣大 → 单价低）。",
+                  " ",
+                  "-图表用 mermaid xychart-beta。xychart-beta 无图例，故每图正文标注线序与终值。",
+                  "+套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设",
+                  "+每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。",
+                  " \"\"\"",
+                  " from __future__ import annotations",
+                  " ",
+                  " import csv",
+                  "-import math",
+                  " import os",
+                  " import re",
+                  " "
+                ]
+              },
+              {
+                "oldStart": 23,
+                "oldLines": 11,
+                "newStart": 22,
+                "newLines": 8,
+                "lines": [
+                  " CSV = os.path.join(HERE, \"chat\", \"token-price.csv\")",
+                  " OUT = os.path.join(HERE, \"token-price.md\")",
+                  " ",
+                  "-# ---- 折算假设（全部可调，已在正文披露） ----",
+                  "-TOKENS_PER_MESSAGE = 2000       # 每条消息折合 token（1k 入 + 1k 出，blended）",
+                  "-CASUAL_MSGS_PER_MONTH = 30      # 轻度用户基线：约每天 1 条",
+                  "+TOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）",
+                  " ",
+                  "-# ---- 旗舰模型链（按 product_or_model 精确匹配 CSV，单一数据源） ----",
+                  " FLAGSHIP = {",
+                  "     \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",",
+                  "                \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],"
+                ]
+              },
+              {
+                "oldStart": 39,
+                "oldLines": 12,
+                "newStart": 35,
+                "newLines": 14,
+                "lines": [
+                  "                  \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",",
+                  "                  \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],",
+                  " }",
+                  "+# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）",
+                  "+OPENAI_CHAT_PLUS = [\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",",
+                  "+                    \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"]",
+                  " ",
+                  "-# 季度时间轴 2023Q1 .. 2026Q2",
+                  " QUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]",
+                  " QUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]",
+                  " QLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]",
+                  "-QEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]   # 每季度末月 YYYY-MM",
+                  "+QEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]",
+                  " ",
+                  " ",
+                  " def load_rows():"
+                ]
+              },
+              {
+                "oldStart": 57,
+                "oldLines": 24,
+                "newStart": 55,
+                "newLines": 9,
+                "lines": [
+                  "     return float(s) if s else None",
+                  " ",
+                  " ",
+                  "-def flagship_series(rows):",
+                  "-    \"\"\"返回 {brand: [(ym, blended, in, out, model), ...]} 按日期排序。\"\"\"",
+                  "-    out = {}",
+                  "-    for brand, names in FLAGSHIP.items():",
+                  "-        pts = []",
+                  "-        for r in rows:",
+                  "-            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:",
+                  "-                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])",
+                  "-                if i is not None and o is not None:",
+                  "-                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))",
+                  "-        out[brand] = sorted(pts, key=lambda x: x[0])",
+                  "-    return out",
+                  "-",
+                  "-",
+                  " def forward_fill(points):",
+                  "-    \"\"\"points=[(ym, val)] -> 每个季度一个值（取 <= 季末的最近值；季前 pad 首值）。\"\"\"",
+                  "     pts = sorted(points, key=lambda x: x[0])",
+                  "-    vals, first = [], pts[0][1]",
+                  "+    first, vals = pts[0][1], []",
+                  "     for qe in QEND:",
+                  "         cur = first",
+                  "         for ym, v in pts:"
+                ]
+              },
+              {
+                "oldStart": 91,
+                "oldLines": 146,
+                "newStart": 74,
+                "newLines": 148,
+                "lines": [
+                  "     r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",",
+                  "     re.IGNORECASE,",
+                  " )",
+                  "-PERIOD_PER_MONTH = {\"h\": None, \"hour\": None, \"hr\": None,",
+                  "-                    \"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}",
+                  "+PER_MONTH = {\"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}",
+                  " ",
+                  " ",
+                  "-def cap_to_msgs_per_month(text):",
+                  "-    \"\"\"从 usage_limit 文本解析「消息/月」上限；解析不出返回 None。\"\"\"",
+                  "+def cap_msgs_per_month(text):",
+                  "     m = CAP_RE.search(text or \"\")",
+                  "     if not m:",
+                  "         return None",
+                  "     count = float(m.group(1).replace(\",\", \"\"))",
+                  "     n = float(m.group(2)) if m.group(2) else 1.0",
+                  "     unit = m.group(3).lower().rstrip(\"s\")",
+                  "-    if unit in (\"h\", \"hour\", \"hr\"):                 # 每 n 小时：理论满载（24/7）",
+                  "-        windows = (30 * 24) / n",
+                  "-        return count * windows",
+                  "-    return count * PERIOD_PER_MONTH[unit] / n",
+                  "+    if unit in (\"h\", \"hour\", \"hr\"):",
+                  "+        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7",
+                  "+    return count * PER_MONTH[unit] / n",
+                  " ",
+                  " ",
+                  "-def per_token_band(price, msgs_per_month):",
+                  "-    \"\"\"返回 (min_per_1M, max_per_1M)：下限=榨满配额，上限=轻度基线。\"\"\"",
+                  "-    floor = price / (msgs_per_month * TOKENS_PER_MESSAGE) * 1e6",
+                  "-    casual_msgs = min(CASUAL_MSGS_PER_MONTH, msgs_per_month)",
+                  "-    ceil = price / (casual_msgs * TOKENS_PER_MESSAGE) * 1e6",
+                  "-    return floor, ceil",
+                  "+def per_token(price, tokens_per_month):",
+                  "+    return price / tokens_per_month * 1e6        # USD per 1M tokens",
+                  " ",
+                  " ",
+                  "-def lg(v):",
+                  "-    return round(math.log10(v), 3)",
+                  "+def flagship_blended(rows):",
+                  "+    out = {}",
+                  "+    for brand, names in FLAGSHIP.items():",
+                  "+        pts = []",
+                  "+        for r in rows:",
+                  "+            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:",
+                  "+                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])",
+                  "+                if i is not None and o is not None:",
+                  "+                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))",
+                  "+        out[brand] = sorted(pts, key=lambda x: x[0])",
+                  "+    return out",
+                  " ",
+                  " ",
+                  "-def sub_series(rows, prefix):",
+                  "-    \"\"\"挑选 product_or_model 以 prefix 开头、可解析配额的套餐行。\"\"\"",
+                  "-    pts = []",
+                  "-    for r in rows:",
+                  "-        if r[\"product_or_model\"].startswith(prefix):",
+                  "-            price = fnum(r[\"monthly_price_usd\"])",
+                  "-            cap = cap_to_msgs_per_month(r[\"usage_limit\"])",
+                  "-            if price and cap:",
+                  "-                lo, hi = per_token_band(price, cap)",
+                  "-                pts.append((r[\"effective_date\"], r[\"product_or_model\"], price, cap, lo, hi))",
+                  "-    return sorted(pts, key=lambda x: x[0])",
+                  "-",
+                  "-",
+                  "-def xychart(title, yaxis, ymin, ymax, lines):",
+                  "-    \"\"\"lines=[(label, [values...])]，返回 mermaid 代码块字符串。\"\"\"",
+                  "-    out = [\"```mermaid\", \"xychart-beta\", f'    title \"{title}\"',",
+                  "-           \"    x-axis [\" + \", \".join(QLABEL) + \"]\",",
+                  "-           f'    y-axis \"{yaxis}\" {ymin} --> {ymax}']",
+                  "-    for _, vals in lines:",
+                  "-        out.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")",
+                  "-    out.append(\"```\")",
+                  "-    return \"\\n\".join(out)",
+                  "-",
+                  "-",
+                  " def main():",
+                  "     rows = load_rows()",
+                  "-",
+                  "-    # ===== 图1：旗舰 API blended（log10） =====",
+                  "-    fs = flagship_series(rows)",
+                  "+    fs = flagship_blended(rows)",
+                  "     order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]",
+                  "-    lines1, legend1, appendix = [], [], []",
+                  "-    for b in order:",
+                  "-        pts = fs[b]",
+                  "-        vals = forward_fill([(ym, blend) for ym, blend, *_ in pts])",
+                  "-        lines1.append((b, [lg(v) for v in vals]))",
+                  "-        last_ym, last_blend, last_in, last_out, last_model = pts[-1]",
+                  "-        first_ym = pts[0][0]",
+                  "-        legend1.append(f\"- **{b}**：{first_ym} 起；终值（{last_model}）blended ${last_blend:.2f}/1M\"",
+                  "-                       f\"（in ${last_in:g} / out ${last_out:g}），log10={lg(last_blend)}\")",
+                  "-        for ym, blend, i, o, model in pts:",
+                  "-            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {blend:.2f} |\")",
+                  " ",
+                  "-    chart1 = xychart(\"旗舰模型 API 价格（blended, log10 USD per 1M tokens）\",",
+                  "-                     \"log10($/1M)\", -1, 2, lines1)",
+                  "+    # ---- 套餐折合 per-token ----",
+                  "+    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）",
+                  "+    plus = []",
+                  "+    for r in rows:",
+                  "+        if r[\"product_or_model\"] in OPENAI_CHAT_PLUS:",
+                  "+            p, cap = fnum(r[\"monthly_price_usd\"]), cap_msgs_per_month(r[\"usage_limit\"])",
+                  "+            if p and cap:",
+                  "+                plus.append((r[\"effective_date\"], per_token(p, cap * TOKENS_PER_MESSAGE)))",
+                  "+    plus = sorted(plus)",
+                  " ",
+                  "-    # ===== 图2：ChatGPT Plus 折合 per-token 区间（log10） =====",
+                  "-    # 只用「通用聊天旗舰」配额线，排除 o1/o3 等推理模型的周配额（语义不同）",
+                  "-    CHAT_PLUS = {\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",",
+                  "-                 \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"}",
+                  "-    plus = [p for p in sub_series(rows, \"ChatGPT Plus\") if p[1] in CHAT_PLUS]",
+                  "-    lo_vals = forward_fill([(ym, lo) for ym, _, _, _, lo, _ in plus])",
+                  "-    hi_vals = forward_fill([(ym, hi) for ym, _, _, _, _, hi in plus])",
+                  "-    chart2 = xychart(\"ChatGPT Plus（$20）折合 per-token 区间（log10 USD per 1M tokens）\",",
+                  "-                     \"log10($/1M)\", -0.5, 2.7,",
+                  "-                     [(\"min\", [lg(v) for v in lo_vals]), (\"max\", [lg(v) for v in hi_vals])])",
+                  "+    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）",
+                  "+    pro_row = next(r for r in rows if r[\"product_or_model\"] == \"Claude Pro\")",
+                  "+    pro_tokens = cap_msgs_per_month(pro_row[\"usage_limit\"]) * TOKENS_PER_MESSAGE",
+                  "+    pro_price = fnum(pro_row[\"monthly_price_usd\"])",
+                  "+    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合",
+                  "+    anth_plans = []   # (date, name, price, tokens, per_token)",
+                  "+    anth_plans.append((pro_row[\"effective_date\"], \"Claude Pro\", pro_price, pro_tokens, pro_pt))",
+                  "+    for r in rows:",
+                  "+        m = re.match(r\"Claude Max (\\d+)x\", r[\"product_or_model\"])",
+                  "+        if m:",
+                  "+            mult = int(m.group(1))",
+                  "+            p = fnum(r[\"monthly_price_usd\"])",
+                  "+            tok = mult * pro_tokens",
+                  "+            anth_plans.append((r[\"effective_date\"], r[\"product_or_model\"], p, tok, per_token(p, tok)))",
+                  "+    anth_plans.sort(key=lambda x: (x[0], x[2]))",
+                  "+    max20 = next(x for x in anth_plans if x[1] == \"Claude Max 20x\")",
+                  "+    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro",
+                  "+    anth_high = forward_fill([(pro_row[\"effective_date\"], pro_pt)])",
+                  "+    anth_low = forward_fill([(pro_row[\"effective_date\"], pro_pt), (max20[0], max20[4])])",
+                  " ",
+                  "-    # ===== 套餐折合对照表（所有可解析配额的套餐） =====",
+                  "-    sub_table = []",
+                  "-    for prefix in (\"ChatGPT Plus\", \"ChatGPT Agent\", \"ChatGPT Go\", \"Claude Pro\", \"Cursor\"):",
+                  "-        for ym, model, price, cap, lo, hi in sub_series(rows, prefix):",
+                  "-            sub_table.append(f\"| {ym} | {model} | ${price:g} | {cap:,.0f} | \"",
+                  "-                             f\"${lo:.2f} | ${hi:.0f} |\")",
+                  "+    # ---- 组装单张图（线性 USD/1M） ----",
+                  "+    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}",
+                  "+    plus_line = forward_fill(plus)",
+                  " ",
+                  "-    # ===== 写 md =====",
+                  "-    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐折合 per-token（2023–2026）",
+                  "+    series = [",
+                  "+        (\"OpenAI API\", api_lines[\"OpenAI\"]),",
+                  "+        (\"Anthropic API\", api_lines[\"Anthropic\"]),",
+                  "+        (\"Google API\", api_lines[\"Google\"]),",
+                  "+        (\"DeepSeek API\", api_lines[\"DeepSeek\"]),",
+                  "+        (\"OpenAI 套餐 Plus 榨满\", plus_line),",
+                  "+        (\"Anthropic 套餐最高 (Pro 榨满)\", anth_high),",
+                  "+        (\"Anthropic 套餐最低 (Max20x 榨满)\", anth_low),",
+                  "+    ]",
+                  "+    ymax = max(max(v) for _, v in series)",
+                  "+    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数",
+                  " ",
+                  "-把两类价格归一到同一根轴 —— **USD / 1M tokens（blended，输入输出均值）**，取 log10，",
+                  "-便于跨品牌横向、跨时间纵向比较。数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。",
+                  "+    chart = [\"```mermaid\", \"xychart-beta\",",
+                  "+             '    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"',",
+                  "+             \"    x-axis [\" + \", \".join(QLABEL) + \"]\",",
+                  "+             f'    y-axis \"USD per 1M tokens\" 0 --> {ymax}']",
+                  "+    for _, vals in series:",
+                  "+        chart.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")",
+                  "+    chart.append(\"```\")",
+                  "+    chart = \"\\n\".join(chart)",
+                  " ",
+                  "-## 折算算法",
+                  "+    legend = []",
+                  "+    for i, (label, vals) in enumerate(series, 1):",
+                  "+        legend.append(f\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\")",
+                  " ",
+                  "-- **旗舰 API blended**：每家取「通用旗舰」模型链（OpenAI 的 GPT-4→GPT-5.5、Anthropic 的 Opus 线、",
+                  "-  Google 的 Gemini Pro 线、DeepSeek 的 chat 线），blended =（input + output）/ 2，按季度 forward-fill",
+                  "-  （价格在下次变动前保持有效）。DeepSeek input 取 cache-miss。",
+                  "-- **套餐折合 per-token**：套餐不按 token 计费，设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。",
+                  "-  - **最低（地板，重度用户）** = 月价 ÷（把配额用满时的月 token 数）。按 /N 小时 的配额取理论满载（24×7）。",
+                  "-  - **最高（天花板，轻度用户）** = 月价 ÷（轻度基线 **{CASUAL_MSGS_PER_MONTH} 条/月** 的 token 数）。",
+                  "-  - 区间 [最低, 最高] 夹住该套餐相对 API 逐 token 价的位置：榨满时通常比 API 便宜（被补贴），",
+                  "-    轻用时远贵于 API。",
+                  "-- **对数轴**：价格跨约三个数量级（DeepSeek ~$0.2/1M 到 GPT-4 ~$45/1M），故 Y 轴为 log10($/1M)。",
+                  "-  xychart-beta 无图例，线序见每图正文。",
+                  "+    # 旗舰明细表",
+                  "+    appendix = []",
+                  "+    for b in order:",
+                  "+        for ym, bl, i, o, model in fs[b]:",
+                  "+            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\")",
+                  " ",
+                  "-## 图1：旗舰模型 API 价格随时间变化",
+                  "+    # 套餐折合表",
+                  "+    sub_tbl = []",
+                  "+    for ym, pt in plus:",
+                  "+        sub_tbl.append(f\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\")",
+                  "+    for ym, name, p, tok, pt in anth_plans:",
+                  "+        sub_tbl.append(f\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\")",
+                  " ",
+                  "-线序（自上而下按图例）：{\" / \".join(order)}。",
+                  "+    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）",
+                  " ",
+                  "-{chart1}",
+                  "+各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴",
+                  "+（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。",
+                  "+数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。",
+                  " ",
+                  "-{chr(10).join(legend1)}",
+                  "+## 折算口径",
+                  " ",
+                  "-## 图2：ChatGPT Plus 折合 per-token 区间",
+                  "+- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。",
+                  "+  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。",
+                  "+- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，",
+                  "+  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。",
+                  "+  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。",
+                  "+  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。",
+                  "+  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。",
+                  " ",
+                  "-两条线：上 = max（轻度天花板），下 = min（榨满地板）。Plus 月价始终 $20，故天花板恒为",
+                  "-${plus[0][5]:.0f}/1M（轻度用户严重溢价）；地板随配额放宽而下探，榨满时一度低至",
+                  "-${min(lo for *_, lo, _ in plus):.2f}/1M（比同期旗舰 API 更便宜，即套餐补贴）。",
+                  "+## 对比图",
+                  " ",
+                  "-{chart2}",
+                  "+线序（颜色按此顺序）：",
+                  " ",
+                  "-## 套餐折合 per-token 对照表",
+                  "+{chr(10).join(legend)}",
+                  " ",
+                  "-每条消息按 {TOKENS_PER_MESSAGE} token 折算；月配额为理论满载；下限=榨满，上限=轻度（{CASUAL_MSGS_PER_MONTH} 条/月）。",
+                  "+{chart}",
+                  " ",
+                  "-| 生效 | 套餐 | 月价 | 月配额(消息) | 折合下限 $/1M | 折合上限 $/1M |",
+                  "-|---|---|---|---|---|---|",
+                  "-{chr(10).join(sub_table)}",
+                  "+## 套餐榨满折合明细",
+                  " ",
+                  "-**不可折算的套餐**（配额为「无限」或相对量）：ChatGPT Pro $200、Claude Max 5x/20x（$100/$200）、",
+                  "-Cursor Ultra $200 等标称无限或「N× Pro」，地板随用量趋近于 0、无固定上限，故不入表。",
+                  "-示意：$200 套餐若月推 50M token → $4/1M；月推 200M → $1/1M —— 完全取决于用量。",
+                  "+| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |",
+                  "+|---|---|---|---|---|",
+                  "+{chr(10).join(sub_tbl)}",
+                  " ",
+                  "+Anthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半",
+                  "+（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。",
+                  "+",
+                  " ## 旗舰 API 数据明细（blended 来源）",
+                  " ",
+                  " | 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |"
+                ]
+              },
+              {
+                "oldStart": 239,
+                "oldLines": 21,
+                "newStart": 224,
+                "newLines": 25,
+                "lines": [
+                  " ",
+                  " ## 假设与局限",
+                  " ",
+                  "-- **每条消息 {TOKENS_PER_MESSAGE} token、轻度基线 {CASUAL_MSGS_PER_MONTH} 条/月** 是折算口径，非厂商口径；",
+                  "-  改这两个常数会整体平移套餐曲线，但不改变品牌间相对关系（横向比较稳健）。",
+                  "-- **/N 小时配额按 24×7 满载折算**，是理论地板，真实重度用户达不到；用于界定区间下界。",
+                  "+- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，",
+                  "+  但不改品牌间相对关系。",
+                  "+- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，",
+                  "+  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。",
+                  "+  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）",
+                  "+  无法独立折算，未入图。",
+                  " - 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），",
+                  "-  非厂商公布的稳定值；详见 CSV 中标 FLAG 的行。",
+                  "-- 旗舰链为「通用旗舰」判断：刻意排除一次性高价款（gpt-4.5-preview $75/$150）与推理专用款",
+                  "-  （o 系列、DeepSeek-R1），以保持各家可比的主力对话模型曲线。",
+                  "-- forward-fill 在模型未更新期间保持上次价格；各家曲线仅在其首个数据点之后有意义",
+                  "-  （季前为 pad 的平线）。",
+                  "+  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。",
+                  "+- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。",
+                  "+- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满",
+                  "+  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于",
+                  "+  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。",
+                  " \"\"\"",
+                  "     with open(OUT, \"w\", encoding=\"utf-8\") as fh:",
+                  "         fh.write(md)",
+                  "     print(f\"写入 {OUT}\")",
+                  "-    print(f\"旗舰链数据点：\" + \", \".join(f\"{b}={len(fs[b])}\" for b in order))",
+                  "-    print(f\"ChatGPT Plus 折算点：{len(plus)}；套餐表行数：{len(sub_table)}\")",
+                  "+    print(f\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \"",
+                  "+          f\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\")",
+                  "+    print(f\"图 y 轴上限 {ymax}；线数 {len(series)}\")",
+                  " ",
+                  " ",
+                  " if __name__ == \"__main__\":"
+                ]
+              }
+            ],
+            "originalFile": "#!/usr/bin/env python3\n\"\"\"根据 chat/token-price.csv 生成 token-price.md 中的对比图表。\n\n把两类价格归一到同一根轴 —— **USD / 1M tokens(blended，取输入输出均值)**，\n再取 log10，便于跨品牌横向、跨时间纵向比较：\n\n1. 各家旗舰模型 API blended 价随时间变化（log10 $/1M）。\n2. 消费套餐按用量折合的 per-token 区间 [最低, 最高]（log10 $/1M）：\n   - 套餐不按 token 计费，故设「每条消息 = TOKENS_PER_MESSAGE token」。\n   - 最低（地板）= 月价 ÷ 把配额用满时的月 token 数（重度用户）。\n   - 最高（天花板）= 月价 ÷ 轻度基线 CASUAL_MSGS_PER_MONTH 条的 token 数。\n\n图表用 mermaid xychart-beta。xychart-beta 无图例，故每图正文标注线序与终值。\n\"\"\"\nfrom __future__ import annotations\n\nimport csv\nimport math\nimport os\nimport re\n\nHERE = os.path.dirname(os.path.abspath(__file__))\nCSV = os.path.join(HERE, \"chat\", \"token-price.csv\")\nOUT = os.path.join(HERE, \"token-price.md\")\n\n# ---- 折算假设（全部可调，已在正文披露） ----\nTOKENS_PER_MESSAGE = 2000       # 每条消息折合 token（1k 入 + 1k 出，blended）\nCASUAL_MSGS_PER_MONTH = 30      # 轻度用户基线：约每天 1 条\n\n# ---- 旗舰模型链（按 product_or_model 精确匹配 CSV，单一数据源） ----\nFLAGSHIP = {\n    \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",\n               \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],\n    \"Anthropic\": [\"Claude 2.1\", \"Claude 3 Opus\", \"Claude Opus 4\", \"Claude Opus 4.1\",\n                  \"Claude Opus 4.5\", \"Claude Opus 4.6\", \"Claude Opus 4.7\", \"Claude Opus 4.8\"],\n    \"Google\": [\"Gemini 1.0 Pro\", \"Gemini 1.5 Pro (<=128K)\", \"Gemini 1.5 Pro (<=128K cut)\",\n               \"Gemini 2.5 Pro (<=200K)\", \"Gemini 3.1 Pro (<=200K)\"],\n    \"DeepSeek\": [\"DeepSeek-V2 (deepseek-chat)\", \"deepseek-chat V2 + context caching\",\n                 \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",\n                 \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],\n}\n\n# 季度时间轴 2023Q1 .. 2026Q2\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\nQLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]\nQEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]   # 每季度末月 YYYY-MM\n\n\ndef load_rows():\n    with open(CSV, encoding=\"utf-8\") as fh:\n        return list(csv.DictReader(fh))\n\n\ndef fnum(s):\n    s = (s or \"\").strip()\n    return float(s) if s else None\n\n\ndef flagship_series(rows):\n    \"\"\"返回 {brand: [(ym, blended, in, out, model), ...]} 按日期排序。\"\"\"\n    out = {}\n    for brand, names in FLAGSHIP.items():\n        pts = []\n        for r in rows:\n            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:\n                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])\n                if i is not None and o is not None:\n                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))\n        out[brand] = sorted(pts, key=lambda x: x[0])\n    return out\n\n\ndef forward_fill(points):\n    \"\"\"points=[(ym, val)] -> 每个季度一个值（取 <= 季末的最近值；季前 pad 首值）。\"\"\"\n    pts = sorted(points, key=lambda x: x[0])\n    vals, first = [], pts[0][1]\n    for qe in QEND:\n        cur = first\n        for ym, v in pts:\n            if ym <= qe:\n                cur = v\n            else:\n                break\n        vals.append(cur)\n    return vals\n\n\nCAP_RE = re.compile(\n    r\"(\\d[\\d,]*)\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\s*\"\n    r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",\n    re.IGNORECASE,\n)\nPERIOD_PER_MONTH = {\"h\": None, \"hour\": None, \"hr\": None,\n                    \"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}\n\n\ndef cap_to_msgs_per_month(text):\n    \"\"\"从 usage_limit 文本解析「消息/月」上限；解析不出返回 None。\"\"\"\n    m = CAP_RE.search(text or \"\")\n    if not m:\n        return None\n    count = float(m.group(1).replace(\",\", \"\"))\n    n = float(m.group(2)) if m.group(2) else 1.0\n    unit = m.group(3).lower().rstrip(\"s\")\n    if unit in (\"h\", \"hour\", \"hr\"):                 # 每 n 小时：理论满载（24/7）\n        windows = (30 * 24) / n\n        return count * windows\n    return count * PERIOD_PER_MONTH[unit] / n\n\n\ndef per_token_band(price, msgs_per_month):\n    \"\"\"返回 (min_per_1M, max_per_1M)：下限=榨满配额，上限=轻度基线。\"\"\"\n    floor = price / (msgs_per_month * TOKENS_PER_MESSAGE) * 1e6\n    casual_msgs = min(CASUAL_MSGS_PER_MONTH, msgs_per_month)\n    ceil = price / (casual_msgs * TOKENS_PER_MESSAGE) * 1e6\n    return floor, ceil\n\n\ndef lg(v):\n    return round(math.log10(v), 3)\n\n\ndef sub_series(rows, prefix):\n    \"\"\"挑选 product_or_model 以 prefix 开头、可解析配额的套餐行。\"\"\"\n    pts = []\n    for r in rows:\n        if r[\"product_or_model\"].startswith(prefix):\n            price = fnum(r[\"monthly_price_usd\"])\n            cap = cap_to_msgs_per_month(r[\"usage_limit\"])\n            if price and cap:\n                lo, hi = per_token_band(price, cap)\n                pts.append((r[\"effective_date\"], r[\"product_or_model\"], price, cap, lo, hi))\n    return sorted(pts, key=lambda x: x[0])\n\n\ndef xychart(title, yaxis, ymin, ymax, lines):\n    \"\"\"lines=[(label, [values...])]，返回 mermaid 代码块字符串。\"\"\"\n    out = [\"```mermaid\", \"xychart-beta\", f'    title \"{title}\"',\n           \"    x-axis [\" + \", \".join(QLABEL) + \"]\",\n           f'    y-axis \"{yaxis}\" {ymin} --> {ymax}']\n    for _, vals in lines:\n        out.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")\n    out.append(\"```\")\n    return \"\\n\".join(out)\n\n\ndef main():\n    rows = load_rows()\n\n    # ===== 图1：旗舰 API blended（log10） =====\n    fs = flagship_series(rows)\n    order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]\n    lines1, legend1, appendix = [], [], []\n    for b in order:\n        pts = fs[b]\n        vals = forward_fill([(ym, blend) for ym, blend, *_ in pts])\n        lines1.append((b, [lg(v) for v in vals]))\n        last_ym, last_blend, last_in, last_out, last_model = pts[-1]\n        first_ym = pts[0][0]\n        legend1.append(f\"- **{b}**：{first_ym} 起；终值（{last_model}）blended ${last_blend:.2f}/1M\"\n                       f\"（in ${last_in:g} / out ${last_out:g}），log10={lg(last_blend)}\")\n        for ym, blend, i, o, model in pts:\n            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {blend:.2f} |\")\n\n    chart1 = xychart(\"旗舰模型 API 价格（blended, log10 USD per 1M tokens）\",\n                     \"log10($/1M)\", -1, 2, lines1)\n\n    # ===== 图2：ChatGPT Plus 折合 per-token 区间（log10） =====\n    # 只用「通用聊天旗舰」配额线，排除 o1/o3 等推理模型的周配额（语义不同）\n    CHAT_PLUS = {\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",\n                 \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"}\n    plus = [p for p in sub_series(rows, \"ChatGPT Plus\") if p[1] in CHAT_PLUS]\n    lo_vals = forward_fill([(ym, lo) for ym, _, _, _, lo, _ in plus])\n    hi_vals = forward_fill([(ym, hi) for ym, _, _, _, _, hi in plus])\n    chart2 = xychart(\"ChatGPT Plus（$20）折合 per-token 区间（log10 USD per 1M tokens）\",\n                     \"log10($/1M)\", -0.5, 2.7,\n                     [(\"min\", [lg(v) for v in lo_vals]), (\"max\", [lg(v) for v in hi_vals])])\n\n    # ===== 套餐折合对照表（所有可解析配额的套餐） =====\n    sub_table = []\n    for prefix in (\"ChatGPT Plus\", \"ChatGPT Agent\", \"ChatGPT Go\", \"Claude Pro\", \"Cursor\"):\n        for ym, model, price, cap, lo, hi in sub_series(rows, prefix):\n            sub_table.append(f\"| {ym} | {model} | ${price:g} | {cap:,.0f} | \"\n                             f\"${lo:.2f} | ${hi:.0f} |\")\n\n    # ===== 写 md =====\n    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐折合 per-token（2023–2026）\n\n把两类价格归一到同一根轴 —— **USD / 1M tokens（blended，输入输出均值）**，取 log10，\n便于跨品牌横向、跨时间纵向比较。数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\n\n## 折算算法\n\n- **旗舰 API blended**：每家取「通用旗舰」模型链（OpenAI 的 GPT-4→GPT-5.5、Anthropic 的 Opus 线、\n  Google 的 Gemini Pro 线、DeepSeek 的 chat 线），blended =（input + output）/ 2，按季度 forward-fill\n  （价格在下次变动前保持有效）。DeepSeek input 取 cache-miss。\n- **套餐折合 per-token**：套餐不按 token 计费，设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。\n  - **最低（地板，重度用户）** = 月价 ÷（把配额用满时的月 token 数）。按 /N 小时 的配额取理论满载（24×7）。\n  - **最高（天花板，轻度用户）** = 月价 ÷（轻度基线 **{CASUAL_MSGS_PER_MONTH} 条/月** 的 token 数）。\n  - 区间 [最低, 最高] 夹住该套餐相对 API 逐 token 价的位置：榨满时通常比 API 便宜（被补贴），\n    轻用时远贵于 API。\n- **对数轴**：价格跨约三个数量级（DeepSeek ~$0.2/1M 到 GPT-4 ~$45/1M），故 Y 轴为 log10($/1M)。\n  xychart-beta 无图例，线序见每图正文。\n\n## 图1：旗舰模型 API 价格随时间变化\n\n线序（自上而下按图例）：{\" / \".join(order)}。\n\n{chart1}\n\n{chr(10).join(legend1)}\n\n## 图2：ChatGPT Plus 折合 per-token 区间\n\n两条线：上 = max（轻度天花板），下 = min（榨满地板）。Plus 月价始终 $20，故天花板恒为\n${plus[0][5]:.0f}/1M（轻度用户严重溢价）；地板随配额放宽而下探，榨满时一度低至\n${min(lo for *_, lo, _ in plus):.2f}/1M（比同期旗舰 API 更便宜，即套餐补贴）。\n\n{chart2}\n\n## 套餐折合 per-token 对照表\n\n每条消息按 {TOKENS_PER_MESSAGE} token 折算；月配额为理论满载；下限=榨满，上限=轻度（{CASUAL_MSGS_PER_MONTH} 条/月）。\n\n| 生效 | 套餐 | 月价 | 月配额(消息) | 折合下限 $/1M | 折合上限 $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(sub_table)}\n\n**不可折算的套餐**（配额为「无限」或相对量）：ChatGPT Pro $200、Claude Max 5x/20x（$100/$200）、\nCursor Ultra $200 等标称无限或「N× Pro」，地板随用量趋近于 0、无固定上限，故不入表。\n示意：$200 套餐若月推 50M token → $4/1M；月推 200M → $1/1M —— 完全取决于用量。\n\n## 旗舰 API 数据明细（blended 来源）\n\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(appendix)}\n\n## 假设与局限\n\n- **每条消息 {TOKENS_PER_MESSAGE} token、轻度基线 {CASUAL_MSGS_PER_MONTH} 条/月** 是折算口径，非厂商口径；\n  改这两个常数会整体平移套餐曲线，但不改变品牌间相对关系（横向比较稳健）。\n- **/N 小时配额按 24×7 满载折算**，是理论地板，真实重度用户达不到；用于界定区间下界。\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\n  非厂商公布的稳定值；详见 CSV 中标 FLAG 的行。\n- 旗舰链为「通用旗舰」判断：刻意排除一次性高价款（gpt-4.5-preview $75/$150）与推理专用款\n  （o 系列、DeepSeek-R1），以保持各家可比的主力对话模型曲线。\n- forward-fill 在模型未更新期间保持上次价格；各家曲线仅在其首个数据点之后有意义\n  （季前为 pad 的平线）。\n\"\"\"\n    with open(OUT, \"w\", encoding=\"utf-8\") as fh:\n        fh.write(md)\n    print(f\"写入 {OUT}\")\n    print(f\"旗舰链数据点：\" + \", \".join(f\"{b}={len(fs[b])}\" for b in order))\n    print(f\"ChatGPT Plus 折算点：{len(plus)}；套餐表行数：{len(sub_table)}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VKR8pTMPFgZzFv1Yn5h4ZP",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/token-price.py has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/token-price.py",
+          "content": "#!/usr/bin/env python3\n\"\"\"根据 chat/token-price.csv 生成 token-price.md 的对比图（单张，美元线性轴）。\n\n把三类价格放在同一张图、同一根轴（USD per 1M tokens）上比较：\n\nA. 各家旗舰 API blended 价 =（input + output）/ 2。\nB. 各家套餐「最高折合 per-token」= 该家最便宜的套餐，按用量上限榨满，折合每 token\n   （折扣率低 → 单价高）。\nC. 各家套餐「最低折合 per-token」= 该家最贵的套餐，按用量上限榨满，折合每 token\n   （批量折扣大 → 单价低）。\n\n套餐折算只看「把配额用满」，不区分轻重用户。套餐不按 token 计费，故设\n每条消息 = TOKENS_PER_MESSAGE token。相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。\n\"\"\"\nfrom __future__ import annotations\n\nimport csv\nimport os\nimport re\n\nHERE = os.path.dirname(os.path.abspath(__file__))\nCSV = os.path.join(HERE, \"chat\", \"token-price.csv\")\nOUT = os.path.join(HERE, \"token-price.md\")\n\nTOKENS_PER_MESSAGE = 2000   # 每条消息折合 token（1k 入 + 1k 出，blended）\n\nFLAGSHIP = {\n    \"OpenAI\": [\"gpt-4 (8K)\", \"gpt-4-turbo (1106-preview)\", \"gpt-4o-2024-05-13\",\n               \"gpt-4o-2024-08-06\", \"gpt-4.1\", \"gpt-5\", \"gpt-5.4\", \"gpt-5.5\"],\n    \"Anthropic\": [\"Claude 2.1\", \"Claude 3 Opus\", \"Claude Opus 4\", \"Claude Opus 4.1\",\n                  \"Claude Opus 4.5\", \"Claude Opus 4.6\", \"Claude Opus 4.7\", \"Claude Opus 4.8\"],\n    \"Google\": [\"Gemini 1.0 Pro\", \"Gemini 1.5 Pro (<=128K)\", \"Gemini 1.5 Pro (<=128K cut)\",\n               \"Gemini 2.5 Pro (<=200K)\", \"Gemini 3.1 Pro (<=200K)\"],\n    \"DeepSeek\": [\"DeepSeek-V2 (deepseek-chat)\", \"deepseek-chat V2 + context caching\",\n                 \"DeepSeek-V3 (promo)\", \"DeepSeek-V3 (standard)\", \"DeepSeek-V3.1 (unified)\",\n                 \"DeepSeek-V3.2-Exp\", \"DeepSeek-V4 Pro (promo 75% off)\", \"DeepSeek-V4 Pro (standard)\"],\n}\n# OpenAI 通用聊天旗舰的 Plus 配额线（排除 o1/o3 推理模型的小周配额）\nOPENAI_CHAT_PLUS = [\"ChatGPT Plus (GPT-4)\", \"ChatGPT Plus (GPT-4o)\",\n                    \"ChatGPT Plus (GPT-5 era)\", \"ChatGPT Plus (2026)\"]\n\nQUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)]\nQUARTERS = [(y, q) for (y, q) in QUARTERS if not (y == 2026 and q > 2)]\nQLABEL = [f\"{y % 100}Q{q}\" for (y, q) in QUARTERS]\nQEND = [f\"{y}-{q*3:02d}\" for (y, q) in QUARTERS]\n\n\ndef load_rows():\n    with open(CSV, encoding=\"utf-8\") as fh:\n        return list(csv.DictReader(fh))\n\n\ndef fnum(s):\n    s = (s or \"\").strip()\n    return float(s) if s else None\n\n\ndef forward_fill(points):\n    pts = sorted(points, key=lambda x: x[0])\n    first, vals = pts[0][1], []\n    for qe in QEND:\n        cur = first\n        for ym, v in pts:\n            if ym <= qe:\n                cur = v\n            else:\n                break\n        vals.append(cur)\n    return vals\n\n\nCAP_RE = re.compile(\n    r\"(\\d[\\d,]*)\\s*(?:msgs?|messages?|queries|prompts?|requests?)\\s*\"\n    r\"(?:/|per|every|a|each)?\\s*(\\d*)\\s*(hours?|hrs?|h|days?|weeks?|months?)\",\n    re.IGNORECASE,\n)\nPER_MONTH = {\"day\": 30.0, \"week\": 30.0 / 7, \"month\": 1.0}\n\n\ndef cap_msgs_per_month(text):\n    m = CAP_RE.search(text or \"\")\n    if not m:\n        return None\n    count = float(m.group(1).replace(\",\", \"\"))\n    n = float(m.group(2)) if m.group(2) else 1.0\n    unit = m.group(3).lower().rstrip(\"s\")\n    if unit in (\"h\", \"hour\", \"hr\"):\n        return count * (30 * 24) / n           # 每 n 小时：理论满载 24x7\n    return count * PER_MONTH[unit] / n\n\n\ndef per_token(price, tokens_per_month):\n    return price / tokens_per_month * 1e6        # USD per 1M tokens\n\n\ndef flagship_blended(rows):\n    out = {}\n    for brand, names in FLAGSHIP.items():\n        pts = []\n        for r in rows:\n            if r[\"provider\"] == brand and r[\"category\"] == \"API\" and r[\"product_or_model\"] in names:\n                i, o = fnum(r[\"input_per_1m_usd\"]), fnum(r[\"output_per_1m_usd\"])\n                if i is not None and o is not None:\n                    pts.append((r[\"effective_date\"], (i + o) / 2, i, o, r[\"product_or_model\"]))\n        out[brand] = sorted(pts, key=lambda x: x[0])\n    return out\n\n\ndef main():\n    rows = load_rows()\n    fs = flagship_blended(rows)\n    order = [\"OpenAI\", \"Anthropic\", \"Google\", \"DeepSeek\"]\n\n    # ---- 套餐折合 per-token ----\n    # OpenAI：最便宜可量化套餐 = Plus $20（聊天旗舰配额）；最贵可量化套餐无（Pro $200 无限）\n    plus = []\n    for r in rows:\n        if r[\"product_or_model\"] in OPENAI_CHAT_PLUS:\n            p, cap = fnum(r[\"monthly_price_usd\"]), cap_msgs_per_month(r[\"usage_limit\"])\n            if p and cap:\n                plus.append((r[\"effective_date\"], per_token(p, cap * TOKENS_PER_MESSAGE)))\n    plus = sorted(plus)\n\n    # Anthropic：最便宜 = Claude Pro $20（100/8h）；最贵 = Max 20x $200（20× Pro 配额）\n    pro_row = next(r for r in rows if r[\"product_or_model\"] == \"Claude Pro\")\n    pro_tokens = cap_msgs_per_month(pro_row[\"usage_limit\"]) * TOKENS_PER_MESSAGE\n    pro_price = fnum(pro_row[\"monthly_price_usd\"])\n    pro_pt = per_token(pro_price, pro_tokens)                 # Pro 榨满 折合\n    anth_plans = []   # (date, name, price, tokens, per_token)\n    anth_plans.append((pro_row[\"effective_date\"], \"Claude Pro\", pro_price, pro_tokens, pro_pt))\n    for r in rows:\n        m = re.match(r\"Claude Max (\\d+)x\", r[\"product_or_model\"])\n        if m:\n            mult = int(m.group(1))\n            p = fnum(r[\"monthly_price_usd\"])\n            tok = mult * pro_tokens\n            anth_plans.append((r[\"effective_date\"], r[\"product_or_model\"], p, tok, per_token(p, tok)))\n    anth_plans.sort(key=lambda x: (x[0], x[2]))\n    max20 = next(x for x in anth_plans if x[1] == \"Claude Max 20x\")\n    # 最高折合（最便宜套餐=Pro）：Pro 全程；最低折合（最贵套餐=Max20x）：Max 上线前同 Pro\n    anth_high = forward_fill([(pro_row[\"effective_date\"], pro_pt)])\n    anth_low = forward_fill([(pro_row[\"effective_date\"], pro_pt), (max20[0], max20[4])])\n\n    # ---- 组装单张图（线性 USD/1M） ----\n    api_lines = {b: forward_fill([(ym, bl) for ym, bl, *_ in fs[b]]) for b in order}\n    plus_line = forward_fill(plus)\n\n    series = [\n        (\"OpenAI API\", api_lines[\"OpenAI\"]),\n        (\"Anthropic API\", api_lines[\"Anthropic\"]),\n        (\"Google API\", api_lines[\"Google\"]),\n        (\"DeepSeek API\", api_lines[\"DeepSeek\"]),\n        (\"OpenAI 套餐 Plus 榨满\", plus_line),\n        (\"Anthropic 套餐最高 (Pro 榨满)\", anth_high),\n        (\"Anthropic 套餐最低 (Max20x 榨满)\", anth_low),\n    ]\n    ymax = max(max(v) for _, v in series)\n    ymax = (int(ymax / 5) + 1) * 5    # 取整到 5 的倍数\n\n    chart = [\"```mermaid\", \"xychart-beta\",\n             '    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"',\n             \"    x-axis [\" + \", \".join(QLABEL) + \"]\",\n             f'    y-axis \"USD per 1M tokens\" 0 --> {ymax}']\n    for _, vals in series:\n        chart.append(\"    line [\" + \", \".join(f\"{v:.2f}\" for v in vals) + \"]\")\n    chart.append(\"```\")\n    chart = \"\\n\".join(chart)\n\n    legend = []\n    for i, (label, vals) in enumerate(series, 1):\n        legend.append(f\"{i}. **{label}** — 终值 ${vals[-1]:.2f}/1M\")\n\n    # 旗舰明细表\n    appendix = []\n    for b in order:\n        for ym, bl, i, o, model in fs[b]:\n            appendix.append(f\"| {b} | {ym} | {model} | {i:g} | {o:g} | {bl:.2f} |\")\n\n    # 套餐折合表\n    sub_tbl = []\n    for ym, pt in plus:\n        sub_tbl.append(f\"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |\")\n    for ym, name, p, tok, pt in anth_plans:\n        sub_tbl.append(f\"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |\")\n\n    md = f\"\"\"# AI 价格对比：旗舰 API 与套餐榨满折合 per-token（2023–2026）\n\n各家旗舰 API 价、各家套餐「最高/最低折合 per-token」全部画在同一张图、同一根轴\n（USD per 1M tokens，线性），便于横向（跨品牌）与纵向（跨时间）比较。\n数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。\n\n## 折算口径\n\n- **旗舰 API blended** =（input + output）/ 2，按季度 forward-fill（价格在下次变动前有效）。\n  DeepSeek input 取 cache-miss。旗舰链刻意排除一次性高价款（gpt-4.5-preview）与推理专用款（o 系列 / R1）。\n- **套餐折合 per-token**：只看「把用量上限榨满」，不区分轻重用户。套餐不按 token 计费，\n  故设 **每条消息 = {TOKENS_PER_MESSAGE} token**（1k 入 + 1k 出）。折合 = 月价 ÷（月配额 × 每消息 token）。\n  - **最高折合 = 最便宜的套餐榨满**（折扣率低、单价高）。\n  - **最低折合 = 最贵的套餐榨满**（批量折扣大、单价低）。\n  - 相对配额（如「20x Pro」）= 倍数 × Pro 的 token 配额。/N 小时 配额按理论满载（24×7）折算。\n\n## 对比图\n\n线序（颜色按此顺序）：\n\n{chr(10).join(legend)}\n\n{chart}\n\n## 套餐榨满折合明细\n\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n|---|---|---|---|---|\n{chr(10).join(sub_tbl)}\n\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\n\n## 旗舰 API 数据明细（blended 来源）\n\n| 品牌 | 生效 | 模型 | 输入 $/1M | 输出 $/1M | blended $/1M |\n|---|---|---|---|---|---|\n{chr(10).join(appendix)}\n\n## 假设与局限\n\n- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径，非厂商口径；改它会整体平移套餐线，\n  但不改品牌间相对关系。\n- **可量化套餐有限**：OpenAI 只有 Plus（$20）配额可量化，Pro（$200）标称无限无法榨满，\n  故 OpenAI 只有一条套餐线（最高=最低）。Anthropic 借「N× Pro」相对配额得到 Pro→Max20x 的高低区间。\n  Google（Advanced/Ultra 无数字配额）、DeepSeek（免费无付费档）、Cursor（按量透传 ≈ API 价）\n  无法独立折算，未入图。\n- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测的某一时点观察（OpenAI 多次静默改配额），\n  Claude Pro 后期叠加的周限未量化；详见 CSV 中标 FLAG 的行。\n- forward-fill 在未更新期间保持上次值；各家线仅在其首个数据点后有意义（季前为 pad 平线）。\n- Y 轴线性、单位 USD/1M：早期旗舰 API（GPT-4 / Opus $45）拉高量程，近年低价区（套餐榨满\n  $0.5–1.7、DeepSeek API $0.2–2.6）会挤在底部——这本身即结论：套餐榨满的 per-token 远低于\n  同期旗舰 API 列表价（即套餐补贴），而 DeepSeek API 又低于所有人。\n\"\"\"\n    with open(OUT, \"w\", encoding=\"utf-8\") as fh:\n        fh.write(md)\n    print(f\"写入 {OUT}\")\n    print(f\"Pro 榨满折合 ${pro_pt:.3f}/1M；Max20x ${max20[4]:.3f}/1M；Plus 区间 \"\n          f\"${min(p for _, p in plus):.3f}–${max(p for _, p in plus):.3f}/1M\")\n    print(f\"图 y 轴上限 {ymax}；线数 {len(series)}\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+        }
+      }
+    },
+    {
+      "step_id": 214,
+      "timestamp": "2026-06-01T06:50:04.991Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01KXbJrDe2fbUF4hicXJhHHW",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01KXbJrDe2fbUF4hicXJhHHW",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cd /Users/luwei/work/Controversy; python3 token-price.py && echo \"--- 渲染校验 ---\" && npx -y @mermaid-js/mermaid-cli@latest -i token-price.md -o /tmp/tp.svg 2>&1 | tail -4; rm -f /tmp/tp*.svg tp*.svg 2>/dev/null; echo done",
+            "description": "Regenerate and validate render",
+            "timeout": 180000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01KXbJrDe2fbUF4hicXJhHHW",
+            "content": "写入 /Users/luwei/work/Controversy/token-price.md\nPro 榨满折合 $1.111/1M；Max20x $0.556/1M；Plus 区间 $0.521–$1.667/1M\n图 y 轴上限 50；线数 7\n--- 渲染校验 ---\nFound 1 mermaid charts in Markdown input\n ✅ ./tp-1.svg\ndone\n\n[stdout]\n写入 /Users/luwei/work/Controversy/token-price.md\nPro 榨满折合 $1.111/1M；Max20x $0.556/1M；Plus 区间 $0.521–$1.667/1M\n图 y 轴上限 50；线数 7\n--- 渲染校验 ---\nFound 1 mermaid charts in Markdown input\n ✅ ./tp-1.svg\ndone\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 256650,
+        "completion_tokens": 227,
+        "cached_tokens": 256648,
+        "extra": {
+          "cache_creation_input_tokens": 5729,
+          "cache_read_input_tokens": 256648,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 5729,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 227,
+              "cache_read_input_tokens": 256648,
+              "cache_creation_input_tokens": 5729,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 5729
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "写入 /Users/luwei/work/Controversy/token-price.md\nPro 榨满折合 $1.111/1M；Max20x $0.556/1M；Plus 区间 $0.521–$1.667/1M\n图 y 轴上限 50；线数 7\n--- 渲染校验 ---\nFound 1 mermaid charts in Markdown input\n ✅ ./tp-1.svg\ndone",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01KXbJrDe2fbUF4hicXJhHHW",
+            "type": "tool_result",
+            "content": "写入 /Users/luwei/work/Controversy/token-price.md\nPro 榨满折合 $1.111/1M；Max20x $0.556/1M；Plus 区间 $0.521–$1.667/1M\n图 y 轴上限 50；线数 7\n--- 渲染校验 ---\nFound 1 mermaid charts in Markdown input\n ✅ ./tp-1.svg\ndone",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "写入 /Users/luwei/work/Controversy/token-price.md\nPro 榨满折合 $1.111/1M；Max20x $0.556/1M；Plus 区间 $0.521–$1.667/1M\n图 y 轴上限 50；线数 7\n--- 渲染校验 ---\nFound 1 mermaid charts in Markdown input\n ✅ ./tp-1.svg\ndone",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01KXbJrDe2fbUF4hicXJhHHW",
+            "type": "tool_result",
+            "content": "写入 /Users/luwei/work/Controversy/token-price.md\nPro 榨满折合 $1.111/1M；Max20x $0.556/1M；Plus 区间 $0.521–$1.667/1M\n图 y 轴上限 50；线数 7\n--- 渲染校验 ---\nFound 1 mermaid charts in Markdown input\n ✅ ./tp-1.svg\ndone",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "cd /Users/luwei/work/Controversy; python3 token-price.py && echo \"--- 渲染校验 ---\" && npx -y @mermaid-js/mermaid-cli@latest -i token-price.md -o /tmp/tp.svg 2>&1 | tail -4; rm -f /tmp/tp*.svg tp*.svg 2>/dev/null; echo done",
+          "description": "Regenerate and validate render",
+          "timeout": 180000
+        }
+      }
+    },
+    {
+      "step_id": 215,
+      "timestamp": "2026-06-01T06:50:20.919Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 262379,
+        "completion_tokens": 353,
+        "cached_tokens": 262377,
+        "extra": {
+          "cache_creation_input_tokens": 368,
+          "cache_read_input_tokens": 262377,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 368,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 353,
+              "cache_read_input_tokens": 262377,
+              "cache_creation_input_tokens": 368,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 368
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 216,
+      "timestamp": "2026-06-01T06:50:21.880Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "渲染通过 ✅。单图、7 线、线性 USD/1M。看一下图块和线值:",
+      "metrics": {
+        "prompt_tokens": 262379,
+        "completion_tokens": 353,
+        "cached_tokens": 262377,
+        "extra": {
+          "cache_creation_input_tokens": 368,
+          "cache_read_input_tokens": 262377,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 368,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 353,
+              "cache_read_input_tokens": 262377,
+              "cache_creation_input_tokens": 368,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 368
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 217,
+      "timestamp": "2026-06-01T06:50:22.684Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_015Nrf4BtwLnBRxSzNHEVNEc",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_015Nrf4BtwLnBRxSzNHEVNEc",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/token-price.md",
+            "offset": 17,
+            "limit": 42
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_015Nrf4BtwLnBRxSzNHEVNEc",
+            "content": "17\t## 对比图\n18\t\n19\t线序（颜色按此顺序）：\n20\t\n21\t1. **OpenAI API** — 终值 $17.50/1M\n22\t2. **Anthropic API** — 终值 $15.00/1M\n23\t3. **Google API** — 终值 $7.00/1M\n24\t4. **DeepSeek API** — 终值 $2.61/1M\n25\t5. **OpenAI 套餐 Plus 榨满** — 终值 $0.78/1M\n26\t6. **Anthropic 套餐最高 (Pro 榨满)** — 终值 $1.11/1M\n27\t7. **Anthropic 套餐最低 (Max20x 榨满)** — 终值 $0.56/1M\n28\t\n29\t```mermaid\n30\txychart-beta\n31\t    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"\n32\t    x-axis [23Q1, 23Q2, 23Q3, 23Q4, 24Q1, 24Q2, 24Q3, 24Q4, 25Q1, 25Q2, 25Q3, 25Q4, 26Q1, 26Q2]\n33\t    y-axis \"USD per 1M tokens\" 0 --> 50\n34\t    line [45.00, 45.00, 45.00, 20.00, 20.00, 10.00, 6.25, 6.25, 6.25, 5.00, 5.62, 5.62, 8.75, 17.50]\n35\t    line [21.85, 21.85, 21.85, 21.85, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 15.00, 15.00, 15.00]\n36\t    line [1.00, 1.00, 1.00, 1.00, 1.00, 14.00, 14.00, 1.88, 1.88, 5.62, 5.62, 7.00, 7.00, 7.00]\n37\t    line [0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.69, 0.69, 0.35, 0.35, 0.35, 2.61]\n38\t    line [1.67, 1.67, 0.83, 1.04, 1.04, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.78, 0.78]\n39\t    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11]\n40\t    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 0.56, 0.56, 0.56, 0.56, 0.56]\n41\t```\n42\t\n43\t## 套餐榨满折合明细\n44\t\n45\t| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n46\t|---|---|---|---|---|\n47\t| OpenAI | 2023-03 | ChatGPT Plus | $20 | 1.67 |\n48\t| OpenAI | 2023-07 | ChatGPT Plus | $20 | 0.83 |\n49\t| OpenAI | 2023-11 | ChatGPT Plus | $20 | 1.04 |\n50\t| OpenAI | 2024-05 | ChatGPT Plus | $20 | 0.52 |\n51\t| OpenAI | 2025-08 | ChatGPT Plus | $20 | 0.52 |\n52\t| OpenAI | 2026-03 | ChatGPT Plus | $20 | 0.78 |\n53\t| Anthropic | 2023-09 | Claude Pro | $20 | 1.11 |\n54\t| Anthropic | 2025-04 | Claude Max 5x | $100 | 1.11 |\n55\t| Anthropic | 2025-04 | Claude Max 20x | $200 | 0.56 |\n56\t\n57\tAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n58\t（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/token-price.md\", \"content\": \"## 对比图\\n\\n线序（颜色按此顺序）：\\n\\n1. **OpenAI API** — 终值 $17.50/1M\\n2. **Anthropic API** — 终值 $15.00/1M\\n3. **Google API** — 终值 $7.00/1M\\n4. **DeepSeek API** — 终值 $2.61/1M\\n5. **OpenAI 套餐 Plus 榨满** — 终值 $0.78/1M\\n6. **Anthropic 套餐最高 (Pro 榨满)** — 终值 $1.11/1M\\n7. **Anthropic 套餐最低 (Max20x 榨满)** — 终值 $0.56/1M\\n\\n```mermaid\\nxychart-beta\\n    title \\\"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\\\"\\n    x-axis [23Q1, 23Q2, 23Q3, 23Q4, 24Q1, 24Q2, 24Q3, 24Q4, 25Q1, 25Q2, 25Q3, 25Q4, 26Q1, 26Q2]\\n    y-axis \\\"USD per 1M tokens\\\" 0 --> 50\\n    line [45.00, 45.00, 45.00, 20.00, 20.00, 10.00, 6.25, 6.25, 6.25, 5.00, 5.62, 5.62, 8.75, 17.50]\\n    line [21.85, 21.85, 21.85, 21.85, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 15.00, 15.00, 15.00]\\n    line [1.00, 1.00, 1.00, 1.00, 1.00, 14.00, 14.00, 1.88, 1.88, 5.62, 5.62, 7.00, 7.00, 7.00]\\n    line [0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.69, 0.69, 0.35, 0.35, 0.35, 2.61]\\n    line [1.67, 1.67, 0.83, 1.04, 1.04, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.78, 0.78]\\n    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11]\\n    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 0.56, 0.56, 0.56, 0.56, 0.56]\\n```\\n\\n## 套餐榨满折合明细\\n\\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\\n|---|---|---|---|---|\\n| OpenAI | 2023-03 | ChatGPT Plus | $20 | 1.67 |\\n| OpenAI | 2023-07 | ChatGPT Plus | $20 | 0.83 |\\n| OpenAI | 2023-11 | ChatGPT Plus | $20 | 1.04 |\\n| OpenAI | 2024-05 | ChatGPT Plus | $20 | 0.52 |\\n| OpenAI | 2025-08 | ChatGPT Plus | $20 | 0.52 |\\n| OpenAI | 2026-03 | ChatGPT Plus | $20 | 0.78 |\\n| Anthropic | 2023-09 | Claude Pro | $20 | 1.11 |\\n| Anthropic | 2025-04 | Claude Max 5x | $100 | 1.11 |\\n| Anthropic | 2025-04 | Claude Max 20x | $200 | 0.56 |\\n\\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。\", \"numLines\": 42, \"startLine\": 17, \"totalLines\": 108}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 262379,
+        "completion_tokens": 353,
+        "cached_tokens": 262377,
+        "extra": {
+          "cache_creation_input_tokens": 368,
+          "cache_read_input_tokens": 262377,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 368,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 353,
+              "cache_read_input_tokens": 262377,
+              "cache_creation_input_tokens": 368,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 368
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/token-price.md",
+              "content": "## 对比图\n\n线序（颜色按此顺序）：\n\n1. **OpenAI API** — 终值 $17.50/1M\n2. **Anthropic API** — 终值 $15.00/1M\n3. **Google API** — 终值 $7.00/1M\n4. **DeepSeek API** — 终值 $2.61/1M\n5. **OpenAI 套餐 Plus 榨满** — 终值 $0.78/1M\n6. **Anthropic 套餐最高 (Pro 榨满)** — 终值 $1.11/1M\n7. **Anthropic 套餐最低 (Max20x 榨满)** — 终值 $0.56/1M\n\n```mermaid\nxychart-beta\n    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"\n    x-axis [23Q1, 23Q2, 23Q3, 23Q4, 24Q1, 24Q2, 24Q3, 24Q4, 25Q1, 25Q2, 25Q3, 25Q4, 26Q1, 26Q2]\n    y-axis \"USD per 1M tokens\" 0 --> 50\n    line [45.00, 45.00, 45.00, 20.00, 20.00, 10.00, 6.25, 6.25, 6.25, 5.00, 5.62, 5.62, 8.75, 17.50]\n    line [21.85, 21.85, 21.85, 21.85, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 15.00, 15.00, 15.00]\n    line [1.00, 1.00, 1.00, 1.00, 1.00, 14.00, 14.00, 1.88, 1.88, 5.62, 5.62, 7.00, 7.00, 7.00]\n    line [0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.69, 0.69, 0.35, 0.35, 0.35, 2.61]\n    line [1.67, 1.67, 0.83, 1.04, 1.04, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.78, 0.78]\n    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11]\n    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 0.56, 0.56, 0.56, 0.56, 0.56]\n```\n\n## 套餐榨满折合明细\n\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n|---|---|---|---|---|\n| OpenAI | 2023-03 | ChatGPT Plus | $20 | 1.67 |\n| OpenAI | 2023-07 | ChatGPT Plus | $20 | 0.83 |\n| OpenAI | 2023-11 | ChatGPT Plus | $20 | 1.04 |\n| OpenAI | 2024-05 | ChatGPT Plus | $20 | 0.52 |\n| OpenAI | 2025-08 | ChatGPT Plus | $20 | 0.52 |\n| OpenAI | 2026-03 | ChatGPT Plus | $20 | 0.78 |\n| Anthropic | 2023-09 | Claude Pro | $20 | 1.11 |\n| Anthropic | 2025-04 | Claude Max 5x | $100 | 1.11 |\n| Anthropic | 2025-04 | Claude Max 20x | $200 | 0.56 |\n\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。",
+              "numLines": 42,
+              "startLine": 17,
+              "totalLines": 108
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_015Nrf4BtwLnBRxSzNHEVNEc",
+            "type": "tool_result",
+            "content": "17\t## 对比图\n18\t\n19\t线序（颜色按此顺序）：\n20\t\n21\t1. **OpenAI API** — 终值 $17.50/1M\n22\t2. **Anthropic API** — 终值 $15.00/1M\n23\t3. **Google API** — 终值 $7.00/1M\n24\t4. **DeepSeek API** — 终值 $2.61/1M\n25\t5. **OpenAI 套餐 Plus 榨满** — 终值 $0.78/1M\n26\t6. **Anthropic 套餐最高 (Pro 榨满)** — 终值 $1.11/1M\n27\t7. **Anthropic 套餐最低 (Max20x 榨满)** — 终值 $0.56/1M\n28\t\n29\t```mermaid\n30\txychart-beta\n31\t    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"\n32\t    x-axis [23Q1, 23Q2, 23Q3, 23Q4, 24Q1, 24Q2, 24Q3, 24Q4, 25Q1, 25Q2, 25Q3, 25Q4, 26Q1, 26Q2]\n33\t    y-axis \"USD per 1M tokens\" 0 --> 50\n34\t    line [45.00, 45.00, 45.00, 20.00, 20.00, 10.00, 6.25, 6.25, 6.25, 5.00, 5.62, 5.62, 8.75, 17.50]\n35\t    line [21.85, 21.85, 21.85, 21.85, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 15.00, 15.00, 15.00]\n36\t    line [1.00, 1.00, 1.00, 1.00, 1.00, 14.00, 14.00, 1.88, 1.88, 5.62, 5.62, 7.00, 7.00, 7.00]\n37\t    line [0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.69, 0.69, 0.35, 0.35, 0.35, 2.61]\n38\t    line [1.67, 1.67, 0.83, 1.04, 1.04, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.78, 0.78]\n39\t    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11]\n40\t    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 0.56, 0.56, 0.56, 0.56, 0.56]\n41\t```\n42\t\n43\t## 套餐榨满折合明细\n44\t\n45\t| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n46\t|---|---|---|---|---|\n47\t| OpenAI | 2023-03 | ChatGPT Plus | $20 | 1.67 |\n48\t| OpenAI | 2023-07 | ChatGPT Plus | $20 | 0.83 |\n49\t| OpenAI | 2023-11 | ChatGPT Plus | $20 | 1.04 |\n50\t| OpenAI | 2024-05 | ChatGPT Plus | $20 | 0.52 |\n51\t| OpenAI | 2025-08 | ChatGPT Plus | $20 | 0.52 |\n52\t| OpenAI | 2026-03 | ChatGPT Plus | $20 | 0.78 |\n53\t| Anthropic | 2023-09 | Claude Pro | $20 | 1.11 |\n54\t| Anthropic | 2025-04 | Claude Max 5x | $100 | 1.11 |\n55\t| Anthropic | 2025-04 | Claude Max 20x | $200 | 0.56 |\n56\t\n57\tAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n58\t（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/token-price.md",
+              "content": "## 对比图\n\n线序（颜色按此顺序）：\n\n1. **OpenAI API** — 终值 $17.50/1M\n2. **Anthropic API** — 终值 $15.00/1M\n3. **Google API** — 终值 $7.00/1M\n4. **DeepSeek API** — 终值 $2.61/1M\n5. **OpenAI 套餐 Plus 榨满** — 终值 $0.78/1M\n6. **Anthropic 套餐最高 (Pro 榨满)** — 终值 $1.11/1M\n7. **Anthropic 套餐最低 (Max20x 榨满)** — 终值 $0.56/1M\n\n```mermaid\nxychart-beta\n    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"\n    x-axis [23Q1, 23Q2, 23Q3, 23Q4, 24Q1, 24Q2, 24Q3, 24Q4, 25Q1, 25Q2, 25Q3, 25Q4, 26Q1, 26Q2]\n    y-axis \"USD per 1M tokens\" 0 --> 50\n    line [45.00, 45.00, 45.00, 20.00, 20.00, 10.00, 6.25, 6.25, 6.25, 5.00, 5.62, 5.62, 8.75, 17.50]\n    line [21.85, 21.85, 21.85, 21.85, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 15.00, 15.00, 15.00]\n    line [1.00, 1.00, 1.00, 1.00, 1.00, 14.00, 14.00, 1.88, 1.88, 5.62, 5.62, 7.00, 7.00, 7.00]\n    line [0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.69, 0.69, 0.35, 0.35, 0.35, 2.61]\n    line [1.67, 1.67, 0.83, 1.04, 1.04, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.78, 0.78]\n    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11]\n    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 0.56, 0.56, 0.56, 0.56, 0.56]\n```\n\n## 套餐榨满折合明细\n\n| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n|---|---|---|---|---|\n| OpenAI | 2023-03 | ChatGPT Plus | $20 | 1.67 |\n| OpenAI | 2023-07 | ChatGPT Plus | $20 | 0.83 |\n| OpenAI | 2023-11 | ChatGPT Plus | $20 | 1.04 |\n| OpenAI | 2024-05 | ChatGPT Plus | $20 | 0.52 |\n| OpenAI | 2025-08 | ChatGPT Plus | $20 | 0.52 |\n| OpenAI | 2026-03 | ChatGPT Plus | $20 | 0.78 |\n| Anthropic | 2023-09 | Claude Pro | $20 | 1.11 |\n| Anthropic | 2025-04 | Claude Max 5x | $100 | 1.11 |\n| Anthropic | 2025-04 | Claude Max 20x | $200 | 0.56 |\n\nAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。",
+              "numLines": 42,
+              "startLine": 17,
+              "totalLines": 108
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_015Nrf4BtwLnBRxSzNHEVNEc",
+            "type": "tool_result",
+            "content": "17\t## 对比图\n18\t\n19\t线序（颜色按此顺序）：\n20\t\n21\t1. **OpenAI API** — 终值 $17.50/1M\n22\t2. **Anthropic API** — 终值 $15.00/1M\n23\t3. **Google API** — 终值 $7.00/1M\n24\t4. **DeepSeek API** — 终值 $2.61/1M\n25\t5. **OpenAI 套餐 Plus 榨满** — 终值 $0.78/1M\n26\t6. **Anthropic 套餐最高 (Pro 榨满)** — 终值 $1.11/1M\n27\t7. **Anthropic 套餐最低 (Max20x 榨满)** — 终值 $0.56/1M\n28\t\n29\t```mermaid\n30\txychart-beta\n31\t    title \"AI 价格对比：旗舰 API 与套餐榨满折合 per-token (USD/1M tokens)\"\n32\t    x-axis [23Q1, 23Q2, 23Q3, 23Q4, 24Q1, 24Q2, 24Q3, 24Q4, 25Q1, 25Q2, 25Q3, 25Q4, 26Q1, 26Q2]\n33\t    y-axis \"USD per 1M tokens\" 0 --> 50\n34\t    line [45.00, 45.00, 45.00, 20.00, 20.00, 10.00, 6.25, 6.25, 6.25, 5.00, 5.62, 5.62, 8.75, 17.50]\n35\t    line [21.85, 21.85, 21.85, 21.85, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 45.00, 15.00, 15.00, 15.00]\n36\t    line [1.00, 1.00, 1.00, 1.00, 1.00, 14.00, 14.00, 1.88, 1.88, 5.62, 5.62, 7.00, 7.00, 7.00]\n37\t    line [0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.21, 0.69, 0.69, 0.35, 0.35, 0.35, 2.61]\n38\t    line [1.67, 1.67, 0.83, 1.04, 1.04, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.78, 0.78]\n39\t    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11]\n40\t    line [1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 1.11, 0.56, 0.56, 0.56, 0.56, 0.56]\n41\t```\n42\t\n43\t## 套餐榨满折合明细\n44\t\n45\t| 品牌 | 生效 | 套餐 | 月价 | 榨满折合 $/1M |\n46\t|---|---|---|---|---|\n47\t| OpenAI | 2023-03 | ChatGPT Plus | $20 | 1.67 |\n48\t| OpenAI | 2023-07 | ChatGPT Plus | $20 | 0.83 |\n49\t| OpenAI | 2023-11 | ChatGPT Plus | $20 | 1.04 |\n50\t| OpenAI | 2024-05 | ChatGPT Plus | $20 | 0.52 |\n51\t| OpenAI | 2025-08 | ChatGPT Plus | $20 | 0.52 |\n52\t| OpenAI | 2026-03 | ChatGPT Plus | $20 | 0.78 |\n53\t| Anthropic | 2023-09 | Claude Pro | $20 | 1.11 |\n54\t| Anthropic | 2025-04 | Claude Max 5x | $100 | 1.11 |\n55\t| Anthropic | 2025-04 | Claude Max 20x | $200 | 0.56 |\n56\t\n57\tAnthropic 关系：Max 5x 折合 = Pro 折合（$100/5x = $20/1x）；Max 20x 折合 = Pro 的一半\n58\t（$200/20x = $10/1x），故 20x 是各家可量化套餐里 per-token 最低的。"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/token-price.md",
+          "offset": 17,
+          "limit": 42
+        }
+      }
+    },
+    {
+      "step_id": 218,
+      "timestamp": "2026-06-01T06:50:26.365Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 262747,
+        "completion_tokens": 980,
+        "cached_tokens": 262745,
+        "extra": {
+          "cache_creation_input_tokens": 1817,
+          "cache_read_input_tokens": 262745,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1817,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 980,
+              "cache_read_input_tokens": 262745,
+              "cache_creation_input_tokens": 1817,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1817
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 219,
+      "timestamp": "2026-06-01T06:50:40.704Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "三处改动全部落地。`token-price.py` 重写,生成单张 `token-price.md`,mermaid-cli 渲染通过 ✅,无残留 svg。\n\n## 改动\n\n1. **去掉 log,直接美元**:Y 轴 `USD per 1M tokens`,线性,0→50。\n2. **重新定义套餐折算**(都按配额榨满,不分轻重用户):\n   - **最高折合 = 最便宜套餐榨满**(折扣率低、单价高)\n   - **最低折合 = 最贵套餐榨满**(批量折扣大、单价低)\n   - 相对配额「N× Pro」= 倍数 × Pro 的 token 配额——这样最贵套餐也能榨满折算\n3. **全部一张图**:4 条 API 线 + 3 条套餐线(共 7 线),不再分图。\n\n## 关键数值(印证你的定义)\n\n- **Anthropic 套餐区间**:最便宜的 Claude Pro $20 榨满 = **$1.11/1M**(最高折合);最贵的 Max 20x $200 榨满 = **$0.56/1M**(最低折合)。Max 5x 折合恰等于 Pro($100/5x=$20/1x),Max 20x 是 Pro 一半($200/20x=$10/1x)——批量折扣随档位加深,与\"越贵单价越低\"一致。\n- **OpenAI 套餐**:只有 Plus $20 配额可量化($0.52–1.67/1M 随配额放宽下探),Pro $200 标称无限无法榨满,故 OpenAI 只有一条套餐线(最高=最低)。\n- **三类价的关系一目了然**:套餐榨满($0.5–1.7)远低于同期旗舰 API 列表价(套餐补贴),DeepSeek API($0.2–2.6)又低于所有人;旗舰 API 2025 谷底 $5、2026 回升(gpt-5.5 $17.5)。\n\n## 数据未覆盖(已在局限里说明)\nGoogle(Advanced/Ultra 无数字配额)、DeepSeek(免费无付费档)、Cursor(按量透传≈API 价)无法独立折算套餐 per-token,未入图。\n\n线性轴的代价:早期 $45(GPT-4/Opus)拉高量程,套餐线和 DeepSeek 会挤在底部——但这本身就是结论(套餐榨满 ≪ 旗舰 API 列表价),精确值在下方两张明细表里。如果想看底部低价区的细节,可以加一张「裁到 0–6」的放大图,但按你\"全画一张、不要分开\"的要求我没拆。",
+      "metrics": {
+        "prompt_tokens": 262747,
+        "completion_tokens": 980,
+        "cached_tokens": 262745,
+        "extra": {
+          "cache_creation_input_tokens": 1817,
+          "cache_read_input_tokens": 262745,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1817,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 980,
+              "cache_read_input_tokens": 262745,
+              "cache_creation_input_tokens": 1817,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1817
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 26763251,
-    "total_completion_tokens": 341347,
-    "total_cached_tokens": 26648139,
-    "total_steps": 205,
+    "total_prompt_tokens": 29776459,
+    "total_completion_tokens": 408580,
+    "total_cached_tokens": 29660936,
+    "total_steps": 219,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 471075,
-      "total_cache_read_input_tokens": 26648139
+      "total_cache_creation_input_tokens": 529950,
+      "total_cache_read_input_tokens": 29660936
     }
   }
 }
