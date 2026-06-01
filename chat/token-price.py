@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""根据 chat/token-price.csv 生成 token-price.md。
+"""根据 chat/token-price.csv 生成 token-price.png + token-price.md。
 
 旗舰 = 同一厂家在同一时段 API 目录里最贵的模型（含推理模型），
-而非钉死某个产品线。模型退市后自动让位次高价。
+模型退市后自动让位次高价。
 
-套餐折算假设用户全用这个最贵的模型（因为套餐内模型不加价），
+套餐折算假设用户全用最贵模型（套餐内模型不加价），
 最高折合 = 最便宜套餐榨满配额，最低折合 = 最贵套餐榨满配额。
-全部画在一张图上比较。
+
+输出 matplotlib png（带图例、标注、双 Y 轴），替代 mermaid xychart-beta。
 """
 from __future__ import annotations
 
@@ -14,18 +15,21 @@ import csv
 import os
 import re
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+
 HERE = os.path.dirname(os.path.abspath(__file__))
-CSV = os.path.join(HERE, "chat", "token-price.csv")
-OUT = os.path.join(HERE, "token-price.md")
+CSV = os.path.join(HERE, "token-price.csv")
+OUT_PNG = os.path.join(HERE, "token-price.png")
+OUT_MD = os.path.join(HERE, "token-price.md")
 
 TOKENS_PER_MESSAGE = 2000
 
-# 排除非文本模型（音频、embeddings、off-peak 机制行等）
 EXCLUDE = {"OpenAI audio models", "text-embedding-ada-002", "Off-peak discount"}
 
-# 模型退市时间（YYYY-MM），之后不再计入「当期最贵」
 DEPRECATED = {
-    # OpenAI
     "GPT-3 Davinci":            "2024-01",
     "GPT-3 Curie":              "2024-01",
     "GPT-3 Babbage":            "2024-01",
@@ -38,17 +42,16 @@ DEPRECATED = {
     "gpt-4-32k":                "2025-06",
     "gpt-4-turbo (1106-preview)":"2024-12",
     "gpt-4o-2024-05-13":        "2024-10",
-    "gpt-4o-2024-08-06":        "2026-02",   # retired Jan 29 2026 per Reddit r/OpenAI
+    "gpt-4o-2024-08-06":        "2026-02",
     "gpt-4.5-preview":          "2025-04",
-    "gpt-4.1":                  "2026-02",   # retired Jan 29 2026 batch
-    "gpt-4.1-mini":             "2026-02",   # retired Jan 29 2026 batch
-    "gpt-4.1-nano":             "2026-02",   # likely same batch
+    "gpt-4.1":                  "2026-02",
+    "gpt-4.1-mini":             "2026-02",
+    "gpt-4.1-nano":             "2026-02",
     "o1-preview":               "2025-02",
     "o1-mini":                  "2025-06",
-    "o1 (GA)":                  "2025-06",   # superseded by o3
-    "o3-mini":                  "2025-06",   # superseded by o4-mini
-    "o4-mini":                  "2026-02",   # retired Jan 29 2026 batch
-    # Anthropic
+    "o1 (GA)":                  "2025-06",
+    "o3-mini":                  "2025-06",
+    "o4-mini":                  "2026-02",
     "Claude Instant 1.2":       "2024-03",
     "Claude 2.1":               "2025-03",
     "Claude 3 Opus":            "2025-06",
@@ -62,9 +65,8 @@ DEPRECATED = {
     "Claude Opus 4":            "2025-08",
     "Claude Sonnet 4":          "2025-09",
     "Claude Opus 4.1":          "2025-11",
-    "Claude Sonnet 4.5":        "2026-02",   # superseded by 4.6
+    "Claude Sonnet 4.5":        "2026-02",
     "Claude Haiku 4.5":         "2026-02",
-    # Google
     "PaLM 2 text-bison":        "2024-04",
     "Gemini 1.0 Pro":           "2025-02",
     "Gemini 1.5 Flash (<=128K)":"2025-06",
@@ -72,9 +74,7 @@ DEPRECATED = {
     "Gemini 1.5 Flash-8B (<=128K)":"2025-06",
     "Gemini 2.0 Flash":         "2026-06",
     "Gemini 2.0 Flash-Lite":    "2026-06",
-    # Google (price-cut supersedes original row)
-    "Gemini 1.5 Pro (<=128K)":  "2024-10",   # superseded by <=128K cut
-    # DeepSeek
+    "Gemini 1.5 Pro (<=128K)":  "2024-10",
     "DeepSeek-V3 (promo)":      "2025-02",
     "DeepSeek-V2 (deepseek-chat)":"2024-12",
     "deepseek-chat V2 + context caching":"2024-12",
@@ -124,12 +124,8 @@ def per_token(price, tokens):
     return price / tokens * 1e6
 
 
-# ---- 核心：每季度每家取 API 目录里在售的最贵模型 ----
-
 def max_envelope(rows, providers):
-    """返回 {brand: (quarterly_vals, quarterly_models)}"""
-    # 先收集每家所有 API 模型
-    models = {b: [] for b in providers}     # (ym, blended, in, out, name)
+    models = {b: [] for b in providers}
     for r in rows:
         b = r["provider"]
         if b not in providers or r["category"] != "API":
@@ -141,19 +137,17 @@ def max_envelope(rows, providers):
         if i is None or o is None:
             continue
         models[b].append((r["effective_date"], (i + o) / 2, i, o, name))
-
     result = {}
     for b in providers:
         vals, mnames = [], []
         for qe in QEND:
             best, best_name = 0, ""
-            # 遍历所有已发布且未退市的模型，取最贵
             for ym, bl, inp, out, name in models[b]:
                 if ym > qe:
-                    continue           # 还没发布
+                    continue
                 dep = DEPRECATED.get(name)
                 if dep and dep <= qe:
-                    continue           # 已退市
+                    continue
                 if bl > best:
                     best, best_name = bl, name
             vals.append(best)
@@ -176,12 +170,25 @@ def forward_fill(points):
     return vals
 
 
+# ---- 标注：在线条末端（或极值处）标出当期最贵模型名 ----
+
+def annotate_changes(ax, x, vals, names, color, yoffset=0):
+    prev = ""
+    for i, (v, nm) in enumerate(zip(vals, names)):
+        if nm != prev and nm and v > 0:
+            ax.annotate(nm, (x[i], v), fontsize=5.5, color=color, alpha=0.85,
+                        xytext=(4, yoffset), textcoords="offset points",
+                        va="center", ha="left",
+                        arrowprops=dict(arrowstyle="-", color=color, lw=0.4, alpha=0.4))
+            prev = nm
+
+
 def main():
     rows = load_rows()
     order = ["OpenAI", "Anthropic", "Google", "DeepSeek"]
     env = max_envelope(rows, order)
 
-    # ---- 套餐折合 ----
+    # 套餐
     plus = []
     for r in rows:
         if r["product_or_model"] in OPENAI_CHAT_PLUS:
@@ -207,33 +214,59 @@ def main():
     anth_high = forward_fill([(pro_row["effective_date"], pro_pt)])
     anth_low = forward_fill([(pro_row["effective_date"], pro_pt), (max20[0], max20[4])])
 
-    # ---- 单张图 ----
-    series = [
-        ("OpenAI API 最贵", env["OpenAI"][0]),
-        ("Anthropic API 最贵", env["Anthropic"][0]),
-        ("Google API 最贵", env["Google"][0]),
-        ("DeepSeek API 最贵", env["DeepSeek"][0]),
-        ("OpenAI Plus 榨满", plus_line),
-        ("Anthropic Pro 榨满(最高)", anth_high),
-        ("Anthropic Max20x 榨满(最低)", anth_low),
-    ]
-    ymax = max(max(v) for _, v in series)
-    ymax = (int(ymax / 5) + 1) * 5
+    x = list(range(len(QUARTERS)))
 
-    chart = ["```mermaid", "xychart-beta",
-             '    title "各品牌最贵 API 价 + 套餐榨满折合 (USD/1M tokens)"',
-             "    x-axis [" + ", ".join(QLABEL) + "]",
-             f'    y-axis "USD per 1M tokens" 0 --> {ymax}']
-    for _, vals in series:
-        chart.append("    line [" + ", ".join(f"{v:.1f}" for v in vals) + "]")
-    chart.append("```")
-    chart_str = "\n".join(chart)
+    # ---- 画图 ----
+    fig, ax1 = plt.subplots(figsize=(14, 7))
+    fig.patch.set_facecolor("white")
 
-    legend = []
-    for i, (label, vals) in enumerate(series, 1):
-        legend.append(f"{i}. **{label}** — 终值 ${vals[-1]:.1f}/1M")
+    # API lines (left Y axis, solid thick)
+    api_colors = {"OpenAI": "#10a37f", "Anthropic": "#d97706",
+                  "Google": "#4285f4", "DeepSeek": "#1a1a2e"}
+    for b in order:
+        vals, names = env[b]
+        c = api_colors[b]
+        ax1.plot(x, vals, "-", color=c, lw=2.2, marker="o", ms=4,
+                 label=f"{b} API max", zorder=3)
+        annotate_changes(ax1, x, vals, names, c, yoffset=3)
 
-    # ---- 旗舰明细：每季度最贵的是谁 ----
+    ax1.set_ylabel("API most-expensive model blended (USD / 1M tokens)", fontsize=10)
+    ax1.set_ylim(bottom=-2)
+    ax1.yaxis.set_major_locator(mticker.MultipleLocator(10))
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(QLABEL, rotation=45, ha="right", fontsize=8)
+    ax1.grid(axis="y", alpha=0.25)
+    ax1.grid(axis="x", alpha=0.12)
+
+    # Subscription lines (right Y axis, dashed thin)
+    ax2 = ax1.twinx()
+    ax2.plot(x, plus_line, "--", color="#10a37f", lw=1.5, marker="s", ms=3,
+             alpha=0.8, label="OpenAI Plus $20 maxed-out")
+    ax2.plot(x, anth_high, "--", color="#d97706", lw=1.5, marker="^", ms=3,
+             alpha=0.8, label="Anthropic Pro $20 maxed (highest)")
+    ax2.plot(x, anth_low, ":", color="#d97706", lw=1.5, marker="v", ms=3,
+             alpha=0.6, label="Anthropic Max20x $200 maxed (lowest)")
+    ax2.set_ylabel("Subscription maxed-out per-token (USD / 1M tokens)", fontsize=10)
+    sub_max = max(max(plus_line), max(anth_high), max(anth_low))
+    ax2.set_ylim(-0.05, sub_max * 1.3)
+    ax2.yaxis.set_major_locator(mticker.MultipleLocator(0.2))
+
+    # 合并图例
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, loc="upper right", fontsize=7.5, ncol=2,
+               framealpha=0.9)
+
+    ax1.set_title("Most-Expensive API Price + Subscription Maxed-Out per-Token (2023-2026)\n"
+                  "Left: API max model blended (in+out)/2  |  Right: subscription quota maxed-out",
+                  fontsize=11, pad=12)
+
+    fig.tight_layout()
+    fig.savefig(OUT_PNG, dpi=180, bbox_inches="tight")
+    print(f"写入 {OUT_PNG}")
+    plt.close(fig)
+
+    # ---- 生成 md（引用 png，附明细表） ----
     flagship_tbl = []
     for b in order:
         vals, names = env[b]
@@ -243,7 +276,6 @@ def main():
                 flagship_tbl.append(f"| {b} | {ql} | {nm} | {v:.2f} |")
                 prev = nm
 
-    # ---- 套餐折合表 ----
     sub_tbl = []
     for ym, pt in sorted(plus):
         sub_tbl.append(f"| OpenAI | {ym} | ChatGPT Plus | $20 | {pt:.2f} |")
@@ -253,28 +285,26 @@ def main():
     md = f"""# 各品牌最贵 API 价格 + 套餐榨满折合 per-token（2023–2026）
 
 **旗舰 = 同一厂家在同一时段 API 目录里最贵的文本模型**（含推理模型），
-而不是钉死某个产品线。模型退市后自动让位给次高价。
-这样看到的是**各品牌能卖出的天花板价**随时间的变化。
+模型退市后自动让位给次高价。这样看到的是**各品牌天花板价**随时间的变化。
 
-套餐折算假设用户全用这个最贵的模型（因为套餐内用哪个模型不影响价格）。
-全部画在一张图上比较。数据源 `chat/token-price.csv`，本文由 `token-price.py` 生成。
-
-## 折算口径
-
-- **API 最贵模型** blended =（input + output）/ 2，每季度取目录中**在售且最贵**的那个。
-  模型退市（DEPRECATED 表）后自动让位给次高价。排除音频 / embedding 等非文本模型。
-- **套餐折合 per-token**：只看「把配额用满」。每条消息 = {TOKENS_PER_MESSAGE} token。
-  - **最高折合（最便宜套餐榨满）**：折扣率低、单价高。
-  - **最低折合（最贵套餐榨满）**：批量折扣大、单价低。
-  - 相对配额「N× Pro」= 倍数 × Pro token 配额。/N 小时按 24×7 满载。
+套餐折算假设用户全用最贵模型（套餐内用哪个不影响价格）。
+数据源 `token-price.csv`，本文由 `token-price.py` 生成。
 
 ## 对比图
 
-线序（颜色按此顺序）：
+![各品牌最贵 API 价 + 套餐榨满折合](token-price.png)
 
-{chr(10).join(legend)}
+- **左轴（实线）**：各家 API 目录中在售最贵模型的 blended 价（(input+output)/2，USD/1M tokens）。
+  线上标注了当期最贵模型名。
+- **右轴（虚线）**：套餐把配额用满后的折合 per-token。每条消息按 {TOKENS_PER_MESSAGE} token 折算。
+  - **最高折合**（最便宜套餐榨满）= 折扣率低、单价高。
+  - **最低折合**（最贵套餐榨满）= 批量折扣大、单价低。
 
-{chart_str}
+## 折算口径
+
+- API blended 每季度取在售最贵；退市模型（DEPRECATED 表）让位次高价。排除音频/embedding 模型。
+- 套餐折合 = 月价 ÷（月配额 × {TOKENS_PER_MESSAGE}）。相对配额「N× Pro」= 倍数 × Pro 配额。
+  /N 小时按 24×7 满载。
 
 ## 各季度最贵模型是谁（变更点）
 
@@ -290,18 +320,16 @@ def main():
 
 ## 假设与局限
 
-- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径；改它会整体平移套餐线但不改品牌间相对关系。
-- **模型退市时间**来自 CSV notes + 官方公告，部分为近似（±1 月）。退市判断影响「某季度谁最贵」的答案，
-  但跨品牌相对高低不受单条退市日期影响。
-- **可量化套餐有限**：OpenAI 只有 Plus $20 可量化（Pro $200 标称无限，无配额可榨满）；
-  Anthropic 借「N× Pro」得到 Pro→Max20x 区间。Google（无数字配额）、DeepSeek（免费无付费档）、
-  Cursor（按量透传 ≈ API 价）无法折算，未入图。
-- 套餐配额取自 CSV `usage_limit`，多为 Reddit 实测某时点观察（OpenAI 多次静默改配额）；
-  Claude Pro 后期叠加的周限未量化。
+- **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径；改它整体平移套餐线但不改品牌相对关系。
+- **模型退市时间**来自 CSV notes + Reddit 退市帖 + 官方公告，部分近似（±1 月）。
+- **可量化套餐有限**：OpenAI 只有 Plus $20（Pro $200 无限不可榨满）；Anthropic 借「N× Pro」
+  得到区间。Google/DeepSeek/Cursor 无法独立折算。
+- 套餐配额多为 Reddit 实测某时点观察；Claude Pro 后期叠加的周限未量化。
 """
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
-    print(f"写入 {OUT}")
+    print(f"写入 {OUT_MD}")
+
     for b in order:
         vals, names = env[b]
         print(f"  {b:10s} 最贵演进：", end="")
@@ -311,7 +339,6 @@ def main():
                 print(f" [{ql}]{nm}=${v:.1f}", end="")
                 prev = nm
         print()
-    print(f"y 轴上限 {ymax}；线数 {len(series)}")
 
 
 if __name__ == "__main__":
