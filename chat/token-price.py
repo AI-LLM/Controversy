@@ -254,9 +254,9 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     fig, ax = plt.subplots(figsize=(16, 7.5))
     fig.patch.set_facecolor("white")
 
-    # ---- 互联网线（灰色粗线，标价） ----
-    ax.plot(inet_x, inet_y_scaled, "-", color="#666", lw=2.5,
-            marker="o", ms=6,
+    # ---- 互联网线（灰色虚粗线，标价） ----
+    ax.plot(inet_x, inet_y_scaled, "--", color="#666", lw=2.5,
+            marker="o", ms=6, dashes=(5, 3),
             label=f"美国互联网 $/Mbps × {scale:.4f}（1993-09 = 2020-06 锚定）",
             zorder=4)
     for (ym, per_mbps, price, mbps, note), xv, yv in zip(
