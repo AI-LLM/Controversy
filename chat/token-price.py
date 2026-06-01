@@ -32,27 +32,30 @@ OUT_MD = os.path.join(HERE, "token-price.md")
 
 TOKENS_PER_MESSAGE = 2000
 
-# 美国互联网接入服务历史价格（年/月 -> 名义月费 USD）
+# 美国互联网接入服务历史价格（年/月 -> 名义月费 USD, 典型下行速率 Mbps）
 # 来源：EH.Net, NYT, Computerworld, CNET, Smithsonian, Pew, FCC, WSJ,
 #       Bruce Kushnick / Teletruth, USTelecom BPI, NCTA, BLS CPI
-# 早期高频段以月为单位，2015 后以年为单位（年度报告值）。
+# 早期高频段以月为单位，2015 后用 USTelecom BPI 年度报告值。
+# 拨号年代速率为该时段主流 modem 标准（14.4k → 28.8k → V.90 56k）；
+# 宽带初期速率为入门 tier 典型；2015+ 用 BPI avg 下行速率。
 INTERNET_PRICES = [
-    ("1993-09",  9.95,  "AOL $9.95/月含5h, 超 $3.50/h"),
-    ("1994-12",  9.95,  "AOL 跟进 Prodigy 降价: 超额$2.50/h"),
-    ("1995-02", 24.95,  "CompuServe $24.95/20h 过渡套餐"),
-    ("1996-03", 19.95,  "独立 ISP $19.95 不限时拨号"),
-    ("1996-07", 19.95,  "AOL 双轨: $9.95/5h 或 $19.95/20h"),
-    ("1996-12", 19.95,  "AOL $19.95/月 无限拨号普及全美"),
-    ("1997-06", 20.95,  "全行业拨号锁死 $19.95–21.95"),
-    ("2000-06", 49.99,  "早期宽带 3–6 Mbps $49.99"),
-    ("2002-06", 34.95,  "ADSL 抢市场降至 $34.95"),
-    ("2005-06", 47.50,  "宽带稳定 $45–50/月"),
-    ("2015-06", 65.62,  "USTelecom BPI: 43 Mbps avg"),
-    ("2021-06", 48.42,  "BPI: 85 Mbps avg"),
-    ("2022-06", 45.97,  "BPI: 98 Mbps avg"),
-    ("2023-06", 41.31,  "BPI: 141 Mbps avg"),
-    ("2025-06", 39.90,  "BPI: 200+ Mbps"),
-    ("2026-06", 39.50,  "BPI: 250+ Mbps"),
+    # (日期, 月费 USD, 速率 Mbps, 备注)
+    ("1993-09",  9.95, 0.0144, "AOL $9.95/5h + $3.50/h；14.4k modem"),
+    ("1994-12",  9.95, 0.0144, "AOL 跟进 Prodigy；14.4k 仍主流"),
+    ("1995-02", 24.95, 0.0288, "CompuServe $24.95/20h；28.8k modem"),
+    ("1996-03", 19.95, 0.0288, "独立 ISP $19.95 不限时；28.8k"),
+    ("1996-07", 19.95, 0.0288, "AOL 双轨套餐；28.8k"),
+    ("1996-12", 19.95, 0.0288, "AOL 全美无限拨号；28.8k"),
+    ("1997-06", 20.95, 0.056,  "全行业锁死 $19.95–21.95；V.90 56k"),
+    ("2000-06", 49.99, 4.5,    "早期宽带 3–6 Mbps；取均值 4.5"),
+    ("2002-06", 34.95, 1.0,    "ADSL 入门级 ~1 Mbps（电信抢市场）"),
+    ("2005-06", 47.50, 3.0,    "Cable broadband typical 3 Mbps"),
+    ("2015-06", 65.62, 43,     "USTelecom BPI: 43 Mbps avg"),
+    ("2021-06", 48.42, 85,     "BPI: 85 Mbps avg"),
+    ("2022-06", 45.97, 98,     "BPI: 98 Mbps avg"),
+    ("2023-06", 41.31, 141,    "BPI: 141 Mbps avg"),
+    ("2025-06", 39.90, 200,    "BPI: 200+ Mbps"),
+    ("2026-06", 39.50, 250,    "BPI: 250+ Mbps"),
 ]
 
 # token-price.csv 最早数据点 = 2020-06。互联网时间轴起点 1993-09 对齐到此。
@@ -232,20 +235,20 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     - X 轴延到能装下互联网最后一个数据点（1993-09 + 33 年 → 2053 左右）。
     - token 数据到 2026-06 自然结束。
     """
-    # 锚点
-    inet_anchor_price = INTERNET_PRICES[0][1]  # 1993-09: $9.95
-    token_anchor_price = next(  # 2020-06 OpenAI 最贵 API blended
+    # 把每个互联网点先换算成 $/Mbps，再做缩放
+    inet_per_mbps = [(ym, price / mbps, price, mbps, note)
+                     for ym, price, mbps, note in INTERNET_PRICES]
+    inet_anchor_per_mbps = inet_per_mbps[0][1]  # 1993-09: $9.95/0.0144 ≈ $691/Mbps
+    token_anchor_price = next(  # 2020-06 OpenAI GPT-3 Davinci blended = $60/1M
         ((fnum(r["input_per_1m_usd"]) + fnum(r["output_per_1m_usd"])) / 2
          for r in rows
          if r["effective_date"] == TOKEN_ORIGIN
          and r["category"] == "API"
          and r["product_or_model"] == "GPT-3 Davinci"))
-    scale = token_anchor_price / inet_anchor_price  # 60 / 9.95 ≈ 6.03
+    scale = token_anchor_price / inet_anchor_per_mbps  # 60 / 691 ≈ 0.0868
 
-    # 互联网坐标变换: 月份 = 距 1993-09 月数 + (TOKEN_ORIGIN 距 TOKEN_ORIGIN = 0)
-    # 即: x = months_since(inet_ym, INTERNET_ORIGIN) -> 同时也是 token 时间轴的月份
-    inet_x = [months_since(ym, INTERNET_ORIGIN) for ym, _, _ in INTERNET_PRICES]
-    inet_y_scaled = [v * scale for _, v, _ in INTERNET_PRICES]
+    inet_x = [months_since(ym, INTERNET_ORIGIN) for ym, _, _, _, _ in inet_per_mbps]
+    inet_y_scaled = [pm * scale for _, pm, _, _, _ in inet_per_mbps]
     inet_max = max(inet_x)
 
     fig, ax = plt.subplots(figsize=(16, 7.5))
@@ -253,10 +256,13 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
 
     # ---- 互联网线（灰色粗线，标价） ----
     ax.plot(inet_x, inet_y_scaled, "-", color="#666", lw=2.5,
-            marker="o", ms=6, label=f"美国互联网月费 ×{scale:.2f}（1993-09 锚定）",
+            marker="o", ms=6,
+            label=f"美国互联网 $/Mbps × {scale:.4f}（1993-09 = 2020-06 锚定）",
             zorder=4)
-    for (ym, v_orig, note), xv, yv in zip(INTERNET_PRICES, inet_x, inet_y_scaled):
-        ax.annotate(f"{ym}\n(实${v_orig:.2f})", (xv, yv), fontsize=6.5,
+    for (ym, per_mbps, price, mbps, note), xv, yv in zip(
+            inet_per_mbps, inet_x, inet_y_scaled):
+        ax.annotate(f"{ym}\n${per_mbps:.2f}/Mbps\n({mbps}M, ${price:.0f}/月)",
+                    (xv, yv), fontsize=6,
                     xytext=(5, 7), textcoords="offset points",
                     color="#444", alpha=0.85)
 
@@ -292,26 +298,28 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     ax.set_xticks(tick_months)
     ax.set_xticklabels(tick_labels, fontsize=7.5)
 
-    ax.set_ylabel("USD / 1M tokens（互联网月费已按 1993-09 ≡ 2020-06 GPT-3 Davinci 缩放）",
+    ax.set_ylabel("USD / 1M tokens（互联网 $/Mbps 已按 1993-09 ≡ 2020-06 GPT-3 Davinci 缩放）",
                   fontsize=10)
     ax.set_xlabel("token 真实日期 / (互联网真实年份)，1993-09 → 2020-06 平移对齐", fontsize=9)
-    ax.set_ylim(0, max(max(inet_y_scaled), 120) * 1.08)
+    ax.set_yscale("log")
+    ax.set_ylim(0.005, max(inet_y_scaled) * 1.5)
 
     # token 数据截止竖线
     token_end = months_since("2026-06", TOKEN_ORIGIN)
     ax.axvline(token_end, color="#999", ls=":", lw=1, alpha=0.6, zorder=1)
-    ax.text(token_end + 1, ax.get_ylim()[1] * 0.9,
+    ax.text(token_end + 1, ax.get_ylim()[1] * 0.5,
             "token 数据截止\n(2026-06)", fontsize=7.5, color="#666", va="top")
     ax.grid(alpha=0.25)
     ax.legend(loc="upper right", fontsize=8.5, ncol=2, framealpha=0.92)
 
+    final_per_mbps = inet_per_mbps[-1][1]
     ax.set_title(
-        f"假设互联网 1993-09 = AI token 2020-06：等比缩放后叠加\n"
-        f"价格缩放系数 ×{scale:.2f}（{INTERNET_PRICES[0][0]} 互联网 ${inet_anchor_price:.2f}/月 ≡ "
-        f"2020-06 GPT-3 Davinci ${token_anchor_price:.2f}/1M tokens）\n"
-        f"互联网走完 33 年才到 $39.50（缩放后≈${39.50 * scale:.0f}）；"
-        f"token 6 年内已多次穿越互联网 33 年的价格区间",
-        fontsize=11.5, pad=12)
+        f"互联网 $/Mbps 与 AI token $/1M tokens 等比叠加（Y 轴 log）\n"
+        f"锚定：1993-09 互联网 ${inet_anchor_per_mbps:.0f}/Mbps ≡ "
+        f"2020-06 GPT-3 Davinci ${token_anchor_price:.0f}/1M tokens（× {scale:.4f}）\n"
+        f"互联网 33 年 $/Mbps 从 ${inet_anchor_per_mbps:.0f} 跌到 ${final_per_mbps:.2f}"
+        f"（≈4400×）；token 6 年内顶价 $50–$112 + 长尾跌到 $0.1",
+        fontsize=11, pad=12)
 
     fig.tight_layout()
     fig.savefig(OUT_PNG2, dpi=180, bbox_inches="tight")
@@ -419,8 +427,8 @@ def main():
         sub_tbl.append(f"| Anthropic | {ym} | {name} | ${p:g} | {pt:.2f} |")
 
     inet_tbl = []
-    for ym, v, note in INTERNET_PRICES:
-        inet_tbl.append(f"| {ym} | ${v:.2f} | {note} |")
+    for ym, price, mbps, note in INTERNET_PRICES:
+        inet_tbl.append(f"| {ym} | ${price:.2f} | {mbps} | ${price / mbps:.2f} | {note} |")
 
     md = f"""# 各品牌最贵 API 价格 + 套餐榨满折合 per-token（2023–2026）
 
@@ -458,29 +466,32 @@ def main():
 |---|---|---|---|---|
 {chr(10).join(sub_tbl)}
 
-## 与互联网接入价格的同尺度对比
+## 与互联网 $/Mbps 价格的等比叠加对比
 
-把美国互联网接入服务的价格历史**同时平移并缩放**到 token 坐标系：
+把美国互联网接入服务的价格历史**先换算成 $/Mbps**（每月费 ÷ 该时段典型下行速率），
+再**平移并等比缩放**到 token 坐标系：
 
 - **时间平移**：假设互联网 1993-09 那一刻发生在 token 的 2020-06，即互联网每个日历日期 +321 个月
   落到 token 时间轴上。互联网最后一个数据点 2026-06 落到 token 时间 2053 附近，X 轴顺延到装下。
-- **价格等比缩放**：用 1993-09 互联网 $9.95/月 ≡ 2020-06 GPT-3 Davinci $60/1M tokens 作锚点，
-  互联网所有价格 × 6.03 后画到同一 Y 轴。
+- **$/Mbps 等比缩放**：用 1993-09 互联网 ≈$691/Mbps（$9.95 ÷ 14.4k modem 0.0144 Mbps）
+  ≡ 2020-06 GPT-3 Davinci $60/1M tokens 作锚点，互联网所有 $/Mbps × **0.0868** 后画到同一 Y 轴。
+- **Y 轴 log**：互联网 $/Mbps 从 $691 跌到 $0.16（≈4400×），跨 ~3.6 个数量级，线性轴
+  会把后期点压成 0。
 - 2026-06 后 token 没数据则留空（图中竖虚线标出 token 数据截止）。
 
-![互联网月费等比缩放叠加 AI token 价格](token-price-vs-internet.png)
+![互联网 $/Mbps 等比缩放叠加 AI token 价格](token-price-vs-internet.png)
 
-- **灰线**：缩放后的互联网月费，标签同时给出真实日历日期和原始月费。
+- **灰线**：缩放后的互联网 $/Mbps，标签同时给出真实日期、原始 $/Mbps、速率、月费。
 - **彩线**：各家 API 最贵模型 blended（与第一张图一致）。
-- **观感**：互联网 33 年最低也只缩到 $238（即 $39.50 × 6.03），从未跌破起点 $60；
-  AI token 6 年内已多次穿越互联网 33 年走过的价格区间——OpenAI 最贵从 $60 飙到 $112.5
-  再回落到 $50；DeepSeek 把同等天花板按到 $0.x。**等比缩放抹掉绝对量级差后，token 的
-  下行速度仍比互联网快近一个数量级**。
+- **观感**：换成 $/Mbps 后互联网线呈现**指数下行**——拨号 33 年压缩成几段台阶，2000 年宽带
+  普及后陡降一个量级，2015 后 USTelecom BPI 时代再降两个量级。**token 6 年的最贵 API 在
+  $50–$112 区间小幅波动，但 DeepSeek 已把同等天花板的便宜端按到 $0.1 量级**——
+  与互联网 $/Mbps 跌幅相比，AI token 的下行斜率更陡，时间窗仅互联网的 1/5。
 
-### 互联网月费数据点
+### 互联网月费 → $/Mbps 数据点
 
-| 日期 | 名义月费 | 备注 |
-|---|---|---|
+| 日期 | 名义月费 | 速率 (Mbps) | $/Mbps | 备注 |
+|---|---|---|---|---|
 {chr(10).join(inet_tbl)}
 
 数据来源：EH.Net、NYT Archive (1994)、Computerworld、CNET、Smithsonian、Pew Research、
