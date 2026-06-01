@@ -63,25 +63,26 @@ TOKEN_ORIGIN = "2020-06"
 INTERNET_ORIGIN = "1993-09"
 PC_ORIGIN = "1976-07"
 
-# 个人电脑历史价格（日期, 整机售价 USD, RAM 容量 KB, 备注）
-# 通缩指标 = 整机售价 ÷ RAM 容量 = $/KB
+# 个人电脑历史价格（日期, 整机售价 USD, 核心数, 主频 GHz, 备注）
+# 通缩指标 = 整机售价 ÷ (核心数 × 主频 GHz) = $/(core·GHz)
 # 来源：Smithsonian, IBM Archives, Computer History Museum, NYT (1983),
-#       Stanford Mac history, PC Magazine, WaPo, BLS PPI, Our World in Data
+#       Stanford Mac history, PC Magazine, WaPo, BLS PPI, Intel ARK
 PC_PRICES = [
-    ("1976-07",  666.66,        4,        "Apple I（4KB 主板）"),
-    ("1977-06", 2638.00,       48,        "Apple II 48KB 满配"),
-    ("1981-08", 1565.00,       16,        "IBM PC 5150 基础"),
-    ("1982-01",  595.00,       64,        "Commodore 64 首发"),
-    ("1983-12",  199.00,       64,        "C64 价格战钉死 $199"),
-    ("1984-01", 2495.00,      128,        "Macintosh 128K + GUI"),
-    ("1990-06", 2500.00,     4 * 1024,    "386 PC 典型, 4 MB"),
-    ("1995-06", 1900.00,     8 * 1024,    "Pentium 75 + Win95, 8 MB"),
-    ("2000-06",  999.00,    64 * 1024,    "$999 价格战, 64 MB"),
-    ("2005-06",  800.00,   512 * 1024,    "ASP < $800, 512 MB"),
-    ("2015-06",  650.00,     8 * 1024**2, "BLS ASP, 8 GB"),
-    ("2020-06",  710.00,    16 * 1024**2, "疫情供应链, 16 GB"),
-    ("2024-06",  680.00,    16 * 1024**2, "ASP, 16 GB"),
-    ("2026-06",  660.00,    16 * 1024**2, "ASP, 16 GB"),
+    # (date, 整机价 USD, cores, GHz, 备注)
+    ("1976-07",  666.66,  1, 0.00102, "Apple I; MOS 6502 @ 1.02 MHz"),
+    ("1977-06", 1298.00,  1, 0.00102, "Apple II; MOS 6502 @ 1.02 MHz"),
+    ("1981-08", 1565.00,  1, 0.00477, "IBM PC 5150; Intel 8088 @ 4.77 MHz"),
+    ("1982-01",  595.00,  1, 0.00102, "Commodore 64; MOS 6510 @ 1.02 MHz"),
+    ("1983-06",   99.00,  1, 0.00300, "TI-99/4A 倾销价; TMS9900 @ 3 MHz"),
+    ("1984-01", 2495.00,  1, 0.00783, "Macintosh 128K; MC68000 @ 7.83 MHz"),
+    ("1990-06", 2500.00,  1, 0.016,   "Compaq 386SX @ 16 MHz"),
+    ("1995-06", 1900.00,  1, 0.075,   "Pentium 75; 超标量"),
+    ("2000-06",  999.00,  1, 1.0,     "Athlon / Pentium III @ 1.0 GHz"),
+    ("2005-06",  800.00,  1, 3.0,     "Pentium 4 Prescott @ 3.0 GHz；主频墙"),
+    ("2015-06",  650.00,  4, 3.2,     "Intel Core i5-6500"),
+    ("2020-06",  710.00,  6, 3.6,     "AMD Ryzen 5 3600 / Intel i5-10400"),
+    ("2024-06",  680.00, 10, 2.5,     "Intel Core i5-14400（6P+4E）"),
+    ("2026-06",  660.00, 13, 3.5,     "AI PC 主流（多核混合架构）"),
 ]
 
 EXCLUDE = {"OpenAI audio models", "text-embedding-ada-002", "Off-peak discount"}
@@ -273,13 +274,13 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     inet_y_scaled = [pm * scale_inet for _, pm, _, _, _ in inet_per_mbps]
     inet_max = max(inet_x)
 
-    # 把每个 PC 点换算成 $/KB（整机价 ÷ RAM 容量），再缩放
-    pc_per_kb = [(ym, price / kb, price, kb, note)
-                 for ym, price, kb, note in PC_PRICES]
-    pc_anchor_per_kb = pc_per_kb[0][1]  # 1976-07: $666.66/4 = $166.665/KB
-    scale_pc = token_anchor_price / pc_anchor_per_kb  # 60 / 166.665 ≈ 0.36
-    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _ in pc_per_kb]
-    pc_y_scaled = [pk * scale_pc for _, pk, _, _, _ in pc_per_kb]
+    # 把每个 PC 点换算成 $/(core·GHz)（整机价 ÷ 核心数 ÷ 主频 GHz），再缩放
+    pc_per_unit = [(ym, price / (cores * ghz), price, cores, ghz, note)
+                   for ym, price, cores, ghz, note in PC_PRICES]
+    pc_anchor_per_unit = pc_per_unit[0][1]  # 1976-07: $666.66/(1×0.00102) ≈ $653,588
+    scale_pc = token_anchor_price / pc_anchor_per_unit  # 60 / 653588 ≈ 9.18e-5
+    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _, _ in pc_per_unit]
+    pc_y_scaled = [pu * scale_pc for _, pu, _, _, _, _ in pc_per_unit]
     pc_max = max(pc_x)
 
     fig, ax = plt.subplots(figsize=(20, 8))
@@ -288,19 +289,15 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     # ---- PC 线（蓝色虚线，标价） ----
     ax.plot(pc_x, pc_y_scaled, "--", color="#2b5b9b", lw=2.5,
             marker="s", ms=6, dashes=(2, 2),
-            label=f"个人电脑 $/KB RAM × {scale_pc:.4f}（1976-07 = 2020-06 锚定）",
+            label=f"个人电脑 $/(core·GHz) × {scale_pc:.2e}（1976-07 = 2020-06 锚定）",
             zorder=3)
-    for (ym, per_kb, price, kb, note), xv, yv in zip(
-            pc_per_kb, pc_x, pc_y_scaled):
-        if kb >= 1024 ** 2:
-            ram_lbl = f"{kb // (1024 ** 2)}GB"
-        elif kb >= 1024:
-            ram_lbl = f"{kb // 1024}MB"
-        else:
-            ram_lbl = f"{kb}KB"
-        ax.annotate(f"{ym}\n${per_kb:.3g}/KB\n({ram_lbl}, ${price:.0f})",
+    for (ym, per_unit, price, cores, ghz, note), xv, yv in zip(
+            pc_per_unit, pc_x, pc_y_scaled):
+        # 主频显示：≥1 GHz 直接显示 GHz，否则 MHz
+        freq_lbl = f"{ghz:.1f}GHz" if ghz >= 1 else f"{ghz * 1000:.2f}MHz"
+        ax.annotate(f"{ym}\n${per_unit:,.0f}/(c·GHz)\n({cores}c {freq_lbl}, ${price:.0f})",
                     (xv, yv), fontsize=5.8,
-                    xytext=(5, -22), textcoords="offset points",
+                    xytext=(5, -28), textcoords="offset points",
                     color="#2b5b9b", alpha=0.85)
 
     # ---- 互联网线（灰色虚粗线，标价） ----
@@ -348,7 +345,7 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     ax.set_xticks(tick_months)
     ax.set_xticklabels(tick_labels, fontsize=7)
 
-    ax.set_ylabel("USD / 1M tokens（PC $/KB、互联网 $/Mbps 均按 1976/1993 起点 ≡ "
+    ax.set_ylabel("USD / 1M tokens（PC $/(core·GHz)、互联网 $/Mbps 均按 1976/1993 起点 ≡ "
                   "2020-06 GPT-3 Davinci $60 缩放）", fontsize=9.5)
     ax.set_xlabel("token 真实日期 / 互联网真实年份 / PC 真实年份"
                   "（1976-07 PC、1993-09 互联网 → 2020-06 token 平移对齐）", fontsize=9)
@@ -371,14 +368,14 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     ax.legend(loc="upper right", fontsize=8.5, ncol=2, framealpha=0.92)
 
     final_per_mbps = inet_per_mbps[-1][1]
-    final_per_kb = pc_per_kb[-1][1]
+    final_per_unit = pc_per_unit[-1][1]
     ax.set_title(
-        f"PC $/KB、互联网 $/Mbps、AI token $/1M tokens 三条等比叠加（Y log）\n"
-        f"锚定：1976-07 PC ${pc_anchor_per_kb:.1f}/KB、"
+        f"PC $/(core·GHz)、互联网 $/Mbps、AI token $/1M tokens 三条等比叠加（Y log）\n"
+        f"锚定：1976-07 PC ${pc_anchor_per_unit:,.0f}/(core·GHz)、"
         f"1993-09 互联网 ${inet_anchor_per_mbps:.0f}/Mbps、"
         f"2020-06 GPT-3 Davinci ${token_anchor_price:.0f}/1M tokens 三点同高\n"
-        f"PC 50 年 $/KB 从 ${pc_anchor_per_kb:.1f} 跌到 ${final_per_kb:.2g}"
-        f"（≈{pc_anchor_per_kb/final_per_kb:.0e}×）；"
+        f"PC 50 年 $/(core·GHz) 从 ${pc_anchor_per_unit:,.0f} 跌到 ${final_per_unit:,.1f}"
+        f"（≈{pc_anchor_per_unit/final_per_unit:,.0f}×）；"
         f"互联网 33 年 $/Mbps 跌 4400×；token 6 年顶 $50–$112、长尾 $0.1",
         fontsize=10.5, pad=12)
 
@@ -497,14 +494,11 @@ def main():
         inet_tbl.append(f"| {ym} | ${price:.2f} | {mbps} | ${price / mbps:.2f} | {note} |")
 
     pc_tbl = []
-    for ym, price, kb, note in PC_PRICES:
-        if kb >= 1024 ** 2:
-            ram = f"{kb // (1024 ** 2)} GB"
-        elif kb >= 1024:
-            ram = f"{kb // 1024} MB"
-        else:
-            ram = f"{kb} KB"
-        pc_tbl.append(f"| {ym} | ${price:.2f} | {ram} | ${price / kb:.3g} | {note} |")
+    for ym, price, cores, ghz, note in PC_PRICES:
+        freq = f"{ghz:.1f} GHz" if ghz >= 1 else f"{ghz * 1000:.2f} MHz"
+        per_unit = price / (cores * ghz)
+        pc_tbl.append(
+            f"| {ym} | ${price:.2f} | {cores} | {freq} | ${per_unit:,.0f} | {note} |")
 
     md = f"""# 各品牌最贵 API 价格 + 套餐榨满折合 per-token（2020–2026）
 
@@ -542,7 +536,7 @@ def main():
 |---|---|---|---|---|
 {chr(10).join(sub_tbl)}
 
-## 与 PC $/KB、互联网 $/Mbps 的三条等比叠加
+## 与 PC $/(core·GHz)、互联网 $/Mbps 的三条等比叠加
 
 把美国 PC（1976-）、互联网接入（1993-）、AI token（2020-）三条曲线统一到 token 坐标系：
 
@@ -551,37 +545,39 @@ def main():
   - 互联网 1993-09 → 2020-06（+321 月），最后点 2026-06 落到 token 2053-03；
   - token 自身原位。
 - **指标统一**：均取"行业核心通缩指标"——
-  - PC：**$/KB RAM**（整机售价 ÷ RAM 容量，单位 $/KB）；
+  - PC：**$/(core·GHz)**（整机售价 ÷ 核心数 ÷ 主频 GHz）。该指标在 1976–2005 由主频拉动，
+    2005–2026 由核心数拉动；横跨"频率战"和"多核战"两个阶段。
   - 互联网：**$/Mbps**（月费 ÷ 典型下行速率）；
   - token：**$/1M tokens**（API 最贵模型 blended）。
 - **等比缩放**：三条线起点价 ≡ 2020-06 GPT-3 Davinci $60/1M tokens，
-  - PC ×0.36（1976-07 $166.66/KB → $60）；
+  - PC ×9.18e-5（1976-07 Apple I $653,588/(core·GHz) → $60）；
   - 互联网 ×0.0868（1993-09 $691/Mbps → $60）；
   - token 不缩放。
-- **Y 轴 log**：PC $/KB 50 年跌 ~400 万倍（$166.7 → $0.0000394，≈4.2e6×），
-  互联网 $/Mbps 33 年跌 ~4400×，token 6 年最贵在 $50–$112 + 长尾 $0.1。
+- **Y 轴 log**：PC $/(core·GHz) 50 年跌 ~45,000×（$653K → $14.5），
+  互联网 $/Mbps 33 年跌 4400×，token 6 年最贵在 $50–$112 + 长尾 $0.1。
 
 ![PC + 互联网 + token 三条等比叠加](token-price-vs-internet-pc.png)
 
-- **蓝虚线**：PC $/KB RAM，方形 marker。
+- **蓝虚线**：PC $/(core·GHz)，方形 marker。
 - **灰虚线**：互联网 $/Mbps，圆形 marker。
 - **彩实线**：各家 token API 最贵模型 blended。
 
-**观感**：log 空间里 PC 50 年画出一条几乎完美的指数下行直线（接近经典 Hennessy & Patterson
-半导体每年 ~40% 通缩）；互联网斜率明显比 PC 缓；**token 6 年的斜率（最贵小幅波动 + 长尾陡降）
-若延长，理论上 5–6 年就能覆盖 PC 50 年走过的下行幅度**。这是 AI token 价格相对于历史
-科技品类的"加速倍率"的直观印证。
+**观感**：log 空间里 PC 50 年画出一条接近指数下行的直线，可分两段——
+1976–2005 的**频率战**（单核主频从 1 MHz 飙到 3 GHz，3000×）和 2005–2026 的**多核战**
+（核心数从 1 涨到 13+ 而绝对售价不变）。互联网斜率明显比 PC 缓；**token 6 年的下行斜率
+（最贵小幅波动 + 长尾陡降）若延长，理论上 5–6 年就能覆盖 PC 50 年走过的下行幅度**——
+这是 AI token 价格相对于历史科技品类的"加速倍率"的直观印证。
 
-### PC 整机价 → $/KB RAM 数据点
+### PC 整机价 → $/(core·GHz) 数据点
 
-| 日期 | 整机售价 | RAM | $/KB | 备注 |
-|---|---|---|---|---|
+| 日期 | 整机售价 | 核心 | 主频 | $/(core·GHz) | 备注 |
+|---|---|---|---|---|---|
 {chr(10).join(pc_tbl)}
 
 数据来源：Smithsonian（Apple I）、Apple Computer Inc. Archive（Apple II）、Computer History
 Museum（TRS-80）、IBM Archives（IBM PC）、NYT Archive（1983 TI 退出）、Stanford "Making the
-Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、Gartner/IDC（2000
-$999 价格战）、BLS Computer Price Deflation、Our World in Data（Memory/Storage 历史价）。
+Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、Gartner/IDC
+（2000 $999 价格战）、BLS Computer Price Deflation、Intel ARK / AMD 官方处理器规格。
 
 ### 互联网月费 → $/Mbps 数据点
 

@@ -61,7 +61,7 @@
 | Anthropic | 2025-04 | Claude Max 5x | $100 | 1.11 |
 | Anthropic | 2025-04 | Claude Max 20x | $200 | 0.56 |
 
-## 与 PC $/KB、互联网 $/Mbps 的三条等比叠加
+## 与 PC $/(core·GHz)、互联网 $/Mbps 的三条等比叠加
 
 把美国 PC（1976-）、互联网接入（1993-）、AI token（2020-）三条曲线统一到 token 坐标系：
 
@@ -70,50 +70,52 @@
   - 互联网 1993-09 → 2020-06（+321 月），最后点 2026-06 落到 token 2053-03；
   - token 自身原位。
 - **指标统一**：均取"行业核心通缩指标"——
-  - PC：**$/KB RAM**（整机售价 ÷ RAM 容量，单位 $/KB）；
+  - PC：**$/(core·GHz)**（整机售价 ÷ 核心数 ÷ 主频 GHz）。该指标在 1976–2005 由主频拉动，
+    2005–2026 由核心数拉动；横跨"频率战"和"多核战"两个阶段。
   - 互联网：**$/Mbps**（月费 ÷ 典型下行速率）；
   - token：**$/1M tokens**（API 最贵模型 blended）。
 - **等比缩放**：三条线起点价 ≡ 2020-06 GPT-3 Davinci $60/1M tokens，
-  - PC ×0.36（1976-07 $166.66/KB → $60）；
+  - PC ×9.18e-5（1976-07 Apple I $653,588/(core·GHz) → $60）；
   - 互联网 ×0.0868（1993-09 $691/Mbps → $60）；
   - token 不缩放。
-- **Y 轴 log**：PC $/KB 50 年跌 ~400 万倍（$166.7 → $0.0000394，≈4.2e6×），
-  互联网 $/Mbps 33 年跌 ~4400×，token 6 年最贵在 $50–$112 + 长尾 $0.1。
+- **Y 轴 log**：PC $/(core·GHz) 50 年跌 ~45,000×（$653K → $14.5），
+  互联网 $/Mbps 33 年跌 4400×，token 6 年最贵在 $50–$112 + 长尾 $0.1。
 
 ![PC + 互联网 + token 三条等比叠加](token-price-vs-internet-pc.png)
 
-- **蓝虚线**：PC $/KB RAM，方形 marker。
+- **蓝虚线**：PC $/(core·GHz)，方形 marker。
 - **灰虚线**：互联网 $/Mbps，圆形 marker。
 - **彩实线**：各家 token API 最贵模型 blended。
 
-**观感**：log 空间里 PC 50 年画出一条几乎完美的指数下行直线（接近经典 Hennessy & Patterson
-半导体每年 ~40% 通缩）；互联网斜率明显比 PC 缓；**token 6 年的斜率（最贵小幅波动 + 长尾陡降）
-若延长，理论上 5–6 年就能覆盖 PC 50 年走过的下行幅度**。这是 AI token 价格相对于历史
-科技品类的"加速倍率"的直观印证。
+**观感**：log 空间里 PC 50 年画出一条接近指数下行的直线，可分两段——
+1976–2005 的**频率战**（单核主频从 1 MHz 飙到 3 GHz，3000×）和 2005–2026 的**多核战**
+（核心数从 1 涨到 13+ 而绝对售价不变）。互联网斜率明显比 PC 缓；**token 6 年的下行斜率
+（最贵小幅波动 + 长尾陡降）若延长，理论上 5–6 年就能覆盖 PC 50 年走过的下行幅度**——
+这是 AI token 价格相对于历史科技品类的"加速倍率"的直观印证。
 
-### PC 整机价 → $/KB RAM 数据点
+### PC 整机价 → $/(core·GHz) 数据点
 
-| 日期 | 整机售价 | RAM | $/KB | 备注 |
-|---|---|---|---|---|
-| 1976-07 | $666.66 | 4 KB | $167 | Apple I（4KB 主板） |
-| 1977-06 | $2638.00 | 48 KB | $55 | Apple II 48KB 满配 |
-| 1981-08 | $1565.00 | 16 KB | $97.8 | IBM PC 5150 基础 |
-| 1982-01 | $595.00 | 64 KB | $9.3 | Commodore 64 首发 |
-| 1983-12 | $199.00 | 64 KB | $3.11 | C64 价格战钉死 $199 |
-| 1984-01 | $2495.00 | 128 KB | $19.5 | Macintosh 128K + GUI |
-| 1990-06 | $2500.00 | 4 MB | $0.61 | 386 PC 典型, 4 MB |
-| 1995-06 | $1900.00 | 8 MB | $0.232 | Pentium 75 + Win95, 8 MB |
-| 2000-06 | $999.00 | 64 MB | $0.0152 | $999 价格战, 64 MB |
-| 2005-06 | $800.00 | 512 MB | $0.00153 | ASP < $800, 512 MB |
-| 2015-06 | $650.00 | 8 GB | $7.75e-05 | BLS ASP, 8 GB |
-| 2020-06 | $710.00 | 16 GB | $4.23e-05 | 疫情供应链, 16 GB |
-| 2024-06 | $680.00 | 16 GB | $4.05e-05 | ASP, 16 GB |
-| 2026-06 | $660.00 | 16 GB | $3.93e-05 | ASP, 16 GB |
+| 日期 | 整机售价 | 核心 | 主频 | $/(core·GHz) | 备注 |
+|---|---|---|---|---|---|
+| 1976-07 | $666.66 | 1 | 1.02 MHz | $653,588 | Apple I; MOS 6502 @ 1.02 MHz |
+| 1977-06 | $1298.00 | 1 | 1.02 MHz | $1,272,549 | Apple II; MOS 6502 @ 1.02 MHz |
+| 1981-08 | $1565.00 | 1 | 4.77 MHz | $328,092 | IBM PC 5150; Intel 8088 @ 4.77 MHz |
+| 1982-01 | $595.00 | 1 | 1.02 MHz | $583,333 | Commodore 64; MOS 6510 @ 1.02 MHz |
+| 1983-06 | $99.00 | 1 | 3.00 MHz | $33,000 | TI-99/4A 倾销价; TMS9900 @ 3 MHz |
+| 1984-01 | $2495.00 | 1 | 7.83 MHz | $318,646 | Macintosh 128K; MC68000 @ 7.83 MHz |
+| 1990-06 | $2500.00 | 1 | 16.00 MHz | $156,250 | Compaq 386SX @ 16 MHz |
+| 1995-06 | $1900.00 | 1 | 75.00 MHz | $25,333 | Pentium 75; 超标量 |
+| 2000-06 | $999.00 | 1 | 1.0 GHz | $999 | Athlon / Pentium III @ 1.0 GHz |
+| 2005-06 | $800.00 | 1 | 3.0 GHz | $267 | Pentium 4 Prescott @ 3.0 GHz；主频墙 |
+| 2015-06 | $650.00 | 4 | 3.2 GHz | $51 | Intel Core i5-6500 |
+| 2020-06 | $710.00 | 6 | 3.6 GHz | $33 | AMD Ryzen 5 3600 / Intel i5-10400 |
+| 2024-06 | $680.00 | 10 | 2.5 GHz | $27 | Intel Core i5-14400（6P+4E） |
+| 2026-06 | $660.00 | 13 | 3.5 GHz | $15 | AI PC 主流（多核混合架构） |
 
 数据来源：Smithsonian（Apple I）、Apple Computer Inc. Archive（Apple II）、Computer History
 Museum（TRS-80）、IBM Archives（IBM PC）、NYT Archive（1983 TI 退出）、Stanford "Making the
-Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、Gartner/IDC（2000
-$999 价格战）、BLS Computer Price Deflation、Our World in Data（Memory/Storage 历史价）。
+Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、Gartner/IDC
+（2000 $999 价格战）、BLS Computer Price Deflation、Intel ARK / AMD 官方处理器规格。
 
 ### 互联网月费 → $/Mbps 数据点
 
