@@ -1,0 +1,1873 @@
+{
+  "schema_version": "ATIF-v1.5",
+  "session_id": "acbbb3c3-ed66-4a88-9d7d-9400eb32f467",
+  "agent": {
+    "name": "claude-code",
+    "version": "2.1.159",
+    "model_name": "claude-opus-4-8",
+    "extra": {
+      "cwds": [
+        "/Users/luwei/work/Controversy"
+      ],
+      "git_branches": [
+        "agent/7a72830a-8406-47a9-8741-2654df8e5da8"
+      ]
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-06-01T19:08:57.012Z",
+      "source": "user",
+      "message": "加一条新闻：“5月29日，Glean CEO Arvind Jain在接受CNBC记者Deirdre Bosa采访时这样讲道：「这是我记忆中第一次，技术成本开始和人力成本持平。」英伟达应用深度学习副总裁Bryan Catanzaro的观察也印证了这一点。他在Axios访谈里提到:对于他的团队来说，算力成本已经远远超过员工薪资。”",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-06-01T19:09:01.008Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 18386,
+        "completion_tokens": 257,
+        "cached_tokens": 16202,
+        "extra": {
+          "cache_creation_input_tokens": 10053,
+          "cache_read_input_tokens": 16202,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 10053,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2184,
+              "output_tokens": 257,
+              "cache_read_input_tokens": 16202,
+              "cache_creation_input_tokens": 10053,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 10053
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 3,
+      "timestamp": "2026-06-01T19:09:02.134Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "I'll first verify the facts and look at the existing structure before writing. Let me explore the repo and search for sources in parallel.",
+      "metrics": {
+        "prompt_tokens": 18386,
+        "completion_tokens": 257,
+        "cached_tokens": 16202,
+        "extra": {
+          "cache_creation_input_tokens": 10053,
+          "cache_read_input_tokens": 16202,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 10053,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2184,
+              "output_tokens": 257,
+              "cache_read_input_tokens": 16202,
+              "cache_creation_input_tokens": 10053,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 10053
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 4,
+      "timestamp": "2026-06-01T19:09:02.209Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01NVKV3ymLWokBNmvQQdDjjL",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01NVKV3ymLWokBNmvQQdDjjL",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/README.md"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01NVKV3ymLWokBNmvQQdDjjL",
+            "content": "1\t# Controversy\n2\t\n3\t每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n4\t\n5\t## 索引\n6\t\n7\t| 日期 | 主题 | 文件 |\n8\t| --- | --- | --- |\n9\t| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\n10\t| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\n11\t| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n12\t| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n13\t| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n14\t| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n15\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/README.md\", \"content\": \"# Controversy\\n\\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\\n\\n## 索引\\n\\n| 日期 | 主题 | 文件 |\\n| --- | --- | --- |\\n| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\\\"AI 突袭式替代白领\\\"——2029 年才能在 80–95% 文字任务上\\\"勉强胜任\\\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\\n\", \"numLines\": 15, \"startLine\": 1, \"totalLines\": 15}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 18386,
+        "completion_tokens": 257,
+        "cached_tokens": 16202,
+        "extra": {
+          "cache_creation_input_tokens": 10053,
+          "cache_read_input_tokens": 16202,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 10053,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2184,
+              "output_tokens": 257,
+              "cache_read_input_tokens": 16202,
+              "cache_creation_input_tokens": 10053,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 10053
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/README.md",
+              "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+              "numLines": 15,
+              "startLine": 1,
+              "totalLines": 15
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NVKV3ymLWokBNmvQQdDjjL",
+            "type": "tool_result",
+            "content": "1\t# Controversy\n2\t\n3\t每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n4\t\n5\t## 索引\n6\t\n7\t| 日期 | 主题 | 文件 |\n8\t| --- | --- | --- |\n9\t| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\n10\t| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\n11\t| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n12\t| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n13\t| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n14\t| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n15\t"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/README.md",
+              "content": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+              "numLines": 15,
+              "startLine": 1,
+              "totalLines": 15
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NVKV3ymLWokBNmvQQdDjjL",
+            "type": "tool_result",
+            "content": "1\t# Controversy\n2\t\n3\t每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n4\t\n5\t## 索引\n6\t\n7\t| 日期 | 主题 | 文件 |\n8\t| --- | --- | --- |\n9\t| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\n10\t| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\n11\t| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n12\t| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n13\t| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n14\t| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n15\t"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/README.md"
+        }
+      }
+    },
+    {
+      "step_id": 5,
+      "timestamp": "2026-06-01T19:09:07.976Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "I'll look at an existing news entry for format and search for sources in parallel.",
+      "metrics": {
+        "prompt_tokens": 26257,
+        "completion_tokens": 127,
+        "cached_tokens": 26255,
+        "extra": {
+          "cache_creation_input_tokens": 3239,
+          "cache_read_input_tokens": 26255,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3239,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 127,
+              "cache_read_input_tokens": 26255,
+              "cache_creation_input_tokens": 3239,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3239
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 6,
+      "timestamp": "2026-06-01T19:09:08.391Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01Y5poy3ctL8CLVdvNh45sm2",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Y5poy3ctL8CLVdvNh45sm2",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/news/2026-05-31-tokenmaxxing.md",
+            "limit": 40
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Y5poy3ctL8CLVdvNh45sm2",
+            "content": "1\t# 2026-05-31：AI 的「Dark Output」——为什么 AI 创造的价值可能在GDP中不可见\n2\t\n3\t原文：Malcolm Spittler，《AI Dark Output: The Visible Cost of Invisible Output》，SemiAnalysis Newsletter，发表于 2026 年 5 月 29 日 [1]，配套机构版为《Tokenomics: Dark Output》[2]。\n4\t\n5\t核心主张一句话：AI 的成本（数据中心、GPU、电、水、token 支出）和它造成的岗位流失都清晰可见，但它创造的产出大多不会被现行 GDP／CPI／劳动统计捕捉到——作者把这部分真实存在却统计不可见的产出命名为 **Dark Output**（暗产出），并警告若不补上账本的另一面，AI 繁荣在数据上可能被读成 AI 萧条。\n6\t\n7\t⚠ 本文的核心评判（见文末「综合判断」）：**原报告这条主论点（PO1）至今没有任何可验证的事实支撑，全部建立在类比与结构性推论之上**——它赖以立论的论据（Solow 悖论、2013 年 GDP 修订、服务业统计口径、马力类比、消费者剩余理论）无一例外是历史先例与经济学理论，没有一条能落在原文自创的验证阶梯（T4+）上。而把天平推向「相当部分支出其实是浪费」的，反倒是一批可验证的产业实测（Waydev、GitClear、Uber、Meta／Amazon）。**于是原报告恰好输在了它自己提出的证据标准上。**\n8\t\n9\t## 用 IBIS 重构：原文论证 + 竞争立场\n10\t\n11\t下图用 Issue-Based Information System（IBIS）方法重构全文逻辑，并把对核心主张的反方质疑作为**与原文平级的竞争立场**并入同一张图。节点 ID 统一编号，图内标签与图外正文标出同一 ID，便于双向对照。\n12\t\n13\t节点与边的约定：\n14\t\n15\t- **IS{n}·议题**（Issue，蓝色六边形）：待回答的问题。\n16\t- **PO{n}·立场**（Position，橙色圆角框）：对某议题的回答／主张。\n17\t- **AR{n}·论据**（Argument，灰色矩形）：**内容中立的论据节点，本身不含立场**。部分节点末尾带 **【证据 Tn】** 标注——用验证阶梯（T0–T6，见 AR2）评估该论据所依据的**真实世界 AI 部署证据**位于哪一层级；逻辑／历史／经济理论／价格类论据不在阶梯上，不标注（详见文末「用验证阶梯给论据评级」一节）。\n18\t\n19\t边遵循 IBIS（gIBIS）语法，关系写在**边的标签**上，只允许以下几种：\n20\t\n21\t- `PO -- 回应 --> IS`：立场**回应**议题（Position responds-to Issue）——同一议题下的并列候选答案都用它指回该议题。\n22\t- `AR -- 支持/反对 --> PO`：论据**支持／反对**某立场（Argument supports／objects-to Position）。**同一条论据可对一个立场支持、对另一个立场反对**——例如 **AR9（Solow 悖论／2013 补记）支持 PO1（看不见≠不存在）、同时反对 PO15（不能断言没产出）**。\n23\t- `IS -. 源自 .-> PO`：议题**由某立场引出**（Issue is-suggested-by Position）——子议题不是「派生自」立场，而是被该立场 suggested。\n24\t- 语法上还允许 `IS -. 质疑 .-> PO/IS/AR`（Issue questions）与 `IS == specializes ==> IS`（议题间 generalize／specialize／replace），本图未用到。\n25\t- **边的颜色**：只有**落在验证阶梯上（T4+）的论据**，其极性边才着色——**绿色＝支持、红色＝反对**；离阶梯（N/A）论据的边保持默认灰色。这样一眼可见「有部署强度／实测背书的证据」各自把哪个立场往哪个方向推（评级见文末「用验证阶梯给论据评级」一节）。\n26\t\n27\t⚠ IBIS 语法约束：**Position 与 Issue 之间只有 `responds-to` 一种关系**（立场回应议题），不存在「立场派生议题」；**论据只连立场**（支持／反对），不直接连另一条论据——论据间的削弱要么改写为对相关立场的反对，要么另立一个 questions 该论据的议题。\n28\t\n29\t核心议题 IS1 有**三个竞争立场**（均以 `回应` 指向 IS1）：**PO1**（不能计量——价值存在但隐形，即 Dark Output／计漏；它引出 IS2–IS9）、**PO15**（相当部分确实没产出，GDP 不体现即如实反映、并非计漏）、**PO16**（两者混合的折中；它引出 IS10）。序号在全图内唯一、按出现顺序递增。\n30\t\n31\t⚠ 说明：IBIS 的拆解是本人对原文论证结构的重构方式，并非原文自身的章节划分；下方两节文字逐条对应这些节点 ID 与原文数据。\n32\t\n33\t```mermaid\n34\t---\n35\tconfig:\n36\t  layout: elk\n37\t---\n38\tgraph TD\n39\t    classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;\n40\t    classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/news/2026-05-31-tokenmaxxing.md\", \"content\": \"# 2026-05-31：AI 的「Dark Output」——为什么 AI 创造的价值可能在GDP中不可见\\n\\n原文：Malcolm Spittler，《AI Dark Output: The Visible Cost of Invisible Output》，SemiAnalysis Newsletter，发表于 2026 年 5 月 29 日 [1]，配套机构版为《Tokenomics: Dark Output》[2]。\\n\\n核心主张一句话：AI 的成本（数据中心、GPU、电、水、token 支出）和它造成的岗位流失都清晰可见，但它创造的产出大多不会被现行 GDP／CPI／劳动统计捕捉到——作者把这部分真实存在却统计不可见的产出命名为 **Dark Output**（暗产出），并警告若不补上账本的另一面，AI 繁荣在数据上可能被读成 AI 萧条。\\n\\n⚠ 本文的核心评判（见文末「综合判断」）：**原报告这条主论点（PO1）至今没有任何可验证的事实支撑，全部建立在类比与结构性推论之上**——它赖以立论的论据（Solow 悖论、2013 年 GDP 修订、服务业统计口径、马力类比、消费者剩余理论）无一例外是历史先例与经济学理论，没有一条能落在原文自创的验证阶梯（T4+）上。而把天平推向「相当部分支出其实是浪费」的，反倒是一批可验证的产业实测（Waydev、GitClear、Uber、Meta／Amazon）。**于是原报告恰好输在了它自己提出的证据标准上。**\\n\\n## 用 IBIS 重构：原文论证 + 竞争立场\\n\\n下图用 Issue-Based Information System（IBIS）方法重构全文逻辑，并把对核心主张的反方质疑作为**与原文平级的竞争立场**并入同一张图。节点 ID 统一编号，图内标签与图外正文标出同一 ID，便于双向对照。\\n\\n节点与边的约定：\\n\\n- **IS{n}·议题**（Issue，蓝色六边形）：待回答的问题。\\n- **PO{n}·立场**（Position，橙色圆角框）：对某议题的回答／主张。\\n- **AR{n}·论据**（Argument，灰色矩形）：**内容中立的论据节点，本身不含立场**。部分节点末尾带 **【证据 Tn】** 标注——用验证阶梯（T0–T6，见 AR2）评估该论据所依据的**真实世界 AI 部署证据**位于哪一层级；逻辑／历史／经济理论／价格类论据不在阶梯上，不标注（详见文末「用验证阶梯给论据评级」一节）。\\n\\n边遵循 IBIS（gIBIS）语法，关系写在**边的标签**上，只允许以下几种：\\n\\n- `PO -- 回应 --> IS`：立场**回应**议题（Position responds-to Issue）——同一议题下的并列候选答案都用它指回该议题。\\n- `AR -- 支持/反对 --> PO`：论据**支持／反对**某立场（Argument supports／objects-to Position）。**同一条论据可对一个立场支持、对另一个立场反对**——例如 **AR9（Solow 悖论／2013 补记）支持 PO1（看不见≠不存在）、同时反对 PO15（不能断言没产出）**。\\n- `IS -. 源自 .-> PO`：议题**由某立场引出**（Issue is-suggested-by Position）——子议题不是「派生自」立场，而是被该立场 suggested。\\n- 语法上还允许 `IS -. 质疑 .-> PO/IS/AR`（Issue questions）与 `IS == specializes ==> IS`（议题间 generalize／specialize／replace），本图未用到。\\n- **边的颜色**：只有**落在验证阶梯上（T4+）的论据**，其极性边才着色——**绿色＝支持、红色＝反对**；离阶梯（N/A）论据的边保持默认灰色。这样一眼可见「有部署强度／实测背书的证据」各自把哪个立场往哪个方向推（评级见文末「用验证阶梯给论据评级」一节）。\\n\\n⚠ IBIS 语法约束：**Position 与 Issue 之间只有 `responds-to` 一种关系**（立场回应议题），不存在「立场派生议题」；**论据只连立场**（支持／反对），不直接连另一条论据——论据间的削弱要么改写为对相关立场的反对，要么另立一个 questions 该论据的议题。\\n\\n核心议题 IS1 有**三个竞争立场**（均以 `回应` 指向 IS1）：**PO1**（不能计量——价值存在但隐形，即 Dark Output／计漏；它引出 IS2–IS9）、**PO15**（相当部分确实没产出，GDP 不体现即如实反映、并非计漏）、**PO16**（两者混合的折中；它引出 IS10）。序号在全图内唯一、按出现顺序递增。\\n\\n⚠ 说明：IBIS 的拆解是本人对原文论证结构的重构方式，并非原文自身的章节划分；下方两节文字逐条对应这些节点 ID 与原文数据。\\n\\n```mermaid\\n---\\nconfig:\\n  layout: elk\\n---\\ngraph TD\\n    classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;\\n    classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;\", \"numLines\": 40, \"startLine\": 1, \"totalLines\": 409}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 26257,
+        "completion_tokens": 127,
+        "cached_tokens": 26255,
+        "extra": {
+          "cache_creation_input_tokens": 3239,
+          "cache_read_input_tokens": 26255,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3239,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 127,
+              "cache_read_input_tokens": 26255,
+              "cache_creation_input_tokens": 3239,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3239
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/news/2026-05-31-tokenmaxxing.md",
+              "content": "# 2026-05-31：AI 的「Dark Output」——为什么 AI 创造的价值可能在GDP中不可见\n\n原文：Malcolm Spittler，《AI Dark Output: The Visible Cost of Invisible Output》，SemiAnalysis Newsletter，发表于 2026 年 5 月 29 日 [1]，配套机构版为《Tokenomics: Dark Output》[2]。\n\n核心主张一句话：AI 的成本（数据中心、GPU、电、水、token 支出）和它造成的岗位流失都清晰可见，但它创造的产出大多不会被现行 GDP／CPI／劳动统计捕捉到——作者把这部分真实存在却统计不可见的产出命名为 **Dark Output**（暗产出），并警告若不补上账本的另一面，AI 繁荣在数据上可能被读成 AI 萧条。\n\n⚠ 本文的核心评判（见文末「综合判断」）：**原报告这条主论点（PO1）至今没有任何可验证的事实支撑，全部建立在类比与结构性推论之上**——它赖以立论的论据（Solow 悖论、2013 年 GDP 修订、服务业统计口径、马力类比、消费者剩余理论）无一例外是历史先例与经济学理论，没有一条能落在原文自创的验证阶梯（T4+）上。而把天平推向「相当部分支出其实是浪费」的，反倒是一批可验证的产业实测（Waydev、GitClear、Uber、Meta／Amazon）。**于是原报告恰好输在了它自己提出的证据标准上。**\n\n## 用 IBIS 重构：原文论证 + 竞争立场\n\n下图用 Issue-Based Information System（IBIS）方法重构全文逻辑，并把对核心主张的反方质疑作为**与原文平级的竞争立场**并入同一张图。节点 ID 统一编号，图内标签与图外正文标出同一 ID，便于双向对照。\n\n节点与边的约定：\n\n- **IS{n}·议题**（Issue，蓝色六边形）：待回答的问题。\n- **PO{n}·立场**（Position，橙色圆角框）：对某议题的回答／主张。\n- **AR{n}·论据**（Argument，灰色矩形）：**内容中立的论据节点，本身不含立场**。部分节点末尾带 **【证据 Tn】** 标注——用验证阶梯（T0–T6，见 AR2）评估该论据所依据的**真实世界 AI 部署证据**位于哪一层级；逻辑／历史／经济理论／价格类论据不在阶梯上，不标注（详见文末「用验证阶梯给论据评级」一节）。\n\n边遵循 IBIS（gIBIS）语法，关系写在**边的标签**上，只允许以下几种：\n\n- `PO -- 回应 --> IS`：立场**回应**议题（Position responds-to Issue）——同一议题下的并列候选答案都用它指回该议题。\n- `AR -- 支持/反对 --> PO`：论据**支持／反对**某立场（Argument supports／objects-to Position）。**同一条论据可对一个立场支持、对另一个立场反对**——例如 **AR9（Solow 悖论／2013 补记）支持 PO1（看不见≠不存在）、同时反对 PO15（不能断言没产出）**。\n- `IS -. 源自 .-> PO`：议题**由某立场引出**（Issue is-suggested-by Position）——子议题不是「派生自」立场，而是被该立场 suggested。\n- 语法上还允许 `IS -. 质疑 .-> PO/IS/AR`（Issue questions）与 `IS == specializes ==> IS`（议题间 generalize／specialize／replace），本图未用到。\n- **边的颜色**：只有**落在验证阶梯上（T4+）的论据**，其极性边才着色——**绿色＝支持、红色＝反对**；离阶梯（N/A）论据的边保持默认灰色。这样一眼可见「有部署强度／实测背书的证据」各自把哪个立场往哪个方向推（评级见文末「用验证阶梯给论据评级」一节）。\n\n⚠ IBIS 语法约束：**Position 与 Issue 之间只有 `responds-to` 一种关系**（立场回应议题），不存在「立场派生议题」；**论据只连立场**（支持／反对），不直接连另一条论据——论据间的削弱要么改写为对相关立场的反对，要么另立一个 questions 该论据的议题。\n\n核心议题 IS1 有**三个竞争立场**（均以 `回应` 指向 IS1）：**PO1**（不能计量——价值存在但隐形，即 Dark Output／计漏；它引出 IS2–IS9）、**PO15**（相当部分确实没产出，GDP 不体现即如实反映、并非计漏）、**PO16**（两者混合的折中；它引出 IS10）。序号在全图内唯一、按出现顺序递增。\n\n⚠ 说明：IBIS 的拆解是本人对原文论证结构的重构方式，并非原文自身的章节划分；下方两节文字逐条对应这些节点 ID 与原文数据。\n\n```mermaid\n---\nconfig:\n  layout: elk\n---\ngraph TD\n    classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;\n    classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;",
+              "numLines": 40,
+              "startLine": 1,
+              "totalLines": 409
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Y5poy3ctL8CLVdvNh45sm2",
+            "type": "tool_result",
+            "content": "1\t# 2026-05-31：AI 的「Dark Output」——为什么 AI 创造的价值可能在GDP中不可见\n2\t\n3\t原文：Malcolm Spittler，《AI Dark Output: The Visible Cost of Invisible Output》，SemiAnalysis Newsletter，发表于 2026 年 5 月 29 日 [1]，配套机构版为《Tokenomics: Dark Output》[2]。\n4\t\n5\t核心主张一句话：AI 的成本（数据中心、GPU、电、水、token 支出）和它造成的岗位流失都清晰可见，但它创造的产出大多不会被现行 GDP／CPI／劳动统计捕捉到——作者把这部分真实存在却统计不可见的产出命名为 **Dark Output**（暗产出），并警告若不补上账本的另一面，AI 繁荣在数据上可能被读成 AI 萧条。\n6\t\n7\t⚠ 本文的核心评判（见文末「综合判断」）：**原报告这条主论点（PO1）至今没有任何可验证的事实支撑，全部建立在类比与结构性推论之上**——它赖以立论的论据（Solow 悖论、2013 年 GDP 修订、服务业统计口径、马力类比、消费者剩余理论）无一例外是历史先例与经济学理论，没有一条能落在原文自创的验证阶梯（T4+）上。而把天平推向「相当部分支出其实是浪费」的，反倒是一批可验证的产业实测（Waydev、GitClear、Uber、Meta／Amazon）。**于是原报告恰好输在了它自己提出的证据标准上。**\n8\t\n9\t## 用 IBIS 重构：原文论证 + 竞争立场\n10\t\n11\t下图用 Issue-Based Information System（IBIS）方法重构全文逻辑，并把对核心主张的反方质疑作为**与原文平级的竞争立场**并入同一张图。节点 ID 统一编号，图内标签与图外正文标出同一 ID，便于双向对照。\n12\t\n13\t节点与边的约定：\n14\t\n15\t- **IS{n}·议题**（Issue，蓝色六边形）：待回答的问题。\n16\t- **PO{n}·立场**（Position，橙色圆角框）：对某议题的回答／主张。\n17\t- **AR{n}·论据**（Argument，灰色矩形）：**内容中立的论据节点，本身不含立场**。部分节点末尾带 **【证据 Tn】** 标注——用验证阶梯（T0–T6，见 AR2）评估该论据所依据的**真实世界 AI 部署证据**位于哪一层级；逻辑／历史／经济理论／价格类论据不在阶梯上，不标注（详见文末「用验证阶梯给论据评级」一节）。\n18\t\n19\t边遵循 IBIS（gIBIS）语法，关系写在**边的标签**上，只允许以下几种：\n20\t\n21\t- `PO -- 回应 --> IS`：立场**回应**议题（Position responds-to Issue）——同一议题下的并列候选答案都用它指回该议题。\n22\t- `AR -- 支持/反对 --> PO`：论据**支持／反对**某立场（Argument supports／objects-to Position）。**同一条论据可对一个立场支持、对另一个立场反对**——例如 **AR9（Solow 悖论／2013 补记）支持 PO1（看不见≠不存在）、同时反对 PO15（不能断言没产出）**。\n23\t- `IS -. 源自 .-> PO`：议题**由某立场引出**（Issue is-suggested-by Position）——子议题不是「派生自」立场，而是被该立场 suggested。\n24\t- 语法上还允许 `IS -. 质疑 .-> PO/IS/AR`（Issue questions）与 `IS == specializes ==> IS`（议题间 generalize／specialize／replace），本图未用到。\n25\t- **边的颜色**：只有**落在验证阶梯上（T4+）的论据**，其极性边才着色——**绿色＝支持、红色＝反对**；离阶梯（N/A）论据的边保持默认灰色。这样一眼可见「有部署强度／实测背书的证据」各自把哪个立场往哪个方向推（评级见文末「用验证阶梯给论据评级」一节）。\n26\t\n27\t⚠ IBIS 语法约束：**Position 与 Issue 之间只有 `responds-to` 一种关系**（立场回应议题），不存在「立场派生议题」；**论据只连立场**（支持／反对），不直接连另一条论据——论据间的削弱要么改写为对相关立场的反对，要么另立一个 questions 该论据的议题。\n28\t\n29\t核心议题 IS1 有**三个竞争立场**（均以 `回应` 指向 IS1）：**PO1**（不能计量——价值存在但隐形，即 Dark Output／计漏；它引出 IS2–IS9）、**PO15**（相当部分确实没产出，GDP 不体现即如实反映、并非计漏）、**PO16**（两者混合的折中；它引出 IS10）。序号在全图内唯一、按出现顺序递增。\n30\t\n31\t⚠ 说明：IBIS 的拆解是本人对原文论证结构的重构方式，并非原文自身的章节划分；下方两节文字逐条对应这些节点 ID 与原文数据。\n32\t\n33\t```mermaid\n34\t---\n35\tconfig:\n36\t  layout: elk\n37\t---\n38\tgraph TD\n39\t    classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;\n40\t    classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/news/2026-05-31-tokenmaxxing.md",
+              "content": "# 2026-05-31：AI 的「Dark Output」——为什么 AI 创造的价值可能在GDP中不可见\n\n原文：Malcolm Spittler，《AI Dark Output: The Visible Cost of Invisible Output》，SemiAnalysis Newsletter，发表于 2026 年 5 月 29 日 [1]，配套机构版为《Tokenomics: Dark Output》[2]。\n\n核心主张一句话：AI 的成本（数据中心、GPU、电、水、token 支出）和它造成的岗位流失都清晰可见，但它创造的产出大多不会被现行 GDP／CPI／劳动统计捕捉到——作者把这部分真实存在却统计不可见的产出命名为 **Dark Output**（暗产出），并警告若不补上账本的另一面，AI 繁荣在数据上可能被读成 AI 萧条。\n\n⚠ 本文的核心评判（见文末「综合判断」）：**原报告这条主论点（PO1）至今没有任何可验证的事实支撑，全部建立在类比与结构性推论之上**——它赖以立论的论据（Solow 悖论、2013 年 GDP 修订、服务业统计口径、马力类比、消费者剩余理论）无一例外是历史先例与经济学理论，没有一条能落在原文自创的验证阶梯（T4+）上。而把天平推向「相当部分支出其实是浪费」的，反倒是一批可验证的产业实测（Waydev、GitClear、Uber、Meta／Amazon）。**于是原报告恰好输在了它自己提出的证据标准上。**\n\n## 用 IBIS 重构：原文论证 + 竞争立场\n\n下图用 Issue-Based Information System（IBIS）方法重构全文逻辑，并把对核心主张的反方质疑作为**与原文平级的竞争立场**并入同一张图。节点 ID 统一编号，图内标签与图外正文标出同一 ID，便于双向对照。\n\n节点与边的约定：\n\n- **IS{n}·议题**（Issue，蓝色六边形）：待回答的问题。\n- **PO{n}·立场**（Position，橙色圆角框）：对某议题的回答／主张。\n- **AR{n}·论据**（Argument，灰色矩形）：**内容中立的论据节点，本身不含立场**。部分节点末尾带 **【证据 Tn】** 标注——用验证阶梯（T0–T6，见 AR2）评估该论据所依据的**真实世界 AI 部署证据**位于哪一层级；逻辑／历史／经济理论／价格类论据不在阶梯上，不标注（详见文末「用验证阶梯给论据评级」一节）。\n\n边遵循 IBIS（gIBIS）语法，关系写在**边的标签**上，只允许以下几种：\n\n- `PO -- 回应 --> IS`：立场**回应**议题（Position responds-to Issue）——同一议题下的并列候选答案都用它指回该议题。\n- `AR -- 支持/反对 --> PO`：论据**支持／反对**某立场（Argument supports／objects-to Position）。**同一条论据可对一个立场支持、对另一个立场反对**——例如 **AR9（Solow 悖论／2013 补记）支持 PO1（看不见≠不存在）、同时反对 PO15（不能断言没产出）**。\n- `IS -. 源自 .-> PO`：议题**由某立场引出**（Issue is-suggested-by Position）——子议题不是「派生自」立场，而是被该立场 suggested。\n- 语法上还允许 `IS -. 质疑 .-> PO/IS/AR`（Issue questions）与 `IS == specializes ==> IS`（议题间 generalize／specialize／replace），本图未用到。\n- **边的颜色**：只有**落在验证阶梯上（T4+）的论据**，其极性边才着色——**绿色＝支持、红色＝反对**；离阶梯（N/A）论据的边保持默认灰色。这样一眼可见「有部署强度／实测背书的证据」各自把哪个立场往哪个方向推（评级见文末「用验证阶梯给论据评级」一节）。\n\n⚠ IBIS 语法约束：**Position 与 Issue 之间只有 `responds-to` 一种关系**（立场回应议题），不存在「立场派生议题」；**论据只连立场**（支持／反对），不直接连另一条论据——论据间的削弱要么改写为对相关立场的反对，要么另立一个 questions 该论据的议题。\n\n核心议题 IS1 有**三个竞争立场**（均以 `回应` 指向 IS1）：**PO1**（不能计量——价值存在但隐形，即 Dark Output／计漏；它引出 IS2–IS9）、**PO15**（相当部分确实没产出，GDP 不体现即如实反映、并非计漏）、**PO16**（两者混合的折中；它引出 IS10）。序号在全图内唯一、按出现顺序递增。\n\n⚠ 说明：IBIS 的拆解是本人对原文论证结构的重构方式，并非原文自身的章节划分；下方两节文字逐条对应这些节点 ID 与原文数据。\n\n```mermaid\n---\nconfig:\n  layout: elk\n---\ngraph TD\n    classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;\n    classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;",
+              "numLines": 40,
+              "startLine": 1,
+              "totalLines": 409
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Y5poy3ctL8CLVdvNh45sm2",
+            "type": "tool_result",
+            "content": "1\t# 2026-05-31：AI 的「Dark Output」——为什么 AI 创造的价值可能在GDP中不可见\n2\t\n3\t原文：Malcolm Spittler，《AI Dark Output: The Visible Cost of Invisible Output》，SemiAnalysis Newsletter，发表于 2026 年 5 月 29 日 [1]，配套机构版为《Tokenomics: Dark Output》[2]。\n4\t\n5\t核心主张一句话：AI 的成本（数据中心、GPU、电、水、token 支出）和它造成的岗位流失都清晰可见，但它创造的产出大多不会被现行 GDP／CPI／劳动统计捕捉到——作者把这部分真实存在却统计不可见的产出命名为 **Dark Output**（暗产出），并警告若不补上账本的另一面，AI 繁荣在数据上可能被读成 AI 萧条。\n6\t\n7\t⚠ 本文的核心评判（见文末「综合判断」）：**原报告这条主论点（PO1）至今没有任何可验证的事实支撑，全部建立在类比与结构性推论之上**——它赖以立论的论据（Solow 悖论、2013 年 GDP 修订、服务业统计口径、马力类比、消费者剩余理论）无一例外是历史先例与经济学理论，没有一条能落在原文自创的验证阶梯（T4+）上。而把天平推向「相当部分支出其实是浪费」的，反倒是一批可验证的产业实测（Waydev、GitClear、Uber、Meta／Amazon）。**于是原报告恰好输在了它自己提出的证据标准上。**\n8\t\n9\t## 用 IBIS 重构：原文论证 + 竞争立场\n10\t\n11\t下图用 Issue-Based Information System（IBIS）方法重构全文逻辑，并把对核心主张的反方质疑作为**与原文平级的竞争立场**并入同一张图。节点 ID 统一编号，图内标签与图外正文标出同一 ID，便于双向对照。\n12\t\n13\t节点与边的约定：\n14\t\n15\t- **IS{n}·议题**（Issue，蓝色六边形）：待回答的问题。\n16\t- **PO{n}·立场**（Position，橙色圆角框）：对某议题的回答／主张。\n17\t- **AR{n}·论据**（Argument，灰色矩形）：**内容中立的论据节点，本身不含立场**。部分节点末尾带 **【证据 Tn】** 标注——用验证阶梯（T0–T6，见 AR2）评估该论据所依据的**真实世界 AI 部署证据**位于哪一层级；逻辑／历史／经济理论／价格类论据不在阶梯上，不标注（详见文末「用验证阶梯给论据评级」一节）。\n18\t\n19\t边遵循 IBIS（gIBIS）语法，关系写在**边的标签**上，只允许以下几种：\n20\t\n21\t- `PO -- 回应 --> IS`：立场**回应**议题（Position responds-to Issue）——同一议题下的并列候选答案都用它指回该议题。\n22\t- `AR -- 支持/反对 --> PO`：论据**支持／反对**某立场（Argument supports／objects-to Position）。**同一条论据可对一个立场支持、对另一个立场反对**——例如 **AR9（Solow 悖论／2013 补记）支持 PO1（看不见≠不存在）、同时反对 PO15（不能断言没产出）**。\n23\t- `IS -. 源自 .-> PO`：议题**由某立场引出**（Issue is-suggested-by Position）——子议题不是「派生自」立场，而是被该立场 suggested。\n24\t- 语法上还允许 `IS -. 质疑 .-> PO/IS/AR`（Issue questions）与 `IS == specializes ==> IS`（议题间 generalize／specialize／replace），本图未用到。\n25\t- **边的颜色**：只有**落在验证阶梯上（T4+）的论据**，其极性边才着色——**绿色＝支持、红色＝反对**；离阶梯（N/A）论据的边保持默认灰色。这样一眼可见「有部署强度／实测背书的证据」各自把哪个立场往哪个方向推（评级见文末「用验证阶梯给论据评级」一节）。\n26\t\n27\t⚠ IBIS 语法约束：**Position 与 Issue 之间只有 `responds-to` 一种关系**（立场回应议题），不存在「立场派生议题」；**论据只连立场**（支持／反对），不直接连另一条论据——论据间的削弱要么改写为对相关立场的反对，要么另立一个 questions 该论据的议题。\n28\t\n29\t核心议题 IS1 有**三个竞争立场**（均以 `回应` 指向 IS1）：**PO1**（不能计量——价值存在但隐形，即 Dark Output／计漏；它引出 IS2–IS9）、**PO15**（相当部分确实没产出，GDP 不体现即如实反映、并非计漏）、**PO16**（两者混合的折中；它引出 IS10）。序号在全图内唯一、按出现顺序递增。\n30\t\n31\t⚠ 说明：IBIS 的拆解是本人对原文论证结构的重构方式，并非原文自身的章节划分；下方两节文字逐条对应这些节点 ID 与原文数据。\n32\t\n33\t```mermaid\n34\t---\n35\tconfig:\n36\t  layout: elk\n37\t---\n38\tgraph TD\n39\t    classDef issue fill:#e7f0fb,stroke:#1565c0,stroke-width:2px,color:#0d3c78;\n40\t    classDef position fill:#fff6e0,stroke:#e08e0b,stroke-width:2px,color:#6b4a08;"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/news/2026-05-31-tokenmaxxing.md",
+          "limit": 40
+        }
+      }
+    },
+    {
+      "step_id": 7,
+      "timestamp": "2026-06-01T19:09:11.339Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 29496,
+        "completion_tokens": 140,
+        "cached_tokens": 29494,
+        "extra": {
+          "cache_creation_input_tokens": 2133,
+          "cache_read_input_tokens": 29494,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2133,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 140,
+              "cache_read_input_tokens": 29494,
+              "cache_creation_input_tokens": 2133,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2133
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 8,
+      "timestamp": "2026-06-01T19:09:11.807Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Let me look at a simpler news entry and verify the facts via web search in parallel.",
+      "metrics": {
+        "prompt_tokens": 29496,
+        "completion_tokens": 140,
+        "cached_tokens": 29494,
+        "extra": {
+          "cache_creation_input_tokens": 2133,
+          "cache_read_input_tokens": 29494,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2133,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 140,
+              "cache_read_input_tokens": 29494,
+              "cache_creation_input_tokens": 2133,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2133
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 9,
+      "timestamp": "2026-06-01T19:09:12.448Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01RuFvHzMDwRaKTswbAPHxEe",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01RuFvHzMDwRaKTswbAPHxEe",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/news/2026-05-11-claude-mythos-metr.md"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01RuFvHzMDwRaKTswbAPHxEe",
+            "content": "1\t# 2026-05-11：Claude Mythos 在 METR 评测中\"撞上了基准的天花板\"\n2\t\n3\t今天 METR 公布的评测显示，Claude Mythos Preview 在 Time Horizons 软件任务基准上的 **50% 时间视界达到至少 16 小时**——已经触及 METR 当前能够测量的上限——95% 置信区间从 **8.5 小时一直拉到 55 小时**，区间宽到这个程度的原因是 228 个任务里只有 5 个达到 16 小时级别，长尾数据点根本不够。这把上一代 Claude Opus 4.6 / GPT-5.2 的 5–6 小时、Sonnet 3.7 的约 2 小时、以及 2024 年中 GPT-4o 的约 7 分钟全部远远甩在身后，符合 METR 此前测出的\"前沿模型时间视界约每 105 天翻倍\"的指数曲线。\n4\t\n5\t## 当事人各自的主张\n6\t\n7\t- **METR 的主张**：他们明确**不认为这个数字在这个能力区间还能用来做精确比较或外推**，公开声明里没有把任何一个具体数字标成\"权威结果\"——只敢说\"至少 16 小时\"，并主动点出 228 个任务里只有 5 个进入 16 小时级别这一测量学事实。换句话说，METR 在用一种近乎\"否认自己结果精度\"的方式公布结果。\n8\t- **Anthropic 的主张**：[Claude Mythos Preview](https://red.anthropic.com/2026/mythos-preview/) 不是今天发布的——它于 **2026 年 4 月 7 日正式公布**（更早一次因 CMS 配置失误于 3 月 26 日意外泄出过草稿页），定位\"整整一个能力档高于 Opus 4.7\"。Anthropic 自己的宣发重点放在**计算机安全能力**而非时间视界：宣称该模型已经发现了\"数千个高危漏洞\"，每个主流操作系统和浏览器都中招（包括一个 27 年历史的 OpenBSD TCP SACK 漏洞、16 年历史的 FFmpeg H.264 编解码器漏洞），能自主串联多个漏洞构造 sandbox 逃逸、远程代码执行、提权链；相对 Opus 4.6，在 Firefox 上的 JavaScript shell 利用从几百次尝试里只有 2 次成功跳到 181 次。配套的 **Project Glasswing** 只对关键基础设施伙伴与开源开发者提供受限访问——**没有公开 API、没有 claude.ai 接入、Pro/Max/Team/Enterprise 任何档位都买不到**；协调披露用 SHA-3 哈希承诺方式，Anthropic 自陈披露过的漏洞中\"超过 99% 尚未被修补\"。今天的 METR 数据是这个 4 月模型在外部独立评测口径上的一次新读数，而非伴随发布的官方营销材料。\n9\t\n10\t## 这条新闻的意义\n11\t\n12\t1. **基准撞顶**：METR 的 Time Horizons 第一次出现\"前沿模型的能力已经超出基准长度上限\"的局面——以前是 AI 追着任务跑，现在是任务套件追不上 AI。这意味着接下来一段时间，\"AI 能完成多长时间的任务\"这个最被广泛引用的能力刻度，将暂时失去判别力。\n13\t2. **指数趋势的延续**：每约 105 天翻一倍的曲线没有出现拐点。如果 16 小时是真实下界，那么相对于 2024 年 7 分钟的 GPT-4o，约两年时间出现了 ~130 倍的扩张。\n14\t3. **领域偏置依然没解决**：METR 的任务集中在软件工程、机器学习、网络安全——结合 Anthropic 这次主推的恰好是网络安全能力，\"模型擅长的领域\"和\"基准能测的领域\"高度重合，这让 16 小时这个数字在向普通经济活动外推时格外不可靠（也是 METR 自己主动加的免责声明）。\n15\t4. **安全外部性提前到来**：Anthropic 自陈\"99% 已发现漏洞未修补\"，意味着即便是合作披露路径，攻防节奏也已经被这一代模型的发现速度甩开——这是新闻里最不舒服的一句话。\n16\t\n17\t## 相关资料\n18\t\n19\t- [METR Time Horizons 基准任务详解 (2026-05-11)](../chat/METR%20Time%20Horizons%E5%9F%BA%E5%87%86%E4%BB%BB%E5%8A%A1%E8%AF%A6%E8%A7%A3%20(2026-05-11)-2.md) — 基准本身的任务构成（SWAA / HCAST / RE-Bench）、评分方法、已知批评\n20\t\n21\t## 信源\n22\t\n23\t- [Claude Mythos Shows 50% Time Horizon Of 16+ Hours On METR Benchmark — OfficeChai](https://officechai.com/ai/claude-mythos-shows-50-time-horizon-of-16-hours-on-metr-benchmark/)\n24\t- [METR says Claude Mythos is testing the limits of AI evaluation — Startup Fortune](https://startupfortune.com/metr-says-claude-mythos-is-testing-the-limits-of-ai-evaluation/)\n25\t- [Claude Mythos Preview hits 16hr eval window — Blockchain.news](https://blockchain.news/ainews/claude-mythos-preview-hits-16hr-eval-window)\n26\t- [Claude Mythos Preview — Anthropic (red.anthropic.com)](https://red.anthropic.com/2026/mythos-preview/)\n27\t- [Task-Completion Time Horizons of Frontier AI Models — METR](https://metr.org/time-horizons/)\n28\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/news/2026-05-11-claude-mythos-metr.md\", \"content\": \"# 2026-05-11：Claude Mythos 在 METR 评测中\\\"撞上了基准的天花板\\\"\\n\\n今天 METR 公布的评测显示，Claude Mythos Preview 在 Time Horizons 软件任务基准上的 **50% 时间视界达到至少 16 小时**——已经触及 METR 当前能够测量的上限——95% 置信区间从 **8.5 小时一直拉到 55 小时**，区间宽到这个程度的原因是 228 个任务里只有 5 个达到 16 小时级别，长尾数据点根本不够。这把上一代 Claude Opus 4.6 / GPT-5.2 的 5–6 小时、Sonnet 3.7 的约 2 小时、以及 2024 年中 GPT-4o 的约 7 分钟全部远远甩在身后，符合 METR 此前测出的\\\"前沿模型时间视界约每 105 天翻倍\\\"的指数曲线。\\n\\n## 当事人各自的主张\\n\\n- **METR 的主张**：他们明确**不认为这个数字在这个能力区间还能用来做精确比较或外推**，公开声明里没有把任何一个具体数字标成\\\"权威结果\\\"——只敢说\\\"至少 16 小时\\\"，并主动点出 228 个任务里只有 5 个进入 16 小时级别这一测量学事实。换句话说，METR 在用一种近乎\\\"否认自己结果精度\\\"的方式公布结果。\\n- **Anthropic 的主张**：[Claude Mythos Preview](https://red.anthropic.com/2026/mythos-preview/) 不是今天发布的——它于 **2026 年 4 月 7 日正式公布**（更早一次因 CMS 配置失误于 3 月 26 日意外泄出过草稿页），定位\\\"整整一个能力档高于 Opus 4.7\\\"。Anthropic 自己的宣发重点放在**计算机安全能力**而非时间视界：宣称该模型已经发现了\\\"数千个高危漏洞\\\"，每个主流操作系统和浏览器都中招（包括一个 27 年历史的 OpenBSD TCP SACK 漏洞、16 年历史的 FFmpeg H.264 编解码器漏洞），能自主串联多个漏洞构造 sandbox 逃逸、远程代码执行、提权链；相对 Opus 4.6，在 Firefox 上的 JavaScript shell 利用从几百次尝试里只有 2 次成功跳到 181 次。配套的 **Project Glasswing** 只对关键基础设施伙伴与开源开发者提供受限访问——**没有公开 API、没有 claude.ai 接入、Pro/Max/Team/Enterprise 任何档位都买不到**；协调披露用 SHA-3 哈希承诺方式，Anthropic 自陈披露过的漏洞中\\\"超过 99% 尚未被修补\\\"。今天的 METR 数据是这个 4 月模型在外部独立评测口径上的一次新读数，而非伴随发布的官方营销材料。\\n\\n## 这条新闻的意义\\n\\n1. **基准撞顶**：METR 的 Time Horizons 第一次出现\\\"前沿模型的能力已经超出基准长度上限\\\"的局面——以前是 AI 追着任务跑，现在是任务套件追不上 AI。这意味着接下来一段时间，\\\"AI 能完成多长时间的任务\\\"这个最被广泛引用的能力刻度，将暂时失去判别力。\\n2. **指数趋势的延续**：每约 105 天翻一倍的曲线没有出现拐点。如果 16 小时是真实下界，那么相对于 2024 年 7 分钟的 GPT-4o，约两年时间出现了 ~130 倍的扩张。\\n3. **领域偏置依然没解决**：METR 的任务集中在软件工程、机器学习、网络安全——结合 Anthropic 这次主推的恰好是网络安全能力，\\\"模型擅长的领域\\\"和\\\"基准能测的领域\\\"高度重合，这让 16 小时这个数字在向普通经济活动外推时格外不可靠（也是 METR 自己主动加的免责声明）。\\n4. **安全外部性提前到来**：Anthropic 自陈\\\"99% 已发现漏洞未修补\\\"，意味着即便是合作披露路径，攻防节奏也已经被这一代模型的发现速度甩开——这是新闻里最不舒服的一句话。\\n\\n## 相关资料\\n\\n- [METR Time Horizons 基准任务详解 (2026-05-11)](../chat/METR%20Time%20Horizons%E5%9F%BA%E5%87%86%E4%BB%BB%E5%8A%A1%E8%AF%A6%E8%A7%A3%20(2026-05-11)-2.md) — 基准本身的任务构成（SWAA / HCAST / RE-Bench）、评分方法、已知批评\\n\\n## 信源\\n\\n- [Claude Mythos Shows 50% Time Horizon Of 16+ Hours On METR Benchmark — OfficeChai](https://officechai.com/ai/claude-mythos-shows-50-time-horizon-of-16-hours-on-metr-benchmark/)\\n- [METR says Claude Mythos is testing the limits of AI evaluation — Startup Fortune](https://startupfortune.com/metr-says-claude-mythos-is-testing-the-limits-of-ai-evaluation/)\\n- [Claude Mythos Preview hits 16hr eval window — Blockchain.news](https://blockchain.news/ainews/claude-mythos-preview-hits-16hr-eval-window)\\n- [Claude Mythos Preview — Anthropic (red.anthropic.com)](https://red.anthropic.com/2026/mythos-preview/)\\n- [Task-Completion Time Horizons of Frontier AI Models — METR](https://metr.org/time-horizons/)\\n\", \"numLines\": 28, \"startLine\": 1, \"totalLines\": 28}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 29496,
+        "completion_tokens": 140,
+        "cached_tokens": 29494,
+        "extra": {
+          "cache_creation_input_tokens": 2133,
+          "cache_read_input_tokens": 29494,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2133,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 140,
+              "cache_read_input_tokens": 29494,
+              "cache_creation_input_tokens": 2133,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2133
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/news/2026-05-11-claude-mythos-metr.md",
+              "content": "# 2026-05-11：Claude Mythos 在 METR 评测中\"撞上了基准的天花板\"\n\n今天 METR 公布的评测显示，Claude Mythos Preview 在 Time Horizons 软件任务基准上的 **50% 时间视界达到至少 16 小时**——已经触及 METR 当前能够测量的上限——95% 置信区间从 **8.5 小时一直拉到 55 小时**，区间宽到这个程度的原因是 228 个任务里只有 5 个达到 16 小时级别，长尾数据点根本不够。这把上一代 Claude Opus 4.6 / GPT-5.2 的 5–6 小时、Sonnet 3.7 的约 2 小时、以及 2024 年中 GPT-4o 的约 7 分钟全部远远甩在身后，符合 METR 此前测出的\"前沿模型时间视界约每 105 天翻倍\"的指数曲线。\n\n## 当事人各自的主张\n\n- **METR 的主张**：他们明确**不认为这个数字在这个能力区间还能用来做精确比较或外推**，公开声明里没有把任何一个具体数字标成\"权威结果\"——只敢说\"至少 16 小时\"，并主动点出 228 个任务里只有 5 个进入 16 小时级别这一测量学事实。换句话说，METR 在用一种近乎\"否认自己结果精度\"的方式公布结果。\n- **Anthropic 的主张**：[Claude Mythos Preview](https://red.anthropic.com/2026/mythos-preview/) 不是今天发布的——它于 **2026 年 4 月 7 日正式公布**（更早一次因 CMS 配置失误于 3 月 26 日意外泄出过草稿页），定位\"整整一个能力档高于 Opus 4.7\"。Anthropic 自己的宣发重点放在**计算机安全能力**而非时间视界：宣称该模型已经发现了\"数千个高危漏洞\"，每个主流操作系统和浏览器都中招（包括一个 27 年历史的 OpenBSD TCP SACK 漏洞、16 年历史的 FFmpeg H.264 编解码器漏洞），能自主串联多个漏洞构造 sandbox 逃逸、远程代码执行、提权链；相对 Opus 4.6，在 Firefox 上的 JavaScript shell 利用从几百次尝试里只有 2 次成功跳到 181 次。配套的 **Project Glasswing** 只对关键基础设施伙伴与开源开发者提供受限访问——**没有公开 API、没有 claude.ai 接入、Pro/Max/Team/Enterprise 任何档位都买不到**；协调披露用 SHA-3 哈希承诺方式，Anthropic 自陈披露过的漏洞中\"超过 99% 尚未被修补\"。今天的 METR 数据是这个 4 月模型在外部独立评测口径上的一次新读数，而非伴随发布的官方营销材料。\n\n## 这条新闻的意义\n\n1. **基准撞顶**：METR 的 Time Horizons 第一次出现\"前沿模型的能力已经超出基准长度上限\"的局面——以前是 AI 追着任务跑，现在是任务套件追不上 AI。这意味着接下来一段时间，\"AI 能完成多长时间的任务\"这个最被广泛引用的能力刻度，将暂时失去判别力。\n2. **指数趋势的延续**：每约 105 天翻一倍的曲线没有出现拐点。如果 16 小时是真实下界，那么相对于 2024 年 7 分钟的 GPT-4o，约两年时间出现了 ~130 倍的扩张。\n3. **领域偏置依然没解决**：METR 的任务集中在软件工程、机器学习、网络安全——结合 Anthropic 这次主推的恰好是网络安全能力，\"模型擅长的领域\"和\"基准能测的领域\"高度重合，这让 16 小时这个数字在向普通经济活动外推时格外不可靠（也是 METR 自己主动加的免责声明）。\n4. **安全外部性提前到来**：Anthropic 自陈\"99% 已发现漏洞未修补\"，意味着即便是合作披露路径，攻防节奏也已经被这一代模型的发现速度甩开——这是新闻里最不舒服的一句话。\n\n## 相关资料\n\n- [METR Time Horizons 基准任务详解 (2026-05-11)](../chat/METR%20Time%20Horizons%E5%9F%BA%E5%87%86%E4%BB%BB%E5%8A%A1%E8%AF%A6%E8%A7%A3%20(2026-05-11)-2.md) — 基准本身的任务构成（SWAA / HCAST / RE-Bench）、评分方法、已知批评\n\n## 信源\n\n- [Claude Mythos Shows 50% Time Horizon Of 16+ Hours On METR Benchmark — OfficeChai](https://officechai.com/ai/claude-mythos-shows-50-time-horizon-of-16-hours-on-metr-benchmark/)\n- [METR says Claude Mythos is testing the limits of AI evaluation — Startup Fortune](https://startupfortune.com/metr-says-claude-mythos-is-testing-the-limits-of-ai-evaluation/)\n- [Claude Mythos Preview hits 16hr eval window — Blockchain.news](https://blockchain.news/ainews/claude-mythos-preview-hits-16hr-eval-window)\n- [Claude Mythos Preview — Anthropic (red.anthropic.com)](https://red.anthropic.com/2026/mythos-preview/)\n- [Task-Completion Time Horizons of Frontier AI Models — METR](https://metr.org/time-horizons/)\n",
+              "numLines": 28,
+              "startLine": 1,
+              "totalLines": 28
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01RuFvHzMDwRaKTswbAPHxEe",
+            "type": "tool_result",
+            "content": "1\t# 2026-05-11：Claude Mythos 在 METR 评测中\"撞上了基准的天花板\"\n2\t\n3\t今天 METR 公布的评测显示，Claude Mythos Preview 在 Time Horizons 软件任务基准上的 **50% 时间视界达到至少 16 小时**——已经触及 METR 当前能够测量的上限——95% 置信区间从 **8.5 小时一直拉到 55 小时**，区间宽到这个程度的原因是 228 个任务里只有 5 个达到 16 小时级别，长尾数据点根本不够。这把上一代 Claude Opus 4.6 / GPT-5.2 的 5–6 小时、Sonnet 3.7 的约 2 小时、以及 2024 年中 GPT-4o 的约 7 分钟全部远远甩在身后，符合 METR 此前测出的\"前沿模型时间视界约每 105 天翻倍\"的指数曲线。\n4\t\n5\t## 当事人各自的主张\n6\t\n7\t- **METR 的主张**：他们明确**不认为这个数字在这个能力区间还能用来做精确比较或外推**，公开声明里没有把任何一个具体数字标成\"权威结果\"——只敢说\"至少 16 小时\"，并主动点出 228 个任务里只有 5 个进入 16 小时级别这一测量学事实。换句话说，METR 在用一种近乎\"否认自己结果精度\"的方式公布结果。\n8\t- **Anthropic 的主张**：[Claude Mythos Preview](https://red.anthropic.com/2026/mythos-preview/) 不是今天发布的——它于 **2026 年 4 月 7 日正式公布**（更早一次因 CMS 配置失误于 3 月 26 日意外泄出过草稿页），定位\"整整一个能力档高于 Opus 4.7\"。Anthropic 自己的宣发重点放在**计算机安全能力**而非时间视界：宣称该模型已经发现了\"数千个高危漏洞\"，每个主流操作系统和浏览器都中招（包括一个 27 年历史的 OpenBSD TCP SACK 漏洞、16 年历史的 FFmpeg H.264 编解码器漏洞），能自主串联多个漏洞构造 sandbox 逃逸、远程代码执行、提权链；相对 Opus 4.6，在 Firefox 上的 JavaScript shell 利用从几百次尝试里只有 2 次成功跳到 181 次。配套的 **Project Glasswing** 只对关键基础设施伙伴与开源开发者提供受限访问——**没有公开 API、没有 claude.ai 接入、Pro/Max/Team/Enterprise 任何档位都买不到**；协调披露用 SHA-3 哈希承诺方式，Anthropic 自陈披露过的漏洞中\"超过 99% 尚未被修补\"。今天的 METR 数据是这个 4 月模型在外部独立评测口径上的一次新读数，而非伴随发布的官方营销材料。\n9\t\n10\t## 这条新闻的意义\n11\t\n12\t1. **基准撞顶**：METR 的 Time Horizons 第一次出现\"前沿模型的能力已经超出基准长度上限\"的局面——以前是 AI 追着任务跑，现在是任务套件追不上 AI。这意味着接下来一段时间，\"AI 能完成多长时间的任务\"这个最被广泛引用的能力刻度，将暂时失去判别力。\n13\t2. **指数趋势的延续**：每约 105 天翻一倍的曲线没有出现拐点。如果 16 小时是真实下界，那么相对于 2024 年 7 分钟的 GPT-4o，约两年时间出现了 ~130 倍的扩张。\n14\t3. **领域偏置依然没解决**：METR 的任务集中在软件工程、机器学习、网络安全——结合 Anthropic 这次主推的恰好是网络安全能力，\"模型擅长的领域\"和\"基准能测的领域\"高度重合，这让 16 小时这个数字在向普通经济活动外推时格外不可靠（也是 METR 自己主动加的免责声明）。\n15\t4. **安全外部性提前到来**：Anthropic 自陈\"99% 已发现漏洞未修补\"，意味着即便是合作披露路径，攻防节奏也已经被这一代模型的发现速度甩开——这是新闻里最不舒服的一句话。\n16\t\n17\t## 相关资料\n18\t\n19\t- [METR Time Horizons 基准任务详解 (2026-05-11)](../chat/METR%20Time%20Horizons%E5%9F%BA%E5%87%86%E4%BB%BB%E5%8A%A1%E8%AF%A6%E8%A7%A3%20(2026-05-11)-2.md) — 基准本身的任务构成（SWAA / HCAST / RE-Bench）、评分方法、已知批评\n20\t\n21\t## 信源\n22\t\n23\t- [Claude Mythos Shows 50% Time Horizon Of 16+ Hours On METR Benchmark — OfficeChai](https://officechai.com/ai/claude-mythos-shows-50-time-horizon-of-16-hours-on-metr-benchmark/)\n24\t- [METR says Claude Mythos is testing the limits of AI evaluation — Startup Fortune](https://startupfortune.com/metr-says-claude-mythos-is-testing-the-limits-of-ai-evaluation/)\n25\t- [Claude Mythos Preview hits 16hr eval window — Blockchain.news](https://blockchain.news/ainews/claude-mythos-preview-hits-16hr-eval-window)\n26\t- [Claude Mythos Preview — Anthropic (red.anthropic.com)](https://red.anthropic.com/2026/mythos-preview/)\n27\t- [Task-Completion Time Horizons of Frontier AI Models — METR](https://metr.org/time-horizons/)\n28\t"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/news/2026-05-11-claude-mythos-metr.md",
+              "content": "# 2026-05-11：Claude Mythos 在 METR 评测中\"撞上了基准的天花板\"\n\n今天 METR 公布的评测显示，Claude Mythos Preview 在 Time Horizons 软件任务基准上的 **50% 时间视界达到至少 16 小时**——已经触及 METR 当前能够测量的上限——95% 置信区间从 **8.5 小时一直拉到 55 小时**，区间宽到这个程度的原因是 228 个任务里只有 5 个达到 16 小时级别，长尾数据点根本不够。这把上一代 Claude Opus 4.6 / GPT-5.2 的 5–6 小时、Sonnet 3.7 的约 2 小时、以及 2024 年中 GPT-4o 的约 7 分钟全部远远甩在身后，符合 METR 此前测出的\"前沿模型时间视界约每 105 天翻倍\"的指数曲线。\n\n## 当事人各自的主张\n\n- **METR 的主张**：他们明确**不认为这个数字在这个能力区间还能用来做精确比较或外推**，公开声明里没有把任何一个具体数字标成\"权威结果\"——只敢说\"至少 16 小时\"，并主动点出 228 个任务里只有 5 个进入 16 小时级别这一测量学事实。换句话说，METR 在用一种近乎\"否认自己结果精度\"的方式公布结果。\n- **Anthropic 的主张**：[Claude Mythos Preview](https://red.anthropic.com/2026/mythos-preview/) 不是今天发布的——它于 **2026 年 4 月 7 日正式公布**（更早一次因 CMS 配置失误于 3 月 26 日意外泄出过草稿页），定位\"整整一个能力档高于 Opus 4.7\"。Anthropic 自己的宣发重点放在**计算机安全能力**而非时间视界：宣称该模型已经发现了\"数千个高危漏洞\"，每个主流操作系统和浏览器都中招（包括一个 27 年历史的 OpenBSD TCP SACK 漏洞、16 年历史的 FFmpeg H.264 编解码器漏洞），能自主串联多个漏洞构造 sandbox 逃逸、远程代码执行、提权链；相对 Opus 4.6，在 Firefox 上的 JavaScript shell 利用从几百次尝试里只有 2 次成功跳到 181 次。配套的 **Project Glasswing** 只对关键基础设施伙伴与开源开发者提供受限访问——**没有公开 API、没有 claude.ai 接入、Pro/Max/Team/Enterprise 任何档位都买不到**；协调披露用 SHA-3 哈希承诺方式，Anthropic 自陈披露过的漏洞中\"超过 99% 尚未被修补\"。今天的 METR 数据是这个 4 月模型在外部独立评测口径上的一次新读数，而非伴随发布的官方营销材料。\n\n## 这条新闻的意义\n\n1. **基准撞顶**：METR 的 Time Horizons 第一次出现\"前沿模型的能力已经超出基准长度上限\"的局面——以前是 AI 追着任务跑，现在是任务套件追不上 AI。这意味着接下来一段时间，\"AI 能完成多长时间的任务\"这个最被广泛引用的能力刻度，将暂时失去判别力。\n2. **指数趋势的延续**：每约 105 天翻一倍的曲线没有出现拐点。如果 16 小时是真实下界，那么相对于 2024 年 7 分钟的 GPT-4o，约两年时间出现了 ~130 倍的扩张。\n3. **领域偏置依然没解决**：METR 的任务集中在软件工程、机器学习、网络安全——结合 Anthropic 这次主推的恰好是网络安全能力，\"模型擅长的领域\"和\"基准能测的领域\"高度重合，这让 16 小时这个数字在向普通经济活动外推时格外不可靠（也是 METR 自己主动加的免责声明）。\n4. **安全外部性提前到来**：Anthropic 自陈\"99% 已发现漏洞未修补\"，意味着即便是合作披露路径，攻防节奏也已经被这一代模型的发现速度甩开——这是新闻里最不舒服的一句话。\n\n## 相关资料\n\n- [METR Time Horizons 基准任务详解 (2026-05-11)](../chat/METR%20Time%20Horizons%E5%9F%BA%E5%87%86%E4%BB%BB%E5%8A%A1%E8%AF%A6%E8%A7%A3%20(2026-05-11)-2.md) — 基准本身的任务构成（SWAA / HCAST / RE-Bench）、评分方法、已知批评\n\n## 信源\n\n- [Claude Mythos Shows 50% Time Horizon Of 16+ Hours On METR Benchmark — OfficeChai](https://officechai.com/ai/claude-mythos-shows-50-time-horizon-of-16-hours-on-metr-benchmark/)\n- [METR says Claude Mythos is testing the limits of AI evaluation — Startup Fortune](https://startupfortune.com/metr-says-claude-mythos-is-testing-the-limits-of-ai-evaluation/)\n- [Claude Mythos Preview hits 16hr eval window — Blockchain.news](https://blockchain.news/ainews/claude-mythos-preview-hits-16hr-eval-window)\n- [Claude Mythos Preview — Anthropic (red.anthropic.com)](https://red.anthropic.com/2026/mythos-preview/)\n- [Task-Completion Time Horizons of Frontier AI Models — METR](https://metr.org/time-horizons/)\n",
+              "numLines": 28,
+              "startLine": 1,
+              "totalLines": 28
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01RuFvHzMDwRaKTswbAPHxEe",
+            "type": "tool_result",
+            "content": "1\t# 2026-05-11：Claude Mythos 在 METR 评测中\"撞上了基准的天花板\"\n2\t\n3\t今天 METR 公布的评测显示，Claude Mythos Preview 在 Time Horizons 软件任务基准上的 **50% 时间视界达到至少 16 小时**——已经触及 METR 当前能够测量的上限——95% 置信区间从 **8.5 小时一直拉到 55 小时**，区间宽到这个程度的原因是 228 个任务里只有 5 个达到 16 小时级别，长尾数据点根本不够。这把上一代 Claude Opus 4.6 / GPT-5.2 的 5–6 小时、Sonnet 3.7 的约 2 小时、以及 2024 年中 GPT-4o 的约 7 分钟全部远远甩在身后，符合 METR 此前测出的\"前沿模型时间视界约每 105 天翻倍\"的指数曲线。\n4\t\n5\t## 当事人各自的主张\n6\t\n7\t- **METR 的主张**：他们明确**不认为这个数字在这个能力区间还能用来做精确比较或外推**，公开声明里没有把任何一个具体数字标成\"权威结果\"——只敢说\"至少 16 小时\"，并主动点出 228 个任务里只有 5 个进入 16 小时级别这一测量学事实。换句话说，METR 在用一种近乎\"否认自己结果精度\"的方式公布结果。\n8\t- **Anthropic 的主张**：[Claude Mythos Preview](https://red.anthropic.com/2026/mythos-preview/) 不是今天发布的——它于 **2026 年 4 月 7 日正式公布**（更早一次因 CMS 配置失误于 3 月 26 日意外泄出过草稿页），定位\"整整一个能力档高于 Opus 4.7\"。Anthropic 自己的宣发重点放在**计算机安全能力**而非时间视界：宣称该模型已经发现了\"数千个高危漏洞\"，每个主流操作系统和浏览器都中招（包括一个 27 年历史的 OpenBSD TCP SACK 漏洞、16 年历史的 FFmpeg H.264 编解码器漏洞），能自主串联多个漏洞构造 sandbox 逃逸、远程代码执行、提权链；相对 Opus 4.6，在 Firefox 上的 JavaScript shell 利用从几百次尝试里只有 2 次成功跳到 181 次。配套的 **Project Glasswing** 只对关键基础设施伙伴与开源开发者提供受限访问——**没有公开 API、没有 claude.ai 接入、Pro/Max/Team/Enterprise 任何档位都买不到**；协调披露用 SHA-3 哈希承诺方式，Anthropic 自陈披露过的漏洞中\"超过 99% 尚未被修补\"。今天的 METR 数据是这个 4 月模型在外部独立评测口径上的一次新读数，而非伴随发布的官方营销材料。\n9\t\n10\t## 这条新闻的意义\n11\t\n12\t1. **基准撞顶**：METR 的 Time Horizons 第一次出现\"前沿模型的能力已经超出基准长度上限\"的局面——以前是 AI 追着任务跑，现在是任务套件追不上 AI。这意味着接下来一段时间，\"AI 能完成多长时间的任务\"这个最被广泛引用的能力刻度，将暂时失去判别力。\n13\t2. **指数趋势的延续**：每约 105 天翻一倍的曲线没有出现拐点。如果 16 小时是真实下界，那么相对于 2024 年 7 分钟的 GPT-4o，约两年时间出现了 ~130 倍的扩张。\n14\t3. **领域偏置依然没解决**：METR 的任务集中在软件工程、机器学习、网络安全——结合 Anthropic 这次主推的恰好是网络安全能力，\"模型擅长的领域\"和\"基准能测的领域\"高度重合，这让 16 小时这个数字在向普通经济活动外推时格外不可靠（也是 METR 自己主动加的免责声明）。\n15\t4. **安全外部性提前到来**：Anthropic 自陈\"99% 已发现漏洞未修补\"，意味着即便是合作披露路径，攻防节奏也已经被这一代模型的发现速度甩开——这是新闻里最不舒服的一句话。\n16\t\n17\t## 相关资料\n18\t\n19\t- [METR Time Horizons 基准任务详解 (2026-05-11)](../chat/METR%20Time%20Horizons%E5%9F%BA%E5%87%86%E4%BB%BB%E5%8A%A1%E8%AF%A6%E8%A7%A3%20(2026-05-11)-2.md) — 基准本身的任务构成（SWAA / HCAST / RE-Bench）、评分方法、已知批评\n20\t\n21\t## 信源\n22\t\n23\t- [Claude Mythos Shows 50% Time Horizon Of 16+ Hours On METR Benchmark — OfficeChai](https://officechai.com/ai/claude-mythos-shows-50-time-horizon-of-16-hours-on-metr-benchmark/)\n24\t- [METR says Claude Mythos is testing the limits of AI evaluation — Startup Fortune](https://startupfortune.com/metr-says-claude-mythos-is-testing-the-limits-of-ai-evaluation/)\n25\t- [Claude Mythos Preview hits 16hr eval window — Blockchain.news](https://blockchain.news/ainews/claude-mythos-preview-hits-16hr-eval-window)\n26\t- [Claude Mythos Preview — Anthropic (red.anthropic.com)](https://red.anthropic.com/2026/mythos-preview/)\n27\t- [Task-Completion Time Horizons of Frontier AI Models — METR](https://metr.org/time-horizons/)\n28\t"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/news/2026-05-11-claude-mythos-metr.md"
+        }
+      }
+    },
+    {
+      "step_id": 10,
+      "timestamp": "2026-06-01T19:09:14.660Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Now let me verify the facts via web search.",
+      "metrics": {
+        "prompt_tokens": 31629,
+        "completion_tokens": 99,
+        "cached_tokens": 31627,
+        "extra": {
+          "cache_creation_input_tokens": 2198,
+          "cache_read_input_tokens": 31627,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2198,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 99,
+              "cache_read_input_tokens": 31627,
+              "cache_creation_input_tokens": 2198,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2198
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 11,
+      "timestamp": "2026-06-01T19:09:15.245Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed ToolSearch toolu_01ErsGqTkvXVj4irNYbWRPhM",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01ErsGqTkvXVj4irNYbWRPhM",
+          "function_name": "ToolSearch",
+          "arguments": {
+            "query": "select:WebSearch,WebFetch",
+            "max_results": 5
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01ErsGqTkvXVj4irNYbWRPhM",
+            "content": "{\"type\": \"tool_reference\", \"tool_name\": \"WebSearch\"}\n\n{\"type\": \"tool_reference\", \"tool_name\": \"WebFetch\"}\n\n[metadata] {\"matches\": [\"WebSearch\", \"WebFetch\"], \"query\": \"select:WebSearch,WebFetch\", \"total_deferred_tools\": 20}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 31629,
+        "completion_tokens": 99,
+        "cached_tokens": 31627,
+        "extra": {
+          "cache_creation_input_tokens": 2198,
+          "cache_read_input_tokens": 31627,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2198,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 99,
+              "cache_read_input_tokens": 31627,
+              "cache_creation_input_tokens": 2198,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2198
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "ToolSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "matches": [
+              "WebSearch",
+              "WebFetch"
+            ],
+            "query": "select:WebSearch,WebFetch",
+            "total_deferred_tools": 20
+          },
+          "raw_tool_result": {
+            "type": "tool_result",
+            "tool_use_id": "toolu_01ErsGqTkvXVj4irNYbWRPhM",
+            "content": [
+              {
+                "type": "tool_reference",
+                "tool_name": "WebSearch"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "WebFetch"
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "matches": [
+              "WebSearch",
+              "WebFetch"
+            ],
+            "query": "select:WebSearch,WebFetch",
+            "total_deferred_tools": 20
+          },
+          "raw_tool_result": {
+            "type": "tool_result",
+            "tool_use_id": "toolu_01ErsGqTkvXVj4irNYbWRPhM",
+            "content": [
+              {
+                "type": "tool_reference",
+                "tool_name": "WebSearch"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "WebFetch"
+              }
+            ]
+          }
+        },
+        "raw_arguments": {
+          "query": "select:WebSearch,WebFetch",
+          "max_results": 5
+        }
+      }
+    },
+    {
+      "step_id": 12,
+      "timestamp": "2026-06-01T19:09:18.536Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_013QHNu23TDEPsAbVaX3BTJR",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_013QHNu23TDEPsAbVaX3BTJR",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_013QHNu23TDEPsAbVaX3BTJR",
+            "content": "Web search results for query: \"Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team\"\n\nLinks: [{\"title\":\"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\",\"url\":\"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"},{\"title\":\"Nvidia VP says AI compute costs now exceed employee pay\",\"url\":\"https://www.msn.com/en-us/news/other/nvidia-vp-says-ai-compute-costs-now-exceed-employee-pay/gm-GMC1D91EF2\"},{\"title\":\"Nvidia says AI compute now costs more than human labor\",\"url\":\"https://www.msn.com/en-us/news/insight/nvidia-says-ai-compute-now-costs-more-than-human-labor/gm-GMC1329524\"},{\"title\":\"Nvidia VP Says AI Costs ‘Far’ More Than Human Employees\",\"url\":\"https://www.entrepreneur.com/business-news/nvidia-vp-says-it-costs-more-to-use-ai-than-to-hire-humans\"},{\"title\":\"Nvidia AI Costs Exceed Human Employee Expenses\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"},{\"title\":\"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\",\"url\":\"https://x.com/efipm/status/2049888518801965529\"},{\"title\":\"AI Cost Exceeds Human Workers at Nvidia, Uber\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"},{\"title\":\"Nvidia says AI compute costs still exceed human labour expenses\",\"url\":\"https://www.msn.com/en-gb/news/other/nvidia-says-ai-compute-costs-still-exceed-human-labour-expenses/gm-GMA9D3F746\"},{\"title\":\"Nvidia Executive Highlights AI Compute Costs Outpacing Salaries | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/nvidia-executive-highlights-ai-compute-costs-outpacing-salar-4e039f82\"}]\n\nBased on the search results, here's what I found:\n\nBryan Catanzaro, vice president of applied deep learning at Nvidia, recently told Axios that \"for my team, the cost of compute is far beyond the costs of the employees.\"\n\nThis statement highlights a significant issue in the AI industry. An MIT study from 2024 backs up Catanzaro's experience. Analyzing the technical requirements of AI models needed to perform jobs at a human level, researchers found that AI automation would be economically viable in only 23% of roles where vision is a primary part of the work. In the remaining 77% of the time, it was cheaper for humans to continue their work.\n\nRight now, AI isn't saving companies money on labor; it's actually costing them more than the humans they currently employ. The situation extends beyond just Nvidia — Uber has already exhausted its 2026 AI budget due to soaring token costs.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team\", \"results\": [{\"tool_use_id\": \"srvtoolu_01TfQCR5KDjpxZdbvpduU5zP\", \"content\": [{\"title\": \"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\", \"url\": \"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"}, {\"title\": \"Nvidia VP says AI compute costs now exceed employee pay\", \"url\": \"https://www.msn.com/en-us/news/other/nvidia-vp-says-ai-compute-costs-now-exceed-employee-pay/gm-GMC1D91EF2\"}, {\"title\": \"Nvidia says AI compute now costs more than human labor\", \"url\": \"https://www.msn.com/en-us/news/insight/nvidia-says-ai-compute-now-costs-more-than-human-labor/gm-GMC1329524\"}, {\"title\": \"Nvidia VP Says AI Costs ‘Far’ More Than Human Employees\", \"url\": \"https://www.entrepreneur.com/business-news/nvidia-vp-says-it-costs-more-to-use-ai-than-to-hire-humans\"}, {\"title\": \"Nvidia AI Costs Exceed Human Employee Expenses\", \"url\": \"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"}, {\"title\": \"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\", \"url\": \"https://x.com/efipm/status/2049888518801965529\"}, {\"title\": \"AI Cost Exceeds Human Workers at Nvidia, Uber\", \"url\": \"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"}, {\"title\": \"Nvidia says AI compute costs still exceed human labour expenses\", \"url\": \"https://www.msn.com/en-gb/news/other/nvidia-says-ai-compute-costs-still-exceed-human-labour-expenses/gm-GMA9D3F746\"}, {\"title\": \"Nvidia Executive Highlights AI Compute Costs Outpacing Salaries | Let's Data Science\", \"url\": \"https://letsdatascience.com/news/nvidia-executive-highlights-ai-compute-costs-outpacing-salar-4e039f82\"}]}, \"Based on the search results, here's what I found:\\n\\nBryan Catanzaro, vice president of applied deep learning at Nvidia, recently told Axios that \\\"for my team, the cost of compute is far beyond the costs of the employees.\\\"\\n\\nThis statement highlights a significant issue in the AI industry. An MIT study from 2024 backs up Catanzaro's experience. Analyzing the technical requirements of AI models needed to perform jobs at a human level, researchers found that AI automation would be economically viable in only 23% of roles where vision is a primary part of the work. In the remaining 77% of the time, it was cheaper for humans to continue their work.\\n\\nRight now, AI isn't saving companies money on labor; it's actually costing them more than the humans they currently employ. The situation extends beyond just Nvidia — Uber has already exhausted its 2026 AI budget due to soaring token costs.\"], \"durationSeconds\": 5.032696542000005, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16297,
+        "completion_tokens": 162,
+        "cached_tokens": 16295,
+        "extra": {
+          "cache_creation_input_tokens": 18355,
+          "cache_read_input_tokens": 16295,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 18355,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 162,
+              "cache_read_input_tokens": 16295,
+              "cache_creation_input_tokens": 18355,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 18355
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01TfQCR5KDjpxZdbvpduU5zP",
+                "content": [
+                  {
+                    "title": "‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune",
+                    "url": "https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/"
+                  },
+                  {
+                    "title": "Nvidia VP says AI compute costs now exceed employee pay",
+                    "url": "https://www.msn.com/en-us/news/other/nvidia-vp-says-ai-compute-costs-now-exceed-employee-pay/gm-GMC1D91EF2"
+                  },
+                  {
+                    "title": "Nvidia says AI compute now costs more than human labor",
+                    "url": "https://www.msn.com/en-us/news/insight/nvidia-says-ai-compute-now-costs-more-than-human-labor/gm-GMC1329524"
+                  },
+                  {
+                    "title": "Nvidia VP Says AI Costs ‘Far’ More Than Human Employees",
+                    "url": "https://www.entrepreneur.com/business-news/nvidia-vp-says-it-costs-more-to-use-ai-than-to-hire-humans"
+                  },
+                  {
+                    "title": "Nvidia AI Costs Exceed Human Employee Expenses",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/"
+                  },
+                  {
+                    "title": "Dr Efi Pylarinou on X: \"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \"For my team, the cost of compute is far beyond the costs of the employees.\" Uber blew entire 2026 AI budget early on coding\" / X",
+                    "url": "https://x.com/efipm/status/2049888518801965529"
+                  },
+                  {
+                    "title": "AI Cost Exceeds Human Workers at Nvidia, Uber",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/"
+                  },
+                  {
+                    "title": "Nvidia says AI compute costs still exceed human labour expenses",
+                    "url": "https://www.msn.com/en-gb/news/other/nvidia-says-ai-compute-costs-still-exceed-human-labour-expenses/gm-GMA9D3F746"
+                  },
+                  {
+                    "title": "Nvidia Executive Highlights AI Compute Costs Outpacing Salaries | Let's Data Science",
+                    "url": "https://letsdatascience.com/news/nvidia-executive-highlights-ai-compute-costs-outpacing-salar-4e039f82"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found:\n\nBryan Catanzaro, vice president of applied deep learning at Nvidia, recently told Axios that \"for my team, the cost of compute is far beyond the costs of the employees.\"\n\nThis statement highlights a significant issue in the AI industry. An MIT study from 2024 backs up Catanzaro's experience. Analyzing the technical requirements of AI models needed to perform jobs at a human level, researchers found that AI automation would be economically viable in only 23% of roles where vision is a primary part of the work. In the remaining 77% of the time, it was cheaper for humans to continue their work.\n\nRight now, AI isn't saving companies money on labor; it's actually costing them more than the humans they currently employ. The situation extends beyond just Nvidia — Uber has already exhausted its 2026 AI budget due to soaring token costs."
+            ],
+            "durationSeconds": 5.032696542000005,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013QHNu23TDEPsAbVaX3BTJR",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team\"\n\nLinks: [{\"title\":\"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\",\"url\":\"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"},{\"title\":\"Nvidia VP says AI compute costs now exceed employee pay\",\"url\":\"https://www.msn.com/en-us/news/other/nvidia-vp-says-ai-compute-costs-now-exceed-employee-pay/gm-GMC1D91EF2\"},{\"title\":\"Nvidia says AI compute now costs more than human labor\",\"url\":\"https://www.msn.com/en-us/news/insight/nvidia-says-ai-compute-now-costs-more-than-human-labor/gm-GMC1329524\"},{\"title\":\"Nvidia VP Says AI Costs ‘Far’ More Than Human Employees\",\"url\":\"https://www.entrepreneur.com/business-news/nvidia-vp-says-it-costs-more-to-use-ai-than-to-hire-humans\"},{\"title\":\"Nvidia AI Costs Exceed Human Employee Expenses\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"},{\"title\":\"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\",\"url\":\"https://x.com/efipm/status/2049888518801965529\"},{\"title\":\"AI Cost Exceeds Human Workers at Nvidia, Uber\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"},{\"title\":\"Nvidia says AI compute costs still exceed human labour expenses\",\"url\":\"https://www.msn.com/en-gb/news/other/nvidia-says-ai-compute-costs-still-exceed-human-labour-expenses/gm-GMA9D3F746\"},{\"title\":\"Nvidia Executive Highlights AI Compute Costs Outpacing Salaries | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/nvidia-executive-highlights-ai-compute-costs-outpacing-salar-4e039f82\"}]\n\nBased on the search results, here's what I found:\n\nBryan Catanzaro, vice president of applied deep learning at Nvidia, recently told Axios that \"for my team, the cost of compute is far beyond the costs of the employees.\"\n\nThis statement highlights a significant issue in the AI industry. An MIT study from 2024 backs up Catanzaro's experience. Analyzing the technical requirements of AI models needed to perform jobs at a human level, researchers found that AI automation would be economically viable in only 23% of roles where vision is a primary part of the work. In the remaining 77% of the time, it was cheaper for humans to continue their work.\n\nRight now, AI isn't saving companies money on labor; it's actually costing them more than the humans they currently employ. The situation extends beyond just Nvidia — Uber has already exhausted its 2026 AI budget due to soaring token costs.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01TfQCR5KDjpxZdbvpduU5zP",
+                "content": [
+                  {
+                    "title": "‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune",
+                    "url": "https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/"
+                  },
+                  {
+                    "title": "Nvidia VP says AI compute costs now exceed employee pay",
+                    "url": "https://www.msn.com/en-us/news/other/nvidia-vp-says-ai-compute-costs-now-exceed-employee-pay/gm-GMC1D91EF2"
+                  },
+                  {
+                    "title": "Nvidia says AI compute now costs more than human labor",
+                    "url": "https://www.msn.com/en-us/news/insight/nvidia-says-ai-compute-now-costs-more-than-human-labor/gm-GMC1329524"
+                  },
+                  {
+                    "title": "Nvidia VP Says AI Costs ‘Far’ More Than Human Employees",
+                    "url": "https://www.entrepreneur.com/business-news/nvidia-vp-says-it-costs-more-to-use-ai-than-to-hire-humans"
+                  },
+                  {
+                    "title": "Nvidia AI Costs Exceed Human Employee Expenses",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/"
+                  },
+                  {
+                    "title": "Dr Efi Pylarinou on X: \"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \"For my team, the cost of compute is far beyond the costs of the employees.\" Uber blew entire 2026 AI budget early on coding\" / X",
+                    "url": "https://x.com/efipm/status/2049888518801965529"
+                  },
+                  {
+                    "title": "AI Cost Exceeds Human Workers at Nvidia, Uber",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/"
+                  },
+                  {
+                    "title": "Nvidia says AI compute costs still exceed human labour expenses",
+                    "url": "https://www.msn.com/en-gb/news/other/nvidia-says-ai-compute-costs-still-exceed-human-labour-expenses/gm-GMA9D3F746"
+                  },
+                  {
+                    "title": "Nvidia Executive Highlights AI Compute Costs Outpacing Salaries | Let's Data Science",
+                    "url": "https://letsdatascience.com/news/nvidia-executive-highlights-ai-compute-costs-outpacing-salar-4e039f82"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found:\n\nBryan Catanzaro, vice president of applied deep learning at Nvidia, recently told Axios that \"for my team, the cost of compute is far beyond the costs of the employees.\"\n\nThis statement highlights a significant issue in the AI industry. An MIT study from 2024 backs up Catanzaro's experience. Analyzing the technical requirements of AI models needed to perform jobs at a human level, researchers found that AI automation would be economically viable in only 23% of roles where vision is a primary part of the work. In the remaining 77% of the time, it was cheaper for humans to continue their work.\n\nRight now, AI isn't saving companies money on labor; it's actually costing them more than the humans they currently employ. The situation extends beyond just Nvidia — Uber has already exhausted its 2026 AI budget due to soaring token costs."
+            ],
+            "durationSeconds": 5.032696542000005,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_013QHNu23TDEPsAbVaX3BTJR",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team\"\n\nLinks: [{\"title\":\"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\",\"url\":\"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"},{\"title\":\"Nvidia VP says AI compute costs now exceed employee pay\",\"url\":\"https://www.msn.com/en-us/news/other/nvidia-vp-says-ai-compute-costs-now-exceed-employee-pay/gm-GMC1D91EF2\"},{\"title\":\"Nvidia says AI compute now costs more than human labor\",\"url\":\"https://www.msn.com/en-us/news/insight/nvidia-says-ai-compute-now-costs-more-than-human-labor/gm-GMC1329524\"},{\"title\":\"Nvidia VP Says AI Costs ‘Far’ More Than Human Employees\",\"url\":\"https://www.entrepreneur.com/business-news/nvidia-vp-says-it-costs-more-to-use-ai-than-to-hire-humans\"},{\"title\":\"Nvidia AI Costs Exceed Human Employee Expenses\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"},{\"title\":\"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\",\"url\":\"https://x.com/efipm/status/2049888518801965529\"},{\"title\":\"AI Cost Exceeds Human Workers at Nvidia, Uber\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"},{\"title\":\"Nvidia says AI compute costs still exceed human labour expenses\",\"url\":\"https://www.msn.com/en-gb/news/other/nvidia-says-ai-compute-costs-still-exceed-human-labour-expenses/gm-GMA9D3F746\"},{\"title\":\"Nvidia Executive Highlights AI Compute Costs Outpacing Salaries | Let's Data Science\",\"url\":\"https://letsdatascience.com/news/nvidia-executive-highlights-ai-compute-costs-outpacing-salar-4e039f82\"}]\n\nBased on the search results, here's what I found:\n\nBryan Catanzaro, vice president of applied deep learning at Nvidia, recently told Axios that \"for my team, the cost of compute is far beyond the costs of the employees.\"\n\nThis statement highlights a significant issue in the AI industry. An MIT study from 2024 backs up Catanzaro's experience. Analyzing the technical requirements of AI models needed to perform jobs at a human level, researchers found that AI automation would be economically viable in only 23% of roles where vision is a primary part of the work. In the remaining 77% of the time, it was cheaper for humans to continue their work.\n\nRight now, AI isn't saving companies money on labor; it's actually costing them more than the humans they currently employ. The situation extends beyond just Nvidia — Uber has already exhausted its 2026 AI budget due to soaring token costs.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Bryan Catanzaro NVIDIA Axios compute cost exceeds salaries team"
+        }
+      }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-06-01T19:09:17.802Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_01WdKpaReW7Hxu8vmFxo44w8",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01WdKpaReW7Hxu8vmFxo44w8",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01WdKpaReW7Hxu8vmFxo44w8",
+            "content": "Web search results for query: \"Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time\"\n\nLinks: [{\"title\":\"AI Tokens or humans? The new debate reshaping corporate budgets\",\"url\":\"https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html\"},{\"title\":\"Tokens or humans? The new corporate trade-off\",\"url\":\"https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html\"},{\"title\":\"About Glean | Enterprise AI Platform for Work\",\"url\":\"https://www.glean.com/about\"},{\"title\":\"Arvind Jain - Glean | LinkedIn\",\"url\":\"https://www.linkedin.com/in/jain-arvind/\"},{\"title\":\"Watch as Equity sits down with Glean CEO and founder ...\",\"url\":\"https://www.facebook.com/techcrunch/posts/watch-as-equity-sits-down-with-glean-ceo-and-founder-arvind-jain-to-break-down-h/1258207049506493/\"},{\"title\":\"Arvind Jain | Glean\",\"url\":\"https://www.glean.com/authors/arvind-jain\"},{\"title\":\"In this week's episode of the Equity podcast, Glean CEO ...\",\"url\":\"https://www.facebook.com/techcrunch/posts/in-this-weeks-episode-of-the-equity-podcast-glean-ceo-arvind-jain-explains-the-c/1261415502518981/\"},{\"title\":\"Transforming Work Productivity with AI: Glean CEO Arvind Jain | Goldman Sachs\",\"url\":\"https://www.goldmansachs.com/insights/talks-at-gs/arvind-jain\"},{\"title\":\"Arvind Jain, founder and CEO of Glean, on why context is ...\",\"url\":\"https://www.linkedin.com/posts/iconiq-capital-llc_arvind-jain-founder-and-ceo-of-glean-on-activity-7391882369621901312-fhTL\"},{\"title\":\"Glean, gen AI enterprise search startup, raises $150 million in deal adding billions to valuation\",\"url\":\"https://www.cnbc.com/2025/06/10/glean-gen-ai-search-startup-raises-150-million-at-7-billion-value.html\"}]\n\nBased on the search results, I found the information you were looking for:\n\nCNBC's Deirdre Bosa interviewed Arvind Jain, CEO of Glean, and Matan Grinberg, CEO of Factory AI, to discuss how companies are routing work across multiple AI models to control costs and what it signals about the labor and capital decisions reshaping corporate budgets.\n\nThe key point about technology costs equaling labor costs: Jain stated: \"This is the first time ever that I can remember that technology costs the same as people, and you're making that comparison: choose tech or people.\" He noted that historically they've \"never had that conversation because tech is a fraction of the overall cost of any operating business.\"\n\nThe interview covered the broader issue that companies are telling Glean that their AI budgets are getting exhausted in one or two months, despite being annual budgets.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time\", \"results\": [{\"tool_use_id\": \"srvtoolu_012HVMGo7TyfQVFcTU8DaTTi\", \"content\": [{\"title\": \"AI Tokens or humans? The new debate reshaping corporate budgets\", \"url\": \"https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html\"}, {\"title\": \"Tokens or humans? The new corporate trade-off\", \"url\": \"https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html\"}, {\"title\": \"About Glean | Enterprise AI Platform for Work\", \"url\": \"https://www.glean.com/about\"}, {\"title\": \"Arvind Jain - Glean | LinkedIn\", \"url\": \"https://www.linkedin.com/in/jain-arvind/\"}, {\"title\": \"Watch as Equity sits down with Glean CEO and founder ...\", \"url\": \"https://www.facebook.com/techcrunch/posts/watch-as-equity-sits-down-with-glean-ceo-and-founder-arvind-jain-to-break-down-h/1258207049506493/\"}, {\"title\": \"Arvind Jain | Glean\", \"url\": \"https://www.glean.com/authors/arvind-jain\"}, {\"title\": \"In this week's episode of the Equity podcast, Glean CEO ...\", \"url\": \"https://www.facebook.com/techcrunch/posts/in-this-weeks-episode-of-the-equity-podcast-glean-ceo-arvind-jain-explains-the-c/1261415502518981/\"}, {\"title\": \"Transforming Work Productivity with AI: Glean CEO Arvind Jain | Goldman Sachs\", \"url\": \"https://www.goldmansachs.com/insights/talks-at-gs/arvind-jain\"}, {\"title\": \"Arvind Jain, founder and CEO of Glean, on why context is ...\", \"url\": \"https://www.linkedin.com/posts/iconiq-capital-llc_arvind-jain-founder-and-ceo-of-glean-on-activity-7391882369621901312-fhTL\"}, {\"title\": \"Glean, gen AI enterprise search startup, raises $150 million in deal adding billions to valuation\", \"url\": \"https://www.cnbc.com/2025/06/10/glean-gen-ai-search-startup-raises-150-million-at-7-billion-value.html\"}]}, \"Based on the search results, I found the information you were looking for:\\n\\nCNBC's Deirdre Bosa interviewed Arvind Jain, CEO of Glean, and Matan Grinberg, CEO of Factory AI, to discuss how companies are routing work across multiple AI models to control costs and what it signals about the labor and capital decisions reshaping corporate budgets.\\n\\nThe key point about technology costs equaling labor costs: Jain stated: \\\"This is the first time ever that I can remember that technology costs the same as people, and you're making that comparison: choose tech or people.\\\" He noted that historically they've \\\"never had that conversation because tech is a fraction of the overall cost of any operating business.\\\"\\n\\nThe interview covered the broader issue that companies are telling Glean that their AI budgets are getting exhausted in one or two months, despite being annual budgets.\"], \"durationSeconds\": 8.595437459000008, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16297,
+        "completion_tokens": 162,
+        "cached_tokens": 16295,
+        "extra": {
+          "cache_creation_input_tokens": 18355,
+          "cache_read_input_tokens": 16295,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 18355,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 162,
+              "cache_read_input_tokens": 16295,
+              "cache_creation_input_tokens": 18355,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 18355
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_012HVMGo7TyfQVFcTU8DaTTi",
+                "content": [
+                  {
+                    "title": "AI Tokens or humans? The new debate reshaping corporate budgets",
+                    "url": "https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html"
+                  },
+                  {
+                    "title": "Tokens or humans? The new corporate trade-off",
+                    "url": "https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html"
+                  },
+                  {
+                    "title": "About Glean | Enterprise AI Platform for Work",
+                    "url": "https://www.glean.com/about"
+                  },
+                  {
+                    "title": "Arvind Jain - Glean | LinkedIn",
+                    "url": "https://www.linkedin.com/in/jain-arvind/"
+                  },
+                  {
+                    "title": "Watch as Equity sits down with Glean CEO and founder ...",
+                    "url": "https://www.facebook.com/techcrunch/posts/watch-as-equity-sits-down-with-glean-ceo-and-founder-arvind-jain-to-break-down-h/1258207049506493/"
+                  },
+                  {
+                    "title": "Arvind Jain | Glean",
+                    "url": "https://www.glean.com/authors/arvind-jain"
+                  },
+                  {
+                    "title": "In this week's episode of the Equity podcast, Glean CEO ...",
+                    "url": "https://www.facebook.com/techcrunch/posts/in-this-weeks-episode-of-the-equity-podcast-glean-ceo-arvind-jain-explains-the-c/1261415502518981/"
+                  },
+                  {
+                    "title": "Transforming Work Productivity with AI: Glean CEO Arvind Jain | Goldman Sachs",
+                    "url": "https://www.goldmansachs.com/insights/talks-at-gs/arvind-jain"
+                  },
+                  {
+                    "title": "Arvind Jain, founder and CEO of Glean, on why context is ...",
+                    "url": "https://www.linkedin.com/posts/iconiq-capital-llc_arvind-jain-founder-and-ceo-of-glean-on-activity-7391882369621901312-fhTL"
+                  },
+                  {
+                    "title": "Glean, gen AI enterprise search startup, raises $150 million in deal adding billions to valuation",
+                    "url": "https://www.cnbc.com/2025/06/10/glean-gen-ai-search-startup-raises-150-million-at-7-billion-value.html"
+                  }
+                ]
+              },
+              "Based on the search results, I found the information you were looking for:\n\nCNBC's Deirdre Bosa interviewed Arvind Jain, CEO of Glean, and Matan Grinberg, CEO of Factory AI, to discuss how companies are routing work across multiple AI models to control costs and what it signals about the labor and capital decisions reshaping corporate budgets.\n\nThe key point about technology costs equaling labor costs: Jain stated: \"This is the first time ever that I can remember that technology costs the same as people, and you're making that comparison: choose tech or people.\" He noted that historically they've \"never had that conversation because tech is a fraction of the overall cost of any operating business.\"\n\nThe interview covered the broader issue that companies are telling Glean that their AI budgets are getting exhausted in one or two months, despite being annual budgets."
+            ],
+            "durationSeconds": 8.595437459000008,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01WdKpaReW7Hxu8vmFxo44w8",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time\"\n\nLinks: [{\"title\":\"AI Tokens or humans? The new debate reshaping corporate budgets\",\"url\":\"https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html\"},{\"title\":\"Tokens or humans? The new corporate trade-off\",\"url\":\"https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html\"},{\"title\":\"About Glean | Enterprise AI Platform for Work\",\"url\":\"https://www.glean.com/about\"},{\"title\":\"Arvind Jain - Glean | LinkedIn\",\"url\":\"https://www.linkedin.com/in/jain-arvind/\"},{\"title\":\"Watch as Equity sits down with Glean CEO and founder ...\",\"url\":\"https://www.facebook.com/techcrunch/posts/watch-as-equity-sits-down-with-glean-ceo-and-founder-arvind-jain-to-break-down-h/1258207049506493/\"},{\"title\":\"Arvind Jain | Glean\",\"url\":\"https://www.glean.com/authors/arvind-jain\"},{\"title\":\"In this week's episode of the Equity podcast, Glean CEO ...\",\"url\":\"https://www.facebook.com/techcrunch/posts/in-this-weeks-episode-of-the-equity-podcast-glean-ceo-arvind-jain-explains-the-c/1261415502518981/\"},{\"title\":\"Transforming Work Productivity with AI: Glean CEO Arvind Jain | Goldman Sachs\",\"url\":\"https://www.goldmansachs.com/insights/talks-at-gs/arvind-jain\"},{\"title\":\"Arvind Jain, founder and CEO of Glean, on why context is ...\",\"url\":\"https://www.linkedin.com/posts/iconiq-capital-llc_arvind-jain-founder-and-ceo-of-glean-on-activity-7391882369621901312-fhTL\"},{\"title\":\"Glean, gen AI enterprise search startup, raises $150 million in deal adding billions to valuation\",\"url\":\"https://www.cnbc.com/2025/06/10/glean-gen-ai-search-startup-raises-150-million-at-7-billion-value.html\"}]\n\nBased on the search results, I found the information you were looking for:\n\nCNBC's Deirdre Bosa interviewed Arvind Jain, CEO of Glean, and Matan Grinberg, CEO of Factory AI, to discuss how companies are routing work across multiple AI models to control costs and what it signals about the labor and capital decisions reshaping corporate budgets.\n\nThe key point about technology costs equaling labor costs: Jain stated: \"This is the first time ever that I can remember that technology costs the same as people, and you're making that comparison: choose tech or people.\" He noted that historically they've \"never had that conversation because tech is a fraction of the overall cost of any operating business.\"\n\nThe interview covered the broader issue that companies are telling Glean that their AI budgets are getting exhausted in one or two months, despite being annual budgets.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_012HVMGo7TyfQVFcTU8DaTTi",
+                "content": [
+                  {
+                    "title": "AI Tokens or humans? The new debate reshaping corporate budgets",
+                    "url": "https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html"
+                  },
+                  {
+                    "title": "Tokens or humans? The new corporate trade-off",
+                    "url": "https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html"
+                  },
+                  {
+                    "title": "About Glean | Enterprise AI Platform for Work",
+                    "url": "https://www.glean.com/about"
+                  },
+                  {
+                    "title": "Arvind Jain - Glean | LinkedIn",
+                    "url": "https://www.linkedin.com/in/jain-arvind/"
+                  },
+                  {
+                    "title": "Watch as Equity sits down with Glean CEO and founder ...",
+                    "url": "https://www.facebook.com/techcrunch/posts/watch-as-equity-sits-down-with-glean-ceo-and-founder-arvind-jain-to-break-down-h/1258207049506493/"
+                  },
+                  {
+                    "title": "Arvind Jain | Glean",
+                    "url": "https://www.glean.com/authors/arvind-jain"
+                  },
+                  {
+                    "title": "In this week's episode of the Equity podcast, Glean CEO ...",
+                    "url": "https://www.facebook.com/techcrunch/posts/in-this-weeks-episode-of-the-equity-podcast-glean-ceo-arvind-jain-explains-the-c/1261415502518981/"
+                  },
+                  {
+                    "title": "Transforming Work Productivity with AI: Glean CEO Arvind Jain | Goldman Sachs",
+                    "url": "https://www.goldmansachs.com/insights/talks-at-gs/arvind-jain"
+                  },
+                  {
+                    "title": "Arvind Jain, founder and CEO of Glean, on why context is ...",
+                    "url": "https://www.linkedin.com/posts/iconiq-capital-llc_arvind-jain-founder-and-ceo-of-glean-on-activity-7391882369621901312-fhTL"
+                  },
+                  {
+                    "title": "Glean, gen AI enterprise search startup, raises $150 million in deal adding billions to valuation",
+                    "url": "https://www.cnbc.com/2025/06/10/glean-gen-ai-search-startup-raises-150-million-at-7-billion-value.html"
+                  }
+                ]
+              },
+              "Based on the search results, I found the information you were looking for:\n\nCNBC's Deirdre Bosa interviewed Arvind Jain, CEO of Glean, and Matan Grinberg, CEO of Factory AI, to discuss how companies are routing work across multiple AI models to control costs and what it signals about the labor and capital decisions reshaping corporate budgets.\n\nThe key point about technology costs equaling labor costs: Jain stated: \"This is the first time ever that I can remember that technology costs the same as people, and you're making that comparison: choose tech or people.\" He noted that historically they've \"never had that conversation because tech is a fraction of the overall cost of any operating business.\"\n\nThe interview covered the broader issue that companies are telling Glean that their AI budgets are getting exhausted in one or two months, despite being annual budgets."
+            ],
+            "durationSeconds": 8.595437459000008,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01WdKpaReW7Hxu8vmFxo44w8",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time\"\n\nLinks: [{\"title\":\"AI Tokens or humans? The new debate reshaping corporate budgets\",\"url\":\"https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html\"},{\"title\":\"Tokens or humans? The new corporate trade-off\",\"url\":\"https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html\"},{\"title\":\"About Glean | Enterprise AI Platform for Work\",\"url\":\"https://www.glean.com/about\"},{\"title\":\"Arvind Jain - Glean | LinkedIn\",\"url\":\"https://www.linkedin.com/in/jain-arvind/\"},{\"title\":\"Watch as Equity sits down with Glean CEO and founder ...\",\"url\":\"https://www.facebook.com/techcrunch/posts/watch-as-equity-sits-down-with-glean-ceo-and-founder-arvind-jain-to-break-down-h/1258207049506493/\"},{\"title\":\"Arvind Jain | Glean\",\"url\":\"https://www.glean.com/authors/arvind-jain\"},{\"title\":\"In this week's episode of the Equity podcast, Glean CEO ...\",\"url\":\"https://www.facebook.com/techcrunch/posts/in-this-weeks-episode-of-the-equity-podcast-glean-ceo-arvind-jain-explains-the-c/1261415502518981/\"},{\"title\":\"Transforming Work Productivity with AI: Glean CEO Arvind Jain | Goldman Sachs\",\"url\":\"https://www.goldmansachs.com/insights/talks-at-gs/arvind-jain\"},{\"title\":\"Arvind Jain, founder and CEO of Glean, on why context is ...\",\"url\":\"https://www.linkedin.com/posts/iconiq-capital-llc_arvind-jain-founder-and-ceo-of-glean-on-activity-7391882369621901312-fhTL\"},{\"title\":\"Glean, gen AI enterprise search startup, raises $150 million in deal adding billions to valuation\",\"url\":\"https://www.cnbc.com/2025/06/10/glean-gen-ai-search-startup-raises-150-million-at-7-billion-value.html\"}]\n\nBased on the search results, I found the information you were looking for:\n\nCNBC's Deirdre Bosa interviewed Arvind Jain, CEO of Glean, and Matan Grinberg, CEO of Factory AI, to discuss how companies are routing work across multiple AI models to control costs and what it signals about the labor and capital decisions reshaping corporate budgets.\n\nThe key point about technology costs equaling labor costs: Jain stated: \"This is the first time ever that I can remember that technology costs the same as people, and you're making that comparison: choose tech or people.\" He noted that historically they've \"never had that conversation because tech is a fraction of the overall cost of any operating business.\"\n\nThe interview covered the broader issue that companies are telling Glean that their AI budgets are getting exhausted in one or two months, despite being annual budgets.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Glean CEO Arvind Jain CNBC Deirdre Bosa technology cost equal labor cost first time"
+        }
+      }
+    },
+    {
+      "step_id": 14,
+      "timestamp": "2026-06-01T19:09:37.161Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 36091,
+        "completion_tokens": 755,
+        "cached_tokens": 34650,
+        "extra": {
+          "cache_creation_input_tokens": 1305,
+          "cache_read_input_tokens": 34650,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1305,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 1441,
+              "output_tokens": 755,
+              "cache_read_input_tokens": 34650,
+              "cache_creation_input_tokens": 1305,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1305
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 15,
+      "timestamp": "2026-06-01T19:09:37.554Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Both facts are verified. Let me fetch the CNBC article for exact quotes and find the original Axios date.",
+      "metrics": {
+        "prompt_tokens": 36091,
+        "completion_tokens": 755,
+        "cached_tokens": 34650,
+        "extra": {
+          "cache_creation_input_tokens": 1305,
+          "cache_read_input_tokens": 34650,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1305,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 1441,
+              "output_tokens": 755,
+              "cache_read_input_tokens": 34650,
+              "cache_creation_input_tokens": 1305,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1305
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 16,
+      "timestamp": "2026-06-01T19:09:39.434Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebFetch toolu_019XEFVDn5j5iGmJHcH7b5ZN",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_019XEFVDn5j5iGmJHcH7b5ZN",
+          "function_name": "WebFetch",
+          "arguments": {
+            "url": "https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html",
+            "prompt": "Extract the exact quote from Glean CEO Arvind Jain about technology costs and people/labor costs being equal. Also any quotes about AI budgets being exhausted. Who conducted the interview? What date?"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_019XEFVDn5j5iGmJHcH7b5ZN",
+            "content": "The server returned HTTP 403 Forbidden.\n\nThe response body was not retrieved. If this URL requires authentication, use an authenticated tool (e.g. `gh` for GitHub, or an MCP-provided fetch tool) instead of WebFetch.\n\n[metadata] {\"bytes\": 0, \"code\": 403, \"codeText\": \"Forbidden\", \"result\": \"The server returned HTTP 403 Forbidden.\\n\\nThe response body was not retrieved. If this URL requires authentication, use an authenticated tool (e.g. `gh` for GitHub, or an MCP-provided fetch tool) instead of WebFetch.\", \"durationMs\": 330, \"url\": \"https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html\"}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 36091,
+        "completion_tokens": 755,
+        "cached_tokens": 34650,
+        "extra": {
+          "cache_creation_input_tokens": 1305,
+          "cache_read_input_tokens": 34650,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1305,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 1441,
+              "output_tokens": 755,
+              "cache_read_input_tokens": 34650,
+              "cache_creation_input_tokens": 1305,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1305
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebFetch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "bytes": 0,
+            "code": 403,
+            "codeText": "Forbidden",
+            "result": "The server returned HTTP 403 Forbidden.\n\nThe response body was not retrieved. If this URL requires authentication, use an authenticated tool (e.g. `gh` for GitHub, or an MCP-provided fetch tool) instead of WebFetch.",
+            "durationMs": 330,
+            "url": "https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019XEFVDn5j5iGmJHcH7b5ZN",
+            "type": "tool_result",
+            "content": "The server returned HTTP 403 Forbidden.\n\nThe response body was not retrieved. If this URL requires authentication, use an authenticated tool (e.g. `gh` for GitHub, or an MCP-provided fetch tool) instead of WebFetch."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "bytes": 0,
+            "code": 403,
+            "codeText": "Forbidden",
+            "result": "The server returned HTTP 403 Forbidden.\n\nThe response body was not retrieved. If this URL requires authentication, use an authenticated tool (e.g. `gh` for GitHub, or an MCP-provided fetch tool) instead of WebFetch.",
+            "durationMs": 330,
+            "url": "https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_019XEFVDn5j5iGmJHcH7b5ZN",
+            "type": "tool_result",
+            "content": "The server returned HTTP 403 Forbidden.\n\nThe response body was not retrieved. If this URL requires authentication, use an authenticated tool (e.g. `gh` for GitHub, or an MCP-provided fetch tool) instead of WebFetch."
+          }
+        },
+        "raw_arguments": {
+          "url": "https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html",
+          "prompt": "Extract the exact quote from Glean CEO Arvind Jain about technology costs and people/labor costs being equal. Also any quotes about AI budgets being exhausted. Who conducted the interview? What date?"
+        }
+      }
+    },
+    {
+      "step_id": 17,
+      "timestamp": "2026-06-01T19:09:39.878Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_015YgD9dLAECWoHzBou4xHLE",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_015YgD9dLAECWoHzBou4xHLE",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Axios Nvidia Bryan Catanzaro \"cost of compute\" employees AI tokens article date"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_015YgD9dLAECWoHzBou4xHLE",
+            "content": "Web search results for query: \"Axios Nvidia Bryan Catanzaro \"cost of compute\" employees AI tokens article date\"\n\nLinks: [{\"title\":\"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\",\"url\":\"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"},{\"title\":\"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\",\"url\":\"https://x.com/efipm/status/2049888518801965529\"},{\"title\":\"AI can cost more than human workers now\",\"url\":\"https://www.axios.com/2026/04/26/ai-cost-human-workers\"},{\"title\":\"Nvidia AI Costs Exceed Human Employee Expenses\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"},{\"title\":\"AI Cost Exceeds Human Workers at Nvidia, Uber\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"},{\"title\":\"Companies fired workers to save money, now AI tokens cost more than salaries\",\"url\":\"https://cybernews.com/ai-news/ai-token-human-salaries-automation-spending-tech-execs/\"},{\"title\":\"Bosses Are Blowing More Money on AI Agents Than It'd Cost Them to Just Pay Human Workers\",\"url\":\"https://futurism.com/artificial-intelligence/bosses-more-money-ai-agents-human-salary\"},{\"title\":\"Nvidia exec says AI is more expensive than actual workers — yet some companies don't see the extra costs as a negative | Tom's Hardware\",\"url\":\"https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-exec-says-ai-is-more-expensive-than-actual-workers-yet-some-companies-dont-see-the-extra-costs-as-a-negative\"},{\"title\":\"It's Costing More To Use AI Than Human Employees, Nvidia Exec Says - Meta Platforms (NASDAQ:META), Micros - Benzinga\",\"url\":\"https://www.benzinga.com/news/topics/26/05/52422275/its-costing-more-to-use-ai-than-human-employees-nvidia-exec-says\"}]\n\nBased on the search results, here's what I found:\n\n**Article Details:**\n\nThe Axios article features a quote from Bryan Catanzaro, vice president of applied deep learning at Nvidia, who told Axios: \"For my team, the cost of compute is far beyond the costs of the employees.\"\n\n**Article Date:** The Axios article was published on April 26, 2026\n\n**Article Title and Link:** The article is titled \"AI can cost more than human workers now\" and can be found at axios.com/2026/04/26/ai-cost-human-workers\n\n**Key Related Content:**\n\nUber's chief technology officer already blew through his full 2026 AI budget due to token costs, according to The Information. The article also discusses how Amos Bar-Joseph, CEO of Swan AI, bragged about his Anthropic bill in a viral LinkedIn post, saying \"We're building the first autonomous business - scaling with intelligence, not headcount.\"\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Axios Nvidia Bryan Catanzaro \\\"cost of compute\\\" employees AI tokens article date\", \"results\": [{\"tool_use_id\": \"srvtoolu_013XQV3BbSWAUb9RXW3q4Avp\", \"content\": [{\"title\": \"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\", \"url\": \"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"}, {\"title\": \"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\", \"url\": \"https://x.com/efipm/status/2049888518801965529\"}, {\"title\": \"AI can cost more than human workers now\", \"url\": \"https://www.axios.com/2026/04/26/ai-cost-human-workers\"}, {\"title\": \"Nvidia AI Costs Exceed Human Employee Expenses\", \"url\": \"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"}, {\"title\": \"AI Cost Exceeds Human Workers at Nvidia, Uber\", \"url\": \"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"}, {\"title\": \"Companies fired workers to save money, now AI tokens cost more than salaries\", \"url\": \"https://cybernews.com/ai-news/ai-token-human-salaries-automation-spending-tech-execs/\"}, {\"title\": \"Bosses Are Blowing More Money on AI Agents Than It'd Cost Them to Just Pay Human Workers\", \"url\": \"https://futurism.com/artificial-intelligence/bosses-more-money-ai-agents-human-salary\"}, {\"title\": \"Nvidia exec says AI is more expensive than actual workers — yet some companies don't see the extra costs as a negative | Tom's Hardware\", \"url\": \"https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-exec-says-ai-is-more-expensive-than-actual-workers-yet-some-companies-dont-see-the-extra-costs-as-a-negative\"}, {\"title\": \"It's Costing More To Use AI Than Human Employees, Nvidia Exec Says - Meta Platforms (NASDAQ:META), Micros - Benzinga\", \"url\": \"https://www.benzinga.com/news/topics/26/05/52422275/its-costing-more-to-use-ai-than-human-employees-nvidia-exec-says\"}]}, \"Based on the search results, here's what I found:\\n\\n**Article Details:**\\n\\nThe Axios article features a quote from Bryan Catanzaro, vice president of applied deep learning at Nvidia, who told Axios: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\"\\n\\n**Article Date:** The Axios article was published on April 26, 2026\\n\\n**Article Title and Link:** The article is titled \\\"AI can cost more than human workers now\\\" and can be found at axios.com/2026/04/26/ai-cost-human-workers\\n\\n**Key Related Content:**\\n\\nUber's chief technology officer already blew through his full 2026 AI budget due to token costs, according to The Information. The article also discusses how Amos Bar-Joseph, CEO of Swan AI, bragged about his Anthropic bill in a viral LinkedIn post, saying \\\"We're building the first autonomous business - scaling with intelligence, not headcount.\\\"\"], \"durationSeconds\": 4.918985874999999, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 36091,
+        "completion_tokens": 755,
+        "cached_tokens": 34650,
+        "extra": {
+          "cache_creation_input_tokens": 1305,
+          "cache_read_input_tokens": 34650,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1305,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 1441,
+              "output_tokens": 755,
+              "cache_read_input_tokens": 34650,
+              "cache_creation_input_tokens": 1305,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1305
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Axios Nvidia Bryan Catanzaro \"cost of compute\" employees AI tokens article date",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_013XQV3BbSWAUb9RXW3q4Avp",
+                "content": [
+                  {
+                    "title": "‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune",
+                    "url": "https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/"
+                  },
+                  {
+                    "title": "Dr Efi Pylarinou on X: \"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \"For my team, the cost of compute is far beyond the costs of the employees.\" Uber blew entire 2026 AI budget early on coding\" / X",
+                    "url": "https://x.com/efipm/status/2049888518801965529"
+                  },
+                  {
+                    "title": "AI can cost more than human workers now",
+                    "url": "https://www.axios.com/2026/04/26/ai-cost-human-workers"
+                  },
+                  {
+                    "title": "Nvidia AI Costs Exceed Human Employee Expenses",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/"
+                  },
+                  {
+                    "title": "AI Cost Exceeds Human Workers at Nvidia, Uber",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/"
+                  },
+                  {
+                    "title": "Companies fired workers to save money, now AI tokens cost more than salaries",
+                    "url": "https://cybernews.com/ai-news/ai-token-human-salaries-automation-spending-tech-execs/"
+                  },
+                  {
+                    "title": "Bosses Are Blowing More Money on AI Agents Than It'd Cost Them to Just Pay Human Workers",
+                    "url": "https://futurism.com/artificial-intelligence/bosses-more-money-ai-agents-human-salary"
+                  },
+                  {
+                    "title": "Nvidia exec says AI is more expensive than actual workers — yet some companies don't see the extra costs as a negative | Tom's Hardware",
+                    "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-exec-says-ai-is-more-expensive-than-actual-workers-yet-some-companies-dont-see-the-extra-costs-as-a-negative"
+                  },
+                  {
+                    "title": "It's Costing More To Use AI Than Human Employees, Nvidia Exec Says - Meta Platforms (NASDAQ:META), Micros - Benzinga",
+                    "url": "https://www.benzinga.com/news/topics/26/05/52422275/its-costing-more-to-use-ai-than-human-employees-nvidia-exec-says"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found:\n\n**Article Details:**\n\nThe Axios article features a quote from Bryan Catanzaro, vice president of applied deep learning at Nvidia, who told Axios: \"For my team, the cost of compute is far beyond the costs of the employees.\"\n\n**Article Date:** The Axios article was published on April 26, 2026\n\n**Article Title and Link:** The article is titled \"AI can cost more than human workers now\" and can be found at axios.com/2026/04/26/ai-cost-human-workers\n\n**Key Related Content:**\n\nUber's chief technology officer already blew through his full 2026 AI budget due to token costs, according to The Information. The article also discusses how Amos Bar-Joseph, CEO of Swan AI, bragged about his Anthropic bill in a viral LinkedIn post, saying \"We're building the first autonomous business - scaling with intelligence, not headcount.\""
+            ],
+            "durationSeconds": 4.918985874999999,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_015YgD9dLAECWoHzBou4xHLE",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Axios Nvidia Bryan Catanzaro \"cost of compute\" employees AI tokens article date\"\n\nLinks: [{\"title\":\"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\",\"url\":\"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"},{\"title\":\"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\",\"url\":\"https://x.com/efipm/status/2049888518801965529\"},{\"title\":\"AI can cost more than human workers now\",\"url\":\"https://www.axios.com/2026/04/26/ai-cost-human-workers\"},{\"title\":\"Nvidia AI Costs Exceed Human Employee Expenses\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"},{\"title\":\"AI Cost Exceeds Human Workers at Nvidia, Uber\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"},{\"title\":\"Companies fired workers to save money, now AI tokens cost more than salaries\",\"url\":\"https://cybernews.com/ai-news/ai-token-human-salaries-automation-spending-tech-execs/\"},{\"title\":\"Bosses Are Blowing More Money on AI Agents Than It'd Cost Them to Just Pay Human Workers\",\"url\":\"https://futurism.com/artificial-intelligence/bosses-more-money-ai-agents-human-salary\"},{\"title\":\"Nvidia exec says AI is more expensive than actual workers — yet some companies don't see the extra costs as a negative | Tom's Hardware\",\"url\":\"https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-exec-says-ai-is-more-expensive-than-actual-workers-yet-some-companies-dont-see-the-extra-costs-as-a-negative\"},{\"title\":\"It's Costing More To Use AI Than Human Employees, Nvidia Exec Says - Meta Platforms (NASDAQ:META), Micros - Benzinga\",\"url\":\"https://www.benzinga.com/news/topics/26/05/52422275/its-costing-more-to-use-ai-than-human-employees-nvidia-exec-says\"}]\n\nBased on the search results, here's what I found:\n\n**Article Details:**\n\nThe Axios article features a quote from Bryan Catanzaro, vice president of applied deep learning at Nvidia, who told Axios: \"For my team, the cost of compute is far beyond the costs of the employees.\"\n\n**Article Date:** The Axios article was published on April 26, 2026\n\n**Article Title and Link:** The article is titled \"AI can cost more than human workers now\" and can be found at axios.com/2026/04/26/ai-cost-human-workers\n\n**Key Related Content:**\n\nUber's chief technology officer already blew through his full 2026 AI budget due to token costs, according to The Information. The article also discusses how Amos Bar-Joseph, CEO of Swan AI, bragged about his Anthropic bill in a viral LinkedIn post, saying \"We're building the first autonomous business - scaling with intelligence, not headcount.\"\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Axios Nvidia Bryan Catanzaro \"cost of compute\" employees AI tokens article date",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_013XQV3BbSWAUb9RXW3q4Avp",
+                "content": [
+                  {
+                    "title": "‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune",
+                    "url": "https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/"
+                  },
+                  {
+                    "title": "Dr Efi Pylarinou on X: \"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \"For my team, the cost of compute is far beyond the costs of the employees.\" Uber blew entire 2026 AI budget early on coding\" / X",
+                    "url": "https://x.com/efipm/status/2049888518801965529"
+                  },
+                  {
+                    "title": "AI can cost more than human workers now",
+                    "url": "https://www.axios.com/2026/04/26/ai-cost-human-workers"
+                  },
+                  {
+                    "title": "Nvidia AI Costs Exceed Human Employee Expenses",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/"
+                  },
+                  {
+                    "title": "AI Cost Exceeds Human Workers at Nvidia, Uber",
+                    "url": "https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/"
+                  },
+                  {
+                    "title": "Companies fired workers to save money, now AI tokens cost more than salaries",
+                    "url": "https://cybernews.com/ai-news/ai-token-human-salaries-automation-spending-tech-execs/"
+                  },
+                  {
+                    "title": "Bosses Are Blowing More Money on AI Agents Than It'd Cost Them to Just Pay Human Workers",
+                    "url": "https://futurism.com/artificial-intelligence/bosses-more-money-ai-agents-human-salary"
+                  },
+                  {
+                    "title": "Nvidia exec says AI is more expensive than actual workers — yet some companies don't see the extra costs as a negative | Tom's Hardware",
+                    "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-exec-says-ai-is-more-expensive-than-actual-workers-yet-some-companies-dont-see-the-extra-costs-as-a-negative"
+                  },
+                  {
+                    "title": "It's Costing More To Use AI Than Human Employees, Nvidia Exec Says - Meta Platforms (NASDAQ:META), Micros - Benzinga",
+                    "url": "https://www.benzinga.com/news/topics/26/05/52422275/its-costing-more-to-use-ai-than-human-employees-nvidia-exec-says"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found:\n\n**Article Details:**\n\nThe Axios article features a quote from Bryan Catanzaro, vice president of applied deep learning at Nvidia, who told Axios: \"For my team, the cost of compute is far beyond the costs of the employees.\"\n\n**Article Date:** The Axios article was published on April 26, 2026\n\n**Article Title and Link:** The article is titled \"AI can cost more than human workers now\" and can be found at axios.com/2026/04/26/ai-cost-human-workers\n\n**Key Related Content:**\n\nUber's chief technology officer already blew through his full 2026 AI budget due to token costs, according to The Information. The article also discusses how Amos Bar-Joseph, CEO of Swan AI, bragged about his Anthropic bill in a viral LinkedIn post, saying \"We're building the first autonomous business - scaling with intelligence, not headcount.\""
+            ],
+            "durationSeconds": 4.918985874999999,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_015YgD9dLAECWoHzBou4xHLE",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Axios Nvidia Bryan Catanzaro \"cost of compute\" employees AI tokens article date\"\n\nLinks: [{\"title\":\"‘The cost of compute is far beyond the costs of the employees’: Nvidia exec says right now AI is more expensive than paying human workers | Fortune\",\"url\":\"https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/\"},{\"title\":\"Dr Efi Pylarinou on X: \\\"AI Can Cost More Than Human Workers Now Axios reports some companies spending more on AI compute/tokens than on salaries. Nvidia VP Bryan Catanzaro: \\\"For my team, the cost of compute is far beyond the costs of the employees.\\\" Uber blew entire 2026 AI budget early on coding\\\" / X\",\"url\":\"https://x.com/efipm/status/2049888518801965529\"},{\"title\":\"AI can cost more than human workers now\",\"url\":\"https://www.axios.com/2026/04/26/ai-cost-human-workers\"},{\"title\":\"Nvidia AI Costs Exceed Human Employee Expenses\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-compute-costs-now-exceed-employee-salaries-raising-roi-questions-26109/\"},{\"title\":\"AI Cost Exceeds Human Workers at Nvidia, Uber\",\"url\":\"https://theoutpost.ai/news-story/nvidia-exec-reveals-ai-is-more-expensive-than-human-workers-as-compute-costs-soar-beyond-salaries-25740/\"},{\"title\":\"Companies fired workers to save money, now AI tokens cost more than salaries\",\"url\":\"https://cybernews.com/ai-news/ai-token-human-salaries-automation-spending-tech-execs/\"},{\"title\":\"Bosses Are Blowing More Money on AI Agents Than It'd Cost Them to Just Pay Human Workers\",\"url\":\"https://futurism.com/artificial-intelligence/bosses-more-money-ai-agents-human-salary\"},{\"title\":\"Nvidia exec says AI is more expensive than actual workers — yet some companies don't see the extra costs as a negative | Tom's Hardware\",\"url\":\"https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-exec-says-ai-is-more-expensive-than-actual-workers-yet-some-companies-dont-see-the-extra-costs-as-a-negative\"},{\"title\":\"It's Costing More To Use AI Than Human Employees, Nvidia Exec Says - Meta Platforms (NASDAQ:META), Micros - Benzinga\",\"url\":\"https://www.benzinga.com/news/topics/26/05/52422275/its-costing-more-to-use-ai-than-human-employees-nvidia-exec-says\"}]\n\nBased on the search results, here's what I found:\n\n**Article Details:**\n\nThe Axios article features a quote from Bryan Catanzaro, vice president of applied deep learning at Nvidia, who told Axios: \"For my team, the cost of compute is far beyond the costs of the employees.\"\n\n**Article Date:** The Axios article was published on April 26, 2026\n\n**Article Title and Link:** The article is titled \"AI can cost more than human workers now\" and can be found at axios.com/2026/04/26/ai-cost-human-workers\n\n**Key Related Content:**\n\nUber's chief technology officer already blew through his full 2026 AI budget due to token costs, according to The Information. The article also discusses how Amos Bar-Joseph, CEO of Swan AI, bragged about his Anthropic bill in a viral LinkedIn post, saying \"We're building the first autonomous business - scaling with intelligence, not headcount.\"\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Axios Nvidia Bryan Catanzaro \"cost of compute\" employees AI tokens article date"
+        }
+      }
+    },
+    {
+      "step_id": 18,
+      "timestamp": "2026-06-01T19:10:00.627Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 35957,
+        "completion_tokens": 3072,
+        "cached_tokens": 35955,
+        "extra": {
+          "cache_creation_input_tokens": 3649,
+          "cache_read_input_tokens": 35955,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3649,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3072,
+              "cache_read_input_tokens": 35955,
+              "cache_creation_input_tokens": 3649,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3649
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 19,
+      "timestamp": "2026-06-01T19:10:01.638Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Both facts verified. Note: Catanzaro's Axios quote is actually from **April 26, 2026**, not May 29 — I'll anchor it correctly rather than imply both happened the same day. Writing the entry now.",
+      "metrics": {
+        "prompt_tokens": 35957,
+        "completion_tokens": 3072,
+        "cached_tokens": 35955,
+        "extra": {
+          "cache_creation_input_tokens": 3649,
+          "cache_read_input_tokens": 35955,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3649,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3072,
+              "cache_read_input_tokens": 35955,
+              "cache_creation_input_tokens": 3649,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3649
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 20,
+      "timestamp": "2026-06-01T19:10:32.182Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Write toolu_0178kCsQA7PwEEyFR9PiyMLR",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_0178kCsQA7PwEEyFR9PiyMLR",
+          "function_name": "Write",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md",
+            "content": "# 2026-05-29：「记忆中第一次，技术成本开始和人力成本持平」——AI 算力账单逼平甚至超过工资单\n\n5 月 29 日，Glean CEO Arvind Jain 在接受 CNBC 记者 Deirdre Bosa 采访时这样讲道：「这是我记忆中第一次，技术成本开始和人力成本持平。」（\"This is the first time ever that I can remember that technology costs the same as people.\"）他补充说，过去之所以从没出现过「选技术还是选人」这种对话，是因为「对任何一门生意来说，技术历来只是总成本里的一小部分」。Jain 还提到，客户告诉 Glean，本该按年编列的 AI 预算正在一两个月内被用光。\n\n英伟达应用深度学习副总裁 Bryan Catanzaro 的观察也印证了这一点。他在更早的一篇 Axios 访谈（发表于 **4 月 26 日**）里提到：对于他的团队来说，算力成本已经**远远超过**员工薪资（\"For my team, the cost of compute is far beyond the costs of the employees.\"）。\n\n两条引述出自不同时间、不同场合——Jain 说的是「持平」，Catanzaro 说的是「远超」——但指向同一个转折：在生成式 AI 大规模进入工作流之后，token／算力开支第一次升到了和工资单同一量级，开始进入企业「人 vs 技术」的预算权衡。\n\n## 当事人各自的主张\n\n- **Glean Arvind Jain（CNBC，5/29）**：历史上技术只是经营成本的零头，所以从不需要把它和人力放在一起比；如今两者持平，企业第一次要在「上技术还是上人」之间做选择。佐证是客户的年度 AI 预算正被一两个月烧完。\n- **英伟达 Bryan Catanzaro（Axios，4/26）**：站在使用方角度给出更激进的读数——他自己团队的算力开支已经远超员工薪资，即 AI 当下不是在替企业省人力钱，而是比养人更贵。\n- **Axios 报道补充的旁证**：The Information 报道称 Uber 的 CTO 已经提前烧光了 2026 年全年的 AI 预算；Swan AI 的 CEO Amos Bar-Joseph 在 LinkedIn 上炫耀自家的 Anthropic 账单，自称在做「第一家自主企业——靠智能而非靠人头扩张」。这些都是「算力成本逼近／超过人力成本」的在野证据。\n\n## 这条新闻的意义\n\n1. **量级转折，而非纯粹涨价**：关键不在「AI 很贵」，而在于它第一次跟工资进了同一个数量级。技术成本一旦不再是零头，企业资本支出（买算力）和运营支出（发工资）之间就出现了直接替代关系——这正是 Jain 说「第一次要做这个选择」的含义。\n2. **「裁人省钱」的叙事被反转**：Catanzaro 和 Axios 给出的实测是，眼下用 AI 干同样的活，账面上可能比雇人更贵。先裁人、再用 AI 顶上的逻辑，在 token 价格曲线被打平之前未必成立。\n3. **预算被「月度化」击穿**：按年编列的 AI 预算一两个月用光、Uber 全年预算提前烧完，说明 token 消耗的波动性和不可预测性正在击穿传统 IT 预算的编制方式——这是 CFO 层面的新问题，不只是工程问题。\n4. **和「Dark Output」「AI 替代白领」是同一枚硬币的两面**：成本这一侧（算力、token 支出）清晰可见、当期入账，而产出那一侧是否兑现仍有争议（参见 [5/31 SemiAnalysis「AI Dark Output」](2026-05-31-tokenmaxxing.md)、[5/29 MIT FutureTech 评估](2026-05-29-mit-crashing-waves-rising-tides.md)）。当成本端已经逼平工资单、产出端却仍待验证时，ROI 问题就被顶到了台面。\n\n## 相关资料\n\n- [2026-05-31：AI 的「Dark Output」](2026-05-31-tokenmaxxing.md) — 成本可见、产出统计不可见的论证（同一枚硬币的产出侧）\n- [2026-05-29：MIT FutureTech 17,000 次双盲评估](2026-05-29-mit-crashing-waves-rising-tides.md) — AI 在文字任务上的实际替代进度\n\n## 信源\n\n- [Tokens or humans? The new corporate trade-off — CNBC（Deirdre Bosa，2026-05-29）](https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html)\n- [AI tokens or humans? The new debate reshaping corporate budgets（视频）— CNBC](https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html)\n- [AI can cost more than human workers now — Axios（2026-04-26）](https://www.axios.com/2026/04/26/ai-cost-human-workers)\n- ['The cost of compute is far beyond the costs of the employees': Nvidia exec — Fortune（2026-04-28）](https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/)\n"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_0178kCsQA7PwEEyFR9PiyMLR",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md (file state is current in your context — no need to Read it back)\n\n[metadata] {\"type\": \"create\", \"filePath\": \"/Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md\", \"content\": \"# 2026-05-29：「记忆中第一次，技术成本开始和人力成本持平」——AI 算力账单逼平甚至超过工资单\\n\\n5 月 29 日，Glean CEO Arvind Jain 在接受 CNBC 记者 Deirdre Bosa 采访时这样讲道：「这是我记忆中第一次，技术成本开始和人力成本持平。」（\\\"This is the first time ever that I can remember that technology costs the same as people.\\\"）他补充说，过去之所以从没出现过「选技术还是选人」这种对话，是因为「对任何一门生意来说，技术历来只是总成本里的一小部分」。Jain 还提到，客户告诉 Glean，本该按年编列的 AI 预算正在一两个月内被用光。\\n\\n英伟达应用深度学习副总裁 Bryan Catanzaro 的观察也印证了这一点。他在更早的一篇 Axios 访谈（发表于 **4 月 26 日**）里提到：对于他的团队来说，算力成本已经**远远超过**员工薪资（\\\"For my team, the cost of compute is far beyond the costs of the employees.\\\"）。\\n\\n两条引述出自不同时间、不同场合——Jain 说的是「持平」，Catanzaro 说的是「远超」——但指向同一个转折：在生成式 AI 大规模进入工作流之后，token／算力开支第一次升到了和工资单同一量级，开始进入企业「人 vs 技术」的预算权衡。\\n\\n## 当事人各自的主张\\n\\n- **Glean Arvind Jain（CNBC，5/29）**：历史上技术只是经营成本的零头，所以从不需要把它和人力放在一起比；如今两者持平，企业第一次要在「上技术还是上人」之间做选择。佐证是客户的年度 AI 预算正被一两个月烧完。\\n- **英伟达 Bryan Catanzaro（Axios，4/26）**：站在使用方角度给出更激进的读数——他自己团队的算力开支已经远超员工薪资，即 AI 当下不是在替企业省人力钱，而是比养人更贵。\\n- **Axios 报道补充的旁证**：The Information 报道称 Uber 的 CTO 已经提前烧光了 2026 年全年的 AI 预算；Swan AI 的 CEO Amos Bar-Joseph 在 LinkedIn 上炫耀自家的 Anthropic 账单，自称在做「第一家自主企业——靠智能而非靠人头扩张」。这些都是「算力成本逼近／超过人力成本」的在野证据。\\n\\n## 这条新闻的意义\\n\\n1. **量级转折，而非纯粹涨价**：关键不在「AI 很贵」，而在于它第一次跟工资进了同一个数量级。技术成本一旦不再是零头，企业资本支出（买算力）和运营支出（发工资）之间就出现了直接替代关系——这正是 Jain 说「第一次要做这个选择」的含义。\\n2. **「裁人省钱」的叙事被反转**：Catanzaro 和 Axios 给出的实测是，眼下用 AI 干同样的活，账面上可能比雇人更贵。先裁人、再用 AI 顶上的逻辑，在 token 价格曲线被打平之前未必成立。\\n3. **预算被「月度化」击穿**：按年编列的 AI 预算一两个月用光、Uber 全年预算提前烧完，说明 token 消耗的波动性和不可预测性正在击穿传统 IT 预算的编制方式——这是 CFO 层面的新问题，不只是工程问题。\\n4. **和「Dark Output」「AI 替代白领」是同一枚硬币的两面**：成本这一侧（算力、token 支出）清晰可见、当期入账，而产出那一侧是否兑现仍有争议（参见 [5/31 SemiAnalysis「AI Dark Output」](2026-05-31-tokenmaxxing.md)、[5/29 MIT FutureTech 评估](2026-05-29-mit-crashing-waves-rising-tides.md)）。当成本端已经逼平工资单、产出端却仍待验证时，ROI 问题就被顶到了台面。\\n\\n## 相关资料\\n\\n- [2026-05-31：AI 的「Dark Output」](2026-05-31-tokenmaxxing.md) — 成本可见、产出统计不可见的论证（同一枚硬币的产出侧）\\n- [2026-05-29：MIT FutureTech 17,000 次双盲评估](2026-05-29-mit-crashing-waves-rising-tides.md) — AI 在文字任务上的实际替代进度\\n\\n## 信源\\n\\n- [Tokens or humans? The new corporate trade-off — CNBC（Deirdre Bosa，2026-05-29）](https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html)\\n- [AI tokens or humans? The new debate reshaping corporate budgets（视频）— CNBC](https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html)\\n- [AI can cost more than human workers now — Axios（2026-04-26）](https://www.axios.com/2026/04/26/ai-cost-human-workers)\\n- ['The cost of compute is far beyond the costs of the employees': Nvidia exec — Fortune（2026-04-28）](https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/)\\n\", \"structuredPatch\": [], \"originalFile\": null, \"userModified\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 35957,
+        "completion_tokens": 3072,
+        "cached_tokens": 35955,
+        "extra": {
+          "cache_creation_input_tokens": 3649,
+          "cache_read_input_tokens": 35955,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3649,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3072,
+              "cache_read_input_tokens": 35955,
+              "cache_creation_input_tokens": 3649,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3649
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Write",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "create",
+            "filePath": "/Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md",
+            "content": "# 2026-05-29：「记忆中第一次，技术成本开始和人力成本持平」——AI 算力账单逼平甚至超过工资单\n\n5 月 29 日，Glean CEO Arvind Jain 在接受 CNBC 记者 Deirdre Bosa 采访时这样讲道：「这是我记忆中第一次，技术成本开始和人力成本持平。」（\"This is the first time ever that I can remember that technology costs the same as people.\"）他补充说，过去之所以从没出现过「选技术还是选人」这种对话，是因为「对任何一门生意来说，技术历来只是总成本里的一小部分」。Jain 还提到，客户告诉 Glean，本该按年编列的 AI 预算正在一两个月内被用光。\n\n英伟达应用深度学习副总裁 Bryan Catanzaro 的观察也印证了这一点。他在更早的一篇 Axios 访谈（发表于 **4 月 26 日**）里提到：对于他的团队来说，算力成本已经**远远超过**员工薪资（\"For my team, the cost of compute is far beyond the costs of the employees.\"）。\n\n两条引述出自不同时间、不同场合——Jain 说的是「持平」，Catanzaro 说的是「远超」——但指向同一个转折：在生成式 AI 大规模进入工作流之后，token／算力开支第一次升到了和工资单同一量级，开始进入企业「人 vs 技术」的预算权衡。\n\n## 当事人各自的主张\n\n- **Glean Arvind Jain（CNBC，5/29）**：历史上技术只是经营成本的零头，所以从不需要把它和人力放在一起比；如今两者持平，企业第一次要在「上技术还是上人」之间做选择。佐证是客户的年度 AI 预算正被一两个月烧完。\n- **英伟达 Bryan Catanzaro（Axios，4/26）**：站在使用方角度给出更激进的读数——他自己团队的算力开支已经远超员工薪资，即 AI 当下不是在替企业省人力钱，而是比养人更贵。\n- **Axios 报道补充的旁证**：The Information 报道称 Uber 的 CTO 已经提前烧光了 2026 年全年的 AI 预算；Swan AI 的 CEO Amos Bar-Joseph 在 LinkedIn 上炫耀自家的 Anthropic 账单，自称在做「第一家自主企业——靠智能而非靠人头扩张」。这些都是「算力成本逼近／超过人力成本」的在野证据。\n\n## 这条新闻的意义\n\n1. **量级转折，而非纯粹涨价**：关键不在「AI 很贵」，而在于它第一次跟工资进了同一个数量级。技术成本一旦不再是零头，企业资本支出（买算力）和运营支出（发工资）之间就出现了直接替代关系——这正是 Jain 说「第一次要做这个选择」的含义。\n2. **「裁人省钱」的叙事被反转**：Catanzaro 和 Axios 给出的实测是，眼下用 AI 干同样的活，账面上可能比雇人更贵。先裁人、再用 AI 顶上的逻辑，在 token 价格曲线被打平之前未必成立。\n3. **预算被「月度化」击穿**：按年编列的 AI 预算一两个月用光、Uber 全年预算提前烧完，说明 token 消耗的波动性和不可预测性正在击穿传统 IT 预算的编制方式——这是 CFO 层面的新问题，不只是工程问题。\n4. **和「Dark Output」「AI 替代白领」是同一枚硬币的两面**：成本这一侧（算力、token 支出）清晰可见、当期入账，而产出那一侧是否兑现仍有争议（参见 [5/31 SemiAnalysis「AI Dark Output」](2026-05-31-tokenmaxxing.md)、[5/29 MIT FutureTech 评估](2026-05-29-mit-crashing-waves-rising-tides.md)）。当成本端已经逼平工资单、产出端却仍待验证时，ROI 问题就被顶到了台面。\n\n## 相关资料\n\n- [2026-05-31：AI 的「Dark Output」](2026-05-31-tokenmaxxing.md) — 成本可见、产出统计不可见的论证（同一枚硬币的产出侧）\n- [2026-05-29：MIT FutureTech 17,000 次双盲评估](2026-05-29-mit-crashing-waves-rising-tides.md) — AI 在文字任务上的实际替代进度\n\n## 信源\n\n- [Tokens or humans? The new corporate trade-off — CNBC（Deirdre Bosa，2026-05-29）](https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html)\n- [AI tokens or humans? The new debate reshaping corporate budgets（视频）— CNBC](https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html)\n- [AI can cost more than human workers now — Axios（2026-04-26）](https://www.axios.com/2026/04/26/ai-cost-human-workers)\n- ['The cost of compute is far beyond the costs of the employees': Nvidia exec — Fortune（2026-04-28）](https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/)\n",
+            "structuredPatch": [],
+            "originalFile": null,
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0178kCsQA7PwEEyFR9PiyMLR",
+            "type": "tool_result",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "create",
+            "filePath": "/Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md",
+            "content": "# 2026-05-29：「记忆中第一次，技术成本开始和人力成本持平」——AI 算力账单逼平甚至超过工资单\n\n5 月 29 日，Glean CEO Arvind Jain 在接受 CNBC 记者 Deirdre Bosa 采访时这样讲道：「这是我记忆中第一次，技术成本开始和人力成本持平。」（\"This is the first time ever that I can remember that technology costs the same as people.\"）他补充说，过去之所以从没出现过「选技术还是选人」这种对话，是因为「对任何一门生意来说，技术历来只是总成本里的一小部分」。Jain 还提到，客户告诉 Glean，本该按年编列的 AI 预算正在一两个月内被用光。\n\n英伟达应用深度学习副总裁 Bryan Catanzaro 的观察也印证了这一点。他在更早的一篇 Axios 访谈（发表于 **4 月 26 日**）里提到：对于他的团队来说，算力成本已经**远远超过**员工薪资（\"For my team, the cost of compute is far beyond the costs of the employees.\"）。\n\n两条引述出自不同时间、不同场合——Jain 说的是「持平」，Catanzaro 说的是「远超」——但指向同一个转折：在生成式 AI 大规模进入工作流之后，token／算力开支第一次升到了和工资单同一量级，开始进入企业「人 vs 技术」的预算权衡。\n\n## 当事人各自的主张\n\n- **Glean Arvind Jain（CNBC，5/29）**：历史上技术只是经营成本的零头，所以从不需要把它和人力放在一起比；如今两者持平，企业第一次要在「上技术还是上人」之间做选择。佐证是客户的年度 AI 预算正被一两个月烧完。\n- **英伟达 Bryan Catanzaro（Axios，4/26）**：站在使用方角度给出更激进的读数——他自己团队的算力开支已经远超员工薪资，即 AI 当下不是在替企业省人力钱，而是比养人更贵。\n- **Axios 报道补充的旁证**：The Information 报道称 Uber 的 CTO 已经提前烧光了 2026 年全年的 AI 预算；Swan AI 的 CEO Amos Bar-Joseph 在 LinkedIn 上炫耀自家的 Anthropic 账单，自称在做「第一家自主企业——靠智能而非靠人头扩张」。这些都是「算力成本逼近／超过人力成本」的在野证据。\n\n## 这条新闻的意义\n\n1. **量级转折，而非纯粹涨价**：关键不在「AI 很贵」，而在于它第一次跟工资进了同一个数量级。技术成本一旦不再是零头，企业资本支出（买算力）和运营支出（发工资）之间就出现了直接替代关系——这正是 Jain 说「第一次要做这个选择」的含义。\n2. **「裁人省钱」的叙事被反转**：Catanzaro 和 Axios 给出的实测是，眼下用 AI 干同样的活，账面上可能比雇人更贵。先裁人、再用 AI 顶上的逻辑，在 token 价格曲线被打平之前未必成立。\n3. **预算被「月度化」击穿**：按年编列的 AI 预算一两个月用光、Uber 全年预算提前烧完，说明 token 消耗的波动性和不可预测性正在击穿传统 IT 预算的编制方式——这是 CFO 层面的新问题，不只是工程问题。\n4. **和「Dark Output」「AI 替代白领」是同一枚硬币的两面**：成本这一侧（算力、token 支出）清晰可见、当期入账，而产出那一侧是否兑现仍有争议（参见 [5/31 SemiAnalysis「AI Dark Output」](2026-05-31-tokenmaxxing.md)、[5/29 MIT FutureTech 评估](2026-05-29-mit-crashing-waves-rising-tides.md)）。当成本端已经逼平工资单、产出端却仍待验证时，ROI 问题就被顶到了台面。\n\n## 相关资料\n\n- [2026-05-31：AI 的「Dark Output」](2026-05-31-tokenmaxxing.md) — 成本可见、产出统计不可见的论证（同一枚硬币的产出侧）\n- [2026-05-29：MIT FutureTech 17,000 次双盲评估](2026-05-29-mit-crashing-waves-rising-tides.md) — AI 在文字任务上的实际替代进度\n\n## 信源\n\n- [Tokens or humans? The new corporate trade-off — CNBC（Deirdre Bosa，2026-05-29）](https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html)\n- [AI tokens or humans? The new debate reshaping corporate budgets（视频）— CNBC](https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html)\n- [AI can cost more than human workers now — Axios（2026-04-26）](https://www.axios.com/2026/04/26/ai-cost-human-workers)\n- ['The cost of compute is far beyond the costs of the employees': Nvidia exec — Fortune（2026-04-28）](https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/)\n",
+            "structuredPatch": [],
+            "originalFile": null,
+            "userModified": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0178kCsQA7PwEEyFR9PiyMLR",
+            "type": "tool_result",
+            "content": "File created successfully at: /Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/news/2026-05-29-compute-vs-labor-cost.md",
+          "content": "# 2026-05-29：「记忆中第一次，技术成本开始和人力成本持平」——AI 算力账单逼平甚至超过工资单\n\n5 月 29 日，Glean CEO Arvind Jain 在接受 CNBC 记者 Deirdre Bosa 采访时这样讲道：「这是我记忆中第一次，技术成本开始和人力成本持平。」（\"This is the first time ever that I can remember that technology costs the same as people.\"）他补充说，过去之所以从没出现过「选技术还是选人」这种对话，是因为「对任何一门生意来说，技术历来只是总成本里的一小部分」。Jain 还提到，客户告诉 Glean，本该按年编列的 AI 预算正在一两个月内被用光。\n\n英伟达应用深度学习副总裁 Bryan Catanzaro 的观察也印证了这一点。他在更早的一篇 Axios 访谈（发表于 **4 月 26 日**）里提到：对于他的团队来说，算力成本已经**远远超过**员工薪资（\"For my team, the cost of compute is far beyond the costs of the employees.\"）。\n\n两条引述出自不同时间、不同场合——Jain 说的是「持平」，Catanzaro 说的是「远超」——但指向同一个转折：在生成式 AI 大规模进入工作流之后，token／算力开支第一次升到了和工资单同一量级，开始进入企业「人 vs 技术」的预算权衡。\n\n## 当事人各自的主张\n\n- **Glean Arvind Jain（CNBC，5/29）**：历史上技术只是经营成本的零头，所以从不需要把它和人力放在一起比；如今两者持平，企业第一次要在「上技术还是上人」之间做选择。佐证是客户的年度 AI 预算正被一两个月烧完。\n- **英伟达 Bryan Catanzaro（Axios，4/26）**：站在使用方角度给出更激进的读数——他自己团队的算力开支已经远超员工薪资，即 AI 当下不是在替企业省人力钱，而是比养人更贵。\n- **Axios 报道补充的旁证**：The Information 报道称 Uber 的 CTO 已经提前烧光了 2026 年全年的 AI 预算；Swan AI 的 CEO Amos Bar-Joseph 在 LinkedIn 上炫耀自家的 Anthropic 账单，自称在做「第一家自主企业——靠智能而非靠人头扩张」。这些都是「算力成本逼近／超过人力成本」的在野证据。\n\n## 这条新闻的意义\n\n1. **量级转折，而非纯粹涨价**：关键不在「AI 很贵」，而在于它第一次跟工资进了同一个数量级。技术成本一旦不再是零头，企业资本支出（买算力）和运营支出（发工资）之间就出现了直接替代关系——这正是 Jain 说「第一次要做这个选择」的含义。\n2. **「裁人省钱」的叙事被反转**：Catanzaro 和 Axios 给出的实测是，眼下用 AI 干同样的活，账面上可能比雇人更贵。先裁人、再用 AI 顶上的逻辑，在 token 价格曲线被打平之前未必成立。\n3. **预算被「月度化」击穿**：按年编列的 AI 预算一两个月用光、Uber 全年预算提前烧完，说明 token 消耗的波动性和不可预测性正在击穿传统 IT 预算的编制方式——这是 CFO 层面的新问题，不只是工程问题。\n4. **和「Dark Output」「AI 替代白领」是同一枚硬币的两面**：成本这一侧（算力、token 支出）清晰可见、当期入账，而产出那一侧是否兑现仍有争议（参见 [5/31 SemiAnalysis「AI Dark Output」](2026-05-31-tokenmaxxing.md)、[5/29 MIT FutureTech 评估](2026-05-29-mit-crashing-waves-rising-tides.md)）。当成本端已经逼平工资单、产出端却仍待验证时，ROI 问题就被顶到了台面。\n\n## 相关资料\n\n- [2026-05-31：AI 的「Dark Output」](2026-05-31-tokenmaxxing.md) — 成本可见、产出统计不可见的论证（同一枚硬币的产出侧）\n- [2026-05-29：MIT FutureTech 17,000 次双盲评估](2026-05-29-mit-crashing-waves-rising-tides.md) — AI 在文字任务上的实际替代进度\n\n## 信源\n\n- [Tokens or humans? The new corporate trade-off — CNBC（Deirdre Bosa，2026-05-29）](https://www.cnbc.com/2026/05/29/-tokens-or-humans-the-new-corporate-trade-off.html)\n- [AI tokens or humans? The new debate reshaping corporate budgets（视频）— CNBC](https://www.cnbc.com/video/2026/05/29/ai-tokens-or-humans-the-new-debate-reshaping-corporate-budgets.html)\n- [AI can cost more than human workers now — Axios（2026-04-26）](https://www.axios.com/2026/04/26/ai-cost-human-workers)\n- ['The cost of compute is far beyond the costs of the employees': Nvidia exec — Fortune（2026-04-28）](https://fortune.com/2026/04/28/nvidia-executive-cost-of-ai-is-greater-than-cost-of-employees/)\n"
+        }
+      }
+    },
+    {
+      "step_id": 21,
+      "timestamp": "2026-06-01T19:10:39.416Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Now update the README index (date-descending; this 5/29 entry goes after the 5/31 row, before the existing 5/29 MIT row).",
+      "metrics": {
+        "prompt_tokens": 39606,
+        "completion_tokens": 367,
+        "cached_tokens": 39604,
+        "extra": {
+          "cache_creation_input_tokens": 3138,
+          "cache_read_input_tokens": 39604,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3138,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 367,
+              "cache_read_input_tokens": 39604,
+              "cache_creation_input_tokens": 3138,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3138
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 22,
+      "timestamp": "2026-06-01T19:10:42.620Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01Qe1ZcqBec4s9sZDWF8r4SM",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Qe1ZcqBec4s9sZDWF8r4SM",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/README.md",
+            "old_string": "| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪",
+            "new_string": "| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Qe1ZcqBec4s9sZDWF8r4SM",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/README.md\", \"oldString\": \"| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\", \"newString\": \"| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |\\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\", \"originalFile\": \"# Controversy\\n\\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\\n\\n## 索引\\n\\n| 日期 | 主题 | 文件 |\\n| --- | --- | --- |\\n| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\\\"AI 突袭式替代白领\\\"——2029 年才能在 80–95% 文字任务上\\\"勉强胜任\\\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\\n\", \"structuredPatch\": [{\"oldStart\": 7, \"oldLines\": 6, \"newStart\": 7, \"newLines\": 7, \"lines\": [\" | 日期 | 主题 | 文件 |\", \" | --- | --- | --- |\", \" | 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\", \"+| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |\", \" | 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\\\"AI 突袭式替代白领\\\"——2029 年才能在 80–95% 文字任务上\\\"勉强胜任\\\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\", \" | 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\", \" | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 39606,
+        "completion_tokens": 367,
+        "cached_tokens": 39604,
+        "extra": {
+          "cache_creation_input_tokens": 3138,
+          "cache_read_input_tokens": 39604,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3138,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 367,
+              "cache_read_input_tokens": 39604,
+              "cache_creation_input_tokens": 3138,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3138
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/README.md",
+            "oldString": "| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪",
+            "newString": "| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪",
+            "originalFile": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+            "structuredPatch": [
+              {
+                "oldStart": 7,
+                "oldLines": 6,
+                "newStart": 7,
+                "newLines": 7,
+                "lines": [
+                  " | 日期 | 主题 | 文件 |",
+                  " | --- | --- | --- |",
+                  " | 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |",
+                  "+| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |",
+                  " | 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |",
+                  " | 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |",
+                  " | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Qe1ZcqBec4s9sZDWF8r4SM",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/README.md",
+            "oldString": "| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪",
+            "newString": "| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪",
+            "originalFile": "# Controversy\n\n每日 AI / 科技热点新闻的中文研究笔记。一手信源以英文报道、官方公告为主，结合 claude.ai 上的对话稿（存放在 `chat/`）作为切入点。\n\n## 索引\n\n| 日期 | 主题 | 文件 |\n| --- | --- | --- |\n| 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |\n| 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |\n| 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |\n| 2026-05-13 | 新闻｜Unitree GD01 量产载人机甲发布——技术难点分析 | [news/2026-05-13-unitree-gd01.md](news/2026-05-13-unitree-gd01.md) |\n| 2026-05-11 | 新闻｜Claude Mythos 在 METR 评测中撞上基准上限 | [news/2026-05-11-claude-mythos-metr.md](news/2026-05-11-claude-mythos-metr.md) |\n",
+            "structuredPatch": [
+              {
+                "oldStart": 7,
+                "oldLines": 6,
+                "newStart": 7,
+                "newLines": 7,
+                "lines": [
+                  " | 日期 | 主题 | 文件 |",
+                  " | --- | --- | --- |",
+                  " | 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |",
+                  "+| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |",
+                  " | 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪\"AI 突袭式替代白领\"——2029 年才能在 80–95% 文字任务上\"勉强胜任\" | [news/2026-05-29-mit-crashing-waves-rising-tides.md](news/2026-05-29-mit-crashing-waves-rising-tides.md) |",
+                  " | 2026-05-15 | 素材｜一个二十多年老兵的忧心：那条从 Debug 开始走向资深工程师的路，正在崩塌 | [news/2026-05-15-debug-path-collapse.md](news/2026-05-15-debug-path-collapse.md) |",
+                  " | 2026-05-13 | 想法｜美股软件股近期重挫——板块名单 + SAP 案例 + 企业软件栈 + SDLC 栈 Agent 重构 | [chat/美股软件股近期重挫 (2026-05-13).md](chat/美股软件股近期重挫%20(2026-05-13).md) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Qe1ZcqBec4s9sZDWF8r4SM",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/README.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/README.md",
+          "old_string": "| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪",
+          "new_string": "| 2026-05-29 | 新闻｜「记忆中第一次，技术成本和人力成本持平」——Glean CEO（CNBC）与英伟达 VP（Axios）印证 AI 算力账单逼平甚至超过工资单 | [news/2026-05-29-compute-vs-labor-cost.md](news/2026-05-29-compute-vs-labor-cost.md) |\n| 2026-05-29 | 新闻｜MIT FutureTech 17,000 次双盲评估证伪"
+        }
+      }
+    },
+    {
+      "step_id": 23,
+      "timestamp": "2026-06-01T19:10:54.574Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "已添加。先说核查结果，因为这里有一处事实需要更正：\n\n**两条引述不是同一天、同一场合**——\n- **Glean Arvind Jain** 的话确实出自 **5 月 29 日** CNBC、Deirdre Bosa 的采访，原话核对无误：*\"This is the first time ever that I can remember that technology costs the same as people.\"*\n- 但 **Bryan Catanzaro** 的话出自 **Axios，发表于 4 月 26 日**（Fortune 转载在 4/28），不是 5/29。原话 *\"For my team, the cost of compute is far beyond the costs of the employees.\"* 也核对无误。\n\n所以我没有把两者写成「同一天发生」，而是分别标了日期，并点明：Jain 说的是「**持平**」，Catanzaro 说的是「**远超**」，两者指向同一转折但措辞不同。\n\n写进文件的内容：\n- `news/2026-05-29-compute-vs-labor-cost.md`，按新闻模板：核心事实段 + `当事人各自的主张`（含 Axios 报道的 Uber 烧光全年预算、Swan AI 等旁证）+ `这条新闻的意义`（4 点）+ 信源。\n- 在「意义」里把它和 5/31「Dark Output」、5/29 MIT 评估关联成「成本侧 vs 产出侧」的同一议题，并互链。\n- README 索引在 5/31 之后、5/29 MIT 之前插入一行。\n\n要不要我把 Catanzaro 这条单独提到标题/开头之外更靠前的位置，或者你希望严格只保留 5/29 这一条事实、把 4/26 的 Axios 降为脚注？",
+      "metrics": {
+        "prompt_tokens": 42744,
+        "completion_tokens": 584,
+        "cached_tokens": 42742,
+        "extra": {
+          "cache_creation_input_tokens": 441,
+          "cache_read_input_tokens": 42742,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 441,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 584,
+              "cache_read_input_tokens": 42742,
+              "cache_creation_input_tokens": 441,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 441
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 666203,
+    "total_completion_tokens": 15521,
+    "total_cached_tokens": 653857,
+    "total_steps": 23,
+    "extra": {
+      "service_tiers": [
+        "standard"
+      ],
+      "total_cache_creation_input_tokens": 107026,
+      "total_cache_read_input_tokens": 653857
+    }
+  }
+}
