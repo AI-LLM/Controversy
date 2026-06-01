@@ -413,10 +413,11 @@ def plot_tokens_per_task():
                     "agent loop, single message", "single conversation",
                     "audiobook generation"))
 
+    # 过滤：忽略"累积/窗口"语义异常点
+    rows = [r for r in rows if not is_outlier(r)]
     for r in rows:
         r["_x"] = months_since(r["effective_date"], TOKEN_ORIGIN)
         r["_y"] = float(r["value"])
-        r["_outlier"] = is_outlier(r)
 
     provider_color = {
         "OpenAI": "#10a37f",
@@ -440,25 +441,17 @@ def plot_tokens_per_task():
         by_provider.setdefault(p, []).append(r)
     for p, items in by_provider.items():
         c = provider_color.get(p, default_color)
-        xs = [r["_x"] for r in items if not r["_outlier"]]
-        ys = [r["_y"] for r in items if not r["_outlier"]]
-        ss = [conf_size.get(r["confidence"], 40) for r in items if not r["_outlier"]]
+        xs = [r["_x"] for r in items]
+        ys = [r["_y"] for r in items]
+        ss = [conf_size.get(r["confidence"], 40) for r in items]
         if xs:
             ax.scatter(xs, ys, s=ss, c=c, alpha=0.75, edgecolors="white",
                        linewidths=0.6, label=p, zorder=3)
-        # outlier：空心方块 + 注释
-        ox = [r["_x"] for r in items if r["_outlier"]]
-        oy = [r["_y"] for r in items if r["_outlier"]]
-        if ox:
-            ax.scatter(ox, oy, s=80, facecolors="none", edgecolors=c,
-                       linewidths=1.4, marker="s", zorder=2)
 
     # 季度中位数趋势线（用非 outlier 数据）
     from collections import defaultdict
     qmed = defaultdict(list)
     for r in rows:
-        if r["_outlier"]:
-            continue
         y, m = r["effective_date"].split("-")
         q = (int(m) - 1) // 3
         qkey = (int(y), q)
@@ -481,8 +474,6 @@ def plot_tokens_per_task():
         ("2024-09", 1_000_000, "Claude Dev\nVS Code session", (8, -16)),
         ("2025-04", 3_500_000, "OpenAI Codex\nagentic task", (8, 8)),
         ("2025-07", 7_000_000, "Claude Code\n(bloated CLAUDE.md)", (8, 8)),
-        ("2026-02", 241_000_000, "⚠ Cursor\nagent loop\n(single message)", (-90, 5)),
-        ("2026-03", 2_200_000_000, "⚠ Claude Code\napp dev project\n(cumulative)", (-110, 5)),
     ]
     for ym, v, lbl, off in annotated:
         if ym is None:
@@ -493,7 +484,7 @@ def plot_tokens_per_task():
                     arrowprops=dict(arrowstyle="-", color="#888", lw=0.5, alpha=0.6))
 
     ax.set_yscale("log")
-    ax.set_ylim(80, 5e9)
+    ax.set_ylim(80, 5e7)
     ax.set_xlim(-3, months_since("2026-06", TOKEN_ORIGIN) + 3)
 
     # X 轴：每年 6 月一个刻度
@@ -513,10 +504,10 @@ def plot_tokens_per_task():
     ax.legend(loc="upper left", fontsize=8, ncol=2, framealpha=0.92)
 
     ax.set_title(
-        "单任务 token 消耗的演变（2020-06 → 2026-04，51 个数据点）\n"
-        "GPT-3 时代单次 API 调用 ~500 tokens → 2025 agentic 工作流 1–3M tokens / 单 task → "
-        "2026 累积/loop 场景上看到 240M–2.2B（标 ⚠ 为非「单 task」语义）\n"
-        "空心方块 = 累积/窗口语义异常点；marker 大小 = confidence(high/medium/flag)；"
+        f"单任务 token 消耗的演变（2020-06 → 2026-04，{len(rows)} 个有效数据点；"
+        "已剔除累积/窗口语义异常点）\n"
+        "GPT-3 时代单次 API 调用 ~500 tokens → 2025 agentic 工作流 1–3M tokens / 单 task\n"
+        "marker 颜色 = provider；marker 大小 = confidence(high/medium/flag)；"
         "灰线 = 季度中位数",
         fontsize=10.5, pad=12)
 
@@ -734,15 +725,14 @@ NCTA、BLS CPI (Internet Access Services)。
 
 token 单价跌了，但**单任务消耗的 token 量同期也涨了**——这是判断"用户实际净支出"是否真降的
 关键变量。数据来自 `token-usage-amount.csv`（含 agent web 研究 + 从 Reddit 三步法挖出的
-163 个高置信度数据点），其中 `unit=tokens_per_task` 共 **51 条**，时间跨 **2020-06 → 2026-04**。
+163 个高置信度数据点），其中 `unit=tokens_per_task` 原始 51 条，**剔除"累积/窗口"语义异常点
+（如 Claude Code 5h 窗口聚合 20–40M、Cursor agent loop 单 message 241M、Claude Code app dev
+累积 2.2B 等）后剩 45 个有效数据点**，时间跨 **2020-06 → 2026-04**。
 
 ![单任务 token 消耗](tokens-per-task.png)
 
 - **散点**：每个数据点 = 一次"单任务/单 session"用量观察；颜色按 provider（OpenAI 绿、
   Anthropic 橙、Cursor 紫、其他灰），marker 大小按 confidence。
-- **空心方块**：语义异常的"累积/窗口"点（如 Claude Code 5h 窗口聚合 20–40M、
-  Cursor agent loop 单 message 241M、Claude Code app dev project 累积 2.2B）——
-  这些不是真"单 task"，画图保留但与趋势线分离。
 - **灰实线**：季度中位数趋势——直观看到 2020 → 2024 中位数从 ~500 tokens 涨到 ~10K-100K，
   2025 agentic 工作流后跳到 1–3M tokens/task 量级。
 
