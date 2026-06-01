@@ -162,7 +162,26 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 **净影响**：用户实际净支出仍在涨——单任务花钱量级是 6 年前的 ~10–100 倍。这与各家平台
 吞吐 20–50× / 年的增长是同源现象（更长任务 + 更多用户 + 更高频调用）。
 
+## 单 task 实际花费 USD（task-price）
 
+把上一节的 **tokens/task** 与本文开头第一张图的 **API 旗舰 blended 单价** 相乘，得到
+"在该时点用该 provider 旗舰跑这个 task 的实际花费"。
+
+![单 task 实际花费 USD](task-price.png)
+
+- **散点**：每个 tokens/task 数据点 × 当月该 provider 旗舰 blended 价 / 1e6 = USD/task。
+- **provider 映射**：Cursor → Anthropic 价；Microsoft → OpenAI 价；
+  community_estimate / third_party_benchmark / public_share_analysis 按归属厂家映射；
+  无归属（Aggregator / Self_reported 等）→ 全平台最贵价 fallback。
+- **灰线**：季度中位数 USD/task 趋势。
+- **Y 轴 log**：跨数个数量级。
+
+**这张图的语义**：把 token-price.png（"单价"）和 tokens-per-task.png（"用量"）相乘，
+得到用户实际感知的 **「每完成一件事要花多少钱」**。结论：单价跌 ~10–100×，用量涨
+~1000–10000×，**净花费仍上行约 100×**——这是为什么 ChatGPT Plus / Claude Pro / Cursor
+$20–$200 的订阅都在 2025–2026 年逐步加套使用限制（周限、autocompact、premium request 配额）。
+
+## 假设与局限
 
 - **每条消息 2000 token** 是折算口径；改它整体平移套餐线但不改品牌相对关系。
 - **模型退市时间**来自 CSV notes + Reddit 退市帖 + 官方公告，部分近似（±1 月）。
