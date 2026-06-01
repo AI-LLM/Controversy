@@ -4,14 +4,18 @@
 数据来源：https://arctic-shift.photon-reddit.com/download-tool 导出的
 submission JSONL（每行一个帖子，PushShift/arctic-shift schema）。
 
-用法：
+两种模式：
+
+  默认（price）：抽取价格信号（美元金额 / token 费率 / 用量上限）。
     python3 scripts/analyze_reddit_prices.py                # 扫 data/reddit/*.jsonl
     python3 scripts/analyze_reddit_prices.py --min-score 5  # 只要 5 赞以上
     python3 scripts/analyze_reddit_prices.py --since 2024-01 --until 2024-12
-    python3 scripts/analyze_reddit_prices.py --keyword gemini
 
-输出 data/reddit/price_mentions.csv：每行一个命中帖子，带抽取出的
-美元金额 / token 费率 / 用量上限 / 提及产品 / 置信度，按日期排序。
+  退市（deprecation）：抽取模型退市/下架事件。
+    python3 scripts/analyze_reddit_prices.py --mode deprecation
+    python3 scripts/analyze_reddit_prices.py --mode deprecation --min-score 3
+
+输出 data/reddit/price_mentions.csv 或 deprecation_events.csv。
 再下载更多频道（放进 data/reddit/）后直接重跑即可，无需改代码。
 """
 from __future__ import annotations
@@ -88,6 +92,109 @@ PRODUCT_PATTERNS = [
 MAX_TEXT = 6000   # 截断超长 selftext，控制开销
 MAX_SNIPPET = 240  # 输出片段长度
 MAX_MATCHES = 6    # 每类最多记几个抽取值
+
+# ---------------------------------------------------------------------------
+# 退市/下架事件检测（--mode deprecation）
+# ---------------------------------------------------------------------------
+
+RE_DEPRECATION = re.compile(
+    r"\b(deprecat\w*|sunset\w*|retired|retiring|"
+    r"end[- ]of[- ]life|eol|removed?\b|removing|"
+    r"no longer available|discontinued|shut\w* down|"
+    r"replaced by|superseded|phase[d ]? out|"
+    r"will be removed|being removed|"
+    r"legacy|shutdown|sundown)\b",
+    re.IGNORECASE,
+)
+
+# 模型名正则（抽取退市的是哪个模型）
+MODEL_PATTERNS = [
+    # OpenAI
+    re.compile(r"\bgpt-?4\.?5[- ]?preview\b", re.IGNORECASE),
+    re.compile(r"\bgpt-?4-?32k\b", re.IGNORECASE),
+    re.compile(r"\bgpt-?4[- ]?turbo\b", re.IGNORECASE),
+    re.compile(r"\bgpt-?4o?(?:-(?:mini|2024\S+))?\b", re.IGNORECASE),
+    re.compile(r"\bgpt-?4\.1(?:-(?:mini|nano))?\b", re.IGNORECASE),
+    re.compile(r"\bgpt-?3\.?5[- ]?turbo\w*\b", re.IGNORECASE),
+    re.compile(r"\bgpt-?5(?:\.[\d]+)?(?:-(?:mini|nano|pro))?\b", re.IGNORECASE),
+    re.compile(r"\bo[134]-?(?:mini|pro|preview)?\b", re.IGNORECASE),
+    re.compile(r"\bdavinci\b", re.IGNORECASE),
+    re.compile(r"\btext-davinci-\d+\b", re.IGNORECASE),
+    re.compile(r"\bcode-davinci\b", re.IGNORECASE),
+    # Anthropic
+    re.compile(r"\bclaude[- ]?(?:instant|[234]\S*|opus|sonnet|haiku)\b", re.IGNORECASE),
+    # Google
+    re.compile(r"\bgemini[- ]?(?:\d\S*|pro|flash|ultra|nano)\b", re.IGNORECASE),
+    re.compile(r"\bpalm[- ]?2?\b", re.IGNORECASE),
+    re.compile(r"\bbard\b", re.IGNORECASE),
+    # DeepSeek
+    re.compile(r"\bdeepseek[- ]?(?:v\d\S*|r\d\S*|coder|chat)\b", re.IGNORECASE),
+]
+
+
+def extract_models(text: str) -> list[str]:
+    seen = []
+    for pat in MODEL_PATTERNS:
+        for m in pat.finditer(text):
+            s = m.group(0).strip()
+            norm = s.lower().replace(" ", "-")
+            if norm not in [x.lower().replace(" ", "-") for x in seen]:
+                seen.append(s)
+    return seen[:8]
+
+
+def analyze_deprecation(d: dict) -> dict | None:
+    title = d.get("title") or ""
+    selftext = d.get("selftext") or ""
+    if selftext in ("[deleted]", "[removed]"):
+        selftext = ""
+    text = (title + "\n" + selftext)[:MAX_TEXT]
+    if not text.strip():
+        return None
+
+    dep_matches = find_all(RE_DEPRECATION, text, limit=4)
+    if not dep_matches:
+        return None
+
+    models = extract_models(text)
+    products = detect_products(text)
+    if not models and not products:
+        return None
+
+    ts = d.get("created_utc")
+    try:
+        date = datetime.fromtimestamp(int(ts), tz=timezone.utc).strftime("%Y-%m-%d")
+    except (TypeError, ValueError):
+        date = ""
+
+    permalink = d.get("permalink") or ""
+    if permalink and not permalink.startswith("http"):
+        permalink = "https://reddit.com" + permalink
+
+    dep_kw = dep_matches[0].lower() if dep_matches else ""
+    snippet = make_snippet(text, dep_kw)
+
+    # 子分类：是宣布退市、讨论退市影响、还是担心即将退市
+    event_type = "deprecation"
+    low = text.lower()
+    if any(w in low for w in ("will be", "going to", "plan to", "rumor", "might")):
+        event_type = "upcoming"
+    elif any(w in low for w in ("replaced by", "superseded", "upgrade to", "migrate")):
+        event_type = "replacement"
+
+    return {
+        "date": date,
+        "subreddit": d.get("subreddit") or "",
+        "event_type": event_type,
+        "deprecation_keywords": " | ".join(dep_matches),
+        "models_mentioned": " | ".join(models),
+        "products": "|".join(products),
+        "score": d.get("score", ""),
+        "num_comments": d.get("num_comments", ""),
+        "title": re.sub(r"\s+", " ", title).strip()[:200],
+        "permalink": permalink,
+        "snippet": snippet,
+    }
 
 
 def find_all(pat: re.Pattern, text: str, limit: int = MAX_MATCHES) -> list[str]:
@@ -200,15 +307,22 @@ def parse_ym(s: str | None) -> str | None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="抽取 Reddit 频道数据里的价格信息")
+    ap = argparse.ArgumentParser(description="抽取 Reddit 频道数据里的价格或退市信息")
+    ap.add_argument("--mode", choices=["price", "deprecation"], default="price",
+                    help="price=价格信号（默认）；deprecation=模型退市/下架事件")
     ap.add_argument("--data-dir", default="data/reddit", help="JSONL 所在目录")
-    ap.add_argument("--out", default="data/reddit/price_mentions.csv", help="输出 CSV 路径")
+    ap.add_argument("--out", default=None, help="输出 CSV 路径（默认按 mode 自动选）")
     ap.add_argument("--min-score", type=int, default=0, help="最低赞数")
     ap.add_argument("--since", default=None, help="起始日期 YYYY-MM 或 YYYY-MM-DD")
     ap.add_argument("--until", default=None, help="截止日期 YYYY-MM 或 YYYY-MM-DD")
     ap.add_argument("--keyword", default=None, help="标题/正文须含该关键词（不分大小写）")
-    ap.add_argument("--high-only", action="store_true", help="只保留 high 置信度（丢弃裸美元兜底）")
+    ap.add_argument("--high-only", action="store_true", help="（仅 price 模式）只保留 high 置信度")
     args = ap.parse_args()
+
+    if args.out is None:
+        args.out = os.path.join(args.data_dir,
+                                "deprecation_events.csv" if args.mode == "deprecation"
+                                else "price_mentions.csv")
 
     files = sorted(glob.glob(os.path.join(args.data_dir, "*.jsonl")))
     if not files:
@@ -218,6 +332,8 @@ def main() -> int:
     since = (args.since + "-01") if (args.since and len(args.since) == 7) else args.since
     until = (args.until + "-31") if (args.until and len(args.until) == 7) else args.until
     kw = args.keyword.lower() if args.keyword else None
+
+    analyze_fn = analyze_deprecation if args.mode == "deprecation" else analyze_post
 
     scanned = 0
     rows: list[dict] = []
@@ -238,7 +354,7 @@ def main() -> int:
                     d = json.loads(line)
                 except json.JSONDecodeError:
                     continue
-                rec = analyze_post(d)
+                rec = analyze_fn(d)
                 if rec is None:
                     continue
                 if args.min_score and (int(rec["score"] or 0) < args.min_score):
@@ -247,26 +363,36 @@ def main() -> int:
                     continue
                 if until and rec["date"] and rec["date"] > until:
                     continue
-                if args.high_only and rec["confidence"] != "high":
+                if args.mode == "price" and args.high_only and rec.get("confidence") != "high":
                     continue
-                if kw and kw not in (rec["title"] + rec["snippet"]).lower():
+                if kw and kw not in (rec["title"] + rec.get("snippet", "")).lower():
                     continue
                 rows.append(rec)
                 file_hits += 1
                 by_subreddit[rec["subreddit"]] += 1
-                for s in rec["signal_types"].split("|"):
-                    by_signal[s] += 1
+                if args.mode == "price":
+                    for s in rec["signal_types"].split("|"):
+                        by_signal[s] += 1
+                else:
+                    by_signal[rec.get("event_type", "")] += 1
                 if rec["date"]:
                     by_month[rec["date"][:7]] += 1
         print(f"  {fname:42s} -> {file_hits:6d} hits", file=sys.stderr)
 
     rows.sort(key=lambda r: (r["date"], r["subreddit"]))
 
-    fieldnames = [
-        "date", "subreddit", "signal_types", "confidence", "products",
-        "dollar_amounts", "token_rates", "usage_limits", "premium_requests",
-        "score", "num_comments", "title", "permalink", "snippet",
-    ]
+    if args.mode == "deprecation":
+        fieldnames = [
+            "date", "subreddit", "event_type", "deprecation_keywords",
+            "models_mentioned", "products", "score", "num_comments",
+            "title", "permalink", "snippet",
+        ]
+    else:
+        fieldnames = [
+            "date", "subreddit", "signal_types", "confidence", "products",
+            "dollar_amounts", "token_rates", "usage_limits", "premium_requests",
+            "score", "num_comments", "title", "permalink", "snippet",
+        ]
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=fieldnames)
@@ -275,8 +401,8 @@ def main() -> int:
 
     # ---- 终端摘要 ----
     print("\n" + "=" * 60, file=sys.stderr)
-    print(f"扫描帖子: {scanned:,}   命中: {len(rows):,}   写入: {args.out}", file=sys.stderr)
-    print("\n按信号类型:", file=sys.stderr)
+    print(f"[{args.mode}] 扫描: {scanned:,}   命中: {len(rows):,}   写入: {args.out}", file=sys.stderr)
+    print("\n按类型:", file=sys.stderr)
     for k, v in by_signal.most_common():
         print(f"  {k:18s} {v:6d}", file=sys.stderr)
     print("\n按频道:", file=sys.stderr)
@@ -285,9 +411,11 @@ def main() -> int:
     print("\n命中最多的月份 (Top 12):", file=sys.stderr)
     for k, v in sorted(by_month.items(), key=lambda x: -x[1])[:12]:
         print(f"  {k}  {v:5d}", file=sys.stderr)
-    print("\n高赞价格帖 (Top 15 by score):", file=sys.stderr)
-    for r in sorted(rows, key=lambda r: -int(r["score"] or 0))[:15]:
-        print(f"  [{r['date']}] {r['score']:>5} r/{r['subreddit']:14s} {r['title'][:70]}", file=sys.stderr)
+    print(f"\n高赞帖 (Top 20 by score):", file=sys.stderr)
+    for r in sorted(rows, key=lambda r: -int(r["score"] or 0))[:20]:
+        extra = r.get("models_mentioned", r.get("signal_types", ""))[:24]
+        print(f"  [{r['date']}] {r['score']:>5} r/{r['subreddit']:14s} "
+              f"{extra:24s} {r['title'][:52]}", file=sys.stderr)
     return 0
 
 

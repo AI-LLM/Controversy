@@ -38,9 +38,16 @@ DEPRECATED = {
     "gpt-4-32k":                "2025-06",
     "gpt-4-turbo (1106-preview)":"2024-12",
     "gpt-4o-2024-05-13":        "2024-10",
+    "gpt-4o-2024-08-06":        "2026-02",   # retired Jan 29 2026 per Reddit r/OpenAI
     "gpt-4.5-preview":          "2025-04",
+    "gpt-4.1":                  "2026-02",   # retired Jan 29 2026 batch
+    "gpt-4.1-mini":             "2026-02",   # retired Jan 29 2026 batch
+    "gpt-4.1-nano":             "2026-02",   # likely same batch
     "o1-preview":               "2025-02",
     "o1-mini":                  "2025-06",
+    "o1 (GA)":                  "2025-06",   # superseded by o3
+    "o3-mini":                  "2025-06",   # superseded by o4-mini
+    "o4-mini":                  "2026-02",   # retired Jan 29 2026 batch
     # Anthropic
     "Claude Instant 1.2":       "2024-03",
     "Claude 2.1":               "2025-03",
@@ -55,6 +62,8 @@ DEPRECATED = {
     "Claude Opus 4":            "2025-08",
     "Claude Sonnet 4":          "2025-09",
     "Claude Opus 4.1":          "2025-11",
+    "Claude Sonnet 4.5":        "2026-02",   # superseded by 4.6
+    "Claude Haiku 4.5":         "2026-02",
     # Google
     "PaLM 2 text-bison":        "2024-04",
     "Gemini 1.0 Pro":           "2025-02",
