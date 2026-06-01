@@ -1,0 +1,295 @@
+#!/usr/bin/env python3
+"""分析 arctic-shift 下载的 Reddit 频道数据，抽取价格相关帖子。
+
+数据来源：https://arctic-shift.photon-reddit.com/download-tool 导出的
+submission JSONL（每行一个帖子，PushShift/arctic-shift schema）。
+
+用法：
+    python3 scripts/analyze_reddit_prices.py                # 扫 data/reddit/*.jsonl
+    python3 scripts/analyze_reddit_prices.py --min-score 5  # 只要 5 赞以上
+    python3 scripts/analyze_reddit_prices.py --since 2024-01 --until 2024-12
+    python3 scripts/analyze_reddit_prices.py --keyword gemini
+
+输出 data/reddit/price_mentions.csv：每行一个命中帖子，带抽取出的
+美元金额 / token 费率 / 用量上限 / 提及产品 / 置信度，按日期排序。
+再下载更多频道（放进 data/reddit/）后直接重跑即可，无需改代码。
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import glob
+import json
+import os
+import re
+import sys
+from collections import Counter
+from datetime import datetime, timezone
+
+# ---------------------------------------------------------------------------
+# 价格信号正则。分类抽取，方便事后按 signal_type 过滤。
+# ---------------------------------------------------------------------------
+
+# token 逐价：$3 / 1M tokens、3 per million tokens、$0.15/MTok、per 1k tokens
+# 简化以避免回溯爆炸；只对正文含 "tok" 的帖运行（见 analyze_post 预过滤）。
+RE_TOKEN_RATE = re.compile(
+    r"\$?\d[\d.]*\s*(?:/|per|a)?\s*"
+    r"(?:1\s?[MmKk]|million|thousand|mil)\s*"
+    r"(?:input|output|cached|in|out)?\s*tok"
+    r"|\$?\d[\d.]*\s*/\s*M?Tok\b"
+    r"|per\s+(?:1\s?[MmKk]|million)\s+tok",
+    re.IGNORECASE,
+)
+
+# 订阅价：$20/mo、$20 per month、$200 a month、$100/year、$17 monthly、$8/month
+RE_SUB_PRICE = re.compile(
+    r"\$\s?\d[\d,]*\.?\d*\s*"
+    r"(?:/|per|a|each)?\s*"
+    r"(?:mo|month|months|monthly|/mo|yr|year|years|annually|annual|seat|user|week)\b",
+    re.IGNORECASE,
+)
+
+# 用量上限：25 messages every 3 hours、50 msgs/3h、300 requests per month、10 prompts a day
+RE_USAGE_LIMIT = re.compile(
+    r"\d[\d,]*\s*"
+    r"(?:messages?|msgs?|prompts?|requests?|queries|completions?|generations?|calls?)\s*"
+    r"(?:per|/|every|a|each|in)\s*"
+    r"\d*\s*"
+    r"(?:hour|hours|hr|hrs|h|day|days|week|weeks|month|months|min|minutes?)\b",
+    re.IGNORECASE,
+)
+
+# premium request 配额（GitHub Copilot 2025 计费模型）
+RE_PREMIUM_REQ = re.compile(r"\d*\s*premium\s+requests?", re.IGNORECASE)
+
+# 裸美元金额（兜底，置信度低，需正文有定价语境词才计入）
+RE_BARE_DOLLAR = re.compile(r"\$\s?\d[\d,]*\.?\d*")
+
+# 定价语境词（裸美元命中时要求出现，过滤掉 "$5 worth of compute" 之类噪声）
+RE_PRICE_CONTEXT = re.compile(
+    r"\b(pric|cost|subscri|plan|tier|billing|charge|paid|pay|"
+    r"per token|/mo|/month|per month|premium request|rate limit|"
+    r"message limit|quota|cap|overage|refund|invoice|upgrade|downgrade)\w*",
+    re.IGNORECASE,
+)
+
+# 产品 / 模型识别，便于归类到 token-price.csv 的 provider
+PRODUCT_PATTERNS = [
+    ("ChatGPT/GPT", re.compile(r"\b(chatgpt|gpt-?[0-9o]|gpt 4|davinci|o[134]-?(mini|pro|preview)?)\b", re.IGNORECASE)),
+    ("Claude", re.compile(r"\b(claude|anthropic|opus|sonnet|haiku)\b", re.IGNORECASE)),
+    ("Gemini", re.compile(r"\b(gemini|bard|palm|google ai|aistudio|vertex)\b", re.IGNORECASE)),
+    ("Copilot", re.compile(r"\b(copilot)\b", re.IGNORECASE)),
+    ("Cursor", re.compile(r"\b(cursor)\b", re.IGNORECASE)),
+    ("Codex", re.compile(r"\bcodex\b", re.IGNORECASE)),
+    ("DeepSeek", re.compile(r"\bdeepseek\b", re.IGNORECASE)),
+    ("API-generic", re.compile(r"\bapi\b", re.IGNORECASE)),
+]
+
+MAX_TEXT = 6000   # 截断超长 selftext，控制开销
+MAX_SNIPPET = 240  # 输出片段长度
+MAX_MATCHES = 6    # 每类最多记几个抽取值
+
+
+def find_all(pat: re.Pattern, text: str, limit: int = MAX_MATCHES) -> list[str]:
+    seen: list[str] = []
+    for m in pat.finditer(text):
+        s = re.sub(r"\s+", " ", m.group(0)).strip()
+        if s not in seen:
+            seen.append(s)
+        if len(seen) >= limit:
+            break
+    return seen
+
+
+def detect_products(text: str) -> list[str]:
+    return [name for name, pat in PRODUCT_PATTERNS if pat.search(text)]
+
+
+def make_snippet(text: str, anchor: str) -> str:
+    """取第一个价格信号附近的一段文字做预览。"""
+    idx = text.lower().find(anchor.lower()) if anchor else -1
+    if idx < 0:
+        idx = 0
+    start = max(0, idx - 60)
+    snip = text[start:start + MAX_SNIPPET]
+    return re.sub(r"\s+", " ", snip).strip()
+
+
+def analyze_post(d: dict) -> dict | None:
+    title = d.get("title") or ""
+    selftext = d.get("selftext") or ""
+    if selftext in ("[deleted]", "[removed]"):
+        selftext = ""
+    text = (title + "\n" + selftext)[:MAX_TEXT]
+    if not text.strip():
+        return None
+
+    # 廉价预过滤：先做小写子串判断，只对可能命中的帖跑（昂贵的）正则，
+    # 避免在 15 万帖上无差别回溯。
+    low = text.lower()
+    has_dollar = "$" in text
+    has_tok = "tok" in low
+    has_limit_cue = any(c in low for c in (
+        "message", "msg", "request", "prompt", "quer", "completion", "generation"))
+
+    token_rates = find_all(RE_TOKEN_RATE, text) if has_tok else []
+    sub_prices = find_all(RE_SUB_PRICE, text) if has_dollar else []
+    usage_limits = find_all(RE_USAGE_LIMIT, text) if has_limit_cue else []
+    premium = find_all(RE_PREMIUM_REQ, text) if "premium" in low else []
+
+    signal_types: list[str] = []
+    if token_rates:
+        signal_types.append("token_rate")
+    if sub_prices:
+        signal_types.append("sub_price")
+    if usage_limits:
+        signal_types.append("usage_limit")
+    if premium:
+        signal_types.append("premium_request")
+
+    # 兜底：裸美元 + 定价语境词
+    bare = []
+    if not signal_types and has_dollar:
+        bare = find_all(RE_BARE_DOLLAR, text)
+        if bare and RE_PRICE_CONTEXT.search(text):
+            signal_types.append("bare_dollar")
+
+    if not signal_types:   # 既无结构化信号、也无（带语境的）裸美元 -> 丢弃
+        return None
+
+    # 置信度：有结构化信号=high；只有裸美元=low
+    confidence = "low" if signal_types == ["bare_dollar"] else "high"
+
+    ts = d.get("created_utc")
+    try:
+        date = datetime.fromtimestamp(int(ts), tz=timezone.utc).strftime("%Y-%m-%d")
+    except (TypeError, ValueError):
+        date = ""
+
+    anchor = (token_rates + sub_prices + premium + usage_limits + bare or [""])[0]
+    permalink = d.get("permalink") or ""
+    if permalink and not permalink.startswith("http"):
+        permalink = "https://reddit.com" + permalink
+
+    return {
+        "date": date,
+        "subreddit": d.get("subreddit") or "",
+        "signal_types": "|".join(signal_types),
+        "confidence": confidence,
+        "products": "|".join(detect_products(text)),
+        "dollar_amounts": " ; ".join(sub_prices + bare),
+        "token_rates": " ; ".join(token_rates),
+        "usage_limits": " ; ".join(usage_limits),
+        "premium_requests": " ; ".join(premium),
+        "score": d.get("score", ""),
+        "num_comments": d.get("num_comments", ""),
+        "title": re.sub(r"\s+", " ", title).strip()[:200],
+        "permalink": permalink,
+        "snippet": make_snippet(text, anchor),
+    }
+
+
+def parse_ym(s: str | None) -> str | None:
+    """把 --since/--until 的 YYYY-MM 或 YYYY-MM-DD 规整成可比较的 YYYY-MM-DD。"""
+    if not s:
+        return None
+    parts = s.split("-")
+    if len(parts) == 2:
+        return f"{parts[0]}-{parts[1]}-01" if s == "since" else s + "-01"
+    return s
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="抽取 Reddit 频道数据里的价格信息")
+    ap.add_argument("--data-dir", default="data/reddit", help="JSONL 所在目录")
+    ap.add_argument("--out", default="data/reddit/price_mentions.csv", help="输出 CSV 路径")
+    ap.add_argument("--min-score", type=int, default=0, help="最低赞数")
+    ap.add_argument("--since", default=None, help="起始日期 YYYY-MM 或 YYYY-MM-DD")
+    ap.add_argument("--until", default=None, help="截止日期 YYYY-MM 或 YYYY-MM-DD")
+    ap.add_argument("--keyword", default=None, help="标题/正文须含该关键词（不分大小写）")
+    ap.add_argument("--high-only", action="store_true", help="只保留 high 置信度（丢弃裸美元兜底）")
+    args = ap.parse_args()
+
+    files = sorted(glob.glob(os.path.join(args.data_dir, "*.jsonl")))
+    if not files:
+        print(f"[!] {args.data_dir} 下没有 .jsonl 文件", file=sys.stderr)
+        return 1
+
+    since = (args.since + "-01") if (args.since and len(args.since) == 7) else args.since
+    until = (args.until + "-31") if (args.until and len(args.until) == 7) else args.until
+    kw = args.keyword.lower() if args.keyword else None
+
+    scanned = 0
+    rows: list[dict] = []
+    by_subreddit = Counter()
+    by_signal = Counter()
+    by_month = Counter()
+
+    for path in files:
+        fname = os.path.basename(path)
+        file_hits = 0
+        with open(path, "r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                scanned += 1
+                try:
+                    d = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                rec = analyze_post(d)
+                if rec is None:
+                    continue
+                if args.min_score and (int(rec["score"] or 0) < args.min_score):
+                    continue
+                if since and rec["date"] and rec["date"] < since:
+                    continue
+                if until and rec["date"] and rec["date"] > until:
+                    continue
+                if args.high_only and rec["confidence"] != "high":
+                    continue
+                if kw and kw not in (rec["title"] + rec["snippet"]).lower():
+                    continue
+                rows.append(rec)
+                file_hits += 1
+                by_subreddit[rec["subreddit"]] += 1
+                for s in rec["signal_types"].split("|"):
+                    by_signal[s] += 1
+                if rec["date"]:
+                    by_month[rec["date"][:7]] += 1
+        print(f"  {fname:42s} -> {file_hits:6d} hits", file=sys.stderr)
+
+    rows.sort(key=lambda r: (r["date"], r["subreddit"]))
+
+    fieldnames = [
+        "date", "subreddit", "signal_types", "confidence", "products",
+        "dollar_amounts", "token_rates", "usage_limits", "premium_requests",
+        "score", "num_comments", "title", "permalink", "snippet",
+    ]
+    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
+    with open(args.out, "w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=fieldnames)
+        w.writeheader()
+        w.writerows(rows)
+
+    # ---- 终端摘要 ----
+    print("\n" + "=" * 60, file=sys.stderr)
+    print(f"扫描帖子: {scanned:,}   命中: {len(rows):,}   写入: {args.out}", file=sys.stderr)
+    print("\n按信号类型:", file=sys.stderr)
+    for k, v in by_signal.most_common():
+        print(f"  {k:18s} {v:6d}", file=sys.stderr)
+    print("\n按频道:", file=sys.stderr)
+    for k, v in by_subreddit.most_common():
+        print(f"  r/{k:24s} {v:6d}", file=sys.stderr)
+    print("\n命中最多的月份 (Top 12):", file=sys.stderr)
+    for k, v in sorted(by_month.items(), key=lambda x: -x[1])[:12]:
+        print(f"  {k}  {v:5d}", file=sys.stderr)
+    print("\n高赞价格帖 (Top 15 by score):", file=sys.stderr)
+    for r in sorted(rows, key=lambda r: -int(r["score"] or 0))[:15]:
+        print(f"  [{r['date']}] {r['score']:>5} r/{r['subreddit']:14s} {r['title'][:70]}", file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
