@@ -28,7 +28,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CSV = os.path.join(HERE, "token-price.csv")
 OUT_PNG = os.path.join(HERE, "token-price.png")
 OUT_PNG2 = os.path.join(HERE, "token-price-vs-internet-pc.png")
+OUT_PNG3 = os.path.join(HERE, "tokens-per-task.png")
 OUT_MD = os.path.join(HERE, "token-price.md")
+
+USAGE_CSV = os.path.join(HERE, "token-usage-amount.csv")
 
 TOKENS_PER_MESSAGE = 2000
 
@@ -385,6 +388,144 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     plt.close(fig)
 
 
+def load_usage_rows():
+    if not os.path.exists(USAGE_CSV):
+        return []
+    with open(USAGE_CSV, encoding="utf-8") as fh:
+        return list(csv.DictReader(fh))
+
+
+def plot_tokens_per_task():
+    """token-usage-amount.csv 里 unit=tokens_per_task 的 51 个数据点散点图。
+    X 轴时间（2020-06 → 2026-04），Y 轴 log（500 → 数十亿 tokens/task）。
+    标注语义异常的"累积/窗口"点为 outlier，剩余画季度中位数趋势线。
+    """
+    rows = [r for r in load_usage_rows() if r["unit"] == "tokens_per_task"]
+    if not rows:
+        print(f"[!] {USAGE_CSV} 无 tokens_per_task 数据，跳过")
+        return
+
+    # 把语义不是"单 task"的标为 outlier（累积/多任务窗口）
+    def is_outlier(r):
+        s = (r["subject"] + " " + r.get("notes", "")).lower()
+        return any(k in s for k in
+                   ("cumulative", "5-hour window", "5h window", "per 5-hour",
+                    "agent loop, single message", "single conversation",
+                    "audiobook generation"))
+
+    for r in rows:
+        r["_x"] = months_since(r["effective_date"], TOKEN_ORIGIN)
+        r["_y"] = float(r["value"])
+        r["_outlier"] = is_outlier(r)
+
+    provider_color = {
+        "OpenAI": "#10a37f",
+        "Anthropic": "#d97706",
+        "Cursor": "#a855f7",
+        "Google": "#4285f4",
+        "DeepSeek": "#1a1a2e",
+        "Microsoft": "#0078d4",
+        "Self_reported": "#888",
+    }
+    default_color = "#bbb"
+    conf_size = {"high": 70, "medium": 50, "flag": 30, "low": 30}
+
+    fig, ax = plt.subplots(figsize=(15, 7.5))
+    fig.patch.set_facecolor("white")
+
+    # 主散点
+    by_provider = {}
+    for r in rows:
+        p = r["provider"]
+        by_provider.setdefault(p, []).append(r)
+    for p, items in by_provider.items():
+        c = provider_color.get(p, default_color)
+        xs = [r["_x"] for r in items if not r["_outlier"]]
+        ys = [r["_y"] for r in items if not r["_outlier"]]
+        ss = [conf_size.get(r["confidence"], 40) for r in items if not r["_outlier"]]
+        if xs:
+            ax.scatter(xs, ys, s=ss, c=c, alpha=0.75, edgecolors="white",
+                       linewidths=0.6, label=p, zorder=3)
+        # outlier：空心方块 + 注释
+        ox = [r["_x"] for r in items if r["_outlier"]]
+        oy = [r["_y"] for r in items if r["_outlier"]]
+        if ox:
+            ax.scatter(ox, oy, s=80, facecolors="none", edgecolors=c,
+                       linewidths=1.4, marker="s", zorder=2)
+
+    # 季度中位数趋势线（用非 outlier 数据）
+    from collections import defaultdict
+    qmed = defaultdict(list)
+    for r in rows:
+        if r["_outlier"]:
+            continue
+        y, m = r["effective_date"].split("-")
+        q = (int(m) - 1) // 3
+        qkey = (int(y), q)
+        qmed[qkey].append(r["_y"])
+    import statistics
+    qkeys = sorted(qmed.keys())
+    qx, qy = [], []
+    for y, q in qkeys:
+        # 季度中点 = 该季度第二个月
+        month = q * 3 + 2
+        qx.append(months_since(f"{y}-{month:02d}", TOKEN_ORIGIN))
+        qy.append(statistics.median(qmed[(y, q)]))
+    ax.plot(qx, qy, "-", color="#444", lw=1.6, alpha=0.55,
+            label="季度中位数", zorder=2)
+
+    # 标注几个关键点
+    annotated = [
+        ("2020-06", 500,       "GPT-3 API\n典型调用", (8, 8)),
+        ("2024-06", 600,       "ChatGPT 单轮\n348 词", (8, 8)),
+        ("2024-09", 1_000_000, "Claude Dev\nVS Code session", (8, -16)),
+        ("2025-04", 3_500_000, "OpenAI Codex\nagentic task", (8, 8)),
+        ("2025-07", 7_000_000, "Claude Code\n(bloated CLAUDE.md)", (8, 8)),
+        ("2026-02", 241_000_000, "⚠ Cursor\nagent loop\n(single message)", (-90, 5)),
+        ("2026-03", 2_200_000_000, "⚠ Claude Code\napp dev project\n(cumulative)", (-110, 5)),
+    ]
+    for ym, v, lbl, off in annotated:
+        if ym is None:
+            continue
+        x = months_since(ym, TOKEN_ORIGIN)
+        ax.annotate(lbl, (x, v), fontsize=7, color="#333",
+                    xytext=off, textcoords="offset points",
+                    arrowprops=dict(arrowstyle="-", color="#888", lw=0.5, alpha=0.6))
+
+    ax.set_yscale("log")
+    ax.set_ylim(80, 5e9)
+    ax.set_xlim(-3, months_since("2026-06", TOKEN_ORIGIN) + 3)
+
+    # X 轴：每年 6 月一个刻度
+    tick_months, tick_labels = [], []
+    for year in range(2020, 2027):
+        m = months_since(f"{year}-06", TOKEN_ORIGIN)
+        if -3 <= m <= months_since("2026-06", TOKEN_ORIGIN) + 3:
+            tick_months.append(m)
+            tick_labels.append(f"{year}-06")
+    ax.set_xticks(tick_months)
+    ax.set_xticklabels(tick_labels, fontsize=8, rotation=30, ha="right")
+    ax.set_xlabel("帖子日期 / 数据点时间（2020-06 token-price.csv 起点）", fontsize=9)
+
+    ax.set_ylabel("单任务 token 消耗（log）", fontsize=10)
+    ax.grid(alpha=0.25, which="both", axis="y")
+    ax.grid(alpha=0.15, which="major", axis="x")
+    ax.legend(loc="upper left", fontsize=8, ncol=2, framealpha=0.92)
+
+    ax.set_title(
+        "单任务 token 消耗的演变（2020-06 → 2026-04，51 个数据点）\n"
+        "GPT-3 时代单次 API 调用 ~500 tokens → 2025 agentic 工作流 1–3M tokens / 单 task → "
+        "2026 累积/loop 场景上看到 240M–2.2B（标 ⚠ 为非「单 task」语义）\n"
+        "空心方块 = 累积/窗口语义异常点；marker 大小 = confidence(high/medium/flag)；"
+        "灰线 = 季度中位数",
+        fontsize=10.5, pad=12)
+
+    fig.tight_layout()
+    fig.savefig(OUT_PNG3, dpi=180, bbox_inches="tight")
+    print(f"写入 {OUT_PNG3}")
+    plt.close(fig)
+
+
 def main():
     rows = load_rows()
     order = ["OpenAI", "Anthropic", "Google", "DeepSeek"]
@@ -589,7 +730,28 @@ Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、
 FCC Historical Reports、WSJ、Bruce Kushnick / Teletruth、**USTelecom Broadband Pricing Index**、
 NCTA、BLS CPI (Internet Access Services)。
 
-## 假设与局限
+## 单任务 token 消耗的演变
+
+token 单价跌了，但**单任务消耗的 token 量同期也涨了**——这是判断"用户实际净支出"是否真降的
+关键变量。数据来自 `token-usage-amount.csv`（含 agent web 研究 + 从 Reddit 三步法挖出的
+163 个高置信度数据点），其中 `unit=tokens_per_task` 共 **51 条**，时间跨 **2020-06 → 2026-04**。
+
+![单任务 token 消耗](tokens-per-task.png)
+
+- **散点**：每个数据点 = 一次"单任务/单 session"用量观察；颜色按 provider（OpenAI 绿、
+  Anthropic 橙、Cursor 紫、其他灰），marker 大小按 confidence。
+- **空心方块**：语义异常的"累积/窗口"点（如 Claude Code 5h 窗口聚合 20–40M、
+  Cursor agent loop 单 message 241M、Claude Code app dev project 累积 2.2B）——
+  这些不是真"单 task"，画图保留但与趋势线分离。
+- **灰实线**：季度中位数趋势——直观看到 2020 → 2024 中位数从 ~500 tokens 涨到 ~10K-100K，
+  2025 agentic 工作流后跳到 1–3M tokens/task 量级。
+
+**结论**：单任务 token 量在 6 年内涨了 **~1000×–10000×**（GPT-3 API 调用 ~500 → Claude Code
+session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50），便宜端跌 ~500×（DeepSeek $0.1）。
+**净影响**：用户实际净支出仍在涨——单任务花钱量级是 6 年前的 ~10–100 倍。这与各家平台
+吞吐 20–50× / 年的增长是同源现象（更长任务 + 更多用户 + 更高频调用）。
+
+
 
 - **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径；改它整体平移套餐线但不改品牌相对关系。
 - **模型退市时间**来自 CSV notes + Reddit 退市帖 + 官方公告，部分近似（±1 月）。
@@ -616,6 +778,7 @@ NCTA、BLS CPI (Internet Access Services)。
     print(f"写入 {OUT_MD}")
 
     plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20)
+    plot_tokens_per_task()
 
     for b in order:
         vals, names = env[b]

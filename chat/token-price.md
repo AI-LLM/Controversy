@@ -142,7 +142,28 @@ Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、
 FCC Historical Reports、WSJ、Bruce Kushnick / Teletruth、**USTelecom Broadband Pricing Index**、
 NCTA、BLS CPI (Internet Access Services)。
 
-## 假设与局限
+## 单任务 token 消耗的演变
+
+token 单价跌了，但**单任务消耗的 token 量同期也涨了**——这是判断"用户实际净支出"是否真降的
+关键变量。数据来自 `token-usage-amount.csv`（含 agent web 研究 + 从 Reddit 三步法挖出的
+163 个高置信度数据点），其中 `unit=tokens_per_task` 共 **51 条**，时间跨 **2020-06 → 2026-04**。
+
+![单任务 token 消耗](tokens-per-task.png)
+
+- **散点**：每个数据点 = 一次"单任务/单 session"用量观察；颜色按 provider（OpenAI 绿、
+  Anthropic 橙、Cursor 紫、其他灰），marker 大小按 confidence。
+- **空心方块**：语义异常的"累积/窗口"点（如 Claude Code 5h 窗口聚合 20–40M、
+  Cursor agent loop 单 message 241M、Claude Code app dev project 累积 2.2B）——
+  这些不是真"单 task"，画图保留但与趋势线分离。
+- **灰实线**：季度中位数趋势——直观看到 2020 → 2024 中位数从 ~500 tokens 涨到 ~10K-100K，
+  2025 agentic 工作流后跳到 1–3M tokens/task 量级。
+
+**结论**：单任务 token 量在 6 年内涨了 **~1000×–10000×**（GPT-3 API 调用 ~500 → Claude Code
+session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50），便宜端跌 ~500×（DeepSeek $0.1）。
+**净影响**：用户实际净支出仍在涨——单任务花钱量级是 6 年前的 ~10–100 倍。这与各家平台
+吞吐 20–50× / 年的增长是同源现象（更长任务 + 更多用户 + 更高频调用）。
+
+
 
 - **每条消息 2000 token** 是折算口径；改它整体平移套餐线但不改品牌相对关系。
 - **模型退市时间**来自 CSV notes + Reddit 退市帖 + 官方公告，部分近似（±1 月）。
