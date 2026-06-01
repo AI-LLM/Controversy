@@ -26,6 +26,7 @@
 
 | 品牌 | 季度 | 当期最贵模型 | blended $/1M |
 |---|---|---|---|
+| OpenAI | 20Q2 | GPT-3 Davinci | 60.00 |
 | OpenAI | 23Q1 | gpt-4-32k | 90.00 |
 | OpenAI | 25Q1 | gpt-4.5-preview | 112.50 |
 | OpenAI | 25Q2 | o3-pro | 50.00 |

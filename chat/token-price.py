@@ -118,8 +118,8 @@ DEPRECATED = {
     "DeepSeek-V4 Pro (promo 75% off)":"2026-06",
 }
 
-QUARTERS = [(y, q) for y in range(2023, 2027) for q in (1, 2, 3, 4)
-            if not (y == 2026 and q > 2)]
+QUARTERS = [(y, q) for y in range(2020, 2027) for q in (1, 2, 3, 4)
+            if not (y == 2026 and q > 2) and not (y == 2020 and q == 1)]
 QLABEL = [f"{y % 100}Q{q}" for (y, q) in QUARTERS]
 QEND = [f"{y}-{q*3:02d}" for (y, q) in QUARTERS]
 OPENAI_CHAT_PLUS = {"ChatGPT Plus (GPT-4)", "ChatGPT Plus (GPT-4o)",
