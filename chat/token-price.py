@@ -550,7 +550,7 @@ def _monthly_price_lookup(rows, providers):
     return best_at
 
 
-def plot_task_price():
+def plot_task_price(plus, pro_pt, max20):
     """token-price.png 风格的 task-price 折线图：4 家品牌各一条季度线。
     USD/task = 该家季度 blended 价 × tokens/task（本家中位数；本家该季度无数据则
     fall back 到全平台中位数；再无数据 forward-fill）。
@@ -630,29 +630,81 @@ def plot_task_price():
             else:
                 series_usd[b].append(price * tpt / 1e6)
 
-    # ---- 画图（token-price.png 风格） ----
+    # 套餐 per-token 折合（USD / 1M tokens）按季度展开
+    # OpenAI Plus：从 plus 列表 forward-fill
+    plus_per_token_q = forward_fill(sorted(plus))   # 长度 = QEND
+    # Anthropic Pro：从 Claude Pro 上线日起 forward-fill 单值
+    pro_pt_q = []
+    pro_start_ym = next(r["effective_date"] for r in price_rows
+                        if r["product_or_model"] == "Claude Pro")
+    for qe in QEND:
+        pro_pt_q.append(pro_pt if qe >= pro_start_ym else None)
+    # Anthropic Max 20x：从 max20[0] 起 forward-fill
+    max20_pt_q = []
+    for qe in QEND:
+        max20_pt_q.append(max20[4] if qe >= max20[0] else None)
+
+    # 用全平台 tokens/task 季度中位数（forward-fill），让套餐线在 OpenAI/Anthropic
+    # 各自 tokens/task 缺失时也有合理 fallback
+    series_oai_tpt = series_tpt["OpenAI"]
+    series_anth_tpt = series_tpt["Anthropic"]
+
+    def usd_per_task(per_token_q, tpt_q):
+        out = []
+        for pt, tpt in zip(per_token_q, tpt_q):
+            if pt is None or tpt is None:
+                out.append(float("nan"))
+            else:
+                out.append(pt * tpt / 1e6)
+        return out
+
+    plus_task = usd_per_task(plus_per_token_q, series_oai_tpt)
+    pro_task = usd_per_task(pro_pt_q, series_anth_tpt)
+    max20_task = usd_per_task(max20_pt_q, series_anth_tpt)
+
+    # ---- 画图（token-price.png 风格，双 Y 轴） ----
     x = list(range(len(QUARTERS)))
-    fig, ax = plt.subplots(figsize=(14, 7))
+    fig, ax1 = plt.subplots(figsize=(14, 7))
     fig.patch.set_facecolor("white")
     api_colors = {"OpenAI": "#10a37f", "Anthropic": "#d97706",
                   "Google": "#4285f4", "DeepSeek": "#1a1a2e"}
     for b in providers:
-        ax.plot(x, series_usd[b], "-", color=api_colors[b], lw=2.2,
-                marker="o", ms=4, label=f"{b} task price", zorder=3)
+        ax1.plot(x, series_usd[b], "-", color=api_colors[b], lw=2.2,
+                 marker="o", ms=4, label=f"{b} API max", zorder=3)
 
-    ax.set_ylabel("单 task 实际花费 (USD/task)", fontsize=10)
-    ax.set_xticks(x)
+    ax1.set_ylabel("API 旗舰 task price (USD/task)", fontsize=10)
+    api_max = max((v for b in providers for v in series_usd[b] if v == v), default=50)
+    ax1.set_ylim(-2, api_max * 1.1)
+    ax1.set_xticks(x)
     sparse_labels = [lbl if lbl.endswith("Q1") or i == 0 or i == len(x) - 1 else ""
                      for i, lbl in enumerate(QLABEL)]
-    ax.set_xticklabels(sparse_labels, rotation=45, ha="right", fontsize=8)
-    ax.grid(axis="y", alpha=0.25, which="both")
-    ax.grid(axis="x", alpha=0.12)
-    ax.legend(loc="upper left", fontsize=8, framealpha=0.9)
+    ax1.set_xticklabels(sparse_labels, rotation=45, ha="right", fontsize=8)
+    ax1.grid(axis="y", alpha=0.25)
+    ax1.grid(axis="x", alpha=0.12)
 
-    ax.set_title(
-        "Task Price = tokens/task × 当家季度旗舰 blended 单价（2020-2026）\n"
-        "各家用本家 tokens/task 中位数，本家无数据则 fall back 到全平台中位数",
-        fontsize=11, pad=12)
+    # 右轴：套餐摊销 task price（量级低 30-50×）
+    ax2 = ax1.twinx()
+    ax2.plot(x, plus_task, "--", color="#10a37f", lw=1.6, marker="s", ms=3,
+             alpha=0.85, label="ChatGPT Plus $20 摊销")
+    ax2.plot(x, pro_task, "--", color="#d97706", lw=1.6, marker="^", ms=3,
+             alpha=0.85, label="Claude Pro $20 摊销")
+    ax2.plot(x, max20_task, ":", color="#d97706", lw=1.6, marker="v", ms=3,
+             alpha=0.7, label="Claude Max 20x $200 摊销")
+    sub_max = max((v for series in (plus_task, pro_task, max20_task)
+                   for v in series if v == v), default=2)
+    ax2.set_ylim(-sub_max * 0.05, sub_max * 1.15)
+    ax2.set_ylabel("套餐摊销 task price (USD/task)", fontsize=10)
+
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, loc="upper left", fontsize=7.8,
+               ncol=2, framealpha=0.92)
+
+    ax1.set_title(
+        "Task Price = tokens/task × 单价（2020-2026）\n"
+        "左轴（实线）= API 旗舰 blended × 本家 tokens/task 中位数；"
+        "右轴（虚/点线）= 套餐月费摊销到 task",
+        fontsize=10.5, pad=12)
 
     fig.tight_layout()
     fig.savefig(OUT_PNG4, dpi=180, bbox_inches="tight")
@@ -886,12 +938,16 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 
 ## 单 task 实际花费 USD（task-price）
 
-把 **tokens/task** 和 **API 旗舰 blended 单价** 按品牌相乘，得到"用该家旗舰跑一个 task
-要花多少钱"的季度演变。与 token-price.png 同风格：4 家品牌各一条折线，X 轴季度，Y 轴 log。
+把 **tokens/task** 和 **单价** 按品牌相乘，得到"用该家旗舰跑一个 task 要花多少钱"的
+季度演变。与 token-price.png 同风格：4 家 API 实线 + 3 条套餐摊销虚线/点线，X 轴季度。
 
 ![单 task 实际花费 USD](task-price.png)
 
-- **每家品牌一条线**：每季度的 task price = 该家季度 blended 单价 × 该家季度 tokens/task 中位数 ÷ 1e6。
+- **实线（4 条 API 旗舰）**：task price = 该家季度旗舰 blended × 该家季度 tokens/task 中位数 ÷ 1e6。
+- **虚/点线（3 条套餐摊销）**：
+  - **ChatGPT Plus $20 摊销** = OpenAI Plus 每 token 折合 × OpenAI tokens/task 中位数 ÷ 1e6
+  - **Claude Pro $20 摊销** = Anthropic Pro per-token × Anthropic tokens/task 中位数
+  - **Claude Max 20x $200 摊销** = Max20x per-token × Anthropic tokens/task 中位数
 - **fallback 顺序**：本家本季度数据 → 全平台本季度中位数 → 上一季度沿用（forward-fill）。
 - **provider 映射**：Cursor → Anthropic、Microsoft → OpenAI、community_estimate /
   third_party_benchmark / public_share_analysis / calculation 按归属厂家映射；
@@ -930,7 +986,7 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 
     plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20)
     plot_tokens_per_task()
-    plot_task_price()
+    plot_task_price(plus, pro_pt, max20)
 
     for b in order:
         vals, names = env[b]

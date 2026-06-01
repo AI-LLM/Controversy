@@ -164,12 +164,16 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 
 ## 单 task 实际花费 USD（task-price）
 
-把 **tokens/task** 和 **API 旗舰 blended 单价** 按品牌相乘，得到"用该家旗舰跑一个 task
-要花多少钱"的季度演变。与 token-price.png 同风格：4 家品牌各一条折线，X 轴季度，Y 轴 log。
+把 **tokens/task** 和 **单价** 按品牌相乘，得到"用该家旗舰跑一个 task 要花多少钱"的
+季度演变。与 token-price.png 同风格：4 家 API 实线 + 3 条套餐摊销虚线/点线，X 轴季度。
 
 ![单 task 实际花费 USD](task-price.png)
 
-- **每家品牌一条线**：每季度的 task price = 该家季度 blended 单价 × 该家季度 tokens/task 中位数 ÷ 1e6。
+- **实线（4 条 API 旗舰）**：task price = 该家季度旗舰 blended × 该家季度 tokens/task 中位数 ÷ 1e6。
+- **虚/点线（3 条套餐摊销）**：
+  - **ChatGPT Plus $20 摊销** = OpenAI Plus 每 token 折合 × OpenAI tokens/task 中位数 ÷ 1e6
+  - **Claude Pro $20 摊销** = Anthropic Pro per-token × Anthropic tokens/task 中位数
+  - **Claude Max 20x $200 摊销** = Max20x per-token × Anthropic tokens/task 中位数
 - **fallback 顺序**：本家本季度数据 → 全平台本季度中位数 → 上一季度沿用（forward-fill）。
 - **provider 映射**：Cursor → Anthropic、Microsoft → OpenAI、community_estimate /
   third_party_benchmark / public_share_analysis / calculation 按归属厂家映射；
