@@ -144,11 +144,8 @@ def extract_models(text: str) -> list[str]:
 
 
 def analyze_deprecation(d: dict) -> dict | None:
-    title = d.get("title") or ""
-    selftext = d.get("selftext") or ""
-    if selftext in ("[deleted]", "[removed]"):
-        selftext = ""
-    text = (title + "\n" + selftext)[:MAX_TEXT]
+    title, body = _get_text(d)
+    text = (title + "\n" + body)[:MAX_TEXT]
     if not text.strip():
         return None
 
@@ -174,13 +171,19 @@ def analyze_deprecation(d: dict) -> dict | None:
     dep_kw = dep_matches[0].lower() if dep_matches else ""
     snippet = make_snippet(text, dep_kw)
 
-    # 子分类：是宣布退市、讨论退市影响、还是担心即将退市
     event_type = "deprecation"
     low = text.lower()
     if any(w in low for w in ("will be", "going to", "plan to", "rumor", "might")):
         event_type = "upcoming"
     elif any(w in low for w in ("replaced by", "superseded", "upgrade to", "migrate")):
         event_type = "replacement"
+
+    is_comment = "body" in d and "title" not in d
+    if is_comment:
+        cid = d.get("id", "")
+        if cid and "/#" not in permalink:
+            permalink = permalink.rstrip("/") + "/#" + cid
+    display_title = title if title else re.sub(r"\s+", " ", (d.get("body") or "")).strip()[:200]
 
     return {
         "date": date,
@@ -191,7 +194,7 @@ def analyze_deprecation(d: dict) -> dict | None:
         "products": "|".join(products),
         "score": d.get("score", ""),
         "num_comments": d.get("num_comments", ""),
-        "title": re.sub(r"\s+", " ", title).strip()[:200],
+        "title": display_title[:200],
         "permalink": permalink,
         "snippet": snippet,
     }
@@ -222,12 +225,18 @@ def make_snippet(text: str, anchor: str) -> str:
     return re.sub(r"\s+", " ", snip).strip()
 
 
-def analyze_post(d: dict) -> dict | None:
+def _get_text(d: dict) -> tuple[str, str]:
+    """统一 posts（title+selftext）和 comments（body）的文本抽取。"""
     title = d.get("title") or ""
-    selftext = d.get("selftext") or ""
-    if selftext in ("[deleted]", "[removed]"):
-        selftext = ""
-    text = (title + "\n" + selftext)[:MAX_TEXT]
+    body = d.get("selftext") or d.get("body") or ""
+    if body in ("[deleted]", "[removed]"):
+        body = ""
+    return title, body
+
+
+def analyze_post(d: dict) -> dict | None:
+    title, body = _get_text(d)
+    text = (title + "\n" + body)[:MAX_TEXT]
     if not text.strip():
         return None
 
@@ -277,6 +286,12 @@ def analyze_post(d: dict) -> dict | None:
     permalink = d.get("permalink") or ""
     if permalink and not permalink.startswith("http"):
         permalink = "https://reddit.com" + permalink
+    is_comment = "body" in d and "title" not in d
+    if is_comment:
+        cid = d.get("id", "")
+        if cid and "/#" not in permalink:
+            permalink = permalink.rstrip("/") + "/#" + cid
+    display_title = title if title else re.sub(r"\s+", " ", (d.get("body") or "")).strip()[:200]
 
     return {
         "date": date,
@@ -290,7 +305,7 @@ def analyze_post(d: dict) -> dict | None:
         "premium_requests": " ; ".join(premium),
         "score": d.get("score", ""),
         "num_comments": d.get("num_comments", ""),
-        "title": re.sub(r"\s+", " ", title).strip()[:200],
+        "title": display_title[:200],
         "permalink": permalink,
         "snippet": make_snippet(text, anchor),
     }
@@ -328,6 +343,7 @@ def main() -> int:
     if not files:
         print(f"[!] {args.data_dir} 下没有 .jsonl 文件", file=sys.stderr)
         return 1
+    print(f"[{args.mode}] {len(files)} 文件（posts + comments）", file=sys.stderr)
 
     since = (args.since + "-01") if (args.since and len(args.since) == 7) else args.since
     until = (args.until + "-31") if (args.until and len(args.until) == 7) else args.until
