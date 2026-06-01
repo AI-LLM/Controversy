@@ -21,7 +21,7 @@
 
 ## 相关资料
 
-- [各品牌最贵 API 价格 + 套餐榨满折合 per-token（2020–2026）](../chat/token-price.md) — token／算力价格随时间的变化曲线，本条新闻所谓「成本逼平工资单」的价格侧底数
+- [Token价格 2020-2026](../chat/token-price.md) — token／算力价格随时间的变化曲线，本条新闻的数据实证
 - [2026-05-31：AI 的「Dark Output」](2026-05-31-tokenmaxxing.md) — 成本可见、产出统计不可见的论证（同一枚硬币的产出侧）
 - [2026-05-29：MIT FutureTech 17,000 次双盲评估](2026-05-29-mit-crashing-waves-rising-tides.md) — AI 在文字任务上的实际替代进度
 
