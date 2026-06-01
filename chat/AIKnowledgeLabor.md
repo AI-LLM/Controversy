@@ -642,7 +642,7 @@ graph TD
     T -. 缺陷打回 .-> C
     MO -. 缺陷与新需求回流 .-> R
     R_A1@{ shape: comment, label: "拆分工作项目（仿照 O*NET），建立评估数据集" }
-    R o--o R_A1
+    R_A1 --o R
 ```
 
 #### 3.2.3 价值实现路径
