@@ -640,8 +640,7 @@ def plot_task_price():
         ax.plot(x, series_usd[b], "-", color=api_colors[b], lw=2.2,
                 marker="o", ms=4, label=f"{b} task price", zorder=3)
 
-    ax.set_yscale("log")
-    ax.set_ylabel("单 task 实际花费 (USD/task, log)", fontsize=10)
+    ax.set_ylabel("单 task 实际花费 (USD/task)", fontsize=10)
     ax.set_xticks(x)
     sparse_labels = [lbl if lbl.endswith("Q1") or i == 0 or i == len(x) - 1 else ""
                      for i, lbl in enumerate(QLABEL)]
@@ -652,7 +651,7 @@ def plot_task_price():
 
     ax.set_title(
         "Task Price = tokens/task × 当家季度旗舰 blended 单价（2020-2026）\n"
-        "Y 轴 log；各家用本家 tokens/task 中位数，本家无数据则 fall back 到全平台中位数",
+        "各家用本家 tokens/task 中位数，本家无数据则 fall back 到全平台中位数",
         fontsize=11, pad=12)
 
     fig.tight_layout()
