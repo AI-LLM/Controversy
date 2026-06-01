@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import os
 import re
 from datetime import datetime
@@ -80,10 +81,10 @@ MODEL_TO_REDDIT_KEYS = {
     "GPT-3 Curie": ["curie"],
     "GPT-3 Babbage": ["babbage"],
     "GPT-3 Ada": ["gpt-3 ada", "text-ada"],
-    "gpt-3.5-turbo-0301": ["gpt-3.5-turbo", "gpt-3.5 turbo"],
+    "gpt-3.5-turbo-0301": ["gpt-3.5-turbo-0301", "gpt-3.5-turbo-0314"],
     "gpt-3.5-turbo-16k-0613": ["gpt-3.5-turbo-16k"],
-    "gpt-3.5-turbo-1106": ["gpt-3.5-turbo"],
-    "gpt-3.5-turbo-0125": ["gpt-3.5-turbo"],
+    "gpt-3.5-turbo-1106": ["gpt-3.5-turbo-1106", "gpt-3.5-turbo-0613"],
+    "gpt-3.5-turbo-0125": ["gpt-3.5-turbo-0125", "gpt-3.5-turbo"],
     "gpt-4 (8K)": ["gpt-4 ", "gpt4 "],
     "gpt-4-32k": ["gpt-4-32k"],
     "gpt-4-turbo (1106-preview)": ["gpt-4-turbo", "gpt-4 turbo", "gpt4-turbo"],
@@ -179,9 +180,8 @@ def refine_deprecated_from_reddit():
     for model, search_keys in MODEL_TO_REDDIT_KEYS.items():
         if model not in dep:
             continue
-        best = None
+        best = None      # (date_ym, score, title, permalink, source_desc)
         for r in dep_rows:
-            # 只信 Haiku 判为 model_retirement 的帖子
             if r.get("llm_verdict") != "model_retirement":
                 continue
             ms = r["models_mentioned"].lower()
@@ -190,14 +190,51 @@ def refine_deprecated_from_reddit():
             sc = int(r["score"] or 0)
             if sc < 5:
                 continue
-            d = r["date"]
-            if best is None or d < best[0]:
-                best = (d, sc, r["title"][:50], r["permalink"])
+
+            # 从 llm_events JSON 抽取结构化退市日期
+            events_json = r.get("llm_events", "")
+            events = []
+            if events_json:
+                try:
+                    events = json.loads(events_json)
+                except (json.JSONDecodeError, TypeError):
+                    pass
+
+            for ev in events:
+                ev_model = (ev.get("model") or "").lower()
+                if not any(k in ev_model for k in search_keys):
+                    continue
+                timing = ev.get("timing", "")
+                if timing == "speculative":
+                    continue
+                eff = ev.get("effective_date", "")
+                if eff:
+                    # 有明确退市生效日期——最可靠
+                    eff_ym = eff[:7]
+                    src = f"eff_date {eff}"
+                elif timing == "immediate":
+                    # 即时退市，帖子日期 = 退市日期
+                    eff_ym = r["date"][:7]
+                    src = f"immediate {r['date']}"
+                elif timing == "already_happened":
+                    # 追溯讨论——帖子日期是上限而非退市日期，不用来前移基线
+                    continue
+                elif timing == "announced_future":
+                    # 公告但无具体日期——帖子日期是公告日不是退市日，跳过
+                    if not eff:
+                        continue
+                else:
+                    continue
+
+                if best is None or eff_ym < best[0]:
+                    best = (eff_ym, sc, r["title"][:50], r["permalink"], src)
+
+            # events 为空时不做兜底——无结构化事件则不用于精确化退市日期
+
         if best:
-            reddit_ym = best[0][:7]
             reddit_evidence[model] = best
-            if reddit_ym < dep[model]:
-                dep[model] = reddit_ym
+            if best[0] < dep[model]:
+                dep[model] = best[0]
 
     return dep, reddit_evidence
 
@@ -237,7 +274,7 @@ def main():
 
     # 统计哪些退市日期被 Reddit 精确化了
     refined = []
-    for model, (rd, sc, title, plink) in reddit_ev.items():
+    for model, (rd, sc, title, plink, *_extra) in reddit_ev.items():
         bl = DEPRECATED_BASELINE.get(model, "")
         final = dep.get(model, "")
         if final != bl:
@@ -332,7 +369,7 @@ def main():
             ev = reddit_ev.get(nm)
             src = ""
             if ev:
-                src = f" (Reddit {ev[0]})"
+                src = f" (Reddit {ev[0]}, {ev[4] if len(ev) > 4 else ''})"
             life_tbl.append(f"| {prov} | {nm} | {launch} | {end} | {d} | {d/30:.1f} | {status}{src} |")
 
     refined_tbl = []
