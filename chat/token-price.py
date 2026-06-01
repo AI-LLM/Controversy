@@ -272,11 +272,8 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     for b in order:
         vals, names = env[b]
         c = api_colors[b]
-        bx, by = [], []
-        for qe, v in zip(QEND, vals):
-            if v > 0:
-                bx.append(months_since(qe, TOKEN_ORIGIN))
-                by.append(v)
+        bx = [months_since(qe, TOKEN_ORIGIN) for qe in QEND]
+        by = [float("nan") if v == 0 else v for v in vals]
         ax.plot(bx, by, "-", color=c, lw=1.8, marker="o", ms=4,
                 label=f"{b} API 最贵 blended", zorder=3)
 
@@ -370,9 +367,11 @@ def main():
     for b in order:
         vals, names = env[b]
         c = api_colors[b]
-        ax1.plot(x, vals, "-", color=c, lw=2.2, marker="o", ms=4,
+        # 缺数据的季度用 NaN，让 matplotlib 断线而不是接到 0
+        masked = [float("nan") if v == 0 else v for v in vals]
+        ax1.plot(x, masked, "-", color=c, lw=2.2, marker="o", ms=4,
                  label=f"{b} API max", zorder=3)
-        annotate_changes(ax1, x, vals, names, c, yoffset=3)
+        annotate_changes(ax1, x, masked, names, c, yoffset=3)
 
     ax1.set_ylabel("API most-expensive model blended (USD / 1M tokens)", fontsize=10)
     api_max = max(max(env[b][0]) for b in order)
