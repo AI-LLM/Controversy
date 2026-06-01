@@ -66,28 +66,31 @@ INTERNET_PRICES = [
 # token-price.csv 最早数据点 = 2020-06。互联网 / PC 时间轴起点对齐到此。
 TOKEN_ORIGIN = "2020-06"
 INTERNET_ORIGIN = "1993-09"
-PC_ORIGIN = "1976-07"
+PC_ORIGIN = "1951-03"
 
-# 个人电脑历史价格（日期, 整机售价 USD, 核心数, 主频 GHz, 备注）
-# 通缩指标 = 整机售价 ÷ (核心数 × 主频 GHz) = $/(core·GHz)
-# 来源：Smithsonian, IBM Archives, Computer History Museum, NYT (1983),
-#       Stanford Mac history, PC Magazine, WaPo, BLS PPI, Intel ARK
+# 商业化计算机历史价格（日期, 整机售价 USD, MIPS, 备注）
+# 通缩指标 = 整机售价 ÷ MIPS = $/MIPS
+# 早期 KIPS → MIPS；2015+ 用 GFLOPS（含 SIMD/NPU）近似为 MIPS 同量级
+# 来源：US Census Bureau (UNIVAC), IBM Archives, Computer History Museum,
+#       Smithsonian, IEEE Spectrum, Stanford, BLS, Intel ARK
 PC_PRICES = [
-    # (date, 整机价 USD, cores, GHz, 备注)
-    ("1976-07",  666.66,  1, 0.00102, "Apple I; MOS 6502 @ 1.02 MHz"),
-    ("1977-06", 1298.00,  1, 0.00102, "Apple II; MOS 6502 @ 1.02 MHz"),
-    ("1981-08", 1565.00,  1, 0.00477, "IBM PC 5150; Intel 8088 @ 4.77 MHz"),
-    ("1982-01",  595.00,  1, 0.00102, "Commodore 64; MOS 6510 @ 1.02 MHz"),
-    ("1983-06",   99.00,  1, 0.00300, "TI-99/4A 倾销价; TMS9900 @ 3 MHz"),
-    ("1984-01", 2495.00,  1, 0.00783, "Macintosh 128K; MC68000 @ 7.83 MHz"),
-    ("1990-06", 2500.00,  1, 0.016,   "Compaq 386SX @ 16 MHz"),
-    ("1995-06", 1900.00,  1, 0.075,   "Pentium 75; 超标量"),
-    ("2000-06",  999.00,  1, 1.0,     "Athlon / Pentium III @ 1.0 GHz"),
-    ("2005-06",  800.00,  1, 3.0,     "Pentium 4 Prescott @ 3.0 GHz；主频墙"),
-    ("2015-06",  650.00,  4, 3.2,     "Intel Core i5-6500"),
-    ("2020-06",  710.00,  6, 3.6,     "AMD Ryzen 5 3600 / Intel i5-10400"),
-    ("2024-06",  680.00, 10, 2.5,     "Intel Core i5-14400（6P+4E）"),
-    ("2026-06",  660.00, 13, 3.5,     "AI PC 主流（多核混合架构）"),
+    # (date, 整机价 USD, MIPS, 备注)
+    ("1951-03", 1000000.0,    0.00190,  "UNIVAC I：5000 电子管 @ 2.25 MHz；1.9 KIPS"),
+    ("1959-10",  150000.0,    0.0115,   "IBM 1401：晶体管 @ 87 KHz；11.5 KIPS"),
+    ("1964-04",  133000.0,    0.0345,   "IBM System/360 M30：SLT @ 1 MHz；34.5 KIPS"),
+    ("1975-01",     621.0,    0.5,      "Altair 8800：Intel 8080 @ 2.0 MHz；0.5 MIPS"),
+    ("1977-06",    1298.0,    0.5,      "Apple II：MOS 6502 @ 1.02 MHz"),
+    ("1981-08",    1565.0,    0.75,     "IBM PC 5150：Intel 8088 @ 4.77 MHz"),
+    ("1983-12",     199.0,    0.5,      "C64 价格战钉死 $199；MOS 6510"),
+    ("1984-01",    2495.0,    1.4,      "Macintosh 128K：MC68000 @ 7.83 MHz"),
+    ("1990-06",    2500.0,    2.5,      "Compaq 386SX @ 16 MHz"),
+    ("1995-06",    1900.0,    126.0,    "Pentium 75；超标量"),
+    ("2000-06",     999.0,   2000.0,    "Athlon / Pentium III @ 1.0 GHz"),
+    ("2005-06",     800.0,  10000.0,    "Pentium 4 Prescott @ 3.0 GHz；主频墙"),
+    ("2015-06",     650.0, 110000.0,    "i5-6500 4c；~110 GFLOPS"),
+    ("2020-06",     710.0, 400000.0,    "Ryzen 5 3600 / i5-10400 6c；~400 GFLOPS"),
+    ("2024-06",     680.0, 700000.0,    "i5-14400 10c；~700 GFLOPS"),
+    ("2026-06",     660.0, 45000000.0,  "AI PC 12-14c + NPU；~45 TOPS"),
 ]
 
 EXCLUDE = {"OpenAI audio models", "text-embedding-ada-002", "Off-peak discount"}
@@ -279,13 +282,13 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     inet_y_scaled = [pm * scale_inet for _, pm, _, _, _ in inet_per_mbps]
     inet_max = max(inet_x)
 
-    # 把每个 PC 点换算成 $/(core·GHz)（整机价 ÷ 核心数 ÷ 主频 GHz），再缩放
-    pc_per_unit = [(ym, price / (cores * ghz), price, cores, ghz, note)
-                   for ym, price, cores, ghz, note in PC_PRICES]
-    pc_anchor_per_unit = pc_per_unit[0][1]  # 1976-07: $666.66/(1×0.00102) ≈ $653,588
-    scale_pc = token_anchor_price / pc_anchor_per_unit  # 60 / 653588 ≈ 9.18e-5
-    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _, _ in pc_per_unit]
-    pc_y_scaled = [pu * scale_pc for _, pu, _, _, _, _ in pc_per_unit]
+    # 把每个 PC 点换算成 $/MIPS（整机价 ÷ MIPS），再缩放
+    pc_per_unit = [(ym, price / mips, price, mips, note)
+                   for ym, price, mips, note in PC_PRICES]
+    pc_anchor_per_unit = pc_per_unit[0][1]  # 1951-03: $1M/0.0019 ≈ $526M/MIPS
+    scale_pc = token_anchor_price / pc_anchor_per_unit
+    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _ in pc_per_unit]
+    pc_y_scaled = [pu * scale_pc for _, pu, _, _, _ in pc_per_unit]
     pc_max = max(pc_x)
 
     fig, ax = plt.subplots(figsize=(20, 8))
@@ -294,13 +297,15 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     # ---- PC 线（蓝色虚线，标价） ----
     ax.plot(pc_x, pc_y_scaled, "--", color="#c0392b", lw=2.5,
             marker="s", ms=6, dashes=(2, 2),
-            label=f"个人电脑 $/(core·GHz) × {scale_pc:.2e}（1976-07 = 2020-06 锚定）",
+            label=f"商业化计算机 $/MIPS × {scale_pc:.2e}（1951-03 = 2020-06 锚定）",
             zorder=3)
-    for (ym, per_unit, price, cores, ghz, note), xv, yv in zip(
+    for (ym, per_unit, price, mips, note), xv, yv in zip(
             pc_per_unit, pc_x, pc_y_scaled):
-        # 主频显示：≥1 GHz 直接显示 GHz，否则 MHz
-        freq_lbl = f"{ghz:.1f}GHz" if ghz >= 1 else f"{ghz * 1000:.2f}MHz"
-        ax.annotate(f"{ym}\n${per_unit:,.0f}/(c·GHz)\n({cores}c {freq_lbl}, ${price:.0f})",
+        mips_lbl = (f"{mips/1e6:.1f}TIPS" if mips >= 1e6
+                    else f"{mips/1e3:.0f}GIPS" if mips >= 1e3
+                    else f"{mips:.2f}MIPS" if mips >= 0.1
+                    else f"{mips*1e3:.1f}KIPS")
+        ax.annotate(f"{ym}\n${per_unit:,.4g}/MIPS\n({mips_lbl}, ${price:,.0f})",
                     (xv, yv), fontsize=5.8,
                     xytext=(5, -28), textcoords="offset points",
                     color="#c0392b", alpha=0.85)
@@ -350,10 +355,10 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     ax.set_xticks(tick_months)
     ax.set_xticklabels(tick_labels, fontsize=7)
 
-    ax.set_ylabel("USD / 1M tokens（PC $/(core·GHz)、互联网 $/Mbps 均按 1976/1993 起点 ≡ "
+    ax.set_ylabel("USD / 1M tokens（PC $/MIPS、互联网 $/Mbps 均按 1951/1993 起点 ≡ "
                   "2020-06 GPT-3 Davinci $60 缩放）", fontsize=9.5)
     ax.set_xlabel("token 真实日期 / 互联网真实年份 / PC 真实年份"
-                  "（1976-07 PC、1993-09 互联网 → 2020-06 token 平移对齐）", fontsize=9)
+                  "（1951-03 PC、1993-09 互联网 → 2020-06 token 平移对齐）", fontsize=9)
     ax.set_yscale("log")
     y_top = max(max(inet_y_scaled), max(pc_y_scaled)) * 1.5
     y_bot = min(min(pc_y_scaled), min(inet_y_scaled)) * 0.5
@@ -375,12 +380,12 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     final_per_mbps = inet_per_mbps[-1][1]
     final_per_unit = pc_per_unit[-1][1]
     ax.set_title(
-        f"PC $/(core·GHz)、互联网 $/Mbps、AI token $/1M tokens 三条等比叠加（Y log）\n"
-        f"锚定：1976-07 PC ${pc_anchor_per_unit:,.0f}/(core·GHz)、"
+        f"商业化计算机 $/MIPS、互联网 $/Mbps、AI token $/1M tokens 三条等比叠加（Y log）\n"
+        f"锚定：1951-03 UNIVAC I ${pc_anchor_per_unit:,.0f}/MIPS、"
         f"1993-09 互联网 ${inet_anchor_per_mbps:.0f}/Mbps、"
         f"2020-06 GPT-3 Davinci ${token_anchor_price:.0f}/1M tokens 三点同高\n"
-        f"PC 50 年 $/(core·GHz) 从 ${pc_anchor_per_unit:,.0f} 跌到 ${final_per_unit:,.1f}"
-        f"（≈{pc_anchor_per_unit/final_per_unit:,.0f}×）；"
+        f"商业计算机 75 年 $/MIPS 从 ${pc_anchor_per_unit:,.0f} 跌到 ${final_per_unit:.2g}"
+        f"（≈{pc_anchor_per_unit/final_per_unit:.0e}×）；"
         f"互联网 33 年 $/Mbps 跌 4400×；token 6 年顶 $50–$112、长尾 $0.1",
         fontsize=10.5, pad=12)
 
@@ -723,11 +728,10 @@ def plot_task_price(plus, pro_pt, max20):
 
 
 def plot_task_price_vs_internet_pc():
-    """token-price-vs-internet-pc.png 风格：把"USD/task"和 PC $/(core·GHz)、
+    """token-price-vs-internet-pc.png 风格：把"USD/task"和 PC $/MIPS、
     互联网 $/Mbps 三条等比叠加。
     锚定：2020-06 GPT-3 API typical task = $60/1M × 500 tokens / 1e6 = $0.03
-    PC 1976-07 → 2020-06 → $0.03（×4.59e-8）
-    互联网 1993-09 → 2020-06 → $0.03（×4.34e-5）
+    PC 1951-03 → 2020-06；互联网 1993-09 → 2020-06。
     """
     bundle = compute_task_price_series()
     if bundle is None:
@@ -749,15 +753,15 @@ def plot_task_price_vs_internet_pc():
     scale_inet = task_anchor / inet_anchor_per_mbps
 
     # PC：1976-07 → 2020-06 = task_anchor
-    pc_per_unit = [(ym, price / (cores * ghz), price, cores, ghz, note)
-                   for ym, price, cores, ghz, note in PC_PRICES]
+    pc_per_unit = [(ym, price / mips, price, mips, note)
+                   for ym, price, mips, note in PC_PRICES]
     pc_anchor_per_unit = pc_per_unit[0][1]
     scale_pc = task_anchor / pc_anchor_per_unit
 
     inet_x = [months_since(ym, INTERNET_ORIGIN) for ym, _, _, _, _ in inet_per_mbps]
     inet_y_scaled = [pm * scale_inet for _, pm, _, _, _ in inet_per_mbps]
-    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _, _ in pc_per_unit]
-    pc_y_scaled = [pu * scale_pc for _, pu, _, _, _, _ in pc_per_unit]
+    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _ in pc_per_unit]
+    pc_y_scaled = [pu * scale_pc for _, pu, _, _, _ in pc_per_unit]
     inet_max = max(inet_x)
     pc_max = max(pc_x)
 
@@ -767,12 +771,15 @@ def plot_task_price_vs_internet_pc():
     # PC 红虚线
     ax.plot(pc_x, pc_y_scaled, "--", color="#c0392b", lw=2.5,
             marker="s", ms=6, dashes=(2, 2),
-            label=f"PC $/(core·GHz) × {scale_pc:.2e}（1976-07 = 2020-06 锚定）",
+            label=f"商业化计算机 $/MIPS × {scale_pc:.2e}（1951-03 = 2020-06 锚定）",
             zorder=3)
-    for (ym, per_unit, price, cores, ghz, note), xv, yv in zip(
+    for (ym, per_unit, price, mips, note), xv, yv in zip(
             pc_per_unit, pc_x, pc_y_scaled):
-        freq_lbl = f"{ghz:.1f}GHz" if ghz >= 1 else f"{ghz * 1000:.2f}MHz"
-        ax.annotate(f"{ym}\n${per_unit:,.0f}/(c·GHz)\n({cores}c {freq_lbl}, ${price:.0f})",
+        mips_lbl = (f"{mips/1e6:.1f}TIPS" if mips >= 1e6
+                    else f"{mips/1e3:.0f}GIPS" if mips >= 1e3
+                    else f"{mips:.2f}MIPS" if mips >= 0.1
+                    else f"{mips*1e3:.1f}KIPS")
+        ax.annotate(f"{ym}\n${per_unit:,.4g}/MIPS\n({mips_lbl}, ${price:,.0f})",
                     (xv, yv), fontsize=5.8,
                     xytext=(5, -28), textcoords="offset points",
                     color="#c0392b", alpha=0.85)
@@ -829,10 +836,10 @@ def plot_task_price_vs_internet_pc():
     ax.set_xticks(tick_months)
     ax.set_xticklabels(tick_labels, fontsize=7)
 
-    ax.set_ylabel(f"USD/task（PC $/(core·GHz)、互联网 $/Mbps 均按 1976/1993 起点 ≡ "
+    ax.set_ylabel(f"USD/task（PC $/MIPS、互联网 $/Mbps 均按 1951/1993 起点 ≡ "
                   f"2020-06 GPT-3 API task ${task_anchor:.3f} 缩放）", fontsize=9.5)
     ax.set_xlabel("token 真实日期 / 互联网真实年份 / PC 真实年份"
-                  "（1976-07 PC、1993-09 互联网 → 2020-06 task 平移对齐）", fontsize=9)
+                  "（1951-03 PC、1993-09 互联网 → 2020-06 task 平移对齐）", fontsize=9)
     ax.set_yscale("log")
     y_top = max(max(inet_y_scaled), max(pc_y_scaled),
                 max(v for b in providers for v in series_usd[b] if v == v)) * 1.5
@@ -857,13 +864,14 @@ def plot_task_price_vs_internet_pc():
     final_inet = inet_per_mbps[-1][1]
     task_now = max(v for b in providers for v in series_usd[b] if v == v)
     ax.set_title(
-        f"USD/task vs 互联网 $/Mbps vs PC $/(core·GHz)（Y log，三条等比叠加）\n"
-        f"锚定：1976-07 PC ${pc_anchor_per_unit:,.0f}、1993-09 互联网 ${inet_anchor_per_mbps:.0f}、"
+        f"USD/task vs 互联网 $/Mbps vs 商业化计算机 $/MIPS（Y log，三条等比叠加）\n"
+        f"锚定：1951-03 UNIVAC I ${pc_anchor_per_unit:,.0f}/MIPS、"
+        f"1993-09 互联网 ${inet_anchor_per_mbps:.0f}/Mbps、"
         f"2020-06 GPT-3 API task ${task_anchor:.3f} 三点同高\n"
-        f"PC 50 年跌 ~{pc_anchor_per_unit/final_pc:,.0f}×；互联网 33 年跌 ~"
-        f"{inet_anchor_per_mbps/final_inet:,.0f}×；USD/task 6 年从 ${task_anchor:.3f} 涨到 ${task_now:.1f}"
-        f"（≈{task_now/task_anchor:,.0f}× 反向上行）",
-        fontsize=11, pad=12)
+        f"商业计算机 75 年跌 ~{pc_anchor_per_unit/final_pc:.0e}×；"
+        f"互联网 33 年跌 ~{inet_anchor_per_mbps/final_inet:,.0f}×；"
+        f"USD/task 6 年从 ${task_anchor:.3f} 涨到 ${task_now:.1f}（≈{task_now/task_anchor:,.0f}× 反向上行）",
+        fontsize=10.5, pad=12)
 
     fig.tight_layout()
     fig.savefig(OUT_PNG5, dpi=180, bbox_inches="tight")
@@ -980,11 +988,14 @@ def main():
         inet_tbl.append(f"| {ym} | ${price:.2f} | {mbps} | ${price / mbps:.2f} | {note} |")
 
     pc_tbl = []
-    for ym, price, cores, ghz, note in PC_PRICES:
-        freq = f"{ghz:.1f} GHz" if ghz >= 1 else f"{ghz * 1000:.2f} MHz"
-        per_unit = price / (cores * ghz)
+    for ym, price, mips, note in PC_PRICES:
+        mips_lbl = (f"{mips/1e6:.1f} TIPS" if mips >= 1e6
+                    else f"{mips/1e3:.0f} GIPS" if mips >= 1e3
+                    else f"{mips:.2f} MIPS" if mips >= 0.1
+                    else f"{mips*1e3:.1f} KIPS")
+        per_unit = price / mips
         pc_tbl.append(
-            f"| {ym} | ${price:.2f} | {cores} | {freq} | ${per_unit:,.0f} | {note} |")
+            f"| {ym} | ${price:,.2f} | {mips_lbl} | ${per_unit:,.4g} | {note} |")
 
     md = f"""# 各品牌最贵 API 价格 + 套餐榨满折合 per-token（2020–2026）
 
@@ -1022,48 +1033,50 @@ def main():
 |---|---|---|---|---|
 {chr(10).join(sub_tbl)}
 
-## 与 PC $/(core·GHz)、互联网 $/Mbps 的三条等比叠加
+## 与商业化计算机 $/MIPS、互联网 $/Mbps 的三条等比叠加
 
-把美国 PC（1976-）、互联网接入（1993-）、AI token（2020-）三条曲线统一到 token 坐标系：
+把商业化计算机（1951-）、美国互联网接入（1993-）、AI token（2020-）三条曲线统一到
+token 坐标系：
 
 - **时间平移**：三条线各自起点对齐到 token 2020-06，
-  - PC 1976-07 → 2020-06（+528 月），最后点 2026-06 落到 token 2070-06；
+  - 商业计算机 1951-03 → 2020-06（+833 月，**69 年**），最后点 2026-06 落到 token 2095-06；
   - 互联网 1993-09 → 2020-06（+321 月），最后点 2026-06 落到 token 2053-03；
   - token 自身原位。
 - **指标统一**：均取"行业核心通缩指标"——
-  - PC：**$/(core·GHz)**（整机售价 ÷ 核心数 ÷ 主频 GHz）。该指标在 1976–2005 由主频拉动，
-    2005–2026 由核心数拉动；横跨"频率战"和"多核战"两个阶段。
+  - 计算机：**$/MIPS**（整机售价 ÷ 每秒指令数）。横跨电子管（UNIVAC 1.9 KIPS）→
+    晶体管（IBM 1401 11.5 KIPS）→ 集成电路（System/360 34.5 KIPS）→ 微处理器（Intel 8080）→
+    多核（i5 4-10c）→ NPU（45 TOPS）。
   - 互联网：**$/Mbps**（月费 ÷ 典型下行速率）；
   - token：**$/1M tokens**（API 最贵模型 blended）。
 - **等比缩放**：三条线起点价 ≡ 2020-06 GPT-3 Davinci $60/1M tokens，
-  - PC ×9.18e-5（1976-07 Apple I $653,588/(core·GHz) → $60）；
-  - 互联网 ×0.0868（1993-09 $691/Mbps → $60）；
+  - 计算机：1951-03 UNIVAC I 约 **$5.26 亿/MIPS**（$1M ÷ 0.0019 MIPS）→ $60；
+  - 互联网：1993-09 约 $691/Mbps → $60；
   - token 不缩放。
-- **Y 轴 log**：PC $/(core·GHz) 50 年跌 ~45,000×（$653K → $14.5），
-  互联网 $/Mbps 33 年跌 4400×，token 6 年最贵在 $50–$112 + 长尾 $0.1。
+- **Y 轴 log**：商业计算机 75 年 $/MIPS 跌约 **3.6 × 10^13 ×**（5.26 亿 → 1.47e-5），
+  互联网 33 年 $/Mbps 跌 ~4400×，token 6 年最贵在 $50–$112 + 长尾 $0.1。
 
-![PC + 互联网 + token 三条等比叠加](token-price-vs-internet-pc.png)
+![商业计算机 + 互联网 + token 三条等比叠加](token-price-vs-internet-pc.png)
 
-- **红虚线**：PC $/(core·GHz)，方形 marker。
+- **红虚线**：商业化计算机 $/MIPS，方形 marker（含 1951 UNIVAC I 起点的电子管时代）。
 - **灰虚线**：互联网 $/Mbps，圆形 marker。
 - **彩实线**：各家 token API 最贵模型 blended。
 
-**观感**：log 空间里 PC 50 年画出一条接近指数下行的直线，可分两段——
-1976–2005 的**频率战**（单核主频从 1 MHz 飙到 3 GHz，3000×）和 2005–2026 的**多核战**
-（核心数从 1 涨到 13+ 而绝对售价不变）。互联网斜率明显比 PC 缓；**token 6 年的下行斜率
-（最贵小幅波动 + 长尾陡降）若延长，理论上 5–6 年就能覆盖 PC 50 年走过的下行幅度**——
-这是 AI token 价格相对于历史科技品类的"加速倍率"的直观印证。
+**观感**：log 空间里 75 年计算机 $/MIPS 曲线接近完美指数下行——可清晰看到 1959 晶体管
+（IBM 1401）一刀切下来、1971 微处理器再切一刀、1995 Pentium 起每年 ×1.5–2、2026 NPU 再
+跳一阶。互联网斜率明显比计算机缓；**token 6 年下行斜率若延长，理论上 8–10 年能覆盖
+计算机 75 年走过的下行幅度**——AI token 是历史科技品类中"通缩斜率"最陡的一类。
 
-### PC 整机价 → $/(core·GHz) 数据点
+### 商业化计算机整机价 → $/MIPS 数据点
 
-| 日期 | 整机售价 | 核心 | 主频 | $/(core·GHz) | 备注 |
-|---|---|---|---|---|---|
+| 日期 | 整机售价 | 算力 | $/MIPS | 备注 |
+|---|---|---|---|---|
 {chr(10).join(pc_tbl)}
 
-数据来源：Smithsonian（Apple I）、Apple Computer Inc. Archive（Apple II）、Computer History
-Museum（TRS-80）、IBM Archives（IBM PC）、NYT Archive（1983 TI 退出）、Stanford "Making the
-Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、Gartner/IDC
-（2000 $999 价格战）、BLS Computer Price Deflation、Intel ARK / AMD 官方处理器规格。
+数据来源：US Census Bureau（UNIVAC I）、IBM Archives（1401 / System/360 / IBM PC）、
+Computer History Museum、Smithsonian（Altair 8800）、Apple Inc. 官方目录（Apple II）、
+NYT Archive（1983 TI 退出）、IEEE Spectrum（C64 价格战）、Stanford "Making the Macintosh"、
+PC Magazine via Google Books、Washington Post（1995 Pentium）、Gartner/IDC（2000 $999 价格战）、
+BLS Computer Price Deflation、Intel ARK / AMD 官方处理器规格。
 
 ### 互联网月费 → $/Mbps 数据点
 
@@ -1117,22 +1130,22 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 ——这就是 ChatGPT Plus / Claude Pro / Cursor $20–$200 套餐 2025–2026 年纷纷加套使用限制
 （周限、autocompact、premium request 配额）的根因。
 
-## USD/task 与 PC $/(core·GHz)、互联网 $/Mbps 的等比叠加
+## USD/task 与商业计算机 $/MIPS、互联网 $/Mbps 的等比叠加
 
-用与 token 单价等比叠加图相同的方法（PC 1976-07、互联网 1993-09、token 2020-06 三起点平移
-到同一 Y 高度，Y 轴 log），把"按 API 价计算的 USD/task"作为 token 端的对照量替进去。锚点：
-**2020-06 GPT-3 API typical task ≈ $0.03/task**（$60/1M × 500 tokens）。
+用与 token 单价等比叠加图相同的方法（计算机 1951-03、互联网 1993-09、token 2020-06 三起点
+平移到同一 Y 高度，Y 轴 log），把"按 API 价计算的 USD/task"作为 token 端的对照量替进去。
+锚点：**2020-06 GPT-3 API typical task ≈ $0.03/task**（$60/1M × 500 tokens）。
 
-![USD/task vs 互联网 vs PC 等比叠加](task-price-vs-internet-pc.png)
+![USD/task vs 互联网 vs 计算机 等比叠加](task-price-vs-internet-pc.png)
 
-- **红虚线**：PC $/(core·GHz)，缩放系数 ≈ 4.59e-8（1976-07 $653,588 → $0.03）。
-- **灰虚线**：互联网 $/Mbps，缩放系数 ≈ 4.34e-5（1993-09 $691 → $0.03）。
+- **红虚线**：商业计算机 $/MIPS（含 1951 UNIVAC I 起点）。
+- **灰虚线**：互联网 $/Mbps。
 - **彩实线**：4 家 API 旗舰 task price，2020-06 OpenAI 起 $0.03，2024–2026 agentic 后蹿到 $1–$45。
 
-**核心反差**：PC 50 年 $/(core·GHz) 跌 ~45,000×，互联网 33 年 $/Mbps 跌 ~4400×——
-这两条都是**指数下行**；而 USD/task 6 年从 $0.03 **反向上行到 $20–$45**（≈1000×）。这是
-"硬件/带宽指数下行 vs AI 单 task 用量指数上涨"的直接画面。**当历史上"单位资源价格 → 0"
-的曲线，在 AI 时代是"单任务花费 → ∞"**。
+**核心反差**：商业计算机 75 年 $/MIPS 跌约 **3.6×10^13×**（5.26 亿 → 1.47e-5）、
+互联网 33 年 $/Mbps 跌 ~4400×——这两条都是**指数下行**；而 USD/task 6 年从 $0.03
+**反向上行到 $20–$45**（≈1000×）。**当历史上"单位资源价格 → 0"的曲线在 AI 时代是
+"单任务花费 → ∞"**。
 
 ## 假设与局限
 
@@ -1152,9 +1165,11 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
     最权威的年度配对数据，置信度最高。
   - 月费均为名义美元；如做 CPI 调整后 1990s 价格还要再上浮 ~70%，会让早期 $/Mbps 更高，
     与现代的差距进一步拉大。
-- **PC $/(core·GHz)** 把"频率战"和"多核战"两阶段揉到同一指标：
-  早期主频是真实算力的瓶颈，2005 后多核才是；用核心数 × 主频做线性合成是粗略简化，没考虑
-  IPC（每周期指令数）的提升——若纳入 IPC，1976→2026 真实算力差距应再 × 数十倍。
+- **商业计算机 $/MIPS** 统一了 75 年的算力指标，但口径在不同时代有偏差：
+  早期电子管 / 晶体管 / 集成电路时代的 KIPS / MIPS 是直接每秒指令数；
+  Pentium 之后 superscalar + OOO 使 IPC > 1，2015+ 用 GFLOPS 近似 MIPS（FLOPS 包含 SIMD），
+  2026 加上 NPU TOPS（AI 加速、非通用算力）——这些数字间存在 ~2–5× 的口径差，
+  但量级上不影响曲线的指数下行斜率。
 """
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
