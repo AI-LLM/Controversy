@@ -375,10 +375,13 @@ def main():
         annotate_changes(ax1, x, vals, names, c, yoffset=3)
 
     ax1.set_ylabel("API most-expensive model blended (USD / 1M tokens)", fontsize=10)
-    ax1.set_ylim(bottom=-2)
+    api_max = max(max(env[b][0]) for b in order)
+    ax1.set_ylim(-2, api_max * 1.1)
     ax1.yaxis.set_major_locator(mticker.MultipleLocator(10))
     ax1.set_xticks(x)
-    ax1.set_xticklabels(QLABEL, rotation=45, ha="right", fontsize=8)
+    sparse_labels = [lbl if lbl.endswith("Q1") or i == 0 or i == len(x) - 1 else ""
+                     for i, lbl in enumerate(QLABEL)]
+    ax1.set_xticklabels(sparse_labels, rotation=45, ha="right", fontsize=8)
     ax1.grid(axis="y", alpha=0.25)
     ax1.grid(axis="x", alpha=0.12)
 
@@ -401,7 +404,7 @@ def main():
     ax1.legend(h1 + h2, l1 + l2, loc="upper right", fontsize=7.5, ncol=2,
                framealpha=0.9)
 
-    ax1.set_title("Most-Expensive API Price + Subscription Maxed-Out per-Token (2023-2026)\n"
+    ax1.set_title("Most-Expensive API Price + Subscription Maxed-Out per-Token (2020-2026)\n"
                   "Left: API max model blended (in+out)/2  |  Right: subscription quota maxed-out",
                   fontsize=11, pad=12)
 
@@ -430,7 +433,7 @@ def main():
     for ym, price, mbps, note in INTERNET_PRICES:
         inet_tbl.append(f"| {ym} | ${price:.2f} | {mbps} | ${price / mbps:.2f} | {note} |")
 
-    md = f"""# 各品牌最贵 API 价格 + 套餐榨满折合 per-token（2023–2026）
+    md = f"""# 各品牌最贵 API 价格 + 套餐榨满折合 per-token（2020–2026）
 
 **旗舰 = 同一厂家在同一时段 API 目录里最贵的文本模型**（含推理模型），
 模型退市后自动让位给次高价。这样看到的是**各品牌天花板价**随时间的变化。
