@@ -169,6 +169,56 @@ md 文件应当作为**最终成品**呈现给读者，**修改史不留正文**
 - **当代论点配近 1–2 年 arXiv / 顶会 / 顶级博客**（Karpathy, Mollick, Chollet, Anthropic / OpenAI 官方等）。
 - **数据来源** 以行业垂直网站、主流财经平台为主。
 
+## Reddit 数据处理流程（`data/reddit/`）
+
+数据来自 https://arctic-shift.photon-reddit.com/download-tool 下载的频道 JSONL（posts + comments）。
+
+### 目录结构
+
+- `data/reddit/r_*_posts.jsonl` — 帖子（submissions），字段：title, selftext, created_utc, score, permalink…
+- `data/reddit/r_*_comments.jsonl` — 评论，字段：body（替代 selftext），无 title，link_id 关联父帖
+- `data/reddit/price_mentions.csv` — 价格信号抽取结果（`--mode price`）
+- `data/reddit/deprecation_events.csv` — 退市事件抽取结果（`--mode deprecation`）
+- `data/reddit/_dep_batch_*.json` — Haiku 分类的批次文件（临时）
+
+### 脚本：`scripts/analyze_reddit_prices.py`
+
+两种模式：
+- `--mode price`：正则抽取美元金额 / token 费率 / 用量上限 / premium request
+- `--mode deprecation`：正则抽取模型退市/下架事件
+
+统一处理 posts 和 comments（`body` 替代 `selftext`），放入 `data/reddit/` 后直接重跑即可。
+
+### 退市事件的 LLM 分类
+
+正则抽出的退市帖噪声大（"removed by moderator" / "feature removed" / rate limit 变动都会误命中）。
+**不用时间规则过滤**，而是用 Haiku subagent 判断每条帖子实际在说什么：
+
+1. 从 `deprecation_events.csv` 筛 score>=5、有模型名的帖（~2000 条）
+2. 分批（每批 40 条）发给 Haiku subagent（`Agent({model: 'haiku', schema: ...})`，通过 Workflow pipeline）
+3. Haiku 分类为：`model_retirement`（模型本身下线）/ `model_replacement`（被新版替代）/ `feature_change` / `rate_limit_change` / `price_change` / `general_discussion` / `other`
+4. 结果写回 CSV 的 `llm_verdict` + `llm_confidence` 列
+5. `chat/model-lifecycle.py` 只读 `llm_verdict == "model_retirement"` 的行来确定退市日期
+
+**重要**：调用 LLM 模型用 Claude Code subagent（Agent tool + model 参数），不要 `pip install anthropic` 走 API。
+
+### 价格信号回填 `chat/token-price.csv` 的规范
+
+- `token-price.csv` 只存价格相关数据（API 定价、订阅价、用量上限）,不存退市日期
+- 从 Reddit 发现的新价格点先在对话中跟现有 CSV 交叉比对,无冲突才加入
+- 加入时在 `notes` 列追加 `confirmed/corroborated YYYY-MM-DD (Reddit r/SubName)`
+- 在 `source` 列追加 ` | https://reddit.com/comments/XXXXX`（用 ` | ` 分隔多源）
+- Reddit 帖的 `created_utc` 是"在野"证据日期,不等于价格生效日期——两者分别标注
+
+### 模型生命周期分析（`chat/model-lifecycle.py`）
+
+多数据源：
+- `token-price.csv` → 发布日期
+- `deprecation_events.csv` + LLM verdict → 退市日期
+- `DEPRECATED_BASELINE` 字典 → 退市日期兜底（官方公告源）
+
+退市日期优先级：LLM 判为 `model_retirement` 的 Reddit 最早帖 > DEPRECATED_BASELINE > 推断。
+
 ## 关键陷阱（来自此前的失败）
 
 - 模型/产品的**发布日期 ≠ 评测公布日期 ≠ 新闻报道日期**，三者要分别核对（曾把 4 月发布的 Mythos Preview 误写成"今天同步发布"）

@@ -174,53 +174,29 @@ def refine_deprecated_from_reddit():
         return dep, {}
 
     dep_rows = list(csv.DictReader(open(DEP_CSV, encoding="utf-8")))
-
-    # 需要 CSV 里的发布日期来过滤——Reddit 退市帖不能早于发布日期
-    csv_rows = list(csv.DictReader(open(CSV, encoding="utf-8")))
-    launch_dates = {}
-    for r in csv_rows:
-        if r["category"] == "API":
-            nm = r["product_or_model"]
-            ym = r["effective_date"]
-            if nm not in launch_dates or ym < launch_dates[nm]:
-                launch_dates[nm] = ym
-
     reddit_evidence = {}
 
     for model, search_keys in MODEL_TO_REDDIT_KEYS.items():
         if model not in dep:
             continue
-        launch_ym = launch_dates.get(model, "2020-01")
         best = None
         for r in dep_rows:
+            # 只信 Haiku 判为 model_retirement 的帖子
+            if r.get("llm_verdict") != "model_retirement":
+                continue
             ms = r["models_mentioned"].lower()
-            kw = r["deprecation_keywords"].lower()
             if not any(k in ms for k in search_keys):
                 continue
-            if not any(w in kw for w in DEP_KEYWORDS):
-                continue
             sc = int(r["score"] or 0)
-            if sc < 10:
+            if sc < 5:
                 continue
             d = r["date"]
-            # 退市帖必须晚于模型发布至少 90 天（排除发布期讨论的误匹配）
-            launch_dt = ym_to_dt(launch_ym)
-            try:
-                post_dt = datetime.strptime(d, "%Y-%m-%d")
-            except ValueError:
-                continue
-            if (post_dt - launch_dt).days < 90:
-                continue
             if best is None or d < best[0]:
                 best = (d, sc, r["title"][:50], r["permalink"])
         if best:
             reddit_ym = best[0][:7]
             reddit_evidence[model] = best
-            baseline_dt = ym_to_dt(dep[model])
-            reddit_dt = ym_to_dt(reddit_ym)
-            gap = (baseline_dt - reddit_dt).days
-            # Reddit 只能把日期前移最多 3 个月（90 天）；差更多说明是误匹配
-            if 0 < gap <= 90:
+            if reddit_ym < dep[model]:
                 dep[model] = reddit_ym
 
     return dep, reddit_evidence
