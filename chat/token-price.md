@@ -164,22 +164,21 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 
 ## 单 task 实际花费 USD（task-price）
 
-把上一节的 **tokens/task** 与本文开头第一张图的 **API 旗舰 blended 单价** 相乘，得到
-"在该时点用该 provider 旗舰跑这个 task 的实际花费"。
+把 **tokens/task** 和 **API 旗舰 blended 单价** 按品牌相乘，得到"用该家旗舰跑一个 task
+要花多少钱"的季度演变。与 token-price.png 同风格：4 家品牌各一条折线，X 轴季度，Y 轴 log。
 
 ![单 task 实际花费 USD](task-price.png)
 
-- **散点**：每个 tokens/task 数据点 × 当月该 provider 旗舰 blended 价 / 1e6 = USD/task。
-- **provider 映射**：Cursor → Anthropic 价；Microsoft → OpenAI 价；
-  community_estimate / third_party_benchmark / public_share_analysis 按归属厂家映射；
-  无归属（Aggregator / Self_reported 等）→ 全平台最贵价 fallback。
-- **灰线**：季度中位数 USD/task 趋势。
-- **Y 轴 log**：跨数个数量级。
+- **每家品牌一条线**：每季度的 task price = 该家季度 blended 单价 × 该家季度 tokens/task 中位数 ÷ 1e6。
+- **fallback 顺序**：本家本季度数据 → 全平台本季度中位数 → 上一季度沿用（forward-fill）。
+- **provider 映射**：Cursor → Anthropic、Microsoft → OpenAI、community_estimate /
+  third_party_benchmark / public_share_analysis / calculation 按归属厂家映射；
+  Aggregator / Self_reported 不归本家、仅进全平台中位数。
 
-**这张图的语义**：把 token-price.png（"单价"）和 tokens-per-task.png（"用量"）相乘，
-得到用户实际感知的 **「每完成一件事要花多少钱」**。结论：单价跌 ~10–100×，用量涨
-~1000–10000×，**净花费仍上行约 100×**——这是为什么 ChatGPT Plus / Claude Pro / Cursor
-$20–$200 的订阅都在 2025–2026 年逐步加套使用限制（周限、autocompact、premium request 配额）。
+**语义**：token-price.png（单价）× tokens-per-task.png（用量）= 用户实际感知的
+**「每完成一件事要花多少钱」**。单价跌 ~10–100×、用量涨 ~1000–10000×，**净花费仍上行**
+——这就是 ChatGPT Plus / Claude Pro / Cursor $20–$200 套餐 2025–2026 年纷纷加套使用限制
+（周限、autocompact、premium request 配额）的根因。
 
 ## 假设与局限
 

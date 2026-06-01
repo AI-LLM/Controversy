@@ -551,7 +551,10 @@ def _monthly_price_lookup(rows, providers):
 
 
 def plot_task_price():
-    """根据 tokens/task × 当月旗舰 blended 价，算出"单 task 实际花费 USD"散点图。"""
+    """token-price.png 风格的 task-price 折线图：4 家品牌各一条季度线。
+    USD/task = 该家季度 blended 价 × tokens/task（本家中位数；本家该季度无数据则
+    fall back 到全平台中位数；再无数据 forward-fill）。
+    """
     usage_rows = [r for r in load_usage_rows() if r["unit"] == "tokens_per_task"]
     if not usage_rows:
         print("[!] 无 tokens_per_task 数据，跳过 task-price 图")
@@ -565,7 +568,7 @@ def plot_task_price():
                     "audiobook generation"))
     usage_rows = [r for r in usage_rows if not is_outlier(r)]
 
-    # provider 字段映射到 token-price.csv 里有的 4 家
+    # provider 字段映射到 token-price.csv 里有的 4 家；映射不到的仅进全平台中位数
     PROVIDER_MAP = {
         "OpenAI": "OpenAI",
         "Anthropic": "Anthropic",
@@ -578,124 +581,77 @@ def plot_task_price():
         "calculation": "OpenAI",
         "community_estimate": "Anthropic",
     }
-
-    price_rows = load_rows()
     providers = ["OpenAI", "Anthropic", "Google", "DeepSeek"]
+    price_rows = load_rows()
     price_at = _monthly_price_lookup(price_rows, providers)
 
-    # 计算每个 task 的 USD
-    pts = []
+    # 把每条 usage row 归到季度 + 4 家映射
+    import statistics
+    from collections import defaultdict
+    per_provider_q = {b: defaultdict(list) for b in providers}
+    all_q = defaultdict(list)
     for r in usage_rows:
         ym = r["effective_date"][:7]
-        p = PROVIDER_MAP.get(r["provider"])
-        if p is None:
-            # fallback：取全平台最贵当月价（4 家 max）
-            blended = max(price_at(b, ym) for b in providers) or 0
-            mapped_provider = "Aggregator"
-        else:
-            blended = price_at(p, ym)
-            mapped_provider = p
-        if blended <= 0:
-            continue
-        usd = float(r["value"]) * blended / 1e6
-        pts.append({
-            "ym": ym,
-            "x": months_since(ym, TOKEN_ORIGIN),
-            "tokens": float(r["value"]),
-            "blended": blended,
-            "usd": usd,
-            "provider": mapped_provider,
-            "subject": r["subject"],
-            "confidence": r["confidence"],
-        })
-
-    fig, ax = plt.subplots(figsize=(15, 7.5))
-    fig.patch.set_facecolor("white")
-
-    provider_color = {
-        "OpenAI": "#10a37f",
-        "Anthropic": "#d97706",
-        "Google": "#4285f4",
-        "DeepSeek": "#1a1a2e",
-        "Aggregator": "#888",
-    }
-    conf_size = {"high": 70, "medium": 50, "flag": 30, "low": 30}
-
-    by_provider = {}
-    for p in pts:
-        by_provider.setdefault(p["provider"], []).append(p)
-    for prov, items in by_provider.items():
-        c = provider_color.get(prov, "#bbb")
-        xs = [p["x"] for p in items]
-        ys = [p["usd"] for p in items]
-        ss = [conf_size.get(p["confidence"], 40) for p in items]
-        ax.scatter(xs, ys, s=ss, c=c, alpha=0.75, edgecolors="white",
-                   linewidths=0.6, label=f"按 {prov} 价计算", zorder=3)
-
-    # 季度中位数趋势
-    from collections import defaultdict
-    import statistics
-    qmed = defaultdict(list)
-    for p in pts:
-        y, m = p["ym"].split("-")
+        y, m = ym.split("-")
         q = (int(m) - 1) // 3
-        qmed[(int(y), q)].append(p["usd"])
-    qkeys = sorted(qmed.keys())
-    qx, qy = [], []
-    for y, q in qkeys:
-        month = q * 3 + 2
-        qx.append(months_since(f"{y}-{month:02d}", TOKEN_ORIGIN))
-        qy.append(statistics.median(qmed[(y, q)]))
-    ax.plot(qx, qy, "-", color="#444", lw=1.8, alpha=0.6,
-            label="季度中位数 (USD/task)", zorder=2)
+        qkey = (int(y), q)
+        v = float(r["value"])
+        all_q[qkey].append(v)
+        mapped = PROVIDER_MAP.get(r["provider"])
+        if mapped:
+            per_provider_q[mapped][qkey].append(v)
 
-    # 标注几个数据点（按 USD 高低代表性）
-    by_usd = sorted(pts, key=lambda p: -p["usd"])
-    label_targets = [
-        ("2020-06", "GPT-3 API\n典型调用"),
-        ("2024-06", "ChatGPT 单轮"),
-        ("2024-09", "Claude Dev session"),
-        ("2025-04", "Codex agentic"),
-        ("2025-07", "Claude Code\nbloated CLAUDE.md"),
-    ]
-    for ym, lbl in label_targets:
-        match = next((p for p in pts if p["ym"].startswith(ym)), None)
-        if match:
-            ax.annotate(f"{lbl}\n${match['usd']:.4g}",
-                        (match["x"], match["usd"]), fontsize=7, color="#333",
-                        xytext=(8, 8), textcoords="offset points",
-                        arrowprops=dict(arrowstyle="-", color="#888", lw=0.5, alpha=0.6))
+    # 4 家各自 forward-fill 系列：tokens/task[本家中位数→全平台中位数→上一季度]
+    series_tpt = {b: [] for b in providers}    # tokens/task per quarter
+    series_usd = {b: [] for b in providers}    # USD/task per quarter
+
+    last_seen = {b: None for b in providers}
+    last_global_tpt = None
+
+    for (y, q), qe in zip(QUARTERS, QEND):
+        gq = (y, q)
+        # 全平台中位数 fallback
+        if all_q[gq]:
+            last_global_tpt = statistics.median(all_q[gq])
+        for b in providers:
+            # 该家本季度中位数
+            if per_provider_q[b][gq]:
+                tpt = statistics.median(per_provider_q[b][gq])
+                last_seen[b] = tpt
+            else:
+                tpt = last_seen[b] if last_seen[b] is not None else last_global_tpt
+            series_tpt[b].append(tpt)
+            # 价格 × tokens / 1e6 = USD
+            price = price_at(b, qe)
+            if tpt is None or price <= 0:
+                series_usd[b].append(float("nan"))
+            else:
+                series_usd[b].append(price * tpt / 1e6)
+
+    # ---- 画图（token-price.png 风格） ----
+    x = list(range(len(QUARTERS)))
+    fig, ax = plt.subplots(figsize=(14, 7))
+    fig.patch.set_facecolor("white")
+    api_colors = {"OpenAI": "#10a37f", "Anthropic": "#d97706",
+                  "Google": "#4285f4", "DeepSeek": "#1a1a2e"}
+    for b in providers:
+        ax.plot(x, series_usd[b], "-", color=api_colors[b], lw=2.2,
+                marker="o", ms=4, label=f"{b} task price", zorder=3)
 
     ax.set_yscale("log")
-    ax.set_xlim(-3, months_since("2026-06", TOKEN_ORIGIN) + 3)
-    if pts:
-        ymin = min(p["usd"] for p in pts)
-        ymax = max(p["usd"] for p in pts)
-        ax.set_ylim(ymin * 0.3, ymax * 3)
+    ax.set_ylabel("单 task 实际花费 (USD/task, log)", fontsize=10)
+    ax.set_xticks(x)
+    sparse_labels = [lbl if lbl.endswith("Q1") or i == 0 or i == len(x) - 1 else ""
+                     for i, lbl in enumerate(QLABEL)]
+    ax.set_xticklabels(sparse_labels, rotation=45, ha="right", fontsize=8)
+    ax.grid(axis="y", alpha=0.25, which="both")
+    ax.grid(axis="x", alpha=0.12)
+    ax.legend(loc="upper left", fontsize=8, framealpha=0.9)
 
-    tick_months, tick_labels = [], []
-    for year in range(2020, 2027):
-        m = months_since(f"{year}-06", TOKEN_ORIGIN)
-        if -3 <= m <= months_since("2026-06", TOKEN_ORIGIN) + 3:
-            tick_months.append(m)
-            tick_labels.append(f"{year}-06")
-    ax.set_xticks(tick_months)
-    ax.set_xticklabels(tick_labels, fontsize=8, rotation=30, ha="right")
-    ax.set_xlabel("数据点时间", fontsize=9)
-
-    ax.set_ylabel("单 task 实际花费 (USD, log)", fontsize=10)
-    ax.grid(alpha=0.25, which="both", axis="y")
-    ax.grid(alpha=0.15, which="major", axis="x")
-    ax.legend(loc="upper left", fontsize=8, framealpha=0.92)
-
-    qmin_usd = min(qy) if qy else 0
-    qmax_usd = max(qy) if qy else 0
     ax.set_title(
-        f"单 task 实际花费 USD = tokens/task × 当月 provider 最贵 blended 价\n"
-        f"基于 {len(pts)} 个 tokens/task 数据点 × token-price.csv envelope；"
-        f"季度中位数 {qmin_usd:.4g} → {qmax_usd:.4g} USD\n"
-        "单价跌但 task 变重，乘积仍上行——直接看到「用户净支出」轨迹",
-        fontsize=10.5, pad=12)
+        "Task Price = tokens/task × 当家季度旗舰 blended 单价（2020-2026）\n"
+        "Y 轴 log；各家用本家 tokens/task 中位数，本家无数据则 fall back 到全平台中位数",
+        fontsize=11, pad=12)
 
     fig.tight_layout()
     fig.savefig(OUT_PNG4, dpi=180, bbox_inches="tight")
@@ -929,22 +885,21 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 
 ## 单 task 实际花费 USD（task-price）
 
-把上一节的 **tokens/task** 与本文开头第一张图的 **API 旗舰 blended 单价** 相乘，得到
-"在该时点用该 provider 旗舰跑这个 task 的实际花费"。
+把 **tokens/task** 和 **API 旗舰 blended 单价** 按品牌相乘，得到"用该家旗舰跑一个 task
+要花多少钱"的季度演变。与 token-price.png 同风格：4 家品牌各一条折线，X 轴季度，Y 轴 log。
 
 ![单 task 实际花费 USD](task-price.png)
 
-- **散点**：每个 tokens/task 数据点 × 当月该 provider 旗舰 blended 价 / 1e6 = USD/task。
-- **provider 映射**：Cursor → Anthropic 价；Microsoft → OpenAI 价；
-  community_estimate / third_party_benchmark / public_share_analysis 按归属厂家映射；
-  无归属（Aggregator / Self_reported 等）→ 全平台最贵价 fallback。
-- **灰线**：季度中位数 USD/task 趋势。
-- **Y 轴 log**：跨数个数量级。
+- **每家品牌一条线**：每季度的 task price = 该家季度 blended 单价 × 该家季度 tokens/task 中位数 ÷ 1e6。
+- **fallback 顺序**：本家本季度数据 → 全平台本季度中位数 → 上一季度沿用（forward-fill）。
+- **provider 映射**：Cursor → Anthropic、Microsoft → OpenAI、community_estimate /
+  third_party_benchmark / public_share_analysis / calculation 按归属厂家映射；
+  Aggregator / Self_reported 不归本家、仅进全平台中位数。
 
-**这张图的语义**：把 token-price.png（"单价"）和 tokens-per-task.png（"用量"）相乘，
-得到用户实际感知的 **「每完成一件事要花多少钱」**。结论：单价跌 ~10–100×，用量涨
-~1000–10000×，**净花费仍上行约 100×**——这是为什么 ChatGPT Plus / Claude Pro / Cursor
-$20–$200 的订阅都在 2025–2026 年逐步加套使用限制（周限、autocompact、premium request 配额）。
+**语义**：token-price.png（单价）× tokens-per-task.png（用量）= 用户实际感知的
+**「每完成一件事要花多少钱」**。单价跌 ~10–100×、用量涨 ~1000–10000×，**净花费仍上行**
+——这就是 ChatGPT Plus / Claude Pro / Cursor $20–$200 套餐 2025–2026 年纷纷加套使用限制
+（周限、autocompact、premium request 配额）的根因。
 
 ## 假设与局限
 
