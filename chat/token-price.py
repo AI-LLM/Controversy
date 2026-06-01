@@ -27,7 +27,7 @@ plt.rcParams["axes.unicode_minus"] = False
 HERE = os.path.dirname(os.path.abspath(__file__))
 CSV = os.path.join(HERE, "token-price.csv")
 OUT_PNG = os.path.join(HERE, "token-price.png")
-OUT_PNG2 = os.path.join(HERE, "token-price-vs-internet.png")
+OUT_PNG2 = os.path.join(HERE, "token-price-vs-internet-pc.png")
 OUT_MD = os.path.join(HERE, "token-price.md")
 
 TOKENS_PER_MESSAGE = 2000
@@ -58,9 +58,31 @@ INTERNET_PRICES = [
     ("2026-06", 39.50, 250,    "BPI: 250+ Mbps"),
 ]
 
-# token-price.csv 最早数据点 = 2020-06。互联网时间轴起点 1993-09 对齐到此。
+# token-price.csv 最早数据点 = 2020-06。互联网 / PC 时间轴起点对齐到此。
 TOKEN_ORIGIN = "2020-06"
 INTERNET_ORIGIN = "1993-09"
+PC_ORIGIN = "1976-07"
+
+# 个人电脑历史价格（日期, 整机售价 USD, RAM 容量 KB, 备注）
+# 通缩指标 = 整机售价 ÷ RAM 容量 = $/KB
+# 来源：Smithsonian, IBM Archives, Computer History Museum, NYT (1983),
+#       Stanford Mac history, PC Magazine, WaPo, BLS PPI, Our World in Data
+PC_PRICES = [
+    ("1976-07",  666.66,        4,        "Apple I（4KB 主板）"),
+    ("1977-06", 2638.00,       48,        "Apple II 48KB 满配"),
+    ("1981-08", 1565.00,       16,        "IBM PC 5150 基础"),
+    ("1982-01",  595.00,       64,        "Commodore 64 首发"),
+    ("1983-12",  199.00,       64,        "C64 价格战钉死 $199"),
+    ("1984-01", 2495.00,      128,        "Macintosh 128K + GUI"),
+    ("1990-06", 2500.00,     4 * 1024,    "386 PC 典型, 4 MB"),
+    ("1995-06", 1900.00,     8 * 1024,    "Pentium 75 + Win95, 8 MB"),
+    ("2000-06",  999.00,    64 * 1024,    "$999 价格战, 64 MB"),
+    ("2005-06",  800.00,   512 * 1024,    "ASP < $800, 512 MB"),
+    ("2015-06",  650.00,     8 * 1024**2, "BLS ASP, 8 GB"),
+    ("2020-06",  710.00,    16 * 1024**2, "疫情供应链, 16 GB"),
+    ("2024-06",  680.00,    16 * 1024**2, "ASP, 16 GB"),
+    ("2026-06",  660.00,    16 * 1024**2, "ASP, 16 GB"),
+]
 
 EXCLUDE = {"OpenAI audio models", "text-embedding-ada-002", "Off-peak discount"}
 
@@ -245,24 +267,51 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
          if r["effective_date"] == TOKEN_ORIGIN
          and r["category"] == "API"
          and r["product_or_model"] == "GPT-3 Davinci"))
-    scale = token_anchor_price / inet_anchor_per_mbps  # 60 / 691 ≈ 0.0868
+    scale_inet = token_anchor_price / inet_anchor_per_mbps  # ≈ 0.0868
 
     inet_x = [months_since(ym, INTERNET_ORIGIN) for ym, _, _, _, _ in inet_per_mbps]
-    inet_y_scaled = [pm * scale for _, pm, _, _, _ in inet_per_mbps]
+    inet_y_scaled = [pm * scale_inet for _, pm, _, _, _ in inet_per_mbps]
     inet_max = max(inet_x)
 
-    fig, ax = plt.subplots(figsize=(16, 7.5))
+    # 把每个 PC 点换算成 $/KB（整机价 ÷ RAM 容量），再缩放
+    pc_per_kb = [(ym, price / kb, price, kb, note)
+                 for ym, price, kb, note in PC_PRICES]
+    pc_anchor_per_kb = pc_per_kb[0][1]  # 1976-07: $666.66/4 = $166.665/KB
+    scale_pc = token_anchor_price / pc_anchor_per_kb  # 60 / 166.665 ≈ 0.36
+    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _ in pc_per_kb]
+    pc_y_scaled = [pk * scale_pc for _, pk, _, _, _ in pc_per_kb]
+    pc_max = max(pc_x)
+
+    fig, ax = plt.subplots(figsize=(20, 8))
     fig.patch.set_facecolor("white")
+
+    # ---- PC 线（蓝色虚线，标价） ----
+    ax.plot(pc_x, pc_y_scaled, "--", color="#2b5b9b", lw=2.5,
+            marker="s", ms=6, dashes=(2, 2),
+            label=f"个人电脑 $/KB RAM × {scale_pc:.4f}（1976-07 = 2020-06 锚定）",
+            zorder=3)
+    for (ym, per_kb, price, kb, note), xv, yv in zip(
+            pc_per_kb, pc_x, pc_y_scaled):
+        if kb >= 1024 ** 2:
+            ram_lbl = f"{kb // (1024 ** 2)}GB"
+        elif kb >= 1024:
+            ram_lbl = f"{kb // 1024}MB"
+        else:
+            ram_lbl = f"{kb}KB"
+        ax.annotate(f"{ym}\n${per_kb:.3g}/KB\n({ram_lbl}, ${price:.0f})",
+                    (xv, yv), fontsize=5.8,
+                    xytext=(5, -22), textcoords="offset points",
+                    color="#2b5b9b", alpha=0.85)
 
     # ---- 互联网线（灰色虚粗线，标价） ----
     ax.plot(inet_x, inet_y_scaled, "--", color="#666", lw=2.5,
             marker="o", ms=6, dashes=(5, 3),
-            label=f"美国互联网 $/Mbps × {scale:.4f}（1993-09 = 2020-06 锚定）",
+            label=f"美国互联网 $/Mbps × {scale_inet:.4f}（1993-09 = 2020-06 锚定）",
             zorder=4)
     for (ym, per_mbps, price, mbps, note), xv, yv in zip(
             inet_per_mbps, inet_x, inet_y_scaled):
         ax.annotate(f"{ym}\n${per_mbps:.2f}/Mbps\n({mbps}M, ${price:.0f}/月)",
-                    (xv, yv), fontsize=6,
+                    (xv, yv), fontsize=5.8,
                     xytext=(5, 7), textcoords="offset points",
                     color="#444", alpha=0.85)
 
@@ -277,46 +326,61 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
         ax.plot(bx, by, "-", color=c, lw=1.8, marker="o", ms=4,
                 label=f"{b} API 最贵 blended", zorder=3)
 
-    # ---- X 轴: 月数 → 双语标签（token 真实日期 + 互联网真实日期） ----
-    ax.set_xlim(-6, inet_max + 12)
-    # 主刻度: 每两年一格的 token 日历
+    # ---- X 轴: 月数 → 三语标签（token / 互联网 / PC 真实日期） ----
+    x_max = max(pc_max, inet_max) + 12
+    ax.set_xlim(-6, x_max)
+    token_end_m = months_since("2026-06", TOKEN_ORIGIN)
+    inet_end_m = months_since("2026-06", INTERNET_ORIGIN)
+    pc_end_m = pc_max
     tick_months = []
     tick_labels = []
-    for m in range(0, inet_max + 12, 24):
+    for m in range(0, int(x_max), 48):
         token_y = 2020 + (6 + m) // 12
         token_mo = (6 + m) % 12 or 12
         inet_y_cal = 1993 + (9 + m) // 12
-        inet_mo = (9 + m) % 12 or 12
-        if m <= months_since("2026-06", TOKEN_ORIGIN):
-            tick_labels.append(f"{token_y}-{token_mo:02d}\n(互{inet_y_cal})")
-        else:
-            tick_labels.append(f"—\n(互{inet_y_cal})")
+        pc_y_cal = 1976 + (7 + m) // 12
+        token_part = (f"{token_y}-{token_mo:02d}"
+                      if m <= token_end_m else "—")
+        inet_part = f"互{inet_y_cal}" if m <= inet_end_m else "互—"
+        pc_part = f"PC{pc_y_cal}" if m <= pc_end_m else "PC—"
+        tick_labels.append(f"{token_part}\n{inet_part}\n{pc_part}")
         tick_months.append(m)
     ax.set_xticks(tick_months)
-    ax.set_xticklabels(tick_labels, fontsize=7.5)
+    ax.set_xticklabels(tick_labels, fontsize=7)
 
-    ax.set_ylabel("USD / 1M tokens（互联网 $/Mbps 已按 1993-09 ≡ 2020-06 GPT-3 Davinci 缩放）",
-                  fontsize=10)
-    ax.set_xlabel("token 真实日期 / (互联网真实年份)，1993-09 → 2020-06 平移对齐", fontsize=9)
+    ax.set_ylabel("USD / 1M tokens（PC $/KB、互联网 $/Mbps 均按 1976/1993 起点 ≡ "
+                  "2020-06 GPT-3 Davinci $60 缩放）", fontsize=9.5)
+    ax.set_xlabel("token 真实日期 / 互联网真实年份 / PC 真实年份"
+                  "（1976-07 PC、1993-09 互联网 → 2020-06 token 平移对齐）", fontsize=9)
     ax.set_yscale("log")
-    ax.set_ylim(0.005, max(inet_y_scaled) * 1.5)
+    y_top = max(max(inet_y_scaled), max(pc_y_scaled)) * 1.5
+    y_bot = min(min(pc_y_scaled), min(inet_y_scaled)) * 0.5
+    ax.set_ylim(y_bot, y_top)
 
-    # token 数据截止竖线
-    token_end = months_since("2026-06", TOKEN_ORIGIN)
-    ax.axvline(token_end, color="#999", ls=":", lw=1, alpha=0.6, zorder=1)
-    ax.text(token_end + 1, ax.get_ylim()[1] * 0.5,
-            "token 数据截止\n(2026-06)", fontsize=7.5, color="#666", va="top")
+    # 各曲线数据截止竖线
+    ax.axvline(token_end_m, color="#10a37f", ls=":", lw=1, alpha=0.5, zorder=1)
+    ax.text(token_end_m + 1, y_top * 0.5,
+            "token 截止\n2026-06", fontsize=7, color="#10a37f", va="top")
+    ax.axvline(inet_end_m, color="#666", ls=":", lw=1, alpha=0.5, zorder=1)
+    ax.text(inet_end_m + 1, y_top * 0.5,
+            "互联网截止\n2026-06", fontsize=7, color="#666", va="top")
+    ax.axvline(pc_end_m, color="#2b5b9b", ls=":", lw=1, alpha=0.5, zorder=1)
+    ax.text(pc_end_m + 1, y_top * 0.5,
+            "PC 截止\n2026-06", fontsize=7, color="#2b5b9b", va="top")
     ax.grid(alpha=0.25)
     ax.legend(loc="upper right", fontsize=8.5, ncol=2, framealpha=0.92)
 
     final_per_mbps = inet_per_mbps[-1][1]
+    final_per_kb = pc_per_kb[-1][1]
     ax.set_title(
-        f"互联网 $/Mbps 与 AI token $/1M tokens 等比叠加（Y 轴 log）\n"
-        f"锚定：1993-09 互联网 ${inet_anchor_per_mbps:.0f}/Mbps ≡ "
-        f"2020-06 GPT-3 Davinci ${token_anchor_price:.0f}/1M tokens（× {scale:.4f}）\n"
-        f"互联网 33 年 $/Mbps 从 ${inet_anchor_per_mbps:.0f} 跌到 ${final_per_mbps:.2f}"
-        f"（≈4400×）；token 6 年内顶价 $50–$112 + 长尾跌到 $0.1",
-        fontsize=11, pad=12)
+        f"PC $/KB、互联网 $/Mbps、AI token $/1M tokens 三条等比叠加（Y log）\n"
+        f"锚定：1976-07 PC ${pc_anchor_per_kb:.1f}/KB、"
+        f"1993-09 互联网 ${inet_anchor_per_mbps:.0f}/Mbps、"
+        f"2020-06 GPT-3 Davinci ${token_anchor_price:.0f}/1M tokens 三点同高\n"
+        f"PC 50 年 $/KB 从 ${pc_anchor_per_kb:.1f} 跌到 ${final_per_kb:.2g}"
+        f"（≈{pc_anchor_per_kb/final_per_kb:.0e}×）；"
+        f"互联网 33 年 $/Mbps 跌 4400×；token 6 年顶 $50–$112、长尾 $0.1",
+        fontsize=10.5, pad=12)
 
     fig.tight_layout()
     fig.savefig(OUT_PNG2, dpi=180, bbox_inches="tight")
@@ -432,6 +496,16 @@ def main():
     for ym, price, mbps, note in INTERNET_PRICES:
         inet_tbl.append(f"| {ym} | ${price:.2f} | {mbps} | ${price / mbps:.2f} | {note} |")
 
+    pc_tbl = []
+    for ym, price, kb, note in PC_PRICES:
+        if kb >= 1024 ** 2:
+            ram = f"{kb // (1024 ** 2)} GB"
+        elif kb >= 1024:
+            ram = f"{kb // 1024} MB"
+        else:
+            ram = f"{kb} KB"
+        pc_tbl.append(f"| {ym} | ${price:.2f} | {ram} | ${price / kb:.3g} | {note} |")
+
     md = f"""# 各品牌最贵 API 价格 + 套餐榨满折合 per-token（2020–2026）
 
 **旗舰 = 同一厂家在同一时段 API 目录里最贵的文本模型**（含推理模型），
@@ -468,27 +542,46 @@ def main():
 |---|---|---|---|---|
 {chr(10).join(sub_tbl)}
 
-## 与互联网 $/Mbps 价格的等比叠加对比
+## 与 PC $/KB、互联网 $/Mbps 的三条等比叠加
 
-把美国互联网接入服务的价格历史**先换算成 $/Mbps**（每月费 ÷ 该时段典型下行速率），
-再**平移并等比缩放**到 token 坐标系：
+把美国 PC（1976-）、互联网接入（1993-）、AI token（2020-）三条曲线统一到 token 坐标系：
 
-- **时间平移**：假设互联网 1993-09 那一刻发生在 token 的 2020-06，即互联网每个日历日期 +321 个月
-  落到 token 时间轴上。互联网最后一个数据点 2026-06 落到 token 时间 2053 附近，X 轴顺延到装下。
-- **$/Mbps 等比缩放**：用 1993-09 互联网 ≈$691/Mbps（$9.95 ÷ 14.4k modem 0.0144 Mbps）
-  ≡ 2020-06 GPT-3 Davinci $60/1M tokens 作锚点，互联网所有 $/Mbps × **0.0868** 后画到同一 Y 轴。
-- **Y 轴 log**：互联网 $/Mbps 从 $691 跌到 $0.16（≈4400×），跨 ~3.6 个数量级，线性轴
-  会把后期点压成 0。
-- 2026-06 后 token 没数据则留空（图中竖虚线标出 token 数据截止）。
+- **时间平移**：三条线各自起点对齐到 token 2020-06，
+  - PC 1976-07 → 2020-06（+528 月），最后点 2026-06 落到 token 2070-06；
+  - 互联网 1993-09 → 2020-06（+321 月），最后点 2026-06 落到 token 2053-03；
+  - token 自身原位。
+- **指标统一**：均取"行业核心通缩指标"——
+  - PC：**$/KB RAM**（整机售价 ÷ RAM 容量，单位 $/KB）；
+  - 互联网：**$/Mbps**（月费 ÷ 典型下行速率）；
+  - token：**$/1M tokens**（API 最贵模型 blended）。
+- **等比缩放**：三条线起点价 ≡ 2020-06 GPT-3 Davinci $60/1M tokens，
+  - PC ×0.36（1976-07 $166.66/KB → $60）；
+  - 互联网 ×0.0868（1993-09 $691/Mbps → $60）；
+  - token 不缩放。
+- **Y 轴 log**：PC $/KB 50 年跌 ~400 万倍（$166.7 → $0.0000394，≈4.2e6×），
+  互联网 $/Mbps 33 年跌 ~4400×，token 6 年最贵在 $50–$112 + 长尾 $0.1。
 
-![互联网 $/Mbps 等比缩放叠加 AI token 价格](token-price-vs-internet.png)
+![PC + 互联网 + token 三条等比叠加](token-price-vs-internet-pc.png)
 
-- **灰线**：缩放后的互联网 $/Mbps，标签同时给出真实日期、原始 $/Mbps、速率、月费。
-- **彩线**：各家 API 最贵模型 blended（与第一张图一致）。
-- **观感**：换成 $/Mbps 后互联网线呈现**指数下行**——拨号 33 年压缩成几段台阶，2000 年宽带
-  普及后陡降一个量级，2015 后 USTelecom BPI 时代再降两个量级。**token 6 年的最贵 API 在
-  $50–$112 区间小幅波动，但 DeepSeek 已把同等天花板的便宜端按到 $0.1 量级**——
-  与互联网 $/Mbps 跌幅相比，AI token 的下行斜率更陡，时间窗仅互联网的 1/5。
+- **蓝虚线**：PC $/KB RAM，方形 marker。
+- **灰虚线**：互联网 $/Mbps，圆形 marker。
+- **彩实线**：各家 token API 最贵模型 blended。
+
+**观感**：log 空间里 PC 50 年画出一条几乎完美的指数下行直线（接近经典 Hennessy & Patterson
+半导体每年 ~40% 通缩）；互联网斜率明显比 PC 缓；**token 6 年的斜率（最贵小幅波动 + 长尾陡降）
+若延长，理论上 5–6 年就能覆盖 PC 50 年走过的下行幅度**。这是 AI token 价格相对于历史
+科技品类的"加速倍率"的直观印证。
+
+### PC 整机价 → $/KB RAM 数据点
+
+| 日期 | 整机售价 | RAM | $/KB | 备注 |
+|---|---|---|---|---|
+{chr(10).join(pc_tbl)}
+
+数据来源：Smithsonian（Apple I）、Apple Computer Inc. Archive（Apple II）、Computer History
+Museum（TRS-80）、IBM Archives（IBM PC）、NYT Archive（1983 TI 退出）、Stanford "Making the
+Macintosh"、PC Magazine via Google Books、Washington Post（1995 Pentium）、Gartner/IDC（2000
+$999 价格战）、BLS Computer Price Deflation、Our World in Data（Memory/Storage 历史价）。
 
 ### 互联网月费 → $/Mbps 数据点
 
@@ -496,7 +589,7 @@ def main():
 |---|---|---|---|---|
 {chr(10).join(inet_tbl)}
 
-数据来源：EH.Net、NYT Archive (1994)、Computerworld、CNET、Smithsonian、Pew Research、
+互联网数据来源：EH.Net、NYT Archive (1994)、Computerworld、CNET、Smithsonian、Pew Research、
 FCC Historical Reports、WSJ、Bruce Kushnick / Teletruth、**USTelecom Broadband Pricing Index**、
 NCTA、BLS CPI (Internet Access Services)。
 
