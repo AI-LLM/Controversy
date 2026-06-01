@@ -30,6 +30,7 @@ OUT_PNG = os.path.join(HERE, "token-price.png")
 OUT_PNG2 = os.path.join(HERE, "token-price-vs-internet-pc.png")
 OUT_PNG3 = os.path.join(HERE, "tokens-per-task.png")
 OUT_PNG4 = os.path.join(HERE, "task-price.png")
+OUT_PNG5 = os.path.join(HERE, "task-price-vs-internet-pc.png")
 OUT_MD = os.path.join(HERE, "token-price.md")
 
 USAGE_CSV = os.path.join(HERE, "token-usage-amount.csv")
@@ -550,15 +551,13 @@ def _monthly_price_lookup(rows, providers):
     return best_at
 
 
-def plot_task_price(plus, pro_pt, max20):
-    """token-price.png 风格的 task-price 折线图：4 家品牌各一条季度线。
-    USD/task = 该家季度 blended 价 × tokens/task（本家中位数；本家该季度无数据则
-    fall back 到全平台中位数；再无数据 forward-fill）。
+def compute_task_price_series():
+    """返回 (series_usd, series_tpt, providers, price_at, price_rows)。
+    每个 series 是按 QUARTERS 顺序的 list（NaN 表示无数据）。
     """
     usage_rows = [r for r in load_usage_rows() if r["unit"] == "tokens_per_task"]
     if not usage_rows:
-        print("[!] 无 tokens_per_task 数据，跳过 task-price 图")
-        return
+        return None
 
     def is_outlier(r):
         s = (r["subject"] + " " + r.get("notes", "")).lower()
@@ -629,6 +628,17 @@ def plot_task_price(plus, pro_pt, max20):
                 series_usd[b].append(float("nan"))
             else:
                 series_usd[b].append(price * tpt / 1e6)
+
+    return series_usd, series_tpt, providers, price_at, price_rows
+
+
+def plot_task_price(plus, pro_pt, max20):
+    """token-price.png 风格的 task-price 折线图：4 家品牌各一条季度线。"""
+    bundle = compute_task_price_series()
+    if bundle is None:
+        print("[!] 无 tokens_per_task 数据，跳过 task-price 图")
+        return
+    series_usd, series_tpt, providers, price_at, price_rows = bundle
 
     # 套餐 per-token 折合（USD / 1M tokens）按季度展开
     # OpenAI Plus：从 plus 列表 forward-fill
@@ -709,6 +719,146 @@ def plot_task_price(plus, pro_pt, max20):
     fig.tight_layout()
     fig.savefig(OUT_PNG4, dpi=180, bbox_inches="tight")
     print(f"写入 {OUT_PNG4}")
+    plt.close(fig)
+
+
+def plot_task_price_vs_internet_pc():
+    """token-price-vs-internet-pc.png 风格：把"USD/task"和 PC $/(core·GHz)、
+    互联网 $/Mbps 三条等比叠加。
+    锚定：2020-06 GPT-3 API typical task = $60/1M × 500 tokens / 1e6 = $0.03
+    PC 1976-07 → 2020-06 → $0.03（×4.59e-8）
+    互联网 1993-09 → 2020-06 → $0.03（×4.34e-5）
+    """
+    bundle = compute_task_price_series()
+    if bundle is None:
+        print("[!] 无 tokens_per_task，跳过 task-price-vs-internet-pc")
+        return
+    series_usd, _series_tpt, providers, _price_at, _price_rows = bundle
+
+    # 三方锚点都对齐到 task price 2020-06 的 OpenAI USD/task
+    # （取 series_usd["OpenAI"] 第一个有效值）
+    oai_first = next((v for v in series_usd["OpenAI"] if v == v and v > 0), None)
+    if oai_first is None:
+        oai_first = 0.03  # 兜底
+    task_anchor = oai_first
+
+    # 互联网：1993-09 → 2020-06 = task_anchor
+    inet_per_mbps = [(ym, price / mbps, price, mbps, note)
+                     for ym, price, mbps, note in INTERNET_PRICES]
+    inet_anchor_per_mbps = inet_per_mbps[0][1]
+    scale_inet = task_anchor / inet_anchor_per_mbps
+
+    # PC：1976-07 → 2020-06 = task_anchor
+    pc_per_unit = [(ym, price / (cores * ghz), price, cores, ghz, note)
+                   for ym, price, cores, ghz, note in PC_PRICES]
+    pc_anchor_per_unit = pc_per_unit[0][1]
+    scale_pc = task_anchor / pc_anchor_per_unit
+
+    inet_x = [months_since(ym, INTERNET_ORIGIN) for ym, _, _, _, _ in inet_per_mbps]
+    inet_y_scaled = [pm * scale_inet for _, pm, _, _, _ in inet_per_mbps]
+    pc_x = [months_since(ym, PC_ORIGIN) for ym, _, _, _, _, _ in pc_per_unit]
+    pc_y_scaled = [pu * scale_pc for _, pu, _, _, _, _ in pc_per_unit]
+    inet_max = max(inet_x)
+    pc_max = max(pc_x)
+
+    fig, ax = plt.subplots(figsize=(20, 8))
+    fig.patch.set_facecolor("white")
+
+    # PC 红虚线
+    ax.plot(pc_x, pc_y_scaled, "--", color="#c0392b", lw=2.5,
+            marker="s", ms=6, dashes=(2, 2),
+            label=f"PC $/(core·GHz) × {scale_pc:.2e}（1976-07 = 2020-06 锚定）",
+            zorder=3)
+    for (ym, per_unit, price, cores, ghz, note), xv, yv in zip(
+            pc_per_unit, pc_x, pc_y_scaled):
+        freq_lbl = f"{ghz:.1f}GHz" if ghz >= 1 else f"{ghz * 1000:.2f}MHz"
+        ax.annotate(f"{ym}\n${per_unit:,.0f}/(c·GHz)\n({cores}c {freq_lbl}, ${price:.0f})",
+                    (xv, yv), fontsize=5.8,
+                    xytext=(5, -28), textcoords="offset points",
+                    color="#c0392b", alpha=0.85)
+
+    # 互联网灰虚线
+    ax.plot(inet_x, inet_y_scaled, "--", color="#666", lw=2.5,
+            marker="o", ms=6, dashes=(5, 3),
+            label=f"互联网 $/Mbps × {scale_inet:.4f}（1993-09 = 2020-06 锚定）",
+            zorder=4)
+    for (ym, per_mbps, price, mbps, note), xv, yv in zip(
+            inet_per_mbps, inet_x, inet_y_scaled):
+        ax.annotate(f"{ym}\n${per_mbps:.2f}/Mbps\n({mbps}M, ${price:.0f}/月)",
+                    (xv, yv), fontsize=5.8,
+                    xytext=(5, 7), textcoords="offset points",
+                    color="#444", alpha=0.85)
+
+    # AI 4 家 task price 实线
+    api_colors = {"OpenAI": "#10a37f", "Anthropic": "#d97706",
+                  "Google": "#4285f4", "DeepSeek": "#1a1a2e"}
+    for b in providers:
+        c = api_colors[b]
+        bx = [months_since(qe, TOKEN_ORIGIN) for qe in QEND]
+        by = series_usd[b]
+        ax.plot(bx, by, "-", color=c, lw=1.8, marker="o", ms=4,
+                label=f"{b} API task price", zorder=3)
+
+    # X 轴三语标签
+    x_max = max(pc_max, inet_max) + 12
+    ax.set_xlim(-6, x_max)
+    token_end_m = months_since("2026-06", TOKEN_ORIGIN)
+    inet_end_m = months_since("2026-06", INTERNET_ORIGIN)
+    pc_end_m = pc_max
+    tick_months, tick_labels = [], []
+    for m in range(0, int(x_max), 48):
+        token_y = 2020 + (6 + m) // 12
+        token_mo = (6 + m) % 12 or 12
+        inet_y_cal = 1993 + (9 + m) // 12
+        pc_y_cal = 1976 + (7 + m) // 12
+        token_part = (f"{token_y}-{token_mo:02d}"
+                      if m <= token_end_m else "—")
+        inet_part = f"互{inet_y_cal}" if m <= inet_end_m else "互—"
+        pc_part = f"PC{pc_y_cal}" if m <= pc_end_m else "PC—"
+        tick_labels.append(f"{token_part}\n{inet_part}\n{pc_part}")
+        tick_months.append(m)
+    ax.set_xticks(tick_months)
+    ax.set_xticklabels(tick_labels, fontsize=7)
+
+    ax.set_ylabel(f"USD/task（PC $/(core·GHz)、互联网 $/Mbps 均按 1976/1993 起点 ≡ "
+                  f"2020-06 GPT-3 API task ${task_anchor:.3f} 缩放）", fontsize=9.5)
+    ax.set_xlabel("token 真实日期 / 互联网真实年份 / PC 真实年份"
+                  "（1976-07 PC、1993-09 互联网 → 2020-06 task 平移对齐）", fontsize=9)
+    ax.set_yscale("log")
+    y_top = max(max(inet_y_scaled), max(pc_y_scaled),
+                max(v for b in providers for v in series_usd[b] if v == v)) * 1.5
+    y_bot = min(min(pc_y_scaled), min(inet_y_scaled)) * 0.5
+    ax.set_ylim(y_bot, y_top)
+
+    # 各曲线截止竖线
+    ax.axvline(token_end_m, color="#10a37f", ls=":", lw=1, alpha=0.5, zorder=1)
+    ax.text(token_end_m + 1, y_top * 0.5,
+            "task 截止\n2026-06", fontsize=7, color="#10a37f", va="top")
+    ax.axvline(inet_end_m, color="#666", ls=":", lw=1, alpha=0.5, zorder=1)
+    ax.text(inet_end_m + 1, y_top * 0.5,
+            "互联网截止\n2026-06", fontsize=7, color="#666", va="top")
+    ax.axvline(pc_end_m, color="#c0392b", ls=":", lw=1, alpha=0.5, zorder=1)
+    ax.text(pc_end_m + 1, y_top * 0.5,
+            "PC 截止\n2026-06", fontsize=7, color="#c0392b", va="top")
+
+    ax.grid(alpha=0.25)
+    ax.legend(loc="upper right", fontsize=8.5, ncol=2, framealpha=0.92)
+
+    final_pc = pc_per_unit[-1][1]
+    final_inet = inet_per_mbps[-1][1]
+    task_now = max(v for b in providers for v in series_usd[b] if v == v)
+    ax.set_title(
+        f"USD/task vs 互联网 $/Mbps vs PC $/(core·GHz)（Y log，三条等比叠加）\n"
+        f"锚定：1976-07 PC ${pc_anchor_per_unit:,.0f}、1993-09 互联网 ${inet_anchor_per_mbps:.0f}、"
+        f"2020-06 GPT-3 API task ${task_anchor:.3f} 三点同高\n"
+        f"PC 50 年跌 ~{pc_anchor_per_unit/final_pc:,.0f}×；互联网 33 年跌 ~"
+        f"{inet_anchor_per_mbps/final_inet:,.0f}×；USD/task 6 年从 ${task_anchor:.3f} 涨到 ${task_now:.1f}"
+        f"（≈{task_now/task_anchor:,.0f}× 反向上行）",
+        fontsize=11, pad=12)
+
+    fig.tight_layout()
+    fig.savefig(OUT_PNG5, dpi=180, bbox_inches="tight")
+    print(f"写入 {OUT_PNG5}")
     plt.close(fig)
 
 
@@ -958,6 +1108,23 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
 ——这就是 ChatGPT Plus / Claude Pro / Cursor $20–$200 套餐 2025–2026 年纷纷加套使用限制
 （周限、autocompact、premium request 配额）的根因。
 
+## USD/task 与 PC $/(core·GHz)、互联网 $/Mbps 的等比叠加
+
+用与 token 单价等比叠加图相同的方法（PC 1976-07、互联网 1993-09、token 2020-06 三起点平移
+到同一 Y 高度，Y 轴 log），把"按 API 价计算的 USD/task"作为 token 端的对照量替进去。锚点：
+**2020-06 GPT-3 API typical task ≈ $0.03/task**（$60/1M × 500 tokens）。
+
+![USD/task vs 互联网 vs PC 等比叠加](task-price-vs-internet-pc.png)
+
+- **红虚线**：PC $/(core·GHz)，缩放系数 ≈ 4.59e-8（1976-07 $653,588 → $0.03）。
+- **灰虚线**：互联网 $/Mbps，缩放系数 ≈ 4.34e-5（1993-09 $691 → $0.03）。
+- **彩实线**：4 家 API 旗舰 task price，2020-06 OpenAI 起 $0.03，2024–2026 agentic 后蹿到 $1–$45。
+
+**核心反差**：PC 50 年 $/(core·GHz) 跌 ~45,000×，互联网 33 年 $/Mbps 跌 ~4400×——
+这两条都是**指数下行**；而 USD/task 6 年从 $0.03 **反向上行到 $20–$45**（≈1000×）。这是
+"硬件/带宽指数下行 vs AI 单 task 用量指数上涨"的直接画面。**当历史上"单位资源价格 → 0"
+的曲线，在 AI 时代是"单任务花费 → ∞"**。
+
 ## 假设与局限
 
 - **每条消息 {TOKENS_PER_MESSAGE} token** 是折算口径；改它整体平移套餐线但不改品牌相对关系。
@@ -987,6 +1154,7 @@ session 1–3M）。同期最贵 API 单价大约跌 ~50%（$60 → $25–$50）
     plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20)
     plot_tokens_per_task()
     plot_task_price(plus, pro_pt, max20)
+    plot_task_price_vs_internet_pc()
 
     for b in order:
         vals, names = env[b]
