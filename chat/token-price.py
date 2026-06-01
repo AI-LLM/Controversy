@@ -789,15 +789,24 @@ def plot_task_price_vs_internet_pc():
                     xytext=(5, 7), textcoords="offset points",
                     color="#444", alpha=0.85)
 
-    # AI 4 家 task price 实线
+    # AI 4 家 task price 实线（加粗 + 大 marker，token 区域只占整张图 12% 宽度，
+    # 易被压扁）
     api_colors = {"OpenAI": "#10a37f", "Anthropic": "#d97706",
                   "Google": "#4285f4", "DeepSeek": "#1a1a2e"}
     for b in providers:
         c = api_colors[b]
         bx = [months_since(qe, TOKEN_ORIGIN) for qe in QEND]
         by = series_usd[b]
-        ax.plot(bx, by, "-", color=c, lw=1.8, marker="o", ms=4,
-                label=f"{b} API task price", zorder=3)
+        ax.plot(bx, by, "-", color=c, lw=2.4, marker="o", ms=5,
+                label=f"{b} API task price", zorder=5)
+
+    # OpenAI 起点显式标注（X=0 容易和 PC 1976-07 标注挤在一起）
+    if series_usd["OpenAI"] and series_usd["OpenAI"][0] == series_usd["OpenAI"][0]:
+        v0 = series_usd["OpenAI"][0]
+        ax.annotate(f"2020-06 OpenAI\nGPT-3 task ${v0:.3f}",
+                    (0, v0), fontsize=7.5, color="#10a37f", fontweight="bold",
+                    xytext=(8, 22), textcoords="offset points",
+                    arrowprops=dict(arrowstyle="->", color="#10a37f", lw=0.9))
 
     # X 轴三语标签
     x_max = max(pc_max, inet_max) + 12
