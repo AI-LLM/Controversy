@@ -15,7 +15,11 @@ submission JSONL（每行一个帖子，PushShift/arctic-shift schema）。
     python3 scripts/analyze_reddit_prices.py --mode deprecation
     python3 scripts/analyze_reddit_prices.py --mode deprecation --min-score 3
 
-输出 data/reddit/price_mentions.csv 或 deprecation_events.csv。
+  用量（usage）：抽取 token 消耗量信号（每天/每任务/每用户/context 使用率）。
+    python3 scripts/analyze_reddit_prices.py --mode usage
+    python3 scripts/analyze_reddit_prices.py --mode usage --min-score 3
+
+输出 data/reddit/price_mentions.csv / deprecation_events.csv / usage_mentions.csv。
 再下载更多频道（放进 data/reddit/）后直接重跑即可，无需改代码。
 """
 from __future__ import annotations
@@ -200,6 +204,131 @@ def analyze_deprecation(d: dict) -> dict | None:
     }
 
 
+# ---------------------------------------------------------------------------
+# Token 用量信号检测（--mode usage）
+# 目标：从 Reddit 帖子中粗筛"用户/任务消耗 token 量"信号。
+# 信号类型：
+#   throughput  平台/账户总吞吐（"X tokens per day", "burned 5M tokens"）
+#   per_request 单请求/单 prompt 长度（"context filled to 50K", "my prompt is 200K"）
+#   per_task    单任务/单 session 消耗（"used 800K tokens in one Claude Code run"）
+#   per_user    每开发者/用户日均（"I spend $X/day on API", "my monthly bill"）
+#   context_use context window 利用率（"only using 5% of 1M context"）
+# ---------------------------------------------------------------------------
+
+# token 数量：5M tokens、200K tokens、1.5 million tokens、$13/day on Claude
+RE_TOKEN_COUNT = re.compile(
+    r"\b\d[\d.,]*\s*(?:k|m|b|thousand|million|billion|trillion|mn|bn)?\s*tok"
+    r"|\b\d[\d.,]*\s*(?:k|m|b)\s*(?:input|output|cached|context|prompt|completion)\s*tok"
+    r"|tok(?:ens?)?\s*(?:limit|cap|usage|burn\w*|spent|used|consumed)",
+    re.IGNORECASE,
+)
+
+# 速率：tokens per day/hour/minute、tpm、tps、tokens/sec
+RE_TOKEN_RATE_PER_TIME = re.compile(
+    r"\b\d[\d.,]*\s*(?:k|m|b)?\s*tok(?:ens?)?\s*(?:/|per|a)\s*"
+    r"(?:sec|second|min|minute|hour|hr|day|week|month|mo)\b"
+    r"|\b\d[\d.,]*\s*(?:tpm|tps|tpd)\b",
+    re.IGNORECASE,
+)
+
+# 单任务/session 信号：burned through, blew through, ate up, in one session/run/task
+RE_TASK_USAGE = re.compile(
+    r"\b(burn\w*\s+(?:through\s+)?\d|blew\s+through\s+\d|"
+    r"ate\s+up\s+\d|"
+    r"\d[\d.,]*\s*(?:k|m|b)?\s*tok\w*\s+in\s+(?:one|a|single|my)\s+(?:session|run|task|prompt|chat|conversation))",
+    re.IGNORECASE,
+)
+
+# context 利用率：filled context, max context, context window full, 200K of 1M
+RE_CONTEXT_USE = re.compile(
+    r"\b(context\s+(?:window\s+)?(?:full|filled|maxed|usage|util\w*)|"
+    r"filled\s+(?:up\s+)?(?:my\s+)?context|"
+    r"max(?:ed)?\s+out\s+(?:my\s+)?context|"
+    r"\d[\d.,]*\s*(?:k|m)\s*(?:of|/)\s*\d[\d.,]*\s*(?:k|m)?\s*(?:tok|context))",
+    re.IGNORECASE,
+)
+
+# 用户 / 团队日均花费 + token 量（与 sub_price 重叠时优先收）
+RE_PERSONAL_SPEND = re.compile(
+    r"\b(?:I|we|my\s+(?:team|company))\s+(?:spend|burn|use|consume|paid|pay|run\w*\s+through)\s+"
+    r"(?:about\s+|around\s+|~\s*)?\$?\d[\d.,]*\s*(?:/|per|a)?\s*(?:day|month|week|hour|year)",
+    re.IGNORECASE,
+)
+
+
+def analyze_usage(d: dict) -> dict | None:
+    title, body = _get_text(d)
+    text = (title + "\n" + body)[:MAX_TEXT]
+    if not text.strip():
+        return None
+
+    low = text.lower()
+    # 廉价预过滤：必须含 "tok" 或 "context" 子串
+    if "tok" not in low and "context" not in low:
+        return None
+
+    token_counts = find_all(RE_TOKEN_COUNT, text) if "tok" in low else []
+    rate_per_time = find_all(RE_TOKEN_RATE_PER_TIME, text) if "tok" in low else []
+    task_usage = find_all(RE_TASK_USAGE, text) if "tok" in low else []
+    context_use = find_all(RE_CONTEXT_USE, text) if "context" in low or "tok" in low else []
+    personal_spend = find_all(RE_PERSONAL_SPEND, text)
+
+    signal_types: list[str] = []
+    if rate_per_time:
+        signal_types.append("rate_per_time")
+    if task_usage:
+        signal_types.append("per_task")
+    if context_use:
+        signal_types.append("context_use")
+    if personal_spend:
+        signal_types.append("personal_spend")
+    if token_counts and not signal_types:
+        # 兜底：只有裸 token 数量，但需要至少有具体数字 + 单位
+        # 过滤掉 "tokens" 单独出现的情况
+        if any(re.search(r"\d", t) for t in token_counts):
+            signal_types.append("bare_token_count")
+
+    if not signal_types:
+        return None
+
+    confidence = "low" if signal_types == ["bare_token_count"] else "high"
+
+    ts = d.get("created_utc")
+    try:
+        date = datetime.fromtimestamp(int(ts), tz=timezone.utc).strftime("%Y-%m-%d")
+    except (TypeError, ValueError):
+        date = ""
+
+    anchor = (rate_per_time + task_usage + context_use + personal_spend + token_counts or [""])[0]
+    permalink = d.get("permalink") or ""
+    if permalink and not permalink.startswith("http"):
+        permalink = "https://reddit.com" + permalink
+    is_comment = "body" in d and "title" not in d
+    if is_comment:
+        cid = d.get("id", "")
+        if cid and "/#" not in permalink:
+            permalink = permalink.rstrip("/") + "/#" + cid
+    display_title = title if title else re.sub(r"\s+", " ", (d.get("body") or "")).strip()[:200]
+
+    return {
+        "date": date,
+        "subreddit": d.get("subreddit") or "",
+        "signal_types": "|".join(signal_types),
+        "confidence": confidence,
+        "products": "|".join(detect_products(text)),
+        "token_counts": " ; ".join(token_counts[:MAX_MATCHES]),
+        "rate_per_time": " ; ".join(rate_per_time),
+        "task_usage": " ; ".join(task_usage),
+        "context_use": " ; ".join(context_use),
+        "personal_spend": " ; ".join(personal_spend),
+        "score": d.get("score", ""),
+        "num_comments": d.get("num_comments", ""),
+        "title": display_title[:200],
+        "permalink": permalink,
+        "snippet": make_snippet(text, anchor),
+    }
+
+
 def find_all(pat: re.Pattern, text: str, limit: int = MAX_MATCHES) -> list[str]:
     seen: list[str] = []
     for m in pat.finditer(text):
@@ -323,8 +452,8 @@ def parse_ym(s: str | None) -> str | None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="抽取 Reddit 频道数据里的价格或退市信息")
-    ap.add_argument("--mode", choices=["price", "deprecation"], default="price",
-                    help="price=价格信号（默认）；deprecation=模型退市/下架事件")
+    ap.add_argument("--mode", choices=["price", "deprecation", "usage"], default="price",
+                    help="price=价格信号（默认）；deprecation=模型退市/下架；usage=token 用量信号")
     ap.add_argument("--data-dir", default="data/reddit", help="JSONL 所在目录")
     ap.add_argument("--out", default=None, help="输出 CSV 路径（默认按 mode 自动选）")
     ap.add_argument("--min-score", type=int, default=0, help="最低赞数")
@@ -335,9 +464,12 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.out is None:
-        args.out = os.path.join(args.data_dir,
-                                "deprecation_events.csv" if args.mode == "deprecation"
-                                else "price_mentions.csv")
+        out_name = {
+            "deprecation": "deprecation_events.csv",
+            "usage": "usage_mentions.csv",
+            "price": "price_mentions.csv",
+        }[args.mode]
+        args.out = os.path.join(args.data_dir, out_name)
 
     files = sorted(glob.glob(os.path.join(args.data_dir, "*.jsonl")))
     if not files:
@@ -349,7 +481,11 @@ def main() -> int:
     until = (args.until + "-31") if (args.until and len(args.until) == 7) else args.until
     kw = args.keyword.lower() if args.keyword else None
 
-    analyze_fn = analyze_deprecation if args.mode == "deprecation" else analyze_post
+    analyze_fn = {
+        "deprecation": analyze_deprecation,
+        "usage": analyze_usage,
+        "price": analyze_post,
+    }[args.mode]
 
     scanned = 0
     rows: list[dict] = []
@@ -386,7 +522,7 @@ def main() -> int:
                 rows.append(rec)
                 file_hits += 1
                 by_subreddit[rec["subreddit"]] += 1
-                if args.mode == "price":
+                if args.mode in ("price", "usage"):
                     for s in rec["signal_types"].split("|"):
                         by_signal[s] += 1
                 else:
@@ -402,6 +538,13 @@ def main() -> int:
             "date", "subreddit", "event_type", "deprecation_keywords",
             "models_mentioned", "products", "score", "num_comments",
             "title", "permalink", "snippet",
+        ]
+    elif args.mode == "usage":
+        fieldnames = [
+            "date", "subreddit", "signal_types", "confidence", "products",
+            "token_counts", "rate_per_time", "task_usage", "context_use",
+            "personal_spend", "score", "num_comments", "title", "permalink",
+            "snippet",
         ]
     else:
         fieldnames = [
