@@ -83,7 +83,7 @@
 
 ![PC + 互联网 + token 三条等比叠加](token-price-vs-internet-pc.png)
 
-- **蓝虚线**：PC $/(core·GHz)，方形 marker。
+- **红虚线**：PC $/(core·GHz)，方形 marker。
 - **灰虚线**：互联网 $/Mbps，圆形 marker。
 - **彩实线**：各家 token API 最贵模型 blended。
 

@@ -287,7 +287,7 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     fig.patch.set_facecolor("white")
 
     # ---- PC 线（蓝色虚线，标价） ----
-    ax.plot(pc_x, pc_y_scaled, "--", color="#2b5b9b", lw=2.5,
+    ax.plot(pc_x, pc_y_scaled, "--", color="#c0392b", lw=2.5,
             marker="s", ms=6, dashes=(2, 2),
             label=f"个人电脑 $/(core·GHz) × {scale_pc:.2e}（1976-07 = 2020-06 锚定）",
             zorder=3)
@@ -298,7 +298,7 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
         ax.annotate(f"{ym}\n${per_unit:,.0f}/(c·GHz)\n({cores}c {freq_lbl}, ${price:.0f})",
                     (xv, yv), fontsize=5.8,
                     xytext=(5, -28), textcoords="offset points",
-                    color="#2b5b9b", alpha=0.85)
+                    color="#c0392b", alpha=0.85)
 
     # ---- 互联网线（灰色虚粗线，标价） ----
     ax.plot(inet_x, inet_y_scaled, "--", color="#666", lw=2.5,
@@ -361,9 +361,9 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
     ax.axvline(inet_end_m, color="#666", ls=":", lw=1, alpha=0.5, zorder=1)
     ax.text(inet_end_m + 1, y_top * 0.5,
             "互联网截止\n2026-06", fontsize=7, color="#666", va="top")
-    ax.axvline(pc_end_m, color="#2b5b9b", ls=":", lw=1, alpha=0.5, zorder=1)
+    ax.axvline(pc_end_m, color="#c0392b", ls=":", lw=1, alpha=0.5, zorder=1)
     ax.text(pc_end_m + 1, y_top * 0.5,
-            "PC 截止\n2026-06", fontsize=7, color="#2b5b9b", va="top")
+            "PC 截止\n2026-06", fontsize=7, color="#c0392b", va="top")
     ax.grid(alpha=0.25)
     ax.legend(loc="upper right", fontsize=8.5, ncol=2, framealpha=0.92)
 
@@ -558,7 +558,7 @@ def main():
 
 ![PC + 互联网 + token 三条等比叠加](token-price-vs-internet-pc.png)
 
-- **蓝虚线**：PC $/(core·GHz)，方形 marker。
+- **红虚线**：PC $/(core·GHz)，方形 marker。
 - **灰虚线**：互联网 $/Mbps，圆形 marker。
 - **彩实线**：各家 token API 最贵模型 blended。
 
