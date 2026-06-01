@@ -225,47 +225,42 @@ def annotate_changes(ax, x, vals, names, color, yoffset=0):
 
 
 def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
-    """画第二张图: 互联网月费历史 vs token 价格历史。
-    互联网起点 1993-09 对齐到 token 起点 2020-06, 即 X 轴用「距起点的月数」。
-    上 subplot: 互联网月费 (1993-09 = month 0, 跨 ~33 年)。
-    下 subplot: token 旗舰 API + 套餐榨满折合 (2020-06 = month 0, 跨 6 年)。
+    """画第二张图: 互联网月费与 AI token 价格叠加在一张图里。
+    - 时间对齐: 互联网 1993-09 平移到 2020-06（+ 321 个月偏移）
+    - 价格缩放: 互联网价格 × (token_at_2020_06 / internet_at_1993_09)，
+      即假设 1993-09 互联网月费 ≡ 2020-06 最贵 API 模型 blended。
+    - X 轴延到能装下互联网最后一个数据点（1993-09 + 33 年 → 2053 左右）。
+    - token 数据到 2026-06 自然结束。
     """
+    # 锚点
+    inet_anchor_price = INTERNET_PRICES[0][1]  # 1993-09: $9.95
+    token_anchor_price = next(  # 2020-06 OpenAI 最贵 API blended
+        ((fnum(r["input_per_1m_usd"]) + fnum(r["output_per_1m_usd"])) / 2
+         for r in rows
+         if r["effective_date"] == TOKEN_ORIGIN
+         and r["category"] == "API"
+         and r["product_or_model"] == "GPT-3 Davinci"))
+    scale = token_anchor_price / inet_anchor_price  # 60 / 9.95 ≈ 6.03
+
+    # 互联网坐标变换: 月份 = 距 1993-09 月数 + (TOKEN_ORIGIN 距 TOKEN_ORIGIN = 0)
+    # 即: x = months_since(inet_ym, INTERNET_ORIGIN) -> 同时也是 token 时间轴的月份
     inet_x = [months_since(ym, INTERNET_ORIGIN) for ym, _, _ in INTERNET_PRICES]
-    inet_y = [v for _, v, _ in INTERNET_PRICES]
+    inet_y_scaled = [v * scale for _, v, _ in INTERNET_PRICES]
     inet_max = max(inet_x)
 
-    fig, (ax_top, ax_bot) = plt.subplots(
-        2, 1, figsize=(14, 9), sharex=False,
-        gridspec_kw={"height_ratios": [1, 1.4], "hspace": 0.32})
+    fig, ax = plt.subplots(figsize=(16, 7.5))
     fig.patch.set_facecolor("white")
 
-    # ---- 上: 互联网月费 ----
-    ax_top.plot(inet_x, inet_y, "-", color="#555", lw=2, marker="o", ms=5)
-    for (ym, v, note), xv in zip(INTERNET_PRICES, inet_x):
-        ax_top.annotate(f"{ym}\n${v:.2f}", (xv, v), fontsize=6.5,
-                        xytext=(4, 6), textcoords="offset points",
-                        color="#333", alpha=0.9)
-    ax_top.set_ylabel("美国家庭互联网名义月费 (USD/月)", fontsize=10)
-    ax_top.set_title("美国互联网接入月费历史 (1993-09 → 2026-06, 33 年)\n"
-                     "起点 1993-09 与下图 token 起点 2020-06 对齐",
-                     fontsize=10.5, pad=8)
-    ax_top.grid(alpha=0.25)
-    ax_top.set_xlim(-6, inet_max + 12)
-    ax_top.set_ylim(0, 75)
-    # 顶部 X 轴标注真实年份
-    year_ticks = []
-    year_labels = []
-    for year in range(1995, 2027, 5):
-        m = months_since(f"{year}-06", INTERNET_ORIGIN)
-        if -6 <= m <= inet_max + 12:
-            year_ticks.append(m)
-            year_labels.append(str(year))
-    ax_top.set_xticks(year_ticks)
-    ax_top.set_xticklabels(year_labels, fontsize=8)
-    ax_top.set_xlabel("互联网时间线", fontsize=8)
+    # ---- 互联网线（灰色粗线，标价） ----
+    ax.plot(inet_x, inet_y_scaled, "-", color="#666", lw=2.5,
+            marker="o", ms=6, label=f"美国互联网月费 ×{scale:.2f}（1993-09 锚定）",
+            zorder=4)
+    for (ym, v_orig, note), xv, yv in zip(INTERNET_PRICES, inet_x, inet_y_scaled):
+        ax.annotate(f"{ym}\n(实${v_orig:.2f})", (xv, yv), fontsize=6.5,
+                    xytext=(5, 7), textcoords="offset points",
+                    color="#444", alpha=0.85)
 
-    # ---- 下: token 旗舰 API + 套餐 ----
-    token_max_months = months_since("2026-06", TOKEN_ORIGIN)
+    # ---- token API 线 ----
     api_colors = {"OpenAI": "#10a37f", "Anthropic": "#d97706",
                   "Google": "#4285f4", "DeepSeek": "#1a1a2e"}
     for b in order:
@@ -276,59 +271,49 @@ def plot_vs_internet(rows, env, order, plus, anth_plans, pro_pt, max20):
             if v > 0:
                 bx.append(months_since(qe, TOKEN_ORIGIN))
                 by.append(v)
-        ax_bot.plot(bx, by, "-", color=c, lw=2, marker="o", ms=4,
-                    label=f"{b} API 最贵模型 blended", zorder=3)
+        ax.plot(bx, by, "-", color=c, lw=1.8, marker="o", ms=4,
+                label=f"{b} API 最贵 blended", zorder=3)
 
-    # 套餐线 (右轴)
-    ax_bot2 = ax_bot.twinx()
-    plus_pts = sorted(plus)
-    plus_x = [months_since(ym, TOKEN_ORIGIN) for ym, _ in plus_pts]
-    plus_y = [v for _, v in plus_pts]
-    ax_bot2.plot(plus_x, plus_y, "--", color="#10a37f", lw=1.4, marker="s", ms=3,
-                 alpha=0.75, label="ChatGPT Plus $20 榨满")
+    # ---- X 轴: 月数 → 双语标签（token 真实日期 + 互联网真实日期） ----
+    ax.set_xlim(-6, inet_max + 12)
+    # 主刻度: 每两年一格的 token 日历
+    tick_months = []
+    tick_labels = []
+    for m in range(0, inet_max + 12, 24):
+        token_y = 2020 + (6 + m) // 12
+        token_mo = (6 + m) % 12 or 12
+        inet_y_cal = 1993 + (9 + m) // 12
+        inet_mo = (9 + m) % 12 or 12
+        if m <= months_since("2026-06", TOKEN_ORIGIN):
+            tick_labels.append(f"{token_y}-{token_mo:02d}\n(互{inet_y_cal})")
+        else:
+            tick_labels.append(f"—\n(互{inet_y_cal})")
+        tick_months.append(m)
+    ax.set_xticks(tick_months)
+    ax.set_xticklabels(tick_labels, fontsize=7.5)
 
-    anth_x_high = [months_since(anth_plans[0][0], TOKEN_ORIGIN)]
-    anth_y_high = [pro_pt]
-    ax_bot2.plot(anth_x_high + [token_max_months],
-                 anth_y_high + [anth_y_high[-1]],
-                 "--", color="#d97706", lw=1.4, marker="^", ms=3,
-                 alpha=0.75, label="Claude Pro $20 榨满 (最高)")
-    anth_x_low = [months_since(anth_plans[0][0], TOKEN_ORIGIN),
-                  months_since(max20[0], TOKEN_ORIGIN)]
-    anth_y_low = [pro_pt, max20[4]]
-    ax_bot2.plot(anth_x_low + [token_max_months],
-                 anth_y_low + [anth_y_low[-1]],
-                 ":", color="#d97706", lw=1.4, marker="v", ms=3,
-                 alpha=0.6, label="Claude Max 20x $200 榨满 (最低)")
+    ax.set_ylabel("USD / 1M tokens（互联网月费已按 1993-09 ≡ 2020-06 GPT-3 Davinci 缩放）",
+                  fontsize=10)
+    ax.set_xlabel("token 真实日期 / (互联网真实年份)，1993-09 → 2020-06 平移对齐", fontsize=9)
+    ax.set_ylim(0, max(max(inet_y_scaled), 120) * 1.08)
 
-    ax_bot.set_ylabel("API 最贵 blended (USD / 1M tokens)", fontsize=10)
-    ax_bot2.set_ylabel("套餐榨满折合 (USD / 1M tokens)", fontsize=10)
-    ax_bot.set_xlim(-3, token_max_months + 6)
-    ax_bot.grid(alpha=0.25)
-    ax_bot.set_title("AI token 价格历史 (2020-06 → 2026-06, 6 年)",
-                     fontsize=10.5, pad=8)
-    # 下方 X 轴: 真实日期
-    tok_ticks, tok_labels = [], []
-    for year in range(2020, 2027):
-        for month in (6,):
-            m = months_since(f"{year}-{month:02d}", TOKEN_ORIGIN)
-            if -3 <= m <= token_max_months + 6:
-                tok_ticks.append(m)
-                tok_labels.append(f"{year}-{month:02d}")
-    ax_bot.set_xticks(tok_ticks)
-    ax_bot.set_xticklabels(tok_labels, fontsize=8, rotation=30, ha="right")
-    ax_bot.set_xlabel("AI token 时间线 (与上图 1993-09 起点对齐)", fontsize=8)
+    # token 数据截止竖线
+    token_end = months_since("2026-06", TOKEN_ORIGIN)
+    ax.axvline(token_end, color="#999", ls=":", lw=1, alpha=0.6, zorder=1)
+    ax.text(token_end + 1, ax.get_ylim()[1] * 0.9,
+            "token 数据截止\n(2026-06)", fontsize=7.5, color="#666", va="top")
+    ax.grid(alpha=0.25)
+    ax.legend(loc="upper right", fontsize=8.5, ncol=2, framealpha=0.92)
 
-    h1, l1 = ax_bot.get_legend_handles_labels()
-    h2, l2 = ax_bot2.get_legend_handles_labels()
-    ax_bot.legend(h1 + h2, l1 + l2, loc="upper right", fontsize=7.5,
-                  ncol=2, framealpha=0.9)
+    ax.set_title(
+        f"假设互联网 1993-09 = AI token 2020-06：等比缩放后叠加\n"
+        f"价格缩放系数 ×{scale:.2f}（{INTERNET_PRICES[0][0]} 互联网 ${inet_anchor_price:.2f}/月 ≡ "
+        f"2020-06 GPT-3 Davinci ${token_anchor_price:.2f}/1M tokens）\n"
+        f"互联网走完 33 年才到 $39.50（缩放后≈${39.50 * scale:.0f}）；"
+        f"token 6 年内已多次穿越互联网 33 年的价格区间",
+        fontsize=11.5, pad=12)
 
-    fig.suptitle(
-        "互联网接入月费 vs AI token 价格：起点对齐的同尺度对比\n"
-        "互联网用 33 年从计时拨号走到光纤通缩；AI token 用 6 年走完同等量级的价格演化",
-        fontsize=12, y=0.995)
-    fig.tight_layout(rect=(0, 0, 1, 0.97))
+    fig.tight_layout()
     fig.savefig(OUT_PNG2, dpi=180, bbox_inches="tight")
     print(f"写入 {OUT_PNG2}")
     plt.close(fig)
@@ -475,18 +460,22 @@ def main():
 
 ## 与互联网接入价格的同尺度对比
 
-把美国互联网接入服务的价格历史起点（**1993-09 AOL 开放公众接入**）对齐到 token-price.csv
-的最早时间点（**2020-06 OpenAI GPT-3 API**），用同一坐标观察两条曲线。
+把美国互联网接入服务的价格历史**同时平移并缩放**到 token 坐标系：
 
-![互联网月费 vs AI token 价格](token-price-vs-internet.png)
+- **时间平移**：假设互联网 1993-09 那一刻发生在 token 的 2020-06，即互联网每个日历日期 +321 个月
+  落到 token 时间轴上。互联网最后一个数据点 2026-06 落到 token 时间 2053 附近，X 轴顺延到装下。
+- **价格等比缩放**：用 1993-09 互联网 $9.95/月 ≡ 2020-06 GPT-3 Davinci $60/1M tokens 作锚点，
+  互联网所有价格 × 6.03 后画到同一 Y 轴。
+- 2026-06 后 token 没数据则留空（图中竖虚线标出 token 数据截止）。
 
-- **上图**：1993-09 → 2026-06 共 33 年的美国家庭互联网名义月费。早期高频波动以月为单位标注，
-  后期成熟阶段以年度 USTelecom BPI 数值标注。
-- **下图**：2020-06 → 2026-06 共 6 年的 AI token API 与套餐价格演化，X 轴起点（2020-06）
-  与上图起点（1993-09）共用 figure 左侧位置。
-- **结论**：互联网用 33 年从"计时拨号 $9.95+$3.50/h"走到"光纤 $39.50/月、单 Mbps 下降 90%"；
-  AI token 仅 6 年就在同等量级走完了"$60/1M 旗舰 → $5/1M Opus 4.5 / $0.14/1M DeepSeek"
-  的演化。**两条线放进同一图里看，6 年 AI 价格变化 ≈ 33 年互联网价格变化的覆盖宽度**。
+![互联网月费等比缩放叠加 AI token 价格](token-price-vs-internet.png)
+
+- **灰线**：缩放后的互联网月费，标签同时给出真实日历日期和原始月费。
+- **彩线**：各家 API 最贵模型 blended（与第一张图一致）。
+- **观感**：互联网 33 年最低也只缩到 $238（即 $39.50 × 6.03），从未跌破起点 $60；
+  AI token 6 年内已多次穿越互联网 33 年走过的价格区间——OpenAI 最贵从 $60 飙到 $112.5
+  再回落到 $50；DeepSeek 把同等天花板按到 $0.x。**等比缩放抹掉绝对量级差后，token 的
+  下行速度仍比互联网快近一个数量级**。
 
 ### 互联网月费数据点
 
