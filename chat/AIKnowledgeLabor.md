@@ -663,8 +663,8 @@ graph TD
     IG --- AIE
     T --- AIE
     MO --- AIE
-    A1 ---|数据集| T
-    A1 ---|数据集| MO
+    A1 ---|Eval数据集| T
+    A1 ---|Eval数据集| MO
 ```
 
 #### 3.2.3 价值实现路径
