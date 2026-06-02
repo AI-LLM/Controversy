@@ -656,6 +656,12 @@ graph TD
     CR -. 打回返工 .-> C
     T -. 缺陷打回 .-> C
     MO -. 缺陷与新需求回流 .-> R
+    R --- AIE[AI增强]
+    C --- AIE
+    CR --- AIE
+    IG --- AIE
+    T --- AIE
+    MO --- AIE
 ```
 
 #### 3.2.3 价值实现路径
