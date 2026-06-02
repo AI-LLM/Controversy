@@ -662,6 +662,7 @@ graph TD
     IG --- AIE
     T --- AIE
     MO --- AIE
+    linkStyle 17,18,19,20,21,22 stroke:#8e24aa,stroke-width:1.5px,stroke-dasharray:6 4;
 ```
 
 #### 3.2.3 价值实现路径
