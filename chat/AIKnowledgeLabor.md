@@ -631,28 +631,28 @@ config:
   layout: elk
 ---
 graph TD
-    R[需求分析] --> A1
+    R[需求分析] ==> A1
     subgraph SP [能否运用AI？]
         direction TB
-        A1[拆分工作项目<br/>参考 O*NET 方法，建立评估数据集] --> A2[评估 LLM<br/>参考 §2.1 方法]
-        A2 --> Q1{足够满足?}
-        Q1 -- 否 --> A3[评估 LLM + 公开通用 harness 方案]
-        A3 --> Q2{足够满足?}
+        A1[拆分工作项目<br/>参考 O*NET 方法，建立评估数据集] ==> A2[评估 LLM<br/>参考 §2.1 方法]
+        A2 ==> Q1{足够满足?}
+        Q1 == 否 ==> A3[评估 LLM + 公开通用 harness 方案]
+        A3 ==> Q2{足够满足?}
     end
-    Q1 -- 是 --> U[直接使用]
-    Q2 -- 是 --> U
+    Q1 == 是 ==> U[直接使用]
+    Q2 == 是 ==> U
     subgraph D [系统设计与架构]
         direction TB
         D1[经典系统设计与架构]
         D2[虚拟前置部署工程师（FDE）]
     end
-    Q2 -- 否：不满足的部分 --> D
-    D --> C[编码实现]
-    C --> CR[代码评审]
-    CR --> IG[构建与集成]
-    IG --> T[测试与质量保障]
-    T --> DP[部署发布]
-    DP --> MO[运行监控与维护]
+    Q2 == 否：不满足的部分 ==> D
+    D ==> C[编码实现]
+    C ==> CR[代码评审]
+    CR ==> IG[构建与集成]
+    IG ==> T[测试与质量保障]
+    T ==> DP[部署发布]
+    DP ==> MO[运行监控与维护]
     CR -. 打回返工 .-> C
     T -. 缺陷打回 .-> C
     MO -. 缺陷与新需求回流 .-> R
@@ -662,7 +662,6 @@ graph TD
     IG --- AIE
     T --- AIE
     MO --- AIE
-    linkStyle 17,18,19,20,21,22 stroke:#8e24aa,stroke-width:1.5px,stroke-dasharray:6 4;
 ```
 
 #### 3.2.3 价值实现路径
