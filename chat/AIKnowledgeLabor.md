@@ -641,6 +641,7 @@ graph TD
     end
     Q1 == 是 ==> U[直接使用]
     Q2 == 是 ==> U
+    U ==> T
     subgraph D [系统设计与架构]
         direction TB
         D1[经典软件组件与架构]
