@@ -643,7 +643,7 @@ graph TD
     Q2 == 是 ==> U
     subgraph D [系统设计与架构]
         direction TB
-        D1[经典系统设计与架构]
+        D1[经典软件组件与架构]
         D2[虚拟前置部署工程师（FDE）]
     end
     Q2 == 否：不满足的部分 ==> D
