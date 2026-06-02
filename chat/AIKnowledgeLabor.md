@@ -644,7 +644,7 @@ graph TD
     subgraph D [系统设计与架构]
         direction TB
         D1[经典软件组件与架构]
-        D2[虚拟前置部署工程师（FDE）]
+        D2[🤖 虚拟前置部署工程师（FDE）]
     end
     Q2 == 否：不满足的部分 ==> D
     D ==> C[编码实现]
@@ -656,7 +656,7 @@ graph TD
     CR -. 打回返工 .-> C
     T -. 缺陷打回 .-> C
     MO -. 缺陷与新需求回流 .-> R
-    R --- AIE[AI增强]
+    R --- AIE[🤖 AI增强]
     C --- AIE
     CR --- AIE
     IG --- AIE
