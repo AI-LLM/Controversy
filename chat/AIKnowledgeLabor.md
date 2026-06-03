@@ -625,6 +625,9 @@ Fortran 没有 COBOL 那样的总盘子数字，但具象案例同样惊人：NA
 ---
 config:
   layout: elk
+  elk:
+    nodePlacementStrategy: NETWORK_SIMPLEX
+    mergeEdges: false
 ---
 graph TD
     R[需求分析] ==> A1
