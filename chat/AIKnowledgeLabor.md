@@ -635,7 +635,7 @@ graph TD
         direction TB
         A1[拆分工作项目<br/>参考 O*NET 方法，建立评估数据集] ==> A2[评估 LLM<br/>参考 §2.1 方法]
         A2 ==> Q1{足够满足?}
-        Q1 == 否 ==> A3[评估 LLM + 公开通用 harness 方案]
+        Q1 == 否 ==> A3[评估 LLM + 通用 Harness 方案]
         A3 ==> Q2{足够满足?}
     end
     Q1 == 是 ==> U[直接使用]
