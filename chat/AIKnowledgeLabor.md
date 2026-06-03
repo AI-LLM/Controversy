@@ -515,7 +515,7 @@ PwC 的 *2026 AI Business Predictions* 报告指出，2026 年企业正在从"�
 
 **核心洞察**：harness 的每一个组件，在传统软件工程组织里都对应着**一种专门的工程师工种**——而这些工种在中小企业根本配不起。LLM Agent 让 harness 第一次可以被批量生成与持续维护，相当于给每个项目配备一组过去只有大企业才有的工程团队。映射如下：
 
-| Harness 元素 | 传统工种/现代LLM+Context | 过去能配齐的组织 |
+| Harness 元素 | 传统工种→现代LLM+Context | 过去能配齐的组织 |
 |---|---|---|
 | Principles / CfRs / 编码规范 | 资深架构师 / Tech Lead 写规范文档 | 中大型企业 |
 | Ref docs / How-tos / Skills | Developer Advocate / Tech Writer | 中大型企业、开源大项目 |
