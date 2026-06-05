@@ -38,12 +38,6 @@ Sutton 给的方向：从外部奖励走向内在自我评估、从任务驱动�
 
 - 媒体转述：[`data/AI下一步是走向生成认知 … 具身.md`](../data/AI下一步是走向生成认知%20%20Enactive%20Cognition%20%20表征主义%20%20示能性%20%20经验%20%20强化学习%20%20持续学习%20%20行动-感知不可分割%20%20意向弧%20%20最大握力%20%20自创%20%20具身.md)
 
-转述里需要纠正的地方
-
-- **图灵奖年份**：解说稿说 Sutton 是"2017 年图灵奖得主"，错误。Sutton 与 Barto 同获的是 **2024 年图灵奖**（2025 年 3 月由 ACM 公布）。
-- **译名"生成式人工智能"易混淆**：视频把 *Enactive* 译作"生成"，把标题译成《走向生成式人工智能》。在认知科学里 enactivism / 生成认知（源自 Varela 的 *enaction*）确有"生成"这一译法，但与产业界的"生成式 AI（Generative AI）"是完全不同的概念，直接叫"生成式人工智能"会和 GPT/扩散模型那一支撞名。本文统一用**生成认知 / enactive** 指代，避免混淆。
-- **几处专有名词的 ASR 误写**（以原文为准）：Agre & Chapman 1987 年的系统是 **PENGI**（视频作"PANGY"）；《What Computers Can't Do》（1972）作者是 **Hubert Dreyfus 休伯特·德雷福斯**（视频作"休伯特·雷德福斯"）；Sutton & Silver 那篇是 **essay/文章**《Welcome to the Era of Experience》（视频口误作"TV"）。
-
 ## 信源
 
 - Banafsheh Rafiee, Richard S. Sutton, "Toward Enactive Artificial Intelligence," *arXiv preprint*, arXiv:2605.24238, May 2026. [Online]. Available: <https://arxiv.org/abs/2605.24238>
