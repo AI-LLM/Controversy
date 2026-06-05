@@ -44,14 +44,14 @@
 
 三家在 ARM 平台上「机器开机后怎么把硬件告诉操作系统」走的是三条不同的路：
 
-| 维度 | Windows on ARM | Linux on ARM64 | 鸿蒙 HarmonyOS（ARM） |
-|---|---|---|---|
-| 代表硬件 | RTX Spark、Surface、骁龙 X 系列笔记本 | DGX Spark、各类 ARM 服务器 / 嵌入式 | 鸿蒙电脑（麒麟 X90）、手机、车机、IoT |
-| 启动固件 | **强制 UEFI** | UEFI（服务器）或 U-Boot 等（嵌入式），灵活 | 华为自有引导链（非标准 UEFI+ACPI；细节未公开 ⚠） |
-| 硬件描述体系 | **只认 ACPI**（经 UEFI 传表） | **ACPI 与设备树（DT）二者皆可** | **HDF + HCS**（自有，HCS 为树状配置，概念近 DT 但格式不同）[[8]](https://github.com/openharmony/drivers_framework) |
-| 内核 | Windows NT 内核 | Linux 内核 | 鸿蒙内核（HarmonyOS NEXT / 鸿蒙 5）；OpenHarmony 另有 LiteOS 等 |
-| 驱动模型 | WDM / WDF | Linux 设备驱动模型 | HDF（Hardware Driver Foundation），可跨内核复用驱动 [[8]](https://github.com/openharmony/drivers_framework) |
-| 跨体系兼容 | 封闭、最严格（缺 ACPI 直接起不来） | 最宽松（两套都吃） | 自成一套，靠 HDF 抽象屏蔽底层差异 |
+| 维度 | Windows on ARM | Linux on ARM64 | 鸿蒙 HarmonyOS（ARM） | 苹果 Apple Silicon |
+|---|---|---|---|---|
+| 代表硬件 | RTX Spark、Surface、骁龙 X 系列笔记本 | DGX Spark、各类 ARM 服务器 / 嵌入式 | 鸿蒙电脑（麒麟 X90）、手机、车机、IoT | M 系列 Mac、iPhone / iPad |
+| 启动固件 | **强制 UEFI** | UEFI（服务器）或 U-Boot 等（嵌入式），灵活 | 华为自有引导链（非标准 UEFI+ACPI；细节未公开 ⚠） | **iBoot**（私有，非 UEFI）[[16]](https://asahilinux.org/docs/fw/adt/) |
+| 硬件描述体系 | **只认 ACPI**（经 UEFI 传表） | **ACPI 与设备树（DT）二者皆可** | **HDF + HCS**（自有，HCS 为树状配置，概念近 DT 但格式不同）[[8]](https://github.com/openharmony/drivers_framework) | **Apple Device Tree（ADT）**：device tree 谱系，但私有二进制格式（非 Linux FDT、非 ACPI），XNU 经 SecureDTLookup 直接解析 [[16]](https://asahilinux.org/docs/fw/adt/) |
+| 内核 | Windows NT 内核 | Linux 内核 | 鸿蒙内核（HarmonyOS NEXT / 鸿蒙 5）；OpenHarmony 另有 LiteOS 等 | XNU（Darwin） |
+| 驱动模型 | WDM / WDF | Linux 设备驱动模型 | HDF（Hardware Driver Foundation），可跨内核复用驱动 [[8]](https://github.com/openharmony/drivers_framework) | IOKit |
+| 跨体系兼容 | 封闭、最严格（缺 ACPI 直接起不来） | 最宽松（两套都吃） | 自成一套，靠 HDF 抽象屏蔽底层差异 | 极致封闭、全栈自有；Linux 靠逆向工程（Asahi + m1n1 转标准 DT），Windows 仅虚拟化、不可原生 [[17]](https://asahilinux.org/docs/platform/introduction/) |
 
 几个关键判断：
 
@@ -61,7 +61,11 @@
 
 3. **桌面落地的现实对照。** 三家都已经把 ARM 推到了桌面：RTX Spark（Windows on ARM，2026 秋）、DGX Spark（Linux，已售）、鸿蒙电脑 MateBook Pro / Fold（HarmonyOS 5 + 麒麟 X90，2025-05-19 发售，从内核重构、不支持侧载）[[9]](https://www.stcn.com/article/detail/1821418.html)。但三者的「同芯换系统」可能性完全不同：Windows ↔ Linux 卡在 ACPI/DT + 驱动两道门槛（如原文 DGX Spark 案例）；鸿蒙电脑则**软硬一体、垂直封闭**，麒麟 + 鸿蒙内核 + HDF 自成闭环，换系统的命题在它这里基本不成立。
 
-4. **「封闭度」排序**：Linux（最开放，两套标准通吃）< Windows on ARM（认证封闭，但走 UEFI+ACPI 业界标准）< 鸿蒙（标准与生态都自有，垂直整合最深）。原文把矛盾框成「Windows vs Linux」，加入鸿蒙后更准确的图景是：**一边是 ACPI/DT 这套开放业界标准内部的 Windows/Linux 之争，另一边是鸿蒙另立标准的国产化垂直路线。**
+4. **「封闭度」排序**：Linux（最开放，两套标准通吃）< Windows on ARM（认证封闭，但走 UEFI+ACPI 业界标准）< 苹果 ≈ 鸿蒙（标准与生态都自有，垂直整合最深）。但同是「垂直封闭」，苹果与鸿蒙选了**不同的硬件描述谱系**：苹果的 ADT 属 **device tree 系**（XNU 直接吃私有二进制 DT），鸿蒙则**另起 HDF + HCS 框架**。可见「自立门户」不等于「必须自创描述格式」——苹果证明封闭垂直栈也能架在 device tree 谱系上，只是换成自家私有二进制格式 [[16]](https://asahilinux.org/docs/fw/adt/)。
+
+5. **封闭硬件上「换系统」的难度阶梯**：DGX Spark 装 Windows 卡在补 ACPI 表 + 移植驱动（原文案例）；**Apple Silicon 更狠**——Windows 无法原生 dual-boot（Boot Camp 只限 Intel Mac），只能靠 Parallels 虚拟化（微软唯一授权方案）[[18]](https://www.parallels.com/products/desktop/microsoft-authorized-solution-windows-11-arm/)；Linux 则靠 Asahi 项目**逆向工程**无公开文档的 SoC，用 m1n1 把 Apple 的 XNU 启动协议桥接成标准 ARM64 + device tree 启动 [[17]](https://asahilinux.org/docs/platform/introduction/)。苹果、鸿蒙这类全栈自有平台，「同芯换系统」的成本比 Windows/Linux 互换高一个量级。
+
+6. **四方归位**：把矛盾从原文的「Windows vs Linux」补全，更准确的图景是按**两个轴**铺开——一轴是硬件描述谱系（**ACPI 系**：Windows；**device tree 系**：Linux、苹果 ADT；**自有框架**：鸿蒙 HDF/HCS；Linux 跨 ACPI 与 DT 两栏），另一轴是开放度（**开放业界标准**：Windows、Linux；**垂直封闭自有**：苹果、鸿蒙）。Linux 是唯一同时落在「两套标准都吃」且「开放」的格子，这正是它成为 AI 算力底座通用选择的结构性原因。
 
 ⚠ **声明**：鸿蒙电脑底层固件（是否用类 UEFI 引导、引导阶段如何向鸿蒙内核传递硬件信息）华为未公开技术文档，表中「启动固件」一栏与第 3 点的闭环判断为据公开报道与 OpenHarmony 框架资料的**推断**，非官方确认。
 
@@ -136,3 +140,9 @@
 [14] "NVLink、HCCL 及传统 PCIe 传输对比分析报告," *知乎*. (HCCL 为昇腾集合通信库，对标 NVIDIA NCCL。) [Online]. Available: <https://zhuanlan.zhihu.com/p/1907189956348220034>
 
 [15] 华为, "Atlas 服务器 openEuler 22.03 LTS 操作系统安装指导书（Arm）," *华为企业技术支持*. (Atlas 服务器官方推荐 openEuler 22.03 LTS ARM64；昇腾驱动官方仅支持 Euler 系列；CANN 为 NPU 驱动与工具链。) [Online]. Available: <https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1>
+
+[16] "Apple Device Tree (ADT)," *Asahi Linux Documentation*. (ADT 由 iBoot2 构建，私有二进制格式，区别于 Linux 的 Flattened Device Tree；XNU 经 SecureDTLookup API 直接消费；Apple Silicon 不用 UEFI/ACPI。) [Online]. Available: <https://asahilinux.org/docs/fw/adt/>
+
+[17] "Introduction to Apple Silicon," *Asahi Linux Documentation*. (m1n1 为 first-stage bootstrap，桥接 XNU 启动协议与 Device Tree / ARM64 Linux 启动协议；SoC 无公开文档，靠逆向工程。) [Online]. Available: <https://asahilinux.org/docs/platform/introduction/>
+
+[18] Parallels, "Microsoft-authorized Windows 11 on Mac," *Parallels Desktop*. (Parallels 为微软唯一授权在 Apple Silicon 上运行 Windows 11 ARM 的虚拟化方案；M 系列无原生 Boot Camp 双启动。) [Online]. Available: <https://www.parallels.com/products/desktop/microsoft-authorized-solution-windows-11-arm/>
