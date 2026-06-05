@@ -10,6 +10,7 @@
         "/Users/luwei/work/Controversy"
       ],
       "git_branches": [
+        "agent/6d6c2a53-d46b-4cca-bcde-f7779ebcf715",
         "agent/9a1785c4-0ee6-48c2-9b8a-5bebe0aa1a3a"
       ]
     }
@@ -1631,19 +1632,928 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 19,
+      "timestamp": "2026-06-05T08:55:29.485Z",
+      "source": "user",
+      "message": "鸿蒙能否直接复用Linux上的NVLink-C2C / ConnectX-7 / 电源管理资产？华为升腾对应的方案呢？",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 20,
+      "timestamp": "2026-06-05T08:55:56.153Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 51419,
+        "completion_tokens": 1823,
+        "cached_tokens": 51417,
+        "extra": {
+          "cache_creation_input_tokens": 58,
+          "cache_read_input_tokens": 51417,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 58,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1823,
+              "cache_read_input_tokens": 51417,
+              "cache_creation_input_tokens": 58,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 58
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 21,
+      "timestamp": "2026-06-05T08:55:57.084Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "两个问题都是事实性的，涉及华为昇腾（本土实体，用中文搜）和 NVIDIA 私有互联（英文搜）。我先核实再回答，不凭印象编。",
+      "metrics": {
+        "prompt_tokens": 51419,
+        "completion_tokens": 1823,
+        "cached_tokens": 51417,
+        "extra": {
+          "cache_creation_input_tokens": 58,
+          "cache_read_input_tokens": 51417,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 58,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1823,
+              "cache_read_input_tokens": 51417,
+              "cache_creation_input_tokens": 58,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 58
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 22,
+      "timestamp": "2026-06-05T08:55:59.441Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_01P6VwCZnaxUGSAguSxQqKJD",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01P6VwCZnaxUGSAguSxQqKJD",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01P6VwCZnaxUGSAguSxQqKJD",
+            "content": "Web search results for query: \"NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source\"\n\nLinks: [{\"title\":\"Linux Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/ConnectX7VPI/Linux+Driver+Installation\"},{\"title\":\"Linux Ethernet Drivers - MLNX_EN\",\"url\":\"https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/\"},{\"title\":\"Installing ConnectX-7 Firmware — NVIDIA DGX Software for Red Hat Enterprise Linux 8 Installation Guide\",\"url\":\"https://docs.nvidia.com/dgx/dgx-rhel8-install-guide/installing-connectx7-steps.html\"},{\"title\":\"Deploying — MNNVL User Guide\",\"url\":\"https://docs.nvidia.com/multi-node-nvlink-systems/mnnvl-user-guide/deploying.html\"},{\"title\":\"ConnectX-7 Ethernet Linux Support - Ethernet Adapter Cards - NVIDIA Developer Forums\",\"url\":\"https://forums.developer.nvidia.com/t/connectx-7-ethernet-linux-support/229698\"},{\"title\":\"Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/connectx6dxen/driver-installation\"},{\"title\":\"Nvidia ConnectX4/ConnectX5/ConnectX6/ConnectX7 ...\",\"url\":\"https://support.hpe.com/connect/s/softwaredetails?language=en_US&collectionId=MTX-44718355028f47ce\"},{\"title\":\"Nvidia-Mellanox ConnectX Networking Adapter/Device Linux Firmware - Lenovo Support US\",\"url\":\"https://support.lenovo.com/us/en/downloads/ds560937-nvidia-mellanox-connectx-networking-adapterdevice-linux-firmware\"},{\"title\":\"DOCA-Host for Linux Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/connectx8SuperNIC/DOCA-Host-for-Linux-Driver-Installation\"},{\"title\":\"How to Enable or Disable NVLink | DigitalOcean Documentation\",\"url\":\"https://docs.digitalocean.com/products/paperspace/machines/how-to/manage-nvlink/\"}]\n\nBased on the search results, I found information about ConnectX-7 Linux drivers. The MLNX_OFED package is used for installing and testing the ConnectX-7 adapter card on Linux, and NVIDIA offers a robust and full set of protocol software and driver for Linux with the ConnectX Ethernet family cards through NVIDIA OpenFabrics Enterprise Distribution (MLNX_OFED).\n\nHowever, the search results don't contain specific information about NVLink-C2C, whether these drivers are proprietary versus GPL licensed, or details about closed source components. The results focus on driver installation procedures and general driver information for ConnectX-7 adapters. To get more specific information about the licensing and proprietary nature of these drivers, you may need to consult NVIDIA's official documentation on driver licensing or the MLNX_OFED source code repository.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source\", \"results\": [{\"tool_use_id\": \"srvtoolu_01PRTqmfAi7sCjubEvP31J4P\", \"content\": [{\"title\": \"Linux Driver Installation - NVIDIA Docs\", \"url\": \"https://docs.nvidia.com/networking/display/ConnectX7VPI/Linux+Driver+Installation\"}, {\"title\": \"Linux Ethernet Drivers - MLNX_EN\", \"url\": \"https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/\"}, {\"title\": \"Installing ConnectX-7 Firmware — NVIDIA DGX Software for Red Hat Enterprise Linux 8 Installation Guide\", \"url\": \"https://docs.nvidia.com/dgx/dgx-rhel8-install-guide/installing-connectx7-steps.html\"}, {\"title\": \"Deploying — MNNVL User Guide\", \"url\": \"https://docs.nvidia.com/multi-node-nvlink-systems/mnnvl-user-guide/deploying.html\"}, {\"title\": \"ConnectX-7 Ethernet Linux Support - Ethernet Adapter Cards - NVIDIA Developer Forums\", \"url\": \"https://forums.developer.nvidia.com/t/connectx-7-ethernet-linux-support/229698\"}, {\"title\": \"Driver Installation - NVIDIA Docs\", \"url\": \"https://docs.nvidia.com/networking/display/connectx6dxen/driver-installation\"}, {\"title\": \"Nvidia ConnectX4/ConnectX5/ConnectX6/ConnectX7 ...\", \"url\": \"https://support.hpe.com/connect/s/softwaredetails?language=en_US&collectionId=MTX-44718355028f47ce\"}, {\"title\": \"Nvidia-Mellanox ConnectX Networking Adapter/Device Linux Firmware - Lenovo Support US\", \"url\": \"https://support.lenovo.com/us/en/downloads/ds560937-nvidia-mellanox-connectx-networking-adapterdevice-linux-firmware\"}, {\"title\": \"DOCA-Host for Linux Driver Installation - NVIDIA Docs\", \"url\": \"https://docs.nvidia.com/networking/display/connectx8SuperNIC/DOCA-Host-for-Linux-Driver-Installation\"}, {\"title\": \"How to Enable or Disable NVLink | DigitalOcean Documentation\", \"url\": \"https://docs.digitalocean.com/products/paperspace/machines/how-to/manage-nvlink/\"}]}, \"Based on the search results, I found information about ConnectX-7 Linux drivers. The MLNX_OFED package is used for installing and testing the ConnectX-7 adapter card on Linux, and NVIDIA offers a robust and full set of protocol software and driver for Linux with the ConnectX Ethernet family cards through NVIDIA OpenFabrics Enterprise Distribution (MLNX_OFED).\\n\\nHowever, the search results don't contain specific information about NVLink-C2C, whether these drivers are proprietary versus GPL licensed, or details about closed source components. The results focus on driver installation procedures and general driver information for ConnectX-7 adapters. To get more specific information about the licensing and proprietary nature of these drivers, you may need to consult NVIDIA's official documentation on driver licensing or the MLNX_OFED source code repository.\"], \"durationSeconds\": 4.9269497079998255, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 51419,
+        "completion_tokens": 1823,
+        "cached_tokens": 51417,
+        "extra": {
+          "cache_creation_input_tokens": 58,
+          "cache_read_input_tokens": 51417,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 58,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1823,
+              "cache_read_input_tokens": 51417,
+              "cache_creation_input_tokens": 58,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 58
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01PRTqmfAi7sCjubEvP31J4P",
+                "content": [
+                  {
+                    "title": "Linux Driver Installation - NVIDIA Docs",
+                    "url": "https://docs.nvidia.com/networking/display/ConnectX7VPI/Linux+Driver+Installation"
+                  },
+                  {
+                    "title": "Linux Ethernet Drivers - MLNX_EN",
+                    "url": "https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/"
+                  },
+                  {
+                    "title": "Installing ConnectX-7 Firmware — NVIDIA DGX Software for Red Hat Enterprise Linux 8 Installation Guide",
+                    "url": "https://docs.nvidia.com/dgx/dgx-rhel8-install-guide/installing-connectx7-steps.html"
+                  },
+                  {
+                    "title": "Deploying — MNNVL User Guide",
+                    "url": "https://docs.nvidia.com/multi-node-nvlink-systems/mnnvl-user-guide/deploying.html"
+                  },
+                  {
+                    "title": "ConnectX-7 Ethernet Linux Support - Ethernet Adapter Cards - NVIDIA Developer Forums",
+                    "url": "https://forums.developer.nvidia.com/t/connectx-7-ethernet-linux-support/229698"
+                  },
+                  {
+                    "title": "Driver Installation - NVIDIA Docs",
+                    "url": "https://docs.nvidia.com/networking/display/connectx6dxen/driver-installation"
+                  },
+                  {
+                    "title": "Nvidia ConnectX4/ConnectX5/ConnectX6/ConnectX7 ...",
+                    "url": "https://support.hpe.com/connect/s/softwaredetails?language=en_US&collectionId=MTX-44718355028f47ce"
+                  },
+                  {
+                    "title": "Nvidia-Mellanox ConnectX Networking Adapter/Device Linux Firmware - Lenovo Support US",
+                    "url": "https://support.lenovo.com/us/en/downloads/ds560937-nvidia-mellanox-connectx-networking-adapterdevice-linux-firmware"
+                  },
+                  {
+                    "title": "DOCA-Host for Linux Driver Installation - NVIDIA Docs",
+                    "url": "https://docs.nvidia.com/networking/display/connectx8SuperNIC/DOCA-Host-for-Linux-Driver-Installation"
+                  },
+                  {
+                    "title": "How to Enable or Disable NVLink | DigitalOcean Documentation",
+                    "url": "https://docs.digitalocean.com/products/paperspace/machines/how-to/manage-nvlink/"
+                  }
+                ]
+              },
+              "Based on the search results, I found information about ConnectX-7 Linux drivers. The MLNX_OFED package is used for installing and testing the ConnectX-7 adapter card on Linux, and NVIDIA offers a robust and full set of protocol software and driver for Linux with the ConnectX Ethernet family cards through NVIDIA OpenFabrics Enterprise Distribution (MLNX_OFED).\n\nHowever, the search results don't contain specific information about NVLink-C2C, whether these drivers are proprietary versus GPL licensed, or details about closed source components. The results focus on driver installation procedures and general driver information for ConnectX-7 adapters. To get more specific information about the licensing and proprietary nature of these drivers, you may need to consult NVIDIA's official documentation on driver licensing or the MLNX_OFED source code repository."
+            ],
+            "durationSeconds": 4.9269497079998255,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01P6VwCZnaxUGSAguSxQqKJD",
+            "type": "tool_result",
+            "content": "Web search results for query: \"NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source\"\n\nLinks: [{\"title\":\"Linux Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/ConnectX7VPI/Linux+Driver+Installation\"},{\"title\":\"Linux Ethernet Drivers - MLNX_EN\",\"url\":\"https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/\"},{\"title\":\"Installing ConnectX-7 Firmware — NVIDIA DGX Software for Red Hat Enterprise Linux 8 Installation Guide\",\"url\":\"https://docs.nvidia.com/dgx/dgx-rhel8-install-guide/installing-connectx7-steps.html\"},{\"title\":\"Deploying — MNNVL User Guide\",\"url\":\"https://docs.nvidia.com/multi-node-nvlink-systems/mnnvl-user-guide/deploying.html\"},{\"title\":\"ConnectX-7 Ethernet Linux Support - Ethernet Adapter Cards - NVIDIA Developer Forums\",\"url\":\"https://forums.developer.nvidia.com/t/connectx-7-ethernet-linux-support/229698\"},{\"title\":\"Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/connectx6dxen/driver-installation\"},{\"title\":\"Nvidia ConnectX4/ConnectX5/ConnectX6/ConnectX7 ...\",\"url\":\"https://support.hpe.com/connect/s/softwaredetails?language=en_US&collectionId=MTX-44718355028f47ce\"},{\"title\":\"Nvidia-Mellanox ConnectX Networking Adapter/Device Linux Firmware - Lenovo Support US\",\"url\":\"https://support.lenovo.com/us/en/downloads/ds560937-nvidia-mellanox-connectx-networking-adapterdevice-linux-firmware\"},{\"title\":\"DOCA-Host for Linux Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/connectx8SuperNIC/DOCA-Host-for-Linux-Driver-Installation\"},{\"title\":\"How to Enable or Disable NVLink | DigitalOcean Documentation\",\"url\":\"https://docs.digitalocean.com/products/paperspace/machines/how-to/manage-nvlink/\"}]\n\nBased on the search results, I found information about ConnectX-7 Linux drivers. The MLNX_OFED package is used for installing and testing the ConnectX-7 adapter card on Linux, and NVIDIA offers a robust and full set of protocol software and driver for Linux with the ConnectX Ethernet family cards through NVIDIA OpenFabrics Enterprise Distribution (MLNX_OFED).\n\nHowever, the search results don't contain specific information about NVLink-C2C, whether these drivers are proprietary versus GPL licensed, or details about closed source components. The results focus on driver installation procedures and general driver information for ConnectX-7 adapters. To get more specific information about the licensing and proprietary nature of these drivers, you may need to consult NVIDIA's official documentation on driver licensing or the MLNX_OFED source code repository.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01PRTqmfAi7sCjubEvP31J4P",
+                "content": [
+                  {
+                    "title": "Linux Driver Installation - NVIDIA Docs",
+                    "url": "https://docs.nvidia.com/networking/display/ConnectX7VPI/Linux+Driver+Installation"
+                  },
+                  {
+                    "title": "Linux Ethernet Drivers - MLNX_EN",
+                    "url": "https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/"
+                  },
+                  {
+                    "title": "Installing ConnectX-7 Firmware — NVIDIA DGX Software for Red Hat Enterprise Linux 8 Installation Guide",
+                    "url": "https://docs.nvidia.com/dgx/dgx-rhel8-install-guide/installing-connectx7-steps.html"
+                  },
+                  {
+                    "title": "Deploying — MNNVL User Guide",
+                    "url": "https://docs.nvidia.com/multi-node-nvlink-systems/mnnvl-user-guide/deploying.html"
+                  },
+                  {
+                    "title": "ConnectX-7 Ethernet Linux Support - Ethernet Adapter Cards - NVIDIA Developer Forums",
+                    "url": "https://forums.developer.nvidia.com/t/connectx-7-ethernet-linux-support/229698"
+                  },
+                  {
+                    "title": "Driver Installation - NVIDIA Docs",
+                    "url": "https://docs.nvidia.com/networking/display/connectx6dxen/driver-installation"
+                  },
+                  {
+                    "title": "Nvidia ConnectX4/ConnectX5/ConnectX6/ConnectX7 ...",
+                    "url": "https://support.hpe.com/connect/s/softwaredetails?language=en_US&collectionId=MTX-44718355028f47ce"
+                  },
+                  {
+                    "title": "Nvidia-Mellanox ConnectX Networking Adapter/Device Linux Firmware - Lenovo Support US",
+                    "url": "https://support.lenovo.com/us/en/downloads/ds560937-nvidia-mellanox-connectx-networking-adapterdevice-linux-firmware"
+                  },
+                  {
+                    "title": "DOCA-Host for Linux Driver Installation - NVIDIA Docs",
+                    "url": "https://docs.nvidia.com/networking/display/connectx8SuperNIC/DOCA-Host-for-Linux-Driver-Installation"
+                  },
+                  {
+                    "title": "How to Enable or Disable NVLink | DigitalOcean Documentation",
+                    "url": "https://docs.digitalocean.com/products/paperspace/machines/how-to/manage-nvlink/"
+                  }
+                ]
+              },
+              "Based on the search results, I found information about ConnectX-7 Linux drivers. The MLNX_OFED package is used for installing and testing the ConnectX-7 adapter card on Linux, and NVIDIA offers a robust and full set of protocol software and driver for Linux with the ConnectX Ethernet family cards through NVIDIA OpenFabrics Enterprise Distribution (MLNX_OFED).\n\nHowever, the search results don't contain specific information about NVLink-C2C, whether these drivers are proprietary versus GPL licensed, or details about closed source components. The results focus on driver installation procedures and general driver information for ConnectX-7 adapters. To get more specific information about the licensing and proprietary nature of these drivers, you may need to consult NVIDIA's official documentation on driver licensing or the MLNX_OFED source code repository."
+            ],
+            "durationSeconds": 4.9269497079998255,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01P6VwCZnaxUGSAguSxQqKJD",
+            "type": "tool_result",
+            "content": "Web search results for query: \"NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source\"\n\nLinks: [{\"title\":\"Linux Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/ConnectX7VPI/Linux+Driver+Installation\"},{\"title\":\"Linux Ethernet Drivers - MLNX_EN\",\"url\":\"https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/\"},{\"title\":\"Installing ConnectX-7 Firmware — NVIDIA DGX Software for Red Hat Enterprise Linux 8 Installation Guide\",\"url\":\"https://docs.nvidia.com/dgx/dgx-rhel8-install-guide/installing-connectx7-steps.html\"},{\"title\":\"Deploying — MNNVL User Guide\",\"url\":\"https://docs.nvidia.com/multi-node-nvlink-systems/mnnvl-user-guide/deploying.html\"},{\"title\":\"ConnectX-7 Ethernet Linux Support - Ethernet Adapter Cards - NVIDIA Developer Forums\",\"url\":\"https://forums.developer.nvidia.com/t/connectx-7-ethernet-linux-support/229698\"},{\"title\":\"Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/connectx6dxen/driver-installation\"},{\"title\":\"Nvidia ConnectX4/ConnectX5/ConnectX6/ConnectX7 ...\",\"url\":\"https://support.hpe.com/connect/s/softwaredetails?language=en_US&collectionId=MTX-44718355028f47ce\"},{\"title\":\"Nvidia-Mellanox ConnectX Networking Adapter/Device Linux Firmware - Lenovo Support US\",\"url\":\"https://support.lenovo.com/us/en/downloads/ds560937-nvidia-mellanox-connectx-networking-adapterdevice-linux-firmware\"},{\"title\":\"DOCA-Host for Linux Driver Installation - NVIDIA Docs\",\"url\":\"https://docs.nvidia.com/networking/display/connectx8SuperNIC/DOCA-Host-for-Linux-Driver-Installation\"},{\"title\":\"How to Enable or Disable NVLink | DigitalOcean Documentation\",\"url\":\"https://docs.digitalocean.com/products/paperspace/machines/how-to/manage-nvlink/\"}]\n\nBased on the search results, I found information about ConnectX-7 Linux drivers. The MLNX_OFED package is used for installing and testing the ConnectX-7 adapter card on Linux, and NVIDIA offers a robust and full set of protocol software and driver for Linux with the ConnectX Ethernet family cards through NVIDIA OpenFabrics Enterprise Distribution (MLNX_OFED).\n\nHowever, the search results don't contain specific information about NVLink-C2C, whether these drivers are proprietary versus GPL licensed, or details about closed source components. The results focus on driver installation procedures and general driver information for ConnectX-7 adapters. To get more specific information about the licensing and proprietary nature of these drivers, you may need to consult NVIDIA's official documentation on driver licensing or the MLNX_OFED source code repository.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "NVLink-C2C ConnectX-7 proprietary NVIDIA driver Linux GPL closed source"
+        }
+      }
+    },
+    {
+      "step_id": 23,
+      "timestamp": "2026-06-05T08:55:58.027Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_01WDU2cpJb9spcqNU9AQEo4o",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01WDU2cpJb9spcqNU9AQEo4o",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01WDU2cpJb9spcqNU9AQEo4o",
+            "content": "Web search results for query: \"华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN\"\n\nLinks: [{\"title\":\"通过光驱安装openEuler 22.03 LTS - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）02 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1\"},{\"title\":\"本地源配置 - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）04 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/83b066c0\"},{\"title\":\"智谱GLM-5 1 day适配华为昇腾（国产），744B模型单机高效推理，全量保姆配置过程 - 肥仔鱼Liam - 博客园\",\"url\":\"https://www.cnblogs.com/Robert.Yu/p/19636143\"},{\"title\":\"中国AI高速路，华为给出开源开放方案 | 量子位\",\"url\":\"https://www.qbitai.com/2025/09/335890.html\"},{\"title\":\"AI适配：智谱GLM-5 1 day适配华为昇腾800T（国产），744B模型单机高效推理，全量保姆配置过程_人工智能_yumgpkpm-昇腾开源生态专区\",\"url\":\"https://ascendai.csdn.net/69a53cf10a2f6a37c594932c.html\"},{\"title\":\"本地源配置 - Atlas 服务器 openEuler 22.03 LTS SP2 操作系统 安装指南 (Arm) 05 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100376178/7abddf26\"},{\"title\":\"华为计算战略全面启动：鲲鹏+昇腾双引擎，硬件开放软件开源_10%公司_澎湃新闻-The Paper\",\"url\":\"https://m.thepaper.cn/kuaibao_detail.jsp?contid=4468372&from=kuaibao\"},{\"title\":\"华为研发服务器操作系统——openEuler（欧拉系统）安装教程_欧拉操作系统-CSDN博客\",\"url\":\"https://blog.csdn.net/m0_45020691/article/details/139960381\"},{\"title\":\"EulerOS - 维基百科，自由的百科全书\",\"url\":\"https://en.wikipedia.org/wiki/EulerOS\"},{\"title\":\"华为研发服务器操作系统——openEuler（欧拉系统）安装教程 - 网硕互联帮助中心\",\"url\":\"https://www.wsisp.com/helps/24884.html\"}]\n\nBased on the web search results, here's information about the key technologies and components mentioned in your query:\n\n## 华为昇腾 Atlas 服务器和 openEuler 操作系统\n\nAtlas 服务器（如 Atlas 800T A3）推荐使用 openEuler 22.03 LTS ARM64 操作系统，且昇腾驱动仅官方支持 Euler 系列。\n\nopenEuler 是华为的开源社区版本，源代码在 2020 年 1 月发布到 Gitee，之后华为在 2021 年 11 月 9 日将源代码捐赠给开放原子基金会。\n\n## CANN 工具链\n\nCANN 是 NPU 驱动与工具链，例如 CANN 8.0.RC2 版本用于 Atlas 800T A3 服务器的部署。\n\n## 灵衢互联协议（HCCS 的替代技术）\n\n虽然您的查询提到了 HCCS，但最新信息显示 华为的灵衢（UnifiedBus）是面向超节点的互联协议，通过灵衢可以实现计算、存储单元的大带宽和低时延互联。这是华为用于实现 Atlas 系列服务器（如 Atlas 850、Atlas 950）之间高效通信的关键技术。\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN\", \"results\": [{\"tool_use_id\": \"srvtoolu_013fiRtL5AmNqt59o3AFk4og\", \"content\": [{\"title\": \"通过光驱安装openEuler 22.03 LTS - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）02 - 华为\", \"url\": \"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1\"}, {\"title\": \"本地源配置 - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）04 - 华为\", \"url\": \"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/83b066c0\"}, {\"title\": \"智谱GLM-5 1 day适配华为昇腾（国产），744B模型单机高效推理，全量保姆配置过程 - 肥仔鱼Liam - 博客园\", \"url\": \"https://www.cnblogs.com/Robert.Yu/p/19636143\"}, {\"title\": \"中国AI高速路，华为给出开源开放方案 | 量子位\", \"url\": \"https://www.qbitai.com/2025/09/335890.html\"}, {\"title\": \"AI适配：智谱GLM-5 1 day适配华为昇腾800T（国产），744B模型单机高效推理，全量保姆配置过程_人工智能_yumgpkpm-昇腾开源生态专区\", \"url\": \"https://ascendai.csdn.net/69a53cf10a2f6a37c594932c.html\"}, {\"title\": \"本地源配置 - Atlas 服务器 openEuler 22.03 LTS SP2 操作系统 安装指南 (Arm) 05 - 华为\", \"url\": \"https://support.huawei.com/enterprise/zh/doc/EDOC1100376178/7abddf26\"}, {\"title\": \"华为计算战略全面启动：鲲鹏+昇腾双引擎，硬件开放软件开源_10%公司_澎湃新闻-The Paper\", \"url\": \"https://m.thepaper.cn/kuaibao_detail.jsp?contid=4468372&from=kuaibao\"}, {\"title\": \"华为研发服务器操作系统——openEuler（欧拉系统）安装教程_欧拉操作系统-CSDN博客\", \"url\": \"https://blog.csdn.net/m0_45020691/article/details/139960381\"}, {\"title\": \"EulerOS - 维基百科，自由的百科全书\", \"url\": \"https://en.wikipedia.org/wiki/EulerOS\"}, {\"title\": \"华为研发服务器操作系统——openEuler（欧拉系统）安装教程 - 网硕互联帮助中心\", \"url\": \"https://www.wsisp.com/helps/24884.html\"}]}, \"Based on the web search results, here's information about the key technologies and components mentioned in your query:\\n\\n## 华为昇腾 Atlas 服务器和 openEuler 操作系统\\n\\nAtlas 服务器（如 Atlas 800T A3）推荐使用 openEuler 22.03 LTS ARM64 操作系统，且昇腾驱动仅官方支持 Euler 系列。\\n\\nopenEuler 是华为的开源社区版本，源代码在 2020 年 1 月发布到 Gitee，之后华为在 2021 年 11 月 9 日将源代码捐赠给开放原子基金会。\\n\\n## CANN 工具链\\n\\nCANN 是 NPU 驱动与工具链，例如 CANN 8.0.RC2 版本用于 Atlas 800T A3 服务器的部署。\\n\\n## 灵衢互联协议（HCCS 的替代技术）\\n\\n虽然您的查询提到了 HCCS，但最新信息显示 华为的灵衢（UnifiedBus）是面向超节点的互联协议，通过灵衢可以实现计算、存储单元的大带宽和低时延互联。这是华为用于实现 Atlas 系列服务器（如 Atlas 850、Atlas 950）之间高效通信的关键技术。\"], \"durationSeconds\": 6.965140957999974, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 51419,
+        "completion_tokens": 1823,
+        "cached_tokens": 51417,
+        "extra": {
+          "cache_creation_input_tokens": 58,
+          "cache_read_input_tokens": 51417,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 58,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1823,
+              "cache_read_input_tokens": 51417,
+              "cache_creation_input_tokens": 58,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 58
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_013fiRtL5AmNqt59o3AFk4og",
+                "content": [
+                  {
+                    "title": "通过光驱安装openEuler 22.03 LTS - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）02 - 华为",
+                    "url": "https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1"
+                  },
+                  {
+                    "title": "本地源配置 - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）04 - 华为",
+                    "url": "https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/83b066c0"
+                  },
+                  {
+                    "title": "智谱GLM-5 1 day适配华为昇腾（国产），744B模型单机高效推理，全量保姆配置过程 - 肥仔鱼Liam - 博客园",
+                    "url": "https://www.cnblogs.com/Robert.Yu/p/19636143"
+                  },
+                  {
+                    "title": "中国AI高速路，华为给出开源开放方案 | 量子位",
+                    "url": "https://www.qbitai.com/2025/09/335890.html"
+                  },
+                  {
+                    "title": "AI适配：智谱GLM-5 1 day适配华为昇腾800T（国产），744B模型单机高效推理，全量保姆配置过程_人工智能_yumgpkpm-昇腾开源生态专区",
+                    "url": "https://ascendai.csdn.net/69a53cf10a2f6a37c594932c.html"
+                  },
+                  {
+                    "title": "本地源配置 - Atlas 服务器 openEuler 22.03 LTS SP2 操作系统 安装指南 (Arm) 05 - 华为",
+                    "url": "https://support.huawei.com/enterprise/zh/doc/EDOC1100376178/7abddf26"
+                  },
+                  {
+                    "title": "华为计算战略全面启动：鲲鹏+昇腾双引擎，硬件开放软件开源_10%公司_澎湃新闻-The Paper",
+                    "url": "https://m.thepaper.cn/kuaibao_detail.jsp?contid=4468372&from=kuaibao"
+                  },
+                  {
+                    "title": "华为研发服务器操作系统——openEuler（欧拉系统）安装教程_欧拉操作系统-CSDN博客",
+                    "url": "https://blog.csdn.net/m0_45020691/article/details/139960381"
+                  },
+                  {
+                    "title": "EulerOS - 维基百科，自由的百科全书",
+                    "url": "https://en.wikipedia.org/wiki/EulerOS"
+                  },
+                  {
+                    "title": "华为研发服务器操作系统——openEuler（欧拉系统）安装教程 - 网硕互联帮助中心",
+                    "url": "https://www.wsisp.com/helps/24884.html"
+                  }
+                ]
+              },
+              "Based on the web search results, here's information about the key technologies and components mentioned in your query:\n\n## 华为昇腾 Atlas 服务器和 openEuler 操作系统\n\nAtlas 服务器（如 Atlas 800T A3）推荐使用 openEuler 22.03 LTS ARM64 操作系统，且昇腾驱动仅官方支持 Euler 系列。\n\nopenEuler 是华为的开源社区版本，源代码在 2020 年 1 月发布到 Gitee，之后华为在 2021 年 11 月 9 日将源代码捐赠给开放原子基金会。\n\n## CANN 工具链\n\nCANN 是 NPU 驱动与工具链，例如 CANN 8.0.RC2 版本用于 Atlas 800T A3 服务器的部署。\n\n## 灵衢互联协议（HCCS 的替代技术）\n\n虽然您的查询提到了 HCCS，但最新信息显示 华为的灵衢（UnifiedBus）是面向超节点的互联协议，通过灵衢可以实现计算、存储单元的大带宽和低时延互联。这是华为用于实现 Atlas 系列服务器（如 Atlas 850、Atlas 950）之间高效通信的关键技术。"
+            ],
+            "durationSeconds": 6.965140957999974,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01WDU2cpJb9spcqNU9AQEo4o",
+            "type": "tool_result",
+            "content": "Web search results for query: \"华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN\"\n\nLinks: [{\"title\":\"通过光驱安装openEuler 22.03 LTS - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）02 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1\"},{\"title\":\"本地源配置 - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）04 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/83b066c0\"},{\"title\":\"智谱GLM-5 1 day适配华为昇腾（国产），744B模型单机高效推理，全量保姆配置过程 - 肥仔鱼Liam - 博客园\",\"url\":\"https://www.cnblogs.com/Robert.Yu/p/19636143\"},{\"title\":\"中国AI高速路，华为给出开源开放方案 | 量子位\",\"url\":\"https://www.qbitai.com/2025/09/335890.html\"},{\"title\":\"AI适配：智谱GLM-5 1 day适配华为昇腾800T（国产），744B模型单机高效推理，全量保姆配置过程_人工智能_yumgpkpm-昇腾开源生态专区\",\"url\":\"https://ascendai.csdn.net/69a53cf10a2f6a37c594932c.html\"},{\"title\":\"本地源配置 - Atlas 服务器 openEuler 22.03 LTS SP2 操作系统 安装指南 (Arm) 05 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100376178/7abddf26\"},{\"title\":\"华为计算战略全面启动：鲲鹏+昇腾双引擎，硬件开放软件开源_10%公司_澎湃新闻-The Paper\",\"url\":\"https://m.thepaper.cn/kuaibao_detail.jsp?contid=4468372&from=kuaibao\"},{\"title\":\"华为研发服务器操作系统——openEuler（欧拉系统）安装教程_欧拉操作系统-CSDN博客\",\"url\":\"https://blog.csdn.net/m0_45020691/article/details/139960381\"},{\"title\":\"EulerOS - 维基百科，自由的百科全书\",\"url\":\"https://en.wikipedia.org/wiki/EulerOS\"},{\"title\":\"华为研发服务器操作系统——openEuler（欧拉系统）安装教程 - 网硕互联帮助中心\",\"url\":\"https://www.wsisp.com/helps/24884.html\"}]\n\nBased on the web search results, here's information about the key technologies and components mentioned in your query:\n\n## 华为昇腾 Atlas 服务器和 openEuler 操作系统\n\nAtlas 服务器（如 Atlas 800T A3）推荐使用 openEuler 22.03 LTS ARM64 操作系统，且昇腾驱动仅官方支持 Euler 系列。\n\nopenEuler 是华为的开源社区版本，源代码在 2020 年 1 月发布到 Gitee，之后华为在 2021 年 11 月 9 日将源代码捐赠给开放原子基金会。\n\n## CANN 工具链\n\nCANN 是 NPU 驱动与工具链，例如 CANN 8.0.RC2 版本用于 Atlas 800T A3 服务器的部署。\n\n## 灵衢互联协议（HCCS 的替代技术）\n\n虽然您的查询提到了 HCCS，但最新信息显示 华为的灵衢（UnifiedBus）是面向超节点的互联协议，通过灵衢可以实现计算、存储单元的大带宽和低时延互联。这是华为用于实现 Atlas 系列服务器（如 Atlas 850、Atlas 950）之间高效通信的关键技术。\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_013fiRtL5AmNqt59o3AFk4og",
+                "content": [
+                  {
+                    "title": "通过光驱安装openEuler 22.03 LTS - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）02 - 华为",
+                    "url": "https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1"
+                  },
+                  {
+                    "title": "本地源配置 - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）04 - 华为",
+                    "url": "https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/83b066c0"
+                  },
+                  {
+                    "title": "智谱GLM-5 1 day适配华为昇腾（国产），744B模型单机高效推理，全量保姆配置过程 - 肥仔鱼Liam - 博客园",
+                    "url": "https://www.cnblogs.com/Robert.Yu/p/19636143"
+                  },
+                  {
+                    "title": "中国AI高速路，华为给出开源开放方案 | 量子位",
+                    "url": "https://www.qbitai.com/2025/09/335890.html"
+                  },
+                  {
+                    "title": "AI适配：智谱GLM-5 1 day适配华为昇腾800T（国产），744B模型单机高效推理，全量保姆配置过程_人工智能_yumgpkpm-昇腾开源生态专区",
+                    "url": "https://ascendai.csdn.net/69a53cf10a2f6a37c594932c.html"
+                  },
+                  {
+                    "title": "本地源配置 - Atlas 服务器 openEuler 22.03 LTS SP2 操作系统 安装指南 (Arm) 05 - 华为",
+                    "url": "https://support.huawei.com/enterprise/zh/doc/EDOC1100376178/7abddf26"
+                  },
+                  {
+                    "title": "华为计算战略全面启动：鲲鹏+昇腾双引擎，硬件开放软件开源_10%公司_澎湃新闻-The Paper",
+                    "url": "https://m.thepaper.cn/kuaibao_detail.jsp?contid=4468372&from=kuaibao"
+                  },
+                  {
+                    "title": "华为研发服务器操作系统——openEuler（欧拉系统）安装教程_欧拉操作系统-CSDN博客",
+                    "url": "https://blog.csdn.net/m0_45020691/article/details/139960381"
+                  },
+                  {
+                    "title": "EulerOS - 维基百科，自由的百科全书",
+                    "url": "https://en.wikipedia.org/wiki/EulerOS"
+                  },
+                  {
+                    "title": "华为研发服务器操作系统——openEuler（欧拉系统）安装教程 - 网硕互联帮助中心",
+                    "url": "https://www.wsisp.com/helps/24884.html"
+                  }
+                ]
+              },
+              "Based on the web search results, here's information about the key technologies and components mentioned in your query:\n\n## 华为昇腾 Atlas 服务器和 openEuler 操作系统\n\nAtlas 服务器（如 Atlas 800T A3）推荐使用 openEuler 22.03 LTS ARM64 操作系统，且昇腾驱动仅官方支持 Euler 系列。\n\nopenEuler 是华为的开源社区版本，源代码在 2020 年 1 月发布到 Gitee，之后华为在 2021 年 11 月 9 日将源代码捐赠给开放原子基金会。\n\n## CANN 工具链\n\nCANN 是 NPU 驱动与工具链，例如 CANN 8.0.RC2 版本用于 Atlas 800T A3 服务器的部署。\n\n## 灵衢互联协议（HCCS 的替代技术）\n\n虽然您的查询提到了 HCCS，但最新信息显示 华为的灵衢（UnifiedBus）是面向超节点的互联协议，通过灵衢可以实现计算、存储单元的大带宽和低时延互联。这是华为用于实现 Atlas 系列服务器（如 Atlas 850、Atlas 950）之间高效通信的关键技术。"
+            ],
+            "durationSeconds": 6.965140957999974,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01WDU2cpJb9spcqNU9AQEo4o",
+            "type": "tool_result",
+            "content": "Web search results for query: \"华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN\"\n\nLinks: [{\"title\":\"通过光驱安装openEuler 22.03 LTS - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）02 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1\"},{\"title\":\"本地源配置 - Atlas 服务器 openEuler 22.03 LTS 操作系统 安装指导书（Arm）04 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/83b066c0\"},{\"title\":\"智谱GLM-5 1 day适配华为昇腾（国产），744B模型单机高效推理，全量保姆配置过程 - 肥仔鱼Liam - 博客园\",\"url\":\"https://www.cnblogs.com/Robert.Yu/p/19636143\"},{\"title\":\"中国AI高速路，华为给出开源开放方案 | 量子位\",\"url\":\"https://www.qbitai.com/2025/09/335890.html\"},{\"title\":\"AI适配：智谱GLM-5 1 day适配华为昇腾800T（国产），744B模型单机高效推理，全量保姆配置过程_人工智能_yumgpkpm-昇腾开源生态专区\",\"url\":\"https://ascendai.csdn.net/69a53cf10a2f6a37c594932c.html\"},{\"title\":\"本地源配置 - Atlas 服务器 openEuler 22.03 LTS SP2 操作系统 安装指南 (Arm) 05 - 华为\",\"url\":\"https://support.huawei.com/enterprise/zh/doc/EDOC1100376178/7abddf26\"},{\"title\":\"华为计算战略全面启动：鲲鹏+昇腾双引擎，硬件开放软件开源_10%公司_澎湃新闻-The Paper\",\"url\":\"https://m.thepaper.cn/kuaibao_detail.jsp?contid=4468372&from=kuaibao\"},{\"title\":\"华为研发服务器操作系统——openEuler（欧拉系统）安装教程_欧拉操作系统-CSDN博客\",\"url\":\"https://blog.csdn.net/m0_45020691/article/details/139960381\"},{\"title\":\"EulerOS - 维基百科，自由的百科全书\",\"url\":\"https://en.wikipedia.org/wiki/EulerOS\"},{\"title\":\"华为研发服务器操作系统——openEuler（欧拉系统）安装教程 - 网硕互联帮助中心\",\"url\":\"https://www.wsisp.com/helps/24884.html\"}]\n\nBased on the web search results, here's information about the key technologies and components mentioned in your query:\n\n## 华为昇腾 Atlas 服务器和 openEuler 操作系统\n\nAtlas 服务器（如 Atlas 800T A3）推荐使用 openEuler 22.03 LTS ARM64 操作系统，且昇腾驱动仅官方支持 Euler 系列。\n\nopenEuler 是华为的开源社区版本，源代码在 2020 年 1 月发布到 Gitee，之后华为在 2021 年 11 月 9 日将源代码捐赠给开放原子基金会。\n\n## CANN 工具链\n\nCANN 是 NPU 驱动与工具链，例如 CANN 8.0.RC2 版本用于 Atlas 800T A3 服务器的部署。\n\n## 灵衢互联协议（HCCS 的替代技术）\n\n虽然您的查询提到了 HCCS，但最新信息显示 华为的灵衢（UnifiedBus）是面向超节点的互联协议，通过灵衢可以实现计算、存储单元的大带宽和低时延互联。这是华为用于实现 Atlas 系列服务器（如 Atlas 850、Atlas 950）之间高效通信的关键技术。\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "华为昇腾 Atlas 服务器 操作系统 openEuler 欧拉 HCCS 互联 CANN"
+        }
+      }
+    },
+    {
+      "step_id": 24,
+      "timestamp": "2026-06-05T08:55:58.968Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_011fPirFf7gKaC1RTp5wz9Y7",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_011fPirFf7gKaC1RTp5wz9Y7",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_011fPirFf7gKaC1RTp5wz9Y7",
+            "content": "Web search results for query: \"昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联\"\n\nLinks: [{\"title\":\"一篇文章说明常见的AI芯片高速互连方案 | ScenSmart一站式智能制造平台|OEM|ODM|行业方案\",\"url\":\"https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/\"},{\"title\":\"NVLink、HCCL及传统PCIe传输对比分析报告 - 知乎\",\"url\":\"https://zhuanlan.zhihu.com/p/1907189956348220034\"},{\"title\":\"英伟达 vs. 华为海思：GPU性能一览_910b-CSDN博客\",\"url\":\"https://blog.csdn.net/m0_71832273/article/details/137377930\"},{\"title\":\"华为昇腾 910B GPU - fengjian1585 - 博客园\",\"url\":\"https://www.cnblogs.com/fengjian2016/p/18767859\"},{\"title\":\"一文看懂华为昇腾芯片-腾讯新闻 - QQ News\",\"url\":\"https://news.qq.com/rain/a/20250604A07ITG00\"},{\"title\":\"一文看懂华为昇腾芯片|芯片|华为|AI_新浪科技_新浪网\",\"url\":\"https://finance.sina.com.cn/tech/digi/2025-12-01/doc-infzeece6200257.shtml\"},{\"title\":\"一文看懂华为昇腾芯片-36氪\",\"url\":\"https://36kr.com/p/3322025045829894\"},{\"title\":\"其实华为在AI芯片上并不比英伟达差_天极大咖秀\",\"url\":\"https://we.yesky.com/blog/313931\"},{\"title\":\"一文看懂华为昇腾芯片 - 知乎\",\"url\":\"https://zhuanlan.zhihu.com/p/1913660152676094004\"},{\"title\":\"GPU 云服务器的软件系统设计和实践-51CTO.COM\",\"url\":\"https://server.51cto.com/article/809773.html\"}]\n\nBased on the search results, here's information about the Ascend 910B inter-chip interconnect and HCCS technology compared to NVLink:\n\n## HCCS Overview\n\nHCCS (High-speed Custom Communication System) is a high-speed interconnect technology designed by Huawei for its Ascend series AI processors.\n\n## Performance Comparison with NVLink\n\nFor 8-card A800 and 910B modules, the 910B HCCS total bandwidth is 392GB/s, which is comparable to the A800 NVLink (400GB/s). However, there are important differences in implementation.\n\nThe Huawei HCCS (Ascend 910B) provides 392 GB/s of bidirectional HCCS bandwidth per NPU module. In contrast, NVLink has bandwidth that is notably ahead in single accelerator direct interconnection.\n\n## Technical Specifications for Ascend 910B\n\nThe Ascend 910B NPU module features seven bidirectional HCCS connections, with each link having a bandwidth of 56 GB/s. On each 910B board with 8 NPUs, the total HCCS bandwidth among the 8 NPUs is 392 GB/s, meaning the bandwidth between two NPUs on the same board is 392/7 = 56 GB/s.\n\n## Strategic Positioning\n\n\"HCCS is Huawei's self-developed high-speed interconnect interface that is targeted at NVIDIA's NVLINK, capable of providing consistent memory access across cores, devices, and clusters, with notable advantages in single-link unidirectional/bidirectional interconnect bandwidth to effectively improve the collaborative training capability of multiple AI chips.\"\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联\", \"results\": [{\"tool_use_id\": \"srvtoolu_01D88WgXDFASSnrtqmEuKXLZ\", \"content\": [{\"title\": \"一篇文章说明常见的AI芯片高速互连方案 | ScenSmart一站式智能制造平台|OEM|ODM|行业方案\", \"url\": \"https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/\"}, {\"title\": \"NVLink、HCCL及传统PCIe传输对比分析报告 - 知乎\", \"url\": \"https://zhuanlan.zhihu.com/p/1907189956348220034\"}, {\"title\": \"英伟达 vs. 华为海思：GPU性能一览_910b-CSDN博客\", \"url\": \"https://blog.csdn.net/m0_71832273/article/details/137377930\"}, {\"title\": \"华为昇腾 910B GPU - fengjian1585 - 博客园\", \"url\": \"https://www.cnblogs.com/fengjian2016/p/18767859\"}, {\"title\": \"一文看懂华为昇腾芯片-腾讯新闻 - QQ News\", \"url\": \"https://news.qq.com/rain/a/20250604A07ITG00\"}, {\"title\": \"一文看懂华为昇腾芯片|芯片|华为|AI_新浪科技_新浪网\", \"url\": \"https://finance.sina.com.cn/tech/digi/2025-12-01/doc-infzeece6200257.shtml\"}, {\"title\": \"一文看懂华为昇腾芯片-36氪\", \"url\": \"https://36kr.com/p/3322025045829894\"}, {\"title\": \"其实华为在AI芯片上并不比英伟达差_天极大咖秀\", \"url\": \"https://we.yesky.com/blog/313931\"}, {\"title\": \"一文看懂华为昇腾芯片 - 知乎\", \"url\": \"https://zhuanlan.zhihu.com/p/1913660152676094004\"}, {\"title\": \"GPU 云服务器的软件系统设计和实践-51CTO.COM\", \"url\": \"https://server.51cto.com/article/809773.html\"}]}, \"Based on the search results, here's information about the Ascend 910B inter-chip interconnect and HCCS technology compared to NVLink:\\n\\n## HCCS Overview\\n\\nHCCS (High-speed Custom Communication System) is a high-speed interconnect technology designed by Huawei for its Ascend series AI processors.\\n\\n## Performance Comparison with NVLink\\n\\nFor 8-card A800 and 910B modules, the 910B HCCS total bandwidth is 392GB/s, which is comparable to the A800 NVLink (400GB/s). However, there are important differences in implementation.\\n\\nThe Huawei HCCS (Ascend 910B) provides 392 GB/s of bidirectional HCCS bandwidth per NPU module. In contrast, NVLink has bandwidth that is notably ahead in single accelerator direct interconnection.\\n\\n## Technical Specifications for Ascend 910B\\n\\nThe Ascend 910B NPU module features seven bidirectional HCCS connections, with each link having a bandwidth of 56 GB/s. On each 910B board with 8 NPUs, the total HCCS bandwidth among the 8 NPUs is 392 GB/s, meaning the bandwidth between two NPUs on the same board is 392/7 = 56 GB/s.\\n\\n## Strategic Positioning\\n\\n\\\"HCCS is Huawei's self-developed high-speed interconnect interface that is targeted at NVIDIA's NVLINK, capable of providing consistent memory access across cores, devices, and clusters, with notable advantages in single-link unidirectional/bidirectional interconnect bandwidth to effectively improve the collaborative training capability of multiple AI chips.\\\"\"], \"durationSeconds\": 7.38876620899979, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 51419,
+        "completion_tokens": 1823,
+        "cached_tokens": 51417,
+        "extra": {
+          "cache_creation_input_tokens": 58,
+          "cache_read_input_tokens": 51417,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 58,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1823,
+              "cache_read_input_tokens": 51417,
+              "cache_creation_input_tokens": 58,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 58
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01D88WgXDFASSnrtqmEuKXLZ",
+                "content": [
+                  {
+                    "title": "一篇文章说明常见的AI芯片高速互连方案 | ScenSmart一站式智能制造平台|OEM|ODM|行业方案",
+                    "url": "https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/"
+                  },
+                  {
+                    "title": "NVLink、HCCL及传统PCIe传输对比分析报告 - 知乎",
+                    "url": "https://zhuanlan.zhihu.com/p/1907189956348220034"
+                  },
+                  {
+                    "title": "英伟达 vs. 华为海思：GPU性能一览_910b-CSDN博客",
+                    "url": "https://blog.csdn.net/m0_71832273/article/details/137377930"
+                  },
+                  {
+                    "title": "华为昇腾 910B GPU - fengjian1585 - 博客园",
+                    "url": "https://www.cnblogs.com/fengjian2016/p/18767859"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片-腾讯新闻 - QQ News",
+                    "url": "https://news.qq.com/rain/a/20250604A07ITG00"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片|芯片|华为|AI_新浪科技_新浪网",
+                    "url": "https://finance.sina.com.cn/tech/digi/2025-12-01/doc-infzeece6200257.shtml"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片-36氪",
+                    "url": "https://36kr.com/p/3322025045829894"
+                  },
+                  {
+                    "title": "其实华为在AI芯片上并不比英伟达差_天极大咖秀",
+                    "url": "https://we.yesky.com/blog/313931"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片 - 知乎",
+                    "url": "https://zhuanlan.zhihu.com/p/1913660152676094004"
+                  },
+                  {
+                    "title": "GPU 云服务器的软件系统设计和实践-51CTO.COM",
+                    "url": "https://server.51cto.com/article/809773.html"
+                  }
+                ]
+              },
+              "Based on the search results, here's information about the Ascend 910B inter-chip interconnect and HCCS technology compared to NVLink:\n\n## HCCS Overview\n\nHCCS (High-speed Custom Communication System) is a high-speed interconnect technology designed by Huawei for its Ascend series AI processors.\n\n## Performance Comparison with NVLink\n\nFor 8-card A800 and 910B modules, the 910B HCCS total bandwidth is 392GB/s, which is comparable to the A800 NVLink (400GB/s). However, there are important differences in implementation.\n\nThe Huawei HCCS (Ascend 910B) provides 392 GB/s of bidirectional HCCS bandwidth per NPU module. In contrast, NVLink has bandwidth that is notably ahead in single accelerator direct interconnection.\n\n## Technical Specifications for Ascend 910B\n\nThe Ascend 910B NPU module features seven bidirectional HCCS connections, with each link having a bandwidth of 56 GB/s. On each 910B board with 8 NPUs, the total HCCS bandwidth among the 8 NPUs is 392 GB/s, meaning the bandwidth between two NPUs on the same board is 392/7 = 56 GB/s.\n\n## Strategic Positioning\n\n\"HCCS is Huawei's self-developed high-speed interconnect interface that is targeted at NVIDIA's NVLINK, capable of providing consistent memory access across cores, devices, and clusters, with notable advantages in single-link unidirectional/bidirectional interconnect bandwidth to effectively improve the collaborative training capability of multiple AI chips.\""
+            ],
+            "durationSeconds": 7.38876620899979,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_011fPirFf7gKaC1RTp5wz9Y7",
+            "type": "tool_result",
+            "content": "Web search results for query: \"昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联\"\n\nLinks: [{\"title\":\"一篇文章说明常见的AI芯片高速互连方案 | ScenSmart一站式智能制造平台|OEM|ODM|行业方案\",\"url\":\"https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/\"},{\"title\":\"NVLink、HCCL及传统PCIe传输对比分析报告 - 知乎\",\"url\":\"https://zhuanlan.zhihu.com/p/1907189956348220034\"},{\"title\":\"英伟达 vs. 华为海思：GPU性能一览_910b-CSDN博客\",\"url\":\"https://blog.csdn.net/m0_71832273/article/details/137377930\"},{\"title\":\"华为昇腾 910B GPU - fengjian1585 - 博客园\",\"url\":\"https://www.cnblogs.com/fengjian2016/p/18767859\"},{\"title\":\"一文看懂华为昇腾芯片-腾讯新闻 - QQ News\",\"url\":\"https://news.qq.com/rain/a/20250604A07ITG00\"},{\"title\":\"一文看懂华为昇腾芯片|芯片|华为|AI_新浪科技_新浪网\",\"url\":\"https://finance.sina.com.cn/tech/digi/2025-12-01/doc-infzeece6200257.shtml\"},{\"title\":\"一文看懂华为昇腾芯片-36氪\",\"url\":\"https://36kr.com/p/3322025045829894\"},{\"title\":\"其实华为在AI芯片上并不比英伟达差_天极大咖秀\",\"url\":\"https://we.yesky.com/blog/313931\"},{\"title\":\"一文看懂华为昇腾芯片 - 知乎\",\"url\":\"https://zhuanlan.zhihu.com/p/1913660152676094004\"},{\"title\":\"GPU 云服务器的软件系统设计和实践-51CTO.COM\",\"url\":\"https://server.51cto.com/article/809773.html\"}]\n\nBased on the search results, here's information about the Ascend 910B inter-chip interconnect and HCCS technology compared to NVLink:\n\n## HCCS Overview\n\nHCCS (High-speed Custom Communication System) is a high-speed interconnect technology designed by Huawei for its Ascend series AI processors.\n\n## Performance Comparison with NVLink\n\nFor 8-card A800 and 910B modules, the 910B HCCS total bandwidth is 392GB/s, which is comparable to the A800 NVLink (400GB/s). However, there are important differences in implementation.\n\nThe Huawei HCCS (Ascend 910B) provides 392 GB/s of bidirectional HCCS bandwidth per NPU module. In contrast, NVLink has bandwidth that is notably ahead in single accelerator direct interconnection.\n\n## Technical Specifications for Ascend 910B\n\nThe Ascend 910B NPU module features seven bidirectional HCCS connections, with each link having a bandwidth of 56 GB/s. On each 910B board with 8 NPUs, the total HCCS bandwidth among the 8 NPUs is 392 GB/s, meaning the bandwidth between two NPUs on the same board is 392/7 = 56 GB/s.\n\n## Strategic Positioning\n\n\"HCCS is Huawei's self-developed high-speed interconnect interface that is targeted at NVIDIA's NVLINK, capable of providing consistent memory access across cores, devices, and clusters, with notable advantages in single-link unidirectional/bidirectional interconnect bandwidth to effectively improve the collaborative training capability of multiple AI chips.\"\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01D88WgXDFASSnrtqmEuKXLZ",
+                "content": [
+                  {
+                    "title": "一篇文章说明常见的AI芯片高速互连方案 | ScenSmart一站式智能制造平台|OEM|ODM|行业方案",
+                    "url": "https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/"
+                  },
+                  {
+                    "title": "NVLink、HCCL及传统PCIe传输对比分析报告 - 知乎",
+                    "url": "https://zhuanlan.zhihu.com/p/1907189956348220034"
+                  },
+                  {
+                    "title": "英伟达 vs. 华为海思：GPU性能一览_910b-CSDN博客",
+                    "url": "https://blog.csdn.net/m0_71832273/article/details/137377930"
+                  },
+                  {
+                    "title": "华为昇腾 910B GPU - fengjian1585 - 博客园",
+                    "url": "https://www.cnblogs.com/fengjian2016/p/18767859"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片-腾讯新闻 - QQ News",
+                    "url": "https://news.qq.com/rain/a/20250604A07ITG00"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片|芯片|华为|AI_新浪科技_新浪网",
+                    "url": "https://finance.sina.com.cn/tech/digi/2025-12-01/doc-infzeece6200257.shtml"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片-36氪",
+                    "url": "https://36kr.com/p/3322025045829894"
+                  },
+                  {
+                    "title": "其实华为在AI芯片上并不比英伟达差_天极大咖秀",
+                    "url": "https://we.yesky.com/blog/313931"
+                  },
+                  {
+                    "title": "一文看懂华为昇腾芯片 - 知乎",
+                    "url": "https://zhuanlan.zhihu.com/p/1913660152676094004"
+                  },
+                  {
+                    "title": "GPU 云服务器的软件系统设计和实践-51CTO.COM",
+                    "url": "https://server.51cto.com/article/809773.html"
+                  }
+                ]
+              },
+              "Based on the search results, here's information about the Ascend 910B inter-chip interconnect and HCCS technology compared to NVLink:\n\n## HCCS Overview\n\nHCCS (High-speed Custom Communication System) is a high-speed interconnect technology designed by Huawei for its Ascend series AI processors.\n\n## Performance Comparison with NVLink\n\nFor 8-card A800 and 910B modules, the 910B HCCS total bandwidth is 392GB/s, which is comparable to the A800 NVLink (400GB/s). However, there are important differences in implementation.\n\nThe Huawei HCCS (Ascend 910B) provides 392 GB/s of bidirectional HCCS bandwidth per NPU module. In contrast, NVLink has bandwidth that is notably ahead in single accelerator direct interconnection.\n\n## Technical Specifications for Ascend 910B\n\nThe Ascend 910B NPU module features seven bidirectional HCCS connections, with each link having a bandwidth of 56 GB/s. On each 910B board with 8 NPUs, the total HCCS bandwidth among the 8 NPUs is 392 GB/s, meaning the bandwidth between two NPUs on the same board is 392/7 = 56 GB/s.\n\n## Strategic Positioning\n\n\"HCCS is Huawei's self-developed high-speed interconnect interface that is targeted at NVIDIA's NVLINK, capable of providing consistent memory access across cores, devices, and clusters, with notable advantages in single-link unidirectional/bidirectional interconnect bandwidth to effectively improve the collaborative training capability of multiple AI chips.\""
+            ],
+            "durationSeconds": 7.38876620899979,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_011fPirFf7gKaC1RTp5wz9Y7",
+            "type": "tool_result",
+            "content": "Web search results for query: \"昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联\"\n\nLinks: [{\"title\":\"一篇文章说明常见的AI芯片高速互连方案 | ScenSmart一站式智能制造平台|OEM|ODM|行业方案\",\"url\":\"https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/\"},{\"title\":\"NVLink、HCCL及传统PCIe传输对比分析报告 - 知乎\",\"url\":\"https://zhuanlan.zhihu.com/p/1907189956348220034\"},{\"title\":\"英伟达 vs. 华为海思：GPU性能一览_910b-CSDN博客\",\"url\":\"https://blog.csdn.net/m0_71832273/article/details/137377930\"},{\"title\":\"华为昇腾 910B GPU - fengjian1585 - 博客园\",\"url\":\"https://www.cnblogs.com/fengjian2016/p/18767859\"},{\"title\":\"一文看懂华为昇腾芯片-腾讯新闻 - QQ News\",\"url\":\"https://news.qq.com/rain/a/20250604A07ITG00\"},{\"title\":\"一文看懂华为昇腾芯片|芯片|华为|AI_新浪科技_新浪网\",\"url\":\"https://finance.sina.com.cn/tech/digi/2025-12-01/doc-infzeece6200257.shtml\"},{\"title\":\"一文看懂华为昇腾芯片-36氪\",\"url\":\"https://36kr.com/p/3322025045829894\"},{\"title\":\"其实华为在AI芯片上并不比英伟达差_天极大咖秀\",\"url\":\"https://we.yesky.com/blog/313931\"},{\"title\":\"一文看懂华为昇腾芯片 - 知乎\",\"url\":\"https://zhuanlan.zhihu.com/p/1913660152676094004\"},{\"title\":\"GPU 云服务器的软件系统设计和实践-51CTO.COM\",\"url\":\"https://server.51cto.com/article/809773.html\"}]\n\nBased on the search results, here's information about the Ascend 910B inter-chip interconnect and HCCS technology compared to NVLink:\n\n## HCCS Overview\n\nHCCS (High-speed Custom Communication System) is a high-speed interconnect technology designed by Huawei for its Ascend series AI processors.\n\n## Performance Comparison with NVLink\n\nFor 8-card A800 and 910B modules, the 910B HCCS total bandwidth is 392GB/s, which is comparable to the A800 NVLink (400GB/s). However, there are important differences in implementation.\n\nThe Huawei HCCS (Ascend 910B) provides 392 GB/s of bidirectional HCCS bandwidth per NPU module. In contrast, NVLink has bandwidth that is notably ahead in single accelerator direct interconnection.\n\n## Technical Specifications for Ascend 910B\n\nThe Ascend 910B NPU module features seven bidirectional HCCS connections, with each link having a bandwidth of 56 GB/s. On each 910B board with 8 NPUs, the total HCCS bandwidth among the 8 NPUs is 392 GB/s, meaning the bandwidth between two NPUs on the same board is 392/7 = 56 GB/s.\n\n## Strategic Positioning\n\n\"HCCS is Huawei's self-developed high-speed interconnect interface that is targeted at NVIDIA's NVLINK, capable of providing consistent memory access across cores, devices, and clusters, with notable advantages in single-link unidirectional/bidirectional interconnect bandwidth to effectively improve the collaborative training capability of multiple AI chips.\"\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "昇腾 910B 片间互联 HCCS 对标 NVLink 华为 高速互联"
+        }
+      }
+    },
+    {
+      "step_id": 25,
+      "timestamp": "2026-06-05T08:56:00.014Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_01Ncqwye54JLEf5bmb29u5QC",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Ncqwye54JLEf5bmb29u5QC",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Ncqwye54JLEf5bmb29u5QC",
+            "content": "Web search results for query: \"鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证\"\n\nLinks: [{\"title\":\"Linux kernel licensing rules — The Linux Kernel documentation\",\"url\":\"https://docs.kernel.org/process/license-rules.html\"},{\"title\":\"Digging into Harmony OS Internals | by Jasper Morgan | Snapp Mobile | Medium\",\"url\":\"https://medium.com/snapp-mobile/digging-into-harmony-os-internals-fb48d822e65a\"},{\"title\":\"Software:HarmonyOS kernel - HandWiki\",\"url\":\"https://handwiki.org/wiki/Software:HarmonyOS_kernel\"},{\"title\":\"HongMeng Kernel - Wikipedia\",\"url\":\"https://en.wikipedia.org/wiki/HongMeng_Kernel\"},{\"title\":\"Licensing - Linux Device Drivers Development [Book]\",\"url\":\"https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/c63c2b6a-1cdd-4acc-906c-fe4bf405c563.xhtml\"},{\"title\":\"The GPL and modules (Linus Torvalds; Theodore Ts'o; Al Viro)\",\"url\":\"https://yarchive.net/comp/linux/gpl_modules.html\"},{\"title\":\"Microkernel Goes General: Performance and Compatibility ...\",\"url\":\"https://www.usenix.org/system/files/osdi24-chen-haibo.pdf\"}]\n\nBased on the search results, here's what I found about the HongMeng kernel, Linux driver compatibility, HDF, and GPL licensing:\n\n## HongMeng Kernel Overview\n\nThe HarmonyOS Kernel (HongMeng Kernel) is a computer operating system kernel developed by Huawei since August 2023, used in the HarmonyOS NEXT version, replacing previous versions that utilized the AOSP compatibility layer, the Linux kernel, and the LiteOS kernel.\n\n## Linux Driver Compatibility\n\nWhen used in smartphones, the HongMeng kernel supports Linux ABI compatibility by placing an ABI-compatible compliant shim in kernel space, and the kernel can also reuse Linux drivers through driver containers, enabling the use of drivers required for migrated HarmonyOS 4.x compatible devices and third-party unadopted peripherals with Linux drivers, which can coexist with native HongMeng kernel drivers for newer hardware and officially supported peripherals.\n\n## HDF (Hardware Driver Foundation)\n\nThe integrated Hardware Driver Foundation (HDF) underpins an open hardware ecosystem for HarmonyOS, standardizing peripheral device access and streamlining I/O driver development and management. The Hardware Driver Foundation (HDF) is a way to decouple the different driver implementations and methods from the rest of the OS, and it means the same driver can be used in Harmony OS builds that employ different kernels.\n\n## GPL License and Driver Reuse\n\nThe search results mention license contamination concerns in the context of driver management. The system uses driver containers to avoid license contamination, though this introduces overhead in driver-critical scenarios, so HongMeng applies control plane and data plane separation by creating a twin driver in the native driver container.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证\", \"results\": [{\"tool_use_id\": \"srvtoolu_01R3XfKv2uNgQxUsVL6AgWLq\", \"content\": [{\"title\": \"Linux kernel licensing rules — The Linux Kernel documentation\", \"url\": \"https://docs.kernel.org/process/license-rules.html\"}, {\"title\": \"Digging into Harmony OS Internals | by Jasper Morgan | Snapp Mobile | Medium\", \"url\": \"https://medium.com/snapp-mobile/digging-into-harmony-os-internals-fb48d822e65a\"}, {\"title\": \"Software:HarmonyOS kernel - HandWiki\", \"url\": \"https://handwiki.org/wiki/Software:HarmonyOS_kernel\"}, {\"title\": \"HongMeng Kernel - Wikipedia\", \"url\": \"https://en.wikipedia.org/wiki/HongMeng_Kernel\"}, {\"title\": \"Licensing - Linux Device Drivers Development [Book]\", \"url\": \"https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/c63c2b6a-1cdd-4acc-906c-fe4bf405c563.xhtml\"}, {\"title\": \"The GPL and modules (Linus Torvalds; Theodore Ts'o; Al Viro)\", \"url\": \"https://yarchive.net/comp/linux/gpl_modules.html\"}, {\"title\": \"Microkernel Goes General: Performance and Compatibility ...\", \"url\": \"https://www.usenix.org/system/files/osdi24-chen-haibo.pdf\"}]}, \"Based on the search results, here's what I found about the HongMeng kernel, Linux driver compatibility, HDF, and GPL licensing:\\n\\n## HongMeng Kernel Overview\\n\\nThe HarmonyOS Kernel (HongMeng Kernel) is a computer operating system kernel developed by Huawei since August 2023, used in the HarmonyOS NEXT version, replacing previous versions that utilized the AOSP compatibility layer, the Linux kernel, and the LiteOS kernel.\\n\\n## Linux Driver Compatibility\\n\\nWhen used in smartphones, the HongMeng kernel supports Linux ABI compatibility by placing an ABI-compatible compliant shim in kernel space, and the kernel can also reuse Linux drivers through driver containers, enabling the use of drivers required for migrated HarmonyOS 4.x compatible devices and third-party unadopted peripherals with Linux drivers, which can coexist with native HongMeng kernel drivers for newer hardware and officially supported peripherals.\\n\\n## HDF (Hardware Driver Foundation)\\n\\nThe integrated Hardware Driver Foundation (HDF) underpins an open hardware ecosystem for HarmonyOS, standardizing peripheral device access and streamlining I/O driver development and management. The Hardware Driver Foundation (HDF) is a way to decouple the different driver implementations and methods from the rest of the OS, and it means the same driver can be used in Harmony OS builds that employ different kernels.\\n\\n## GPL License and Driver Reuse\\n\\nThe search results mention license contamination concerns in the context of driver management. The system uses driver containers to avoid license contamination, though this introduces overhead in driver-critical scenarios, so HongMeng applies control plane and data plane separation by creating a twin driver in the native driver container.\"], \"durationSeconds\": 7.760043125000316, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 51419,
+        "completion_tokens": 1823,
+        "cached_tokens": 51417,
+        "extra": {
+          "cache_creation_input_tokens": 58,
+          "cache_read_input_tokens": 51417,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 58,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1823,
+              "cache_read_input_tokens": 51417,
+              "cache_creation_input_tokens": 58,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 58
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01R3XfKv2uNgQxUsVL6AgWLq",
+                "content": [
+                  {
+                    "title": "Linux kernel licensing rules — The Linux Kernel documentation",
+                    "url": "https://docs.kernel.org/process/license-rules.html"
+                  },
+                  {
+                    "title": "Digging into Harmony OS Internals | by Jasper Morgan | Snapp Mobile | Medium",
+                    "url": "https://medium.com/snapp-mobile/digging-into-harmony-os-internals-fb48d822e65a"
+                  },
+                  {
+                    "title": "Software:HarmonyOS kernel - HandWiki",
+                    "url": "https://handwiki.org/wiki/Software:HarmonyOS_kernel"
+                  },
+                  {
+                    "title": "HongMeng Kernel - Wikipedia",
+                    "url": "https://en.wikipedia.org/wiki/HongMeng_Kernel"
+                  },
+                  {
+                    "title": "Licensing - Linux Device Drivers Development [Book]",
+                    "url": "https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/c63c2b6a-1cdd-4acc-906c-fe4bf405c563.xhtml"
+                  },
+                  {
+                    "title": "The GPL and modules (Linus Torvalds; Theodore Ts'o; Al Viro)",
+                    "url": "https://yarchive.net/comp/linux/gpl_modules.html"
+                  },
+                  {
+                    "title": "Microkernel Goes General: Performance and Compatibility ...",
+                    "url": "https://www.usenix.org/system/files/osdi24-chen-haibo.pdf"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about the HongMeng kernel, Linux driver compatibility, HDF, and GPL licensing:\n\n## HongMeng Kernel Overview\n\nThe HarmonyOS Kernel (HongMeng Kernel) is a computer operating system kernel developed by Huawei since August 2023, used in the HarmonyOS NEXT version, replacing previous versions that utilized the AOSP compatibility layer, the Linux kernel, and the LiteOS kernel.\n\n## Linux Driver Compatibility\n\nWhen used in smartphones, the HongMeng kernel supports Linux ABI compatibility by placing an ABI-compatible compliant shim in kernel space, and the kernel can also reuse Linux drivers through driver containers, enabling the use of drivers required for migrated HarmonyOS 4.x compatible devices and third-party unadopted peripherals with Linux drivers, which can coexist with native HongMeng kernel drivers for newer hardware and officially supported peripherals.\n\n## HDF (Hardware Driver Foundation)\n\nThe integrated Hardware Driver Foundation (HDF) underpins an open hardware ecosystem for HarmonyOS, standardizing peripheral device access and streamlining I/O driver development and management. The Hardware Driver Foundation (HDF) is a way to decouple the different driver implementations and methods from the rest of the OS, and it means the same driver can be used in Harmony OS builds that employ different kernels.\n\n## GPL License and Driver Reuse\n\nThe search results mention license contamination concerns in the context of driver management. The system uses driver containers to avoid license contamination, though this introduces overhead in driver-critical scenarios, so HongMeng applies control plane and data plane separation by creating a twin driver in the native driver container."
+            ],
+            "durationSeconds": 7.760043125000316,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Ncqwye54JLEf5bmb29u5QC",
+            "type": "tool_result",
+            "content": "Web search results for query: \"鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证\"\n\nLinks: [{\"title\":\"Linux kernel licensing rules — The Linux Kernel documentation\",\"url\":\"https://docs.kernel.org/process/license-rules.html\"},{\"title\":\"Digging into Harmony OS Internals | by Jasper Morgan | Snapp Mobile | Medium\",\"url\":\"https://medium.com/snapp-mobile/digging-into-harmony-os-internals-fb48d822e65a\"},{\"title\":\"Software:HarmonyOS kernel - HandWiki\",\"url\":\"https://handwiki.org/wiki/Software:HarmonyOS_kernel\"},{\"title\":\"HongMeng Kernel - Wikipedia\",\"url\":\"https://en.wikipedia.org/wiki/HongMeng_Kernel\"},{\"title\":\"Licensing - Linux Device Drivers Development [Book]\",\"url\":\"https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/c63c2b6a-1cdd-4acc-906c-fe4bf405c563.xhtml\"},{\"title\":\"The GPL and modules (Linus Torvalds; Theodore Ts'o; Al Viro)\",\"url\":\"https://yarchive.net/comp/linux/gpl_modules.html\"},{\"title\":\"Microkernel Goes General: Performance and Compatibility ...\",\"url\":\"https://www.usenix.org/system/files/osdi24-chen-haibo.pdf\"}]\n\nBased on the search results, here's what I found about the HongMeng kernel, Linux driver compatibility, HDF, and GPL licensing:\n\n## HongMeng Kernel Overview\n\nThe HarmonyOS Kernel (HongMeng Kernel) is a computer operating system kernel developed by Huawei since August 2023, used in the HarmonyOS NEXT version, replacing previous versions that utilized the AOSP compatibility layer, the Linux kernel, and the LiteOS kernel.\n\n## Linux Driver Compatibility\n\nWhen used in smartphones, the HongMeng kernel supports Linux ABI compatibility by placing an ABI-compatible compliant shim in kernel space, and the kernel can also reuse Linux drivers through driver containers, enabling the use of drivers required for migrated HarmonyOS 4.x compatible devices and third-party unadopted peripherals with Linux drivers, which can coexist with native HongMeng kernel drivers for newer hardware and officially supported peripherals.\n\n## HDF (Hardware Driver Foundation)\n\nThe integrated Hardware Driver Foundation (HDF) underpins an open hardware ecosystem for HarmonyOS, standardizing peripheral device access and streamlining I/O driver development and management. The Hardware Driver Foundation (HDF) is a way to decouple the different driver implementations and methods from the rest of the OS, and it means the same driver can be used in Harmony OS builds that employ different kernels.\n\n## GPL License and Driver Reuse\n\nThe search results mention license contamination concerns in the context of driver management. The system uses driver containers to avoid license contamination, though this introduces overhead in driver-critical scenarios, so HongMeng applies control plane and data plane separation by creating a twin driver in the native driver container.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01R3XfKv2uNgQxUsVL6AgWLq",
+                "content": [
+                  {
+                    "title": "Linux kernel licensing rules — The Linux Kernel documentation",
+                    "url": "https://docs.kernel.org/process/license-rules.html"
+                  },
+                  {
+                    "title": "Digging into Harmony OS Internals | by Jasper Morgan | Snapp Mobile | Medium",
+                    "url": "https://medium.com/snapp-mobile/digging-into-harmony-os-internals-fb48d822e65a"
+                  },
+                  {
+                    "title": "Software:HarmonyOS kernel - HandWiki",
+                    "url": "https://handwiki.org/wiki/Software:HarmonyOS_kernel"
+                  },
+                  {
+                    "title": "HongMeng Kernel - Wikipedia",
+                    "url": "https://en.wikipedia.org/wiki/HongMeng_Kernel"
+                  },
+                  {
+                    "title": "Licensing - Linux Device Drivers Development [Book]",
+                    "url": "https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/c63c2b6a-1cdd-4acc-906c-fe4bf405c563.xhtml"
+                  },
+                  {
+                    "title": "The GPL and modules (Linus Torvalds; Theodore Ts'o; Al Viro)",
+                    "url": "https://yarchive.net/comp/linux/gpl_modules.html"
+                  },
+                  {
+                    "title": "Microkernel Goes General: Performance and Compatibility ...",
+                    "url": "https://www.usenix.org/system/files/osdi24-chen-haibo.pdf"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about the HongMeng kernel, Linux driver compatibility, HDF, and GPL licensing:\n\n## HongMeng Kernel Overview\n\nThe HarmonyOS Kernel (HongMeng Kernel) is a computer operating system kernel developed by Huawei since August 2023, used in the HarmonyOS NEXT version, replacing previous versions that utilized the AOSP compatibility layer, the Linux kernel, and the LiteOS kernel.\n\n## Linux Driver Compatibility\n\nWhen used in smartphones, the HongMeng kernel supports Linux ABI compatibility by placing an ABI-compatible compliant shim in kernel space, and the kernel can also reuse Linux drivers through driver containers, enabling the use of drivers required for migrated HarmonyOS 4.x compatible devices and third-party unadopted peripherals with Linux drivers, which can coexist with native HongMeng kernel drivers for newer hardware and officially supported peripherals.\n\n## HDF (Hardware Driver Foundation)\n\nThe integrated Hardware Driver Foundation (HDF) underpins an open hardware ecosystem for HarmonyOS, standardizing peripheral device access and streamlining I/O driver development and management. The Hardware Driver Foundation (HDF) is a way to decouple the different driver implementations and methods from the rest of the OS, and it means the same driver can be used in Harmony OS builds that employ different kernels.\n\n## GPL License and Driver Reuse\n\nThe search results mention license contamination concerns in the context of driver management. The system uses driver containers to avoid license contamination, though this introduces overhead in driver-critical scenarios, so HongMeng applies control plane and data plane separation by creating a twin driver in the native driver container."
+            ],
+            "durationSeconds": 7.760043125000316,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Ncqwye54JLEf5bmb29u5QC",
+            "type": "tool_result",
+            "content": "Web search results for query: \"鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证\"\n\nLinks: [{\"title\":\"Linux kernel licensing rules — The Linux Kernel documentation\",\"url\":\"https://docs.kernel.org/process/license-rules.html\"},{\"title\":\"Digging into Harmony OS Internals | by Jasper Morgan | Snapp Mobile | Medium\",\"url\":\"https://medium.com/snapp-mobile/digging-into-harmony-os-internals-fb48d822e65a\"},{\"title\":\"Software:HarmonyOS kernel - HandWiki\",\"url\":\"https://handwiki.org/wiki/Software:HarmonyOS_kernel\"},{\"title\":\"HongMeng Kernel - Wikipedia\",\"url\":\"https://en.wikipedia.org/wiki/HongMeng_Kernel\"},{\"title\":\"Licensing - Linux Device Drivers Development [Book]\",\"url\":\"https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/c63c2b6a-1cdd-4acc-906c-fe4bf405c563.xhtml\"},{\"title\":\"The GPL and modules (Linus Torvalds; Theodore Ts'o; Al Viro)\",\"url\":\"https://yarchive.net/comp/linux/gpl_modules.html\"},{\"title\":\"Microkernel Goes General: Performance and Compatibility ...\",\"url\":\"https://www.usenix.org/system/files/osdi24-chen-haibo.pdf\"}]\n\nBased on the search results, here's what I found about the HongMeng kernel, Linux driver compatibility, HDF, and GPL licensing:\n\n## HongMeng Kernel Overview\n\nThe HarmonyOS Kernel (HongMeng Kernel) is a computer operating system kernel developed by Huawei since August 2023, used in the HarmonyOS NEXT version, replacing previous versions that utilized the AOSP compatibility layer, the Linux kernel, and the LiteOS kernel.\n\n## Linux Driver Compatibility\n\nWhen used in smartphones, the HongMeng kernel supports Linux ABI compatibility by placing an ABI-compatible compliant shim in kernel space, and the kernel can also reuse Linux drivers through driver containers, enabling the use of drivers required for migrated HarmonyOS 4.x compatible devices and third-party unadopted peripherals with Linux drivers, which can coexist with native HongMeng kernel drivers for newer hardware and officially supported peripherals.\n\n## HDF (Hardware Driver Foundation)\n\nThe integrated Hardware Driver Foundation (HDF) underpins an open hardware ecosystem for HarmonyOS, standardizing peripheral device access and streamlining I/O driver development and management. The Hardware Driver Foundation (HDF) is a way to decouple the different driver implementations and methods from the rest of the OS, and it means the same driver can be used in Harmony OS builds that employ different kernels.\n\n## GPL License and Driver Reuse\n\nThe search results mention license contamination concerns in the context of driver management. The system uses driver containers to avoid license contamination, though this introduces overhead in driver-critical scenarios, so HongMeng applies control plane and data plane separation by creating a twin driver in the native driver container.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "鸿蒙内核 HongMeng kernel Linux driver 兼容 HDF 复用 GPL 许可证"
+        }
+      }
+    },
+    {
+      "step_id": 26,
+      "timestamp": "2026-06-05T08:56:55.439Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 51477,
+        "completion_tokens": 5038,
+        "cached_tokens": 51475,
+        "extra": {
+          "cache_creation_input_tokens": 6930,
+          "cache_read_input_tokens": 51475,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 6930,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 5038,
+              "cache_read_input_tokens": 51475,
+              "cache_creation_input_tokens": 6930,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 6930
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 27,
+      "timestamp": "2026-06-05T08:57:28.715Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "核实到位，而且这两个问题挖出来的对照比文档原来的内容更有意思。分两块回答。\n\n## 一、鸿蒙能否直接复用 Linux 上的 NVLink-C2C / ConnectX-7 / 电源管理驱动？\n\n**结论：基本不能，而且分三层卡死，一层比一层根本。**\n\n**第 1 层（最根本）——硬件压根不在鸿蒙设备上。** NVLink-C2C 是 NVIDIA 私有的 die-to-die 一致性互联，ConnectX-7 是 NVIDIA/Mellanox 的网卡，都是 NVIDIA 自家硬件。鸿蒙电脑跑的是麒麟 X90，根本没有这两样东西。所以\"鸿蒙复用这些资产\"在物理上是个伪命题——除非假设你要拿鸿蒙去驱动一台 NVIDIA 的机器。\n\n**第 2 层——就算假设要移植，鸿蒙内核确实\"有\"复用 Linux 驱动的机制，但对 NVIDIA 这套用不上。** 这是个反直觉的发现：HongMeng 鸿蒙内核（2023.8 起自研、用于 HarmonyOS NEXT）**真的内建了 Linux 驱动复用能力**——在内核空间放一个 Linux ABI 兼容 shim，再用 **driver container（驱动容器）** 把 Linux 驱动装进去跑，和原生鸿蒙驱动共存（见 USENIX OSDI'24 华为论文 *Microkernel Goes General*[[1]](https://www.usenix.org/system/files/osdi24-chen-haibo.pdf)）。但这套机制是为**手机端迁移 HarmonyOS 4.x 设备、复用第三方未适配外设**设计的，前提是能拿到那份 Linux 驱动。NVIDIA 的 NVLink-C2C / ConnectX-7 驱动是**闭源专有**（ConnectX 走 MLNX_OFED，含闭源固件与组件[[2]](https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/)），鸿蒙生态既拿不到源码、也不在 NVIDIA 的适配名单里——容器复用的前提不成立。\n\n**第 3 层——许可证污染。** 鸿蒙内核是自研微内核（非 GPL），Linux 驱动是 GPL。OSDI'24 论文明说，正是为了**避免 license contamination（许可证污染）** 才用驱动容器隔离，代价是性能开销；对驱动关键路径还要做控制面/数据面分离、造\"孪生驱动\"[[1]](https://www.usenix.org/system/files/osdi24-chen-haibo.pdf)。也就是说即便技术上能塞进去，GPL × 自研内核的法律边界也是一道独立的坎。\n\n一句话：**鸿蒙复用 Linux 驱动的\"机制\"存在，但 NVIDIA 这套闭源专有互联/网卡资产恰好踩中\"硬件没有 + 闭源拿不到 + 许可证不通\"三连，复用路径全断。**\n\n## 二、华为昇腾对应的方案是什么？\n\n这是真正的看点——**昇腾不是去复用 NVIDIA，而是自建了一整套平行栈，而且它的底座 OS 仍然是 Linux（欧拉），不是鸿蒙。** 逐项对标：\n\n| NVIDIA（DGX/GB10 那套） | 华为昇腾（Ascend/Atlas 那套） |\n|---|---|\n| NVLink / NVLink-C2C（片间一致性互联） | **HCCS** 华为自研高速互联（910B：每 NPU 7 条双向、各 56GB/s，单板 8 卡共 392GB/s，对标 A800 NVLink 400GB/s）[[3]](https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/) |\n| NVLink + NVSwitch + InfiniBand（超节点 scale-up/out） | **灵衢 UnifiedBus（UB）** 超节点互联协议，用于 Atlas 950/960 等[[4]](https://www.qbitai.com/2025/09/335890.html) |\n| NCCL（集合通信库） | **HCCL**[[5]](https://zhuanlan.zhihu.com/p/1907189956348220034) |\n| CUDA（计算架构/软件栈） | **CANN**（Compute Architecture for Neural Networks）[[6]](https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1) |\n| DGX OS（定制 Ubuntu 24.04 / Linux） | **openEuler 欧拉**（Atlas 服务器官方推荐 openEuler 22.03 LTS ARM64，昇腾驱动官方只支持 Euler 系列）[[6]](https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1) |\n\n**最关键的一点**，正好呼应你那篇文档的核心论点：**连华为自己的 AI 算力底座（昇腾 Atlas）跑的都是 openEuler（Linux），不是鸿蒙。** \n\nNVIDIA DGX 用 Ubuntu、华为 Atlas 用 openEuler——是**同一个逻辑**：AI 训练/推理这种高性能算力调度场景，是 Linux 的天下，谁都不例外。鸿蒙在这套对照里是**缺席**的——它是终端/消费侧 OS（手机、PC、车机、IoT），不是数据中心算力 OS。所以\"昇腾对应鸿蒙的方案\"这个问法本身就要拆开：**昇腾对应的是 openEuler，不是鸿蒙;昇腾对应 CUDA 生态的是 CANN+HCCS+灵衢这一整套国产平行宇宙。**\n\n换句话说，原文档\"DGX Spark 坚持 Linux\"的逻辑，在华为身上是**完全镜像**的：自家芯片 + 自家互联 + 自家通信库 + 自家计算栈，但操作系统底座照样押 Linux（欧拉）。鸿蒙与算力栈是两条平行线，不在一个层面。\n\n---\n\n要不要我把这两块（尤其是\"NVIDIA vs 昇腾平行栈对照表\"和\"AI 底座都押 Linux\"这个论点）并进刚才那个归档文件？我觉得它正好把原文\"Windows/Linux/鸿蒙固件分家\"的视角，补成了\"**消费端 OS 之争 vs 算力端 Linux 一统**\"的更完整图景。",
+      "metrics": {
+        "prompt_tokens": 51477,
+        "completion_tokens": 5038,
+        "cached_tokens": 51475,
+        "extra": {
+          "cache_creation_input_tokens": 6930,
+          "cache_read_input_tokens": 51475,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 6930,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 5038,
+              "cache_read_input_tokens": 51475,
+              "cache_creation_input_tokens": 6930,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 6930
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 498154,
-    "total_completion_tokens": 38433,
-    "total_cached_tokens": 486147,
-    "total_steps": 18,
+    "total_prompt_tokens": 909622,
+    "total_completion_tokens": 59447,
+    "total_cached_tokens": 897599,
+    "total_steps": 27,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 136691,
-      "total_cache_read_input_tokens": 486147
+      "total_cache_creation_input_tokens": 150899,
+      "total_cache_read_input_tokens": 897599
     }
   }
 }
