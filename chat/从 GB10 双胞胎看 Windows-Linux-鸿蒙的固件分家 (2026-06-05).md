@@ -67,6 +67,44 @@
 
 ---
 
+## 四、追问：鸿蒙能否复用 NVIDIA 资产？华为昇腾的平行栈对照
+
+> 本节为对原文的延伸追问与对比整理（**解读**），不是原文内容。
+
+### 4.1 鸿蒙能否直接复用 Linux 上的 NVLink-C2C / ConnectX-7 / 电源管理驱动？
+
+基本不能，三层卡死，一层比一层根本：
+
+1. **硬件压根不在鸿蒙设备上。** NVLink-C2C 是 NVIDIA 私有 die-to-die 一致性互联，ConnectX-7 是 NVIDIA/Mellanox 网卡，都是 NVIDIA 自家硬件。鸿蒙电脑跑的是麒麟 X90，没有这两样东西——「鸿蒙复用这些资产」在物理上是伪命题，除非假设拿鸿蒙去驱动一台 NVIDIA 机器。
+
+2. **鸿蒙内核确有 Linux 驱动复用机制，但对 NVIDIA 这套用不上。** 反直觉的事实：HongMeng 鸿蒙内核（2023.8 起自研、用于 HarmonyOS NEXT）内建了 Linux 驱动复用能力——在内核空间放 Linux ABI 兼容 shim，再用 **driver container（驱动容器）** 装载 Linux 驱动，与原生鸿蒙驱动共存 [[10]](https://www.usenix.org/system/files/osdi24-chen-haibo.pdf)。但这套机制是为**手机端迁移 HarmonyOS 4.x 设备、复用第三方未适配外设**设计的，前提是拿得到那份 Linux 驱动。NVIDIA 的 NVLink-C2C / ConnectX-7 驱动是**闭源专有**（ConnectX 走 MLNX_OFED，含闭源固件与组件）[[11]](https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/)，鸿蒙生态既拿不到源码、也不在 NVIDIA 适配名单内——容器复用的前提不成立。
+
+3. **许可证污染。** 鸿蒙内核是自研微内核（非 GPL），Linux 驱动是 GPL。OSDI'24 论文明说，正是为避免 license contamination（许可证污染）才用驱动容器隔离，代价是性能开销；驱动关键路径还要做控制面/数据面分离、造「孪生驱动」 [[10]](https://www.usenix.org/system/files/osdi24-chen-haibo.pdf)。即便技术上能塞进去，GPL × 自研内核的法律边界也是独立一道坎。
+
+一句话：**鸿蒙复用 Linux 驱动的「机制」存在，但 NVIDIA 这套闭源专有互联/网卡资产恰好踩中「硬件没有 + 闭源拿不到 + 许可证不通」三连，复用路径全断。**
+
+### 4.2 华为昇腾的对应方案：自建平行栈，但底座 OS 仍是 Linux（欧拉）
+
+昇腾不是去复用 NVIDIA，而是自建了一整套平行栈逐项对标：
+
+| NVIDIA（DGX / GB10 那套） | 华为昇腾（Ascend / Atlas 那套） |
+|---|---|
+| NVLink / NVLink-C2C（片间一致性互联） | **HCCS** 华为自研高速互联（910B：每 NPU 7 条双向、各 56GB/s，单板 8 卡共 392GB/s，对标 A800 NVLink 400GB/s）[[12]](https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/) |
+| NVLink + NVSwitch + InfiniBand（超节点 scale-up/out） | **灵衢 UnifiedBus（UB）** 超节点互联协议，用于 Atlas 950/960 等 [[13]](https://www.qbitai.com/2025/09/335890.html) |
+| NCCL（集合通信库） | **HCCL** [[14]](https://zhuanlan.zhihu.com/p/1907189956348220034) |
+| CUDA（计算架构 / 软件栈） | **CANN**（Compute Architecture for Neural Networks）[[15]](https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1) |
+| DGX OS（定制 Ubuntu 24.04 / Linux） | **openEuler 欧拉**（Atlas 服务器官方推荐 openEuler 22.03 LTS ARM64，昇腾驱动官方仅支持 Euler 系列）[[15]](https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1) |
+
+关键判断：
+
+1. **连华为自己的 AI 算力底座（昇腾 Atlas）跑的都是 openEuler（Linux），不是鸿蒙。** NVIDIA DGX 用 Ubuntu、华为 Atlas 用 openEuler——同一个逻辑：AI 训练/推理这种高性能算力调度场景是 Linux 的天下，谁都不例外。
+
+2. **「昇腾对应鸿蒙的方案」这个问法要拆开。** 昇腾对应的操作系统是 **openEuler，不是鸿蒙**；昇腾对应 CUDA 生态的，是 **CANN + HCCS + 灵衢** 这一整套国产平行宇宙。鸿蒙在算力栈里是**缺席**的——它是终端/消费侧 OS（手机、PC、车机、IoT），与数据中心算力 OS 是两条平行线。
+
+3. **原文「DGX Spark 坚持 Linux」的逻辑在华为身上完全镜像。** 自家芯片 + 自家互联 + 自家通信库 + 自家计算栈，但操作系统底座照样押 Linux（欧拉）。把三方分家的图景补完整，更准确的概括是：**消费端是 Windows / 鸿蒙 / Linux 的 OS 之争，算力端则是 Linux 一统（NVIDIA→Ubuntu，华为→openEuler）。**
+
+---
+
 ## 信源
 
 [1] T. Claburn, "Nvidia's Grace Blackwell superchips are officially coming to the PC with RTX Spark notebooks," *The Register*, Jun. 1, 2026. [Online]. Available: <https://www.theregister.com/systems/2026/06/01/nvidia-recasts-gb10-superchip-in-bid-for-high-end-pc-market/>
@@ -86,3 +124,15 @@
 [8] OpenHarmony, "Framework of the Hardware Driver Foundation (HDF) | HDF 驱动框架," *GitHub*. (HDF 解析 HCS 配置完成设备发现；驱动可跨内核复用。) [Online]. Available: <https://github.com/openharmony/drivers_framework>
 
 [9] "华为，最新发布！鸿蒙电脑首度亮相," *证券时报网*, 2025-05-19. (MateBook Pro 7999 元起 / MateBook Fold 23999 元起；HarmonyOS 5 + 麒麟 X90，从内核重构。) [Online]. Available: <https://www.stcn.com/article/detail/1821418.html>
+
+[10] H. Chen et al., "Microkernel Goes General: Performance and Compatibility in the HongMeng Production Microkernel," *USENIX OSDI*, 2024. (鸿蒙内核经 ABI shim + driver container 复用 Linux 驱动；为避免许可证污染做容器隔离与孪生驱动。) [Online]. Available: <https://www.usenix.org/system/files/osdi24-chen-haibo.pdf>
+
+[11] NVIDIA, "Linux Ethernet Drivers — MLNX_EN," *NVIDIA Networking*. (ConnectX 系列 Linux 驱动经 MLNX_OFED/MLNX_EN 分发，含闭源固件与组件。) [Online]. Available: <https://network.nvidia.com/products/ethernet-drivers/linux/mlnx_en/>
+
+[12] "一篇文章说明常见的 AI 芯片高速互连方案," *ScenSmart*. (昇腾 910B：每 NPU 7 条双向 HCCS、各 56GB/s，单板 8 卡共 392GB/s，对标 A800 NVLink 400GB/s。) [Online]. Available: <https://www.scensmart.com/news/one-article-explains-common-high-speed-interconnect-solutions-for-ai-chips/>
+
+[13] "中国 AI 高速路，华为给出开源开放方案," *量子位*, 2025-09. (灵衢 UnifiedBus 超节点互联协议，用于 Atlas 950/960 等大带宽低时延互联。) [Online]. Available: <https://www.qbitai.com/2025/09/335890.html>
+
+[14] "NVLink、HCCL 及传统 PCIe 传输对比分析报告," *知乎*. (HCCL 为昇腾集合通信库，对标 NVIDIA NCCL。) [Online]. Available: <https://zhuanlan.zhihu.com/p/1907189956348220034>
+
+[15] 华为, "Atlas 服务器 openEuler 22.03 LTS 操作系统安装指导书（Arm）," *华为企业技术支持*. (Atlas 服务器官方推荐 openEuler 22.03 LTS ARM64；昇腾驱动官方仅支持 Euler 系列；CANN 为 NPU 驱动与工具链。) [Online]. Available: <https://support.huawei.com/enterprise/zh/doc/EDOC1100258040/fc9f82a1>
