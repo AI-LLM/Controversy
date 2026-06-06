@@ -130,6 +130,77 @@
 
 全局看，3,275 条事件里证据类型为纯 benchmark/lmarena 的占一半（1,735 条），有实测（personal_use/anecdote）的约 41%（1,342 条）；社区反应明确质疑的 863 条、明确认同仅 206 条。**"小打大"是真趋势，但每一条具体声明都要扣掉一层 benchmaxx 折扣**——而这层折扣，小模型档最厚。
 
+### 含金量最高的一档：社区明确认同 + 有实测证据的全部记录（62 帖）
+
+把"社区明确认同（endorsed）"与"证据为实测（personal_use / anecdote，非跑分）"两个条件同时满足的事件全部列出——这是整份语料里**最不打折**的越级记录：既不是 benchmaxx，也不是营销，而是有人真用过、且评论区认账。共 78 条事件、去重后 62 个帖：
+
+| 日期 | 赞 | 小模型 | 被比下去 | 域 | 标题 | 链接 |
+|---|---|---|---|---|---|---|
+| 2023-09-27 | 170 | Mistral-7B-Instruct-v0.1 | Llama 13B models | general | LLM Chat/RP Comparison/Test: Mistral 7B Base + Instruct | [链接](https://reddit.com/r/LocalLLaMA/comments/16twtfn/) |
+| 2023-10-22 | 138 | LLaMA2-13B-Tiefighter | OpenHermes 2 Mistral 7B | general | My current favorite new LLMs: SynthIA v1.5 and Tiefighter! | [链接](https://reddit.com/r/LocalLLaMA/comments/17e446l/) |
+| 2023-12-06 | 8 | xwin-mlewd-13b-v0.2 | 7B-13B models (50+ competitors) | creative | I tested over 50 different language models in the past two weeks | [链接](https://reddit.com/r/LocalLLaMA/comments/18c2cs4/kc8qrou/#kc8qrou) |
+| 2023-12-12 | 234 | Mixtral-8x7B-Instruct-v0.1 | Llama 2 70B / GPT-3.5 | general | LLM Comparison/Test: Mixtral-8x7B, Mistral, DeciLM, Synthia-MoE | [链接](https://reddit.com/r/LocalLLaMA/comments/18gz54r/) |
+| 2023-12-22 | 74 | Mixtral 8x7B | Llama 2 70B | general | Mixtral MoE ELI5: How are the responses a higher quality than a 7b? | [链接](https://reddit.com/r/LocalLLaMA/comments/18osgzt/) |
+| 2023-12-24 | 5 | Starling-LM-7B | PuddleJumper-13B-v2 | general | Starling 7B — basically the best 7B I have tried so far | [链接](https://reddit.com/r/LocalLLaMA/comments/18pgfuy/keovmjd/#keovmjd) |
+| 2023-12-27 | 76 | flan-T5-3B / lamini-flan-t5-783m | mini orca 3B / TinyLlama-1.1B | general | Why is no-one fine-tuning something like t5? | [链接](https://reddit.com/r/LocalLLaMA/comments/18rryf1/) |
+| 2024-02-27 | 38 | Phi-2 | Gemma-2B 和 Qwen1.5-4B 微调 | coding | no other model perform above PHI-2 (below 5B) | [链接](https://reddit.com/r/LocalLLaMA/comments/1b1eohd/) |
+| 2024-04-19 | 25 | Mixtral 8x22B Q2K | Mixtral 8x7B | reasoning | I was wrong about 2-bit quants | [链接](https://reddit.com/r/LocalLLaMA/comments/1c81oxo/) |
+| 2024-04-20 | 258 | Llama 3 8B | Mistral 7B v0.2 | general | Thanks Zuck/Meta for these great Llama 3 models! ...BUT... | [链接](https://reddit.com/r/LocalLLaMA/comments/1c8u0n5/) |
+| 2024-04-25 | 155 | Llama 3 8B fp16 | Llama 3 70B Q4 | coding | Quantizing Llama 3 8B seems more harmful compared to other models | [链接](https://reddit.com/r/LocalLLaMA/comments/1cci5w6/) |
+| 2024-05-23 | 146 | SFR-Iterative-DPO-LLaMA-3-8B-R | larger open source models | reasoning | The Salesforce finetune of Llama 3 … is fantastic for reasoning | [链接](https://reddit.com/r/LocalLLaMA/comments/1cyxh1d/) |
+| 2024-06-28 | 136 | Gemma 2 9B / Gemma 2 27B | Llama 3 8B / Llama 3 70B | general | What are your thoughts on Gemma2 27B and 9B? | [链接](https://reddit.com/r/LocalLLaMA/comments/1dqlis5/) |
+| 2024-06-30 | 112 | Codestral 22B | DeepSeek Coder v1 34B | coding | My experience with using Codestral 22b for developing my first android app | [链接](https://reddit.com/r/LocalLLaMA/comments/1ds9ogn/) |
+| 2024-07-07 | 29 | Gemma 2 27B | Goliath-120B / ChatGPT-3.5 | creative | Any worthy Gemma 2 27B finetunes for writing/RP? | [链接](https://reddit.com/r/LocalLLaMA/comments/1dxpc4r/) |
+| 2024-07-26 | 43 | mini-magnum-12b-v1.1 (NeMo 12B 微调) | Llama 3 8B | creative | Nemo 12b, rp/erp/storytelling | [链接](https://reddit.com/r/LocalLLaMA/comments/1ecekpv/) |
+| 2024-09-17 | 166 | Mistral-Small-Instruct-2409 | Gemma 27B | general | Mistral-Small-Instruct-2409 is actually really impressive | [链接](https://reddit.com/r/LocalLLaMA/comments/1fjb4i5/) |
+| 2024-09-19 | 146 | Qwen2.5-32B | Llama 3.1 70B / Gemma 2 27B | general | Just replaced Llama 3.1 70B @ iQ2S for Qwen 2.5 32B @ Q4KM | [链接](https://reddit.com/r/LocalLLaMA/comments/1fkbumy/) |
+| 2024-09-20 | 206 | Qwen2.5-32B-Instruct | Gemma 27B | general | Qwen2.5-32B-Instruct may be the best model for 3090s right now | [链接](https://reddit.com/r/LocalLLaMA/comments/1flfh0p/) |
+| 2024-11-01 | 173 | Qwen2.5-14B | GPT-4o | agentic | IMO the best model for agents: Qwen2.5 14b | [链接](https://reddit.com/r/LocalLLaMA/comments/1gheq9t/) |
+| 2024-11-14 | 291 | Qwen2.5-Coder-32B-Instruct | Qwen2.5-72B / GPT-4o | coding | Qwen 32B Coder-Ins vs 72B-Ins on the latest Leetcode problems | [链接](https://reddit.com/r/LocalLLaMA/comments/1gr35xp/) |
+| 2024-11-28 | 208 | QwQ-32B | o1-preview / o1-mini | reasoning | I ran my misguided attention eval locally on QwQ-32B 4bit — beats o1-preview | [链接](https://reddit.com/r/LocalLLaMA/comments/1h1u7r9/) |
+| 2025-01-25 | 43 | Qwen2.5-Coder-32B-Instruct | Llama-3.3-70B | coding | So what is now the best local AI for coding? | [链接](https://reddit.com/r/LocalLLaMA/comments/1ia0j9o/) |
+| 2025-02-26 | 60 | Gemma 2 2B | Llama 3 400B | multilingual | Gemma 2 2B: Small in Size, Giant in Multilingual Performance | [链接](https://reddit.com/r/LocalLLaMA/comments/1iywf6n/) |
+| 2025-03-06 | 232 | QwQ-32B | DeepSeek-R1 Distill 32B | coding | A few hours with QwQ and Aider - and my thoughts | [链接](https://reddit.com/r/LocalLLaMA/comments/1j4p3xw/) |
+| 2025-03-06 | 168 | QwQ-32B | DeepSeek-R1 671B / o3-mini | math | new QwQ is beating any distil deepseek model in math, even better than full 670b | [链接](https://reddit.com/r/LocalLLaMA/comments/1j4x8sq/) |
+| 2025-03-21 | 60 | Mistral Small 3.1 | GPT-4o Mini | vision | Mistral-small 3.1 Vision for PDF RAG tested | [链接](https://reddit.com/r/LocalLLaMA/comments/1jg5sbj/) |
+| 2025-04-17 | 335 | Gemma 3 27B | ChatGPT (GPT-3.5 Turbo) | general | Medium sized local models already beating vanilla ChatGPT - Mind blown | [链接](https://reddit.com/r/LocalLLaMA/comments/1k1av1x/) |
+| 2025-04-21 | 577 | GLM-4-32B | Gemini 2.5 Flash / Llama 70B | coding / general | GLM-4 32B is mind blowing | [链接](https://reddit.com/r/LocalLLaMA/comments/1k4god7/) |
+| 2025-05-05 | 89 | Qwen3-235B-A22B | DeepSeek-R1 / DeepSeek-V3-0324 | general | Quick-and-dirty test of 5 models on a Mac Studio M3 Ultra 512GB | [链接](https://reddit.com/r/LocalLLaMA/comments/1kfi8xh/) |
+| 2025-05-06 | 67 | Qwen3-4B | Gemma 3 12B | general | Qwen 3 Small Models: 0.6B, 1.7B & 4B compared with Gemma 3 | [链接](https://reddit.com/r/LocalLLaMA/comments/1kfrcul/) |
+| 2025-05-30 | 171 | DeepSeek-R1-0528-Qwen3-8B | DeepSeek-R1 (原 8B distill) | agentic | Deepseek-r1-0528-qwen3-8b is much better than expected | [链接](https://reddit.com/r/LocalLLaMA/comments/1kyt71a/) |
+| 2025-07-22 | 361 | Qwen3-Coder-408B-A35B-Instruct | Kimi-K2-Instruct | coding | Qwen3-Coder Web Development | [链接](https://reddit.com/r/LocalLLaMA/comments/1m6ny2q/) |
+| 2025-07-30 | 463 | Qwen3-30B-A3B-thinking-2507 | Gemini 2.5 Flash | general | Qwen3-30b-a3b-thinking-2507 This is insane performance | [链接](https://reddit.com/r/LocalLLaMA/comments/1md8slx/) |
+| 2025-07-30 | 205 | GLM-4.5-Air | Qwen2.5-32B | agentic | glm-4.5-Air appreciation post — give this model a try | [链接](https://reddit.com/r/LocalLLaMA/comments/1mdhfhs/) |
+| 2025-08-08 | 203 | Granite 3 8B | GPT-5 mini/nano | agentic | Granite 3 8B is seriously underrated - still outperforming newer models | [链接](https://reddit.com/r/LocalLLaMA/comments/1mkp0am/) |
+| 2025-08-20 | 43 | NVIDIA-Nemotron-Nano-9B-v2 | Qwen3-Coder-30B | coding | NVIDIA-Nemotron-Nano-9B-v2 vs Qwen3-Coder-30B | [链接](https://reddit.com/r/LocalLLaMA/comments/1mv6cjq/) |
+| 2025-09-12 | 109 | parakeet-tdt-0.6b-v3 | Whisper large | other | 30 Days Testing Parakeet v3 vs Whisper | [链接](https://reddit.com/r/LocalLLaMA/comments/1nf10ye/) |
+| 2025-11-27 | 57 | TongyiMaizi-Image-Turbo 6B | FLUX.2 | vision | r/StableDiffusion everyone over there is going NUTS over this model | [链接](https://reddit.com/r/LocalLLaMA/comments/1p7i9qh/nqyz5rn/#nqyz5rn) |
+| 2025-11-29 | 126 | gpt-oss-120b | Qwen3-Next-80B-A3B | agentic | Qwen3-Next-80B-A3B vs gpt-oss-120b | [链接](https://reddit.com/r/LocalLLaMA/comments/1p9nckz/) |
+| 2025-12-19 | 29 | Qwen 8B | cloud models | agentic | I've been experimenting with SLM's a lot recently … even SLMs can be accurate | [链接](https://reddit.com/r/LocalLLaMA/comments/1pqd7sy/) |
+| 2026-01-15 | 101 | LFM 2.5 (~1B) | models 3x larger (~3B class) | general | LFM 2.5 is insanely good | [链接](https://reddit.com/r/LocalLLaMA/comments/1qdax6z/) |
+| 2026-01-21 | 162 | distilled Text2SQL 0.6B | GPT-class models | coding | Knowledge distillation with Claude: trained a 0.6B model to match GPT-class | [链接](https://reddit.com/r/LocalLLaMA/comments/1qiu6jo/) |
+| 2026-02-06 | 26 | Nanbeige4-3B-Thinking-2511 | Qwen3-14B | agentic | Nanbeige4-3B-Thinking-2511 is honestly impressive | [链接](https://reddit.com/r/LocalLLaMA/comments/1qxxhi4/) |
+| 2026-02-07 | 160 | Qwen2.5 1.5B | Qwen2.5 3B | agentic | I tested 11 small LLMs on tool-calling judgment — on CPU, no GPU | [链接](https://reddit.com/r/LocalLLaMA/comments/1qyg10z/) |
+| 2026-02-20 | 81 | Qwen3-Coder-Next-30B Q2 | 30B models (Qwen 30B, Devstral) | coding | Qwen3 coder next oddly usable at aggressive quantization | [链接](https://reddit.com/r/LocalLLaMA/comments/1rabg6o/) |
+| 2026-02-21 | 41 | Nanbeige 4.1 | Qwen 4B | general | Nanbeige 4.1 is the best small LLM, it crush qwen 4b | [链接](https://reddit.com/r/LocalLLaMA/comments/1rb61og/) |
+| 2026-02-24 | 41 | Qwen-3.5-35B-A3B | GLM 4.7 Flash | agentic | Qwen-3.5-35B-A3B is impressive | [链接](https://reddit.com/r/LocalLLaMA/comments/1rdru9p/) |
+| 2026-02-24 | 16 | LocoOperator-4B | 7B models | agentic | A small 4B sub-agent for local codebase navigation, 100% tool-calling validity | [链接](https://reddit.com/r/LocalLLaMA/comments/1rdfu5e/) |
+| 2026-03-05 | 8 | Qwen3.5-9B | GPT-OSS 120B | general | Are we at a tipping point for local AI? Qwen3.5 might just be | [链接](https://reddit.com/r/LocalLLaMA/comments/1rln0dv/) |
+| 2026-03-10 | 190 | Qwen 3.5 0.8B (LoRA 微调) | larger models (baseline) | coding | 0.8B model teaching itself on a MacBook Air with 6GB RAM | [链接](https://reddit.com/r/LocalLLaMA/comments/1rq3bix/) |
+| 2026-03-13 | 42 | Qwen 3.5 2B (微调) | Qwen 3.5 4B / 9B / 27B / 35B | other | Fine-tuned Qwen 3.5 2B to beat same-quant 4B, 9B, 27B, 35B on dictation cleanup | [链接](https://reddit.com/r/LocalLLaMA/comments/1rstcy3/) |
+| 2026-03-23 | 131 | Qwen3.5-27B | Qwen3.5-122B | coding | Another appreciation post for qwen3.5 27b model | [链接](https://reddit.com/r/LocalLLaMA/comments/1s1p2jo/) |
+| 2026-03-30 | 196 | Qwen 3.5-27B / Nemotron-Cascade-2-30B-A3B | frontier / Qwen 3.5-35B-A3B | coding | I tested as many small local and OpenRouter models … agentic text-to-SQL | [链接](https://reddit.com/r/LocalLLaMA/comments/1s7r9wu/) |
+| 2026-04-06 | 136 | Gemma 4 26B | Gemini 3 Flash | agentic | Gemma4:26b's reasoning capabilities are crazy | [链接](https://reddit.com/r/LocalLLaMA/comments/1sdz71b/) |
+| 2026-04-09 | 847 | Gemma 4 31B UD IQ3 XXS | Claude Opus 4.6 | general | It's insane how lobotomized Opus 4.6 is right now. Even Gemma 4 31B beat it | [链接](https://reddit.com/r/LocalLLaMA/comments/1sgd7fp/) |
+| 2026-04-12 | 7 | Qwen3.5-9B BF16 | Qwen 3.5 UD Q8_K_XL | reasoning | A Reasoning (Local) Model Comparison … complex long-range reasoning | [链接](https://reddit.com/r/LocalLLaMA/comments/1sj07pe/) |
+| 2026-04-18 | 288 | Qwen3.6-35B-A3B | Qwen3.5-27B / Qwen3.5-122B | coding | Qwen3.6-35B-A3B solved coding problems Qwen3.5-27B couldn't | [链接](https://reddit.com/r/LocalLLaMA/comments/1soxyfi/) |
+| 2026-04-24 | 133 | Qwen 3.6 27B | Claude Sonnet 4.6 | coding | Opinion: Qwen 3.6 27b Beats Sonnet 4.6 on Feature Planning | [链接](https://reddit.com/r/LocalLLaMA/comments/1supft2/) |
+| 2026-05-05 | 635 | Qwen 3.6 27B | cloud models | coding | DeepSeek V4 17x cheaper got me to measure cloud vs local | [链接](https://reddit.com/r/LocalLLaMA/comments/1t4s6g2/) |
+| 2026-05-11 | 419 | Qwen 3.6 35B A3B / Gemma 4 26B A4B | frontier | coding | The Qwen 3.6 35B A3B hype is real!!! | [链接](https://reddit.com/r/LocalLLaMA/comments/1t9whrt/) |
+| 2026-06-04 | 288 | Qwen3.6-35B-A3B IQ4NXL | Qwen3.5-27B Q5_K_XL | coding | You guys were right - Qwen 3.6 35B IS good … and KV Cache DOES matter | [链接](https://reddit.com/r/LocalLLaMA/comments/1twyoqe/) |
+
+读这张表的两个观察：(1) **被认账的实测越级，主体是 20-34B 与 7-15B 稠密模型**——Qwen2.5/3.x-32B、Gemma 2/3/4-27B、QwQ-32B、GLM-4-32B 反复出现，正是甜点档；(2) 标题大量是"appreciation post""mind blowing""insane performance"这类**用户自发安利**，而非厂商通告——与第四节"20-34B 营销占比最低、实测最高"的统计互为印证。⚠ 这 62 帖仍是社区**判断**，证据为发帖人自述实测 + 评论区认同，未经独立复现。
+
 ## 方法与数据
 
 - **语料**：r/LocalLLaMA 全量，118,391 帖 + 1,787,788 评论，2023-03-10 → 2026-06-06（增量 dump 经去重合并入主文件，`scripts/merge_reddit_dumps.py`）。
