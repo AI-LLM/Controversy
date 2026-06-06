@@ -191,12 +191,16 @@ https://arctic-shift.photon-reddit.com/download-tool 下载频道 JSONL：
 适用于：帖子里有**结构化字面量**的信息——金额、费率、配额数字等。
 正则抽得出、误命中少，不需要 LLM。
 
-- 脚本：`scripts/analyze_reddit_prices.py --mode <name>`
+- 脚本：`scripts/analyze_reddit.py --mode <name>`
 - 统一处理 posts + comments（comments 用 body 替代 selftext）
 - 廉价预过滤（小写子串判断），只对可能命中的帖跑正则，避免百万行回溯
 - 输出 CSV 含抽取值 + 帖子元数据（date / score / permalink / snippet）
+- `--channel <名>` 把扫描收窄到 `r_<名>_*.jsonl`，避免为某频道特有信号扫全部数据
+- 带日期后缀的增量 dump 先用 `scripts/merge_reddit_dumps.py` 去重合并进主 jsonl（归档已消费文件，防 glob 双重计数），再跑抽取
 
-已实现例：`--mode price`（美元金额 / token 费率 / 用量上限 / premium request）
+已实现例：`--mode price`（美元金额 / token 费率 / 用量上限 / premium request）；
+`--mode capability`（模型参数量 / MoE 的 N×M 与 active 记法 / 模型家族 / 硬件量化共现 /
+跨尺寸"越级"比较旗标，另出四角度聚合 `capability_aggregates.json`）
 
 #### Level 2：正则粗筛 + LLM 精分类 + LLM 结构化抽取（信号模糊、噪声高）
 

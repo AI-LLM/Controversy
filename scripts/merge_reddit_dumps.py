@@ -3,7 +3,7 @@
 
 arctic-shift 增量下载会生成 `r_<频道>_<posts|comments>-YYYY-MM-DD.jsonl`，
 本脚本将其并入主文件 `r_<频道>_<posts|comments>.jsonl`，之后所有挖掘脚本
-（analyze_reddit_prices.py 等）只跑主文件即可。
+（analyze_reddit.py 等）只跑主文件即可。
 
 做的事：
   - 按 `id` 去重（增量与主文件在边界日期会重叠）。冲突时保留更新鲜的一条

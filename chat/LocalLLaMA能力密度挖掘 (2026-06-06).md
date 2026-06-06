@@ -112,7 +112,7 @@
 ## 方法与数据
 
 - **语料**：r/LocalLLaMA 全量，118,391 帖 + 1,787,788 评论，2023-03-10 → 2026-06-06（增量 dump 经去重合并入主文件，`scripts/merge_reddit_dumps.py`）。
-- **Level-1（正则）**：`analyze_reddit_prices.py --mode capability` 抽参数量（含 MoE 的 N×M 与 active 记法）、模型家族、硬件／量化共现、跨尺寸比较旗标，命中 220,287 条，产出 `capability_mentions.csv` 与四角度聚合 `capability_aggregates.json`。尺寸正则用负向后顾排除 `24GB`／`$7B`／`4bit` 等误命中。
+- **Level-1（正则）**：`analyze_reddit.py --mode capability` 抽参数量（含 MoE 的 N×M 与 active 记法）、模型家族、硬件／量化共现、跨尺寸比较旗标，命中 220,287 条，产出 `capability_mentions.csv` 与四角度聚合 `capability_aggregates.json`。尺寸正则用负向后顾排除 `24GB`／`$7B`／`4bit` 等误命中。
 - **Level-2（LLM）**：对 7,875 条候选（跨尺寸比较 + 有尺寸 + score≥5）做两段式抽取——Haiku 分类过滤（verified_underdog 1,493、benchmark_only 951、refuted 793 等），Sonnet 对正例抽结构化 `events[]`（小模型／尺寸／被超对象／域／证据类型／timing／营销／社区反应）。共 3,275 条事件。LLM 一律走 Claude Code subagent（Workflow），非 API。
 - **已知局限**：(1) 事件是社区**声明**，Sonnet 二次校验推翻约 9%（286/3,275），benchmaxx 声明仍可能漏网；(2) 社区反应基于帖子高赞回复 + 赞数代理，非完整评论树情感分析；(3) 2026 年模型超出可独立核验范围，以 Reddit 讨论为一手源；(4) "帖子日期 ≠ 事件生效日期"已在抽取时用 timing 字段区分，本文只取 immediate 类入里程碑。
 

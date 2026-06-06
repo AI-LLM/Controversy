@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
-"""分析 arctic-shift 下载的 Reddit 频道数据，抽取价格相关帖子。
+"""分析 arctic-shift 下载的 Reddit 频道数据，按 mode 抽取结构化信号。
 
 数据来源：https://arctic-shift.photon-reddit.com/download-tool 导出的
-submission JSONL（每行一个帖子，PushShift/arctic-shift schema）。
+JSONL（每行一个帖子/评论，PushShift/arctic-shift schema）。同时扫 posts + comments。
 
-两种模式：
+四种 mode：
 
-  默认（price）：抽取价格信号（美元金额 / token 费率 / 用量上限）。
-    python3 scripts/analyze_reddit_prices.py                # 扫 data/reddit/*.jsonl
-    python3 scripts/analyze_reddit_prices.py --min-score 5  # 只要 5 赞以上
-    python3 scripts/analyze_reddit_prices.py --since 2024-01 --until 2024-12
+  price（默认）：价格信号（美元金额 / token 费率 / 用量上限 / premium request）。
+    python3 scripts/analyze_reddit.py                # 扫 data/reddit/*.jsonl
+    python3 scripts/analyze_reddit.py --min-score 5  # 只要 5 赞以上
+    python3 scripts/analyze_reddit.py --since 2024-01 --until 2024-12
 
-  退市（deprecation）：抽取模型退市/下架事件。
-    python3 scripts/analyze_reddit_prices.py --mode deprecation
-    python3 scripts/analyze_reddit_prices.py --mode deprecation --min-score 3
+  deprecation：模型退市/下架事件。
+    python3 scripts/analyze_reddit.py --mode deprecation --min-score 3
 
-  用量（usage）：抽取 token 消耗量信号（每天/每任务/每用户/context 使用率）。
-    python3 scripts/analyze_reddit_prices.py --mode usage
-    python3 scripts/analyze_reddit_prices.py --mode usage --min-score 3
+  usage：token 消耗量信号（每天/每任务/每用户/context 使用率）。
+    python3 scripts/analyze_reddit.py --mode usage --min-score 3
 
-输出 data/reddit/price_mentions.csv / deprecation_events.csv / usage_mentions.csv。
+  capability：模型尺寸/能力发展（参数量、MoE 的 N×M 与 active 记法、模型家族、
+    硬件/量化共现、跨尺寸"越级"比较旗标）。
+    python3 scripts/analyze_reddit.py --mode capability --channel LocalLLaMA
+    --channel <名> 把扫描收窄到 r_<名>_*.jsonl，避免为某频道特有信号扫全部数据。
+
+输出 data/reddit/{price_mentions,deprecation_events,usage_mentions,capability_mentions}.csv；
+capability 另出四角度聚合 capability_aggregates.json。
 再下载更多频道（放进 data/reddit/）后直接重跑即可，无需改代码。
 """
 from __future__ import annotations
@@ -700,7 +704,7 @@ def parse_ym(s: str | None) -> str | None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="抽取 Reddit 频道数据里的价格或退市信息")
+    ap = argparse.ArgumentParser(description="按 mode 抽取 Reddit 频道数据的结构化信号（价格/退市/用量/能力）")
     ap.add_argument("--mode", choices=["price", "deprecation", "usage", "capability"], default="price",
                     help="price=价格信号（默认）；deprecation=模型退市；usage=token 用量；"
                          "capability=模型尺寸/能力发展")
