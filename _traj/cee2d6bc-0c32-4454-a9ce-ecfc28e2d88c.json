@@ -30878,19 +30878,1624 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 424,
+      "timestamp": "2026-06-06T14:37:08.641Z",
+      "source": "user",
+      "message": "各汇总表格增加时间维度",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 425,
+      "timestamp": "2026-06-06T14:37:24.441Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 350005,
+        "completion_tokens": 1441,
+        "cached_tokens": 350003,
+        "extra": {
+          "cache_creation_input_tokens": 175,
+          "cache_read_input_tokens": 350003,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 175,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1441,
+              "cache_read_input_tokens": 350003,
+              "cache_creation_input_tokens": 175,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 175
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 426,
+      "timestamp": "2026-06-06T14:37:24.442Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "给 realtask 各汇总表加时间维度。先按年（2023–2026，2026 含至 6 月）算各表的逐年分布。",
+      "metrics": {
+        "prompt_tokens": 350005,
+        "completion_tokens": 1441,
+        "cached_tokens": 350003,
+        "extra": {
+          "cache_creation_input_tokens": 175,
+          "cache_read_input_tokens": 350003,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 175,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1441,
+              "cache_read_input_tokens": 350003,
+              "cache_creation_input_tokens": 175,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 175
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 427,
+      "timestamp": "2026-06-06T14:37:28.518Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01TAbivuL63RwXJ8qNcYrS1S",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01TAbivuL63RwXJ8qNcYrS1S",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cd /Users/luwei/work/Controversy\npython3 -c \"\nimport csv\nfrom collections import Counter, defaultdict\ndef num(x):\n    try: return float(x)\n    except: return None\ndef yr(d): return d[:4] if d and len(d)>=4 else '?'\nrows=[r for r in csv.DictReader(open('data/reddit/realtask_events.csv')) if r['model']]\nYRS=['2023','2024','2025','2026']\n\ndef tab(name, keyfn, order):\n    g=defaultdict(Counter)\n    for r in rows:\n        k=keyfn(r)\n        if k is not None: g[k][yr(r['date'])]+=1\n    print(f'=== {name} ===')\n    print('  行            '+''.join(f'{y:>7}' for y in YRS)+'   总计')\n    for k in order:\n        row=g[k]; tot=sum(row.values())\n        if tot==0: continue\n        print(f'  {k:14}'+''.join(f'{row.get(y,0):>7}' for y in YRS)+f'{tot:>7}')\n    # 列合计\n    col={y:sum(g[k].get(y,0) for k in order) for y in YRS}\n    print(f'  {\\\"列合计\\\":12}'+''.join(f'{col[y]:>7}' for y in YRS)+f'{sum(col.values()):>7}')\n    print()\n\n# 1 outcome\ntab('outcome', lambda r:r['outcome'], ['success','partial','failed'])\n# 2 domain\ndoms=['coding','general','agentic','rag','data-extraction','writing','roleplay','summarization','voice','vision-ocr','research','home-automation','translation','other']\ntab('task_domain', lambda r:r['task_domain'] if r['task_domain'] in doms else 'other', doms)\n# 3 size\ndef szbk(r):\n    s=num(r['size_b'])\n    if s is None: return None\n    return '<3B' if s<3 else '3-7B' if s<8 else '8-14B' if s<16 else '20-34B' if s<36 else '>34B'\ntab('小模型尺寸档', szbk, ['<3B','3-7B','8-14B','20-34B','>34B'])\n# 4 replaced_cloud\ntab('replaced_cloud', lambda r:'替代云' if r['replaced_cloud']=='True' else '本地原生', ['替代云','本地原生'])\n\"",
+            "description": "Compute yearly breakdowns for each summary table"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01TAbivuL63RwXJ8qNcYrS1S",
+            "content": "=== outcome ===\n  行               2023   2024   2025   2026   总计\n  success            74    212    241    204    731\n  partial            28     61     85     47    221\n  failed              4      9     11      5     29\n  列合计             106    282    337    256    981\n\n=== task_domain ===\n  行               2023   2024   2025   2026   总计\n  coding             16     44     83     71    214\n  general            21     60     57     43    181\n  agentic            15     22     48     58    143\n  rag                16     35     25      6     82\n  data-extraction      4     22     22     13     61\n  writing            11     21     18      9     59\n  roleplay           13     18     18      7     56\n  summarization       5     19     10      5     39\n  voice               1      6     15     14     36\n  vision-ocr          1      7     14     14     36\n  research            1     11      6      6     24\n  home-automation      0      4      9      7     20\n  translation         0      6      6      1     13\n  other               2      7      6      2     17\n  列合计             106    282    337    256    981\n\n=== 小模型尺寸档 ===\n  行               2023   2024   2025   2026   总计\n  <3B                 1     18     42     28     89\n  3-7B               63     91     75     34    263\n  8-14B              27     93     76     26    222\n  20-34B             11     48    116    154    329\n  >34B                4     22     13      8     47\n  列合计             106    272    322    250    950\n\n=== replaced_cloud ===\n  行               2023   2024   2025   2026   总计\n  替代云                18     56     75     66    215\n  本地原生               88    226    262    190    766\n  列合计             106    282    337    256    981\n\n[stdout]\n=== outcome ===\n  行               2023   2024   2025   2026   总计\n  success            74    212    241    204    731\n  partial            28     61     85     47    221\n  failed              4      9     11      5     29\n  列合计             106    282    337    256    981\n\n=== task_domain ===\n  行               2023   2024   2025   2026   总计\n  coding             16     44     83     71    214\n  general            21     60     57     43    181\n  agentic            15     22     48     58    143\n  rag                16     35     25      6     82\n  data-extraction      4     22     22     13     61\n  writing            11     21     18      9     59\n  roleplay           13     18     18      7     56\n  summarization       5     19     10      5     39\n  voice               1      6     15     14     36\n  vision-ocr          1      7     14     14     36\n  research            1     11      6      6     24\n  home-automation      0      4      9      7     20\n  translation         0      6      6      1     13\n  other               2      7      6      2     17\n  列合计             106    282    337    256    981\n\n=== 小模型尺寸档 ===\n  行               2023   2024   2025   2026   总计\n  <3B                 1     18     42     28     89\n  3-7B               63     91     75     34    263\n  8-14B              27     93     76     26    222\n  20-34B             11     48    116    154    329\n  >34B                4     22     13      8     47\n  列合计             106    272    322    250    950\n\n=== replaced_cloud ===\n  行               2023   2024   2025   2026   总计\n  替代云                18     56     75     66    215\n  本地原生               88    226    262    190    766\n  列合计             106    282    337    256    981\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 350005,
+        "completion_tokens": 1441,
+        "cached_tokens": 350003,
+        "extra": {
+          "cache_creation_input_tokens": 175,
+          "cache_read_input_tokens": 350003,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 175,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1441,
+              "cache_read_input_tokens": 350003,
+              "cache_creation_input_tokens": 175,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 175
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "=== outcome ===\n  行               2023   2024   2025   2026   总计\n  success            74    212    241    204    731\n  partial            28     61     85     47    221\n  failed              4      9     11      5     29\n  列合计             106    282    337    256    981\n\n=== task_domain ===\n  行               2023   2024   2025   2026   总计\n  coding             16     44     83     71    214\n  general            21     60     57     43    181\n  agentic            15     22     48     58    143\n  rag                16     35     25      6     82\n  data-extraction      4     22     22     13     61\n  writing            11     21     18      9     59\n  roleplay           13     18     18      7     56\n  summarization       5     19     10      5     39\n  voice               1      6     15     14     36\n  vision-ocr          1      7     14     14     36\n  research            1     11      6      6     24\n  home-automation      0      4      9      7     20\n  translation         0      6      6      1     13\n  other               2      7      6      2     17\n  列合计             106    282    337    256    981\n\n=== 小模型尺寸档 ===\n  行               2023   2024   2025   2026   总计\n  <3B                 1     18     42     28     89\n  3-7B               63     91     75     34    263\n  8-14B              27     93     76     26    222\n  20-34B             11     48    116    154    329\n  >34B                4     22     13      8     47\n  列合计             106    272    322    250    950\n\n=== replaced_cloud ===\n  行               2023   2024   2025   2026   总计\n  替代云                18     56     75     66    215\n  本地原生               88    226    262    190    766\n  列合计             106    282    337    256    981",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TAbivuL63RwXJ8qNcYrS1S",
+            "type": "tool_result",
+            "content": "=== outcome ===\n  行               2023   2024   2025   2026   总计\n  success            74    212    241    204    731\n  partial            28     61     85     47    221\n  failed              4      9     11      5     29\n  列合计             106    282    337    256    981\n\n=== task_domain ===\n  行               2023   2024   2025   2026   总计\n  coding             16     44     83     71    214\n  general            21     60     57     43    181\n  agentic            15     22     48     58    143\n  rag                16     35     25      6     82\n  data-extraction      4     22     22     13     61\n  writing            11     21     18      9     59\n  roleplay           13     18     18      7     56\n  summarization       5     19     10      5     39\n  voice               1      6     15     14     36\n  vision-ocr          1      7     14     14     36\n  research            1     11      6      6     24\n  home-automation      0      4      9      7     20\n  translation         0      6      6      1     13\n  other               2      7      6      2     17\n  列合计             106    282    337    256    981\n\n=== 小模型尺寸档 ===\n  行               2023   2024   2025   2026   总计\n  <3B                 1     18     42     28     89\n  3-7B               63     91     75     34    263\n  8-14B              27     93     76     26    222\n  20-34B             11     48    116    154    329\n  >34B                4     22     13      8     47\n  列合计             106    272    322    250    950\n\n=== replaced_cloud ===\n  行               2023   2024   2025   2026   总计\n  替代云                18     56     75     66    215\n  本地原生               88    226    262    190    766\n  列合计             106    282    337    256    981",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "=== outcome ===\n  行               2023   2024   2025   2026   总计\n  success            74    212    241    204    731\n  partial            28     61     85     47    221\n  failed              4      9     11      5     29\n  列合计             106    282    337    256    981\n\n=== task_domain ===\n  行               2023   2024   2025   2026   总计\n  coding             16     44     83     71    214\n  general            21     60     57     43    181\n  agentic            15     22     48     58    143\n  rag                16     35     25      6     82\n  data-extraction      4     22     22     13     61\n  writing            11     21     18      9     59\n  roleplay           13     18     18      7     56\n  summarization       5     19     10      5     39\n  voice               1      6     15     14     36\n  vision-ocr          1      7     14     14     36\n  research            1     11      6      6     24\n  home-automation      0      4      9      7     20\n  translation         0      6      6      1     13\n  other               2      7      6      2     17\n  列合计             106    282    337    256    981\n\n=== 小模型尺寸档 ===\n  行               2023   2024   2025   2026   总计\n  <3B                 1     18     42     28     89\n  3-7B               63     91     75     34    263\n  8-14B              27     93     76     26    222\n  20-34B             11     48    116    154    329\n  >34B                4     22     13      8     47\n  列合计             106    272    322    250    950\n\n=== replaced_cloud ===\n  行               2023   2024   2025   2026   总计\n  替代云                18     56     75     66    215\n  本地原生               88    226    262    190    766\n  列合计             106    282    337    256    981",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TAbivuL63RwXJ8qNcYrS1S",
+            "type": "tool_result",
+            "content": "=== outcome ===\n  行               2023   2024   2025   2026   总计\n  success            74    212    241    204    731\n  partial            28     61     85     47    221\n  failed              4      9     11      5     29\n  列合计             106    282    337    256    981\n\n=== task_domain ===\n  行               2023   2024   2025   2026   总计\n  coding             16     44     83     71    214\n  general            21     60     57     43    181\n  agentic            15     22     48     58    143\n  rag                16     35     25      6     82\n  data-extraction      4     22     22     13     61\n  writing            11     21     18      9     59\n  roleplay           13     18     18      7     56\n  summarization       5     19     10      5     39\n  voice               1      6     15     14     36\n  vision-ocr          1      7     14     14     36\n  research            1     11      6      6     24\n  home-automation      0      4      9      7     20\n  translation         0      6      6      1     13\n  other               2      7      6      2     17\n  列合计             106    282    337    256    981\n\n=== 小模型尺寸档 ===\n  行               2023   2024   2025   2026   总计\n  <3B                 1     18     42     28     89\n  3-7B               63     91     75     34    263\n  8-14B              27     93     76     26    222\n  20-34B             11     48    116    154    329\n  >34B                4     22     13      8     47\n  列合计             106    272    322    250    950\n\n=== replaced_cloud ===\n  行               2023   2024   2025   2026   总计\n  替代云                18     56     75     66    215\n  本地原生               88    226    262    190    766\n  列合计             106    282    337    256    981",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "cd /Users/luwei/work/Controversy\npython3 -c \"\nimport csv\nfrom collections import Counter, defaultdict\ndef num(x):\n    try: return float(x)\n    except: return None\ndef yr(d): return d[:4] if d and len(d)>=4 else '?'\nrows=[r for r in csv.DictReader(open('data/reddit/realtask_events.csv')) if r['model']]\nYRS=['2023','2024','2025','2026']\n\ndef tab(name, keyfn, order):\n    g=defaultdict(Counter)\n    for r in rows:\n        k=keyfn(r)\n        if k is not None: g[k][yr(r['date'])]+=1\n    print(f'=== {name} ===')\n    print('  行            '+''.join(f'{y:>7}' for y in YRS)+'   总计')\n    for k in order:\n        row=g[k]; tot=sum(row.values())\n        if tot==0: continue\n        print(f'  {k:14}'+''.join(f'{row.get(y,0):>7}' for y in YRS)+f'{tot:>7}')\n    # 列合计\n    col={y:sum(g[k].get(y,0) for k in order) for y in YRS}\n    print(f'  {\\\"列合计\\\":12}'+''.join(f'{col[y]:>7}' for y in YRS)+f'{sum(col.values()):>7}')\n    print()\n\n# 1 outcome\ntab('outcome', lambda r:r['outcome'], ['success','partial','failed'])\n# 2 domain\ndoms=['coding','general','agentic','rag','data-extraction','writing','roleplay','summarization','voice','vision-ocr','research','home-automation','translation','other']\ntab('task_domain', lambda r:r['task_domain'] if r['task_domain'] in doms else 'other', doms)\n# 3 size\ndef szbk(r):\n    s=num(r['size_b'])\n    if s is None: return None\n    return '<3B' if s<3 else '3-7B' if s<8 else '8-14B' if s<16 else '20-34B' if s<36 else '>34B'\ntab('小模型尺寸档', szbk, ['<3B','3-7B','8-14B','20-34B','>34B'])\n# 4 replaced_cloud\ntab('replaced_cloud', lambda r:'替代云' if r['replaced_cloud']=='True' else '本地原生', ['替代云','本地原生'])\n\"",
+          "description": "Compute yearly breakdowns for each summary table"
+        }
+      }
+    },
+    {
+      "step_id": 428,
+      "timestamp": "2026-06-06T14:37:47.799Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 350180,
+        "completion_tokens": 1402,
+        "cached_tokens": 350178,
+        "extra": {
+          "cache_creation_input_tokens": 1978,
+          "cache_read_input_tokens": 350178,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1978,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1402,
+              "cache_read_input_tokens": 350178,
+              "cache_creation_input_tokens": 1978,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1978
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 429,
+      "timestamp": "2026-06-06T14:37:48.708Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "逐年趋势很清楚。读取文档里这几张表，逐个加年份列。",
+      "metrics": {
+        "prompt_tokens": 350180,
+        "completion_tokens": 1402,
+        "cached_tokens": 350178,
+        "extra": {
+          "cache_creation_input_tokens": 1978,
+          "cache_read_input_tokens": 350178,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1978,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1402,
+              "cache_read_input_tokens": 350178,
+              "cache_creation_input_tokens": 1978,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1978
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 430,
+      "timestamp": "2026-06-06T14:37:50.075Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01TVqCMWRQAfzTwtv4WEf3gq",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01TVqCMWRQAfzTwtv4WEf3gq",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "offset": 11,
+            "limit": 52
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01TVqCMWRQAfzTwtv4WEf3gq",
+            "content": "11\t| success（干成了/在用） | 731 | 75% |\n12\t| partial（够用但有保留） | 221 | 23% |\n13\t| failed（没干成/回退云） | 29 | 3% |\n14\t\n15\t最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n16\t\n17\t## 用小模型干的是什么活\n18\t\n19\t按任务域（success + partial 合计）：\n20\t\n21\t| 域 | 事件 | 典型用途 |\n22\t|---|---|---|\n23\t| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n24\t| general | 181 | 日常问答、改写、邮件、杂活助手 |\n25\t| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n26\t| rag | 82 | 本地文档问答、知识库检索 |\n27\t| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n28\t| writing | 59 | 文案润色、去 AI 味、长文写作 |\n29\t| roleplay | 56 | 角色扮演、互动叙事 |\n30\t| summarization | 39 | 会议/医疗/文档摘要 |\n31\t| voice | 36 | 本地语音助手 |\n32\t| vision-ocr | 36 | OCR、图像理解、视频分析 |\n33\t| research | 24 | 自动搜索抓取、带引用的研究报告 |\n34\t| home-automation | 20 | Home Assistant 智能家居 |\n35\t| translation | 13 | 专业领域翻译 |\n36\t\n37\t重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n38\t\n39\t各域 success 的高分实例（标题为原帖链接）：\n40\t\n41\t| 域 | 模型 | 任务 | 赞 | 帖 |\n42\t|---|---|---|---|---|\n43\t| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n44\t| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n45\t| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n46\t| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n47\t| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n48\t| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n49\t| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n50\t| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n51\t\n52\t## 多小才够用：3–14B 是真·主力，20–34B 压顶\n53\t\n54\t事件里小模型的尺寸分布：\n55\t\n56\t| 档 | 事件 |\n57\t|---|---|\n58\t| <3B | 89 |\n59\t| 3-7B | 263 |\n60\t| 8-14B | 222 |\n61\t| 20-34B | 329 |\n62\t| >34B | 47 |\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md\", \"content\": \"| success（干成了/在用） | 731 | 75% |\\n| partial（够用但有保留） | 221 | 23% |\\n| failed（没干成/回退云） | 29 | 3% |\\n\\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\\\"越级打闭源\\\"那批 31% 的质疑率——**\\\"我用 7B 把我的活干成了\\\"远比\\\"我的 7B 打赢 GPT-4\\\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\\\"干净\\\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\\n\\n## 用小模型干的是什么活\\n\\n按任务域（success + partial 合计）：\\n\\n| 域 | 事件 | 典型用途 |\\n|---|---|---|\\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\\n| rag | 82 | 本地文档问答、知识库检索 |\\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\\n| roleplay | 56 | 角色扮演、互动叙事 |\\n| summarization | 39 | 会议/医疗/文档摘要 |\\n| voice | 36 | 本地语音助手 |\\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\\n| home-automation | 20 | Home Assistant 智能家居 |\\n| translation | 13 | 专业领域翻译 |\\n\\n重心压在 **coding / agentic / rag / data-extraction** 这些\\\"每天真要干的脏活\\\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\\n\\n各域 success 的高分实例（标题为原帖链接）：\\n\\n| 域 | 模型 | 任务 | 赞 | 帖 |\\n|---|---|---|---|---|\\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\\n\\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\\n\\n事件里小模型的尺寸分布：\\n\\n| 档 | 事件 |\\n|---|---|\\n| <3B | 89 |\\n| 3-7B | 263 |\\n| 8-14B | 222 |\\n| 20-34B | 329 |\\n| >34B | 47 |\", \"numLines\": 52, \"startLine\": 11, \"totalLines\": 176}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 350180,
+        "completion_tokens": 1402,
+        "cached_tokens": 350178,
+        "extra": {
+          "cache_creation_input_tokens": 1978,
+          "cache_read_input_tokens": 350178,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1978,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1402,
+              "cache_read_input_tokens": 350178,
+              "cache_creation_input_tokens": 1978,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1978
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+              "content": "| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n\n## 用小模型干的是什么活\n\n按任务域（success + partial 合计）：\n\n| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n\n各域 success 的高分实例（标题为原帖链接）：\n\n| 域 | 模型 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\n\n事件里小模型的尺寸分布：\n\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |",
+              "numLines": 52,
+              "startLine": 11,
+              "totalLines": 176
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TVqCMWRQAfzTwtv4WEf3gq",
+            "type": "tool_result",
+            "content": "11\t| success（干成了/在用） | 731 | 75% |\n12\t| partial（够用但有保留） | 221 | 23% |\n13\t| failed（没干成/回退云） | 29 | 3% |\n14\t\n15\t最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n16\t\n17\t## 用小模型干的是什么活\n18\t\n19\t按任务域（success + partial 合计）：\n20\t\n21\t| 域 | 事件 | 典型用途 |\n22\t|---|---|---|\n23\t| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n24\t| general | 181 | 日常问答、改写、邮件、杂活助手 |\n25\t| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n26\t| rag | 82 | 本地文档问答、知识库检索 |\n27\t| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n28\t| writing | 59 | 文案润色、去 AI 味、长文写作 |\n29\t| roleplay | 56 | 角色扮演、互动叙事 |\n30\t| summarization | 39 | 会议/医疗/文档摘要 |\n31\t| voice | 36 | 本地语音助手 |\n32\t| vision-ocr | 36 | OCR、图像理解、视频分析 |\n33\t| research | 24 | 自动搜索抓取、带引用的研究报告 |\n34\t| home-automation | 20 | Home Assistant 智能家居 |\n35\t| translation | 13 | 专业领域翻译 |\n36\t\n37\t重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n38\t\n39\t各域 success 的高分实例（标题为原帖链接）：\n40\t\n41\t| 域 | 模型 | 任务 | 赞 | 帖 |\n42\t|---|---|---|---|---|\n43\t| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n44\t| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n45\t| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n46\t| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n47\t| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n48\t| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n49\t| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n50\t| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n51\t\n52\t## 多小才够用：3–14B 是真·主力，20–34B 压顶\n53\t\n54\t事件里小模型的尺寸分布：\n55\t\n56\t| 档 | 事件 |\n57\t|---|---|\n58\t| <3B | 89 |\n59\t| 3-7B | 263 |\n60\t| 8-14B | 222 |\n61\t| 20-34B | 329 |\n62\t| >34B | 47 |"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+              "content": "| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n\n## 用小模型干的是什么活\n\n按任务域（success + partial 合计）：\n\n| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n\n各域 success 的高分实例（标题为原帖链接）：\n\n| 域 | 模型 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\n\n事件里小模型的尺寸分布：\n\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |",
+              "numLines": 52,
+              "startLine": 11,
+              "totalLines": 176
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01TVqCMWRQAfzTwtv4WEf3gq",
+            "type": "tool_result",
+            "content": "11\t| success（干成了/在用） | 731 | 75% |\n12\t| partial（够用但有保留） | 221 | 23% |\n13\t| failed（没干成/回退云） | 29 | 3% |\n14\t\n15\t最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n16\t\n17\t## 用小模型干的是什么活\n18\t\n19\t按任务域（success + partial 合计）：\n20\t\n21\t| 域 | 事件 | 典型用途 |\n22\t|---|---|---|\n23\t| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n24\t| general | 181 | 日常问答、改写、邮件、杂活助手 |\n25\t| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n26\t| rag | 82 | 本地文档问答、知识库检索 |\n27\t| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n28\t| writing | 59 | 文案润色、去 AI 味、长文写作 |\n29\t| roleplay | 56 | 角色扮演、互动叙事 |\n30\t| summarization | 39 | 会议/医疗/文档摘要 |\n31\t| voice | 36 | 本地语音助手 |\n32\t| vision-ocr | 36 | OCR、图像理解、视频分析 |\n33\t| research | 24 | 自动搜索抓取、带引用的研究报告 |\n34\t| home-automation | 20 | Home Assistant 智能家居 |\n35\t| translation | 13 | 专业领域翻译 |\n36\t\n37\t重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n38\t\n39\t各域 success 的高分实例（标题为原帖链接）：\n40\t\n41\t| 域 | 模型 | 任务 | 赞 | 帖 |\n42\t|---|---|---|---|---|\n43\t| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n44\t| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n45\t| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n46\t| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n47\t| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n48\t| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n49\t| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n50\t| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n51\t\n52\t## 多小才够用：3–14B 是真·主力，20–34B 压顶\n53\t\n54\t事件里小模型的尺寸分布：\n55\t\n56\t| 档 | 事件 |\n57\t|---|---|\n58\t| <3B | 89 |\n59\t| 3-7B | 263 |\n60\t| 8-14B | 222 |\n61\t| 20-34B | 329 |\n62\t| >34B | 47 |"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+          "offset": 11,
+          "limit": 52
+        }
+      }
+    },
+    {
+      "step_id": 431,
+      "timestamp": "2026-06-06T14:37:58.632Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 352158,
+        "completion_tokens": 200,
+        "cached_tokens": 352156,
+        "extra": {
+          "cache_creation_input_tokens": 3311,
+          "cache_read_input_tokens": 352156,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3311,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 200,
+              "cache_read_input_tokens": 352156,
+              "cache_creation_input_tokens": 3311,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3311
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 432,
+      "timestamp": "2026-06-06T14:37:59.920Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01FiixF9YdvqZDq5qX95z2BJ",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01FiixF9YdvqZDq5qX95z2BJ",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "offset": 5,
+            "limit": 6
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01FiixF9YdvqZDq5qX95z2BJ",
+            "content": "5\t数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n6\t\n7\t## 核心：成的多，被质疑的极少\n8\t\n9\t| 结果 | 事件数 | 占比 |\n10\t|---|---|---|\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md\", \"content\": \"数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\\\"小模型够用\\\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\\n\\n## 核心：成的多，被质疑的极少\\n\\n| 结果 | 事件数 | 占比 |\\n|---|---|---|\", \"numLines\": 6, \"startLine\": 5, \"totalLines\": 176}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 352158,
+        "completion_tokens": 200,
+        "cached_tokens": 352156,
+        "extra": {
+          "cache_creation_input_tokens": 3311,
+          "cache_read_input_tokens": 352156,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3311,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 200,
+              "cache_read_input_tokens": 352156,
+              "cache_creation_input_tokens": 3311,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3311
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+              "content": "数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n\n## 核心：成的多，被质疑的极少\n\n| 结果 | 事件数 | 占比 |\n|---|---|---|",
+              "numLines": 6,
+              "startLine": 5,
+              "totalLines": 176
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01FiixF9YdvqZDq5qX95z2BJ",
+            "type": "tool_result",
+            "content": "5\t数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n6\t\n7\t## 核心：成的多，被质疑的极少\n8\t\n9\t| 结果 | 事件数 | 占比 |\n10\t|---|---|---|"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+              "content": "数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n\n## 核心：成的多，被质疑的极少\n\n| 结果 | 事件数 | 占比 |\n|---|---|---|",
+              "numLines": 6,
+              "startLine": 5,
+              "totalLines": 176
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01FiixF9YdvqZDq5qX95z2BJ",
+            "type": "tool_result",
+            "content": "5\t数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n6\t\n7\t## 核心：成的多，被质疑的极少\n8\t\n9\t| 结果 | 事件数 | 占比 |\n10\t|---|---|---|"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+          "offset": 5,
+          "limit": 6
+        }
+      }
+    },
+    {
+      "step_id": 433,
+      "timestamp": "2026-06-06T14:38:07.470Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Now let me update the 4 tables. First, the outcome table (add year columns):",
+      "metrics": {
+        "prompt_tokens": 355469,
+        "completion_tokens": 549,
+        "cached_tokens": 355467,
+        "extra": {
+          "cache_creation_input_tokens": 340,
+          "cache_read_input_tokens": 355467,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 340,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 549,
+              "cache_read_input_tokens": 355467,
+              "cache_creation_input_tokens": 340,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 340
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 434,
+      "timestamp": "2026-06-06T14:38:09.513Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01NiHksBNG2Co8J7gERkQ3Fw",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01NiHksBNG2Co8J7gERkQ3Fw",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "old_string": "| 结果 | 事件数 | 占比 |\n|---|---|---|\n| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应",
+            "new_string": "| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\n|---|---|---|---|---|---|---|\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\n\n\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\n\n最值得注意的是社区反应"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01NiHksBNG2Co8J7gERkQ3Fw",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md\", \"oldString\": \"| 结果 | 事件数 | 占比 |\\n|---|---|---|\\n| success（干成了/在用） | 731 | 75% |\\n| partial（够用但有保留） | 221 | 23% |\\n| failed（没干成/回退云） | 29 | 3% |\\n\\n最值得注意的是社区反应\", \"newString\": \"| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\\n|---|---|---|---|---|---|---|\\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\\n\\n\\\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\\n\\n最值得注意的是社区反应\", \"originalFile\": \"# 2026-06-06：小模型把活干成了——r/LocalLLaMA 里 913 帖\\\"用本地小模型完成真实任务\\\"的记录\\n\\n这是一条跟\\\"越级打大模型\\\"互补的线：不看小模型有没有在 benchmark 上打赢谁，只看**用户有没有真用它把一件实际的活干成**。从 r/LocalLLaMA 三年语料里筛出\\\"提到小模型（≤34B 档）+ 第一人称真实使用/搭建/替代云\\\"的帖子 2,509 条，经 Haiku 分类（过滤掉 52% 的硬件帖/求推荐/纯感想）、Sonnet 结构化抽取，得到 **913 个唯一帖、981 个真实任务事件**。\\n\\n数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\\\"小模型够用\\\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\\n\\n## 核心：成的多，被质疑的极少\\n\\n| 结果 | 事件数 | 占比 |\\n|---|---|---|\\n| success（干成了/在用） | 731 | 75% |\\n| partial（够用但有保留） | 221 | 23% |\\n| failed（没干成/回退云） | 29 | 3% |\\n\\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\\\"越级打闭源\\\"那批 31% 的质疑率——**\\\"我用 7B 把我的活干成了\\\"远比\\\"我的 7B 打赢 GPT-4\\\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\\\"干净\\\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\\n\\n## 用小模型干的是什么活\\n\\n按任务域（success + partial 合计）：\\n\\n| 域 | 事件 | 典型用途 |\\n|---|---|---|\\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\\n| rag | 82 | 本地文档问答、知识库检索 |\\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\\n| roleplay | 56 | 角色扮演、互动叙事 |\\n| summarization | 39 | 会议/医疗/文档摘要 |\\n| voice | 36 | 本地语音助手 |\\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\\n| home-automation | 20 | Home Assistant 智能家居 |\\n| translation | 13 | 专业领域翻译 |\\n\\n重心压在 **coding / agentic / rag / data-extraction** 这些\\\"每天真要干的脏活\\\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\\n\\n各域 success 的高分实例（标题为原帖链接）：\\n\\n| 域 | 模型 | 任务 | 赞 | 帖 |\\n|---|---|---|---|---|\\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\\n\\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\\n\\n事件里小模型的尺寸分布：\\n\\n| 档 | 事件 |\\n|---|---|\\n| <3B | 89 |\\n| 3-7B | 263 |\\n| 8-14B | 222 |\\n| 20-34B | 329 |\\n| >34B | 47 |\\n\\n跟\\\"越级打闭源\\\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\\\"通用一点的活\\\"（coding/agentic）的压顶档。\\n\\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\\n\\n## 22% 是\\\"把云退了\\\"：本地小模型替代付费订阅\\n\\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\\n\\n| 模型 | 替代了 | 任务 | 赞 | 帖 |\\n|---|---|---|---|---|\\n| Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\\n| DeepSeek-R1 distill 8B | ChatGPT Plus / o1 | 日常推理任务 | 652 | [Just canceled my ChatGPT Plus subscription](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\\n| Qwen 3.6 27B | cloud 订阅 | PySpark/Python 数据转换调试 + 工具调用 | 599 | [Qwen 3.6 27B is a BEAST](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\\n| DeepSeek-R1 14B | OpenAI Plus | 日常任务（含隐私敏感的个人财务） | 505 | [（同源讨论串）](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\\n| Phi-3 3B（微调） | GPT-4 | 医疗 SOAP 摘要 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\\n| Gemma 2B | Groq API | 本地文件自动分类整理 | 324 | [I built an AI file organizer … 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\\n| Qwen3.6-27B Q8 | GitHub Copilot | VSCode 日常编码辅助 | 251 | [（Qwen 3.6 27B 讨论串）](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\\n\\n替代理由里反复出现的不是\\\"更强\\\"，而是**省钱、隐私、可控、离线**——隐私敏感场景（个人财务、医疗、本地文件）尤其偏好本地。这跟越级声明的动机完全不同：越级求的是\\\"赢\\\"，替代云求的是\\\"够用且我自己说了算\\\"。\\n\\n## 已知局限\\n\\n1. 事件是**用户自述**，多为单人、单任务、自定义场景，可复现性弱；success 高有幸存者偏差（干不成的人较少专门发帖）。\\n2. 候选来自正则圈选（小模型尺寸 + 使用/搭建语言），会漏掉正文里才点明任务、标题平淡的帖。\\n3. 模型/尺寸以社区写法为准，少数\\\"3B 模型\\\"实际可能是 MoE 或带微调，按原帖口径记录。\\n4. 社区反应基于高赞回复 + 赞数代理，非完整评论树情感分析。\\n5. 替代云的\\\"替代\\\"是用户声明，未必长期坚持；只反映发帖当下的选择。\\n\\n## 信源\\n\\n[1] r/LocalLLaMA, \\\"I Created an AI Research Assistant that actually DOES research,\\\" Nov 2024. (1286 赞；Phi 3.8B/14B 自动搜索 + 带引用研究报告.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1gvlzug/>\\n\\n[2] r/LocalLLaMA, \\\"Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo,\\\" 2026. (887 赞；替代 Claude Code 的 agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1rll349/>\\n\\n[3] r/LocalLLaMA, \\\"I built a coding agent that gets 87% on benchmarks with a 4B parameter model,\\\" 2026. (754 赞；Gemma 4 4B + SmallCode agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tgecrq/>\\n\\n[4] r/LocalLLaMA, \\\"Just canceled my ChatGPT Plus subscription,\\\" Feb 2025. (652 赞；DeepSeek-R1 distill 8B 替代 ChatGPT Plus/o1.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1if5q97/>\\n\\n[5] r/LocalLLaMA, \\\"Qwen 3.6 27B is a BEAST,\\\" 2026. (599 赞；替代 cloud 订阅做数据转换调试.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1steip4/>\\n\\n[6] r/LocalLLaMA, \\\"3B Model Beating GPT4 on Medical Summarisation,\\\" May 2024. (332 赞；Phi-3 3B 微调做医疗 SOAP 摘要.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/>\\n\\n[7] r/LocalLLaMA, \\\"I built an AI file organizer that reads and sorts your files, running 100% on your device,\\\" Sep 2024. (324 赞；Gemma 2B 替代 Groq API.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1fn3aee/>\\n\\n[8] r/LocalLLaMA, \\\"I fine-tuned Llama 3.2 3B for transcript analysis,\\\" 2025. (231 赞；转录稿结构化抽取.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/>\\n\\n[9] r/LocalLLaMA, \\\"I made a game using LLMs (gpt-oss:20b) — Among LLMs,\\\" Sep 2025. (380 赞；20B 驱动多 agent 角色扮演游戏.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/>\\n\\n## 附录：所用 LLM prompt\\n\\n两段式抽取的 prompt 原文，供复现。候选口径：有小模型尺寸（≤34B 档）+ score≥5 + 第一人称使用/搭建/替代云语言（正则圈选），见 `scripts/prep_realtask.py`。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`），把结果写回对应输出批文件。\\n\\n### Haiku 分类 prompt\\n\\n```\\n你在给 r/LocalLLaMA 的帖子/评论做分类，判断它是否是\\\"用户报告用【小模型】把一个真实任务/活儿干成\\\"的记录（不要求跟别的模型对比）。\\n\\n用 Read 工具读取 JSON 数组：<输入批路径>\\n每条含 id, kind, title, snippet, sizes_b, model_families, hardware, score。\\n\\n给每条恰好一个 verdict：\\n- task_done：作者报告用某个本地小模型【成功】完成了真实任务，或用它搭起了能用的应用/agent/workflow/产品（如\\\"我用 Qwen 7B 做了个客服 bot，已上线\\\"\\\"本地 14B 跑我的 RAG 很好用\\\"）。\\n- task_partial：能用但有明显保留（\\\"够用但有限\\\"\\\"小任务行、复杂的不行\\\"\\\"需要很多调教\\\"）。\\n- task_failed：试了但【没干成】真实任务（\\\"实测不行\\\"\\\"达不到要求\\\"\\\"还是得用云\\\"）。\\n- not_task：不是真实任务完成报告——纯硬件/显存帖、\\\"该选哪个模型\\\"提问、教程、benchmark 跑分、发布通告、泛泛感想。\\n\\n再给 confidence：high / medium / low。\\n\\n判断要点：\\n- 核心是【真实任务/实际用途 + 用了具体的小模型】。光说\\\"这模型不错\\\"没有具体任务 → not_task。\\n- 纯讨论硬件能跑多大模型、求推荐、纯量化测试 → not_task。\\n- \\\"我把 ChatGPT 订阅退了，改用本地 X 干 Y\\\" → task_done（且后续 Sonnet 会记 replaced_cloud）。\\n\\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\\n格式：[{\\\"id\\\":\\\"...\\\",\\\"verdict\\\":\\\"...\\\",\\\"confidence\\\":\\\"...\\\"}, ...]，每条输入一个，id 一致。\\n文件里只写合法 JSON，无 markdown 代码块、无解释。\\n最终消息只回：\\\"b_NNN: <条数> done\\\"。\\n```\\n\\n### Sonnet 抽取 prompt\\n\\n```\\n你在从 r/LocalLLaMA 帖子/评论里抽取\\\"用户用【本地小模型】完成真实任务\\\"的结构化事件。\\n\\n用 Read 工具读取 JSON 数组：<输入批路径>\\n每条含：id, kind(post/comment), date, score, title, body(全文), top_replies(高赞回复=社区真实反应), sizes_b, active_params_b, model_families, hardware, haiku_verdict(初判：task_done/task_partial/task_failed)。\\n\\n对每条做两件事：\\n1) verdict_check：校验初判，回 confirmed / overturned / unclear。\\n2) 抽取 events 数组（一帖通常 1 个，可能 0 或多个）。每个 event：\\n   - model：用到的小模型精确名（如 \\\"Qwen2.5-7B\\\"、\\\"Gemma 3 12B\\\"、\\\"Llama 3.1 8B\\\"；尽量带版本/尺寸）\\n   - size_b：参数量(数字, B)；不确定填 null\\n   - active_size_b：MoE 活跃参数(数字)；否则 null\\n   - task：用一句话描述【真实任务/用途】（如 \\\"给法律 PDF 做摘要\\\"、\\\"家庭语音助手\\\"、\\\"编辑器里代码补全\\\"、\\\"客服 chatbot\\\"、\\\"批量数据清洗/分类\\\"）\\n   - task_domain：coding / agentic / writing / roleplay / rag / translation / data-extraction / vision-ocr / voice / home-automation / research / summarization / general / other\\n   - outcome：success（干成了/在用）/ partial（够用但有保留）/ failed（没干成、回退云）\\n   - replaced_cloud：true/false——是否明确【替代了云端/付费模型】来做这个任务\\n   - replaced_what：被替代的云模型/服务名（如 \\\"ChatGPT Plus\\\"、\\\"GPT-4 API\\\"、\\\"Claude\\\"）；无则 null\\n   - hardware：跑在什么硬件上（如 \\\"RTX 3060 12GB\\\"、\\\"M2 Max\\\"、\\\"CPU only\\\"）；未提填 null\\n   - is_self_built：true/false——是否围绕它【自己搭了】app/agent/tool/pipeline\\n   - community_reaction：看 top_replies + score —— endorsed（多数认同/也在用）/ skeptical（多数质疑）/ mixed / none\\n\\n抽取要点：\\n- 只抽【真实任务/实际用途】。纯感想、纯 benchmark、求推荐、硬件讨论 → events 留空 []。\\n- model 必须是被【用来干活】的那个小模型，不是顺带提到的对比对象。\\n- \\\"把 ChatGPT 退订，本地 X 干 Y\\\" → replaced_cloud=true, replaced_what=\\\"ChatGPT\\\", outcome=success。\\n\\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\\n格式：[{\\\"id\\\":\\\"...\\\",\\\"haiku_verdict\\\":\\\"...\\\",\\\"verdict_check\\\":\\\"...\\\",\\\"events\\\":[{...}]}, ...]，每条输入对应一个，id 一致，events 可为 []。\\n文件里只写合法 JSON，无 markdown 代码块、无解释。\\n最终消息只回：\\\"s_NNN: <事件数> events\\\"。\\n```\\n\", \"structuredPatch\": [{\"oldStart\": 6, \"oldLines\": 12, \"newStart\": 6, \"newLines\": 15, \"lines\": [\" \", \" ## 核心：成的多，被质疑的极少\", \" \", \"-| 结果 | 事件数 | 占比 |\", \"-|---|---|---|\", \"-| success（干成了/在用） | 731 | 75% |\", \"-| partial（够用但有保留） | 221 | 23% |\", \"-| failed（没干成/回退云） | 29 | 3% |\", \"+| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\", \"+|---|---|---|---|---|---|---|\", \"+| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\", \"+| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\", \"+| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\", \"+| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\", \" \", \"+\\\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\", \"+\", \" 最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\\\"越级打闭源\\\"那批 31% 的质疑率——**\\\"我用 7B 把我的活干成了\\\"远比\\\"我的 7B 打赢 GPT-4\\\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\\\"干净\\\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\", \" \", \" ## 用小模型干的是什么活\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 355469,
+        "completion_tokens": 549,
+        "cached_tokens": 355467,
+        "extra": {
+          "cache_creation_input_tokens": 340,
+          "cache_read_input_tokens": 355467,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 340,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 549,
+              "cache_read_input_tokens": 355467,
+              "cache_creation_input_tokens": 340,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 340
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "| 结果 | 事件数 | 占比 |\n|---|---|---|\n| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应",
+            "newString": "| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\n|---|---|---|---|---|---|---|\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\n\n\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\n\n最值得注意的是社区反应",
+            "originalFile": "# 2026-06-06：小模型把活干成了——r/LocalLLaMA 里 913 帖\"用本地小模型完成真实任务\"的记录\n\n这是一条跟\"越级打大模型\"互补的线：不看小模型有没有在 benchmark 上打赢谁，只看**用户有没有真用它把一件实际的活干成**。从 r/LocalLLaMA 三年语料里筛出\"提到小模型（≤34B 档）+ 第一人称真实使用/搭建/替代云\"的帖子 2,509 条，经 Haiku 分类（过滤掉 52% 的硬件帖/求推荐/纯感想）、Sonnet 结构化抽取，得到 **913 个唯一帖、981 个真实任务事件**。\n\n数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n\n## 核心：成的多，被质疑的极少\n\n| 结果 | 事件数 | 占比 |\n|---|---|---|\n| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n\n## 用小模型干的是什么活\n\n按任务域（success + partial 合计）：\n\n| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n\n各域 success 的高分实例（标题为原帖链接）：\n\n| 域 | 模型 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\n\n事件里小模型的尺寸分布：\n\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n\n## 22% 是\"把云退了\"：本地小模型替代付费订阅\n\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\n\n| 模型 | 替代了 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| DeepSeek-R1 distill 8B | ChatGPT Plus / o1 | 日常推理任务 | 652 | [Just canceled my ChatGPT Plus subscription](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Qwen 3.6 27B | cloud 订阅 | PySpark/Python 数据转换调试 + 工具调用 | 599 | [Qwen 3.6 27B is a BEAST](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n| DeepSeek-R1 14B | OpenAI Plus | 日常任务（含隐私敏感的个人财务） | 505 | [（同源讨论串）](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Phi-3 3B（微调） | GPT-4 | 医疗 SOAP 摘要 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| Gemma 2B | Groq API | 本地文件自动分类整理 | 324 | [I built an AI file organizer … 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n| Qwen3.6-27B Q8 | GitHub Copilot | VSCode 日常编码辅助 | 251 | [（Qwen 3.6 27B 讨论串）](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n\n替代理由里反复出现的不是\"更强\"，而是**省钱、隐私、可控、离线**——隐私敏感场景（个人财务、医疗、本地文件）尤其偏好本地。这跟越级声明的动机完全不同：越级求的是\"赢\"，替代云求的是\"够用且我自己说了算\"。\n\n## 已知局限\n\n1. 事件是**用户自述**，多为单人、单任务、自定义场景，可复现性弱；success 高有幸存者偏差（干不成的人较少专门发帖）。\n2. 候选来自正则圈选（小模型尺寸 + 使用/搭建语言），会漏掉正文里才点明任务、标题平淡的帖。\n3. 模型/尺寸以社区写法为准，少数\"3B 模型\"实际可能是 MoE 或带微调，按原帖口径记录。\n4. 社区反应基于高赞回复 + 赞数代理，非完整评论树情感分析。\n5. 替代云的\"替代\"是用户声明，未必长期坚持；只反映发帖当下的选择。\n\n## 信源\n\n[1] r/LocalLLaMA, \"I Created an AI Research Assistant that actually DOES research,\" Nov 2024. (1286 赞；Phi 3.8B/14B 自动搜索 + 带引用研究报告.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1gvlzug/>\n\n[2] r/LocalLLaMA, \"Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo,\" 2026. (887 赞；替代 Claude Code 的 agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1rll349/>\n\n[3] r/LocalLLaMA, \"I built a coding agent that gets 87% on benchmarks with a 4B parameter model,\" 2026. (754 赞；Gemma 4 4B + SmallCode agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tgecrq/>\n\n[4] r/LocalLLaMA, \"Just canceled my ChatGPT Plus subscription,\" Feb 2025. (652 赞；DeepSeek-R1 distill 8B 替代 ChatGPT Plus/o1.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1if5q97/>\n\n[5] r/LocalLLaMA, \"Qwen 3.6 27B is a BEAST,\" 2026. (599 赞；替代 cloud 订阅做数据转换调试.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1steip4/>\n\n[6] r/LocalLLaMA, \"3B Model Beating GPT4 on Medical Summarisation,\" May 2024. (332 赞；Phi-3 3B 微调做医疗 SOAP 摘要.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/>\n\n[7] r/LocalLLaMA, \"I built an AI file organizer that reads and sorts your files, running 100% on your device,\" Sep 2024. (324 赞；Gemma 2B 替代 Groq API.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1fn3aee/>\n\n[8] r/LocalLLaMA, \"I fine-tuned Llama 3.2 3B for transcript analysis,\" 2025. (231 赞；转录稿结构化抽取.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/>\n\n[9] r/LocalLLaMA, \"I made a game using LLMs (gpt-oss:20b) — Among LLMs,\" Sep 2025. (380 赞；20B 驱动多 agent 角色扮演游戏.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/>\n\n## 附录：所用 LLM prompt\n\n两段式抽取的 prompt 原文，供复现。候选口径：有小模型尺寸（≤34B 档）+ score≥5 + 第一人称使用/搭建/替代云语言（正则圈选），见 `scripts/prep_realtask.py`。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`），把结果写回对应输出批文件。\n\n### Haiku 分类 prompt\n\n```\n你在给 r/LocalLLaMA 的帖子/评论做分类，判断它是否是\"用户报告用【小模型】把一个真实任务/活儿干成\"的记录（不要求跟别的模型对比）。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含 id, kind, title, snippet, sizes_b, model_families, hardware, score。\n\n给每条恰好一个 verdict：\n- task_done：作者报告用某个本地小模型【成功】完成了真实任务，或用它搭起了能用的应用/agent/workflow/产品（如\"我用 Qwen 7B 做了个客服 bot，已上线\"\"本地 14B 跑我的 RAG 很好用\"）。\n- task_partial：能用但有明显保留（\"够用但有限\"\"小任务行、复杂的不行\"\"需要很多调教\"）。\n- task_failed：试了但【没干成】真实任务（\"实测不行\"\"达不到要求\"\"还是得用云\"）。\n- not_task：不是真实任务完成报告——纯硬件/显存帖、\"该选哪个模型\"提问、教程、benchmark 跑分、发布通告、泛泛感想。\n\n再给 confidence：high / medium / low。\n\n判断要点：\n- 核心是【真实任务/实际用途 + 用了具体的小模型】。光说\"这模型不错\"没有具体任务 → not_task。\n- 纯讨论硬件能跑多大模型、求推荐、纯量化测试 → not_task。\n- \"我把 ChatGPT 订阅退了，改用本地 X 干 Y\" → task_done（且后续 Sonnet 会记 replaced_cloud）。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"verdict\":\"...\",\"confidence\":\"...\"}, ...]，每条输入一个，id 一致。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"b_NNN: <条数> done\"。\n```\n\n### Sonnet 抽取 prompt\n\n```\n你在从 r/LocalLLaMA 帖子/评论里抽取\"用户用【本地小模型】完成真实任务\"的结构化事件。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含：id, kind(post/comment), date, score, title, body(全文), top_replies(高赞回复=社区真实反应), sizes_b, active_params_b, model_families, hardware, haiku_verdict(初判：task_done/task_partial/task_failed)。\n\n对每条做两件事：\n1) verdict_check：校验初判，回 confirmed / overturned / unclear。\n2) 抽取 events 数组（一帖通常 1 个，可能 0 或多个）。每个 event：\n   - model：用到的小模型精确名（如 \"Qwen2.5-7B\"、\"Gemma 3 12B\"、\"Llama 3.1 8B\"；尽量带版本/尺寸）\n   - size_b：参数量(数字, B)；不确定填 null\n   - active_size_b：MoE 活跃参数(数字)；否则 null\n   - task：用一句话描述【真实任务/用途】（如 \"给法律 PDF 做摘要\"、\"家庭语音助手\"、\"编辑器里代码补全\"、\"客服 chatbot\"、\"批量数据清洗/分类\"）\n   - task_domain：coding / agentic / writing / roleplay / rag / translation / data-extraction / vision-ocr / voice / home-automation / research / summarization / general / other\n   - outcome：success（干成了/在用）/ partial（够用但有保留）/ failed（没干成、回退云）\n   - replaced_cloud：true/false——是否明确【替代了云端/付费模型】来做这个任务\n   - replaced_what：被替代的云模型/服务名（如 \"ChatGPT Plus\"、\"GPT-4 API\"、\"Claude\"）；无则 null\n   - hardware：跑在什么硬件上（如 \"RTX 3060 12GB\"、\"M2 Max\"、\"CPU only\"）；未提填 null\n   - is_self_built：true/false——是否围绕它【自己搭了】app/agent/tool/pipeline\n   - community_reaction：看 top_replies + score —— endorsed（多数认同/也在用）/ skeptical（多数质疑）/ mixed / none\n\n抽取要点：\n- 只抽【真实任务/实际用途】。纯感想、纯 benchmark、求推荐、硬件讨论 → events 留空 []。\n- model 必须是被【用来干活】的那个小模型，不是顺带提到的对比对象。\n- \"把 ChatGPT 退订，本地 X 干 Y\" → replaced_cloud=true, replaced_what=\"ChatGPT\", outcome=success。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"haiku_verdict\":\"...\",\"verdict_check\":\"...\",\"events\":[{...}]}, ...]，每条输入对应一个，id 一致，events 可为 []。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"s_NNN: <事件数> events\"。\n```\n",
+            "structuredPatch": [
+              {
+                "oldStart": 6,
+                "oldLines": 12,
+                "newStart": 6,
+                "newLines": 15,
+                "lines": [
+                  " ",
+                  " ## 核心：成的多，被质疑的极少",
+                  " ",
+                  "-| 结果 | 事件数 | 占比 |",
+                  "-|---|---|---|",
+                  "-| success（干成了/在用） | 731 | 75% |",
+                  "-| partial（够用但有保留） | 221 | 23% |",
+                  "-| failed（没干成/回退云） | 29 | 3% |",
+                  "+| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |",
+                  "+|---|---|---|---|---|---|---|",
+                  "+| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |",
+                  "+| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |",
+                  "+| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |",
+                  "+| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |",
+                  " ",
+                  "+\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。",
+                  "+",
+                  " 最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）",
+                  " ",
+                  " ## 用小模型干的是什么活"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NiHksBNG2Co8J7gERkQ3Fw",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "| 结果 | 事件数 | 占比 |\n|---|---|---|\n| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应",
+            "newString": "| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\n|---|---|---|---|---|---|---|\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\n\n\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\n\n最值得注意的是社区反应",
+            "originalFile": "# 2026-06-06：小模型把活干成了——r/LocalLLaMA 里 913 帖\"用本地小模型完成真实任务\"的记录\n\n这是一条跟\"越级打大模型\"互补的线：不看小模型有没有在 benchmark 上打赢谁，只看**用户有没有真用它把一件实际的活干成**。从 r/LocalLLaMA 三年语料里筛出\"提到小模型（≤34B 档）+ 第一人称真实使用/搭建/替代云\"的帖子 2,509 条，经 Haiku 分类（过滤掉 52% 的硬件帖/求推荐/纯感想）、Sonnet 结构化抽取，得到 **913 个唯一帖、981 个真实任务事件**。\n\n数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n\n## 核心：成的多，被质疑的极少\n\n| 结果 | 事件数 | 占比 |\n|---|---|---|\n| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n\n## 用小模型干的是什么活\n\n按任务域（success + partial 合计）：\n\n| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n\n各域 success 的高分实例（标题为原帖链接）：\n\n| 域 | 模型 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\n\n事件里小模型的尺寸分布：\n\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n\n## 22% 是\"把云退了\"：本地小模型替代付费订阅\n\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\n\n| 模型 | 替代了 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| DeepSeek-R1 distill 8B | ChatGPT Plus / o1 | 日常推理任务 | 652 | [Just canceled my ChatGPT Plus subscription](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Qwen 3.6 27B | cloud 订阅 | PySpark/Python 数据转换调试 + 工具调用 | 599 | [Qwen 3.6 27B is a BEAST](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n| DeepSeek-R1 14B | OpenAI Plus | 日常任务（含隐私敏感的个人财务） | 505 | [（同源讨论串）](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Phi-3 3B（微调） | GPT-4 | 医疗 SOAP 摘要 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| Gemma 2B | Groq API | 本地文件自动分类整理 | 324 | [I built an AI file organizer … 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n| Qwen3.6-27B Q8 | GitHub Copilot | VSCode 日常编码辅助 | 251 | [（Qwen 3.6 27B 讨论串）](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n\n替代理由里反复出现的不是\"更强\"，而是**省钱、隐私、可控、离线**——隐私敏感场景（个人财务、医疗、本地文件）尤其偏好本地。这跟越级声明的动机完全不同：越级求的是\"赢\"，替代云求的是\"够用且我自己说了算\"。\n\n## 已知局限\n\n1. 事件是**用户自述**，多为单人、单任务、自定义场景，可复现性弱；success 高有幸存者偏差（干不成的人较少专门发帖）。\n2. 候选来自正则圈选（小模型尺寸 + 使用/搭建语言），会漏掉正文里才点明任务、标题平淡的帖。\n3. 模型/尺寸以社区写法为准，少数\"3B 模型\"实际可能是 MoE 或带微调，按原帖口径记录。\n4. 社区反应基于高赞回复 + 赞数代理，非完整评论树情感分析。\n5. 替代云的\"替代\"是用户声明，未必长期坚持；只反映发帖当下的选择。\n\n## 信源\n\n[1] r/LocalLLaMA, \"I Created an AI Research Assistant that actually DOES research,\" Nov 2024. (1286 赞；Phi 3.8B/14B 自动搜索 + 带引用研究报告.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1gvlzug/>\n\n[2] r/LocalLLaMA, \"Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo,\" 2026. (887 赞；替代 Claude Code 的 agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1rll349/>\n\n[3] r/LocalLLaMA, \"I built a coding agent that gets 87% on benchmarks with a 4B parameter model,\" 2026. (754 赞；Gemma 4 4B + SmallCode agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tgecrq/>\n\n[4] r/LocalLLaMA, \"Just canceled my ChatGPT Plus subscription,\" Feb 2025. (652 赞；DeepSeek-R1 distill 8B 替代 ChatGPT Plus/o1.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1if5q97/>\n\n[5] r/LocalLLaMA, \"Qwen 3.6 27B is a BEAST,\" 2026. (599 赞；替代 cloud 订阅做数据转换调试.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1steip4/>\n\n[6] r/LocalLLaMA, \"3B Model Beating GPT4 on Medical Summarisation,\" May 2024. (332 赞；Phi-3 3B 微调做医疗 SOAP 摘要.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/>\n\n[7] r/LocalLLaMA, \"I built an AI file organizer that reads and sorts your files, running 100% on your device,\" Sep 2024. (324 赞；Gemma 2B 替代 Groq API.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1fn3aee/>\n\n[8] r/LocalLLaMA, \"I fine-tuned Llama 3.2 3B for transcript analysis,\" 2025. (231 赞；转录稿结构化抽取.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/>\n\n[9] r/LocalLLaMA, \"I made a game using LLMs (gpt-oss:20b) — Among LLMs,\" Sep 2025. (380 赞；20B 驱动多 agent 角色扮演游戏.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/>\n\n## 附录：所用 LLM prompt\n\n两段式抽取的 prompt 原文，供复现。候选口径：有小模型尺寸（≤34B 档）+ score≥5 + 第一人称使用/搭建/替代云语言（正则圈选），见 `scripts/prep_realtask.py`。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`），把结果写回对应输出批文件。\n\n### Haiku 分类 prompt\n\n```\n你在给 r/LocalLLaMA 的帖子/评论做分类，判断它是否是\"用户报告用【小模型】把一个真实任务/活儿干成\"的记录（不要求跟别的模型对比）。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含 id, kind, title, snippet, sizes_b, model_families, hardware, score。\n\n给每条恰好一个 verdict：\n- task_done：作者报告用某个本地小模型【成功】完成了真实任务，或用它搭起了能用的应用/agent/workflow/产品（如\"我用 Qwen 7B 做了个客服 bot，已上线\"\"本地 14B 跑我的 RAG 很好用\"）。\n- task_partial：能用但有明显保留（\"够用但有限\"\"小任务行、复杂的不行\"\"需要很多调教\"）。\n- task_failed：试了但【没干成】真实任务（\"实测不行\"\"达不到要求\"\"还是得用云\"）。\n- not_task：不是真实任务完成报告——纯硬件/显存帖、\"该选哪个模型\"提问、教程、benchmark 跑分、发布通告、泛泛感想。\n\n再给 confidence：high / medium / low。\n\n判断要点：\n- 核心是【真实任务/实际用途 + 用了具体的小模型】。光说\"这模型不错\"没有具体任务 → not_task。\n- 纯讨论硬件能跑多大模型、求推荐、纯量化测试 → not_task。\n- \"我把 ChatGPT 订阅退了，改用本地 X 干 Y\" → task_done（且后续 Sonnet 会记 replaced_cloud）。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"verdict\":\"...\",\"confidence\":\"...\"}, ...]，每条输入一个，id 一致。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"b_NNN: <条数> done\"。\n```\n\n### Sonnet 抽取 prompt\n\n```\n你在从 r/LocalLLaMA 帖子/评论里抽取\"用户用【本地小模型】完成真实任务\"的结构化事件。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含：id, kind(post/comment), date, score, title, body(全文), top_replies(高赞回复=社区真实反应), sizes_b, active_params_b, model_families, hardware, haiku_verdict(初判：task_done/task_partial/task_failed)。\n\n对每条做两件事：\n1) verdict_check：校验初判，回 confirmed / overturned / unclear。\n2) 抽取 events 数组（一帖通常 1 个，可能 0 或多个）。每个 event：\n   - model：用到的小模型精确名（如 \"Qwen2.5-7B\"、\"Gemma 3 12B\"、\"Llama 3.1 8B\"；尽量带版本/尺寸）\n   - size_b：参数量(数字, B)；不确定填 null\n   - active_size_b：MoE 活跃参数(数字)；否则 null\n   - task：用一句话描述【真实任务/用途】（如 \"给法律 PDF 做摘要\"、\"家庭语音助手\"、\"编辑器里代码补全\"、\"客服 chatbot\"、\"批量数据清洗/分类\"）\n   - task_domain：coding / agentic / writing / roleplay / rag / translation / data-extraction / vision-ocr / voice / home-automation / research / summarization / general / other\n   - outcome：success（干成了/在用）/ partial（够用但有保留）/ failed（没干成、回退云）\n   - replaced_cloud：true/false——是否明确【替代了云端/付费模型】来做这个任务\n   - replaced_what：被替代的云模型/服务名（如 \"ChatGPT Plus\"、\"GPT-4 API\"、\"Claude\"）；无则 null\n   - hardware：跑在什么硬件上（如 \"RTX 3060 12GB\"、\"M2 Max\"、\"CPU only\"）；未提填 null\n   - is_self_built：true/false——是否围绕它【自己搭了】app/agent/tool/pipeline\n   - community_reaction：看 top_replies + score —— endorsed（多数认同/也在用）/ skeptical（多数质疑）/ mixed / none\n\n抽取要点：\n- 只抽【真实任务/实际用途】。纯感想、纯 benchmark、求推荐、硬件讨论 → events 留空 []。\n- model 必须是被【用来干活】的那个小模型，不是顺带提到的对比对象。\n- \"把 ChatGPT 退订，本地 X 干 Y\" → replaced_cloud=true, replaced_what=\"ChatGPT\", outcome=success。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"haiku_verdict\":\"...\",\"verdict_check\":\"...\",\"events\":[{...}]}, ...]，每条输入对应一个，id 一致，events 可为 []。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"s_NNN: <事件数> events\"。\n```\n",
+            "structuredPatch": [
+              {
+                "oldStart": 6,
+                "oldLines": 12,
+                "newStart": 6,
+                "newLines": 15,
+                "lines": [
+                  " ",
+                  " ## 核心：成的多，被质疑的极少",
+                  " ",
+                  "-| 结果 | 事件数 | 占比 |",
+                  "-|---|---|---|",
+                  "-| success（干成了/在用） | 731 | 75% |",
+                  "-| partial（够用但有保留） | 221 | 23% |",
+                  "-| failed（没干成/回退云） | 29 | 3% |",
+                  "+| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |",
+                  "+|---|---|---|---|---|---|---|",
+                  "+| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |",
+                  "+| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |",
+                  "+| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |",
+                  "+| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |",
+                  " ",
+                  "+\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。",
+                  "+",
+                  " 最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）",
+                  " ",
+                  " ## 用小模型干的是什么活"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NiHksBNG2Co8J7gERkQ3Fw",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+          "old_string": "| 结果 | 事件数 | 占比 |\n|---|---|---|\n| success（干成了/在用） | 731 | 75% |\n| partial（够用但有保留） | 221 | 23% |\n| failed（没干成/回退云） | 29 | 3% |\n\n最值得注意的是社区反应",
+          "new_string": "| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\n|---|---|---|---|---|---|---|\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\n\n\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\n\n最值得注意的是社区反应"
+        }
+      }
+    },
+    {
+      "step_id": 435,
+      "timestamp": "2026-06-06T14:38:24.243Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Now the domain table — add year columns (keep 典型用途):",
+      "metrics": {
+        "prompt_tokens": 355938,
+        "completion_tokens": 1512,
+        "cached_tokens": 355807,
+        "extra": {
+          "cache_creation_input_tokens": 618,
+          "cache_read_input_tokens": 355807,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 618,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 1512,
+              "cache_read_input_tokens": 355807,
+              "cache_creation_input_tokens": 618,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 618
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 436,
+      "timestamp": "2026-06-06T14:38:29.055Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_0121p9N4FGDTMKdqFJQsQ72L",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_0121p9N4FGDTMKdqFJQsQ72L",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "old_string": "| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。",
+            "new_string": "| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |\n|---|---|---|---|---|---|---|\n| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |\n| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |\n| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |\n| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |\n| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |\n| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |\n\n时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\"聊天/检索\"明显移向 **coding + agentic** 这些\"每天真要干的脏活\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\* 2026 仅 1–6 月）。"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_0121p9N4FGDTMKdqFJQsQ72L",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md\", \"oldString\": \"| 域 | 事件 | 典型用途 |\\n|---|---|---|\\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\\n| rag | 82 | 本地文档问答、知识库检索 |\\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\\n| roleplay | 56 | 角色扮演、互动叙事 |\\n| summarization | 39 | 会议/医疗/文档摘要 |\\n| voice | 36 | 本地语音助手 |\\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\\n| home-automation | 20 | Home Assistant 智能家居 |\\n| translation | 13 | 专业领域翻译 |\\n\\n重心压在 **coding / agentic / rag / data-extraction** 这些\\\"每天真要干的脏活\\\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\", \"newString\": \"| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |\\n|---|---|---|---|---|---|---|\\n| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\\n| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |\\n| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\\n| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |\\n| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |\\n| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |\\n| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |\\n| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |\\n| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |\\n| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |\\n| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |\\n| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |\\n| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |\\n\\n时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\\\"聊天/检索\\\"明显移向 **coding + agentic** 这些\\\"每天真要干的脏活\\\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\\\* 2026 仅 1–6 月）。\", \"originalFile\": \"# 2026-06-06：小模型把活干成了——r/LocalLLaMA 里 913 帖\\\"用本地小模型完成真实任务\\\"的记录\\n\\n这是一条跟\\\"越级打大模型\\\"互补的线：不看小模型有没有在 benchmark 上打赢谁，只看**用户有没有真用它把一件实际的活干成**。从 r/LocalLLaMA 三年语料里筛出\\\"提到小模型（≤34B 档）+ 第一人称真实使用/搭建/替代云\\\"的帖子 2,509 条，经 Haiku 分类（过滤掉 52% 的硬件帖/求推荐/纯感想）、Sonnet 结构化抽取，得到 **913 个唯一帖、981 个真实任务事件**。\\n\\n数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\\\"小模型够用\\\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\\n\\n## 核心：成的多，被质疑的极少\\n\\n| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\\n|---|---|---|---|---|---|---|\\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\\n\\n\\\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\\n\\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\\\"越级打闭源\\\"那批 31% 的质疑率——**\\\"我用 7B 把我的活干成了\\\"远比\\\"我的 7B 打赢 GPT-4\\\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\\\"干净\\\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\\n\\n## 用小模型干的是什么活\\n\\n按任务域（success + partial 合计）：\\n\\n| 域 | 事件 | 典型用途 |\\n|---|---|---|\\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\\n| rag | 82 | 本地文档问答、知识库检索 |\\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\\n| roleplay | 56 | 角色扮演、互动叙事 |\\n| summarization | 39 | 会议/医疗/文档摘要 |\\n| voice | 36 | 本地语音助手 |\\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\\n| home-automation | 20 | Home Assistant 智能家居 |\\n| translation | 13 | 专业领域翻译 |\\n\\n重心压在 **coding / agentic / rag / data-extraction** 这些\\\"每天真要干的脏活\\\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\\n\\n各域 success 的高分实例（标题为原帖链接）：\\n\\n| 域 | 模型 | 任务 | 赞 | 帖 |\\n|---|---|---|---|---|\\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\\n\\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\\n\\n事件里小模型的尺寸分布：\\n\\n| 档 | 事件 |\\n|---|---|\\n| <3B | 89 |\\n| 3-7B | 263 |\\n| 8-14B | 222 |\\n| 20-34B | 329 |\\n| >34B | 47 |\\n\\n跟\\\"越级打闭源\\\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\\\"通用一点的活\\\"（coding/agentic）的压顶档。\\n\\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\\n\\n## 22% 是\\\"把云退了\\\"：本地小模型替代付费订阅\\n\\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\\n\\n| 模型 | 替代了 | 任务 | 赞 | 帖 |\\n|---|---|---|---|---|\\n| Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\\n| DeepSeek-R1 distill 8B | ChatGPT Plus / o1 | 日常推理任务 | 652 | [Just canceled my ChatGPT Plus subscription](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\\n| Qwen 3.6 27B | cloud 订阅 | PySpark/Python 数据转换调试 + 工具调用 | 599 | [Qwen 3.6 27B is a BEAST](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\\n| DeepSeek-R1 14B | OpenAI Plus | 日常任务（含隐私敏感的个人财务） | 505 | [（同源讨论串）](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\\n| Phi-3 3B（微调） | GPT-4 | 医疗 SOAP 摘要 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\\n| Gemma 2B | Groq API | 本地文件自动分类整理 | 324 | [I built an AI file organizer … 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\\n| Qwen3.6-27B Q8 | GitHub Copilot | VSCode 日常编码辅助 | 251 | [（Qwen 3.6 27B 讨论串）](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\\n\\n替代理由里反复出现的不是\\\"更强\\\"，而是**省钱、隐私、可控、离线**——隐私敏感场景（个人财务、医疗、本地文件）尤其偏好本地。这跟越级声明的动机完全不同：越级求的是\\\"赢\\\"，替代云求的是\\\"够用且我自己说了算\\\"。\\n\\n## 已知局限\\n\\n1. 事件是**用户自述**，多为单人、单任务、自定义场景，可复现性弱；success 高有幸存者偏差（干不成的人较少专门发帖）。\\n2. 候选来自正则圈选（小模型尺寸 + 使用/搭建语言），会漏掉正文里才点明任务、标题平淡的帖。\\n3. 模型/尺寸以社区写法为准，少数\\\"3B 模型\\\"实际可能是 MoE 或带微调，按原帖口径记录。\\n4. 社区反应基于高赞回复 + 赞数代理，非完整评论树情感分析。\\n5. 替代云的\\\"替代\\\"是用户声明，未必长期坚持；只反映发帖当下的选择。\\n\\n## 信源\\n\\n[1] r/LocalLLaMA, \\\"I Created an AI Research Assistant that actually DOES research,\\\" Nov 2024. (1286 赞；Phi 3.8B/14B 自动搜索 + 带引用研究报告.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1gvlzug/>\\n\\n[2] r/LocalLLaMA, \\\"Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo,\\\" 2026. (887 赞；替代 Claude Code 的 agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1rll349/>\\n\\n[3] r/LocalLLaMA, \\\"I built a coding agent that gets 87% on benchmarks with a 4B parameter model,\\\" 2026. (754 赞；Gemma 4 4B + SmallCode agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tgecrq/>\\n\\n[4] r/LocalLLaMA, \\\"Just canceled my ChatGPT Plus subscription,\\\" Feb 2025. (652 赞；DeepSeek-R1 distill 8B 替代 ChatGPT Plus/o1.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1if5q97/>\\n\\n[5] r/LocalLLaMA, \\\"Qwen 3.6 27B is a BEAST,\\\" 2026. (599 赞；替代 cloud 订阅做数据转换调试.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1steip4/>\\n\\n[6] r/LocalLLaMA, \\\"3B Model Beating GPT4 on Medical Summarisation,\\\" May 2024. (332 赞；Phi-3 3B 微调做医疗 SOAP 摘要.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/>\\n\\n[7] r/LocalLLaMA, \\\"I built an AI file organizer that reads and sorts your files, running 100% on your device,\\\" Sep 2024. (324 赞；Gemma 2B 替代 Groq API.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1fn3aee/>\\n\\n[8] r/LocalLLaMA, \\\"I fine-tuned Llama 3.2 3B for transcript analysis,\\\" 2025. (231 赞；转录稿结构化抽取.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/>\\n\\n[9] r/LocalLLaMA, \\\"I made a game using LLMs (gpt-oss:20b) — Among LLMs,\\\" Sep 2025. (380 赞；20B 驱动多 agent 角色扮演游戏.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/>\\n\\n## 附录：所用 LLM prompt\\n\\n两段式抽取的 prompt 原文，供复现。候选口径：有小模型尺寸（≤34B 档）+ score≥5 + 第一人称使用/搭建/替代云语言（正则圈选），见 `scripts/prep_realtask.py`。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`），把结果写回对应输出批文件。\\n\\n### Haiku 分类 prompt\\n\\n```\\n你在给 r/LocalLLaMA 的帖子/评论做分类，判断它是否是\\\"用户报告用【小模型】把一个真实任务/活儿干成\\\"的记录（不要求跟别的模型对比）。\\n\\n用 Read 工具读取 JSON 数组：<输入批路径>\\n每条含 id, kind, title, snippet, sizes_b, model_families, hardware, score。\\n\\n给每条恰好一个 verdict：\\n- task_done：作者报告用某个本地小模型【成功】完成了真实任务，或用它搭起了能用的应用/agent/workflow/产品（如\\\"我用 Qwen 7B 做了个客服 bot，已上线\\\"\\\"本地 14B 跑我的 RAG 很好用\\\"）。\\n- task_partial：能用但有明显保留（\\\"够用但有限\\\"\\\"小任务行、复杂的不行\\\"\\\"需要很多调教\\\"）。\\n- task_failed：试了但【没干成】真实任务（\\\"实测不行\\\"\\\"达不到要求\\\"\\\"还是得用云\\\"）。\\n- not_task：不是真实任务完成报告——纯硬件/显存帖、\\\"该选哪个模型\\\"提问、教程、benchmark 跑分、发布通告、泛泛感想。\\n\\n再给 confidence：high / medium / low。\\n\\n判断要点：\\n- 核心是【真实任务/实际用途 + 用了具体的小模型】。光说\\\"这模型不错\\\"没有具体任务 → not_task。\\n- 纯讨论硬件能跑多大模型、求推荐、纯量化测试 → not_task。\\n- \\\"我把 ChatGPT 订阅退了，改用本地 X 干 Y\\\" → task_done（且后续 Sonnet 会记 replaced_cloud）。\\n\\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\\n格式：[{\\\"id\\\":\\\"...\\\",\\\"verdict\\\":\\\"...\\\",\\\"confidence\\\":\\\"...\\\"}, ...]，每条输入一个，id 一致。\\n文件里只写合法 JSON，无 markdown 代码块、无解释。\\n最终消息只回：\\\"b_NNN: <条数> done\\\"。\\n```\\n\\n### Sonnet 抽取 prompt\\n\\n```\\n你在从 r/LocalLLaMA 帖子/评论里抽取\\\"用户用【本地小模型】完成真实任务\\\"的结构化事件。\\n\\n用 Read 工具读取 JSON 数组：<输入批路径>\\n每条含：id, kind(post/comment), date, score, title, body(全文), top_replies(高赞回复=社区真实反应), sizes_b, active_params_b, model_families, hardware, haiku_verdict(初判：task_done/task_partial/task_failed)。\\n\\n对每条做两件事：\\n1) verdict_check：校验初判，回 confirmed / overturned / unclear。\\n2) 抽取 events 数组（一帖通常 1 个，可能 0 或多个）。每个 event：\\n   - model：用到的小模型精确名（如 \\\"Qwen2.5-7B\\\"、\\\"Gemma 3 12B\\\"、\\\"Llama 3.1 8B\\\"；尽量带版本/尺寸）\\n   - size_b：参数量(数字, B)；不确定填 null\\n   - active_size_b：MoE 活跃参数(数字)；否则 null\\n   - task：用一句话描述【真实任务/用途】（如 \\\"给法律 PDF 做摘要\\\"、\\\"家庭语音助手\\\"、\\\"编辑器里代码补全\\\"、\\\"客服 chatbot\\\"、\\\"批量数据清洗/分类\\\"）\\n   - task_domain：coding / agentic / writing / roleplay / rag / translation / data-extraction / vision-ocr / voice / home-automation / research / summarization / general / other\\n   - outcome：success（干成了/在用）/ partial（够用但有保留）/ failed（没干成、回退云）\\n   - replaced_cloud：true/false——是否明确【替代了云端/付费模型】来做这个任务\\n   - replaced_what：被替代的云模型/服务名（如 \\\"ChatGPT Plus\\\"、\\\"GPT-4 API\\\"、\\\"Claude\\\"）；无则 null\\n   - hardware：跑在什么硬件上（如 \\\"RTX 3060 12GB\\\"、\\\"M2 Max\\\"、\\\"CPU only\\\"）；未提填 null\\n   - is_self_built：true/false——是否围绕它【自己搭了】app/agent/tool/pipeline\\n   - community_reaction：看 top_replies + score —— endorsed（多数认同/也在用）/ skeptical（多数质疑）/ mixed / none\\n\\n抽取要点：\\n- 只抽【真实任务/实际用途】。纯感想、纯 benchmark、求推荐、硬件讨论 → events 留空 []。\\n- model 必须是被【用来干活】的那个小模型，不是顺带提到的对比对象。\\n- \\\"把 ChatGPT 退订，本地 X 干 Y\\\" → replaced_cloud=true, replaced_what=\\\"ChatGPT\\\", outcome=success。\\n\\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\\n格式：[{\\\"id\\\":\\\"...\\\",\\\"haiku_verdict\\\":\\\"...\\\",\\\"verdict_check\\\":\\\"...\\\",\\\"events\\\":[{...}]}, ...]，每条输入对应一个，id 一致，events 可为 []。\\n文件里只写合法 JSON，无 markdown 代码块、无解释。\\n最终消息只回：\\\"s_NNN: <事件数> events\\\"。\\n```\\n\", \"structuredPatch\": [{\"oldStart\": 21, \"oldLines\": 23, \"newStart\": 21, \"newLines\": 23, \"lines\": [\" \", \" 按任务域（success + partial 合计）：\", \" \", \"-| 域 | 事件 | 典型用途 |\", \"-|---|---|---|\", \"-| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\", \"-| general | 181 | 日常问答、改写、邮件、杂活助手 |\", \"-| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\", \"-| rag | 82 | 本地文档问答、知识库检索 |\", \"-| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\", \"-| writing | 59 | 文案润色、去 AI 味、长文写作 |\", \"-| roleplay | 56 | 角色扮演、互动叙事 |\", \"-| summarization | 39 | 会议/医疗/文档摘要 |\", \"-| voice | 36 | 本地语音助手 |\", \"-| vision-ocr | 36 | OCR、图像理解、视频分析 |\", \"-| research | 24 | 自动搜索抓取、带引用的研究报告 |\", \"-| home-automation | 20 | Home Assistant 智能家居 |\", \"-| translation | 13 | 专业领域翻译 |\", \"+| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |\", \"+|---|---|---|---|---|---|---|\", \"+| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\", \"+| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |\", \"+| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\", \"+| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |\", \"+| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |\", \"+| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |\", \"+| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |\", \"+| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |\", \"+| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |\", \"+| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |\", \"+| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |\", \"+| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |\", \"+| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |\", \" \", \"-重心压在 **coding / agentic / rag / data-extraction** 这些\\\"每天真要干的脏活\\\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\", \"+时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\\\"聊天/检索\\\"明显移向 **coding + agentic** 这些\\\"每天真要干的脏活\\\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\\\* 2026 仅 1–6 月）。\", \" \", \" 各域 success 的高分实例（标题为原帖链接）：\", \" \"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 355938,
+        "completion_tokens": 1512,
+        "cached_tokens": 355807,
+        "extra": {
+          "cache_creation_input_tokens": 618,
+          "cache_read_input_tokens": 355807,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 618,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 1512,
+              "cache_read_input_tokens": 355807,
+              "cache_creation_input_tokens": 618,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 618
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。",
+            "newString": "| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |\n|---|---|---|---|---|---|---|\n| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |\n| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |\n| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |\n| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |\n| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |\n| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |\n\n时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\"聊天/检索\"明显移向 **coding + agentic** 这些\"每天真要干的脏活\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\* 2026 仅 1–6 月）。",
+            "originalFile": "# 2026-06-06：小模型把活干成了——r/LocalLLaMA 里 913 帖\"用本地小模型完成真实任务\"的记录\n\n这是一条跟\"越级打大模型\"互补的线：不看小模型有没有在 benchmark 上打赢谁，只看**用户有没有真用它把一件实际的活干成**。从 r/LocalLLaMA 三年语料里筛出\"提到小模型（≤34B 档）+ 第一人称真实使用/搭建/替代云\"的帖子 2,509 条，经 Haiku 分类（过滤掉 52% 的硬件帖/求推荐/纯感想）、Sonnet 结构化抽取，得到 **913 个唯一帖、981 个真实任务事件**。\n\n数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n\n## 核心：成的多，被质疑的极少\n\n| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\n|---|---|---|---|---|---|---|\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\n\n\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\n\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n\n## 用小模型干的是什么活\n\n按任务域（success + partial 合计）：\n\n| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n\n各域 success 的高分实例（标题为原帖链接）：\n\n| 域 | 模型 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\n\n事件里小模型的尺寸分布：\n\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n\n## 22% 是\"把云退了\"：本地小模型替代付费订阅\n\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\n\n| 模型 | 替代了 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| DeepSeek-R1 distill 8B | ChatGPT Plus / o1 | 日常推理任务 | 652 | [Just canceled my ChatGPT Plus subscription](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Qwen 3.6 27B | cloud 订阅 | PySpark/Python 数据转换调试 + 工具调用 | 599 | [Qwen 3.6 27B is a BEAST](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n| DeepSeek-R1 14B | OpenAI Plus | 日常任务（含隐私敏感的个人财务） | 505 | [（同源讨论串）](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Phi-3 3B（微调） | GPT-4 | 医疗 SOAP 摘要 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| Gemma 2B | Groq API | 本地文件自动分类整理 | 324 | [I built an AI file organizer … 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n| Qwen3.6-27B Q8 | GitHub Copilot | VSCode 日常编码辅助 | 251 | [（Qwen 3.6 27B 讨论串）](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n\n替代理由里反复出现的不是\"更强\"，而是**省钱、隐私、可控、离线**——隐私敏感场景（个人财务、医疗、本地文件）尤其偏好本地。这跟越级声明的动机完全不同：越级求的是\"赢\"，替代云求的是\"够用且我自己说了算\"。\n\n## 已知局限\n\n1. 事件是**用户自述**，多为单人、单任务、自定义场景，可复现性弱；success 高有幸存者偏差（干不成的人较少专门发帖）。\n2. 候选来自正则圈选（小模型尺寸 + 使用/搭建语言），会漏掉正文里才点明任务、标题平淡的帖。\n3. 模型/尺寸以社区写法为准，少数\"3B 模型\"实际可能是 MoE 或带微调，按原帖口径记录。\n4. 社区反应基于高赞回复 + 赞数代理，非完整评论树情感分析。\n5. 替代云的\"替代\"是用户声明，未必长期坚持；只反映发帖当下的选择。\n\n## 信源\n\n[1] r/LocalLLaMA, \"I Created an AI Research Assistant that actually DOES research,\" Nov 2024. (1286 赞；Phi 3.8B/14B 自动搜索 + 带引用研究报告.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1gvlzug/>\n\n[2] r/LocalLLaMA, \"Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo,\" 2026. (887 赞；替代 Claude Code 的 agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1rll349/>\n\n[3] r/LocalLLaMA, \"I built a coding agent that gets 87% on benchmarks with a 4B parameter model,\" 2026. (754 赞；Gemma 4 4B + SmallCode agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tgecrq/>\n\n[4] r/LocalLLaMA, \"Just canceled my ChatGPT Plus subscription,\" Feb 2025. (652 赞；DeepSeek-R1 distill 8B 替代 ChatGPT Plus/o1.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1if5q97/>\n\n[5] r/LocalLLaMA, \"Qwen 3.6 27B is a BEAST,\" 2026. (599 赞；替代 cloud 订阅做数据转换调试.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1steip4/>\n\n[6] r/LocalLLaMA, \"3B Model Beating GPT4 on Medical Summarisation,\" May 2024. (332 赞；Phi-3 3B 微调做医疗 SOAP 摘要.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/>\n\n[7] r/LocalLLaMA, \"I built an AI file organizer that reads and sorts your files, running 100% on your device,\" Sep 2024. (324 赞；Gemma 2B 替代 Groq API.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1fn3aee/>\n\n[8] r/LocalLLaMA, \"I fine-tuned Llama 3.2 3B for transcript analysis,\" 2025. (231 赞；转录稿结构化抽取.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/>\n\n[9] r/LocalLLaMA, \"I made a game using LLMs (gpt-oss:20b) — Among LLMs,\" Sep 2025. (380 赞；20B 驱动多 agent 角色扮演游戏.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/>\n\n## 附录：所用 LLM prompt\n\n两段式抽取的 prompt 原文，供复现。候选口径：有小模型尺寸（≤34B 档）+ score≥5 + 第一人称使用/搭建/替代云语言（正则圈选），见 `scripts/prep_realtask.py`。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`），把结果写回对应输出批文件。\n\n### Haiku 分类 prompt\n\n```\n你在给 r/LocalLLaMA 的帖子/评论做分类，判断它是否是\"用户报告用【小模型】把一个真实任务/活儿干成\"的记录（不要求跟别的模型对比）。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含 id, kind, title, snippet, sizes_b, model_families, hardware, score。\n\n给每条恰好一个 verdict：\n- task_done：作者报告用某个本地小模型【成功】完成了真实任务，或用它搭起了能用的应用/agent/workflow/产品（如\"我用 Qwen 7B 做了个客服 bot，已上线\"\"本地 14B 跑我的 RAG 很好用\"）。\n- task_partial：能用但有明显保留（\"够用但有限\"\"小任务行、复杂的不行\"\"需要很多调教\"）。\n- task_failed：试了但【没干成】真实任务（\"实测不行\"\"达不到要求\"\"还是得用云\"）。\n- not_task：不是真实任务完成报告——纯硬件/显存帖、\"该选哪个模型\"提问、教程、benchmark 跑分、发布通告、泛泛感想。\n\n再给 confidence：high / medium / low。\n\n判断要点：\n- 核心是【真实任务/实际用途 + 用了具体的小模型】。光说\"这模型不错\"没有具体任务 → not_task。\n- 纯讨论硬件能跑多大模型、求推荐、纯量化测试 → not_task。\n- \"我把 ChatGPT 订阅退了，改用本地 X 干 Y\" → task_done（且后续 Sonnet 会记 replaced_cloud）。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"verdict\":\"...\",\"confidence\":\"...\"}, ...]，每条输入一个，id 一致。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"b_NNN: <条数> done\"。\n```\n\n### Sonnet 抽取 prompt\n\n```\n你在从 r/LocalLLaMA 帖子/评论里抽取\"用户用【本地小模型】完成真实任务\"的结构化事件。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含：id, kind(post/comment), date, score, title, body(全文), top_replies(高赞回复=社区真实反应), sizes_b, active_params_b, model_families, hardware, haiku_verdict(初判：task_done/task_partial/task_failed)。\n\n对每条做两件事：\n1) verdict_check：校验初判，回 confirmed / overturned / unclear。\n2) 抽取 events 数组（一帖通常 1 个，可能 0 或多个）。每个 event：\n   - model：用到的小模型精确名（如 \"Qwen2.5-7B\"、\"Gemma 3 12B\"、\"Llama 3.1 8B\"；尽量带版本/尺寸）\n   - size_b：参数量(数字, B)；不确定填 null\n   - active_size_b：MoE 活跃参数(数字)；否则 null\n   - task：用一句话描述【真实任务/用途】（如 \"给法律 PDF 做摘要\"、\"家庭语音助手\"、\"编辑器里代码补全\"、\"客服 chatbot\"、\"批量数据清洗/分类\"）\n   - task_domain：coding / agentic / writing / roleplay / rag / translation / data-extraction / vision-ocr / voice / home-automation / research / summarization / general / other\n   - outcome：success（干成了/在用）/ partial（够用但有保留）/ failed（没干成、回退云）\n   - replaced_cloud：true/false——是否明确【替代了云端/付费模型】来做这个任务\n   - replaced_what：被替代的云模型/服务名（如 \"ChatGPT Plus\"、\"GPT-4 API\"、\"Claude\"）；无则 null\n   - hardware：跑在什么硬件上（如 \"RTX 3060 12GB\"、\"M2 Max\"、\"CPU only\"）；未提填 null\n   - is_self_built：true/false——是否围绕它【自己搭了】app/agent/tool/pipeline\n   - community_reaction：看 top_replies + score —— endorsed（多数认同/也在用）/ skeptical（多数质疑）/ mixed / none\n\n抽取要点：\n- 只抽【真实任务/实际用途】。纯感想、纯 benchmark、求推荐、硬件讨论 → events 留空 []。\n- model 必须是被【用来干活】的那个小模型，不是顺带提到的对比对象。\n- \"把 ChatGPT 退订，本地 X 干 Y\" → replaced_cloud=true, replaced_what=\"ChatGPT\", outcome=success。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"haiku_verdict\":\"...\",\"verdict_check\":\"...\",\"events\":[{...}]}, ...]，每条输入对应一个，id 一致，events 可为 []。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"s_NNN: <事件数> events\"。\n```\n",
+            "structuredPatch": [
+              {
+                "oldStart": 21,
+                "oldLines": 23,
+                "newStart": 21,
+                "newLines": 23,
+                "lines": [
+                  " ",
+                  " 按任务域（success + partial 合计）：",
+                  " ",
+                  "-| 域 | 事件 | 典型用途 |",
+                  "-|---|---|---|",
+                  "-| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |",
+                  "-| general | 181 | 日常问答、改写、邮件、杂活助手 |",
+                  "-| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |",
+                  "-| rag | 82 | 本地文档问答、知识库检索 |",
+                  "-| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |",
+                  "-| writing | 59 | 文案润色、去 AI 味、长文写作 |",
+                  "-| roleplay | 56 | 角色扮演、互动叙事 |",
+                  "-| summarization | 39 | 会议/医疗/文档摘要 |",
+                  "-| voice | 36 | 本地语音助手 |",
+                  "-| vision-ocr | 36 | OCR、图像理解、视频分析 |",
+                  "-| research | 24 | 自动搜索抓取、带引用的研究报告 |",
+                  "-| home-automation | 20 | Home Assistant 智能家居 |",
+                  "-| translation | 13 | 专业领域翻译 |",
+                  "+| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |",
+                  "+|---|---|---|---|---|---|---|",
+                  "+| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |",
+                  "+| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |",
+                  "+| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |",
+                  "+| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |",
+                  "+| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |",
+                  "+| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |",
+                  "+| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |",
+                  "+| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |",
+                  "+| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |",
+                  "+| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |",
+                  "+| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |",
+                  "+| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |",
+                  "+| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |",
+                  " ",
+                  "-重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。",
+                  "+时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\"聊天/检索\"明显移向 **coding + agentic** 这些\"每天真要干的脏活\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\* 2026 仅 1–6 月）。",
+                  " ",
+                  " 各域 success 的高分实例（标题为原帖链接）：",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0121p9N4FGDTMKdqFJQsQ72L",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。",
+            "newString": "| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |\n|---|---|---|---|---|---|---|\n| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |\n| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |\n| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |\n| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |\n| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |\n| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |\n\n时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\"聊天/检索\"明显移向 **coding + agentic** 这些\"每天真要干的脏活\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\* 2026 仅 1–6 月）。",
+            "originalFile": "# 2026-06-06：小模型把活干成了——r/LocalLLaMA 里 913 帖\"用本地小模型完成真实任务\"的记录\n\n这是一条跟\"越级打大模型\"互补的线：不看小模型有没有在 benchmark 上打赢谁，只看**用户有没有真用它把一件实际的活干成**。从 r/LocalLLaMA 三年语料里筛出\"提到小模型（≤34B 档）+ 第一人称真实使用/搭建/替代云\"的帖子 2,509 条，经 Haiku 分类（过滤掉 52% 的硬件帖/求推荐/纯感想）、Sonnet 结构化抽取，得到 **913 个唯一帖、981 个真实任务事件**。\n\n数据是社区的**自述**，多为单人单场景，不是系统评测；计数是关于语料的事实，\"小模型够用\"是对这些自述的归纳。Sonnet 二次校验推翻约 5%（33/981）。\n\n## 核心：成的多，被质疑的极少\n\n| 结果 | 2023 | 2024 | 2025 | 2026* | 总计 | 占比 |\n|---|---|---|---|---|---|---|\n| success（干成了/在用） | 74 | 212 | 241 | 204 | 731 | 75% |\n| partial（够用但有保留） | 28 | 61 | 85 | 47 | 221 | 23% |\n| failed（没干成/回退云） | 4 | 9 | 11 | 5 | 29 | 3% |\n| 当年合计 | 106 | 282 | 337 | 256 | 981 | — |\n\n\\* 2026 仅含 1–6 月，已接近 2025 全年量——真实任务报告在加速。success 占比逐年稳定在 70–80%（2026 达 80%）。\n\n最值得注意的是社区反应：**明确质疑只有 35 条（3.6%）**，认同 156、分歧 153、其余无足够回复信号。对照\"越级打闭源\"那批 31% 的质疑率——**\"我用 7B 把我的活干成了\"远比\"我的 7B 打赢 GPT-4\"难反驳**。前者是可复现的个人事实，后者是要扛榜单和复现压力的强声明。这条线因此比越级声明\"干净\"得多：benchmaxx 折扣很薄，failed 仅 3%，社区基本不撕。（⚠ 解读：failed 低也有幸存者偏差——没干成的人更少专门发帖。）\n\n## 用小模型干的是什么活\n\n按任务域（success + partial 合计）：\n\n| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。\n\n各域 success 的高分实例（标题为原帖链接）：\n\n| 域 | 模型 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| research | Phi 3.8B/14B | 自动搜索抓取 + 带引用研究报告 | 1286 | [I Created an AI Research Assistant that actually DOES research](https://reddit.com/r/LocalLLaMA/comments/1gvlzug/) |\n| coding | Gemma 4 4B（4B 活跃） | coding agent（SmallCode），benchmark 87% | 754 | [I built a coding agent that gets 87% on benchmarks with a 4B parameter model](https://reddit.com/r/LocalLLaMA/comments/1tgecrq/) |\n| agentic | Qwen 3.5 9B | M1 Pro 16GB 上当真 agent 跑（非 demo） | 887 | [Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| summarization | Phi-3 3B（微调） | 从医疗对话生成 SOAP 摘要供临床用 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| data-extraction | Llama 3.2 3B（微调） | 转录稿分析输出结构化 JSON | 231 | [I fine-tuned Llama 3.2 3B for transcript analysis](https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/) |\n| vision-ocr | Moondream 2B | 任意视频跑视线检测 | 238 | [Moondream 2B's new gaze detection](https://reddit.com/r/LocalLLaMA/comments/1hxm0ep/) |\n| roleplay | GPT-OSS 20B | 多 agent 角色扮演终端游戏 | 380 | [I made a game using LLMs (gpt-oss:20b) — Among LLMs](https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/) |\n| general | Gemma 2B | 本地文件自动分类整理 | 324 | [I built an AI file organizer that reads and sorts your files, running 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n\n## 多小才够用：3–14B 是真·主力，20–34B 压顶\n\n事件里小模型的尺寸分布：\n\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n\n## 22% 是\"把云退了\"：本地小模型替代付费订阅\n\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\n\n| 模型 | 替代了 | 任务 | 赞 | 帖 |\n|---|---|---|---|---|\n| Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\n| DeepSeek-R1 distill 8B | ChatGPT Plus / o1 | 日常推理任务 | 652 | [Just canceled my ChatGPT Plus subscription](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Qwen 3.6 27B | cloud 订阅 | PySpark/Python 数据转换调试 + 工具调用 | 599 | [Qwen 3.6 27B is a BEAST](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n| DeepSeek-R1 14B | OpenAI Plus | 日常任务（含隐私敏感的个人财务） | 505 | [（同源讨论串）](https://reddit.com/r/LocalLLaMA/comments/1if5q97/) |\n| Phi-3 3B（微调） | GPT-4 | 医疗 SOAP 摘要 | 332 | [3B Model Beating GPT4 on Medical Summarisation](https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/) |\n| Gemma 2B | Groq API | 本地文件自动分类整理 | 324 | [I built an AI file organizer … 100% on your device](https://reddit.com/r/LocalLLaMA/comments/1fn3aee/) |\n| Qwen3.6-27B Q8 | GitHub Copilot | VSCode 日常编码辅助 | 251 | [（Qwen 3.6 27B 讨论串）](https://reddit.com/r/LocalLLaMA/comments/1steip4/) |\n\n替代理由里反复出现的不是\"更强\"，而是**省钱、隐私、可控、离线**——隐私敏感场景（个人财务、医疗、本地文件）尤其偏好本地。这跟越级声明的动机完全不同：越级求的是\"赢\"，替代云求的是\"够用且我自己说了算\"。\n\n## 已知局限\n\n1. 事件是**用户自述**，多为单人、单任务、自定义场景，可复现性弱；success 高有幸存者偏差（干不成的人较少专门发帖）。\n2. 候选来自正则圈选（小模型尺寸 + 使用/搭建语言），会漏掉正文里才点明任务、标题平淡的帖。\n3. 模型/尺寸以社区写法为准，少数\"3B 模型\"实际可能是 MoE 或带微调，按原帖口径记录。\n4. 社区反应基于高赞回复 + 赞数代理，非完整评论树情感分析。\n5. 替代云的\"替代\"是用户声明，未必长期坚持；只反映发帖当下的选择。\n\n## 信源\n\n[1] r/LocalLLaMA, \"I Created an AI Research Assistant that actually DOES research,\" Nov 2024. (1286 赞；Phi 3.8B/14B 自动搜索 + 带引用研究报告.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1gvlzug/>\n\n[2] r/LocalLLaMA, \"Ran Qwen 3.5 9B on M1 Pro (16GB) as an actual agent, not just a chat demo,\" 2026. (887 赞；替代 Claude Code 的 agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1rll349/>\n\n[3] r/LocalLLaMA, \"I built a coding agent that gets 87% on benchmarks with a 4B parameter model,\" 2026. (754 赞；Gemma 4 4B + SmallCode agent.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tgecrq/>\n\n[4] r/LocalLLaMA, \"Just canceled my ChatGPT Plus subscription,\" Feb 2025. (652 赞；DeepSeek-R1 distill 8B 替代 ChatGPT Plus/o1.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1if5q97/>\n\n[5] r/LocalLLaMA, \"Qwen 3.6 27B is a BEAST,\" 2026. (599 赞；替代 cloud 订阅做数据转换调试.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1steip4/>\n\n[6] r/LocalLLaMA, \"3B Model Beating GPT4 on Medical Summarisation,\" May 2024. (332 赞；Phi-3 3B 微调做医疗 SOAP 摘要.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1cp2h1v/>\n\n[7] r/LocalLLaMA, \"I built an AI file organizer that reads and sorts your files, running 100% on your device,\" Sep 2024. (324 赞；Gemma 2B 替代 Groq API.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1fn3aee/>\n\n[8] r/LocalLLaMA, \"I fine-tuned Llama 3.2 3B for transcript analysis,\" 2025. (231 赞；转录稿结构化抽取.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1n5w9yy/>\n\n[9] r/LocalLLaMA, \"I made a game using LLMs (gpt-oss:20b) — Among LLMs,\" Sep 2025. (380 赞；20B 驱动多 agent 角色扮演游戏.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1nfrzbv/>\n\n## 附录：所用 LLM prompt\n\n两段式抽取的 prompt 原文，供复现。候选口径：有小模型尺寸（≤34B 档）+ score≥5 + 第一人称使用/搭建/替代云语言（正则圈选），见 `scripts/prep_realtask.py`。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`），把结果写回对应输出批文件。\n\n### Haiku 分类 prompt\n\n```\n你在给 r/LocalLLaMA 的帖子/评论做分类，判断它是否是\"用户报告用【小模型】把一个真实任务/活儿干成\"的记录（不要求跟别的模型对比）。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含 id, kind, title, snippet, sizes_b, model_families, hardware, score。\n\n给每条恰好一个 verdict：\n- task_done：作者报告用某个本地小模型【成功】完成了真实任务，或用它搭起了能用的应用/agent/workflow/产品（如\"我用 Qwen 7B 做了个客服 bot，已上线\"\"本地 14B 跑我的 RAG 很好用\"）。\n- task_partial：能用但有明显保留（\"够用但有限\"\"小任务行、复杂的不行\"\"需要很多调教\"）。\n- task_failed：试了但【没干成】真实任务（\"实测不行\"\"达不到要求\"\"还是得用云\"）。\n- not_task：不是真实任务完成报告——纯硬件/显存帖、\"该选哪个模型\"提问、教程、benchmark 跑分、发布通告、泛泛感想。\n\n再给 confidence：high / medium / low。\n\n判断要点：\n- 核心是【真实任务/实际用途 + 用了具体的小模型】。光说\"这模型不错\"没有具体任务 → not_task。\n- 纯讨论硬件能跑多大模型、求推荐、纯量化测试 → not_task。\n- \"我把 ChatGPT 订阅退了，改用本地 X 干 Y\" → task_done（且后续 Sonnet 会记 replaced_cloud）。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"verdict\":\"...\",\"confidence\":\"...\"}, ...]，每条输入一个，id 一致。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"b_NNN: <条数> done\"。\n```\n\n### Sonnet 抽取 prompt\n\n```\n你在从 r/LocalLLaMA 帖子/评论里抽取\"用户用【本地小模型】完成真实任务\"的结构化事件。\n\n用 Read 工具读取 JSON 数组：<输入批路径>\n每条含：id, kind(post/comment), date, score, title, body(全文), top_replies(高赞回复=社区真实反应), sizes_b, active_params_b, model_families, hardware, haiku_verdict(初判：task_done/task_partial/task_failed)。\n\n对每条做两件事：\n1) verdict_check：校验初判，回 confirmed / overturned / unclear。\n2) 抽取 events 数组（一帖通常 1 个，可能 0 或多个）。每个 event：\n   - model：用到的小模型精确名（如 \"Qwen2.5-7B\"、\"Gemma 3 12B\"、\"Llama 3.1 8B\"；尽量带版本/尺寸）\n   - size_b：参数量(数字, B)；不确定填 null\n   - active_size_b：MoE 活跃参数(数字)；否则 null\n   - task：用一句话描述【真实任务/用途】（如 \"给法律 PDF 做摘要\"、\"家庭语音助手\"、\"编辑器里代码补全\"、\"客服 chatbot\"、\"批量数据清洗/分类\"）\n   - task_domain：coding / agentic / writing / roleplay / rag / translation / data-extraction / vision-ocr / voice / home-automation / research / summarization / general / other\n   - outcome：success（干成了/在用）/ partial（够用但有保留）/ failed（没干成、回退云）\n   - replaced_cloud：true/false——是否明确【替代了云端/付费模型】来做这个任务\n   - replaced_what：被替代的云模型/服务名（如 \"ChatGPT Plus\"、\"GPT-4 API\"、\"Claude\"）；无则 null\n   - hardware：跑在什么硬件上（如 \"RTX 3060 12GB\"、\"M2 Max\"、\"CPU only\"）；未提填 null\n   - is_self_built：true/false——是否围绕它【自己搭了】app/agent/tool/pipeline\n   - community_reaction：看 top_replies + score —— endorsed（多数认同/也在用）/ skeptical（多数质疑）/ mixed / none\n\n抽取要点：\n- 只抽【真实任务/实际用途】。纯感想、纯 benchmark、求推荐、硬件讨论 → events 留空 []。\n- model 必须是被【用来干活】的那个小模型，不是顺带提到的对比对象。\n- \"把 ChatGPT 退订，本地 X 干 Y\" → replaced_cloud=true, replaced_what=\"ChatGPT\", outcome=success。\n\n用 Write 工具把结果写成 JSON 数组到：<输出批路径>\n格式：[{\"id\":\"...\",\"haiku_verdict\":\"...\",\"verdict_check\":\"...\",\"events\":[{...}]}, ...]，每条输入对应一个，id 一致，events 可为 []。\n文件里只写合法 JSON，无 markdown 代码块、无解释。\n最终消息只回：\"s_NNN: <事件数> events\"。\n```\n",
+            "structuredPatch": [
+              {
+                "oldStart": 21,
+                "oldLines": 23,
+                "newStart": 21,
+                "newLines": 23,
+                "lines": [
+                  " ",
+                  " 按任务域（success + partial 合计）：",
+                  " ",
+                  "-| 域 | 事件 | 典型用途 |",
+                  "-|---|---|---|",
+                  "-| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |",
+                  "-| general | 181 | 日常问答、改写、邮件、杂活助手 |",
+                  "-| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |",
+                  "-| rag | 82 | 本地文档问答、知识库检索 |",
+                  "-| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |",
+                  "-| writing | 59 | 文案润色、去 AI 味、长文写作 |",
+                  "-| roleplay | 56 | 角色扮演、互动叙事 |",
+                  "-| summarization | 39 | 会议/医疗/文档摘要 |",
+                  "-| voice | 36 | 本地语音助手 |",
+                  "-| vision-ocr | 36 | OCR、图像理解、视频分析 |",
+                  "-| research | 24 | 自动搜索抓取、带引用的研究报告 |",
+                  "-| home-automation | 20 | Home Assistant 智能家居 |",
+                  "-| translation | 13 | 专业领域翻译 |",
+                  "+| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |",
+                  "+|---|---|---|---|---|---|---|",
+                  "+| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |",
+                  "+| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |",
+                  "+| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |",
+                  "+| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |",
+                  "+| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |",
+                  "+| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |",
+                  "+| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |",
+                  "+| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |",
+                  "+| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |",
+                  "+| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |",
+                  "+| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |",
+                  "+| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |",
+                  "+| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |",
+                  " ",
+                  "-重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。",
+                  "+时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\"聊天/检索\"明显移向 **coding + agentic** 这些\"每天真要干的脏活\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\* 2026 仅 1–6 月）。",
+                  " ",
+                  " 各域 success 的高分实例（标题为原帖链接）：",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0121p9N4FGDTMKdqFJQsQ72L",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+          "old_string": "| 域 | 事件 | 典型用途 |\n|---|---|---|\n| coding | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 56 | 角色扮演、互动叙事 |\n| summarization | 39 | 会议/医疗/文档摘要 |\n| voice | 36 | 本地语音助手 |\n| vision-ocr | 36 | OCR、图像理解、视频分析 |\n| research | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 20 | Home Assistant 智能家居 |\n| translation | 13 | 专业领域翻译 |\n\n重心压在 **coding / agentic / rag / data-extraction** 这些\"每天真要干的脏活\"上，而不是聊天。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型在这里是被当**零件**嵌进系统，不是当对话玩具。",
+          "new_string": "| 域 | 23 | 24 | 25 | 26* | 总计 | 典型用途 |\n|---|---|---|---|---|---|---|\n| coding | 16 | 44 | 83 | 71 | 214 | 编码补全、coding agent、调试、full-stack vibe coding |\n| general | 21 | 60 | 57 | 43 | 181 | 日常问答、改写、邮件、杂活助手 |\n| agentic | 15 | 22 | 48 | 58 | 143 | 多 agent 编排、工具调用、记忆层、定时任务 |\n| rag | 16 | 35 | 25 | 6 | 82 | 本地文档问答、知识库检索 |\n| data-extraction | 4 | 22 | 22 | 13 | 61 | 转录稿/文件结构化、抽 JSON、分类 |\n| writing | 11 | 21 | 18 | 9 | 59 | 文案润色、去 AI 味、长文写作 |\n| roleplay | 13 | 18 | 18 | 7 | 56 | 角色扮演、互动叙事 |\n| summarization | 5 | 19 | 10 | 5 | 39 | 会议/医疗/文档摘要 |\n| voice | 1 | 6 | 15 | 14 | 36 | 本地语音助手 |\n| vision-ocr | 1 | 7 | 14 | 14 | 36 | OCR、图像理解、视频分析 |\n| research | 1 | 11 | 6 | 6 | 24 | 自动搜索抓取、带引用的研究报告 |\n| home-automation | 0 | 4 | 9 | 7 | 20 | Home Assistant 智能家居 |\n| translation | 0 | 6 | 6 | 1 | 13 | 专业领域翻译 |\n\n时间趋势很分明：**coding（16→44→83→71）和 agentic（15→22→48→58）逐年猛涨**，是 2025–2026 的主战场；**rag（2024 峰值 35→2026 仅 6）、roleplay、general 占比回落**；voice / vision-ocr 从无到有稳步上升。重心从\"聊天/检索\"明显移向 **coding + agentic** 这些\"每天真要干的脏活\"。超过一半的事件（**529，54%**）是用户**围绕小模型自己搭了** app/agent/tool/pipeline——小模型被当**零件**嵌进系统，不是当对话玩具（\\* 2026 仅 1–6 月）。"
+        }
+      }
+    },
+    {
+      "step_id": 437,
+      "timestamp": "2026-06-06T14:38:31.987Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Now the size table:",
+      "metrics": {
+        "prompt_tokens": 356427,
+        "completion_tokens": 135,
+        "cached_tokens": 356425,
+        "extra": {
+          "cache_creation_input_tokens": 1710,
+          "cache_read_input_tokens": 356425,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1710,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 135,
+              "cache_read_input_tokens": 356425,
+              "cache_creation_input_tokens": 1710,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1710
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 438,
+      "timestamp": "2026-06-06T14:38:32.450Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_0139dRyHCiLPq6fR9M2UAuuT",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_0139dRyHCiLPq6fR9M2UAuuT",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "offset": 58,
+            "limit": 16
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_0139dRyHCiLPq6fR9M2UAuuT",
+            "content": "58\t\n59\t| 档 | 事件 |\n60\t|---|---|\n61\t| <3B | 89 |\n62\t| 3-7B | 263 |\n63\t| 8-14B | 222 |\n64\t| 20-34B | 329 |\n65\t| >34B | 47 |\n66\t\n67\t跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n68\t\n69\t跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n70\t\n71\t## 22% 是\"把云退了\"：本地小模型替代付费订阅\n72\t\n73\t215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md\", \"content\": \"\\n| 档 | 事件 |\\n|---|---|\\n| <3B | 89 |\\n| 3-7B | 263 |\\n| 8-14B | 222 |\\n| 20-34B | 329 |\\n| >34B | 47 |\\n\\n跟\\\"越级打闭源\\\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\\\"通用一点的活\\\"（coding/agentic）的压顶档。\\n\\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\\n\\n## 22% 是\\\"把云退了\\\"：本地小模型替代付费订阅\\n\\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\", \"numLines\": 16, \"startLine\": 58, \"totalLines\": 179}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 356427,
+        "completion_tokens": 135,
+        "cached_tokens": 356425,
+        "extra": {
+          "cache_creation_input_tokens": 1710,
+          "cache_read_input_tokens": 356425,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1710,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 135,
+              "cache_read_input_tokens": 356425,
+              "cache_creation_input_tokens": 1710,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1710
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+              "content": "\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n\n## 22% 是\"把云退了\"：本地小模型替代付费订阅\n\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+              "numLines": 16,
+              "startLine": 58,
+              "totalLines": 179
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0139dRyHCiLPq6fR9M2UAuuT",
+            "type": "tool_result",
+            "content": "58\t\n59\t| 档 | 事件 |\n60\t|---|---|\n61\t| <3B | 89 |\n62\t| 3-7B | 263 |\n63\t| 8-14B | 222 |\n64\t| 20-34B | 329 |\n65\t| >34B | 47 |\n66\t\n67\t跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n68\t\n69\t跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n70\t\n71\t## 22% 是\"把云退了\"：本地小模型替代付费订阅\n72\t\n73\t215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例："
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+              "content": "\n| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n\n跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n\n## 22% 是\"把云退了\"：本地小模型替代付费订阅\n\n215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+              "numLines": 16,
+              "startLine": 58,
+              "totalLines": 179
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0139dRyHCiLPq6fR9M2UAuuT",
+            "type": "tool_result",
+            "content": "58\t\n59\t| 档 | 事件 |\n60\t|---|---|\n61\t| <3B | 89 |\n62\t| 3-7B | 263 |\n63\t| 8-14B | 222 |\n64\t| 20-34B | 329 |\n65\t| >34B | 47 |\n66\t\n67\t跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。\n68\t\n69\t跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\n70\t\n71\t## 22% 是\"把云退了\"：本地小模型替代付费订阅\n72\t\n73\t215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例："
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+          "offset": 58,
+          "limit": 16
+        }
+      }
+    },
+    {
+      "step_id": 439,
+      "timestamp": "2026-06-06T14:38:45.039Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01HsXY8TraGpiY1kCbrL6N7E",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01HsXY8TraGpiY1kCbrL6N7E",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "old_string": "| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。",
+            "new_string": "| 档 | 23 | 24 | 25 | 26* | 总计 |\n|---|---|---|---|---|---|\n| <3B | 1 | 18 | 42 | 28 | 89 |\n| 3-7B | 63 | 91 | 75 | 34 | 263 |\n| 8-14B | 27 | 93 | 76 | 26 | 222 |\n| 20-34B | 11 | 48 | 116 | 154 | 329 |\n| >34B | 4 | 22 | 13 | 8 | 47 |\n\n（\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\"越级打闭源\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01HsXY8TraGpiY1kCbrL6N7E",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md\", \"oldString\": \"| 档 | 事件 |\\n|---|---|\\n| <3B | 89 |\\n| 3-7B | 263 |\\n| 8-14B | 222 |\\n| 20-34B | 329 |\\n| >34B | 47 |\\n\\n跟\\\"越级打闭源\\\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\\\"通用一点的活\\\"（coding/agentic）的压顶档。\", \"newString\": \"| 档 | 23 | 24 | 25 | 26* | 总计 |\\n|---|---|---|---|---|---|\\n| <3B | 1 | 18 | 42 | 28 | 89 |\\n| 3-7B | 63 | 91 | 75 | 34 | 263 |\\n| 8-14B | 27 | 93 | 76 | 26 | 222 |\\n| 20-34B | 11 | 48 | 116 | 154 | 329 |\\n| >34B | 4 | 22 | 13 | 8 | 47 |\\n\\n（\\\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\\\"越级打闭源\\\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 56, \"oldLines\": 15, \"newStart\": 56, \"newLines\": 15, \"lines\": [\" \", \" 事件里小模型的尺寸分布：\", \" \", \"-| 档 | 事件 |\", \"-|---|---|\", \"-| <3B | 89 |\", \"-| 3-7B | 263 |\", \"-| 8-14B | 222 |\", \"-| 20-34B | 329 |\", \"-| >34B | 47 |\", \"+| 档 | 23 | 24 | 25 | 26* | 总计 |\", \"+|---|---|---|---|---|---|\", \"+| <3B | 1 | 18 | 42 | 28 | 89 |\", \"+| 3-7B | 63 | 91 | 75 | 34 | 263 |\", \"+| 8-14B | 27 | 93 | 76 | 26 | 222 |\", \"+| 20-34B | 11 | 48 | 116 | 154 | 329 |\", \"+| >34B | 4 | 22 | 13 | 8 | 47 |\", \" \", \"-跟\\\"越级打闭源\\\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\\\"通用一点的活\\\"（coding/agentic）的压顶档。\", \"+（\\\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\\\"越级打闭源\\\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。\", \" \", \" 跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。\", \" \"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 358137,
+        "completion_tokens": 1006,
+        "cached_tokens": 358135,
+        "extra": {
+          "cache_creation_input_tokens": 755,
+          "cache_read_input_tokens": 358135,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 755,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1006,
+              "cache_read_input_tokens": 358135,
+              "cache_creation_input_tokens": 755,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 755
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。",
+            "newString": "| 档 | 23 | 24 | 25 | 26* | 总计 |\n|---|---|---|---|---|---|\n| <3B | 1 | 18 | 42 | 28 | 89 |\n| 3-7B | 63 | 91 | 75 | 34 | 263 |\n| 8-14B | 27 | 93 | 76 | 26 | 222 |\n| 20-34B | 11 | 48 | 116 | 154 | 329 |\n| >34B | 4 | 22 | 13 | 8 | 47 |\n\n（\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\"越级打闭源\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 56,
+                "oldLines": 15,
+                "newStart": 56,
+                "newLines": 15,
+                "lines": [
+                  " ",
+                  " 事件里小模型的尺寸分布：",
+                  " ",
+                  "-| 档 | 事件 |",
+                  "-|---|---|",
+                  "-| <3B | 89 |",
+                  "-| 3-7B | 263 |",
+                  "-| 8-14B | 222 |",
+                  "-| 20-34B | 329 |",
+                  "-| >34B | 47 |",
+                  "+| 档 | 23 | 24 | 25 | 26* | 总计 |",
+                  "+|---|---|---|---|---|---|",
+                  "+| <3B | 1 | 18 | 42 | 28 | 89 |",
+                  "+| 3-7B | 63 | 91 | 75 | 34 | 263 |",
+                  "+| 8-14B | 27 | 93 | 76 | 26 | 222 |",
+                  "+| 20-34B | 11 | 48 | 116 | 154 | 329 |",
+                  "+| >34B | 4 | 22 | 13 | 8 | 47 |",
+                  " ",
+                  "-跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。",
+                  "+（\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\"越级打闭源\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。",
+                  " ",
+                  " 跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01HsXY8TraGpiY1kCbrL6N7E",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。",
+            "newString": "| 档 | 23 | 24 | 25 | 26* | 总计 |\n|---|---|---|---|---|---|\n| <3B | 1 | 18 | 42 | 28 | 89 |\n| 3-7B | 63 | 91 | 75 | 34 | 263 |\n| 8-14B | 27 | 93 | 76 | 26 | 222 |\n| 20-34B | 11 | 48 | 116 | 154 | 329 |\n| >34B | 4 | 22 | 13 | 8 | 47 |\n\n（\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\"越级打闭源\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 56,
+                "oldLines": 15,
+                "newStart": 56,
+                "newLines": 15,
+                "lines": [
+                  " ",
+                  " 事件里小模型的尺寸分布：",
+                  " ",
+                  "-| 档 | 事件 |",
+                  "-|---|---|",
+                  "-| <3B | 89 |",
+                  "-| 3-7B | 263 |",
+                  "-| 8-14B | 222 |",
+                  "-| 20-34B | 329 |",
+                  "-| >34B | 47 |",
+                  "+| 档 | 23 | 24 | 25 | 26* | 总计 |",
+                  "+|---|---|---|---|---|---|",
+                  "+| <3B | 1 | 18 | 42 | 28 | 89 |",
+                  "+| 3-7B | 63 | 91 | 75 | 34 | 263 |",
+                  "+| 8-14B | 27 | 93 | 76 | 26 | 222 |",
+                  "+| 20-34B | 11 | 48 | 116 | 154 | 329 |",
+                  "+| >34B | 4 | 22 | 13 | 8 | 47 |",
+                  " ",
+                  "-跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。",
+                  "+（\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\"越级打闭源\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。",
+                  " ",
+                  " 跑在什么硬件上（355 个事件提到硬件）：3090（55）最多，Apple M 系列合计约 114（Mac/M1/M2/M3/M4），4090（16）、3060（14），CPU only 18，甚至手机 7。**消费级单卡和 Mac 是真实任务的主舞台**，不需要机柜。",
+                  " "
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01HsXY8TraGpiY1kCbrL6N7E",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+          "old_string": "| 档 | 事件 |\n|---|---|\n| <3B | 89 |\n| 3-7B | 263 |\n| 8-14B | 222 |\n| 20-34B | 329 |\n| >34B | 47 |\n\n跟\"越级打闭源\"集中在 24–32B 不同，**真实任务这条线把可用尺寸往下拉了一大截**：3–14B 合计 485 个事件，超过总量一半。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复出现且 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小。20–34B 则是\"通用一点的活\"（coding/agentic）的压顶档。",
+          "new_string": "| 档 | 23 | 24 | 25 | 26* | 总计 |\n|---|---|---|---|---|---|\n| <3B | 1 | 18 | 42 | 28 | 89 |\n| 3-7B | 63 | 91 | 75 | 34 | 263 |\n| 8-14B | 27 | 93 | 76 | 26 | 222 |\n| 20-34B | 11 | 48 | 116 | 154 | 329 |\n| >34B | 4 | 22 | 13 | 8 | 47 |\n\n（\\* 2026 仅 1–6 月；950 个事件抽到了明确尺寸，余 31 个未标。）随时间看是一次**分叉**而非单纯下移：2023 年靠 **3-7B**（能跑啥用啥，63 个事件压这一档）；到 2025–2026，一头是 **20-34B 猛涨成通用活的压顶档**（11→48→116→154），另一头是 **<3B 从 1 涨到 42** 专吃窄任务。窄而定义清楚的活（结构化抽取、摘要、OCR、文件整理、语音）上，**2–3B 的小模型反复 success**——医疗 SOAP 摘要用 Phi-3 3B、文件整理用 Gemma 2B、视线检测用 Moondream 2B、转录分析用 Llama 3.2 3B。任务越窄、越能微调，所需参数越小；通用一点的活则往 20–34B 收敛。跟\"越级打闭源\"集中在 24–32B 不同，真实任务这条线把可用尺寸两头都拉开了。"
+        }
+      }
+    },
+    {
+      "step_id": 440,
+      "timestamp": "2026-06-06T14:38:53.224Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 358892,
+        "completion_tokens": 727,
+        "cached_tokens": 358890,
+        "extra": {
+          "cache_creation_input_tokens": 1075,
+          "cache_read_input_tokens": 358890,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1075,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 727,
+              "cache_read_input_tokens": 358890,
+              "cache_creation_input_tokens": 1075,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1075
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 441,
+      "timestamp": "2026-06-06T14:38:53.224Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Now add a year table to the replaced_cloud section:",
+      "metrics": {
+        "prompt_tokens": 358892,
+        "completion_tokens": 727,
+        "cached_tokens": 358890,
+        "extra": {
+          "cache_creation_input_tokens": 1075,
+          "cache_read_input_tokens": 358890,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1075,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 727,
+              "cache_read_input_tokens": 358890,
+              "cache_creation_input_tokens": 1075,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1075
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 442,
+      "timestamp": "2026-06-06T14:38:55.193Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_011o42d6TMF2q2YVcGg9WCge",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_011o42d6TMF2q2YVcGg9WCge",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "old_string": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+            "new_string": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。\n\n按年看，替代云的**占比逐年走高**：\n\n| | 2023 | 2024 | 2025 | 2026* | 总计 |\n|---|---|---|---|---|---|\n| 替代云 | 18 | 56 | 75 | 66 | 215 |\n| 本地原生 | 88 | 226 | 262 | 190 | 766 |\n| 替代云占比 | 17% | 20% | 22% | 26% | 22% |\n\n（\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\"顺手在本地跑跑\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例："
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_011o42d6TMF2q2YVcGg9WCge",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md\", \"oldString\": \"215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\", \"newString\": \"215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。\\n\\n按年看，替代云的**占比逐年走高**：\\n\\n| | 2023 | 2024 | 2025 | 2026* | 总计 |\\n|---|---|---|---|---|---|\\n| 替代云 | 18 | 56 | 75 | 66 | 215 |\\n| 本地原生 | 88 | 226 | 262 | 190 | 766 |\\n| 替代云占比 | 17% | 20% | 22% | 26% | 22% |\\n\\n（\\\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\\\"顺手在本地跑跑\\\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例：\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 70, \"oldLines\": 8, \"newStart\": 70, \"newLines\": 18, \"lines\": [\" \", \" ## 22% 是\\\"把云退了\\\"：本地小模型替代付费订阅\", \" \", \"-215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：\", \"+215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。\", \" \", \"+按年看，替代云的**占比逐年走高**：\", \"+\", \"+| | 2023 | 2024 | 2025 | 2026* | 总计 |\", \"+|---|---|---|---|---|---|\", \"+| 替代云 | 18 | 56 | 75 | 66 | 215 |\", \"+| 本地原生 | 88 | 226 | 262 | 190 | 766 |\", \"+| 替代云占比 | 17% | 20% | 22% | 26% | 22% |\", \"+\", \"+（\\\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\\\"顺手在本地跑跑\\\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例：\", \"+\", \" | 模型 | 替代了 | 任务 | 赞 | 帖 |\", \" |---|---|---|---|---|\", \" | Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 358892,
+        "completion_tokens": 727,
+        "cached_tokens": 358890,
+        "extra": {
+          "cache_creation_input_tokens": 1075,
+          "cache_read_input_tokens": 358890,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1075,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 727,
+              "cache_read_input_tokens": 358890,
+              "cache_creation_input_tokens": 1075,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1075
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+            "newString": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。\n\n按年看，替代云的**占比逐年走高**：\n\n| | 2023 | 2024 | 2025 | 2026* | 总计 |\n|---|---|---|---|---|---|\n| 替代云 | 18 | 56 | 75 | 66 | 215 |\n| 本地原生 | 88 | 226 | 262 | 190 | 766 |\n| 替代云占比 | 17% | 20% | 22% | 26% | 22% |\n\n（\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\"顺手在本地跑跑\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例：",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 70,
+                "oldLines": 8,
+                "newStart": 70,
+                "newLines": 18,
+                "lines": [
+                  " ",
+                  " ## 22% 是\"把云退了\"：本地小模型替代付费订阅",
+                  " ",
+                  "-215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+                  "+215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。",
+                  " ",
+                  "+按年看，替代云的**占比逐年走高**：",
+                  "+",
+                  "+| | 2023 | 2024 | 2025 | 2026* | 总计 |",
+                  "+|---|---|---|---|---|---|",
+                  "+| 替代云 | 18 | 56 | 75 | 66 | 215 |",
+                  "+| 本地原生 | 88 | 226 | 262 | 190 | 766 |",
+                  "+| 替代云占比 | 17% | 20% | 22% | 26% | 22% |",
+                  "+",
+                  "+（\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\"顺手在本地跑跑\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例：",
+                  "+",
+                  " | 模型 | 替代了 | 任务 | 赞 | 帖 |",
+                  " |---|---|---|---|---|",
+                  " | Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_011o42d6TMF2q2YVcGg9WCge",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+            "oldString": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+            "newString": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。\n\n按年看，替代云的**占比逐年走高**：\n\n| | 2023 | 2024 | 2025 | 2026* | 总计 |\n|---|---|---|---|---|---|\n| 替代云 | 18 | 56 | 75 | 66 | 215 |\n| 本地原生 | 88 | 226 | 262 | 190 | 766 |\n| 替代云占比 | 17% | 20% | 22% | 26% | 22% |\n\n（\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\"顺手在本地跑跑\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例：",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 70,
+                "oldLines": 8,
+                "newStart": 70,
+                "newLines": 18,
+                "lines": [
+                  " ",
+                  " ## 22% 是\"把云退了\"：本地小模型替代付费订阅",
+                  " ",
+                  "-215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+                  "+215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。",
+                  " ",
+                  "+按年看，替代云的**占比逐年走高**：",
+                  "+",
+                  "+| | 2023 | 2024 | 2025 | 2026* | 总计 |",
+                  "+|---|---|---|---|---|---|",
+                  "+| 替代云 | 18 | 56 | 75 | 66 | 215 |",
+                  "+| 本地原生 | 88 | 226 | 262 | 190 | 766 |",
+                  "+| 替代云占比 | 17% | 20% | 22% | 26% | 22% |",
+                  "+",
+                  "+（\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\"顺手在本地跑跑\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例：",
+                  "+",
+                  " | 模型 | 替代了 | 任务 | 赞 | 帖 |",
+                  " |---|---|---|---|---|",
+                  " | Qwen 3.5 9B | Claude Code | 个人自动化 agent 的记忆/工具调用 | 887 | [Ran Qwen 3.5 9B on M1 Pro as an actual agent](https://reddit.com/r/LocalLLaMA/comments/1rll349/) |"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_011o42d6TMF2q2YVcGg9WCge",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/小模型干成真实任务 (2026-06-06).md",
+          "old_string": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。高分实例：",
+          "new_string": "215 个事件（**22%**）明确报告**用本地小模型替代了云端/付费模型**来干这件活。被替代最多的：ChatGPT（22）、Claude（7）、GPT-4 API（6）、GPT-4（6）、GPT-4o-mini（4）、Claude Code（4）、GitHub Copilot（3）。\n\n按年看，替代云的**占比逐年走高**：\n\n| | 2023 | 2024 | 2025 | 2026* | 总计 |\n|---|---|---|---|---|---|\n| 替代云 | 18 | 56 | 75 | 66 | 215 |\n| 本地原生 | 88 | 226 | 262 | 190 | 766 |\n| 替代云占比 | 17% | 20% | 22% | 26% | 22% |\n\n（\\* 2026 仅 1–6 月。）从 2023 的 17% 升到 2026 的 26%——越往后，越多人不是\"顺手在本地跑跑\"，而是**主动把付费订阅退掉换成本地小模型**。高分实例："
+        }
+      }
+    },
+    {
+      "step_id": 443,
+      "timestamp": "2026-06-06T14:39:05.279Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "四张汇总表都加上了时间维度（按年 2023–2026，2026 标注仅含 1–6 月），并各配了一句趋势解读：\n\n1. **outcome 表**：加 4 个年份列 + 当年合计。success 占比逐年稳定 70–80%；2026 半年量已接近 2025 全年——真实任务报告在加速。\n2. **任务域表**：加年份列（保留典型用途列）。趋势分明——coding（16→44→83→71）和 agentic（15→22→48→58）猛涨成主战场，rag（2024 峰值 35→2026 仅 6）/roleplay/general 回落，voice/vision-ocr 从无到有。\n3. **尺寸档表**：加年份列。揭示一次**分叉**而非单纯下移——20-34B 猛涨成通用活压顶档（11→154），同时 <3B 从 1 涨到 42 专吃窄任务，两头拉开。\n4. **替代云**：新增年份表 + 占比行。替代云占比从 2023 的 17% 升到 2026 的 26%，越往后越多人主动退订付费换本地。\n\n文件仍独立、未链接其他文件、未进 README。",
+      "metrics": {
+        "prompt_tokens": 359967,
+        "completion_tokens": 404,
+        "cached_tokens": 359965,
+        "extra": {
+          "cache_creation_input_tokens": 796,
+          "cache_read_input_tokens": 359965,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 796,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 404,
+              "cache_read_input_tokens": 359965,
+              "cache_creation_input_tokens": 796,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 796
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 78598714,
-    "total_completion_tokens": 575392,
-    "total_cached_tokens": 78557836,
-    "total_steps": 423,
+    "total_prompt_tokens": 85334033,
+    "total_completion_tokens": 592304,
+    "total_cached_tokens": 85292859,
+    "total_steps": 443,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 1395199,
-      "total_cache_read_input_tokens": 78557836
+      "total_cache_creation_input_tokens": 1418392,
+      "total_cache_read_input_tokens": 85292859
     }
   }
 }
