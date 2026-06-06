@@ -329,6 +329,255 @@ def analyze_usage(d: dict) -> dict | None:
     }
 
 
+# ---------------------------------------------------------------------------
+# 模型尺寸 / 能力发展信号检测（--mode capability）
+# 目标：从 r/LocalLLaMA 帖子里抽"不同参数量级模型"的提及与跨尺寸能力比较，
+# 支撑"能力密度随时间上升"（今年的 X B 打平去年的 Y B）的分析。
+# ---------------------------------------------------------------------------
+
+# 参数量 <数字>B：要求数字紧贴 B（中间至多一个空格），负向后顾挡掉
+#   24GB/8GB（B 前是字母 G）、$7B（十亿美元）；后顾挡掉 Bench/4bit/1.58bit。
+RE_SIZE = re.compile(r"(?<![A-Za-z0-9.$])(\d{1,3}(?:\.\d{1,2})?)\s?[bB](?![a-zA-Z])")
+
+# 廉价预过滤：正文里有"数字+b"才跑后续（昂贵）正则，给百万条评论提速。
+RE_DIGIT_B = re.compile(r"\d\s?b", re.IGNORECASE)
+
+# MoE 记法 N×M（Mixtral 8x7B / 8x22B）：捕获专家尺寸 M 作为代表尺寸 + 标记 MoE。
+RE_MOE_NX = re.compile(r"(\d{1,2})\s?[xX]\s?(\d{1,3}(?:\.\d)?)\s?[bB](?![a-zA-Z])")
+# MoE 活跃参数（Qwen3-235B-A22B / 30B-A3B / 裸 A3B）：捕获 active 参数量。
+RE_MOE_ACTIVE = re.compile(r"(?<![A-Za-z0-9.])[aA](\d{1,3}(?:\.\d)?)\s?[bB](?![a-zA-Z])")
+
+# 模型家族（标注帖子讨论的是哪一家，做家族×尺寸×时间网格）。
+FAMILY_PATTERNS = [
+    ("Llama", re.compile(r"\b(?:code)?ll?ama-?\s?\d?(?:\.\d)?\b", re.IGNORECASE)),
+    ("Qwen", re.compile(r"\bqwen\d?(?:\.\d)?\b|\bqwq\b", re.IGNORECASE)),
+    ("Mixtral", re.compile(r"\bmixtral\b", re.IGNORECASE)),
+    ("Mistral", re.compile(r"\bmistral\b|\bministral\b|\bcodestral\b|\bdevstral\b", re.IGNORECASE)),
+    ("Gemma", re.compile(r"\bgemma-?\d?\b", re.IGNORECASE)),
+    ("Phi", re.compile(r"\bphi-?\d(?:\.\d)?\b", re.IGNORECASE)),
+    ("DeepSeek", re.compile(r"\bdeepseek\b", re.IGNORECASE)),
+    ("Yi", re.compile(r"\byi-?\d{1,2}\s?[bB]\b|\b01-ai\b", re.IGNORECASE)),
+    ("Command-R", re.compile(r"\bcommand[- ]?r\+?\b|\bc4ai\b", re.IGNORECASE)),
+    ("Granite", re.compile(r"\bgranite\b", re.IGNORECASE)),
+    ("GLM", re.compile(r"\bglm-?\d\b|\bchatglm\b", re.IGNORECASE)),
+    ("Falcon", re.compile(r"\bfalcon\b", re.IGNORECASE)),
+    ("Nemotron", re.compile(r"\bnemotron\b", re.IGNORECASE)),
+    ("OLMo", re.compile(r"\bolmo\b", re.IGNORECASE)),
+    ("StableLM", re.compile(r"\bstable\s?lm\b", re.IGNORECASE)),
+    ("Kimi", re.compile(r"\bkimi\b", re.IGNORECASE)),
+    ("MiniMax", re.compile(r"\bminimax\b", re.IGNORECASE)),
+]
+
+# 硬件档（解释甜点区迁移的驱动：显存够不够跑得动）。
+RE_HW = re.compile(
+    r"\b(\d{1,3}\s?gb|3060|3070|3080|3090|4060|4070|4080|4090|5070|5080|5090|"
+    r"a100|h100|h200|b200|a6000|p40|p100|v100|mi\d{2,3}x?|"
+    r"m[1-4]\s?(?:pro|max|ultra)|mac\s?(?:book|mini|studio)|unified\s?memory|"
+    r"vram|rtx\s?\d{3,4}|tesla)\b",
+    re.IGNORECASE,
+)
+
+# 量化档（GGUF/量化让大模型下沉到消费级硬件）。
+RE_QUANT = re.compile(
+    r"\b(q[2-8]_[0-9km_]+|q[2-8]\b|iq[1-4](?:_\w+)?|gguf|gptq|awq|exl[23]|"
+    r"bnb|nf4|fp8|fp16|bf16|int4|int8|\d(?:\.\d+)?\s?bpw|\d{1,2}[- ]?bit)\b",
+    re.IGNORECASE,
+)
+
+# 能力比较词（越级"小打大"的语义信号，词表来自探针高频项）。
+RE_CMP = re.compile(
+    r"\b(beats?|beating|outperform\w*|out-?perform\w*|punch\w*\s+above|"
+    r"rival\w*|on\s+par|as\s+good\s+as|better\s+than|match(?:es|ing)?|"
+    r"competitive\s+with|surpass\w*|destroy\w*|crush\w*|smoke[sd]?|"
+    r"knock\w*\s+out|dominat\w*|trades?\s+blows|keeps?\s+up\s+with|"
+    r"comparable\s+to|equivalent\s+to|on[- ]the[- ]level\s+of)\b",
+    re.IGNORECASE,
+)
+
+# 前沿/云模型名（"越级"比较的对象）。
+RE_FRONTIER = re.compile(
+    r"\b(gpt-?4o?|gpt-?4\.\d|gpt-?4|gpt-?3\.5|gpt-?5\S*|claude|opus|sonnet|"
+    r"gemini|o[134](?:-?(?:mini|pro|preview))?|deepseek[- ]?r?\d?|chatgpt|"
+    r"grok|frontier\s+models?|cloud\s+models?|sota|state[- ]of[- ]the[- ]art)\b",
+    re.IGNORECASE,
+)
+
+# 9 档尺寸桶，按实际模型聚簇切分（13B 时代、20-34B 新甜点、70B 老王、100B+ MoE）。
+SIZE_BUCKET_ORDER = [
+    "<1B", "1-3B", "4-6B", "7-9B", "11-15B", "20-34B", "40-49B", "65-72B", "100B+",
+]
+
+
+def size_bucket(v: float) -> str:
+    if v < 1:
+        return "<1B"
+    if v < 4:
+        return "1-3B"
+    if v < 7:
+        return "4-6B"
+    if v < 10:
+        return "7-9B"
+    if v < 16:
+        return "11-15B"
+    if v < 36:
+        return "20-34B"
+    if v < 50:
+        return "40-49B"
+    if v < 80:
+        return "65-72B"
+    return "100B+"
+
+
+def detect_families(text: str) -> list[str]:
+    return [name for name, pat in FAMILY_PATTERNS if pat.search(text)]
+
+
+def _sizes_in(text: str) -> tuple[list[float], set[str]]:
+    """从一段文字里抽参数量（含 MoE 专家尺寸），返回 (尺寸列表, 桶集合)。
+    不含 MoE active 参数（active 单独处理，避免污染尺寸桶）。"""
+    sizes: list[float] = []
+    buckets: set[str] = set()
+    for m in RE_SIZE.finditer(text):
+        v = float(m.group(1))
+        if 0 < v <= 1000:
+            sizes.append(v)
+            buckets.add(size_bucket(v))
+    for m in RE_MOE_NX.finditer(text):       # 8x7B -> 专家尺寸 7B 入桶
+        v = float(m.group(2))
+        if 0 < v <= 1000:
+            sizes.append(v)
+            buckets.add(size_bucket(v))
+    return sizes, buckets
+
+
+def analyze_capability(d: dict) -> dict | None:
+    title, body = _get_text(d)
+    text = (title + "\n" + body)[:MAX_TEXT]
+    if not text.strip():
+        return None
+
+    low = text.lower()
+    if not RE_DIGIT_B.search(low):           # 廉价预过滤
+        return None
+
+    sizes, buckets = _sizes_in(text)
+    moe_nx = bool(RE_MOE_NX.search(text))
+    active = []
+    for m in RE_MOE_ACTIVE.finditer(text):
+        v = float(m.group(1))
+        if 0 < v <= 1000:
+            active.append(v)
+    if not sizes and not active:             # 没有任何尺寸信号 -> 丢弃
+        return None
+
+    families = detect_families(text)
+    hardware = find_all(RE_HW, text)
+    quant = find_all(RE_QUANT, text)
+    cmp_verbs = find_all(RE_CMP, text)
+    frontier = find_all(RE_FRONTIER, text)
+
+    # 越级声明判定：标题里有比较词 且（标题含 ≥2 个不同尺寸桶 或 单尺寸+前沿名）
+    _, title_buckets = _sizes_in(title)
+    title_has_cmp = bool(RE_CMP.search(title))
+    title_has_frontier = bool(RE_FRONTIER.search(title))
+    is_crosssize = title_has_cmp and (
+        len(title_buckets) >= 2 or (len(title_buckets) >= 1 and title_has_frontier)
+    )
+
+    ts = d.get("created_utc")
+    try:
+        date = datetime.fromtimestamp(int(ts), tz=timezone.utc).strftime("%Y-%m-%d")
+    except (TypeError, ValueError):
+        date = ""
+
+    permalink = d.get("permalink") or ""
+    if permalink and not permalink.startswith("http"):
+        permalink = "https://reddit.com" + permalink
+    is_comment = "body" in d and "title" not in d
+    if is_comment:
+        cid = d.get("id", "")
+        if cid and "/#" not in permalink:
+            permalink = permalink.rstrip("/") + "/#" + cid
+    display_title = title if title else re.sub(r"\s+", " ", (d.get("body") or "")).strip()[:200]
+
+    anchor = (cmp_verbs or [f"{int(sizes[0])}b" if sizes else ""])[0]
+
+    return {
+        "date": date,
+        "subreddit": d.get("subreddit") or "",
+        "sizes_b": "|".join(f"{s:g}" for s in sizes),
+        "size_buckets": "|".join(b for b in SIZE_BUCKET_ORDER if b in buckets),
+        "moe_flag": "1" if (moe_nx or active) else "",
+        "active_params_b": "|".join(f"{a:g}" for a in active),
+        "model_families": "|".join(families),
+        "hardware": " ; ".join(hardware),
+        "quant": " ; ".join(quant),
+        "comparison_flag": "1" if cmp_verbs else "",
+        "comparison_verbs": " ; ".join(cmp_verbs),
+        "frontier_targets": " ; ".join(frontier),
+        "is_crosssize_claim": "1" if is_crosssize else "",
+        "score": d.get("score", ""),
+        "num_comments": d.get("num_comments", ""),
+        "title": display_title[:200],
+        "permalink": permalink,
+        "snippet": make_snippet(text, anchor),
+    }
+
+
+def build_capability_aggregates(rows: list[dict], out_path: str) -> None:
+    """从抽取结果聚合四角度时间序列，写 capability_aggregates.json。
+    注意力份额用"尺寸提及内份额"（桶计数/当月各桶之和），不依赖外部分母，
+    同时控制了总帖量与尺寸标注率两个混淆。一个帖提到多个桶时各桶都计一次。"""
+    from collections import defaultdict
+
+    attention: dict[str, Counter] = defaultdict(Counter)          # 月 -> 桶 -> 帖数
+    family_grid: dict[str, dict] = defaultdict(lambda: defaultdict(Counter))  # 家族->月->桶
+    hw_month: dict[str, Counter] = defaultdict(Counter)           # 月 -> 硬件标签
+    quant_month: dict[str, Counter] = defaultdict(Counter)        # 月 -> 量化标签
+    cross_month: Counter = Counter()                              # 月 -> 越级候选数
+    moe_month: Counter = Counter()                                # 月 -> MoE 帖数
+    bucket_total: Counter = Counter()                             # 桶 -> 总帖数
+
+    for r in rows:
+        ym = (r["date"] or "")[:7]
+        if not ym:
+            continue
+        bks = set(b for b in r["size_buckets"].split("|") if b)
+        fams = [f for f in r["model_families"].split("|") if f]
+        for b in bks:
+            attention[ym][b] += 1
+            bucket_total[b] += 1
+            for f in fams:
+                family_grid[f][ym][b] += 1
+        for h in (x.strip().lower() for x in r["hardware"].split(";") if x.strip()):
+            hw_month[ym][h] += 1
+        for q in (x.strip().lower() for x in r["quant"].split(";") if x.strip()):
+            quant_month[ym][q] += 1
+        if r["is_crosssize_claim"] == "1":
+            cross_month[ym] += 1
+        if r["moe_flag"] == "1":
+            moe_month[ym] += 1
+
+    def dump_counter_map(m):
+        return {k: dict(v.most_common()) for k, v in sorted(m.items())}
+
+    agg = {
+        "size_bucket_order": SIZE_BUCKET_ORDER,
+        "attention_by_month": {ym: {b: attention[ym].get(b, 0) for b in SIZE_BUCKET_ORDER}
+                               for ym in sorted(attention)},
+        "bucket_total": {b: bucket_total.get(b, 0) for b in SIZE_BUCKET_ORDER},
+        "family_size_month": {fam: {ym: dict(family_grid[fam][ym].most_common())
+                                    for ym in sorted(family_grid[fam])}
+                              for fam in sorted(family_grid)},
+        "hardware_by_month": dump_counter_map(hw_month),
+        "quant_by_month": dump_counter_map(quant_month),
+        "crosssize_candidates_by_month": {ym: cross_month[ym] for ym in sorted(cross_month)},
+        "moe_by_month": {ym: moe_month[ym] for ym in sorted(moe_month)},
+    }
+    with open(out_path, "w", encoding="utf-8") as fh:
+        json.dump(agg, fh, ensure_ascii=False, indent=2)
+
+
 def find_all(pat: re.Pattern, text: str, limit: int = MAX_MATCHES) -> list[str]:
     seen: list[str] = []
     for m in pat.finditer(text):
@@ -452,9 +701,12 @@ def parse_ym(s: str | None) -> str | None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="抽取 Reddit 频道数据里的价格或退市信息")
-    ap.add_argument("--mode", choices=["price", "deprecation", "usage"], default="price",
-                    help="price=价格信号（默认）；deprecation=模型退市/下架；usage=token 用量信号")
+    ap.add_argument("--mode", choices=["price", "deprecation", "usage", "capability"], default="price",
+                    help="price=价格信号（默认）；deprecation=模型退市；usage=token 用量；"
+                         "capability=模型尺寸/能力发展")
     ap.add_argument("--data-dir", default="data/reddit", help="JSONL 所在目录")
+    ap.add_argument("--channel", default=None,
+                    help="只扫某频道（如 LocalLLaMA），收窄到 r_<channel>_*.jsonl")
     ap.add_argument("--out", default=None, help="输出 CSV 路径（默认按 mode 自动选）")
     ap.add_argument("--min-score", type=int, default=0, help="最低赞数")
     ap.add_argument("--since", default=None, help="起始日期 YYYY-MM 或 YYYY-MM-DD")
@@ -468,10 +720,12 @@ def main() -> int:
             "deprecation": "deprecation_events.csv",
             "usage": "usage_mentions.csv",
             "price": "price_mentions.csv",
+            "capability": "capability_mentions.csv",
         }[args.mode]
         args.out = os.path.join(args.data_dir, out_name)
 
-    files = sorted(glob.glob(os.path.join(args.data_dir, "*.jsonl")))
+    file_glob = f"r_{args.channel}_*.jsonl" if args.channel else "*.jsonl"
+    files = sorted(glob.glob(os.path.join(args.data_dir, file_glob)))
     if not files:
         print(f"[!] {args.data_dir} 下没有 .jsonl 文件", file=sys.stderr)
         return 1
@@ -485,6 +739,7 @@ def main() -> int:
         "deprecation": analyze_deprecation,
         "usage": analyze_usage,
         "price": analyze_post,
+        "capability": analyze_capability,
     }[args.mode]
 
     scanned = 0
@@ -525,6 +780,12 @@ def main() -> int:
                 if args.mode in ("price", "usage"):
                     for s in rec["signal_types"].split("|"):
                         by_signal[s] += 1
+                elif args.mode == "capability":
+                    for b in rec["size_buckets"].split("|"):
+                        if b:
+                            by_signal[b] += 1
+                    if rec["is_crosssize_claim"] == "1":
+                        by_signal["[越级声明]"] += 1
                 else:
                     by_signal[rec.get("event_type", "")] += 1
                 if rec["date"]:
@@ -546,6 +807,14 @@ def main() -> int:
             "personal_spend", "score", "num_comments", "title", "permalink",
             "snippet",
         ]
+    elif args.mode == "capability":
+        fieldnames = [
+            "date", "subreddit", "sizes_b", "size_buckets", "moe_flag",
+            "active_params_b", "model_families", "hardware", "quant",
+            "comparison_flag", "comparison_verbs", "frontier_targets",
+            "is_crosssize_claim", "score", "num_comments", "title", "permalink",
+            "snippet",
+        ]
     else:
         fieldnames = [
             "date", "subreddit", "signal_types", "confidence", "products",
@@ -557,6 +826,11 @@ def main() -> int:
         w = csv.DictWriter(fh, fieldnames=fieldnames)
         w.writeheader()
         w.writerows(rows)
+
+    if args.mode == "capability":
+        agg_path = os.path.join(os.path.dirname(args.out) or ".", "capability_aggregates.json")
+        build_capability_aggregates(rows, agg_path)
+        print(f"[capability] 聚合: {agg_path}", file=sys.stderr)
 
     # ---- 终端摘要 ----
     print("\n" + "=" * 60, file=sys.stderr)
