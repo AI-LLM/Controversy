@@ -40,58 +40,9 @@
 
 ### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件
 
-3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：
+3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿旗舰**（OpenAI 866、Anthropic 258、Gemini 116、Grok 12，另有 143 条泛指"前沿/cloud"；已剔除 GPT-OSS 等开放权重）。一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro**。再把口径砍到"社区明确认同 + 亲自实测（非跑分）"，整份语料只剩 19 帖硬核样本。
 
-| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |
-|---|---|---|---|
-| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |
-| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |
-| 泛指"前沿 / 闭源 / cloud" | 143 | 10% | frontier、cloud models |
-| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |
-| xAI Grok | 12 | 1% | — |
-
-一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看"核心域、社区非质疑、稠密模型"成功叫板闭源的中位参数量：
-
-| 年份 | 事件数 | 中位尺寸 | 那年的对手 |
-|---|---|---|---|
-| 2023 | 121 | **13B** | GPT-3.5 |
-| 2024 | 245 | 32B | GPT-4 / GPT-4o |
-| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |
-| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |
-
-参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在"参数变小"，而体现在"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。
-
-成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。
-
-发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B "destroyed every model"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。
-
-#### 最硬的子集：明确认同 + 实测的"打闭源"记录（全 19 条）
-
-把上面 1,395 条再砍两刀——**社区明确认同（endorsed）且证据为亲自实测（personal_use/anecdote，非跑分）**——只剩 19 帖（21 事件去重）。这才是整份语料里"小模型实测打平闭源旗舰、且社区买账"的全部硬核样本；筛得这么狠才剩 19 条，本身就说明绝大多数"打闭源"要么靠 benchmark、要么社区没一致认账。按时间全列（标题为原帖链接）：
-
-| 日期 | 小模型 | 被叫板的闭源 | 域 | 赞 | 原帖标题 |
-|---|---|---|---|---|---|
-| 2023-12-12 | Mixtral-8x7B（47B/13B 活跃） | GPT-3.5 | general | 234 | [LLM Comparison/Test: Mixtral-8x7B, Mistral, DeciLM, Synthia-MoE](https://reddit.com/r/LocalLLaMA/comments/18gz54r/) |
-| 2024-07-07 | Gemma 2 27B | ChatGPT-3.5 | creative | 29 | [Any worthy Gemma 2 27B finetunes for writing/RP?](https://reddit.com/r/LocalLLaMA/comments/1dxpc4r/) |
-| 2024-11-01 | Qwen2.5-14B | GPT-4o | agentic | 173 | [IMO the best model for agents: Qwen2.5 14b](https://reddit.com/r/LocalLLaMA/comments/1gheq9t/) |
-| 2024-11-14 | Qwen2.5-Coder-32B | GPT-4o | coding | 291 | [Qwen 32B Coder-Ins vs 72B-Ins on the latest Leetcode problems](https://reddit.com/r/LocalLLaMA/comments/1gr35xp/) |
-| 2024-11-28 | QwQ-32B（4bit 量化） | o1-preview / o1-mini | reasoning | 208 | [I ran my misguided attention eval locally on QwQ-32B 4bit quantized and it beats o1-preview and o1-mini](https://reddit.com/r/LocalLLaMA/comments/1h1u7r9/) |
-| 2025-03-06 | QwQ-32B | o3-mini (med/high) | math | 168 | [new QwQ is beating any distil deepseek model in math … level o3 mini med/high](https://reddit.com/r/LocalLLaMA/comments/1j4x8sq/) |
-| 2025-03-21 | Mistral Small 3.1（24B） | GPT-4o Mini | vision | 60 | [Mistral-small 3.1 Vision for PDF RAG tested](https://reddit.com/r/LocalLLaMA/comments/1jg5sbj/) |
-| 2025-04-17 | Gemma 3 27B | ChatGPT (GPT-3.5 Turbo) | general | 335 | [Medium sized local models already beating vanilla ChatGPT - Mind blown](https://reddit.com/r/LocalLLaMA/comments/1k1av1x/) |
-| 2025-04-21 | GLM-4-32B | Gemini 2.5 Flash | coding | 577 | [GLM-4 32B is mind blowing](https://reddit.com/r/LocalLLaMA/comments/1k4god7/) |
-| 2025-07-30 | Qwen3-30B-A3B-thinking（3B 活跃） | Gemini 2.5 Flash | general | 463 | [Qwen3-30b-a3b-thinking-2507 This is insane performance](https://reddit.com/r/LocalLLaMA/comments/1md8slx/) |
-| 2025-08-08 | Granite 3 8B | GPT-5 mini/nano | agentic | 203 | [Granite 3 8B is seriously underrated - still outperforming newer models](https://reddit.com/r/LocalLLaMA/comments/1mkp0am/) |
-| 2025-12-19 | Qwen 8B | cloud models | agentic | 29 | [I've been experimenting with SLM's a lot recently … prove even SLMs can be accurate](https://reddit.com/r/LocalLLaMA/comments/1pqd7sy/) |
-| 2026-01-21 | distilled Text2SQL 0.6B | GPT-class models | coding | 162 | [Knowledge distillation with Claude as the interface: trained a 0.6B model to match GPT-class performance on Text2SQL](https://reddit.com/r/LocalLLaMA/comments/1qiu6jo/) |
-| 2026-03-30 | Qwen 3.5-27B | frontier（agentic text-to-SQL） | coding | 196 | [I tested as many of the small local and OpenRouter models I could with my own agentic text-to-SQL benchmark. Surprises ensured…](https://reddit.com/r/LocalLLaMA/comments/1s7r9wu/) |
-| 2026-04-06 | Gemma 4 26B | Gemini 3 Flash | agentic | 136 | [Gemma4:26b's reasoning capabilities are crazy](https://reddit.com/r/LocalLLaMA/comments/1sdz71b/) |
-| 2026-04-09 | Gemma 4 31B（UD IQ3 XXS 量化） | Claude Opus 4.6 | general | 847 | [It's insane how lobotomized Opus 4.6 is right now. Even Gemma 4 31B UD IQ3 XXS beat it on the carwash test on my 5070 TI](https://reddit.com/r/LocalLLaMA/comments/1sgd7fp/) |
-| 2026-04-24 | Qwen 3.6 27B | Claude Sonnet 4.6 | coding | 133 | [Opinion: Qwen 3.6 27b Beats Sonnet 4.6 on Feature Planning](https://reddit.com/r/LocalLLaMA/comments/1supft2/) |
-| 2026-05-05 | Qwen 3.6 27B | cloud models | coding | 635 | [DeepSeek V4 being 17x cheaper got me to actually measure what I send to cloud vs what I could run locally](https://reddit.com/r/LocalLLaMA/comments/1t4s6g2/) |
-| 2026-05-11 | Qwen 3.6 35B-A3B（3B 活跃） | frontier | coding | 419 | [The Qwen 3.6 35B A3B hype is real!!!](https://reddit.com/r/LocalLLaMA/comments/1t9whrt/) |
-
-读这 19 条要带两层折扣：(1) 它们是**实测体感**，多为单人、单任务、自定义 eval，不是系统评测——"在我的活儿上够用"不等于"综合超越"；(2) 标题不少是带情绪的（"mind blowing""insane""lobotomized Opus"），social proof 强但可复现性弱。但即便如此，它们的共性很扎实：**域几乎都落在 coding/agentic/reasoning 这种本地用户每天真用的活儿上，尺寸集中在 24–32B（外加两条 MoE 的 3B 活跃和一条 0.6B 蒸馏专用模型），对手从 2023 年的 GPT-3.5 一路爬到 2026 年的 Claude Opus 4.6 / Sonnet 4.6 / Gemini 3**——和上文"参数卡在 ~25–30B、对手却强了好几代"的结论互相印证。
+这一支线已独立成篇，含厂商分布、逐年中位尺寸、benchmaxx 成色、以及全 19 条实测记录（带原帖链接）：[小模型叫板闭源前沿 (2026-06-06).md](小模型叫板闭源前沿%20(2026-06-06).md)。
 
 ## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位
 
@@ -186,12 +137,6 @@
 [9] r/LocalLLaMA, "HuggingFace researchers got 3b Llama to outperform 70b using search," Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>
 
 [10] r/LocalLLaMA, "AI2 releases OLMo 2 32B," Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>
-
-[11] r/LocalLLaMA, "Gemma 4 just casually destroyed every model on our leaderboard," Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>
-
-[12] r/LocalLLaMA, "Jan-nano-128k: A 4B Model … Still Outperforms 671B," Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>
-
-[13] r/LocalLLaMA, "GLM-4 32B is mind blowing," Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>
 
 ## 附录：Level-2 所用 LLM prompt
 
