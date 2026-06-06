@@ -129,3 +129,72 @@
 [9] r/LocalLLaMA, "HuggingFace researchers got 3b Llama to outperform 70b using search," Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>
 
 [10] r/LocalLLaMA, "AI2 releases OLMo 2 32B," Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>
+
+## 附录：Level-2 所用 LLM prompt
+
+两段式抽取的 prompt 原文，供复现。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`，40 条/15 条一批），把结果写回对应输出批文件。
+
+### Haiku 分类 prompt
+
+```
+你在给 r/LocalLLaMA 关于"不同参数量级模型能力比较"的帖子/评论做分类。
+
+用 Read 工具读取 JSON 数组：<输入批路径>
+每条含 id, kind, title, snippet, sizes_b（提到的参数量）, model_families, frontier_targets（被比较的前沿模型）, score。
+
+给每条分配恰好一个 verdict：
+- verified_underdog：声称一个【更小】的模型确实打平/超越【更大或前沿】模型，且作者当作真事呈现（自己实测或给了 benchmark）。
+- benchmark_only：跨尺寸超越声明，但【仅】基于 benchmark 跑分（benchmaxx 味），没有实际使用佐证。
+- refuted：文本【否定】小模型真能打平大/前沿（打假、"并没有"、"名不副实"、"R1 蒸馏版不是真 R1"）。
+- marketing_hype：发布/推广通告，宣传口吻地声称更强，未经证实。
+- sentiment_only：对某尺寸档的体感/观点，但【没有】具体的跨尺寸比较。
+- off_topic：跟"按尺寸比能力"无关（纯硬件、玩笑、跑题）。
+
+再给 confidence：high / medium / low。
+
+判断要点：
+- 关键是【小 vs 大】的方向。若只是同级比较或大模型更强，多半 sentiment_only 或 off_topic。
+- 标题是营销通告口吻（"X released!"、"introducing"、"我们发布了"）且自夸 → marketing_hype。
+- snippet 里有"actually not"、"falls short"、"not really"、"overhyped" → 倾向 refuted。
+
+用 Write 工具把结果写成 JSON 数组到：<输出批路径>
+格式：[{"id":"...","verdict":"...","confidence":"..."}, ...]，每条输入一个对应条目，id 必须一致。
+文件里【只】写合法 JSON，不要 markdown 代码块、不要解释。
+最终消息只回一句："b_NNN: <条数> classified"。
+```
+
+### Sonnet 抽取 prompt
+
+```
+你在从 r/LocalLLaMA 的帖子/评论里抽取"小模型越级打平/超越大模型或前沿模型"的结构化事件。
+
+用 Read 工具读取 JSON 数组：<输入批路径>
+每条含：id, kind(post/comment), date(帖子日期), score, title, body(正文/评论全文), top_replies(高赞回复，社区真实反应), sizes_b, active_params_b, model_families, frontier_targets, haiku_verdict(初判：verified_underdog/benchmark_only/refuted)。
+
+对每条做两件事：
+1) verdict_check：校验初判对不对，回 confirmed / overturned（你认为初判错）/ unclear。
+2) 抽取 events 数组。一条帖可能含 0、1 或多个越级事件。每个 event：
+   - small_model：被夸的【较小】模型精确名（如 "Qwen3-32B"、"Gemma 3 27B"、"QwQ-32B"；尽量带版本/尺寸，别只写 "Qwen"）
+   - small_size_b：该模型参数量(数字, B)；无法确定填 null
+   - active_size_b：若是 MoE 的活跃参数(数字)；否则 null
+   - beaten_target：被比下去的【更大/前沿】对象名（如 "DeepSeek-R1"、"GPT-4o"、"Claude 3.5 Sonnet"、"Llama-3 70B"；泛指就写 "frontier" 或 "cloud models"）
+   - target_size_b：被比对象参数量(数字)；前沿闭源/未知填 null
+   - task_domain：coding / math / reasoning / general / agentic / multilingual / vision / creative / other
+   - claim_strength：surpasses（超越） / on_par（持平） / approaches（接近但不及）
+   - evidence_type：benchmark / lmarena / personal_use / anecdote / announcement / none
+   - timing：immediate（帖子日=事件日） / announced（预告未来） / retrospective（回溯旧事） / speculative（推测传闻）
+   - effective_date：文本明确提到的事件生效日 YYYY-MM-DD；无则 null（注意：帖子日期≠事件日期）
+   - is_marketing：true/false（是否营销通告口吻而非中立/实测）
+   - community_reaction：看 top_replies 和 score 判断社区是否买账 —— endorsed（多数认同） / skeptical（多数质疑、打假） / mixed / none（无足够回复信号）
+
+抽取要点：
+- 只抽【小→大】方向的越级。同级或大胜小不是 event。
+- refuted 类：仍抽出它所【否定】的那个声明（small_model 是被质疑能越级的小模型，claim_strength 填原声称的强度），并让 community_reaction=skeptical、verdict_check=confirmed。
+- small_size 必须真的【小于】target_size 才算越级（前沿闭源 target_size=null 时，看常识：32B 打 GPT-4o 算越级）。
+- 拿不准 small_model 精确名时用 title/body 里出现的最具体写法。
+
+用 Write 工具把结果写成 JSON 数组到：<输出批路径>
+格式：[{"id":"...","haiku_verdict":"...","verdict_check":"...","events":[{...}, ...]}, ...]，每条输入对应一个条目，id 一致，events 可为 []。
+文件里【只】写合法 JSON，无 markdown 代码块、无解释。
+最终消息只回一句："s_NNN: <事件数> events"。
+```

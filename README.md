@@ -6,7 +6,7 @@
 
 | 日期 | 主题 | 文件 |
 | --- | --- | --- |
-| 2026-06-06 | 数据挖掘｜r/LocalLLaMA 三年语料（11.8 万帖+179 万评论）里的"能力密度"曲线——小模型一路打平大模型：越级声明时间线 + 甜点区从 13B/70B 迁到 20-34B 与 100B+ MoE + 家族×尺寸网格 + 越小越靠 benchmaxx 的营销/实测分化 | [news/2026-06-06-capability-per-param.md](news/2026-06-06-capability-per-param.md) |
+| 2026-06-06 | 数据挖掘｜r/LocalLLaMA 三年语料（11.8 万帖+179 万评论）里的"能力密度"曲线——小模型一路打平大模型：越级声明时间线 + 甜点区从 13B/70B 迁到 20-34B 与 100B+ MoE + 家族×尺寸网格 + 越小越靠 benchmaxx 的营销/实测分化 | [chat/LocalLLaMA能力密度挖掘 (2026-06-06).md](chat/LocalLLaMA能力密度挖掘%20(2026-06-06).md) |
 | 2026-06-05 | 新闻｜图灵奖得主 Sutton 与 Rafiee 新论文《Toward Enactive Artificial Intelligence》——批判被动表征主义、主张转向生成认知（经验／行动-感知不可分割／自主性／具身性四大支柱），并指出强化学习"结构共鸣但仍差三道鸿沟" | [news/2026-06-05-enactive-ai-sutton.md](news/2026-06-05-enactive-ai-sutton.md) |
 | 2026-06-05 | 想法｜从手工记账到 AI Agent——提炼"用不可靠单元得到可靠结果"的五个元模式（冗余碰撞 / 正交交叉审计 / 不对称低成本特征指纹 / 职责分离 / 日志重演），按 人工→经典 CS→LLM AI 三代对照 | [chat/从手工记账到AI Agent (2026-06-05).md](chat/从手工记账到AI%20Agent%20(2026-06-05).md) |
 | 2026-05-31 | 新闻｜SemiAnalysis「AI Dark Output」：AI 创造的价值大多会从 GDP／CPI／劳动统计中蒸发——用 IBIS 方法重构其主张与论据 | [news/2026-05-31-tokenmaxxing.md](news/2026-05-31-tokenmaxxing.md) |
