@@ -73,7 +73,12 @@ def merge_haiku(dd):
 def merge_sonnet(dd):
     rows = []
     for p in sorted(glob.glob(os.path.join(_dir(dd, "sonnet_out"), "*.json"))):
-        for rec in json.load(open(p)):
+        try:
+            recs = json.load(open(p))
+        except json.JSONDecodeError as e:
+            print(f"[skip] {os.path.basename(p)} JSON 损坏: {e}", file=sys.stderr)
+            continue
+        for rec in recs:
             base = {"id": rec.get("id", ""), "haiku_verdict": rec.get("haiku_verdict", ""),
                     "verdict_check": rec.get("verdict_check", "")}
             evs = rec.get("events") or []
