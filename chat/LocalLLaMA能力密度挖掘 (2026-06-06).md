@@ -8,22 +8,24 @@
 
 ## 一、能力密度曲线：越级"小打大"的时间线
 
-从语料里抽出 3,275 条"较小模型打平／超越更大或前沿模型"的事件，取通用／推理／编码／agentic 域、社区非一致质疑、且帖子日期即事件日期的高关注度条目，逐季度的标志性里程碑如下（方括号为 Reddit 赞数；末列为社区反应）：
+从语料里抽出 3,275 条"较小模型打平／超越更大或前沿模型"的事件，取通用／推理／编码／agentic 域、社区非一致质疑、且帖子日期即事件日期的高关注度条目，逐季度的标志性里程碑如下：
 
-| 季度 | 小模型 | 被比下去的对象 | 域 | 社区反应 |
-|---|---|---|---|---|
-| 2023Q2 | phi-1 **1.3B** | GPT-3.5 | coding | 认同 [433] |
-| 2023Q2 | WizardLM-30B | GPT-4 | reasoning | 分歧 [123] |
-| 2023Q3 | Mistral-7B-v0.1 | 13B | general | 认同 [170] |
-| 2023Q4 | Mixtral-8x7B（**47B/12.9B 活跃**） | Llama 2 70B | general | 认同 [234] |
-| 2024Q1 | Mistral-7B（ReAct 微调） | Gemini Pro | agentic | 分歧 [253] |
-| 2024Q4 | Llama **3B** + 测试时搜索 | Llama 70B | reasoning/math | 认同 [773] |
-| 2025Q1 | OLMo 2 **32B** | GPT-4o mini / GPT-3.5 | general | 认同 [1551] |
-| 2025Q2 | Qwen3-**4B** | 72B | general | 认同 [1768] |
-| 2025Q2 | Qwen3-30B-**A3B** | 32B（稠密） | general | 认同 [1768] |
-| 2025Q3 | Qwen3-30B-A3B-thinking | 235B | reasoning | 认同 [463] |
-| 2026Q1 | Qwen2.5-Coder-32B（PewDiePie 微调） | ChatGPT-4o | coding | 分歧 [743] |
-| 2026Q2 | Gemma 4 **31B** | GPT-5.2 / Gemini 3 Pro | agentic | 认同 [1607] |
+| 季度 | 小模型 | 被比下去的对象 | 域 | 点赞数 | 社区反应 |
+|---|---|---|---|---|---|
+| 2023Q2 | phi-1 **1.3B** | GPT-3.5 | coding | 433 | 认同 |
+| 2023Q2 | WizardLM-30B | GPT-4 | reasoning | 123 | 分歧 |
+| 2023Q3 | Mistral-7B-v0.1 | 13B | general | 170 | 认同 |
+| 2023Q4 | Mixtral-8x7B（**47B/12.9B 活跃**） | Llama 2 70B | general | 234 | 认同 |
+| 2024Q1 | Mistral-7B（ReAct 微调） | Gemini Pro | agentic | 253 | 分歧 |
+| 2024Q4 | Llama **3B** + 测试时搜索 | Llama 70B | reasoning/math | 773 | 认同 |
+| 2025Q1 | OLMo 2 **32B** | GPT-4o mini / GPT-3.5 | general | 1551 | 认同 |
+| 2025Q2 | Qwen3-**4B** | 72B | general | 1768 | 认同 |
+| 2025Q2 | Qwen3-30B-**A3B** | 32B（稠密） | general | 1768 | 认同 |
+| 2025Q3 | Qwen3-30B-A3B-thinking | 235B | reasoning | 463 | 认同 |
+| 2026Q1 | Qwen2.5-Coder-32B（PewDiePie 微调） | ChatGPT-4o | coding | 743 | 分歧 |
+| 2026Q2 | Gemma 4 **31B** | GPT-5.2 / Gemini 3 Pro | agentic | 1607 | 认同 |
+
+两列来源不同，不要混看：**点赞数**是该帖在 Reddit 上的原始 score（客观计数）；**社区反应**是 Sonnet 读取该帖通过 `link_id` 关联到的高赞回复（top_replies）再结合赞数，判断社区是否买账——分 endorsed（多数回复认同，本表记"认同"）／mixed（回复有赞有弹，记"分歧"）／skeptical（多数回复质疑、打假）／none（回复信号不足）四档。它是 **LLM 对真实评论内容的判读，不是由赞数机械换算**——高赞帖也可能是"分歧"（如 Qwen2.5-Coder-32B 那条 743 赞，但回复区对"是否训练集污染／刷榜"争论不一）。本里程碑表已滤掉 skeptical 档（社区一致质疑的不计入里程碑）。
 
 四个有据可查的历史锚点：
 
