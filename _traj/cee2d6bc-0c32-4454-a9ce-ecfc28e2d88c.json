@@ -18255,19 +18255,958 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 245,
+      "timestamp": "2026-06-06T12:53:14.803Z",
+      "source": "user",
+      "message": "补进文档",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 246,
+      "timestamp": "2026-06-06T12:53:27.665Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 230220,
+        "completion_tokens": 738,
+        "cached_tokens": 230218,
+        "extra": {
+          "cache_creation_input_tokens": 2631,
+          "cache_read_input_tokens": 230218,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2631,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 738,
+              "cache_read_input_tokens": 230218,
+              "cache_creation_input_tokens": 2631,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2631
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 247,
+      "timestamp": "2026-06-06T12:53:28.569Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "补进文档。先读插入点和参考文献区。",
+      "metrics": {
+        "prompt_tokens": 230220,
+        "completion_tokens": 738,
+        "cached_tokens": 230218,
+        "extra": {
+          "cache_creation_input_tokens": 2631,
+          "cache_read_input_tokens": 230218,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2631,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 738,
+              "cache_read_input_tokens": 230218,
+              "cache_creation_input_tokens": 2631,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2631
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 248,
+      "timestamp": "2026-06-06T12:53:29.925Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01Te8FWDjB1jHTMUdAy5BrYd",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Te8FWDjB1jHTMUdAy5BrYd",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "offset": 35,
+            "limit": 6
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Te8FWDjB1jHTMUdAy5BrYd",
+            "content": "35\t- **QwQ-32B**：用 RL 把 32B 的推理拉到与 DeepSeek-R1（671B、37B 活跃）同级，AIME24 79.5% vs R1 79.8% [[4]](https://qwenlm.github.io/blog/qwq-32b/)。一个能塞进单张 24GB 卡的模型，叫板一个要整机柜的 671B。\n36\t\n37\t这条曲线有两层独立的下降叠加：其一是**稠密模型的能力密度**本身在升（13B→7B→4B 逐代追上前代大哥）；其二是 **MoE 把\"活跃参数\"从总参数里解耦**——Qwen3-30B-A3B 总 30B、每 token 只激活 3B，却被社区拿来跟 235B 比。到 2026 年，\"几 B 打几百 B\"的句式从夸张标题变成了日常表达。\n38\t\n39\t⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n40\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md\", \"content\": \"- **QwQ-32B**：用 RL 把 32B 的推理拉到与 DeepSeek-R1（671B、37B 活跃）同级，AIME24 79.5% vs R1 79.8% [[4]](https://qwenlm.github.io/blog/qwq-32b/)。一个能塞进单张 24GB 卡的模型，叫板一个要整机柜的 671B。\\n\\n这条曲线有两层独立的下降叠加：其一是**稠密模型的能力密度**本身在升（13B→7B→4B 逐代追上前代大哥）；其二是 **MoE 把\\\"活跃参数\\\"从总参数里解耦**——Qwen3-30B-A3B 总 30B、每 token 只激活 3B，却被社区拿来跟 235B 比。到 2026 年，\\\"几 B 打几百 B\\\"的句式从夸张标题变成了日常表达。\\n\\n⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\\n\", \"numLines\": 6, \"startLine\": 35, \"totalLines\": 203}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 230220,
+        "completion_tokens": 738,
+        "cached_tokens": 230218,
+        "extra": {
+          "cache_creation_input_tokens": 2631,
+          "cache_read_input_tokens": 230218,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2631,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 738,
+              "cache_read_input_tokens": 230218,
+              "cache_creation_input_tokens": 2631,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2631
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "- **QwQ-32B**：用 RL 把 32B 的推理拉到与 DeepSeek-R1（671B、37B 活跃）同级，AIME24 79.5% vs R1 79.8% [[4]](https://qwenlm.github.io/blog/qwq-32b/)。一个能塞进单张 24GB 卡的模型，叫板一个要整机柜的 671B。\n\n这条曲线有两层独立的下降叠加：其一是**稠密模型的能力密度**本身在升（13B→7B→4B 逐代追上前代大哥）；其二是 **MoE 把\"活跃参数\"从总参数里解耦**——Qwen3-30B-A3B 总 30B、每 token 只激活 3B，却被社区拿来跟 235B 比。到 2026 年，\"几 B 打几百 B\"的句式从夸张标题变成了日常表达。\n\n⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n",
+              "numLines": 6,
+              "startLine": 35,
+              "totalLines": 203
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Te8FWDjB1jHTMUdAy5BrYd",
+            "type": "tool_result",
+            "content": "35\t- **QwQ-32B**：用 RL 把 32B 的推理拉到与 DeepSeek-R1（671B、37B 活跃）同级，AIME24 79.5% vs R1 79.8% [[4]](https://qwenlm.github.io/blog/qwq-32b/)。一个能塞进单张 24GB 卡的模型，叫板一个要整机柜的 671B。\n36\t\n37\t这条曲线有两层独立的下降叠加：其一是**稠密模型的能力密度**本身在升（13B→7B→4B 逐代追上前代大哥）；其二是 **MoE 把\"活跃参数\"从总参数里解耦**——Qwen3-30B-A3B 总 30B、每 token 只激活 3B，却被社区拿来跟 235B 比。到 2026 年，\"几 B 打几百 B\"的句式从夸张标题变成了日常表达。\n38\t\n39\t⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n40\t"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "- **QwQ-32B**：用 RL 把 32B 的推理拉到与 DeepSeek-R1（671B、37B 活跃）同级，AIME24 79.5% vs R1 79.8% [[4]](https://qwenlm.github.io/blog/qwq-32b/)。一个能塞进单张 24GB 卡的模型，叫板一个要整机柜的 671B。\n\n这条曲线有两层独立的下降叠加：其一是**稠密模型的能力密度**本身在升（13B→7B→4B 逐代追上前代大哥）；其二是 **MoE 把\"活跃参数\"从总参数里解耦**——Qwen3-30B-A3B 总 30B、每 token 只激活 3B，却被社区拿来跟 235B 比。到 2026 年，\"几 B 打几百 B\"的句式从夸张标题变成了日常表达。\n\n⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n",
+              "numLines": 6,
+              "startLine": 35,
+              "totalLines": 203
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Te8FWDjB1jHTMUdAy5BrYd",
+            "type": "tool_result",
+            "content": "35\t- **QwQ-32B**：用 RL 把 32B 的推理拉到与 DeepSeek-R1（671B、37B 活跃）同级，AIME24 79.5% vs R1 79.8% [[4]](https://qwenlm.github.io/blog/qwq-32b/)。一个能塞进单张 24GB 卡的模型，叫板一个要整机柜的 671B。\n36\t\n37\t这条曲线有两层独立的下降叠加：其一是**稠密模型的能力密度**本身在升（13B→7B→4B 逐代追上前代大哥）；其二是 **MoE 把\"活跃参数\"从总参数里解耦**——Qwen3-30B-A3B 总 30B、每 token 只激活 3B，却被社区拿来跟 235B 比。到 2026 年，\"几 B 打几百 B\"的句式从夸张标题变成了日常表达。\n38\t\n39\t⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n40\t"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+          "offset": 35,
+          "limit": 6
+        }
+      }
+    },
+    {
+      "step_id": 249,
+      "timestamp": "2026-06-06T12:53:54.434Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01PJQ6YpcrZ5JYvz9zCnnmY9",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01PJQ6YpcrZ5JYvz9zCnnmY9",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "old_string": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+            "new_string": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件\n\n3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：\n\n| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |\n|---|---|---|---|\n| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |\n| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |\n| 泛指\"前沿 / 闭源 / cloud\" | 143 | 10% | frontier、cloud models |\n| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |\n| xAI Grok | 12 | 1% | — |\n\n一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\"核心域、社区非质疑、稠密模型\"成功叫板闭源的中位参数量：\n\n| 年份 | 事件数 | 中位尺寸 | 那年的对手 |\n|---|---|---|---|\n| 2023 | 121 | **13B** | GPT-3.5 |\n| 2024 | 245 | 32B | GPT-4 / GPT-4o |\n| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |\n| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |\n\n参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\"参数变小\"，而体现在\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。\n\n成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。\n\n发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \"destroyed every model\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01PJQ6YpcrZ5JYvz9zCnnmY9",
+            "content": "The file /Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md\", \"oldString\": \"⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\\n\\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位\", \"newString\": \"⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\\n\\n### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件\\n\\n3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：\\n\\n| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |\\n|---|---|---|---|\\n| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |\\n| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |\\n| 泛指\\\"前沿 / 闭源 / cloud\\\" | 143 | 10% | frontier、cloud models |\\n| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |\\n| xAI Grok | 12 | 1% | — |\\n\\n一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\\\"核心域、社区非质疑、稠密模型\\\"成功叫板闭源的中位参数量：\\n\\n| 年份 | 事件数 | 中位尺寸 | 那年的对手 |\\n|---|---|---|---|\\n| 2023 | 121 | **13B** | GPT-3.5 |\\n| 2024 | 245 | 32B | GPT-4 / GPT-4o |\\n| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |\\n| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |\\n\\n参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\\\"参数变小\\\"，而体现在\\\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\\\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。\\n\\n成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。\\n\\n发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \\\"destroyed every model\\\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。\\n\\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 38, \"oldLines\": 6, \"newStart\": 38, \"newLines\": 33, \"lines\": [\" \", \" ⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\", \" \", \"+### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件\", \"+\", \"+3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：\", \"+\", \"+| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |\", \"+|---|---|---|---|\", \"+| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |\", \"+| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |\", \"+| 泛指\\\"前沿 / 闭源 / cloud\\\" | 143 | 10% | frontier、cloud models |\", \"+| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |\", \"+| xAI Grok | 12 | 1% | — |\", \"+\", \"+一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\\\"核心域、社区非质疑、稠密模型\\\"成功叫板闭源的中位参数量：\", \"+\", \"+| 年份 | 事件数 | 中位尺寸 | 那年的对手 |\", \"+|---|---|---|---|\", \"+| 2023 | 121 | **13B** | GPT-3.5 |\", \"+| 2024 | 245 | 32B | GPT-4 / GPT-4o |\", \"+| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |\", \"+| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |\", \"+\", \"+参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\\\"参数变小\\\"，而体现在\\\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\\\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。\", \"+\", \"+成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。\", \"+\", \"+发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \\\"destroyed every model\\\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。\", \"+\", \" ## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位\", \" \", \" 按月统计带参数量的帖子，再算\\\"当月各尺寸桶占尺寸提及总数的份额\\\"（自归一化，同时抵消总帖量和尺寸标注率两个混淆）。季度份额（%）：\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 232851,
+        "completion_tokens": 1828,
+        "cached_tokens": 232849,
+        "extra": {
+          "cache_creation_input_tokens": 1201,
+          "cache_read_input_tokens": 232849,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1201,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1828,
+              "cache_read_input_tokens": 232849,
+              "cache_creation_input_tokens": 1201,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1201
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "oldString": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+            "newString": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件\n\n3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：\n\n| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |\n|---|---|---|---|\n| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |\n| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |\n| 泛指\"前沿 / 闭源 / cloud\" | 143 | 10% | frontier、cloud models |\n| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |\n| xAI Grok | 12 | 1% | — |\n\n一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\"核心域、社区非质疑、稠密模型\"成功叫板闭源的中位参数量：\n\n| 年份 | 事件数 | 中位尺寸 | 那年的对手 |\n|---|---|---|---|\n| 2023 | 121 | **13B** | GPT-3.5 |\n| 2024 | 245 | 32B | GPT-4 / GPT-4o |\n| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |\n| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |\n\n参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\"参数变小\"，而体现在\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。\n\n成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。\n\n发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \"destroyed every model\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 38,
+                "oldLines": 6,
+                "newStart": 38,
+                "newLines": 33,
+                "lines": [
+                  " ",
+                  " ⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。",
+                  " ",
+                  "+### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件",
+                  "+",
+                  "+3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：",
+                  "+",
+                  "+| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |",
+                  "+|---|---|---|---|",
+                  "+| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |",
+                  "+| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |",
+                  "+| 泛指\"前沿 / 闭源 / cloud\" | 143 | 10% | frontier、cloud models |",
+                  "+| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |",
+                  "+| xAI Grok | 12 | 1% | — |",
+                  "+",
+                  "+一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\"核心域、社区非质疑、稠密模型\"成功叫板闭源的中位参数量：",
+                  "+",
+                  "+| 年份 | 事件数 | 中位尺寸 | 那年的对手 |",
+                  "+|---|---|---|---|",
+                  "+| 2023 | 121 | **13B** | GPT-3.5 |",
+                  "+| 2024 | 245 | 32B | GPT-4 / GPT-4o |",
+                  "+| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |",
+                  "+| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |",
+                  "+",
+                  "+参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\"参数变小\"，而体现在\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。",
+                  "+",
+                  "+成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。",
+                  "+",
+                  "+发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \"destroyed every model\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。",
+                  "+",
+                  " ## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+                  " ",
+                  " 按月统计带参数量的帖子，再算\"当月各尺寸桶占尺寸提及总数的份额\"（自归一化，同时抵消总帖量和尺寸标注率两个混淆）。季度份额（%）："
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01PJQ6YpcrZ5JYvz9zCnnmY9",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "oldString": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+            "newString": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件\n\n3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：\n\n| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |\n|---|---|---|---|\n| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |\n| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |\n| 泛指\"前沿 / 闭源 / cloud\" | 143 | 10% | frontier、cloud models |\n| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |\n| xAI Grok | 12 | 1% | — |\n\n一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\"核心域、社区非质疑、稠密模型\"成功叫板闭源的中位参数量：\n\n| 年份 | 事件数 | 中位尺寸 | 那年的对手 |\n|---|---|---|---|\n| 2023 | 121 | **13B** | GPT-3.5 |\n| 2024 | 245 | 32B | GPT-4 / GPT-4o |\n| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |\n| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |\n\n参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\"参数变小\"，而体现在\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。\n\n成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。\n\n发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \"destroyed every model\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 38,
+                "oldLines": 6,
+                "newStart": 38,
+                "newLines": 33,
+                "lines": [
+                  " ",
+                  " ⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。",
+                  " ",
+                  "+### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件",
+                  "+",
+                  "+3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：",
+                  "+",
+                  "+| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |",
+                  "+|---|---|---|---|",
+                  "+| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |",
+                  "+| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |",
+                  "+| 泛指\"前沿 / 闭源 / cloud\" | 143 | 10% | frontier、cloud models |",
+                  "+| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |",
+                  "+| xAI Grok | 12 | 1% | — |",
+                  "+",
+                  "+一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\"核心域、社区非质疑、稠密模型\"成功叫板闭源的中位参数量：",
+                  "+",
+                  "+| 年份 | 事件数 | 中位尺寸 | 那年的对手 |",
+                  "+|---|---|---|---|",
+                  "+| 2023 | 121 | **13B** | GPT-3.5 |",
+                  "+| 2024 | 245 | 32B | GPT-4 / GPT-4o |",
+                  "+| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |",
+                  "+| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |",
+                  "+",
+                  "+参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\"参数变小\"，而体现在\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。",
+                  "+",
+                  "+成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。",
+                  "+",
+                  "+发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \"destroyed every model\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。",
+                  "+",
+                  " ## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+                  " ",
+                  " 按月统计带参数量的帖子，再算\"当月各尺寸桶占尺寸提及总数的份额\"（自归一化，同时抵消总帖量和尺寸标注率两个混淆）。季度份额（%）："
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01PJQ6YpcrZ5JYvz9zCnnmY9",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+          "old_string": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位",
+          "new_string": "⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。\n\n### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件\n\n3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：\n\n| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |\n|---|---|---|---|\n| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |\n| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |\n| 泛指\"前沿 / 闭源 / cloud\" | 143 | 10% | frontier、cloud models |\n| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |\n| xAI Grok | 12 | 1% | — |\n\n一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看\"核心域、社区非质疑、稠密模型\"成功叫板闭源的中位参数量：\n\n| 年份 | 事件数 | 中位尺寸 | 那年的对手 |\n|---|---|---|---|\n| 2023 | 121 | **13B** | GPT-3.5 |\n| 2024 | 245 | 32B | GPT-4 / GPT-4o |\n| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |\n| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |\n\n参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在\"参数变小\"，而体现在\"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰\"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。\n\n成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。\n\n发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B \"destroyed every model\"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。\n\n## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位"
+        }
+      }
+    },
+    {
+      "step_id": 250,
+      "timestamp": "2026-06-06T12:53:58.179Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Now append the three new references [11]–[13] to the 信源 section.",
+      "metrics": {
+        "prompt_tokens": 234181,
+        "completion_tokens": 158,
+        "cached_tokens": 234050,
+        "extra": {
+          "cache_creation_input_tokens": 1904,
+          "cache_read_input_tokens": 234050,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1904,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 158,
+              "cache_read_input_tokens": 234050,
+              "cache_creation_input_tokens": 1904,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1904
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 251,
+      "timestamp": "2026-06-06T12:53:58.587Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01KyoGGdAKjnBEPBVsG5cnF4",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01KyoGGdAKjnBEPBVsG5cnF4",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "offset": 109,
+            "limit": 14
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01KyoGGdAKjnBEPBVsG5cnF4",
+            "content": "109\t\n110\t## 四、营销标题党 vs 实测口碑：越小的模型越靠跑分\n111\t\n112\t这是四个角度里信息量最大的一条。把每条越级事件按小模型尺寸分档，统计证据类型和社区反应：\n113\t\n114\t| 小模型档 | 事件数 | 营销口吻 | 仅 benchmark | 有实测证据 | 社区质疑 |\n115\t|---|---|---|---|---|---|\n116\t| <7B | 544 | **29%** | **63%** | 26% | 27% |\n117\t| 7-15B | 991 | 15% | 56% | 36% | 30% |\n118\t| 20-34B | 963 | **7%** | 46% | **50%** | **21%** |\n119\t| 40-72B | 333 | 15% | 56% | 38% | 27% |\n120\t| 100B+ | 240 | 10% | 48% | 46% | 25% |\n121\t\n122\t规律很干净：**模型越小，越级声明越靠 benchmark 和营销撑场**。<7B 档里 29% 是营销通告口吻、63% 只有跑分、仅 26% 有真实使用佐证；而 **20-34B 甜点档恰恰相反**——营销口吻只占 7%、半数有实测证据、社区质疑率全场最低（21%）。换句话说，小模型的\"越级\"很多是 benchmaxx 标题党，而 20-34B 这一档是社区**真的在用、真的认账**的。\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md\", \"content\": \"\\n## 四、营销标题党 vs 实测口碑：越小的模型越靠跑分\\n\\n这是四个角度里信息量最大的一条。把每条越级事件按小模型尺寸分档，统计证据类型和社区反应：\\n\\n| 小模型档 | 事件数 | 营销口吻 | 仅 benchmark | 有实测证据 | 社区质疑 |\\n|---|---|---|---|---|---|\\n| <7B | 544 | **29%** | **63%** | 26% | 27% |\\n| 7-15B | 991 | 15% | 56% | 36% | 30% |\\n| 20-34B | 963 | **7%** | 46% | **50%** | **21%** |\\n| 40-72B | 333 | 15% | 56% | 38% | 27% |\\n| 100B+ | 240 | 10% | 48% | 46% | 25% |\\n\\n规律很干净：**模型越小，越级声明越靠 benchmark 和营销撑场**。<7B 档里 29% 是营销通告口吻、63% 只有跑分、仅 26% 有真实使用佐证；而 **20-34B 甜点档恰恰相反**——营销口吻只占 7%、半数有实测证据、社区质疑率全场最低（21%）。换句话说，小模型的\\\"越级\\\"很多是 benchmaxx 标题党，而 20-34B 这一档是社区**真的在用、真的认账**的。\", \"numLines\": 14, \"startLine\": 109, \"totalLines\": 230}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 234181,
+        "completion_tokens": 158,
+        "cached_tokens": 234050,
+        "extra": {
+          "cache_creation_input_tokens": 1904,
+          "cache_read_input_tokens": 234050,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1904,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 158,
+              "cache_read_input_tokens": 234050,
+              "cache_creation_input_tokens": 1904,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1904
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "\n## 四、营销标题党 vs 实测口碑：越小的模型越靠跑分\n\n这是四个角度里信息量最大的一条。把每条越级事件按小模型尺寸分档，统计证据类型和社区反应：\n\n| 小模型档 | 事件数 | 营销口吻 | 仅 benchmark | 有实测证据 | 社区质疑 |\n|---|---|---|---|---|---|\n| <7B | 544 | **29%** | **63%** | 26% | 27% |\n| 7-15B | 991 | 15% | 56% | 36% | 30% |\n| 20-34B | 963 | **7%** | 46% | **50%** | **21%** |\n| 40-72B | 333 | 15% | 56% | 38% | 27% |\n| 100B+ | 240 | 10% | 48% | 46% | 25% |\n\n规律很干净：**模型越小，越级声明越靠 benchmark 和营销撑场**。<7B 档里 29% 是营销通告口吻、63% 只有跑分、仅 26% 有真实使用佐证；而 **20-34B 甜点档恰恰相反**——营销口吻只占 7%、半数有实测证据、社区质疑率全场最低（21%）。换句话说，小模型的\"越级\"很多是 benchmaxx 标题党，而 20-34B 这一档是社区**真的在用、真的认账**的。",
+              "numLines": 14,
+              "startLine": 109,
+              "totalLines": 230
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01KyoGGdAKjnBEPBVsG5cnF4",
+            "type": "tool_result",
+            "content": "109\t\n110\t## 四、营销标题党 vs 实测口碑：越小的模型越靠跑分\n111\t\n112\t这是四个角度里信息量最大的一条。把每条越级事件按小模型尺寸分档，统计证据类型和社区反应：\n113\t\n114\t| 小模型档 | 事件数 | 营销口吻 | 仅 benchmark | 有实测证据 | 社区质疑 |\n115\t|---|---|---|---|---|---|\n116\t| <7B | 544 | **29%** | **63%** | 26% | 27% |\n117\t| 7-15B | 991 | 15% | 56% | 36% | 30% |\n118\t| 20-34B | 963 | **7%** | 46% | **50%** | **21%** |\n119\t| 40-72B | 333 | 15% | 56% | 38% | 27% |\n120\t| 100B+ | 240 | 10% | 48% | 46% | 25% |\n121\t\n122\t规律很干净：**模型越小，越级声明越靠 benchmark 和营销撑场**。<7B 档里 29% 是营销通告口吻、63% 只有跑分、仅 26% 有真实使用佐证；而 **20-34B 甜点档恰恰相反**——营销口吻只占 7%、半数有实测证据、社区质疑率全场最低（21%）。换句话说，小模型的\"越级\"很多是 benchmaxx 标题党，而 20-34B 这一档是社区**真的在用、真的认账**的。"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "\n## 四、营销标题党 vs 实测口碑：越小的模型越靠跑分\n\n这是四个角度里信息量最大的一条。把每条越级事件按小模型尺寸分档，统计证据类型和社区反应：\n\n| 小模型档 | 事件数 | 营销口吻 | 仅 benchmark | 有实测证据 | 社区质疑 |\n|---|---|---|---|---|---|\n| <7B | 544 | **29%** | **63%** | 26% | 27% |\n| 7-15B | 991 | 15% | 56% | 36% | 30% |\n| 20-34B | 963 | **7%** | 46% | **50%** | **21%** |\n| 40-72B | 333 | 15% | 56% | 38% | 27% |\n| 100B+ | 240 | 10% | 48% | 46% | 25% |\n\n规律很干净：**模型越小，越级声明越靠 benchmark 和营销撑场**。<7B 档里 29% 是营销通告口吻、63% 只有跑分、仅 26% 有真实使用佐证；而 **20-34B 甜点档恰恰相反**——营销口吻只占 7%、半数有实测证据、社区质疑率全场最低（21%）。换句话说，小模型的\"越级\"很多是 benchmaxx 标题党，而 20-34B 这一档是社区**真的在用、真的认账**的。",
+              "numLines": 14,
+              "startLine": 109,
+              "totalLines": 230
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01KyoGGdAKjnBEPBVsG5cnF4",
+            "type": "tool_result",
+            "content": "109\t\n110\t## 四、营销标题党 vs 实测口碑：越小的模型越靠跑分\n111\t\n112\t这是四个角度里信息量最大的一条。把每条越级事件按小模型尺寸分档，统计证据类型和社区反应：\n113\t\n114\t| 小模型档 | 事件数 | 营销口吻 | 仅 benchmark | 有实测证据 | 社区质疑 |\n115\t|---|---|---|---|---|---|\n116\t| <7B | 544 | **29%** | **63%** | 26% | 27% |\n117\t| 7-15B | 991 | 15% | 56% | 36% | 30% |\n118\t| 20-34B | 963 | **7%** | 46% | **50%** | **21%** |\n119\t| 40-72B | 333 | 15% | 56% | 38% | 27% |\n120\t| 100B+ | 240 | 10% | 48% | 46% | 25% |\n121\t\n122\t规律很干净：**模型越小，越级声明越靠 benchmark 和营销撑场**。<7B 档里 29% 是营销通告口吻、63% 只有跑分、仅 26% 有真实使用佐证；而 **20-34B 甜点档恰恰相反**——营销口吻只占 7%、半数有实测证据、社区质疑率全场最低（21%）。换句话说，小模型的\"越级\"很多是 benchmaxx 标题党，而 20-34B 这一档是社区**真的在用、真的认账**的。"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+          "offset": 109,
+          "limit": 14
+        }
+      }
+    },
+    {
+      "step_id": 252,
+      "timestamp": "2026-06-06T12:54:03.122Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_018eeWatmjSnrwHiLRbYUocY",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_018eeWatmjSnrwHiLRbYUocY",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "offset": 143,
+            "limit": 12
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_018eeWatmjSnrwHiLRbYUocY",
+            "content": "143\t\n144\t[2] Mistral AI, \"Mixtral of experts,\" *Mistral AI News*, Dec 2023. (8x7B, 46.7B 总/12.9B 活跃，持平 Llama 2 70B 与 GPT-3.5.) [Online]. Available: <https://mistral.ai/news/mixtral-of-experts>\n145\t\n146\t[3] L. Tunstall, E. Beeching, et al., \"Scaling Test-Time Compute,\" *Hugging Face*, Dec 2024. (Llama 3B 在 MATH-500 追平 70B，DVTS 树搜索.) [Online]. Available: <https://huggingface.co/posts/lewtun/679536201490974>\n147\t\n148\t[4] Qwen Team, \"QwQ-32B: Embracing the Power of Reinforcement Learning,\" *Qwen Blog*, Mar 2025. (32B 持平 DeepSeek-R1 671B/37B 活跃；AIME24 79.5 vs 79.8.) [Online]. Available: <https://qwenlm.github.io/blog/qwq-32b/>\n149\t\n150\t[5] r/LocalLLaMA, \"Stop asking what model to run. There are literally only two,\" Jun 2026. (2340 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tu82wi/>\n151\t\n152\t[6] r/LocalLLaMA, \"Skywork MindLink 32B/72B — 'training on test',\" Aug 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1mfitwb/>\n153\t\n154\t[7] r/LocalLLaMA, \"Germany: we released model equivalent to R1 — 'No it is not R1 equivalent',\" Feb 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ikgsl6/>\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md\", \"content\": \"\\n[2] Mistral AI, \\\"Mixtral of experts,\\\" *Mistral AI News*, Dec 2023. (8x7B, 46.7B 总/12.9B 活跃，持平 Llama 2 70B 与 GPT-3.5.) [Online]. Available: <https://mistral.ai/news/mixtral-of-experts>\\n\\n[3] L. Tunstall, E. Beeching, et al., \\\"Scaling Test-Time Compute,\\\" *Hugging Face*, Dec 2024. (Llama 3B 在 MATH-500 追平 70B，DVTS 树搜索.) [Online]. Available: <https://huggingface.co/posts/lewtun/679536201490974>\\n\\n[4] Qwen Team, \\\"QwQ-32B: Embracing the Power of Reinforcement Learning,\\\" *Qwen Blog*, Mar 2025. (32B 持平 DeepSeek-R1 671B/37B 活跃；AIME24 79.5 vs 79.8.) [Online]. Available: <https://qwenlm.github.io/blog/qwq-32b/>\\n\\n[5] r/LocalLLaMA, \\\"Stop asking what model to run. There are literally only two,\\\" Jun 2026. (2340 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tu82wi/>\\n\\n[6] r/LocalLLaMA, \\\"Skywork MindLink 32B/72B — 'training on test',\\\" Aug 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1mfitwb/>\\n\\n[7] r/LocalLLaMA, \\\"Germany: we released model equivalent to R1 — 'No it is not R1 equivalent',\\\" Feb 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ikgsl6/>\", \"numLines\": 12, \"startLine\": 143, \"totalLines\": 230}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 235956,
+        "completion_tokens": 135,
+        "cached_tokens": 235954,
+        "extra": {
+          "cache_creation_input_tokens": 791,
+          "cache_read_input_tokens": 235954,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 791,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 135,
+              "cache_read_input_tokens": 235954,
+              "cache_creation_input_tokens": 791,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 791
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "\n[2] Mistral AI, \"Mixtral of experts,\" *Mistral AI News*, Dec 2023. (8x7B, 46.7B 总/12.9B 活跃，持平 Llama 2 70B 与 GPT-3.5.) [Online]. Available: <https://mistral.ai/news/mixtral-of-experts>\n\n[3] L. Tunstall, E. Beeching, et al., \"Scaling Test-Time Compute,\" *Hugging Face*, Dec 2024. (Llama 3B 在 MATH-500 追平 70B，DVTS 树搜索.) [Online]. Available: <https://huggingface.co/posts/lewtun/679536201490974>\n\n[4] Qwen Team, \"QwQ-32B: Embracing the Power of Reinforcement Learning,\" *Qwen Blog*, Mar 2025. (32B 持平 DeepSeek-R1 671B/37B 活跃；AIME24 79.5 vs 79.8.) [Online]. Available: <https://qwenlm.github.io/blog/qwq-32b/>\n\n[5] r/LocalLLaMA, \"Stop asking what model to run. There are literally only two,\" Jun 2026. (2340 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tu82wi/>\n\n[6] r/LocalLLaMA, \"Skywork MindLink 32B/72B — 'training on test',\" Aug 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1mfitwb/>\n\n[7] r/LocalLLaMA, \"Germany: we released model equivalent to R1 — 'No it is not R1 equivalent',\" Feb 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ikgsl6/>",
+              "numLines": 12,
+              "startLine": 143,
+              "totalLines": 230
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_018eeWatmjSnrwHiLRbYUocY",
+            "type": "tool_result",
+            "content": "143\t\n144\t[2] Mistral AI, \"Mixtral of experts,\" *Mistral AI News*, Dec 2023. (8x7B, 46.7B 总/12.9B 活跃，持平 Llama 2 70B 与 GPT-3.5.) [Online]. Available: <https://mistral.ai/news/mixtral-of-experts>\n145\t\n146\t[3] L. Tunstall, E. Beeching, et al., \"Scaling Test-Time Compute,\" *Hugging Face*, Dec 2024. (Llama 3B 在 MATH-500 追平 70B，DVTS 树搜索.) [Online]. Available: <https://huggingface.co/posts/lewtun/679536201490974>\n147\t\n148\t[4] Qwen Team, \"QwQ-32B: Embracing the Power of Reinforcement Learning,\" *Qwen Blog*, Mar 2025. (32B 持平 DeepSeek-R1 671B/37B 活跃；AIME24 79.5 vs 79.8.) [Online]. Available: <https://qwenlm.github.io/blog/qwq-32b/>\n149\t\n150\t[5] r/LocalLLaMA, \"Stop asking what model to run. There are literally only two,\" Jun 2026. (2340 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tu82wi/>\n151\t\n152\t[6] r/LocalLLaMA, \"Skywork MindLink 32B/72B — 'training on test',\" Aug 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1mfitwb/>\n153\t\n154\t[7] r/LocalLLaMA, \"Germany: we released model equivalent to R1 — 'No it is not R1 equivalent',\" Feb 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ikgsl6/>"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "\n[2] Mistral AI, \"Mixtral of experts,\" *Mistral AI News*, Dec 2023. (8x7B, 46.7B 总/12.9B 活跃，持平 Llama 2 70B 与 GPT-3.5.) [Online]. Available: <https://mistral.ai/news/mixtral-of-experts>\n\n[3] L. Tunstall, E. Beeching, et al., \"Scaling Test-Time Compute,\" *Hugging Face*, Dec 2024. (Llama 3B 在 MATH-500 追平 70B，DVTS 树搜索.) [Online]. Available: <https://huggingface.co/posts/lewtun/679536201490974>\n\n[4] Qwen Team, \"QwQ-32B: Embracing the Power of Reinforcement Learning,\" *Qwen Blog*, Mar 2025. (32B 持平 DeepSeek-R1 671B/37B 活跃；AIME24 79.5 vs 79.8.) [Online]. Available: <https://qwenlm.github.io/blog/qwq-32b/>\n\n[5] r/LocalLLaMA, \"Stop asking what model to run. There are literally only two,\" Jun 2026. (2340 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tu82wi/>\n\n[6] r/LocalLLaMA, \"Skywork MindLink 32B/72B — 'training on test',\" Aug 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1mfitwb/>\n\n[7] r/LocalLLaMA, \"Germany: we released model equivalent to R1 — 'No it is not R1 equivalent',\" Feb 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ikgsl6/>",
+              "numLines": 12,
+              "startLine": 143,
+              "totalLines": 230
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_018eeWatmjSnrwHiLRbYUocY",
+            "type": "tool_result",
+            "content": "143\t\n144\t[2] Mistral AI, \"Mixtral of experts,\" *Mistral AI News*, Dec 2023. (8x7B, 46.7B 总/12.9B 活跃，持平 Llama 2 70B 与 GPT-3.5.) [Online]. Available: <https://mistral.ai/news/mixtral-of-experts>\n145\t\n146\t[3] L. Tunstall, E. Beeching, et al., \"Scaling Test-Time Compute,\" *Hugging Face*, Dec 2024. (Llama 3B 在 MATH-500 追平 70B，DVTS 树搜索.) [Online]. Available: <https://huggingface.co/posts/lewtun/679536201490974>\n147\t\n148\t[4] Qwen Team, \"QwQ-32B: Embracing the Power of Reinforcement Learning,\" *Qwen Blog*, Mar 2025. (32B 持平 DeepSeek-R1 671B/37B 活跃；AIME24 79.5 vs 79.8.) [Online]. Available: <https://qwenlm.github.io/blog/qwq-32b/>\n149\t\n150\t[5] r/LocalLLaMA, \"Stop asking what model to run. There are literally only two,\" Jun 2026. (2340 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1tu82wi/>\n151\t\n152\t[6] r/LocalLLaMA, \"Skywork MindLink 32B/72B — 'training on test',\" Aug 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1mfitwb/>\n153\t\n154\t[7] r/LocalLLaMA, \"Germany: we released model equivalent to R1 — 'No it is not R1 equivalent',\" Feb 2025. (605 赞质疑回复.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ikgsl6/>"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+          "offset": 143,
+          "limit": 12
+        }
+      }
+    },
+    {
+      "step_id": 253,
+      "timestamp": "2026-06-06T12:54:07.702Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01VqXr7GRft8vcddXCa1vsAV",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01VqXr7GRft8vcddXCa1vsAV",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "offset": 155,
+            "limit": 8
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01VqXr7GRft8vcddXCa1vsAV",
+            "content": "155\t\n156\t[8] r/LocalLLaMA, \"gemma 3 27b is underrated af, #11 at lmarena, matches o1,\" Apr 2025. (555 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k2kl84/>\n157\t\n158\t[9] r/LocalLLaMA, \"HuggingFace researchers got 3b Llama to outperform 70b using search,\" Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>\n159\t\n160\t[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n161\t\n162\t## 附录：Level-2 所用 LLM prompt\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md\", \"content\": \"\\n[8] r/LocalLLaMA, \\\"gemma 3 27b is underrated af, #11 at lmarena, matches o1,\\\" Apr 2025. (555 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k2kl84/>\\n\\n[9] r/LocalLLaMA, \\\"HuggingFace researchers got 3b Llama to outperform 70b using search,\\\" Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>\\n\\n[10] r/LocalLLaMA, \\\"AI2 releases OLMo 2 32B,\\\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\\n\\n## 附录：Level-2 所用 LLM prompt\", \"numLines\": 8, \"startLine\": 155, \"totalLines\": 230}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 236747,
+        "completion_tokens": 135,
+        "cached_tokens": 236745,
+        "extra": {
+          "cache_creation_input_tokens": 820,
+          "cache_read_input_tokens": 236745,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 820,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 135,
+              "cache_read_input_tokens": 236745,
+              "cache_creation_input_tokens": 820,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 820
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "\n[8] r/LocalLLaMA, \"gemma 3 27b is underrated af, #11 at lmarena, matches o1,\" Apr 2025. (555 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k2kl84/>\n\n[9] r/LocalLLaMA, \"HuggingFace researchers got 3b Llama to outperform 70b using search,\" Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>\n\n[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n## 附录：Level-2 所用 LLM prompt",
+              "numLines": 8,
+              "startLine": 155,
+              "totalLines": 230
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VqXr7GRft8vcddXCa1vsAV",
+            "type": "tool_result",
+            "content": "155\t\n156\t[8] r/LocalLLaMA, \"gemma 3 27b is underrated af, #11 at lmarena, matches o1,\" Apr 2025. (555 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k2kl84/>\n157\t\n158\t[9] r/LocalLLaMA, \"HuggingFace researchers got 3b Llama to outperform 70b using search,\" Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>\n159\t\n160\t[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n161\t\n162\t## 附录：Level-2 所用 LLM prompt"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+              "content": "\n[8] r/LocalLLaMA, \"gemma 3 27b is underrated af, #11 at lmarena, matches o1,\" Apr 2025. (555 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k2kl84/>\n\n[9] r/LocalLLaMA, \"HuggingFace researchers got 3b Llama to outperform 70b using search,\" Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>\n\n[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n## 附录：Level-2 所用 LLM prompt",
+              "numLines": 8,
+              "startLine": 155,
+              "totalLines": 230
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01VqXr7GRft8vcddXCa1vsAV",
+            "type": "tool_result",
+            "content": "155\t\n156\t[8] r/LocalLLaMA, \"gemma 3 27b is underrated af, #11 at lmarena, matches o1,\" Apr 2025. (555 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k2kl84/>\n157\t\n158\t[9] r/LocalLLaMA, \"HuggingFace researchers got 3b Llama to outperform 70b using search,\" Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>\n159\t\n160\t[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n161\t\n162\t## 附录：Level-2 所用 LLM prompt"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+          "offset": 155,
+          "limit": 8
+        }
+      }
+    },
+    {
+      "step_id": 254,
+      "timestamp": "2026-06-06T12:54:16.172Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01PQkhAeb4aVGsAp3qovCpNj",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01PQkhAeb4aVGsAp3qovCpNj",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "old_string": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n## 附录：Level-2 所用 LLM prompt",
+            "new_string": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n[11] r/LocalLLaMA, \"Gemma 4 just casually destroyed every model on our leaderboard,\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>\n\n[12] r/LocalLLaMA, \"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>\n\n[13] r/LocalLLaMA, \"GLM-4 32B is mind blowing,\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>\n\n## 附录：Level-2 所用 LLM prompt"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01PQkhAeb4aVGsAp3qovCpNj",
+            "content": "The file /Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md\", \"oldString\": \"[10] r/LocalLLaMA, \\\"AI2 releases OLMo 2 32B,\\\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\\n\\n## 附录：Level-2 所用 LLM prompt\", \"newString\": \"[10] r/LocalLLaMA, \\\"AI2 releases OLMo 2 32B,\\\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\\n\\n[11] r/LocalLLaMA, \\\"Gemma 4 just casually destroyed every model on our leaderboard,\\\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>\\n\\n[12] r/LocalLLaMA, \\\"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\\\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>\\n\\n[13] r/LocalLLaMA, \\\"GLM-4 32B is mind blowing,\\\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>\\n\\n## 附录：Level-2 所用 LLM prompt\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 159, \"oldLines\": 6, \"newStart\": 159, \"newLines\": 12, \"lines\": [\" \", \" [10] r/LocalLLaMA, \\\"AI2 releases OLMo 2 32B,\\\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\", \" \", \"+[11] r/LocalLLaMA, \\\"Gemma 4 just casually destroyed every model on our leaderboard,\\\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>\", \"+\", \"+[12] r/LocalLLaMA, \\\"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\\\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>\", \"+\", \"+[13] r/LocalLLaMA, \\\"GLM-4 32B is mind blowing,\\\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>\", \"+\", \" ## 附录：Level-2 所用 LLM prompt\", \" \", \" 两段式抽取的 prompt 原文，供复现。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`，40 条/15 条一批），把结果写回对应输出批文件。\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 237567,
+        "completion_tokens": 720,
+        "cached_tokens": 237565,
+        "extra": {
+          "cache_creation_input_tokens": 458,
+          "cache_read_input_tokens": 237565,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 458,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 720,
+              "cache_read_input_tokens": 237565,
+              "cache_creation_input_tokens": 458,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 458
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "oldString": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n## 附录：Level-2 所用 LLM prompt",
+            "newString": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n[11] r/LocalLLaMA, \"Gemma 4 just casually destroyed every model on our leaderboard,\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>\n\n[12] r/LocalLLaMA, \"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>\n\n[13] r/LocalLLaMA, \"GLM-4 32B is mind blowing,\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>\n\n## 附录：Level-2 所用 LLM prompt",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 159,
+                "oldLines": 6,
+                "newStart": 159,
+                "newLines": 12,
+                "lines": [
+                  " ",
+                  " [10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>",
+                  " ",
+                  "+[11] r/LocalLLaMA, \"Gemma 4 just casually destroyed every model on our leaderboard,\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>",
+                  "+",
+                  "+[12] r/LocalLLaMA, \"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>",
+                  "+",
+                  "+[13] r/LocalLLaMA, \"GLM-4 32B is mind blowing,\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>",
+                  "+",
+                  " ## 附录：Level-2 所用 LLM prompt",
+                  " ",
+                  " 两段式抽取的 prompt 原文，供复现。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`，40 条/15 条一批），把结果写回对应输出批文件。"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01PQkhAeb4aVGsAp3qovCpNj",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+            "oldString": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n## 附录：Level-2 所用 LLM prompt",
+            "newString": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n[11] r/LocalLLaMA, \"Gemma 4 just casually destroyed every model on our leaderboard,\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>\n\n[12] r/LocalLLaMA, \"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>\n\n[13] r/LocalLLaMA, \"GLM-4 32B is mind blowing,\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>\n\n## 附录：Level-2 所用 LLM prompt",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 159,
+                "oldLines": 6,
+                "newStart": 159,
+                "newLines": 12,
+                "lines": [
+                  " ",
+                  " [10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>",
+                  " ",
+                  "+[11] r/LocalLLaMA, \"Gemma 4 just casually destroyed every model on our leaderboard,\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>",
+                  "+",
+                  "+[12] r/LocalLLaMA, \"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>",
+                  "+",
+                  "+[13] r/LocalLLaMA, \"GLM-4 32B is mind blowing,\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>",
+                  "+",
+                  " ## 附录：Level-2 所用 LLM prompt",
+                  " ",
+                  " 两段式抽取的 prompt 原文，供复现。每个 agent 读一个输入批文件（`b_NNN.json` / `s_NNN.json`，40 条/15 条一批），把结果写回对应输出批文件。"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01PQkhAeb4aVGsAp3qovCpNj",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/LocalLLaMA能力密度挖掘 (2026-06-06).md",
+          "old_string": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n## 附录：Level-2 所用 LLM prompt",
+          "new_string": "[10] r/LocalLLaMA, \"AI2 releases OLMo 2 32B,\" Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>\n\n[11] r/LocalLLaMA, \"Gemma 4 just casually destroyed every model on our leaderboard,\" Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>\n\n[12] r/LocalLLaMA, \"Jan-nano-128k: A 4B Model … Still Outperforms 671B,\" Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>\n\n[13] r/LocalLLaMA, \"GLM-4 32B is mind blowing,\" Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>\n\n## 附录：Level-2 所用 LLM prompt"
+        }
+      }
+    },
+    {
+      "step_id": 255,
+      "timestamp": "2026-06-06T12:54:27.138Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "已补进文档。在角度①下新增子节「**专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件**」，含：\n\n- **厂商分布表**：OpenAI 62% / Anthropic 18% / 泛指前沿 10% / Gemini 8% / Grok 1%，附被点名最多的具体型号\n- **逐年中位尺寸表** + 核心洞察：参数预算卡在 20–32B 不动，对手却从 GPT-3.5 升到 GPT-5/Gemini 3 Pro——能力密度体现在\"同样 ~25–30B 打的对手强了好几代\"\n- **成色**：打闭源 benchmaxx 折扣最厚（55% 纯跑分、31% 社区质疑、仅 6% 明确认同）\n- **挑战家族** + 三条标志性高分帖，新增引用 [11]–[13]（Gemma 4 / Jan-nano / GLM-4-32B）\n\nREADME 索引不用动（主题概述仍准确）。文档现在四节齐全，角度①里多了这条\"专打闭源\"的支线。",
+      "metrics": {
+        "prompt_tokens": 238025,
+        "completion_tokens": 387,
+        "cached_tokens": 238023,
+        "extra": {
+          "cache_creation_input_tokens": 796,
+          "cache_read_input_tokens": 238023,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 796,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 387,
+              "cache_read_input_tokens": 238023,
+              "cache_creation_input_tokens": 796,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 796
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 30495193,
-    "total_completion_tokens": 372802,
-    "total_cached_tokens": 30478619,
-    "total_steps": 244,
+    "total_prompt_tokens": 32835361,
+    "total_completion_tokens": 378537,
+    "total_cached_tokens": 32818509,
+    "total_steps": 255,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 1093443,
-      "total_cache_read_input_tokens": 30478619
+      "total_cache_creation_input_tokens": 1109210,
+      "total_cache_read_input_tokens": 32818509
     }
   }
 }

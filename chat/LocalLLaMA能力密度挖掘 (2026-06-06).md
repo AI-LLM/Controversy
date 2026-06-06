@@ -38,6 +38,33 @@
 
 ⚠ 解读：2026 年的条目（Gemma 4 31B、Qwen 3.5/3.6 27B、对手 GPT-5.2/Gemini 3 Pro）超出可独立核验的范围，**一手源是 r/LocalLLaMA 当时的讨论本身**（见信源 permalink），本文不对其外部 benchmark 真值背书；社区对这批声明的接受度见第四节。
 
+### 专打闭源前沿：1,395 条叫板 ChatGPT / Claude / Gemini 的事件
+
+3,275 条越级事件里，**1,395 条（43%）的被比对象是闭源／前沿模型**（target_size 为空的闭源旗舰，已剔除 GPT-OSS 等开放权重）。按厂商：
+
+| 被叫板的厂商 | 事件数 | 占比 | 被点名最多的型号 |
+|---|---|---|---|
+| OpenAI（GPT / o* / ChatGPT） | 866 | 62% | GPT-4 (199)、GPT-4o (118)、GPT-3.5 (116) |
+| Anthropic（Claude / Opus / Sonnet） | 258 | 18% | Claude 3.5 Sonnet (40)、Claude Opus (25) |
+| 泛指"前沿 / 闭源 / cloud" | 143 | 10% | frontier、cloud models |
+| Google Gemini | 116 | 8% | Gemini 2.5 Pro (16) |
+| xAI Grok | 12 | 1% | — |
+
+一个反直觉的结构：**挑战闭源所需的参数量没有一路下降，而是卡在 ~25–30B 不动——但被它叫板的对手强了好几代**。逐年看"核心域、社区非质疑、稠密模型"成功叫板闭源的中位参数量：
+
+| 年份 | 事件数 | 中位尺寸 | 那年的对手 |
+|---|---|---|---|
+| 2023 | 121 | **13B** | GPT-3.5 |
+| 2024 | 245 | 32B | GPT-4 / GPT-4o |
+| 2025 | 211 | 22B | GPT-4o / o3-mini / Gemini 2.5 |
+| 2026 | 109 | **27B** | GPT-5 / Claude Sonnet 4.6 / Gemini 3 Pro |
+
+参数预算几乎没变（始终压在 20–32B 这一档），变的是对手——从 GPT-3.5 一路升到 GPT-5 / Gemini 3 Pro。**能力密度的提升不体现在"参数变小"，而体现在"同样 ~25–30B，今天叫板的是强好几代的闭源旗舰"**。MoE 是另一条线：Qwen3-30B-A3B（3B 活跃）这类已能拿来跟 Gemini 2.5 Flash 比。
+
+成色上，打闭源的声明 benchmaxx 折扣最厚：证据为纯 benchmark/lmarena 的占 55%（762 条）、有实测的 38%（533 条）；社区反应里**质疑 429 条（31%）**、分歧 212、明确认同仅 80 条（6%），其余无足够回复信号。**叫板闭源比叫板开源更招怀疑**——近三分之一此类帖评论区在打假，明确买账的只有 6%。
+
+发起挑战的家族：Qwen 374（绝对主力）、Llama 214、Gemma 79、Mistral 50、DeepSeek 41、GLM 31。标志性高分帖：Gemma 4 31B "destroyed every model"（同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro，1607 赞，认同）[[11]](https://reddit.com/r/LocalLLaMA/comments/1sdcotc/)；Jan-nano（Qwen3-4B 微调）> Claude 3.7 Sonnet（890 赞，认同）[[12]](https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/)；GLM-4-32B > Gemini 2.5 Flash（577 赞，认同）[[13]](https://reddit.com/r/LocalLLaMA/comments/1k4god7/)。
+
 ## 二、甜点区迁移：13B/70B 退场，20-34B 与 100B+ MoE 上位
 
 按月统计带参数量的帖子，再算"当月各尺寸桶占尺寸提及总数的份额"（自归一化，同时抵消总帖量和尺寸标注率两个混淆）。季度份额（%）：
@@ -131,6 +158,12 @@
 [9] r/LocalLLaMA, "HuggingFace researchers got 3b Llama to outperform 70b using search," Dec 2024. (773 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1hgybhg/>
 
 [10] r/LocalLLaMA, "AI2 releases OLMo 2 32B," Mar 2025. (1551 赞.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1jaj6gc/>
+
+[11] r/LocalLLaMA, "Gemma 4 just casually destroyed every model on our leaderboard," Apr 2026. (1607 赞；同时叫板 Claude Sonnet 4.6 与 Gemini 3 Pro.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1sdcotc/>
+
+[12] r/LocalLLaMA, "Jan-nano-128k: A 4B Model … Still Outperforms 671B," Jun 2025. (890 赞；Qwen3-4B 微调 > Claude 3.7 Sonnet.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1ljyo2p/>
+
+[13] r/LocalLLaMA, "GLM-4 32B is mind blowing," Apr 2025. (577 赞；> Gemini 2.5 Flash.) [Online]. Available: <https://reddit.com/r/LocalLLaMA/comments/1k4god7/>
 
 ## 附录：Level-2 所用 LLM prompt
 
