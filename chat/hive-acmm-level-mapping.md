@@ -194,6 +194,6 @@ L6 的产物**主体在 hive**（参考实现）。console 侧只留两个把自
 
 ## 信源
 
-- 论文：`/Users/luwei/Documents/AI/LLM/Coding/The AI Codebase Maturity Model- From Assisted Coding to Self-Sustaining Systems.pdf`（Andy Anderson, IBM Research，v2，含 Level 6 与 Hive）
+- 论文：<https://arxiv.org/abs/2604.09388>（Andy Anderson, IBM Research，v2，含 Level 6 与 Hive）
 - 被管理项目：console（github.com/AI-LLM/console；上游 github.com/kubestellar/console）
 - 编排引擎：hive（github.com/AI-LLM/hive；上游 github.com/kubestellar/hive，Apache 2.0）
