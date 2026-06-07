@@ -155,8 +155,8 @@ The recurring reason for replacement is not "stronger" but **cost, privacy, cont
 
 ## Related material
 
-- Companion search (the full versions of the "what work small models do" + "22% canceled the cloud" sections + quality/size/hardware stats + limitations + Haiku/Sonnet prompts): [小模型干成真实任务 (2026-06-06).md](小模型干成真实任务%20(2026-06-06).md) — the data in the two sections above all comes from that piece's Level-2 extraction `realtask_events.csv` (981 real-task events).
-- The parent piece (four-angle overview + full extraction pipeline + Haiku/Sonnet prompts): [LocalLLaMA能力密度挖掘 (2026-06-06).md](LocalLLaMA能力密度挖掘%20(2026-06-06).md) — this piece's vendor distribution, yearly median size, quality stats, and the 19-record hard subset all come from that piece's Level-2 extraction `capability_events.csv`.
+- Companion search (the full versions of the "what work small models do" + "22% canceled the cloud" sections + quality/size/hardware stats + limitations + Haiku/Sonnet prompts): [small-models-getting-real-work-done (2026-06-06).md](small-models-getting-real-work-done%20(2026-06-06).md) — the data in the two sections above all comes from that piece's Level-2 extraction `realtask_events.csv` (981 real-task events).
+- The parent piece (four-angle overview + full extraction pipeline + Haiku/Sonnet prompts): [localllama-capability-density (2026-06-06).md](localllama-capability-density%20(2026-06-06).md) — this piece's vendor distribution, yearly median size, quality stats, and the 19-record hard subset all come from that piece's Level-2 extraction `capability_events.csv`.
 
 ## References
 
