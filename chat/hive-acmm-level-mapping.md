@@ -211,17 +211,17 @@ L6 的产物**主体在 hive**（参考实现）。console 侧只留两个把自
 
 标志性产物的首次出现：
 
-| 日期 | 文件首次 commit | 标记的 level |
+| 日期 | 文件首次 commit（链向上游 commit） | 标记的 level |
 |---|---|---|
-| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |
-| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |
-| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |
-| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |
-| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |
-| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |
-| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |
-| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |
-| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |
+| 2026-01-16 | 初始化（[`63331c4`](https://github.com/kubestellar/console/commit/63331c4234de26b9be786f5aa51b96fbf584f600)）；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |
+| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) ([`ff0053a`](https://github.com/kubestellar/console/commit/ff0053a189795954eb097e731bf8753bd60d070d)) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md) ([`d4d2fcf`](https://github.com/kubestellar/console/commit/d4d2fcffd8642e085e24109d23db201ae4d015a7)) | **L2** 起点 |
+| 2026-02-06 / 02-10 | 第一个前端测试（[`9757be7`](https://github.com/kubestellar/console/commit/9757be7770910d13585f6266109234e82b5f3c3a)） / 第一个 Go 测试（[`6e7c19a`](https://github.com/kubestellar/console/commit/6e7c19a2f8a33ba2666a60101a5e34ae389dbf70)） | **L3** 测试基建开始 |
+| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一 commit [`54b0f0a`](https://github.com/kubestellar/console/commit/54b0f0a4d33bf98d6023f27e73ffa1a28e92a37d)） | **L3 接受率日志 + L4 自调权重** |
+| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml) ([`2a56039`](https://github.com/kubestellar/console/commit/2a56039d805460fad73c93bf8a218e0ed000532b))、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml) ([`60101e3`](https://github.com/kubestellar/console/commit/60101e312e97a7312ee3f02e34fd387d768976a4))、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) ([`568a8a2`](https://github.com/kubestellar/console/commit/568a8a29cc82a11f498479fb3f8a7c570095a230)) | L3 加深 |
+| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml) ([`71a7c5c`](https://github.com/kubestellar/console/commit/71a7c5c5afa2653106e966e6efdeeb0796f169a2))（91% 门禁） | L3/L4 门禁闭环 |
+| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) ([`61a5db6`](https://github.com/kubestellar/console/commit/61a5db609dd4314281dcb7fcac36d79c7a1baf98)) | **L5** 机器可执行策略 |
+| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml) ([`4352673`](https://github.com/kubestellar/console/commit/4352673ec33d8098e748fcfc6b1dbccb60afa57d))（自测成熟度） | **L5** 自指反馈环 |
+| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml) ([`ac75a38`](https://github.com/kubestellar/console/commit/ac75a381c60cbc59dc852514c454e037e28a087f))（接入 hive） | **L6** 交接给编排引擎 |
 
 补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的"自修改配置"，在被持续重写。
 
@@ -229,11 +229,11 @@ L6 的产物**主体在 hive**（参考实现）。console 侧只留两个把自
 
 初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：
 
-- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)
-- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)
-- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)
-- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)
-- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）
+- 2026-04-17（第一天，init commit [`eba8935`](https://github.com/kubestellar/hive/commit/eba89356fdf8d6575af3976b6466bc6ee9ac8880)，同时引入）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)
+- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md) ([`48ee157`](https://github.com/kubestellar/hive/commit/48ee157f01463662e182588b05743527381cad5e))、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh) ([`26bf8b5`](https://github.com/kubestellar/hive/commit/26bf8b5aba401c8cd9187a55d55d7764366caa4a))、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh) ([`6832716`](https://github.com/kubestellar/hive/commit/683271684a8f276feeebf706506213b557e1cfb9))、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js) ([`ade2110`](https://github.com/kubestellar/hive/commit/ade2110eaac1af5cfdafaf5a24a637311328bdd8))
+- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf) ([`57f262f`](https://github.com/kubestellar/hive/commit/57f262f798b7b53ee71209d39b9d82b79b0e00f2))、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh) ([`f363157`](https://github.com/kubestellar/hive/commit/f3631578152698da7afc1ff7be74d021d6a91c3f))
+- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh) ([`f92be2e`](https://github.com/kubestellar/hive/commit/f92be2e362aa0a4deb19c458b24b4f0f79a2ae9d))
+- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile) ([`def0d73`](https://github.com/kubestellar/hive/commit/def0d73d95abbaa53d3e4c309d1de4fff1425225))（容器化）
 
 这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive "built in the week preceding this revision"。
 
