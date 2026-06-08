@@ -333,49 +333,53 @@ console 的 8804 个 commit 里能直接数出**用了哪些模型、哪个 agen
 
 前面各节看的是"产物落在哪个 level"。这一节看**上游**：console 怎么把"要做什么"一路传导到"agent 生成什么、被什么卡住"。它是一条分层、且**约束端机器强制**的链——不是航天级可追溯矩阵，但对应关系明确。
 
+（每个文件后标 git 的`建`=首次 commit、`改`=最后 commit 日期。）
+
 ### ① 需求 / 规格层（WHAT）
 
-- [ROADMAP.md](https://github.com/AI-LLM/console/blob/main/ROADMAP.md)：里程碑需求（按版本/季度，含 Non-Goals）。
-- [INVENTORY.md](https://github.com/AI-LLM/console/blob/main/INVENTORY.md)：组件清单（现有 surface 的规格目录）。
-- [docs/ai-mission-proposals.md](https://github.com/AI-LLM/console/blob/main/docs/ai-mission-proposals.md)：**AI 生成的需求提案**（18 类 mission + gap analysis）。
+- [ROADMAP.md](https://github.com/AI-LLM/console/blob/main/ROADMAP.md)（建 2026-04-01，改 2026-06-02）：里程碑需求（按版本/季度，含 Non-Goals）。
+- [INVENTORY.md](https://github.com/AI-LLM/console/blob/main/INVENTORY.md)（建 2026-01-22，改 2026-06-02）：组件清单（现有 surface 的规格目录）。
+- [docs/ai-mission-proposals.md](https://github.com/AI-LLM/console/blob/main/docs/ai-mission-proposals.md)（建/改 2026-02-06）：**AI 生成的需求提案**（18 类 mission + gap analysis）。
 - [docs/plans/](https://github.com/AI-LLM/console/tree/main/docs/plans)：RFC（GitOps / Plugin 架构提案）。
-- [docs/components/TEMPLATE.md](https://github.com/AI-LLM/console/blob/main/docs/components/TEMPLATE.md)：**单组件规格模板**（Purpose / Data Sources / Props / UI States / Logic / AI Integration）。
+- [docs/components/TEMPLATE.md](https://github.com/AI-LLM/console/blob/main/docs/components/TEMPLATE.md)（建/改 2026-03-24）：**单组件规格模板**（Purpose / Data Sources / Props / UI States / Logic / AI Integration）。
 - GitHub Issues + ISSUE_TEMPLATE：社区驱动的需求入口（论文的"community is the roadmap"）。
 
 ### ② 架构 / 设计规范层（HOW it's shaped）
 
-- [docs/ARCHITECTURE.md](https://github.com/AI-LLM/console/blob/main/docs/ARCHITECTURE.md)、[docs/TEST-COVERAGE-ARCHITECTURE.md](https://github.com/AI-LLM/console/blob/main/docs/TEST-COVERAGE-ARCHITECTURE.md)。
-- [docs/components/component-criteria.md](https://github.com/AI-LLM/console/blob/main/docs/components/component-criteria.md)：**设计系统 + 验收标准**（5 种卡片范式、design token、hook 选择、**Definition of Done**）。
-- [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) 的 Architecture Decisions 节。
+- [docs/ARCHITECTURE.md](https://github.com/AI-LLM/console/blob/main/docs/ARCHITECTURE.md)（建 2026-04-01，改 2026-06-01）、[docs/TEST-COVERAGE-ARCHITECTURE.md](https://github.com/AI-LLM/console/blob/main/docs/TEST-COVERAGE-ARCHITECTURE.md)（建 2026-04-29，改 2026-06-04）。
+- [docs/components/component-criteria.md](https://github.com/AI-LLM/console/blob/main/docs/components/component-criteria.md)（建 2026-01-29，改 2026-03-06）：**设计系统 + 验收标准**（5 种卡片范式、design token、hook 选择、**Definition of Done**）。
+- [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md)（建 2026-01-27，改 2026-06-03）的 Architecture Decisions 节。
 
 ### ③ 驱动 agent 层（spec → agent 的桥）
 
-- [AGENTS.md](https://github.com/AI-LLM/console/blob/main/AGENTS.md)：工具中立入口，指向 CLAUDE.md 为 source of truth。
-- [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md)：规范总纲（约定 / critical rules / MANDATORY testing）。
-- [.github/CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md)：卡片"规格→代码"驱动器（防 90% 拒绝）。
+- [AGENTS.md](https://github.com/AI-LLM/console/blob/main/AGENTS.md)（建 2026-04-17，改 2026-05-07）：工具中立入口，指向 CLAUDE.md 为 source of truth。
+- [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md)（建 2026-01-27，改 2026-06-03）：规范总纲（约定 / critical rules / MANDATORY testing）。
+- [.github/CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md)（建/改 2026-03-13）：卡片"规格→代码"驱动器（防 90% 拒绝）。
 - [.github/agents/*.agent.md](https://github.com/AI-LLM/console/tree/main/.github/agents)：各角色 agent 定义。
-- [docs/qa/AI-UX-ISSUE-AGENT-BRIEF.md](https://github.com/AI-LLM/console/blob/main/docs/qa/AI-UX-ISSUE-AGENT-BRIEF.md)：UX agent 的 operating brief（输入/目标/约束）。
+- [docs/qa/AI-UX-ISSUE-AGENT-BRIEF.md](https://github.com/AI-LLM/console/blob/main/docs/qa/AI-UX-ISSUE-AGENT-BRIEF.md)（建/改 2026-04-20）：UX agent 的 operating brief（输入/目标/约束）。
 
 ### ④⑤ 代码 + 测试
 
 - 代码 `web/src/...`（卡片/hooks）、`pkg/...`（Go）——形状由 TEMPLATE + component-criteria 定，agent 填。
-- 测试：CLAUDE.md 的 MANDATORY Testing Requirements + [auto-test-gen.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-test-gen.yml) 自动生成；落地 1904 前端 + 357 Go 测试。
+- 测试：CLAUDE.md 的 MANDATORY Testing Requirements + [auto-test-gen.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-test-gen.yml)（建 2026-05-18，改 2026-06-04）自动生成；落地 1904 前端 + 357 Go 测试。
 
 ### ⑥ 约束层——关键：写在指南里的约束 ↔ 机器强制的 ratchet ↔ lint，一一对应
 
 这是整条链最硬的地方。CARD guide 的每条"拒绝理由"都有一个棘轮基线 + lint 工作流兜底：
 
-| 指南里的约束（规格） | 机器强制（ratchet/baseline） | lint 工作流 |
+| 指南里的约束（规格） | 机器强制（ratchet/baseline，建→改） | lint 工作流 |
 |---|---|---|
-| 禁 magic numbers | [ai-magic-numbers-baseline.txt](https://github.com/AI-LLM/console/blob/main/.github/ai-magic-numbers-baseline.txt)（`7`） | QA 棘轮 |
-| 禁硬编码英文串（用 `t()`） | [ai-non-localized-baseline.txt](https://github.com/AI-LLM/console/blob/main/.github/ai-non-localized-baseline.txt)（`272`） | i18n check |
-| 数组操作前必须 guard | [array-safety-baseline.txt](https://github.com/AI-LLM/console/blob/main/.github/array-safety-baseline.txt) | array-safety |
-| Go nil slice → `make([]T,0)` | [nilaway-baseline.json](https://github.com/AI-LLM/console/blob/main/.github/nilaway-baseline.json) | [nil-safety.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nil-safety.yml) |
-| 覆盖率 ≥91% | [go-coverage-ratchet.txt](https://github.com/AI-LLM/console/blob/main/.github/go-coverage-ratchet.txt)（`52.0`） | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml) |
+| 禁 magic numbers | [ai-magic-numbers-baseline.txt](https://github.com/AI-LLM/console/blob/main/.github/ai-magic-numbers-baseline.txt)（`7`；04-02→04-23） | QA 棘轮 |
+| 禁硬编码英文串（用 `t()`） | [ai-non-localized-baseline.txt](https://github.com/AI-LLM/console/blob/main/.github/ai-non-localized-baseline.txt)（`272`；04-02→04-23） | i18n check |
+| 数组操作前必须 guard | [array-safety-baseline.txt](https://github.com/AI-LLM/console/blob/main/.github/array-safety-baseline.txt)（03-31→04-23） | array-safety |
+| Go nil slice → `make([]T,0)` | [nilaway-baseline.json](https://github.com/AI-LLM/console/blob/main/.github/nilaway-baseline.json)（02-20→03-06） | [nil-safety.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nil-safety.yml)（建 2026-02-20，改 2026-06-04） |
+| 覆盖率 ≥91% | [go-coverage-ratchet.txt](https://github.com/AI-LLM/console/blob/main/.github/go-coverage-ratchet.txt)（`52.0`；建/改 2026-06-04） | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（建 2026-03-31，改 2026-06-04） |
 
-再加 [tier-classifier-rules.yml](https://github.com/AI-LLM/console/blob/main/.github/tier-classifier-rules.yml)（按改动路径把 PR 分 tier 0/1/2/3 → 决定要几个人审）与 [docs/AI-QUALITY-ASSURANCE.md](https://github.com/AI-LLM/console/blob/main/docs/AI-QUALITY-ASSURANCE.md) 的 5 个反馈环统管。
+再加 [tier-classifier-rules.yml](https://github.com/AI-LLM/console/blob/main/.github/tier-classifier-rules.yml)（建/改 2026-04-15；按改动路径把 PR 分 tier 0/1/2/3 → 决定要几个人审）与 [docs/AI-QUALITY-ASSURANCE.md](https://github.com/AI-LLM/console/blob/main/docs/AI-QUALITY-ASSURANCE.md)（建 2026-04-02，改 2026-04-03）的 5 个反馈环统管。
 
 **判断（解读）**：整条链是完整的，且约束端机器强制——**"人写下的规格约束"与"CI 强制的基线"一一对应**，这正是 ACMM 核心（把人的判断编码进 system artifacts）：连"卡片该怎么写"都从散文规格压成了可机器卡的数字基线。
+
+**日期还暴露一个顺序**：**驱动层先于规格层**。最早落地的是直接驱动 agent 的 [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md)（01-27）、[component-criteria.md](https://github.com/AI-LLM/console/blob/main/docs/components/component-criteria.md)（01-29）、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md)（03-13）——即"怎么写代码的规则"；而看起来更"上游"的 [ROADMAP.md](https://github.com/AI-LLM/console/blob/main/ROADMAP.md)、[ARCHITECTURE.md](https://github.com/AI-LLM/console/blob/main/docs/ARCHITECTURE.md)（都 04-01）、[AGENTS.md](https://github.com/AI-LLM/console/blob/main/AGENTS.md)（04-17）、多数 ratchet（04 月）、[auto-test-gen.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-test-gen.yml)（05-18）、go-coverage 棘轮（06-04）都晚得多。也就是说：**需求/架构文档不少是边做边补、甚至事后追认的**，agent 是先被"操作规则"驱动跑起来、约束再逐条机器化补齐——与前文"基础设施持续叠加、非台阶式跃迁"一致。
 
 > ⚠ **caveat**：这不是正式的需求可追溯矩阵——没有 req-ID → 具体 test 的映射；顶层需求主要是**社区 issue + AI 提案 + ROADMAP**，是 community-steered 而非冻结的 SRS。所以是"分层文档 + 强制约束"，不是航天级 traceability。
 
