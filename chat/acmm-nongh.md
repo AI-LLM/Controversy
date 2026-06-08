@@ -96,6 +96,33 @@
 
 来源：[Gitea Actions 对比 GitHub](https://docs.gitea.com/usage/actions/comparison)｜[github-script 兼容性 FAQ](https://docs.gitea.com/usage/actions/faq)｜[schedule #28157](https://github.com/go-gitea/gitea/issues/28157)｜[artifact v4 #28853](https://github.com/go-gitea/gitea/issues/28853)
 
+### 二·补3、真机实测（Gitea 1.25.5 + act_runner + docker backend，2026-06-08）
+
+把 §二·补2 的文档级判断拿到一台真实 Gitea（`192.168.32.69:3000`，v1.25.5）上跑探针验证：建临时仓库 `LLM/gtaw-probe`，注册一个 docker-backend 的 act_runner（label `ubuntu-latest:docker://catthehacker/ubuntu:act-latest`），推 5 个探针 workflow 看真实 run 日志。**结果推翻了两条最关键的文档级判断**：
+
+| 特性 | 文档级判断（§二·补2） | **真机实测结果** | 证据（真实 run 日志） |
+|---|---|---|---|
+| `actions/github-script` + octokit | ✗ 不可靠 | **✓ 对 issue/comment/label 可用** | `GHSCRIPT_RESULT {"repos_get":"OK","issues_create":"OK #5","list_labels":"OK"}`——octokit 经 github-script 真在 Gitea 上建了 issue #5。仅 GitHub-only scope（checks/statuses/deployments）不通 |
+| `if:` 表达式函数 | ✗ 几乎全废 | **✓ 全部正确求值** | `needs.a.result=='success' && !cancelled()` 的 job **ran**；`failure()` 的 job **skipped**；`always()` 的 job ran。Gitea 文档"only always()"对这版 act_runner 不成立 |
+| `upload/download-artifact@v4` | ◐ 须 fork | **✗ 实测确认中止** | `::error:: @actions/artifact v2.0.0+, upload-artifact@v4+ ... are not currently supported on GHES` |
+| `container:` + `services:` | ✓ | **✓ 实测确认** | node:20 容器 + redis:7 service，job success |
+| `uses:` 从 github.com 解析 | ✓ | **✓ 实测确认**（且 runner 有外网） | runner 日志 `☁ git clone https://github.com/actions/upload-artifact` 成功 |
+| `check_run` 触发 | ✗ | ⚠ **无法实测触发**（Gitea 不产生 check_run 事件）；文件可 `workflow_dispatch`（HTTP 204） | — |
+| `schedule` | ◐ 有 bug | 未实测（需等时间）；文档 bug 仍按 §二·补2 成立 | — |
+
+**这次实测把 §二·补2 末尾的 6 条硬约束修订为 4 条**（两条最重的被现场推翻）：
+
+- ~~1. 零 `actions/github-script`~~ → **松绑**：施加器可直接用 github-script/octokit 处理 issue/comment/label；仅 checks/statuses/deployments 等 GitHub-only scope 须改 Gitea 原生 API。
+- ~~2. 门控不靠表达式函数~~ → **取消**：多 job `if:`（`needs.result` / `!cancelled()` / `failure()` / `always()`）可照搬。
+- 3. **不用 `check_run` 触发**——改 `pull_request`/`schedule`（仍成立，Gitea 不发该事件）。
+- 4. **artifact 换 fork（[gitea-upload-artifact](https://github.com/ChristopherHX/gitea-upload-artifact)）或 v3，或改用文件 / job `outputs`**（实测确认官方 v4 中止）。
+- 5. **`schedule` 配外部调度兜底**（文档 bug 仍在）。
+- 6. **runner 必须 docker backend**（实测确认 `container:`/`services:`/artifact 都靠它）。
+
+**净效果**：路线 2 大幅去风险——lock.yml 最依赖的 github-script（24 次）与表达式门控在 Gitea 上其实能跑，连路线 1（fork gh-aw retarget）也比文档判断时更可行。真正的硬骨头收窄到：artifact（换实现）、check_run（换触发）、schedule（外部兜底）、必须 docker runner。
+
+> ⚠ **实测口径**：以上为 Gitea **1.25.5** + 某一版 act_runner + `catthehacker/ubuntu:act-latest` 镜像的结果；不同 Gitea/Forgejo 与 runner 版本可能不同，落地目标环境仍应复跑这套探针确认。探针仓库 `LLM/gtaw-probe` 与 5 个 workflow 可复用。
+
 ---
 
 ## 三、编译器的输入：声明式源 schema（限定在 console 实际用到的子集）
@@ -199,7 +226,7 @@ conclusion
 3. **没有 Copilot 编码 agent**：`assign-to-agent` 在 gh-aw 是把活甩给 GitHub 托管的 Copilot；Gitea 版必须 opencode 自己写码（§六C）。质量不确定，建议先只对低风险类别（docs/lint/补测试）放开自动实现，复杂改动停在"提议+人批"（L5），稳了再到 L6。
 4. **威胁检测层要自己实现**。gh-aw 的 detection job 做净化（域名白名单、@提及上限、剥离注入引用）；编译器要生成等价的 detection job，否则只读 agent + apply 分离也防不住"提议本身被注入污染"。
 5. **opencode 是否支持"收集器/施加器"两段拆分要验证**。参考库的工具是直接调 API 的。把工具改成只写 jsonl、再在独立 job 施加，是本计划对 opencode 用法的关键假设；若 opencode 的 plugin 工具机制不便如此，退一步可在 agent job 内禁掉所有 Gitea 写 API（容器层 egress 只放只读端点），写操作全部留给 apply job 的纯脚本读 jsonl。
-6. **§二·补2 的 ◐/✗ 项仍是文档级核实，未经运行验证**。落地前应起一个最小沙盒坐实：docker-compose 拉 Gitea + 注册 act_runner + 推一个分别触发 `actions/github-script` / `check_run` / `schedule` / `upload-artifact` / 多 job `if:` 表达式的探针 workflow，看真实 run 日志。这一步把 6 条硬约束从"文档推断"升级为"实测确认"，是 Phase 0 的前置。
+6. **~~§二·补2 的 ◐/✗ 项仍是文档级核实~~ —— 已于 2026-06-08 在真机跑过探针，见 §二·补3**。结果推翻了 github-script、表达式两条文档判断，6 条硬约束收为 4 条。仍未实测的只剩 `schedule`（需等时间窗）。落地到**目标环境**时仍建议复跑 `LLM/gtaw-probe` 那套探针，确认目标 Gitea/Forgejo + runner 版本一致。
 
 ---
 
