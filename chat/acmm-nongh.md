@@ -1,172 +1,194 @@
-# 在 Gitea / Forgejo 上实现"代理化工作流"——非 GitHub 的 ACMM L5/L6 落地计划
+# 在 Gitea / Forgejo 上复刻 gh-aw 的"编译→锁文件→运行"链——非 GitHub 的 ACMM L5/L6 落地计划
 
 ## 这份计划要解决什么
 
-[hive-acmm-level-mapping.md](hive-acmm-level-mapping.md) 里分析的"代理化工作流（agentic workflows，系统自己提议并执行）"，整套实现绑死在 GitHub 专有栈上：gh-aw 编译器、GitHub Copilot 编码 agent、GitHub Actions、`pull_request_target`、Copilot 指派。**自托管 Gitea / Forgejo 用户拿不到这套。** 本计划把这套能力移植到 Gitea / Forgejo，做到"系统在自己的 forge 上提议并执行工作"。
+[hive-acmm-level-mapping.md](hive-acmm-level-mapping.md) 分析的"代理化工作流"，其安全性**不在 agent 本身，而在 gh-aw 编译器生成的那套多 job 权限分离骨架**：一个声明式 `.md`（触发器 + safe-outputs + prompt）被 `gh aw compile` 展开成一个自包含的 `.lock.yml`，里面是 5–6 个 job 的流水线——只读 agent 把"提议"写进 Safe Outputs MCP，再由**另一个**带写权限的 job 施加白名单内的动作。
 
-参考实现：`data/opencode-review-gitea`（[ccsert/opencode-review-gitea](https://github.com/ccsert/opencode-review-gitea)，MIT）。它已经在 Gitea 上跑通了**一条** agentic workflow（PR 自动评审）。本计划把它**泛化成完整的 agentic-workflow 套件**（triage → implement → review → stuck-recovery → 自我提议），并补上 GitHub 版独有、Gitea 版缺失的环节。
+上一版计划里我把这条链当成"opencode 运行时解释就不需要"，**那是错的**：光跑 `opencode run` 只拿到 agent，拿不到外面那层"只读执行 + 提议收集 + 威胁检测 + 最小权限施加"的骨架。本计划的核心就是**把 compile→lock→run 这条链在 Gitea / Forgejo 上复刻出来**。
 
-事实（参考库已实现的）与设计（本计划提出的）会分别标注。
+口径：本文是设计，不在本机运行、不安装任何环境、不需匹配本地版本。范围限定在 **gh-aw 文档支持 + `data/console/.github/workflows/*.md` 实际用到的功能子集**——不实现 gh-aw 全集。
+
+事实（gh-aw 文档 / console lock 文件实测）与设计（本计划提出）分别标注。
 
 ---
 
-## 一、为什么 opencode + Gitea 是对的底座
+## 一、先看清编译器到底生成了什么（事实，来自 console 实测）
 
-gh-aw 那套 L6 的关键不是"AI 多强"，而是**护栏拓扑**：agent 零权限、只能往一个受限的"安全输出"通道写提议、由下游用最小权限施加白名单内的动作（见 [hive-acmm-level-mapping.md](hive-acmm-level-mapping.md) L5 那节的 safe-outputs 分析）。参考库用 opencode 在 Gitea 上复刻了**同构的护栏**：
+读 `data/console/.github/workflows/auto-triage.lock.yml`（1398 行，由一个 12 行 frontmatter 的 `.md` 编译而来）。它生成的 **job 图**就是必须复刻的对象：
 
-| gh-aw（GitHub） | opencode + Gitea 等价物 | 出处 |
+| 生成的 job | 权限 | 干什么（实测步骤） |
 |---|---|---|
-| `.md` frontmatter `on:` 触发器 | `.gitea/workflows/*.yaml` 的 `on:`（Gitea Actions，GitHub 语法子集） | `data/opencode-review-gitea/.gitea/workflows/opencode-review.yaml` |
-| `gh aw compile` → `.lock.yml` | **不需要**——opencode 运行时解释 `agent.md`（无编译步骤 = 无"改了不算"的漂移问题） | — |
-| body = agent prompt | `opencode run --agent X "<prompt>"` + `agents/X.md` 正文 | `.opencode-review/agents/code-review.md` |
-| `safe-outputs:`（add-labels / add-comment / assign-to-agent） | agent frontmatter 的 `tools:` 白名单 + 自定义工具是 agent 碰外界的**唯一**接口 | `agents/code-review.md` 的 `tools: {"*": false, "gitea-review": true, ...}` |
-| `permissions: {}`（agent token 零权限） | `opencode.json` 的 `permission: {edit: deny, bash: deny, read: deny}` + 作用域受限的 `GITEA_TOKEN` | `.opencode-review/opencode.json` |
-| 安全输出通道（outputs.jsonl，只施加白名单类型） | `tools/*.ts`（每个工具就是一种被允许的副作用，封装一次 Gitea API 调用） | `.opencode-review/tools/gitea-review.ts` |
-| github-mcp-server 提供工具 | opencode 自定义工具（`@opencode-ai/plugin`）/ 亦可接 MCP | `tools/gitea-review.ts` 用 `tool()` 定义 |
-| 防火墙容器（squid egress 收口） | **缺口**——需补（见 §五风险 1） | — |
-| Copilot 编码 agent（`assign-to-agent` 写 PR） | **缺口**——Gitea 无此物，须由 opencode 自己写码开 PR（见 §三 workflow C） | — |
-| `config.yml`（provider / protected-paths / retry / stuck 阈值） | `opencode.json` + 环境变量 + 新增 `agentic.yml` | `.opencode-review/opencode.json` |
-| 计划任务 stuck-detection（cron） | Gitea Actions `on: schedule:`（需确认 runner 版本支持） | 设计 |
+| `pre_activation` / `activation` | `contents: read`（只读） | 校验触发器、并发、skip 条件；拼 prompt（[`Create prompt with built-in context`:185](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L185)）；上传 activation artifact |
+| `agent` | **`contents: read` 仅此**（[:55 `permissions: {}` 叠加只读](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L55)） | 装 AWF 防火墙二进制（[`Install AWF binary`:418](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L418)）、起 **Safe Outputs MCP HTTP Server**（[:579](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L579)）、起 MCP Gateway、跑 agent（[`Execute GitHub Copilot CLI`:702](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L702)）、**收集提议**（[`Ingest agent output`:815](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L815)）、打印防火墙日志、上传 artifact。**agent 全程无写权限，只往 MCP 写提议。** |
+| `detection` | `contents: read` | 对提议做**威胁检测 / 净化**（域名白名单、@提及上限、剥离注入的仓库引用）后才放行 |
+| `safe_outputs` | **`issues: write, pull-requests: write`**（[:apply job](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml)，`if: detection==success`） | 读校验过的提议，**只施加白名单类型**（auto-triage 的配置写死 `{"add_labels":{"max":3}}`，[:458](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L458)；agent 拿到的工具只有 `add_labels(max:3), missing_tool, missing_data`，[:210](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L210)） |
+| `conclusion` | `issues: write, pull-requests: write` | 收尾、失败转 issue、记录 missing-tool / incomplete |
 
-**核心判断**：参考库证明了 safe-outputs 护栏可在 Gitea 上以"opencode permission-deny + per-agent 工具白名单"实现，且因为没有编译步骤，反而消除了 gh-aw 的"源 `.md` 与产物 `.lock.yml` 漂移"那个失效模式。剩下的工作是**把单一 review 工作流扩成完整套件 + 补两个缺口（egress 防火墙、编码执行）**。
+**gh-aw 官方把这套叫"separation of privilege"四层** [[safe-outputs 文档]](https://github.github.com/gh-aw/reference/safe-outputs/)：① 只读 agent ② Safe Outputs MCP 收集+校验提议 ③ 独立写权限 job 施加 ④ 威胁检测+净化。**这四层就是要在 Gitea 上 1:1 复刻的东西**，而不是"让 opencode 跑一下"。
 
 ---
 
-## 二、目标架构
+## 二、参考库 `opencode-review-gitea` 有什么、缺什么（事实）
+
+| 能力 | 参考库状态 | 与 gh-aw 骨架的差距 |
+|---|---|---|
+| agent 角色 + prompt | ✓ `agents/code-review.md` | 对齐 |
+| 工具白名单（默认 deny） | ✓ `tools:{"*":false,...}` + `opencode.json permission deny` | 对齐 safe-outputs 的"只开放白名单工具" |
+| **权限分离（只读 agent / 写权限 apply 分两个 job）** | ✗ **没有**——`tools/gitea-review.ts` 在 agent 阶段**直接调 Gitea API 写评审** | **最大缺口**：agent 自己就有写权限，没有"提议→检测→施加"的隔离 |
+| **威胁检测 / 净化层** | ✗ 没有 | 缺口 |
+| **egress 防火墙**（squid/AWF） | ✗ 没有 | 缺口 |
+| **编译器**（声明式 .md → 多 job lock 工作流） | ✗ 没有——workflow 是手写单 job | 缺口（本计划核心） |
+| **锁文件新鲜度校验**（防源/产物漂移） | ✗ 没有 | 缺口 |
+
+结论：参考库给了**执行层（opencode + 工具白名单）**这块拼图，但**没有编译器、没有权限分离骨架**。本计划要补的正是后者。
+
+---
+
+## 三、编译器的输入：声明式源 schema（限定在 console 实际用到的子集）
+
+定义 Gitea 版编译器 **`gtaw`**（gitea-agentic-workflows）。输入 = `.gtaw/agents/<name>.md`，frontmatter 只支持下列字段（取自 gh-aw 文档 [[frontmatter]](https://github.github.com/gh-aw/reference/frontmatter/) ∩ console `*.md` 实际用到的）：
+
+```yaml
+---
+on:                      # console 用到的全部触发器：
+  issues: {types: [...]}            #   assigned / labeled
+  issue_comment: {types: [created]}
+  pull_request: {types: [...]}      #   opened / synchronize
+  pull_request_review: {types: [submitted]}
+  check_run: {types: [completed]}
+  schedule: [{cron: "..."}]         #   stuck/scan 用
+  workflow_dispatch: {inputs: {...}}
+concurrency: {group: ..., cancel-in-progress: true}   # console handle-complications 用到
+engine: opencode         # 替代 gh-aw 的 engine: copilot/claude
+model: deepseek/deepseek-chat
+network: {allowed: [gitea-host, llm-endpoint]}        # 生成 egress 白名单
+timeout-minutes: 15
+permissions: {contents: read}      # agent 阶段恒只读
+tools: ["gitea-pr-diff", "gitea-list-stale"]          # agent 可用的【只读】工具
+safe-outputs:            # 只支持 console 用到的类型 + 必要替代：
+  add-labels: {max: 3, allowed: [...]}     # console 用
+  add-comment: {max: 5}                     # console 用
+  create-pull-request: {title-prefix: "[AI]", protected-files: [...]}  # 替代 assign-to-agent（见 §六C）
+  create-issue: {max: 3, labels: [ai-proposed]}        # scanner 用
+  report-failure-as-issue: false            # console 用
+  noop: true                                # 系统类型
+---
+<正文 = 给 opencode agent 的自然语言 prompt>
+```
+
+**关键裁剪**：gh-aw 有 ~50 种 safe-output，本计划**只实现 console 真用到的 5 种 + `create-pull-request`**（用来替代 Gitea 没有的 `assign-to-agent`）。其余不做。
+
+---
+
+## 四、编译器的产物：生成的 Gitea lock 工作流（多 job 权限分离）
+
+`gtaw compile` 把上面的 `.md` 展开成 `.gitea/workflows/<name>.lock.yaml`，job 图与 gh-aw 同构：
 
 ```
-Gitea 事件 (comment / PR / issue label / schedule)
-        │
-        ▼
-.gitea/workflows/ai-*.yaml          ← 触发层（Gitea Actions，等价 gh-aw 的 on:）
-        │  起容器、注入 scoped GITEA_TOKEN + LLM key + 上下文 env
-        ▼
-opencode run --agent <role>         ← 执行层（容器内 opencode CLI）
-        │  读 agents/<role>.md（tools 白名单）+ opencode.json（permission deny）
-        ▼
-自定义工具 tools/*.ts               ← 安全输出层（agent 碰 forge 的唯一接口）
-        │  每个工具 = 一种被允许的副作用，封装一次 Gitea API
-        ▼
-Gitea REST API (/api/v1/...)        ← 副作用真正落地（打标签 / 评论 / 开 PR / 建 issue）
+pre_activation/activation (只读)
+  └─ 评估 on/if、拼 prompt、上传 prompt artifact
+agent (只读 token + egress 防火墙 + 容器)
+  └─ opencode run --agent <name>
+       工具 = 【收集器版】safe-output 工具：只把提议 append 到 $SAFE_OUTPUTS/outputs.jsonl
+       （绝不调 Gitea 写 API）+ 只读工具(gitea-pr-diff 等)
+       └─ 上传 outputs.jsonl artifact
+detection (只读)
+  └─ 净化 outputs.jsonl：域名白名单、@提及上限、剥离注入引用；不过则丢弃该条
+apply / safe_outputs (scoped 写 token，独立 job)
+  └─ 读净化后的 outputs.jsonl，逐条按类型施加：
+       add-labels → 校验 allowed+max → 调 Gitea API
+       add-comment → 校验 max → 调 API
+       create-pull-request → 触发"实现"子流程（见 §六C）
+conclusion
+  └─ 失败转 issue（report-failure-as-issue）、记录 missing-tool
 ```
 
-护栏在三处叠加，与 gh-aw 同构：
-1. **触发层**：workflow 的 `if:` 门（命令前缀 `/ai`、标签、作者白名单）。
-2. **执行层**：`opencode.json` 全局 deny + `agents/<role>.md` 的 `tools:` 白名单——agent **默认什么都不能做**，只开放它这个角色该有的工具。
-3. **安全输出层**：工具本身是窄接口（`gitea-review` 只能提交评审、`gitea-label` 只能加白名单内标签），且服务端 token 作用域受限。
+**与参考库最本质的改动**：safe-output 工具要**拆成两份**——
+- **agent 阶段的工具是"收集器"**：`gitea-label`(collector) 只往 `outputs.jsonl` 写 `{"type":"add_labels","labels":[...]}`，**不碰 API**。这对应 gh-aw 的 Safe Outputs MCP server。opencode 侧靠 `opencode.json permission deny` + 该 agent 的 `tools` 白名单只挂收集器版工具来保证。
+- **apply 阶段的工具是"施加器"**：真正的 `gitea-label`(applier) / `gitea-comment`(applier) / `gitea-create-pr`(applier) 在独立 job 里跑、用 scoped 写 token、施加前再校验一遍 `max`/`allowed`。
+
+这样 agent 即使被 prompt 注入，也只能写出一条 jsonl 提议，下游 job 仍按白名单+上限过滤——**复刻了"agent 永远无写权限"这个 gh-aw 不变量**。
 
 ---
 
-## 三、要实现的 agentic workflows（对齐 gh-aw 三件套 + 扩展）
+## 五、编译器 `gtaw` 本身（设计）
 
-每条 = 一个 `.gitea/workflows/ai-X.yaml`（触发）+ 一个 `agents/X.md`（角色+工具白名单）+ 若干 `tools/*.ts`（安全输出）。
-
-### Workflow A — 自动评审（auto-review）｜对应 gh-aw 之外、参考库已有
-- **触发**：`pull_request: [opened, synchronize]` 或评论 `/ai review`。
-- **状态**：参考库**已实现**，直接采用 `data/opencode-review-gitea` 整套（agent `code-review.md` + 工具 `gitea-pr-diff` / `gitea-incremental-diff` / `gitea-review`）。
-- **安全输出**：仅 `gitea-review`（提交 COMMENT/APPROVE/REQUEST_CHANGES + 行级评论）。
-
-### Workflow B — 自动分诊（auto-triage）｜对应 gh-aw `auto-triage.md`
-- **触发**：`issues: [opened]`，或评论触发；对齐 gh-aw 的"issue 进来即分类"。
-- **agent `triage.md`**：读 issue 标题/正文，判类型（bug / enhancement / docs / question）、估复杂度、决定是否 `ai-fix-requested`。
-- **安全输出（新建工具）**：`gitea-label`（只能加预定义标签集，等价 gh-aw `add-labels: max 3`）、可选 `gitea-comment`（max 1）。**禁止**改代码、关 issue。
-- **enforcement**：`agents/triage.md` 的 `tools: {"*": false, "gitea-label": true}`。
-
-### Workflow C — 自动实现（implement-fix）｜对应 gh-aw `implement-fix.md`（最大缺口）
-- **gh-aw 做法**：`assign-to-agent` 把 issue 甩给 Copilot 编码 agent。**Gitea 没有 Copilot agent**，所以这一步必须由 opencode **自己写码**。
-- **触发**：issue 被打上 `ai-fix-requested`（`issues: [labeled]`，需确认 Gitea 支持该事件，否则用 `/ai fix` 评论触发）。
-- **agent `implement.md`**：这是**唯一需要放开 `edit` + `bash` 权限**的 agent——但限制在一次性 worktree 容器里：
-  1. clone + 建 worktree（绝不直接提交 main）
-  2. 读 issue + 相关代码，改之
-  3. 跑 `build` / `lint` / `test`（项目命令，写进 agent 指令）
-  4. 通过失败则按 `agentic.yml` 的 retry 退避重试（上限 N 次→标 `ai-needs-human`）
-  5. 通过则 commit（带 DCO `-s`）、push 分支、用新工具 `gitea-create-pr` 开 PR
-- **安全输出（新建工具）**：`gitea-create-pr`（开 PR，标题强制 `[AI]` 前缀、自动加 `ai-generated` 标签）、`gitea-comment`。
-- **关键护栏**：(a) `edit`/`bash` 仅对此 agent 开、仅在隔离容器；(b) `protected-paths`（见 §四）禁止它改 `.gitea/workflows/`、`*.md`、lockfile；(c) push 目标永远是 `ai/fix-<issue>` 分支，main 由分支保护挡。
-
-### Workflow D — 卡死恢复（stuck-recovery）｜对应 gh-aw `stuck-detection.md`
-- **触发**：`on: schedule: cron`（如每 30 分钟；**须确认 Gitea/Forgejo Actions 的 schedule 支持**，否则用外部 cron 调 `workflow_dispatch` 或 hive 式 systemd timer，见 §五风险 2）。
-- **agent `stuck.md`**：用工具列出超时项（处理中 issue > 2h、草稿 PR 无活动 > 1h——阈值来自 `agentic.yml`），评论催办 / 重新触发 / 升级。
-- **安全输出**：`gitea-list-stale`（只读列举）+ `gitea-comment` + `gitea-label`。
-
-### Workflow E — 自我提议（self-proposal / automated issue generation）｜对应 gh-aw L6"系统提议自己的下一个任务"
-- **触发**：`on: schedule`（每日）。
-- **agent `scanner.md`**：扫 TODO/FIXME、失败的 CI、覆盖率缺口、陈旧依赖，**开 issue 让 triage→implement 流水线接手**——这就是"系统自己提议工作"的闭环起点。
-- **安全输出（新建工具）**：`gitea-create-issue`（开 issue，自动加 `ai-proposed`）。
-- **去重**：开前先 `gitea-search-issues` 查重，避免重复提案。
+- **形态**：一个小程序（TS，用 opencode 同生态的 bun 跑；逻辑就是"读 frontmatter→按 schema 校验→模板渲染出 lock.yaml"）。它**不在用户机器跑**，而是作为仓库的一个 CI job（或 pre-commit）跑——和 gh-aw 一样，产物 `.lock.yaml` 提交进仓库、由 Gitea Actions 执行。
+- **模板**：维护一套 lock 工作流的 job 模板（上面那 5 段），frontmatter 的每个字段决定模板的填充：
+  - `on:` / `concurrency:` → 直接写进 lock 的顶层（Gitea Actions 语法 = GitHub 子集，须实测各触发器在目标 Gitea/act_runner 版本可用，见 §七风险 2）
+  - `safe-outputs:` 的每个类型 → 决定 agent 阶段挂哪些**收集器**工具、apply 阶段生成哪些**施加器**步骤及其 `max/allowed` 校验
+  - `network:` → 生成 agent job 的容器 egress 白名单（docker network + iptables / 代理）
+  - `tools:` + `permissions: contents:read` → agent job 的只读约束
+- **防漂移（复刻 gh-aw 的锁文件校验）**：
+  - lock 文件头写入源文件的 `frontmatter_hash` / `body_hash`（gh-aw 同款，见 console lock 元数据头）。
+  - CI 加一个 `lockfile-fresh` 检查：重跑 `gtaw compile` 并 `git diff`，不一致就 fail——对应 console lock 的 [`Check workflow lock file`:152](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L152) / [`Check compile-agentic version`:164](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L164)。这消除"改了 `.md` 没重编译则行为不变"那个失效模式。
+- **版本钉**：lock 里所有 `uses:` 钉到 commit SHA（gh-aw 用 `actions-lock.json`，本计划用同样的 lock+patch 思路）。
 
 ---
 
-## 四、治理与护栏（对应 gh-aw config.yml + 论文 L4 anti-pattern"无护栏的自动化"）
+## 六、五条工作流如何套这条编译链
 
-新增 `.opencode-agents/agentic.yml`（opencode.json 之外的策略集中地，等价 `data/opencode-review-gitea` 没有、但 gh-aw `config.yml` 有的那层）：
+每条 = 一个 `.gtaw/agents/<role>.md`（声明式源）→ `gtaw compile` → `.gitea/workflows/<role>.lock.yaml`。
 
-- **protected-paths**：AI agent 禁改 `.gitea/workflows/*.yaml`、`*.md`、`*.lock` / `go.sum`——由 implement agent 在 push 前自检 + CI 侧 `paths` 守卫双保险。（对应 gh-aw `config.yml:43-47`。）
-- **retry / backoff**：指数退避，max-attempts=3，对应论文"error recovery with exponential backoff"。
-- **stuck 阈值**：processing-timeout / pr-inactivity-timeout，喂给 Workflow D。
-- **author / 触发白名单**：只有 bot 账号或维护者评论 `/ai` 才触发，挡住任意人触发烧 token。
-- **作用域 token**：给 bot 账号建**仓库级、最小 scope** 的 access token（issue+PR 写，**不给 admin / workflow 写**），存进 Gitea repo/org secrets（参考库用 `secrets.OPENCODE_GIT_TOKEN`）。
-
-**真·强制层（不靠 agent 自觉，对应 merge-policy 的"一等机制兜底"）**：
-- **Gitea 分支保护**：main 禁直推、PR 必过 required status checks（build/lint）、可要求人审——等价 gh-aw 的 `no-direct-main` + `ci-gate`，且这是 Gitea **设置项**（真拦），不是声明文件。
-- **DCO**：Gitea 内置 DCO 检查或 CI 工作流强制 `Signed-off-by`。
-- **CI 门禁**：项目自己的 `.gitea/workflows/ci.yaml`（build/test/coverage）作为 PR 合并的 required check。
+- **A 自动评审**（参考库已有逻辑）：safe-outputs = `create-pull-request-review`（参考库的 `gitea-review` 改造成收集器+施加器两段）。这是把参考库"单 job 直接写"重构成"两段权限分离"的第一个落点。
+- **B 自动分诊**（对应 console `auto-triage.md`）：trigger `issues:[opened]`；safe-outputs = `add-labels: {max:3, allowed:[bug,enhancement,...]}`。agent 只读 issue、只产标签提议。
+- **C 自动实现**（对应 console `implement-fix.md` 的 `assign-to-agent`，**Gitea 无此物 → 用 `create-pull-request` 替代**）：trigger `issues:[labeled ai-fix-requested]`；safe-outputs = `create-pull-request`。**这是唯一让 apply 阶段放开写码的工作流**——施加器 `gitea-create-pr` 在独立 job 里：起隔离 worktree 容器、放开 opencode 的 `edit/bash`、按 issue 改码、跑 build/lint/test、按 retry 退避、过则 push `ai/fix-<n>` 分支 + 开 PR（标题强制 `[AI]`、自动 `ai-generated` 标签、`protected-files` 禁改 workflows/lockfile）。agent 阶段仍只读、只产"实现意图"提议；写码隔离在 apply 子 job。
+- **D 卡死恢复**（对应 console `stuck-detection.md`）：trigger `schedule: cron`；safe-outputs = `add-comment{max:5}` + `add-labels{max:3}`；只读列举超时项。
+- **E 自我提议**（对应论文 L6 自动开 issue）：trigger `schedule`；safe-outputs = `create-issue{labels:[ai-proposed]}`，开前去重。
 
 ---
 
-## 五、关键缺口与风险（务必正视，别假装 Gitea = GitHub）
+## 七、缺口与风险（正视，别假装 Gitea = GitHub）
 
-1. **egress 防火墙缺失**。gh-aw 用 squid 把 agent 容器的出网收口（防 prompt 注入后外联），参考库**没有**这层。设计：给 Gitea runner 的 agent 容器加网络策略——只允许 Gitea API + LLM provider 端点（docker network + iptables 白名单，或 runner 级 egress 代理）。这是把"评审型只读 agent"升级成"会写码的 implement agent"后**必须补**的，否则放开 `bash` 的容器是攻击面。
-
-2. **schedule / 事件支持是 Gitea/Forgejo 版本相关的**。参考库只用了 `issue_comment` / `pull_request` / `pull_request_review_comment`（确认可用）。`on: schedule`（Workflow D/E 依赖）和 `issues: [labeled]`（Workflow C 依赖）**须在目标 Gitea/Forgejo + act_runner 版本上实测**。回退方案：用 hive 式外部调度（systemd timer / cron 调 Gitea API 触发 `workflow_dispatch`），把"调度可靠性移出 forge"——正好呼应论文 §5 hive 的设计哲学。
-
-3. **没有 Copilot 编码 agent = implement-fix 全靠 opencode 自己写**。这是工作量与质量的最大不确定点。建议：implement agent 用强模型（Claude Sonnet/Opus 或 DeepSeek），且**先只对低风险类别**（docs、lint、测试补全）放开自动实现，复杂改动仍走"提议+人批"（即先停在 L5，验证稳了再放到 L6 自动合并）。
-
-4. **opencode 工具即信任边界**。agent 的全部副作用都过 `tools/*.ts`，所以工具实现必须把 Gitea API 调用写窄（如 `gitea-label` 校验标签在白名单内、`gitea-create-pr` 强制分支前缀与标题前缀）。工具有多严，护栏就有多严。
+1. **egress 防火墙必须自建**。gh-aw 的 AWF（squid+api-proxy 容器）把 agent 出网收口；参考库没有。编译器要给 agent job 生成容器网络白名单（只放 Gitea API + LLM 端点）。放开 C 的写码容器后这是**硬要求**。
+2. **触发器/schedule 是 Gitea/Forgejo + act_runner 版本相关的**。参考库只验证了 `issue_comment`/`pull_request`/`pull_request_review_comment`。`schedule`（D/E）、`issues:[labeled]`（C）、`check_run`（console handle-complications 用）须在目标版本实测；回退 = hive 式外部调度（systemd timer/cron 调 API 触发 `workflow_dispatch`），把调度可靠性移出 forge（呼应论文 §5 hive 哲学）。
+3. **没有 Copilot 编码 agent**：`assign-to-agent` 在 gh-aw 是把活甩给 GitHub 托管的 Copilot；Gitea 版必须 opencode 自己写码（§六C）。质量不确定，建议先只对低风险类别（docs/lint/补测试）放开自动实现，复杂改动停在"提议+人批"（L5），稳了再到 L6。
+4. **威胁检测层要自己实现**。gh-aw 的 detection job 做净化（域名白名单、@提及上限、剥离注入引用）；编译器要生成等价的 detection job，否则只读 agent + apply 分离也防不住"提议本身被注入污染"。
+5. **opencode 是否支持"收集器/施加器"两段拆分要验证**。参考库的工具是直接调 API 的。把工具改成只写 jsonl、再在独立 job 施加，是本计划对 opencode 用法的关键假设；若 opencode 的 plugin 工具机制不便如此，退一步可在 agent job 内禁掉所有 Gitea 写 API（容器层 egress 只放只读端点），写操作全部留给 apply job 的纯脚本读 jsonl。
 
 ---
 
-## 六、分阶段落地（按 ACMM 级别递进，可验证）
+## 八、分阶段落地（按 ACMM 递进，可灰度）
 
-- **Phase 0 — 地基**：建 bot 账号 + 作用域 token + secrets；起 act_runner；放最小 `opencode.json`（全 deny）。
-- **Phase 1 — L2 指令层**：写 `CLAUDE.md` / 项目约定 + 各 `agents/*.md`（角色 + 工具白名单）。
-- **Phase 2 — 安全输出工具层**：实现 `tools/`：`gitea-pr-diff`、`gitea-review`（采参考库）+ 新建 `gitea-label`、`gitea-comment`、`gitea-create-pr`、`gitea-create-issue`、`gitea-list-stale`、`gitea-search-issues`。每个配单测（参考库 `tests/*.test.ts` 模式）。
-- **Phase 3 — 评审（Workflow A）**：直接移植参考库，跑通 `/ai review`。验证护栏（agent 只能评审、动不了代码）。
-- **Phase 4 — 分诊+提议（B、E）**：只读/打标签/开 issue 的低风险 agent 先上，形成"系统提议工作"的入口。**此时已达 L4-L5**。
-- **Phase 5 — 自动实现（C）**：放开 implement agent（隔离容器 + egress 防火墙 + protected-paths），先限低风险类别，PR 仍人批 = **稳态 L5**。
-- **Phase 6 — 闭环+调度（D + 自动合并）**：补 schedule/外部调度跑 stuck-recovery；对高接受率类别开自动合并（merge-eligible 由 CI required-checks 判定）= **L6**。每升一级前用 `agentic.yml` 的开关灰度。
+- **Phase 0 — 编译器骨架**：实现 `gtaw compile` 的最小版（支持 `on` + `add-labels` + 两段工具拆分 + lockfile-fresh 检查）。先只跑通"声明式 .md → 多 job lock.yaml"这条链本身。
+- **Phase 1 — 权限分离落第一条（B 分诊）**：只读 agent + detection + scoped 写 apply，全套跑通一个最简单的"打标签"工作流。**验证 agent 阶段无写权限**（断网测试：拔掉 apply job，确认标签没被打上）。
+- **Phase 2 — 把参考库 A 重构进编译链**：`gitea-review` 拆成收集器/施加器两段，证明现有逻辑能套这套骨架。
+- **Phase 3 — egress 防火墙 + 威胁检测 job**：补 §七 缺口 1、4。此时护栏拓扑≈gh-aw。**到此达 L4-L5**。
+- **Phase 4 — 自我提议（E）+ 卡死恢复（D）**：补 schedule/外部调度。系统开始自己提议工作。
+- **Phase 5 — 自动实现（C）**：apply 阶段放开隔离写码容器，先限低风险类别，PR 仍人批 = **稳态 L5**。
+- **Phase 6 — 自动合并**：高接受率类别 PR 过 CI required-checks 即自动合并 = **L6**。
 
 ---
 
-## 七、最终交付物清单（目标 Gitea 仓库里新增的文件）
+## 九、交付物清单（目标 Gitea 仓库）
 
 ```
-.gitea/workflows/
-  ai-review.yaml          # Workflow A（采参考库 opencode-review.yaml）
-  ai-triage.yaml          # Workflow B
-  ai-implement.yaml       # Workflow C（隔离容器 + 放开 edit/bash）
-  ai-stuck.yaml           # Workflow D（schedule 或外部调度）
-  ai-scan.yaml            # Workflow E（schedule）
-  ci.yaml                 # required checks（build/lint/test/coverage）— 合并门禁
-
-.opencode-agents/         # 改名自参考库 .opencode-review/，避免与用户 .opencode/ 冲突
-  opencode.json           # permission 全 deny（采参考库）
-  agentic.yml             # 新增：protected-paths / retry / stuck 阈值 / 白名单
+.gtaw/                              # 声明式源 + 编译器（新增，等价 .github/aw + *.md 源）
+  compile.ts                        # gtaw 编译器（.md → lock.yaml）
+  templates/                        # lock 工作流的 5 段 job 模板
+  schema.ts                         # frontmatter 校验（限定 console 子集）
   agents/
-    code-review.md        # 采参考库
-    triage.md  implement.md  stuck.md  scanner.md   # 新建
+    code-review.md  triage.md  implement.md  stuck.md  scanner.md   # 声明式源
+  opencode.json                     # permission 全 deny（采参考库）
   tools/
-    gitea-pr-diff.ts  gitea-incremental-diff.ts  gitea-review.ts   # 采参考库
-    gitea-label.ts  gitea-comment.ts  gitea-create-pr.ts          # 新建
-    gitea-create-issue.ts  gitea-list-stale.ts  gitea-search-issues.ts
-  tests/                  # 每个工具配单测（参考库模式）
+    collectors/   gitea-label.ts gitea-comment.ts gitea-pr-intent.ts  # agent 阶段：只写 jsonl
+    appliers/     gitea-label.ts gitea-comment.ts gitea-create-pr.ts  # apply 阶段：调 API
+    readonly/     gitea-pr-diff.ts gitea-list-stale.ts ...            # agent 阶段只读
+  tests/
 
-# Gitea 设置项（非文件，但属交付）：main 分支保护 + required checks + DCO + bot token scope
+.gitea/workflows/                   # 编译产物（gtaw compile 生成，提交进仓库）
+  code-review.lock.yaml  triage.lock.yaml  implement.lock.yaml
+  stuck.lock.yaml  scan.lock.yaml
+  gtaw-lockfile-fresh.yaml          # CI：重编译并 diff，防漂移
+  ci.yaml                           # required checks（合并门禁）
+
+# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope
 ```
 
 ## 信源 / 参考
 
-- 参考实现：`data/opencode-review-gitea`（[ccsert/opencode-review-gitea](https://github.com/ccsert/opencode-review-gitea)，MIT）——已跑通的 Gitea PR 评审 agent
-- gh-aw 原型分析：[hive-acmm-level-mapping.md](hive-acmm-level-mapping.md) 的 Level 5 "代理化工作流"deep-dive（safe-outputs / 编译链 / config.yml 护栏）
-- opencode 自定义工具与权限：`data/opencode-review-gitea/.opencode-review/opencode.json`、`agents/code-review.md`、`tools/gitea-review.ts`
+- gh-aw 官方：[GitHub Agentic Workflows](https://github.com/github/gh-aw)｜[Frontmatter 参考](https://github.github.com/gh-aw/reference/frontmatter/)｜[Safe Outputs 参考](https://github.github.com/gh-aw/reference/safe-outputs/)｜[About Workflows](https://github.github.com/gh-aw/introduction/overview/)
+- 编译产物实测：`data/console/.github/workflows/auto-triage.lock.yml`（job 图、Safe Outputs MCP、AWF 防火墙、锁文件校验步骤）；源 frontmatter：`data/console/.github/workflows/{auto-triage,implement-fix,stuck-detection,handle-complications.md.disabled,verify-preview.md.disabled}.md`
+- 执行层参考实现：`data/opencode-review-gitea`（[ccsert/opencode-review-gitea](https://github.com/ccsert/opencode-review-gitea)，MIT）——opencode + 工具白名单 + permission deny，但无编译器/无权限分离
+- gh-aw 原型分析：[hive-acmm-level-mapping.md](hive-acmm-level-mapping.md) Level 5 "代理化工作流"deep-dive
 - ACMM 模型：<https://arxiv.org/abs/2604.09388>
