@@ -42,6 +42,32 @@
 
 结论：参考库给了**执行层（opencode + 工具白名单）**这块拼图，但**没有编译器、没有权限分离骨架**。本计划要补的正是后者。
 
+### 二·补、能不能直接 port gh-aw？可移植性判断 + 两条路线（这决定了 §三起的设计取舍）
+
+**gh-aw 是 MIT 开源**（Go 66% + JS 32%），配套的 **AWF 防火墙、MCP Gateway、gh-aw-actions 也都开源**，引擎支持 Copilot/Claude/Codex/Gemini [[gh-aw]](https://github.com/github/gh-aw)｜[[MIT LICENSE]](https://raw.githubusercontent.com/github/gh-aw/main/LICENSE)。所以**法律上可随便 fork/改/再分发**。但**开源 ≠ 能直接搬到 Gitea/Forgejo**——编译器**生成的产物**绑死在三样 GitHub 专有件上：
+
+| 绑死的东西 | 为什么搬不动 | 可移植性 |
+|---|---|---|
+| **GitHub Actions 运行时** | Gitea/Forgejo Actions（act_runner）只是 GitHub Actions 的**兼容子集**。lock.yml 大量用 `actions/github-script`、service containers、`check_run` 事件、artifacts、schedule——在 Gitea 上**部分不支持或行为不同**，须逐个实测 | ✗ 须改 codegen |
+| **GitHub REST/GraphQL API（octokit）** | safe-outputs 的 apply job 全程调 GitHub API；Gitea 是**另一套** `/api/v1`。每个施加器都得从 octokit 重写成 Gitea API | ✗ 须重写 API 层 |
+| **Copilot 编码 agent**（`assign-to-agent` / `create-agent-session`） | GitHub 托管的；Gitea 没有 | ✗ 须用 opencode 自己写码替代（§六C） |
+| github-mcp-server | GitHub 专属 MCP | ✗ 换 gitea-mcp（参考库的工具即是） |
+| **AWF 防火墙、MCP Gateway** | 纯 egress 控制 / MCP 路由，**不绑 GitHub API** | ✓ **可直接复用** |
+| **编译器架构本身**（md→多 job 权限分离） | 思路可借，codegen 的 target 要换 | ◐ fork 改 target |
+
+**由此两条路线**：
+
+- **路线 1 — fork gh-aw 的 Go 编译器、retarget codegen**：把代码生成的 target 从"GitHub Actions + octokit"换成"Gitea Actions + Gitea `/api/v1`"，砍掉 Copilot-only 输出类型。复用它成熟的 frontmatter 解析、job 图模板、AWF/MCP Gateway。**优点**：拿到 gh-aw 全部成熟度与 ~50 种 safe-output。**代价**：要吃透其 Go 代码，且每次上游改 codegen 都要跟着 rebase retarget 层。
+- **路线 2 — 不碰 gh-aw 代码，用 opencode 重新实现 job 图拓扑**（即 §三起的 `gtaw` 方案）：只复刻"权限分离骨架"这个**架构不变量**，功能限定在 console 实际用到的子集。**优点**：实现轻、无上游耦合、与参考库 opencode 同生态。**代价**：safe-output 类型自己一种种加，成熟度从零积累。
+
+**本计划选路线 2**，理由：(a) 目标是 console 用到的 5 种 safe-output，不需要 gh-aw 全集；(b) 执行层已有参考库的 opencode 底座，重写 codegen 比 retarget 别人的 Go 更可控；(c) 路线 2 天然规避"上游 codegen 变动→retarget 层腐烂"。
+
+**但有一条横跨两条路线的硬建议：AWF 防火墙与 MCP Gateway 直接复用 gh-aw 的，别自己造。** 这两块是 §七风险 1（egress 防火墙）和 MCP 路由的现成开源答案，且**不绑 GitHub API**（纯 egress/路由），MIT 可直接拿。`gtaw` 生成的 agent job 应当：
+- 用 **AWF**（`ghcr.io/github/gh-aw-firewall/*`，开源）做容器 egress 收口——把网络白名单（Gitea API + LLM 端点）喂给它，而不是自己写 iptables。
+- 用 **MCP Gateway**（开源）路由 agent 到工具的 MCP 调用——Safe Outputs"收集器"工具挂在它后面，与 gh-aw 同构。
+
+也就是说：**编译器/施加器/API 层走路线 2 自建，防火墙/MCP 路由走"直接复用 gh-aw 开源件"**——混合最省力。
+
 ---
 
 ## 三、编译器的输入：声明式源 schema（限定在 console 实际用到的子集）
@@ -140,7 +166,7 @@ conclusion
 
 ## 七、缺口与风险（正视，别假装 Gitea = GitHub）
 
-1. **egress 防火墙必须自建**。gh-aw 的 AWF（squid+api-proxy 容器）把 agent 出网收口；参考库没有。编译器要给 agent job 生成容器网络白名单（只放 Gitea API + LLM 端点）。放开 C 的写码容器后这是**硬要求**。
+1. **egress 防火墙：复用 gh-aw 的 AWF，不自建**（见 §二·补）。gh-aw 的 AWF（squid+api-proxy 容器，MIT 开源、不绑 GitHub API）把 agent 出网收口；参考库没有这层。`gtaw` 生成的 agent job 直接挂 AWF，把网络白名单（只放 Gitea API + LLM 端点）喂给它，而不是自己写 iptables。放开 C 的写码容器后这是**硬要求**。
 2. **触发器/schedule 是 Gitea/Forgejo + act_runner 版本相关的**。参考库只验证了 `issue_comment`/`pull_request`/`pull_request_review_comment`。`schedule`（D/E）、`issues:[labeled]`（C）、`check_run`（console handle-complications 用）须在目标版本实测；回退 = hive 式外部调度（systemd timer/cron 调 API 触发 `workflow_dispatch`），把调度可靠性移出 forge（呼应论文 §5 hive 哲学）。
 3. **没有 Copilot 编码 agent**：`assign-to-agent` 在 gh-aw 是把活甩给 GitHub 托管的 Copilot；Gitea 版必须 opencode 自己写码（§六C）。质量不确定，建议先只对低风险类别（docs/lint/补测试）放开自动实现，复杂改动停在"提议+人批"（L5），稳了再到 L6。
 4. **威胁检测层要自己实现**。gh-aw 的 detection job 做净化（域名白名单、@提及上限、剥离注入引用）；编译器要生成等价的 detection job，否则只读 agent + apply 分离也防不住"提议本身被注入污染"。
