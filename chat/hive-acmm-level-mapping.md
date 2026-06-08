@@ -192,6 +192,61 @@ L6 的产物**主体在 hive**（参考实现）。console 侧只留两个把自
 
 4. **代码库给模型当了 CI 门禁**。[acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml) 让 console 每天检测自己的 ACMM level 并要求 ≥ L5——论文的成熟度模型被它的案例代码库内化成了自动化质量门。
 
+## git 历史还原的 level 演进时间线
+
+两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。
+
+### console（L1→L5 的成长轨迹）
+
+仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文"吞吐量随 level 加速"论点的实证：
+
+| 月份 | commits | 对应 level（论文 Table 4） |
+|---|---|---|
+| 2026-01 | 701 | L1→L2 |
+| 2026-02 | 899 | L3 |
+| 2026-03 | 1409 | L4 |
+| 2026-04 | 2939（暴涨） | L5→L6 |
+| 2026-05 | 2529 | — |
+| 2026-06 | 327（未满月） | — |
+
+标志性产物的首次出现：
+
+| 日期 | 文件首次 commit | 标记的 level |
+|---|---|---|
+| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |
+| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |
+| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |
+| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |
+| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |
+| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |
+| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |
+| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |
+| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |
+
+补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的"自修改配置"，在被持续重写。
+
+### hive（L6 引擎，出生即成熟）
+
+初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：
+
+- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)
+- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)
+- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)
+- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)
+- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）
+
+这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive "built in the week preceding this revision"。
+
+### git 历史揭穿的一处理想化（解读）
+
+论文把演进讲成干净的"L1→L2→L3 逐月递进、每级完全先于下一级"。git 历史显示真实过程是**交错叠加**的：
+
+1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是"先有完整 L3 才进 L4"。
+2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。
+3. **日期对不齐论文的"82 天到 L5、93 天到 L6"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为"零点"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。
+
+结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是"基础设施持续叠加"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。
+
 ## 信源
 
 - 论文：<https://arxiv.org/abs/2604.09388>（Andy Anderson, IBM Research，v2，含 Level 6 与 Hive）

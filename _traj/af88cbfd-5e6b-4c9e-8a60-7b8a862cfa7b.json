@@ -6833,19 +6833,362 @@
         "cwd": "/Users/luwei/work/Controversy/data/console",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 91,
+      "timestamp": "2026-06-08T07:56:53.142Z",
+      "source": "user",
+      "message": "要",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 92,
+      "timestamp": "2026-06-08T07:57:03.575Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 165305,
+        "completion_tokens": 3012,
+        "cached_tokens": 165303,
+        "extra": {
+          "cache_creation_input_tokens": 3,
+          "cache_read_input_tokens": 165303,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3012,
+              "cache_read_input_tokens": 165303,
+              "cache_creation_input_tokens": 3,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 93,
+      "timestamp": "2026-06-08T07:57:27.340Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01SDyXvwm8zjo2jgKa4hfhLo",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01SDyXvwm8zjo2jgKa4hfhLo",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+            "old_string": "## 信源",
+            "new_string": "## git 历史还原的 level 演进时间线\n\n两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。\n\n### console（L1→L5 的成长轨迹）\n\n仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\"吞吐量随 level 加速\"论点的实证：\n\n| 月份 | commits | 对应 level（论文 Table 4） |\n|---|---|---|\n| 2026-01 | 701 | L1→L2 |\n| 2026-02 | 899 | L3 |\n| 2026-03 | 1409 | L4 |\n| 2026-04 | 2939（暴涨） | L5→L6 |\n| 2026-05 | 2529 | — |\n| 2026-06 | 327（未满月） | — |\n\n标志性产物的首次出现：\n\n| 日期 | 文件首次 commit | 标记的 level |\n|---|---|---|\n| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |\n| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |\n| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |\n| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |\n| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |\n| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |\n| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |\n| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |\n| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |\n\n补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\"自修改配置\"，在被持续重写。\n\n### hive（L6 引擎，出生即成熟）\n\n初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：\n\n- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)\n- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)\n- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)\n- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)\n- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）\n\n这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \"built in the week preceding this revision\"。\n\n### git 历史揭穿的一处理想化（解读）\n\n论文把演进讲成干净的\"L1→L2→L3 逐月递进、每级完全先于下一级\"。git 历史显示真实过程是**交错叠加**的：\n\n1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\"先有完整 L3 才进 L4\"。\n2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。\n3. **日期对不齐论文的\"82 天到 L5、93 天到 L6\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\"零点\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。\n\n结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\"基础设施持续叠加\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。\n\n## 信源"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01SDyXvwm8zjo2jgKa4hfhLo",
+            "content": "The file /Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md\", \"oldString\": \"## 信源\", \"newString\": \"## git 历史还原的 level 演进时间线\\n\\n两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。\\n\\n### console（L1→L5 的成长轨迹）\\n\\n仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\\\"吞吐量随 level 加速\\\"论点的实证：\\n\\n| 月份 | commits | 对应 level（论文 Table 4） |\\n|---|---|---|\\n| 2026-01 | 701 | L1→L2 |\\n| 2026-02 | 899 | L3 |\\n| 2026-03 | 1409 | L4 |\\n| 2026-04 | 2939（暴涨） | L5→L6 |\\n| 2026-05 | 2529 | — |\\n| 2026-06 | 327（未满月） | — |\\n\\n标志性产物的首次出现：\\n\\n| 日期 | 文件首次 commit | 标记的 level |\\n|---|---|---|\\n| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |\\n| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |\\n| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |\\n| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |\\n| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |\\n| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |\\n| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |\\n| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |\\n| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |\\n\\n补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\\\"自修改配置\\\"，在被持续重写。\\n\\n### hive（L6 引擎，出生即成熟）\\n\\n初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：\\n\\n- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)\\n- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)\\n- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)\\n- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)\\n- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）\\n\\n这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \\\"built in the week preceding this revision\\\"。\\n\\n### git 历史揭穿的一处理想化（解读）\\n\\n论文把演进讲成干净的\\\"L1→L2→L3 逐月递进、每级完全先于下一级\\\"。git 历史显示真实过程是**交错叠加**的：\\n\\n1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\\\"先有完整 L3 才进 L4\\\"。\\n2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。\\n3. **日期对不齐论文的\\\"82 天到 L5、93 天到 L6\\\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\\\"零点\\\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。\\n\\n结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\\\"基础设施持续叠加\\\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。\\n\\n## 信源\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 192, \"oldLines\": 6, \"newStart\": 192, \"newLines\": 61, \"lines\": [\" \", \" 4. **代码库给模型当了 CI 门禁**。[acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml) 让 console 每天检测自己的 ACMM level 并要求 ≥ L5——论文的成熟度模型被它的案例代码库内化成了自动化质量门。\", \" \", \"+## git 历史还原的 level 演进时间线\", \"+\", \"+两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。\", \"+\", \"+### console（L1→L5 的成长轨迹）\", \"+\", \"+仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\\\"吞吐量随 level 加速\\\"论点的实证：\", \"+\", \"+| 月份 | commits | 对应 level（论文 Table 4） |\", \"+|---|---|---|\", \"+| 2026-01 | 701 | L1→L2 |\", \"+| 2026-02 | 899 | L3 |\", \"+| 2026-03 | 1409 | L4 |\", \"+| 2026-04 | 2939（暴涨） | L5→L6 |\", \"+| 2026-05 | 2529 | — |\", \"+| 2026-06 | 327（未满月） | — |\", \"+\", \"+标志性产物的首次出现：\", \"+\", \"+| 日期 | 文件首次 commit | 标记的 level |\", \"+|---|---|---|\", \"+| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |\", \"+| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |\", \"+| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |\", \"+| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |\", \"+| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |\", \"+| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |\", \"+| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |\", \"+| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |\", \"+| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |\", \"+\", \"+补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\\\"自修改配置\\\"，在被持续重写。\", \"+\", \"+### hive（L6 引擎，出生即成熟）\", \"+\", \"+初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：\", \"+\", \"+- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)\", \"+- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)\", \"+- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)\", \"+- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)\", \"+- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）\", \"+\", \"+这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \\\"built in the week preceding this revision\\\"。\", \"+\", \"+### git 历史揭穿的一处理想化（解读）\", \"+\", \"+论文把演进讲成干净的\\\"L1→L2→L3 逐月递进、每级完全先于下一级\\\"。git 历史显示真实过程是**交错叠加**的：\", \"+\", \"+1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\\\"先有完整 L3 才进 L4\\\"。\", \"+2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。\", \"+3. **日期对不齐论文的\\\"82 天到 L5、93 天到 L6\\\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\\\"零点\\\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。\", \"+\", \"+结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\\\"基础设施持续叠加\\\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。\", \"+\", \" ## 信源\", \" \", \" - 论文：<https://arxiv.org/abs/2604.09388>（Andy Anderson, IBM Research，v2，含 Level 6 与 Hive）\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 165305,
+        "completion_tokens": 3012,
+        "cached_tokens": 165303,
+        "extra": {
+          "cache_creation_input_tokens": 3,
+          "cache_read_input_tokens": 165303,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3012,
+              "cache_read_input_tokens": 165303,
+              "cache_creation_input_tokens": 3,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+            "oldString": "## 信源",
+            "newString": "## git 历史还原的 level 演进时间线\n\n两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。\n\n### console（L1→L5 的成长轨迹）\n\n仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\"吞吐量随 level 加速\"论点的实证：\n\n| 月份 | commits | 对应 level（论文 Table 4） |\n|---|---|---|\n| 2026-01 | 701 | L1→L2 |\n| 2026-02 | 899 | L3 |\n| 2026-03 | 1409 | L4 |\n| 2026-04 | 2939（暴涨） | L5→L6 |\n| 2026-05 | 2529 | — |\n| 2026-06 | 327（未满月） | — |\n\n标志性产物的首次出现：\n\n| 日期 | 文件首次 commit | 标记的 level |\n|---|---|---|\n| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |\n| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |\n| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |\n| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |\n| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |\n| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |\n| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |\n| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |\n| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |\n\n补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\"自修改配置\"，在被持续重写。\n\n### hive（L6 引擎，出生即成熟）\n\n初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：\n\n- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)\n- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)\n- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)\n- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)\n- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）\n\n这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \"built in the week preceding this revision\"。\n\n### git 历史揭穿的一处理想化（解读）\n\n论文把演进讲成干净的\"L1→L2→L3 逐月递进、每级完全先于下一级\"。git 历史显示真实过程是**交错叠加**的：\n\n1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\"先有完整 L3 才进 L4\"。\n2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。\n3. **日期对不齐论文的\"82 天到 L5、93 天到 L6\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\"零点\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。\n\n结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\"基础设施持续叠加\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。\n\n## 信源",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 192,
+                "oldLines": 6,
+                "newStart": 192,
+                "newLines": 61,
+                "lines": [
+                  " ",
+                  " 4. **代码库给模型当了 CI 门禁**。[acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml) 让 console 每天检测自己的 ACMM level 并要求 ≥ L5——论文的成熟度模型被它的案例代码库内化成了自动化质量门。",
+                  " ",
+                  "+## git 历史还原的 level 演进时间线",
+                  "+",
+                  "+两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。",
+                  "+",
+                  "+### console（L1→L5 的成长轨迹）",
+                  "+",
+                  "+仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\"吞吐量随 level 加速\"论点的实证：",
+                  "+",
+                  "+| 月份 | commits | 对应 level（论文 Table 4） |",
+                  "+|---|---|---|",
+                  "+| 2026-01 | 701 | L1→L2 |",
+                  "+| 2026-02 | 899 | L3 |",
+                  "+| 2026-03 | 1409 | L4 |",
+                  "+| 2026-04 | 2939（暴涨） | L5→L6 |",
+                  "+| 2026-05 | 2529 | — |",
+                  "+| 2026-06 | 327（未满月） | — |",
+                  "+",
+                  "+标志性产物的首次出现：",
+                  "+",
+                  "+| 日期 | 文件首次 commit | 标记的 level |",
+                  "+|---|---|---|",
+                  "+| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |",
+                  "+| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |",
+                  "+| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |",
+                  "+| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |",
+                  "+| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |",
+                  "+| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |",
+                  "+| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |",
+                  "+| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |",
+                  "+| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |",
+                  "+",
+                  "+补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\"自修改配置\"，在被持续重写。",
+                  "+",
+                  "+### hive（L6 引擎，出生即成熟）",
+                  "+",
+                  "+初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：",
+                  "+",
+                  "+- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)",
+                  "+- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)",
+                  "+- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)",
+                  "+- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)",
+                  "+- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）",
+                  "+",
+                  "+这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \"built in the week preceding this revision\"。",
+                  "+",
+                  "+### git 历史揭穿的一处理想化（解读）",
+                  "+",
+                  "+论文把演进讲成干净的\"L1→L2→L3 逐月递进、每级完全先于下一级\"。git 历史显示真实过程是**交错叠加**的：",
+                  "+",
+                  "+1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\"先有完整 L3 才进 L4\"。",
+                  "+2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。",
+                  "+3. **日期对不齐论文的\"82 天到 L5、93 天到 L6\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\"零点\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。",
+                  "+",
+                  "+结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\"基础设施持续叠加\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。",
+                  "+",
+                  " ## 信源",
+                  " ",
+                  " - 论文：<https://arxiv.org/abs/2604.09388>（Andy Anderson, IBM Research，v2，含 Level 6 与 Hive）"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01SDyXvwm8zjo2jgKa4hfhLo",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+            "oldString": "## 信源",
+            "newString": "## git 历史还原的 level 演进时间线\n\n两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。\n\n### console（L1→L5 的成长轨迹）\n\n仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\"吞吐量随 level 加速\"论点的实证：\n\n| 月份 | commits | 对应 level（论文 Table 4） |\n|---|---|---|\n| 2026-01 | 701 | L1→L2 |\n| 2026-02 | 899 | L3 |\n| 2026-03 | 1409 | L4 |\n| 2026-04 | 2939（暴涨） | L5→L6 |\n| 2026-05 | 2529 | — |\n| 2026-06 | 327（未满月） | — |\n\n标志性产物的首次出现：\n\n| 日期 | 文件首次 commit | 标记的 level |\n|---|---|---|\n| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |\n| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |\n| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |\n| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |\n| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |\n| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |\n| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |\n| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |\n| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |\n\n补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\"自修改配置\"，在被持续重写。\n\n### hive（L6 引擎，出生即成熟）\n\n初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：\n\n- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)\n- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)\n- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)\n- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)\n- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）\n\n这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \"built in the week preceding this revision\"。\n\n### git 历史揭穿的一处理想化（解读）\n\n论文把演进讲成干净的\"L1→L2→L3 逐月递进、每级完全先于下一级\"。git 历史显示真实过程是**交错叠加**的：\n\n1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\"先有完整 L3 才进 L4\"。\n2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。\n3. **日期对不齐论文的\"82 天到 L5、93 天到 L6\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\"零点\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。\n\n结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\"基础设施持续叠加\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。\n\n## 信源",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 192,
+                "oldLines": 6,
+                "newStart": 192,
+                "newLines": 61,
+                "lines": [
+                  " ",
+                  " 4. **代码库给模型当了 CI 门禁**。[acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml) 让 console 每天检测自己的 ACMM level 并要求 ≥ L5——论文的成熟度模型被它的案例代码库内化成了自动化质量门。",
+                  " ",
+                  "+## git 历史还原的 level 演进时间线",
+                  "+",
+                  "+两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。",
+                  "+",
+                  "+### console（L1→L5 的成长轨迹）",
+                  "+",
+                  "+仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\"吞吐量随 level 加速\"论点的实证：",
+                  "+",
+                  "+| 月份 | commits | 对应 level（论文 Table 4） |",
+                  "+|---|---|---|",
+                  "+| 2026-01 | 701 | L1→L2 |",
+                  "+| 2026-02 | 899 | L3 |",
+                  "+| 2026-03 | 1409 | L4 |",
+                  "+| 2026-04 | 2939（暴涨） | L5→L6 |",
+                  "+| 2026-05 | 2529 | — |",
+                  "+| 2026-06 | 327（未满月） | — |",
+                  "+",
+                  "+标志性产物的首次出现：",
+                  "+",
+                  "+| 日期 | 文件首次 commit | 标记的 level |",
+                  "+|---|---|---|",
+                  "+| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |",
+                  "+| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |",
+                  "+| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |",
+                  "+| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |",
+                  "+| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |",
+                  "+| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |",
+                  "+| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |",
+                  "+| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |",
+                  "+| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |",
+                  "+",
+                  "+补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\"自修改配置\"，在被持续重写。",
+                  "+",
+                  "+### hive（L6 引擎，出生即成熟）",
+                  "+",
+                  "+初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：",
+                  "+",
+                  "+- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)",
+                  "+- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)",
+                  "+- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)",
+                  "+- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)",
+                  "+- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）",
+                  "+",
+                  "+这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \"built in the week preceding this revision\"。",
+                  "+",
+                  "+### git 历史揭穿的一处理想化（解读）",
+                  "+",
+                  "+论文把演进讲成干净的\"L1→L2→L3 逐月递进、每级完全先于下一级\"。git 历史显示真实过程是**交错叠加**的：",
+                  "+",
+                  "+1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\"先有完整 L3 才进 L4\"。",
+                  "+2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。",
+                  "+3. **日期对不齐论文的\"82 天到 L5、93 天到 L6\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\"零点\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。",
+                  "+",
+                  "+结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\"基础设施持续叠加\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。",
+                  "+",
+                  " ## 信源",
+                  " ",
+                  " - 论文：<https://arxiv.org/abs/2604.09388>（Andy Anderson, IBM Research，v2，含 Level 6 与 Hive）"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01SDyXvwm8zjo2jgKa4hfhLo",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+          "old_string": "## 信源",
+          "new_string": "## git 历史还原的 level 演进时间线\n\n两个仓库的 commit 历史把 level 上升过程逐月记录了下来——把每个 level 标志性产物**第一次进 commit** 的日期排出来，就是一条成熟度爬升曲线。\n\n### console（L1→L5 的成长轨迹）\n\n仓库初始化 `2026-01-16`，到 2026-06 共 8804 个 commit。每月提交量本身就是论文\"吞吐量随 level 加速\"论点的实证：\n\n| 月份 | commits | 对应 level（论文 Table 4） |\n|---|---|---|\n| 2026-01 | 701 | L1→L2 |\n| 2026-02 | 899 | L3 |\n| 2026-03 | 1409 | L4 |\n| 2026-04 | 2939（暴涨） | L5→L6 |\n| 2026-05 | 2529 | — |\n| 2026-06 | 327（未满月） | — |\n\n标志性产物的首次出现：\n\n| 日期 | 文件首次 commit | 标记的 level |\n|---|---|---|\n| 2026-01-16 | 初始化；最早几个 commit 全是 `Fix TypeScript compilation errors` 之类——纯写代码、无任何指令文件 | **L1**（prompt & review） |\n| 2026-01-27 | [CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md) + [.github/copilot-instructions.md](https://github.com/AI-LLM/console/blob/main/.github/copilot-instructions.md)（同一天） | **L2** 起点 |\n| 2026-02-06 / 02-10 | 第一个前端测试 / 第一个 Go 测试 | **L3** 测试基建开始 |\n| 2026-02-17 | [.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) + [.github/workflows/auto-qa-tuner.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-qa-tuner.yml)（同一天） | **L3 接受率日志 + L4 自调权重** |\n| 2026-03-07 / 03-13 | [nightly-test-suite.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/nightly-test-suite.yml)、[ga4-error-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ga4-error-monitor.yml)、[CARD_DEVELOPMENT_GUIDE.md](https://github.com/AI-LLM/console/blob/main/.github/CARD_DEVELOPMENT_GUIDE.md) | L3 加深 |\n| 2026-03-31 | [coverage-gate.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/coverage-gate.yml)（91% 门禁） | L3/L4 门禁闭环 |\n| 2026-04-21 | [.github/policies/ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | **L5** 机器可执行策略 |\n| 2026-04-25 | [acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（自测成熟度） | **L5** 自指反馈环 |\n| 2026-05-15 | [hive-interactive.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/hive-interactive.yml)（接入 hive） | **L6** 交接给编排引擎 |\n\n补一个有力细节：[.github/auto-qa-tuning.json](https://github.com/AI-LLM/console/blob/main/.github/auto-qa-tuning.json) 这个文件**被改了 105 次**——它确实是论文说的\"自修改配置\"，在被持续重写。\n\n### hive（L6 引擎，出生即成熟）\n\n初始化 `2026-04-17`，commit message 即 `initial commit: supervised-agent runtime`。它建得晚得多（仅 713 个 commit、两个月），且几乎所有 L6 产物都挤在 2 周内落地：\n\n- 2026-04-17（第一天）：[bin/agent-healthcheck.sh](https://github.com/AI-LLM/hive/blob/main/bin/agent-healthcheck.sh)、[docs/troubleshooting.md](https://github.com/AI-LLM/hive/blob/main/docs/troubleshooting.md)\n- 2026-04-23/24：[examples/sqlite-state.md](https://github.com/AI-LLM/hive/blob/main/examples/sqlite-state.md)、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)、[bin/notify.sh](https://github.com/AI-LLM/hive/blob/main/bin/notify.sh)、[dashboard/server.js](https://github.com/AI-LLM/hive/blob/main/dashboard/server.js)\n- 2026-04-27/29：[config/backends.conf](https://github.com/AI-LLM/hive/blob/main/config/backends.conf)、[bin/merge-gate.sh](https://github.com/AI-LLM/hive/blob/main/bin/merge-gate.sh)\n- 2026-05-01：[bin/conflict-sweeper.sh](https://github.com/AI-LLM/hive/blob/main/bin/conflict-sweeper.sh)\n- 2026-05-20：[v2/Dockerfile](https://github.com/AI-LLM/hive/blob/main/v2/Dockerfile)（容器化）\n\n这印证论文 §5.1：Level 6 是 v1 发表三周后才补的，Hive \"built in the week preceding this revision\"。\n\n### git 历史揭穿的一处理想化（解读）\n\n论文把演进讲成干净的\"L1→L2→L3 逐月递进、每级完全先于下一级\"。git 历史显示真实过程是**交错叠加**的：\n\n1. **L4 的自调权重（auto-qa-tuner.yml）与 L3 的接受率日志（auto-qa-tuning.json）是同一天（02-17）进来的**——测量和自适应几乎一起建，不是\"先有完整 L3 才进 L4\"。\n2. **论文重点强调的 L2 产物 CARD_DEVELOPMENT_GUIDE.md 直到 03-13 才出现**——那时 L3 测试基建早已铺开。指令文件是边跑边补的，不是 L2 阶段一次写完。\n3. **日期对不齐论文的\"82 天到 L5、93 天到 L6\"**：console 公开初始化是 01-16，但论文称开发始于 2025 年 12 月中（私有期）。以哪个为\"零点\"都凑不出 82/93 这两个数——论文的天数是约数，公开 git 史只能从 01-16 起算。\n\n结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是\"基础设施持续叠加\"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。\n\n## 信源"
+        }
+      }
+    },
+    {
+      "step_id": 94,
+      "timestamp": "2026-06-08T07:57:37.739Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "已追加。在 `chat/hive-acmm-level-mapping.md` 的\"边界说明\"和\"信源\"之间插入了新的一节 **「git 历史还原的 level 演进时间线」**,含:\n\n- **console 月度提交量表**(701→899→1409→2939→2529,印证吞吐量加速)\n- **console 标志产物首次 commit 表**(01-16 L1 → 01-27 L2 → 02 月 L3/L4 → 04 月 L5 → 05-15 L6)\n- **hive L6 产物两周内集中落地的清单**(04-17 起)\n- **三条揭穿论文理想化叙事的发现**:L3/L4 同日落地、L2 卡片指南迟至 03-13、82/93 天对不齐\n\n所有文件名都接了 GitHub 链接,与全文风格一致。",
+      "metrics": {
+        "prompt_tokens": 165308,
+        "completion_tokens": 284,
+        "cached_tokens": 165306,
+        "extra": {
+          "cache_creation_input_tokens": 3100,
+          "cache_read_input_tokens": 165306,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3100,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 284,
+              "cache_read_input_tokens": 165306,
+              "cache_creation_input_tokens": 3100,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3100
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 6991030,
-    "total_completion_tokens": 196455,
-    "total_cached_tokens": 6976114,
-    "total_steps": 90,
+    "total_prompt_tokens": 7486948,
+    "total_completion_tokens": 202763,
+    "total_cached_tokens": 7472026,
+    "total_steps": 94,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 773175,
-      "total_cache_read_input_tokens": 6976114
+      "total_cache_creation_input_tokens": 776281,
+      "total_cache_read_input_tokens": 7472026
     }
   }
 }
