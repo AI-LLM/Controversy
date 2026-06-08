@@ -313,6 +313,13 @@ console 的 8804 个 commit 里能直接数出**用了哪些模型、哪个 agen
 
 所以"Copilot 路由到 GPT/Claude/Gemini"精确说是：**默认 Claude Sonnet 4.6，允许集含 GPT-5.x / Gemini-3.x**。
 
+**但不要据此推成"console 主要功能由 Sonnet 4.6 实现"——时间线否定这点**：`claude-sonnet-4.6` 这个钉法 **2026-04-28 才进仓**（随一次 gh-aw 升级），且只管那三个代理化维护工作流。拆开看分工：
+
+- **1–3 月（L1–L4）核心功能建设期**——架构、卡片、后端、CI 基建——主力是 **Claude Opus 4.5/4.6**（reasoning，~1400 commits 集中于此）+ 托管 `copilot-swe-agent[bot]`（**模型仓库未钉**）+ 人类 Andy（人在环驱动）。
+- **4 月底–6 月（L5–L6）自主维护洪峰**——triage / auto-QA 修复 / stuck 恢复——才是 **Sonnet 4.6** 经 Copilot CLI 跑出来的（Copilot 署名 commit 5 月单月 2020 个，但内容偏 QA/小修，非主体功能）。
+
+直接以 `Co-Authored-By: Claude Sonnet 4.6` 署名的只有 21 个 commit。Sonnet 4.6 的体量几乎全在后期维护层；**核心功能的建设主力是 Claude Opus 4.5/4.6**。
+
 **hive 舰队各角色 agent 署名**（signed-off/co-authored）：hive bot 总 1266、reviewer 444、scanner 151、tester 112、architect 61、supervisor 3。（outreach/guardian/analyst/strategist 在本仓未留 commit 署名——未启用或主要在他仓活动。）
 
 **提交者**（谁把 commit 推上去）：Andy Anderson（人类维护者）~5232、**kubestellar-hive[bot]（L6 全自主舰队）2146**、Copilot ~382、github-actions[bot] ~356、dependabot 182。
