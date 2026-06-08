@@ -267,6 +267,56 @@ conclusion
 # Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope
 ```
 
+---
+
+## 十、落地总结：走路线 2 + 最省力混合，具体怎么做
+
+实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**
+
+### 三条"省力"决定（全部来自真机实测）
+
+1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。
+2. **job 间传"提议"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。
+3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。
+
+### 复用清单（不造）
+
+| 件 | 来源 | 怎么用 |
+|---|---|---|
+| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |
+| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |
+| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |
+| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |
+
+### 自造清单（最小）
+
+1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。
+2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：
+   ```
+   job agent   (permissions: contents:read；container + AWF egress 收口)
+     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl
+     outputs.proposals = base64(proposals.jsonl)
+   job apply   (needs: agent; if: needs.agent.result == 'success')
+     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加
+   ```
+3. **collector 工具**：把参考库的 `gitea-*` 工具从"直接调 API"改成"append jsonl"（小改）——这是复刻 gh-aw"agent 只提议、不施加"的关键。
+4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。
+
+### 落地顺序（最短到可用，可灰度）
+
+- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小"`agent`(只读 opencode)→`apply`(github-script 打标签)"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。
+- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。
+- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。
+- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。
+- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。
+- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。
+
+### 一句话
+
+**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。
+
+---
+
 ## 信源 / 参考
 
 - gh-aw 官方：[GitHub Agentic Workflows](https://github.com/github/gh-aw)｜[Frontmatter 参考](https://github.github.com/gh-aw/reference/frontmatter/)｜[Safe Outputs 参考](https://github.github.com/gh-aw/reference/safe-outputs/)｜[About Workflows](https://github.github.com/gh-aw/introduction/overview/)

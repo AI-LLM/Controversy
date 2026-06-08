@@ -24448,19 +24448,600 @@
         "cwd": "/Users/luwei/work/Controversy",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 348,
+      "timestamp": "2026-06-08T16:38:16.537Z",
+      "source": "user",
+      "message": "做个总结，走路线2和最省力的混合，具体要怎么做",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 349,
+      "timestamp": "2026-06-08T16:39:19.664Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 16372,
+        "completion_tokens": 3664,
+        "cached_tokens": 16370,
+        "extra": {
+          "cache_creation_input_tokens": 362981,
+          "cache_read_input_tokens": 16370,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 362981,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3664,
+              "cache_read_input_tokens": 16370,
+              "cache_creation_input_tokens": 362981,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 362981
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 350,
+      "timestamp": "2026-06-08T16:39:21.126Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "明白。把整条线收成一个\"具体怎么做\"的落地总结——结合实测把方案大幅简化。先写进文档,再给你要点。",
+      "metrics": {
+        "prompt_tokens": 16372,
+        "completion_tokens": 3664,
+        "cached_tokens": 16370,
+        "extra": {
+          "cache_creation_input_tokens": 362981,
+          "cache_read_input_tokens": 16370,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 362981,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3664,
+              "cache_read_input_tokens": 16370,
+              "cache_creation_input_tokens": 362981,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 362981
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 351,
+      "timestamp": "2026-06-08T16:39:21.564Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01DwXzu7Jhszay84ZhC4bfMg",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01DwXzu7Jhszay84ZhC4bfMg",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "grep -n \"^## 信源 / 参考\" chat/acmm-nongh.md",
+            "description": "Find 信源 section anchor"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01DwXzu7Jhszay84ZhC4bfMg",
+            "content": "270:## 信源 / 参考\n\n[stdout]\n270:## 信源 / 参考\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 16372,
+        "completion_tokens": 3664,
+        "cached_tokens": 16370,
+        "extra": {
+          "cache_creation_input_tokens": 362981,
+          "cache_read_input_tokens": 16370,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 362981,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 3664,
+              "cache_read_input_tokens": 16370,
+              "cache_creation_input_tokens": 362981,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 362981
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "270:## 信源 / 参考",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01DwXzu7Jhszay84ZhC4bfMg",
+            "type": "tool_result",
+            "content": "270:## 信源 / 参考",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "270:## 信源 / 参考",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01DwXzu7Jhszay84ZhC4bfMg",
+            "type": "tool_result",
+            "content": "270:## 信源 / 参考",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "grep -n \"^## 信源 / 参考\" chat/acmm-nongh.md",
+          "description": "Find 信源 section anchor"
+        }
+      }
+    },
+    {
+      "step_id": 352,
+      "timestamp": "2026-06-08T16:39:27.617Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Read toolu_01K5A53PgK359Tmxj75ihp36",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01K5A53PgK359Tmxj75ihp36",
+          "function_name": "Read",
+          "arguments": {
+            "file_path": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+            "offset": 266,
+            "limit": 5
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01K5A53PgK359Tmxj75ihp36",
+            "content": "266\t\n267\t# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n268\t```\n269\t\n270\t## 信源 / 参考\n\n[metadata] {\"type\": \"text\", \"file\": {\"filePath\": \"/Users/luwei/work/Controversy/chat/acmm-nongh.md\", \"content\": \"\\n# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\\n```\\n\\n## 信源 / 参考\", \"numLines\": 5, \"startLine\": 266, \"totalLines\": 277}}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 379353,
+        "completion_tokens": 118,
+        "cached_tokens": 379351,
+        "extra": {
+          "cache_creation_input_tokens": 3680,
+          "cache_read_input_tokens": 379351,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 3680,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 118,
+              "cache_read_input_tokens": 379351,
+              "cache_creation_input_tokens": 3680,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3680
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Read",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+              "content": "\n# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n## 信源 / 参考",
+              "numLines": 5,
+              "startLine": 266,
+              "totalLines": 277
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01K5A53PgK359Tmxj75ihp36",
+            "type": "tool_result",
+            "content": "266\t\n267\t# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n268\t```\n269\t\n270\t## 信源 / 参考"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "type": "text",
+            "file": {
+              "filePath": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+              "content": "\n# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n## 信源 / 参考",
+              "numLines": 5,
+              "startLine": 266,
+              "totalLines": 277
+            }
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01K5A53PgK359Tmxj75ihp36",
+            "type": "tool_result",
+            "content": "266\t\n267\t# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n268\t```\n269\t\n270\t## 信源 / 参考"
+          }
+        },
+        "raw_arguments": {
+          "file_path": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+          "offset": 266,
+          "limit": 5
+        }
+      }
+    },
+    {
+      "step_id": 353,
+      "timestamp": "2026-06-08T16:40:00.313Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01R5fN2PJxnuQjYAsmWVmn4B",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01R5fN2PJxnuQjYAsmWVmn4B",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+            "old_string": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n## 信源 / 参考",
+            "new_string": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n---\n\n## 十、落地总结：走路线 2 + 最省力混合，具体怎么做\n\n实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**\n\n### 三条\"省力\"决定（全部来自真机实测）\n\n1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。\n2. **job 间传\"提议\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。\n3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。\n\n### 复用清单（不造）\n\n| 件 | 来源 | 怎么用 |\n|---|---|---|\n| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |\n| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |\n| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |\n| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |\n\n### 自造清单（最小）\n\n1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。\n2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：\n   ```\n   job agent   (permissions: contents:read；container + AWF egress 收口)\n     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl\n     outputs.proposals = base64(proposals.jsonl)\n   job apply   (needs: agent; if: needs.agent.result == 'success')\n     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加\n   ```\n3. **collector 工具**：把参考库的 `gitea-*` 工具从\"直接调 API\"改成\"append jsonl\"（小改）——这是复刻 gh-aw\"agent 只提议、不施加\"的关键。\n4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。\n\n### 落地顺序（最短到可用，可灰度）\n\n- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\"`agent`(只读 opencode)→`apply`(github-script 打标签)\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。\n- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。\n- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。\n- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。\n- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。\n- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。\n\n### 一句话\n\n**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。\n\n---\n\n## 信源 / 参考"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01R5fN2PJxnuQjYAsmWVmn4B",
+            "content": "The file /Users/luwei/work/Controversy/chat/acmm-nongh.md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/acmm-nongh.md\", \"oldString\": \"# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\\n```\\n\\n## 信源 / 参考\", \"newString\": \"# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\\n```\\n\\n---\\n\\n## 十、落地总结：走路线 2 + 最省力混合，具体怎么做\\n\\n实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**\\n\\n### 三条\\\"省力\\\"决定（全部来自真机实测）\\n\\n1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。\\n2. **job 间传\\\"提议\\\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。\\n3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。\\n\\n### 复用清单（不造）\\n\\n| 件 | 来源 | 怎么用 |\\n|---|---|---|\\n| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |\\n| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |\\n| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |\\n| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |\\n\\n### 自造清单（最小）\\n\\n1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。\\n2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：\\n   ```\\n   job agent   (permissions: contents:read；container + AWF egress 收口)\\n     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl\\n     outputs.proposals = base64(proposals.jsonl)\\n   job apply   (needs: agent; if: needs.agent.result == 'success')\\n     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加\\n   ```\\n3. **collector 工具**：把参考库的 `gitea-*` 工具从\\\"直接调 API\\\"改成\\\"append jsonl\\\"（小改）——这是复刻 gh-aw\\\"agent 只提议、不施加\\\"的关键。\\n4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。\\n\\n### 落地顺序（最短到可用，可灰度）\\n\\n- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\\\"`agent`(只读 opencode)→`apply`(github-script 打标签)\\\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。\\n- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。\\n- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。\\n- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。\\n- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。\\n- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。\\n\\n### 一句话\\n\\n**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。\\n\\n---\\n\\n## 信源 / 参考\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 267, \"oldLines\": 6, \"newStart\": 267, \"newLines\": 56, \"lines\": [\" # Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\", \" ```\", \" \", \"+---\", \"+\", \"+## 十、落地总结：走路线 2 + 最省力混合，具体怎么做\", \"+\", \"+实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**\", \"+\", \"+### 三条\\\"省力\\\"决定（全部来自真机实测）\", \"+\", \"+1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。\", \"+2. **job 间传\\\"提议\\\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。\", \"+3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。\", \"+\", \"+### 复用清单（不造）\", \"+\", \"+| 件 | 来源 | 怎么用 |\", \"+|---|---|---|\", \"+| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |\", \"+| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |\", \"+| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |\", \"+| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |\", \"+\", \"+### 自造清单（最小）\", \"+\", \"+1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。\", \"+2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：\", \"+   ```\", \"+   job agent   (permissions: contents:read；container + AWF egress 收口)\", \"+     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl\", \"+     outputs.proposals = base64(proposals.jsonl)\", \"+   job apply   (needs: agent; if: needs.agent.result == 'success')\", \"+     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加\", \"+   ```\", \"+3. **collector 工具**：把参考库的 `gitea-*` 工具从\\\"直接调 API\\\"改成\\\"append jsonl\\\"（小改）——这是复刻 gh-aw\\\"agent 只提议、不施加\\\"的关键。\", \"+4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。\", \"+\", \"+### 落地顺序（最短到可用，可灰度）\", \"+\", \"+- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\\\"`agent`(只读 opencode)→`apply`(github-script 打标签)\\\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。\", \"+- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。\", \"+- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。\", \"+- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。\", \"+- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。\", \"+- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。\", \"+\", \"+### 一句话\", \"+\", \"+**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。\", \"+\", \"+---\", \"+\", \" ## 信源 / 参考\", \" \", \" - gh-aw 官方：[GitHub Agentic Workflows](https://github.com/github/gh-aw)｜[Frontmatter 参考](https://github.github.com/gh-aw/reference/frontmatter/)｜[Safe Outputs 参考](https://github.github.com/gh-aw/reference/safe-outputs/)｜[About Workflows](https://github.github.com/gh-aw/introduction/overview/)\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 383033,
+        "completion_tokens": 2013,
+        "cached_tokens": 383031,
+        "extra": {
+          "cache_creation_input_tokens": 189,
+          "cache_read_input_tokens": 383031,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 189,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2013,
+              "cache_read_input_tokens": 383031,
+              "cache_creation_input_tokens": 189,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 189
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+            "oldString": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n## 信源 / 参考",
+            "newString": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n---\n\n## 十、落地总结：走路线 2 + 最省力混合，具体怎么做\n\n实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**\n\n### 三条\"省力\"决定（全部来自真机实测）\n\n1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。\n2. **job 间传\"提议\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。\n3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。\n\n### 复用清单（不造）\n\n| 件 | 来源 | 怎么用 |\n|---|---|---|\n| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |\n| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |\n| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |\n| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |\n\n### 自造清单（最小）\n\n1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。\n2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：\n   ```\n   job agent   (permissions: contents:read；container + AWF egress 收口)\n     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl\n     outputs.proposals = base64(proposals.jsonl)\n   job apply   (needs: agent; if: needs.agent.result == 'success')\n     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加\n   ```\n3. **collector 工具**：把参考库的 `gitea-*` 工具从\"直接调 API\"改成\"append jsonl\"（小改）——这是复刻 gh-aw\"agent 只提议、不施加\"的关键。\n4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。\n\n### 落地顺序（最短到可用，可灰度）\n\n- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\"`agent`(只读 opencode)→`apply`(github-script 打标签)\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。\n- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。\n- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。\n- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。\n- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。\n- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。\n\n### 一句话\n\n**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。\n\n---\n\n## 信源 / 参考",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 267,
+                "oldLines": 6,
+                "newStart": 267,
+                "newLines": 56,
+                "lines": [
+                  " # Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope",
+                  " ```",
+                  " ",
+                  "+---",
+                  "+",
+                  "+## 十、落地总结：走路线 2 + 最省力混合，具体怎么做",
+                  "+",
+                  "+实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**",
+                  "+",
+                  "+### 三条\"省力\"决定（全部来自真机实测）",
+                  "+",
+                  "+1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。",
+                  "+2. **job 间传\"提议\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。",
+                  "+3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。",
+                  "+",
+                  "+### 复用清单（不造）",
+                  "+",
+                  "+| 件 | 来源 | 怎么用 |",
+                  "+|---|---|---|",
+                  "+| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |",
+                  "+| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |",
+                  "+| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |",
+                  "+| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |",
+                  "+",
+                  "+### 自造清单（最小）",
+                  "+",
+                  "+1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。",
+                  "+2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：",
+                  "+   ```",
+                  "+   job agent   (permissions: contents:read；container + AWF egress 收口)",
+                  "+     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl",
+                  "+     outputs.proposals = base64(proposals.jsonl)",
+                  "+   job apply   (needs: agent; if: needs.agent.result == 'success')",
+                  "+     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加",
+                  "+   ```",
+                  "+3. **collector 工具**：把参考库的 `gitea-*` 工具从\"直接调 API\"改成\"append jsonl\"（小改）——这是复刻 gh-aw\"agent 只提议、不施加\"的关键。",
+                  "+4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。",
+                  "+",
+                  "+### 落地顺序（最短到可用，可灰度）",
+                  "+",
+                  "+- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\"`agent`(只读 opencode)→`apply`(github-script 打标签)\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。",
+                  "+- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。",
+                  "+- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。",
+                  "+- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。",
+                  "+- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。",
+                  "+- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。",
+                  "+",
+                  "+### 一句话",
+                  "+",
+                  "+**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。",
+                  "+",
+                  "+---",
+                  "+",
+                  " ## 信源 / 参考",
+                  " ",
+                  " - gh-aw 官方：[GitHub Agentic Workflows](https://github.com/github/gh-aw)｜[Frontmatter 参考](https://github.github.com/gh-aw/reference/frontmatter/)｜[Safe Outputs 参考](https://github.github.com/gh-aw/reference/safe-outputs/)｜[About Workflows](https://github.github.com/gh-aw/introduction/overview/)"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01R5fN2PJxnuQjYAsmWVmn4B",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/acmm-nongh.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+            "oldString": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n## 信源 / 参考",
+            "newString": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n---\n\n## 十、落地总结：走路线 2 + 最省力混合，具体怎么做\n\n实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**\n\n### 三条\"省力\"决定（全部来自真机实测）\n\n1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。\n2. **job 间传\"提议\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。\n3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。\n\n### 复用清单（不造）\n\n| 件 | 来源 | 怎么用 |\n|---|---|---|\n| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |\n| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |\n| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |\n| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |\n\n### 自造清单（最小）\n\n1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。\n2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：\n   ```\n   job agent   (permissions: contents:read；container + AWF egress 收口)\n     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl\n     outputs.proposals = base64(proposals.jsonl)\n   job apply   (needs: agent; if: needs.agent.result == 'success')\n     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加\n   ```\n3. **collector 工具**：把参考库的 `gitea-*` 工具从\"直接调 API\"改成\"append jsonl\"（小改）——这是复刻 gh-aw\"agent 只提议、不施加\"的关键。\n4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。\n\n### 落地顺序（最短到可用，可灰度）\n\n- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\"`agent`(只读 opencode)→`apply`(github-script 打标签)\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。\n- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。\n- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。\n- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。\n- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。\n- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。\n\n### 一句话\n\n**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。\n\n---\n\n## 信源 / 参考",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 267,
+                "oldLines": 6,
+                "newStart": 267,
+                "newLines": 56,
+                "lines": [
+                  " # Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope",
+                  " ```",
+                  " ",
+                  "+---",
+                  "+",
+                  "+## 十、落地总结：走路线 2 + 最省力混合，具体怎么做",
+                  "+",
+                  "+实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**",
+                  "+",
+                  "+### 三条\"省力\"决定（全部来自真机实测）",
+                  "+",
+                  "+1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。",
+                  "+2. **job 间传\"提议\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。",
+                  "+3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。",
+                  "+",
+                  "+### 复用清单（不造）",
+                  "+",
+                  "+| 件 | 来源 | 怎么用 |",
+                  "+|---|---|---|",
+                  "+| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |",
+                  "+| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |",
+                  "+| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |",
+                  "+| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |",
+                  "+",
+                  "+### 自造清单（最小）",
+                  "+",
+                  "+1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。",
+                  "+2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：",
+                  "+   ```",
+                  "+   job agent   (permissions: contents:read；container + AWF egress 收口)",
+                  "+     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl",
+                  "+     outputs.proposals = base64(proposals.jsonl)",
+                  "+   job apply   (needs: agent; if: needs.agent.result == 'success')",
+                  "+     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加",
+                  "+   ```",
+                  "+3. **collector 工具**：把参考库的 `gitea-*` 工具从\"直接调 API\"改成\"append jsonl\"（小改）——这是复刻 gh-aw\"agent 只提议、不施加\"的关键。",
+                  "+4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。",
+                  "+",
+                  "+### 落地顺序（最短到可用，可灰度）",
+                  "+",
+                  "+- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\"`agent`(只读 opencode)→`apply`(github-script 打标签)\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。",
+                  "+- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。",
+                  "+- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。",
+                  "+- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。",
+                  "+- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。",
+                  "+- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。",
+                  "+",
+                  "+### 一句话",
+                  "+",
+                  "+**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。",
+                  "+",
+                  "+---",
+                  "+",
+                  " ## 信源 / 参考",
+                  " ",
+                  " - gh-aw 官方：[GitHub Agentic Workflows](https://github.com/github/gh-aw)｜[Frontmatter 参考](https://github.github.com/gh-aw/reference/frontmatter/)｜[Safe Outputs 参考](https://github.github.com/gh-aw/reference/safe-outputs/)｜[About Workflows](https://github.github.com/gh-aw/introduction/overview/)"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01R5fN2PJxnuQjYAsmWVmn4B",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/acmm-nongh.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/acmm-nongh.md",
+          "old_string": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n## 信源 / 参考",
+          "new_string": "# Gitea 设置项（真·强制层）：main 分支保护 + required checks + DCO + bot token 最小 scope\n```\n\n---\n\n## 十、落地总结：走路线 2 + 最省力混合，具体怎么做\n\n实测（§二·补3）把方案大幅简化。总原则：**能复用就不造，实测能用就不绕。**\n\n### 三条\"省力\"决定（全部来自真机实测）\n\n1. **施加器直接用 `actions/github-script` + octokit，不写 Gitea-API 客户端**——实测 `issues.create / addLabels / createComment / listLabels` 在 Gitea 上都通。只有 create-pull-request（要写码）需要自定义逻辑。\n2. **job 间传\"提议\"用 job `outputs`，不用 artifact**——实测 artifact@v4 在 Gitea 中止；提议 jsonl 很小，base64 塞进 `$GITHUB_OUTPUT` 即可，省掉换 fork。\n3. **多 job 门控照搬 `needs` + `if:`**——实测 `needs.result`/`!cancelled()`/`failure()`/`always()` 都可用，不用绕。\n\n### 复用清单（不造）\n\n| 件 | 来源 | 怎么用 |\n|---|---|---|\n| opencode + `permission: deny` + agent `tools` 白名单 | 参考库 `opencode-review-gitea` | 直接拿 `opencode.json` + `agents/*.md` 范式（默认 deny，按角色开工具） |\n| `gitea-pr-diff` 等只读工具 | 参考库 `tools/` | 直接用 |\n| **施加器（add-labels / add-comment / create-issue）** | `actions/github-script` + octokit | 实测可用 → apply job 一个 github-script step 搞定，**省掉整层 Gitea-API 客户端** |\n| **AWF 防火墙 + MCP Gateway** | gh-aw（MIT，`ghcr.io/github/gh-aw-firewall/*`、mcpg） | agent job 里挂 AWF 收 egress、MCP Gateway 路由工具 |\n\n### 自造清单（最小）\n\n1. **`gtaw` 编译器**：一个小 templater——读 `agents/<x>.md` frontmatter（on / safe-outputs / tools / network）→ 渲染 `.gitea/workflows/<x>.lock.yaml`。\n2. **job-graph 模板**（每 agent 一份 lock，权限分离骨架）：\n   ```\n   job agent   (permissions: contents:read；container + AWF egress 收口)\n     opencode run --agent <x>          # 工具=收集器，把提议 append 到 proposals.jsonl\n     outputs.proposals = base64(proposals.jsonl)\n   job apply   (needs: agent; if: needs.agent.result == 'success')\n     - uses: actions/github-script     # 读 proposals，按 safe-outputs 类型 + max/allowed 施加\n   ```\n3. **collector 工具**：把参考库的 `gitea-*` 工具从\"直接调 API\"改成\"append jsonl\"（小改）——这是复刻 gh-aw\"agent 只提议、不施加\"的关键。\n4. **create-pr 施加器**（唯一要写码的）：apply 阶段开一个隔离容器放开 opencode `edit/bash`，按 issue 写码 → 跑 build/lint/test → push `ai/fix-<n>` 分支 → github-script 开 PR（标题 `[AI]`、`protected-files` 禁改 workflow/lockfile）。\n\n### 落地顺序（最短到可用，可灰度）\n\n- **Step 1 — 证明骨架**：复用现成在线 runner，手写一条最小\"`agent`(只读 opencode)→`apply`(github-script 打标签)\"两 job lock，跑通。验证：拔掉 apply job → 标签打不上（证明 agent 无写权限）。\n- **Step 2 — 接评审（A）**：把参考库 review agent collector 化，跑通 `/ai review`。\n- **Step 3 — 挂防火墙**：给 agent job 接 AWF（复用 gh-aw 件）+ 网络白名单（Gitea API + LLM 端点）。\n- **Step 4 — 上编译器**：写 `gtaw` 把 Step 1–2 的手写 lock 模板化；加 `lockfile-fresh` CI（重编译并 diff，防源/产物漂移）。\n- **Step 5 — 铺工作流**：triage(B)、scanner(E)（只读+提议，低风险先上）→ 最后 create-pr(C) 的隔离写码。`schedule`(D/E) 一律配外部 cron 调 `workflow_dispatch` 兜底。\n- **强制层**（贯穿）：Gitea main 分支保护 + required checks（build/lint）+ DCO + bot token 最小 scope——这层是真拦的，不靠 agent 自觉。\n\n### 一句话\n\n**自造的只剩三样小东西**（gtaw templater、collector 化的工具、create-pr 施加器）；**评审/打标签/开 issue 的施加全交给 github-script，egress/MCP 路由全复用 gh-aw**——这就是路线 2 + 最省力混合的全部。\n\n---\n\n## 信源 / 参考"
+        }
+      }
+    },
+    {
+      "step_id": 354,
+      "timestamp": "2026-06-08T16:40:22.869Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "落地总结已写进 `acmm-nongh.md` 第十节。要点:\n\n## 走路线 2 + 最省力混合,具体怎么做\n\n实测把方案大幅砍简。**总原则:能复用就不造,实测能用就不绕。**\n\n### 三条\"省力\"决定(全来自真机实测)\n\n1. **施加器直接用 `github-script` + octokit**——实测建 issue/打标签/评论都通,**省掉整层 Gitea-API 客户端**;只有写码开 PR 要自定义。\n2. **job 间传提议用 job `outputs`,不用 artifact**——artifact@v4 实测中止;jsonl 很小,base64 塞 `$GITHUB_OUTPUT` 即可。\n3. **多 job 门控照搬 `needs`+`if:`**——表达式实测可用,不绕。\n\n### 复用(不造)\n\n- opencode + `permission deny` + 工具白名单 ← 参考库\n- 只读工具 `gitea-pr-diff` 等 ← 参考库\n- **施加器** ← `github-script`/octokit(实测可用)\n- **AWF 防火墙 + MCP Gateway** ← gh-aw(MIT)\n\n### 自造(最小,就三样)\n\n1. **`gtaw` 编译器**:小 templater,`agents/<x>.md` → `.gitea/workflows/<x>.lock.yaml`\n2. **collector 工具**:把参考库的 `gitea-*` 工具从\"调 API\"改成\"append jsonl\"(小改)——复刻\"agent 只提议不施加\"\n3. **create-pr 施加器**:唯一要写码的,隔离容器放开 opencode edit/bash\n\n骨架(每 agent 一份 lock):\n```\njob agent (contents:read + AWF egress)：opencode 跑，提议写 jsonl → outputs\njob apply (needs agent, if success)：github-script 读提议、按 max/allowed 施加\n```\n\n### 落地顺序\n\nStep1 手写最小\"agent→apply 打标签\"两 job 证明骨架(拔掉 apply 验证 agent 无写权限)→ Step2 接评审 → Step3 挂 AWF → Step4 写 gtaw 模板化 + lockfile-fresh CI → Step5 铺 triage/scanner,最后上 create-pr 写码;schedule 一律外部 cron 兜底;分支保护/required-checks/DCO 是真·强制层。\n\n**一句话:自造只剩三样小东西(gtaw、collector 工具、create-pr),施加全交给 github-script,防火墙/MCP 全复用 gh-aw。**\n\n---\n\n文档 `chat/acmm-nongh.md` 现在是完整闭环:可移植性判断 → 路线选择 → 文档级核实 → **真机实测纠正** → 编译链设计 → 落地总结。\n\n还有个收尾没定:`LLM/gtaw-probe` 临时仓库(+ 实测建的 issue #5 + 在线 runner)删不删?以及建议把那个 API token(`97296…`,能建/删仓)在 Gitea 后台作废重发。",
+      "metrics": {
+        "prompt_tokens": 383222,
+        "completion_tokens": 1062,
+        "cached_tokens": 383220,
+        "extra": {
+          "cache_creation_input_tokens": 2072,
+          "cache_read_input_tokens": 383220,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2072,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1062,
+              "cache_read_input_tokens": 383220,
+              "cache_creation_input_tokens": 2072,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2072
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 72468048,
-    "total_completion_tokens": 621346,
-    "total_cached_tokens": 72444686,
-    "total_steps": 347,
+    "total_prompt_tokens": 73662772,
+    "total_completion_tokens": 635531,
+    "total_cached_tokens": 73639398,
+    "total_steps": 354,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 2728585,
-      "total_cache_read_input_tokens": 72444686
+      "total_cache_creation_input_tokens": 3823469,
+      "total_cache_read_input_tokens": 73639398
     }
   }
 }
