@@ -16584,19 +16584,1419 @@
         "cwd": "/Users/luwei/work/Controversy/data/console",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 230,
+      "timestamp": "2026-06-08T10:19:12.332Z",
+      "source": "user",
+      "message": "“lock.yml 大量用 actions/github-script、service containers、check_run 事件、artifacts、schedule——在 Gitea 上部分不支持或行为不同，须逐个实测” 现在逐个实测",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 231,
+      "timestamp": "2026-06-08T10:19:44.623Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 301755,
+        "completion_tokens": 2240,
+        "cached_tokens": 301753,
+        "extra": {
+          "cache_creation_input_tokens": 644,
+          "cache_read_input_tokens": 301753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 644,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2240,
+              "cache_read_input_tokens": 301753,
+              "cache_creation_input_tokens": 644,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 644
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 232,
+      "timestamp": "2026-06-08T10:19:44.634Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "我没法凭空断言——得先把\"lock.yml 到底用了什么\"精确量出来,再逐项对照 Gitea/Forgejo 的真实支持。先做这两步:(1) 从 lock.yml 精确提取每个特性的实际用法;(2) 看本机能否起 Gitea+act_runner 做真·跑测。",
+      "metrics": {
+        "prompt_tokens": 301755,
+        "completion_tokens": 2240,
+        "cached_tokens": 301753,
+        "extra": {
+          "cache_creation_input_tokens": 644,
+          "cache_read_input_tokens": 301753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 644,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2240,
+              "cache_read_input_tokens": 301753,
+              "cache_creation_input_tokens": 644,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 644
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 233,
+      "timestamp": "2026-06-08T10:19:49.282Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01Tzb3J8qwmFbZrWhf5RqZws",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01Tzb3J8qwmFbZrWhf5RqZws",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cd /Users/luwei/work/Controversy/data/console\nF=.github/workflows/auto-triage.lock.yml\necho \"=== ① 用到的 uses: actions（含版本）===\"\ngrep -oE 'uses: [^ ]+' \"$F\" | sort | uniq -c | sort -rn\necho; echo \"=== ② github-script 出现次数 + actions/github-script ===\"\ngrep -c 'actions/github-script' \"$F\"; grep -cE 'github\\.rest\\.|github\\.graphql|octokit' \"$F\"\necho; echo \"=== ③ service containers / container: 用法 ===\"\ngrep -nE '^\\s+(services|container|image):' \"$F\" | head\necho; echo \"=== ④ artifacts 上传/下载 ===\"\ngrep -nE 'upload-artifact|download-artifact' \"$F\" | head\necho; echo \"=== ⑤ 触发事件 on: (顶层) ===\"\nsed -n '/^on:/,/^[a-z]/p' \"$F\" | head -15\necho; echo \"=== ⑥ 跨所有 .md 源用到的事件类型 ===\"\ngrep -rhoE '^\\s+(issues|issue_comment|pull_request|pull_request_review|check_run|schedule|workflow_dispatch):' .github/workflows/*.md .github/workflows/*.md.disabled 2>/dev/null | sort | uniq -c\necho; echo \"=== ⑦ 本机能否起 Gitea 沙盒？ ===\"\nwhich docker >/dev/null 2>&1 && echo \"docker: 有 ($(docker --version 2>/dev/null))\" || echo \"docker: 无\"\ndocker info >/dev/null 2>&1 && echo \"docker daemon: 在跑\" || echo \"docker daemon: 没跑/不可用\"",
+            "description": "Extract exact feature usage + check docker availability"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01Tzb3J8qwmFbZrWhf5RqZws",
+            "content": "=== ① 用到的 uses: actions（含版本）===\n  24 uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3\n   6 uses: github/gh-aw-actions/setup@3ea13c02d765410340d533515cb31a7eef2baaf0\n   4 uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a\n   4 uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c\n   3 uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10\n   1 uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e\n\n=== ② github-script 出现次数 + actions/github-script ===\n27\n\n[stdout]\n=== ① 用到的 uses: actions（含版本）===\n  24 uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3\n   6 uses: github/gh-aw-actions/setup@3ea13c02d765410340d533515cb31a7eef2baaf0\n   4 uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a\n   4 uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c\n   3 uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10\n   1 uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e\n\n=== ② github-script 出现次数 + actions/github-script ===\n27\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 301755,
+        "completion_tokens": 2240,
+        "cached_tokens": 301753,
+        "extra": {
+          "cache_creation_input_tokens": 644,
+          "cache_read_input_tokens": 301753,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 644,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2240,
+              "cache_read_input_tokens": 301753,
+              "cache_creation_input_tokens": 644,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 644
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "=== ① 用到的 uses: actions（含版本）===\n  24 uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3\n   6 uses: github/gh-aw-actions/setup@3ea13c02d765410340d533515cb31a7eef2baaf0\n   4 uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a\n   4 uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c\n   3 uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10\n   1 uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e\n\n=== ② github-script 出现次数 + actions/github-script ===\n27",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Tzb3J8qwmFbZrWhf5RqZws",
+            "type": "tool_result",
+            "content": "=== ① 用到的 uses: actions（含版本）===\n  24 uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3\n   6 uses: github/gh-aw-actions/setup@3ea13c02d765410340d533515cb31a7eef2baaf0\n   4 uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a\n   4 uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c\n   3 uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10\n   1 uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e\n\n=== ② github-script 出现次数 + actions/github-script ===\n27",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "=== ① 用到的 uses: actions（含版本）===\n  24 uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3\n   6 uses: github/gh-aw-actions/setup@3ea13c02d765410340d533515cb31a7eef2baaf0\n   4 uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a\n   4 uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c\n   3 uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10\n   1 uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e\n\n=== ② github-script 出现次数 + actions/github-script ===\n27",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01Tzb3J8qwmFbZrWhf5RqZws",
+            "type": "tool_result",
+            "content": "=== ① 用到的 uses: actions（含版本）===\n  24 uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3\n   6 uses: github/gh-aw-actions/setup@3ea13c02d765410340d533515cb31a7eef2baaf0\n   4 uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a\n   4 uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c\n   3 uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10\n   1 uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e\n\n=== ② github-script 出现次数 + actions/github-script ===\n27",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "cd /Users/luwei/work/Controversy/data/console\nF=.github/workflows/auto-triage.lock.yml\necho \"=== ① 用到的 uses: actions（含版本）===\"\ngrep -oE 'uses: [^ ]+' \"$F\" | sort | uniq -c | sort -rn\necho; echo \"=== ② github-script 出现次数 + actions/github-script ===\"\ngrep -c 'actions/github-script' \"$F\"; grep -cE 'github\\.rest\\.|github\\.graphql|octokit' \"$F\"\necho; echo \"=== ③ service containers / container: 用法 ===\"\ngrep -nE '^\\s+(services|container|image):' \"$F\" | head\necho; echo \"=== ④ artifacts 上传/下载 ===\"\ngrep -nE 'upload-artifact|download-artifact' \"$F\" | head\necho; echo \"=== ⑤ 触发事件 on: (顶层) ===\"\nsed -n '/^on:/,/^[a-z]/p' \"$F\" | head -15\necho; echo \"=== ⑥ 跨所有 .md 源用到的事件类型 ===\"\ngrep -rhoE '^\\s+(issues|issue_comment|pull_request|pull_request_review|check_run|schedule|workflow_dispatch):' .github/workflows/*.md .github/workflows/*.md.disabled 2>/dev/null | sort | uniq -c\necho; echo \"=== ⑦ 本机能否起 Gitea 沙盒？ ===\"\nwhich docker >/dev/null 2>&1 && echo \"docker: 有 ($(docker --version 2>/dev/null))\" || echo \"docker: 无\"\ndocker info >/dev/null 2>&1 && echo \"docker daemon: 在跑\" || echo \"docker daemon: 没跑/不可用\"",
+          "description": "Extract exact feature usage + check docker availability"
+        }
+      }
+    },
+    {
+      "step_id": 234,
+      "timestamp": "2026-06-08T10:20:07.714Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 302528,
+        "completion_tokens": 899,
+        "cached_tokens": 302397,
+        "extra": {
+          "cache_creation_input_tokens": 2552,
+          "cache_read_input_tokens": 302397,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2552,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 899,
+              "cache_read_input_tokens": 302397,
+              "cache_creation_input_tokens": 2552,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2552
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 235,
+      "timestamp": "2026-06-08T10:20:07.714Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Item ① is the key finding — **24× `actions/github-script`** dominates. The script aborted on a zero-match grep; let me get the rest robustly.",
+      "metrics": {
+        "prompt_tokens": 302528,
+        "completion_tokens": 899,
+        "cached_tokens": 302397,
+        "extra": {
+          "cache_creation_input_tokens": 2552,
+          "cache_read_input_tokens": 302397,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2552,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 899,
+              "cache_read_input_tokens": 302397,
+              "cache_creation_input_tokens": 2552,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2552
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 236,
+      "timestamp": "2026-06-08T10:20:08.590Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01LeFkN7fjS6k3Jhtj4ir8tj",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01LeFkN7fjS6k3Jhtj4ir8tj",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cd /Users/luwei/work/Controversy/data/console; F=.github/workflows/auto-triage.lock.yml\necho \"github.rest/graphql/octokit calls:\"; grep -cE 'github\\.rest\\.|github\\.graphql|octokit' \"$F\" || true\necho \"--- service/container/image: ---\"; grep -nE '^\\s+(services|container):|image:' \"$F\" || echo \"（无）\"\necho \"--- artifacts ---\"; grep -nE 'upload-artifact|download-artifact' \"$F\" | head || true\necho \"--- 顶层 on: 块 ---\"; awk '/^on:/{f=1} f&&/^[a-zA-Z]/&&!/^on:/{exit} f{print}' \"$F\"\necho \"--- 所有 .md 源的事件类型统计 ---\"; grep -rhoE '^[[:space:]]+(issues|issue_comment|pull_request|pull_request_review|check_run|schedule|workflow_dispatch):' .github/workflows/*.md .github/workflows/*.md.disabled 2>/dev/null | sed 's/[: ]//g' | sort | uniq -c || true",
+            "description": "Remaining feature extraction"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01LeFkN7fjS6k3Jhtj4ir8tj",
+            "content": "Exit code 1\ngithub.rest/graphql/octokit calls:\n0\n\n[error] tool reported failure"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 302528,
+        "completion_tokens": 899,
+        "cached_tokens": 302397,
+        "extra": {
+          "cache_creation_input_tokens": 2552,
+          "cache_read_input_tokens": 302397,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2552,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 899,
+              "cache_read_input_tokens": 302397,
+              "cache_creation_input_tokens": 2552,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2552
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Exit code 1\ngithub.rest/graphql/octokit calls:\n0",
+            "is_error": true,
+            "tool_use_id": "toolu_01LeFkN7fjS6k3Jhtj4ir8tj"
+          }
+        },
+        "tool_result_is_error": true,
+        "metadata": {
+          "is_error": true,
+          "raw_tool_result": {
+            "type": "tool_result",
+            "content": "Exit code 1\ngithub.rest/graphql/octokit calls:\n0",
+            "is_error": true,
+            "tool_use_id": "toolu_01LeFkN7fjS6k3Jhtj4ir8tj"
+          }
+        },
+        "raw_arguments": {
+          "command": "cd /Users/luwei/work/Controversy/data/console; F=.github/workflows/auto-triage.lock.yml\necho \"github.rest/graphql/octokit calls:\"; grep -cE 'github\\.rest\\.|github\\.graphql|octokit' \"$F\" || true\necho \"--- service/container/image: ---\"; grep -nE '^\\s+(services|container):|image:' \"$F\" || echo \"（无）\"\necho \"--- artifacts ---\"; grep -nE 'upload-artifact|download-artifact' \"$F\" | head || true\necho \"--- 顶层 on: 块 ---\"; awk '/^on:/{f=1} f&&/^[a-zA-Z]/&&!/^on:/{exit} f{print}' \"$F\"\necho \"--- 所有 .md 源的事件类型统计 ---\"; grep -rhoE '^[[:space:]]+(issues|issue_comment|pull_request|pull_request_review|check_run|schedule|workflow_dispatch):' .github/workflows/*.md .github/workflows/*.md.disabled 2>/dev/null | sed 's/[: ]//g' | sort | uniq -c || true",
+          "description": "Remaining feature extraction"
+        }
+      }
+    },
+    {
+      "step_id": 237,
+      "timestamp": "2026-06-08T10:20:10.482Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01GPW1TR2QcDFzp2tbwB9Y73",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01GPW1TR2QcDFzp2tbwB9Y73",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "echo \"docker:\"; which docker 2>/dev/null || echo \"  无 docker\"\ndocker info >/dev/null 2>&1 && echo \"  daemon 在跑\" || echo \"  daemon 不可用\"\necho \"act_runner / forgejo-runner:\"; which act_runner forgejo-runner 2>/dev/null || echo \"  无\"\necho \"gitea:\"; which gitea 2>/dev/null || echo \"  无 gitea 二进制\"",
+            "description": "Check local Gitea sandbox tooling"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01GPW1TR2QcDFzp2tbwB9Y73",
+            "content": "docker:\n  无 docker\n  daemon 不可用\nact_runner / forgejo-runner:\n  无\ngitea:\n  无 gitea 二进制\n\n[stdout]\ndocker:\n  无 docker\n  daemon 不可用\nact_runner / forgejo-runner:\n  无\ngitea:\n  无 gitea 二进制\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 302528,
+        "completion_tokens": 899,
+        "cached_tokens": 302397,
+        "extra": {
+          "cache_creation_input_tokens": 2552,
+          "cache_read_input_tokens": 302397,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2552,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 899,
+              "cache_read_input_tokens": 302397,
+              "cache_creation_input_tokens": 2552,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2552
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "docker:\n  无 docker\n  daemon 不可用\nact_runner / forgejo-runner:\n  无\ngitea:\n  无 gitea 二进制",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GPW1TR2QcDFzp2tbwB9Y73",
+            "type": "tool_result",
+            "content": "docker:\n  无 docker\n  daemon 不可用\nact_runner / forgejo-runner:\n  无\ngitea:\n  无 gitea 二进制",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "docker:\n  无 docker\n  daemon 不可用\nact_runner / forgejo-runner:\n  无\ngitea:\n  无 gitea 二进制",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01GPW1TR2QcDFzp2tbwB9Y73",
+            "type": "tool_result",
+            "content": "docker:\n  无 docker\n  daemon 不可用\nact_runner / forgejo-runner:\n  无\ngitea:\n  无 gitea 二进制",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "echo \"docker:\"; which docker 2>/dev/null || echo \"  无 docker\"\ndocker info >/dev/null 2>&1 && echo \"  daemon 在跑\" || echo \"  daemon 不可用\"\necho \"act_runner / forgejo-runner:\"; which act_runner forgejo-runner 2>/dev/null || echo \"  无\"\necho \"gitea:\"; which gitea 2>/dev/null || echo \"  无 gitea 二进制\"",
+          "description": "Check local Gitea sandbox tooling"
+        }
+      }
+    },
+    {
+      "step_id": 238,
+      "timestamp": "2026-06-08T10:20:49.392Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 304951,
+        "completion_tokens": 2423,
+        "cached_tokens": 304949,
+        "extra": {
+          "cache_creation_input_tokens": 1159,
+          "cache_read_input_tokens": 304949,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1159,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2423,
+              "cache_read_input_tokens": 304949,
+              "cache_creation_input_tokens": 1159,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1159
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 239,
+      "timestamp": "2026-06-08T10:20:56.107Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "本机没有 docker / act_runner / gitea 二进制——**起不了真·运行沙盒**。我得跟你说清楚:在这台机器上做不到\"跑一个真实 Gitea workflow 看结果\"。我能做的最硬的\"实测\"是两段:(1) 已从 lock.yml 精确量出依赖(下方),(2) 拿这些依赖去 Gitea/Forgejo 官方文档 + issue 跟踪器逐项核实支持状态。\n\n已量出的实际依赖(来自 `auto-triage.lock.yml`):\n- **`actions/github-script` 24 次**(压倒性主依赖——编排和 safe-output 施加全靠它)\n- `upload-artifact`/`download-artifact` 各 4 次(job 间传 prompt/agent 输出)\n- 容器:gh-aw-firewall、mcp-gateway、github-mcp-server、node(docker 容器/服务)\n- 事件:issues/issue_comment/pull_request/pull_request_review/**check_run**/**schedule**/workflow_dispatch\n\n现在逐项查 Gitea/Forgejo 真实支持。",
+      "metrics": {
+        "prompt_tokens": 304951,
+        "completion_tokens": 2423,
+        "cached_tokens": 304949,
+        "extra": {
+          "cache_creation_input_tokens": 1159,
+          "cache_read_input_tokens": 304949,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1159,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2423,
+              "cache_read_input_tokens": 304949,
+              "cache_creation_input_tokens": 1159,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1159
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 240,
+      "timestamp": "2026-06-08T10:20:56.529Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_017rRouqstdKck5zYCaCso5e",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_017rRouqstdKck5zYCaCso5e",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Gitea Actions actions/github-script compatibility octokit GitHub API not compatible"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_017rRouqstdKck5zYCaCso5e",
+            "content": "Web search results for query: \"Gitea Actions actions/github-script compatibility octokit GitHub API not compatible\"\n\nLinks: [{\"title\":\"GitHub - octokit/action.js: GitHub API client for GitHub Actions · GitHub\",\"url\":\"https://github.com/octokit/action.js/\"},{\"title\":\"GitHub - actions/github-script: Write workflows scripting the GitHub API in JavaScript · GitHub\",\"url\":\"https://github.com/actions/github-script\"},{\"title\":\"Actions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions\"},{\"title\":\"Compared to GitHub Actions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/comparison\"},{\"title\":\"Releases · actions/github-script\",\"url\":\"https://github.com/actions/github-script/releases\"},{\"title\":\"GitHub Script · Actions · GitHub Marketplace · GitHub\",\"url\":\"https://github.com/marketplace/actions/github-script\"},{\"title\":\"Frequently Asked Questions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/faq\"},{\"title\":\"Make action compatible with Gitea · Issue #1386 · release-drafter/release-drafter\",\"url\":\"https://github.com/release-drafter/release-drafter/issues/1386\"},{\"title\":\"An internal CI/CD system compatible with Github actions workflow yaml syntax, action yaml syntax and most action plugins · Issue #13539 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/13539\"},{\"title\":\"Octokit · GitHub\",\"url\":\"https://github.com/octokit\"}]\n\nBased on the search results, here's what I found about Gitea Actions and `actions/github-script` compatibility with octokit and the GitHub API:\n\n## Compatibility Overview\n\nEven though Gitea Actions is designed to be compatible with GitHub Actions, there are some differences between them. This creates potential compatibility issues when using GitHub actions like `actions/github-script` with Gitea.\n\n## Key Compatibility Issues\n\nOne significant issue is that GitHub-only scopes such as statuses, checks, deployments, id-token, security-events, and pages are not supported, while Gitea-specific scopes such as code, releases, wiki, and projects are available.\n\nAdditionally, a workaround for Gitea Actions is to use a Personal Access Token (PAT). See this github issue and comment for tracking this feature. This suggests that certain API operations that depend on GitHub-specific authentication or permissions may not work out of the box with Gitea.\n\n## About github-script and octokit\n\nThe `actions/github-script` action uses the Octokit library to interact with APIs. Version 5 of this action includes the version 5 of @actions/github and @octokit/plugin-rest-endpoint-methods. As part of this update, the Octokit context available via github no longer has REST methods directly. These methods are available via github.rest.\n\nThe fundamental issue is that while `actions/github-script` and its Octokit dependency are designed for the GitHub API, Gitea has its own API implementation that isn't fully compatible with GitHub's endpoints and scopes.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Gitea Actions actions/github-script compatibility octokit GitHub API not compatible\", \"results\": [{\"tool_use_id\": \"srvtoolu_01JbSDMqXAQ7q3SRShJTN4Xs\", \"content\": [{\"title\": \"GitHub - octokit/action.js: GitHub API client for GitHub Actions · GitHub\", \"url\": \"https://github.com/octokit/action.js/\"}, {\"title\": \"GitHub - actions/github-script: Write workflows scripting the GitHub API in JavaScript · GitHub\", \"url\": \"https://github.com/actions/github-script\"}, {\"title\": \"Actions | Gitea Documentation\", \"url\": \"https://docs.gitea.com/usage/actions\"}, {\"title\": \"Compared to GitHub Actions | Gitea Documentation\", \"url\": \"https://docs.gitea.com/usage/actions/comparison\"}, {\"title\": \"Releases · actions/github-script\", \"url\": \"https://github.com/actions/github-script/releases\"}, {\"title\": \"GitHub Script · Actions · GitHub Marketplace · GitHub\", \"url\": \"https://github.com/marketplace/actions/github-script\"}, {\"title\": \"Frequently Asked Questions | Gitea Documentation\", \"url\": \"https://docs.gitea.com/usage/actions/faq\"}, {\"title\": \"Make action compatible with Gitea · Issue #1386 · release-drafter/release-drafter\", \"url\": \"https://github.com/release-drafter/release-drafter/issues/1386\"}, {\"title\": \"An internal CI/CD system compatible with Github actions workflow yaml syntax, action yaml syntax and most action plugins · Issue #13539 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/13539\"}, {\"title\": \"Octokit · GitHub\", \"url\": \"https://github.com/octokit\"}]}, \"Based on the search results, here's what I found about Gitea Actions and `actions/github-script` compatibility with octokit and the GitHub API:\\n\\n## Compatibility Overview\\n\\nEven though Gitea Actions is designed to be compatible with GitHub Actions, there are some differences between them. This creates potential compatibility issues when using GitHub actions like `actions/github-script` with Gitea.\\n\\n## Key Compatibility Issues\\n\\nOne significant issue is that GitHub-only scopes such as statuses, checks, deployments, id-token, security-events, and pages are not supported, while Gitea-specific scopes such as code, releases, wiki, and projects are available.\\n\\nAdditionally, a workaround for Gitea Actions is to use a Personal Access Token (PAT). See this github issue and comment for tracking this feature. This suggests that certain API operations that depend on GitHub-specific authentication or permissions may not work out of the box with Gitea.\\n\\n## About github-script and octokit\\n\\nThe `actions/github-script` action uses the Octokit library to interact with APIs. Version 5 of this action includes the version 5 of @actions/github and @octokit/plugin-rest-endpoint-methods. As part of this update, the Octokit context available via github no longer has REST methods directly. These methods are available via github.rest.\\n\\nThe fundamental issue is that while `actions/github-script` and its Octokit dependency are designed for the GitHub API, Gitea has its own API implementation that isn't fully compatible with GitHub's endpoints and scopes.\"], \"durationSeconds\": 7.021614875003696, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 304951,
+        "completion_tokens": 2423,
+        "cached_tokens": 304949,
+        "extra": {
+          "cache_creation_input_tokens": 1159,
+          "cache_read_input_tokens": 304949,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1159,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2423,
+              "cache_read_input_tokens": 304949,
+              "cache_creation_input_tokens": 1159,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1159
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Gitea Actions actions/github-script compatibility octokit GitHub API not compatible",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01JbSDMqXAQ7q3SRShJTN4Xs",
+                "content": [
+                  {
+                    "title": "GitHub - octokit/action.js: GitHub API client for GitHub Actions · GitHub",
+                    "url": "https://github.com/octokit/action.js/"
+                  },
+                  {
+                    "title": "GitHub - actions/github-script: Write workflows scripting the GitHub API in JavaScript · GitHub",
+                    "url": "https://github.com/actions/github-script"
+                  },
+                  {
+                    "title": "Actions | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions"
+                  },
+                  {
+                    "title": "Compared to GitHub Actions | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions/comparison"
+                  },
+                  {
+                    "title": "Releases · actions/github-script",
+                    "url": "https://github.com/actions/github-script/releases"
+                  },
+                  {
+                    "title": "GitHub Script · Actions · GitHub Marketplace · GitHub",
+                    "url": "https://github.com/marketplace/actions/github-script"
+                  },
+                  {
+                    "title": "Frequently Asked Questions | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions/faq"
+                  },
+                  {
+                    "title": "Make action compatible with Gitea · Issue #1386 · release-drafter/release-drafter",
+                    "url": "https://github.com/release-drafter/release-drafter/issues/1386"
+                  },
+                  {
+                    "title": "An internal CI/CD system compatible with Github actions workflow yaml syntax, action yaml syntax and most action plugins · Issue #13539 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/13539"
+                  },
+                  {
+                    "title": "Octokit · GitHub",
+                    "url": "https://github.com/octokit"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about Gitea Actions and `actions/github-script` compatibility with octokit and the GitHub API:\n\n## Compatibility Overview\n\nEven though Gitea Actions is designed to be compatible with GitHub Actions, there are some differences between them. This creates potential compatibility issues when using GitHub actions like `actions/github-script` with Gitea.\n\n## Key Compatibility Issues\n\nOne significant issue is that GitHub-only scopes such as statuses, checks, deployments, id-token, security-events, and pages are not supported, while Gitea-specific scopes such as code, releases, wiki, and projects are available.\n\nAdditionally, a workaround for Gitea Actions is to use a Personal Access Token (PAT). See this github issue and comment for tracking this feature. This suggests that certain API operations that depend on GitHub-specific authentication or permissions may not work out of the box with Gitea.\n\n## About github-script and octokit\n\nThe `actions/github-script` action uses the Octokit library to interact with APIs. Version 5 of this action includes the version 5 of @actions/github and @octokit/plugin-rest-endpoint-methods. As part of this update, the Octokit context available via github no longer has REST methods directly. These methods are available via github.rest.\n\nThe fundamental issue is that while `actions/github-script` and its Octokit dependency are designed for the GitHub API, Gitea has its own API implementation that isn't fully compatible with GitHub's endpoints and scopes."
+            ],
+            "durationSeconds": 7.021614875003696,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_017rRouqstdKck5zYCaCso5e",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Gitea Actions actions/github-script compatibility octokit GitHub API not compatible\"\n\nLinks: [{\"title\":\"GitHub - octokit/action.js: GitHub API client for GitHub Actions · GitHub\",\"url\":\"https://github.com/octokit/action.js/\"},{\"title\":\"GitHub - actions/github-script: Write workflows scripting the GitHub API in JavaScript · GitHub\",\"url\":\"https://github.com/actions/github-script\"},{\"title\":\"Actions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions\"},{\"title\":\"Compared to GitHub Actions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/comparison\"},{\"title\":\"Releases · actions/github-script\",\"url\":\"https://github.com/actions/github-script/releases\"},{\"title\":\"GitHub Script · Actions · GitHub Marketplace · GitHub\",\"url\":\"https://github.com/marketplace/actions/github-script\"},{\"title\":\"Frequently Asked Questions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/faq\"},{\"title\":\"Make action compatible with Gitea · Issue #1386 · release-drafter/release-drafter\",\"url\":\"https://github.com/release-drafter/release-drafter/issues/1386\"},{\"title\":\"An internal CI/CD system compatible with Github actions workflow yaml syntax, action yaml syntax and most action plugins · Issue #13539 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/13539\"},{\"title\":\"Octokit · GitHub\",\"url\":\"https://github.com/octokit\"}]\n\nBased on the search results, here's what I found about Gitea Actions and `actions/github-script` compatibility with octokit and the GitHub API:\n\n## Compatibility Overview\n\nEven though Gitea Actions is designed to be compatible with GitHub Actions, there are some differences between them. This creates potential compatibility issues when using GitHub actions like `actions/github-script` with Gitea.\n\n## Key Compatibility Issues\n\nOne significant issue is that GitHub-only scopes such as statuses, checks, deployments, id-token, security-events, and pages are not supported, while Gitea-specific scopes such as code, releases, wiki, and projects are available.\n\nAdditionally, a workaround for Gitea Actions is to use a Personal Access Token (PAT). See this github issue and comment for tracking this feature. This suggests that certain API operations that depend on GitHub-specific authentication or permissions may not work out of the box with Gitea.\n\n## About github-script and octokit\n\nThe `actions/github-script` action uses the Octokit library to interact with APIs. Version 5 of this action includes the version 5 of @actions/github and @octokit/plugin-rest-endpoint-methods. As part of this update, the Octokit context available via github no longer has REST methods directly. These methods are available via github.rest.\n\nThe fundamental issue is that while `actions/github-script` and its Octokit dependency are designed for the GitHub API, Gitea has its own API implementation that isn't fully compatible with GitHub's endpoints and scopes.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Gitea Actions actions/github-script compatibility octokit GitHub API not compatible",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01JbSDMqXAQ7q3SRShJTN4Xs",
+                "content": [
+                  {
+                    "title": "GitHub - octokit/action.js: GitHub API client for GitHub Actions · GitHub",
+                    "url": "https://github.com/octokit/action.js/"
+                  },
+                  {
+                    "title": "GitHub - actions/github-script: Write workflows scripting the GitHub API in JavaScript · GitHub",
+                    "url": "https://github.com/actions/github-script"
+                  },
+                  {
+                    "title": "Actions | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions"
+                  },
+                  {
+                    "title": "Compared to GitHub Actions | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions/comparison"
+                  },
+                  {
+                    "title": "Releases · actions/github-script",
+                    "url": "https://github.com/actions/github-script/releases"
+                  },
+                  {
+                    "title": "GitHub Script · Actions · GitHub Marketplace · GitHub",
+                    "url": "https://github.com/marketplace/actions/github-script"
+                  },
+                  {
+                    "title": "Frequently Asked Questions | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions/faq"
+                  },
+                  {
+                    "title": "Make action compatible with Gitea · Issue #1386 · release-drafter/release-drafter",
+                    "url": "https://github.com/release-drafter/release-drafter/issues/1386"
+                  },
+                  {
+                    "title": "An internal CI/CD system compatible with Github actions workflow yaml syntax, action yaml syntax and most action plugins · Issue #13539 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/13539"
+                  },
+                  {
+                    "title": "Octokit · GitHub",
+                    "url": "https://github.com/octokit"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about Gitea Actions and `actions/github-script` compatibility with octokit and the GitHub API:\n\n## Compatibility Overview\n\nEven though Gitea Actions is designed to be compatible with GitHub Actions, there are some differences between them. This creates potential compatibility issues when using GitHub actions like `actions/github-script` with Gitea.\n\n## Key Compatibility Issues\n\nOne significant issue is that GitHub-only scopes such as statuses, checks, deployments, id-token, security-events, and pages are not supported, while Gitea-specific scopes such as code, releases, wiki, and projects are available.\n\nAdditionally, a workaround for Gitea Actions is to use a Personal Access Token (PAT). See this github issue and comment for tracking this feature. This suggests that certain API operations that depend on GitHub-specific authentication or permissions may not work out of the box with Gitea.\n\n## About github-script and octokit\n\nThe `actions/github-script` action uses the Octokit library to interact with APIs. Version 5 of this action includes the version 5 of @actions/github and @octokit/plugin-rest-endpoint-methods. As part of this update, the Octokit context available via github no longer has REST methods directly. These methods are available via github.rest.\n\nThe fundamental issue is that while `actions/github-script` and its Octokit dependency are designed for the GitHub API, Gitea has its own API implementation that isn't fully compatible with GitHub's endpoints and scopes."
+            ],
+            "durationSeconds": 7.021614875003696,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_017rRouqstdKck5zYCaCso5e",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Gitea Actions actions/github-script compatibility octokit GitHub API not compatible\"\n\nLinks: [{\"title\":\"GitHub - octokit/action.js: GitHub API client for GitHub Actions · GitHub\",\"url\":\"https://github.com/octokit/action.js/\"},{\"title\":\"GitHub - actions/github-script: Write workflows scripting the GitHub API in JavaScript · GitHub\",\"url\":\"https://github.com/actions/github-script\"},{\"title\":\"Actions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions\"},{\"title\":\"Compared to GitHub Actions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/comparison\"},{\"title\":\"Releases · actions/github-script\",\"url\":\"https://github.com/actions/github-script/releases\"},{\"title\":\"GitHub Script · Actions · GitHub Marketplace · GitHub\",\"url\":\"https://github.com/marketplace/actions/github-script\"},{\"title\":\"Frequently Asked Questions | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/faq\"},{\"title\":\"Make action compatible with Gitea · Issue #1386 · release-drafter/release-drafter\",\"url\":\"https://github.com/release-drafter/release-drafter/issues/1386\"},{\"title\":\"An internal CI/CD system compatible with Github actions workflow yaml syntax, action yaml syntax and most action plugins · Issue #13539 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/13539\"},{\"title\":\"Octokit · GitHub\",\"url\":\"https://github.com/octokit\"}]\n\nBased on the search results, here's what I found about Gitea Actions and `actions/github-script` compatibility with octokit and the GitHub API:\n\n## Compatibility Overview\n\nEven though Gitea Actions is designed to be compatible with GitHub Actions, there are some differences between them. This creates potential compatibility issues when using GitHub actions like `actions/github-script` with Gitea.\n\n## Key Compatibility Issues\n\nOne significant issue is that GitHub-only scopes such as statuses, checks, deployments, id-token, security-events, and pages are not supported, while Gitea-specific scopes such as code, releases, wiki, and projects are available.\n\nAdditionally, a workaround for Gitea Actions is to use a Personal Access Token (PAT). See this github issue and comment for tracking this feature. This suggests that certain API operations that depend on GitHub-specific authentication or permissions may not work out of the box with Gitea.\n\n## About github-script and octokit\n\nThe `actions/github-script` action uses the Octokit library to interact with APIs. Version 5 of this action includes the version 5 of @actions/github and @octokit/plugin-rest-endpoint-methods. As part of this update, the Octokit context available via github no longer has REST methods directly. These methods are available via github.rest.\n\nThe fundamental issue is that while `actions/github-script` and its Octokit dependency are designed for the GitHub API, Gitea has its own API implementation that isn't fully compatible with GitHub's endpoints and scopes.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Gitea Actions actions/github-script compatibility octokit GitHub API not compatible"
+        }
+      }
+    },
+    {
+      "step_id": 241,
+      "timestamp": "2026-06-08T10:20:56.857Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_0181u6eBuZLdAaECpMafmE4C",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_0181u6eBuZLdAaECpMafmE4C",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Gitea Actions check_run event supported on schedule cron limitations default branch"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_0181u6eBuZLdAaECpMafmE4C",
+            "content": "Web search results for query: \"Gitea Actions check_run event supported on schedule cron limitations default branch\"\n\nLinks: [{\"title\":\"Scheduled Gitea Actions sometimes run on non-default merged branches · Issue #28157 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28157\"},{\"title\":\"Schedules in actions - Actions - Gitea\",\"url\":\"https://forum.gitea.com/t/schedules-in-actions/6939\"},{\"title\":\"Actions - Cron schedule not working for all repos · Issue #28533 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28533\"},{\"title\":\"Action schedule · Issue #34472 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/34472\"},{\"title\":\"Overview | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/overview\"},{\"title\":\"#741 - [FEAT] Actions should support scheduling - forgejo/forgejo - Codeberg.org\",\"url\":\"https://codeberg.org/forgejo/forgejo/issues/741\"},{\"title\":\"Scheduled actions are not working for non-main branch · Issue #29574 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/29574\"},{\"title\":\"Gitea Actions System | go-gitea/gitea | DeepWiki\",\"url\":\"https://deepwiki.com/go-gitea/gitea/6-user-and-organization-management\"},{\"title\":\"Configuration Cheat Sheet | Gitea Documentation\",\"url\":\"https://docs.gitea.com/administration/config-cheat-sheet\"},{\"title\":\"Gitea Actions - Gitea\",\"url\":\"https://go-gitea-gitea.mintlify.app/features/actions\"}]\n\nBased on the search results, here's what I found about Gitea Actions with check_run events, schedule/cron, and default branch limitations:\n\n## Schedule/Cron Support\n\nScheduled workflows use cron expressions in the on.schedule section (e.g., cron: '0 0 * * *'). The system stores these in the action_schedule table and evaluates them periodically.\n\n## Default Branch Limitations\n\nThere are documented limitations with scheduled actions and branches:\n\nIf you create a workflow with scheduled cron in the default branch, it will run in the default branch as scheduled. However, once you create a PR and merge it (with branch auto-deletion turned on) it will start running the schedule on the deleted branch instead.\n\nAdditionally, scheduled actions runner did trigger on push for both main and dev branch commits, but not on the scheduled action on dev branch. This indicates that scheduled workflows may only work reliably on the default branch.\n\n## Check_run Event\n\nI did not find specific information about the `check_run` event in the search results. The documentation mentions that Gitea Actions supports events like `push`, `pull_request`, and `schedule`, but `check_run` support was not explicitly mentioned in the returned results.\n\nIf you need more specific information about the `check_run` event support, I'd recommend checking the official Gitea documentation or GitHub issues directly.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Gitea Actions check_run event supported on schedule cron limitations default branch\", \"results\": [{\"tool_use_id\": \"srvtoolu_018B9CNzKLgtMsckUhRCFvV7\", \"content\": [{\"title\": \"Scheduled Gitea Actions sometimes run on non-default merged branches · Issue #28157 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/28157\"}, {\"title\": \"Schedules in actions - Actions - Gitea\", \"url\": \"https://forum.gitea.com/t/schedules-in-actions/6939\"}, {\"title\": \"Actions - Cron schedule not working for all repos · Issue #28533 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/28533\"}, {\"title\": \"Action schedule · Issue #34472 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/34472\"}, {\"title\": \"Overview | Gitea Documentation\", \"url\": \"https://docs.gitea.com/usage/actions/overview\"}, {\"title\": \"#741 - [FEAT] Actions should support scheduling - forgejo/forgejo - Codeberg.org\", \"url\": \"https://codeberg.org/forgejo/forgejo/issues/741\"}, {\"title\": \"Scheduled actions are not working for non-main branch · Issue #29574 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/29574\"}, {\"title\": \"Gitea Actions System | go-gitea/gitea | DeepWiki\", \"url\": \"https://deepwiki.com/go-gitea/gitea/6-user-and-organization-management\"}, {\"title\": \"Configuration Cheat Sheet | Gitea Documentation\", \"url\": \"https://docs.gitea.com/administration/config-cheat-sheet\"}, {\"title\": \"Gitea Actions - Gitea\", \"url\": \"https://go-gitea-gitea.mintlify.app/features/actions\"}]}, \"Based on the search results, here's what I found about Gitea Actions with check_run events, schedule/cron, and default branch limitations:\\n\\n## Schedule/Cron Support\\n\\nScheduled workflows use cron expressions in the on.schedule section (e.g., cron: '0 0 * * *'). The system stores these in the action_schedule table and evaluates them periodically.\\n\\n## Default Branch Limitations\\n\\nThere are documented limitations with scheduled actions and branches:\\n\\nIf you create a workflow with scheduled cron in the default branch, it will run in the default branch as scheduled. However, once you create a PR and merge it (with branch auto-deletion turned on) it will start running the schedule on the deleted branch instead.\\n\\nAdditionally, scheduled actions runner did trigger on push for both main and dev branch commits, but not on the scheduled action on dev branch. This indicates that scheduled workflows may only work reliably on the default branch.\\n\\n## Check_run Event\\n\\nI did not find specific information about the `check_run` event in the search results. The documentation mentions that Gitea Actions supports events like `push`, `pull_request`, and `schedule`, but `check_run` support was not explicitly mentioned in the returned results.\\n\\nIf you need more specific information about the `check_run` event support, I'd recommend checking the official Gitea documentation or GitHub issues directly.\"], \"durationSeconds\": 7.468441499993205, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 304951,
+        "completion_tokens": 2423,
+        "cached_tokens": 304949,
+        "extra": {
+          "cache_creation_input_tokens": 1159,
+          "cache_read_input_tokens": 304949,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1159,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2423,
+              "cache_read_input_tokens": 304949,
+              "cache_creation_input_tokens": 1159,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1159
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Gitea Actions check_run event supported on schedule cron limitations default branch",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_018B9CNzKLgtMsckUhRCFvV7",
+                "content": [
+                  {
+                    "title": "Scheduled Gitea Actions sometimes run on non-default merged branches · Issue #28157 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/28157"
+                  },
+                  {
+                    "title": "Schedules in actions - Actions - Gitea",
+                    "url": "https://forum.gitea.com/t/schedules-in-actions/6939"
+                  },
+                  {
+                    "title": "Actions - Cron schedule not working for all repos · Issue #28533 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/28533"
+                  },
+                  {
+                    "title": "Action schedule · Issue #34472 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/34472"
+                  },
+                  {
+                    "title": "Overview | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions/overview"
+                  },
+                  {
+                    "title": "#741 - [FEAT] Actions should support scheduling - forgejo/forgejo - Codeberg.org",
+                    "url": "https://codeberg.org/forgejo/forgejo/issues/741"
+                  },
+                  {
+                    "title": "Scheduled actions are not working for non-main branch · Issue #29574 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/29574"
+                  },
+                  {
+                    "title": "Gitea Actions System | go-gitea/gitea | DeepWiki",
+                    "url": "https://deepwiki.com/go-gitea/gitea/6-user-and-organization-management"
+                  },
+                  {
+                    "title": "Configuration Cheat Sheet | Gitea Documentation",
+                    "url": "https://docs.gitea.com/administration/config-cheat-sheet"
+                  },
+                  {
+                    "title": "Gitea Actions - Gitea",
+                    "url": "https://go-gitea-gitea.mintlify.app/features/actions"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about Gitea Actions with check_run events, schedule/cron, and default branch limitations:\n\n## Schedule/Cron Support\n\nScheduled workflows use cron expressions in the on.schedule section (e.g., cron: '0 0 * * *'). The system stores these in the action_schedule table and evaluates them periodically.\n\n## Default Branch Limitations\n\nThere are documented limitations with scheduled actions and branches:\n\nIf you create a workflow with scheduled cron in the default branch, it will run in the default branch as scheduled. However, once you create a PR and merge it (with branch auto-deletion turned on) it will start running the schedule on the deleted branch instead.\n\nAdditionally, scheduled actions runner did trigger on push for both main and dev branch commits, but not on the scheduled action on dev branch. This indicates that scheduled workflows may only work reliably on the default branch.\n\n## Check_run Event\n\nI did not find specific information about the `check_run` event in the search results. The documentation mentions that Gitea Actions supports events like `push`, `pull_request`, and `schedule`, but `check_run` support was not explicitly mentioned in the returned results.\n\nIf you need more specific information about the `check_run` event support, I'd recommend checking the official Gitea documentation or GitHub issues directly."
+            ],
+            "durationSeconds": 7.468441499993205,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0181u6eBuZLdAaECpMafmE4C",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Gitea Actions check_run event supported on schedule cron limitations default branch\"\n\nLinks: [{\"title\":\"Scheduled Gitea Actions sometimes run on non-default merged branches · Issue #28157 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28157\"},{\"title\":\"Schedules in actions - Actions - Gitea\",\"url\":\"https://forum.gitea.com/t/schedules-in-actions/6939\"},{\"title\":\"Actions - Cron schedule not working for all repos · Issue #28533 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28533\"},{\"title\":\"Action schedule · Issue #34472 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/34472\"},{\"title\":\"Overview | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/overview\"},{\"title\":\"#741 - [FEAT] Actions should support scheduling - forgejo/forgejo - Codeberg.org\",\"url\":\"https://codeberg.org/forgejo/forgejo/issues/741\"},{\"title\":\"Scheduled actions are not working for non-main branch · Issue #29574 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/29574\"},{\"title\":\"Gitea Actions System | go-gitea/gitea | DeepWiki\",\"url\":\"https://deepwiki.com/go-gitea/gitea/6-user-and-organization-management\"},{\"title\":\"Configuration Cheat Sheet | Gitea Documentation\",\"url\":\"https://docs.gitea.com/administration/config-cheat-sheet\"},{\"title\":\"Gitea Actions - Gitea\",\"url\":\"https://go-gitea-gitea.mintlify.app/features/actions\"}]\n\nBased on the search results, here's what I found about Gitea Actions with check_run events, schedule/cron, and default branch limitations:\n\n## Schedule/Cron Support\n\nScheduled workflows use cron expressions in the on.schedule section (e.g., cron: '0 0 * * *'). The system stores these in the action_schedule table and evaluates them periodically.\n\n## Default Branch Limitations\n\nThere are documented limitations with scheduled actions and branches:\n\nIf you create a workflow with scheduled cron in the default branch, it will run in the default branch as scheduled. However, once you create a PR and merge it (with branch auto-deletion turned on) it will start running the schedule on the deleted branch instead.\n\nAdditionally, scheduled actions runner did trigger on push for both main and dev branch commits, but not on the scheduled action on dev branch. This indicates that scheduled workflows may only work reliably on the default branch.\n\n## Check_run Event\n\nI did not find specific information about the `check_run` event in the search results. The documentation mentions that Gitea Actions supports events like `push`, `pull_request`, and `schedule`, but `check_run` support was not explicitly mentioned in the returned results.\n\nIf you need more specific information about the `check_run` event support, I'd recommend checking the official Gitea documentation or GitHub issues directly.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Gitea Actions check_run event supported on schedule cron limitations default branch",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_018B9CNzKLgtMsckUhRCFvV7",
+                "content": [
+                  {
+                    "title": "Scheduled Gitea Actions sometimes run on non-default merged branches · Issue #28157 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/28157"
+                  },
+                  {
+                    "title": "Schedules in actions - Actions - Gitea",
+                    "url": "https://forum.gitea.com/t/schedules-in-actions/6939"
+                  },
+                  {
+                    "title": "Actions - Cron schedule not working for all repos · Issue #28533 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/28533"
+                  },
+                  {
+                    "title": "Action schedule · Issue #34472 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/34472"
+                  },
+                  {
+                    "title": "Overview | Gitea Documentation",
+                    "url": "https://docs.gitea.com/usage/actions/overview"
+                  },
+                  {
+                    "title": "#741 - [FEAT] Actions should support scheduling - forgejo/forgejo - Codeberg.org",
+                    "url": "https://codeberg.org/forgejo/forgejo/issues/741"
+                  },
+                  {
+                    "title": "Scheduled actions are not working for non-main branch · Issue #29574 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/29574"
+                  },
+                  {
+                    "title": "Gitea Actions System | go-gitea/gitea | DeepWiki",
+                    "url": "https://deepwiki.com/go-gitea/gitea/6-user-and-organization-management"
+                  },
+                  {
+                    "title": "Configuration Cheat Sheet | Gitea Documentation",
+                    "url": "https://docs.gitea.com/administration/config-cheat-sheet"
+                  },
+                  {
+                    "title": "Gitea Actions - Gitea",
+                    "url": "https://go-gitea-gitea.mintlify.app/features/actions"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found about Gitea Actions with check_run events, schedule/cron, and default branch limitations:\n\n## Schedule/Cron Support\n\nScheduled workflows use cron expressions in the on.schedule section (e.g., cron: '0 0 * * *'). The system stores these in the action_schedule table and evaluates them periodically.\n\n## Default Branch Limitations\n\nThere are documented limitations with scheduled actions and branches:\n\nIf you create a workflow with scheduled cron in the default branch, it will run in the default branch as scheduled. However, once you create a PR and merge it (with branch auto-deletion turned on) it will start running the schedule on the deleted branch instead.\n\nAdditionally, scheduled actions runner did trigger on push for both main and dev branch commits, but not on the scheduled action on dev branch. This indicates that scheduled workflows may only work reliably on the default branch.\n\n## Check_run Event\n\nI did not find specific information about the `check_run` event in the search results. The documentation mentions that Gitea Actions supports events like `push`, `pull_request`, and `schedule`, but `check_run` support was not explicitly mentioned in the returned results.\n\nIf you need more specific information about the `check_run` event support, I'd recommend checking the official Gitea documentation or GitHub issues directly."
+            ],
+            "durationSeconds": 7.468441499993205,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_0181u6eBuZLdAaECpMafmE4C",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Gitea Actions check_run event supported on schedule cron limitations default branch\"\n\nLinks: [{\"title\":\"Scheduled Gitea Actions sometimes run on non-default merged branches · Issue #28157 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28157\"},{\"title\":\"Schedules in actions - Actions - Gitea\",\"url\":\"https://forum.gitea.com/t/schedules-in-actions/6939\"},{\"title\":\"Actions - Cron schedule not working for all repos · Issue #28533 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28533\"},{\"title\":\"Action schedule · Issue #34472 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/34472\"},{\"title\":\"Overview | Gitea Documentation\",\"url\":\"https://docs.gitea.com/usage/actions/overview\"},{\"title\":\"#741 - [FEAT] Actions should support scheduling - forgejo/forgejo - Codeberg.org\",\"url\":\"https://codeberg.org/forgejo/forgejo/issues/741\"},{\"title\":\"Scheduled actions are not working for non-main branch · Issue #29574 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/29574\"},{\"title\":\"Gitea Actions System | go-gitea/gitea | DeepWiki\",\"url\":\"https://deepwiki.com/go-gitea/gitea/6-user-and-organization-management\"},{\"title\":\"Configuration Cheat Sheet | Gitea Documentation\",\"url\":\"https://docs.gitea.com/administration/config-cheat-sheet\"},{\"title\":\"Gitea Actions - Gitea\",\"url\":\"https://go-gitea-gitea.mintlify.app/features/actions\"}]\n\nBased on the search results, here's what I found about Gitea Actions with check_run events, schedule/cron, and default branch limitations:\n\n## Schedule/Cron Support\n\nScheduled workflows use cron expressions in the on.schedule section (e.g., cron: '0 0 * * *'). The system stores these in the action_schedule table and evaluates them periodically.\n\n## Default Branch Limitations\n\nThere are documented limitations with scheduled actions and branches:\n\nIf you create a workflow with scheduled cron in the default branch, it will run in the default branch as scheduled. However, once you create a PR and merge it (with branch auto-deletion turned on) it will start running the schedule on the deleted branch instead.\n\nAdditionally, scheduled actions runner did trigger on push for both main and dev branch commits, but not on the scheduled action on dev branch. This indicates that scheduled workflows may only work reliably on the default branch.\n\n## Check_run Event\n\nI did not find specific information about the `check_run` event in the search results. The documentation mentions that Gitea Actions supports events like `push`, `pull_request`, and `schedule`, but `check_run` support was not explicitly mentioned in the returned results.\n\nIf you need more specific information about the `check_run` event support, I'd recommend checking the official Gitea documentation or GitHub issues directly.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Gitea Actions check_run event supported on schedule cron limitations default branch"
+        }
+      }
+    },
+    {
+      "step_id": 242,
+      "timestamp": "2026-06-08T10:21:19.826Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 306110,
+        "completion_tokens": 907,
+        "cached_tokens": 306108,
+        "extra": {
+          "cache_creation_input_tokens": 4679,
+          "cache_read_input_tokens": 306108,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4679,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 907,
+              "cache_read_input_tokens": 306108,
+              "cache_creation_input_tokens": 4679,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4679
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 243,
+      "timestamp": "2026-06-08T10:21:19.845Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Let me pull the authoritative Gitea \"Compared to GitHub Actions\" page and the artifacts/services support for the definitive matrix.",
+      "metrics": {
+        "prompt_tokens": 306110,
+        "completion_tokens": 907,
+        "cached_tokens": 306108,
+        "extra": {
+          "cache_creation_input_tokens": 4679,
+          "cache_read_input_tokens": 306108,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4679,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 907,
+              "cache_read_input_tokens": 306108,
+              "cache_creation_input_tokens": 4679,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4679
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 244,
+      "timestamp": "2026-06-08T10:21:21.751Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebFetch toolu_012rk9tdYVgTV9u6wnKs8djf",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_012rk9tdYVgTV9u6wnKs8djf",
+          "function_name": "WebFetch",
+          "arguments": {
+            "url": "https://docs.gitea.com/usage/actions/comparison",
+            "prompt": "List exactly which GitHub Actions features Gitea Actions does and does NOT support. Specifically: which trigger events are supported (does it support check_run, pull_request_review, issues, schedule, workflow_dispatch?); is actions/github-script supported and does the GitHub API / octokit work against Gitea (which permission scopes are unsupported — statuses, checks, deployments, etc.); are service containers and container: jobs supported; are artifacts (upload-artifact/download-artifact) supported and which versions; how are uses: actions resolved (from github.com or a mirror). Quote specifics."
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_012rk9tdYVgTV9u6wnKs8djf",
+            "content": "# Gitea Actions vs GitHub Actions Support\n\nBased on the documentation provided, here's what's explicitly covered:\n\n## Supported Features\nThe page does not specify which trigger events are supported. It mentions schedule events work with non-standard syntax (\"@yearly, @monthly, @weekly, @daily, @hourly\") but doesn't list other event triggers.\n\n## Unsupported Workflow Syntax\n- `jobs.<job_id>.timeout-minutes` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.continue-on-error` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.environment` – \"ignored by Gitea Actions now\"\n- Complex `runs-on` – \"only supports `runs-on: xyz` or `runs-on: [xyz]`\"\n\n## Missing Features\n- **Package authorization**: \"not implemented in Gitea Actions now\"\n- **Problem Matchers**: \"ignored by Gitea Actions now\"\n- **Error annotations**: \"ignored by Gitea Actions now\"\n- **Expressions**: \"only `always()` is supported\"\n- **GitHub-only scopes unsupported**: \"statuses, checks, deployments, id-token, security-events, and pages are not supported\"\n\n## Not Documented\nThe page does not address:\n- Whether `actions/github-script` is supported\n- Octokit/GitHub API compatibility\n- Service containers or `container:` jobs\n- Artifact upload/download support\n- Specific trigger events (check_run, pull_request_review, issues, workflow_dispatch)\n\nThe documentation states action resolution defaults to GitHub when using short syntax like `uses: actions/checkout@v4`.\n\n[metadata] {\"bytes\": 41724, \"code\": 200, \"codeText\": \"OK\", \"result\": \"# Gitea Actions vs GitHub Actions Support\\n\\nBased on the documentation provided, here's what's explicitly covered:\\n\\n## Supported Features\\nThe page does not specify which trigger events are supported. It mentions schedule events work with non-standard syntax (\\\"@yearly, @monthly, @weekly, @daily, @hourly\\\") but doesn't list other event triggers.\\n\\n## Unsupported Workflow Syntax\\n- `jobs.<job_id>.timeout-minutes` – \\\"ignored by Gitea Actions now\\\"\\n- `jobs.<job_id>.continue-on-error` – \\\"ignored by Gitea Actions now\\\"\\n- `jobs.<job_id>.environment` – \\\"ignored by Gitea Actions now\\\"\\n- Complex `runs-on` – \\\"only supports `runs-on: xyz` or `runs-on: [xyz]`\\\"\\n\\n## Missing Features\\n- **Package authorization**: \\\"not implemented in Gitea Actions now\\\"\\n- **Problem Matchers**: \\\"ignored by Gitea Actions now\\\"\\n- **Error annotations**: \\\"ignored by Gitea Actions now\\\"\\n- **Expressions**: \\\"only `always()` is supported\\\"\\n- **GitHub-only scopes unsupported**: \\\"statuses, checks, deployments, id-token, security-events, and pages are not supported\\\"\\n\\n## Not Documented\\nThe page does not address:\\n- Whether `actions/github-script` is supported\\n- Octokit/GitHub API compatibility\\n- Service containers or `container:` jobs\\n- Artifact upload/download support\\n- Specific trigger events (check_run, pull_request_review, issues, workflow_dispatch)\\n\\nThe documentation states action resolution defaults to GitHub when using short syntax like `uses: actions/checkout@v4`.\", \"durationMs\": 4471, \"url\": \"https://docs.gitea.com/usage/actions/comparison\"}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 306110,
+        "completion_tokens": 907,
+        "cached_tokens": 306108,
+        "extra": {
+          "cache_creation_input_tokens": 4679,
+          "cache_read_input_tokens": 306108,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4679,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 907,
+              "cache_read_input_tokens": 306108,
+              "cache_creation_input_tokens": 4679,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4679
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "WebFetch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "bytes": 41724,
+            "code": 200,
+            "codeText": "OK",
+            "result": "# Gitea Actions vs GitHub Actions Support\n\nBased on the documentation provided, here's what's explicitly covered:\n\n## Supported Features\nThe page does not specify which trigger events are supported. It mentions schedule events work with non-standard syntax (\"@yearly, @monthly, @weekly, @daily, @hourly\") but doesn't list other event triggers.\n\n## Unsupported Workflow Syntax\n- `jobs.<job_id>.timeout-minutes` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.continue-on-error` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.environment` – \"ignored by Gitea Actions now\"\n- Complex `runs-on` – \"only supports `runs-on: xyz` or `runs-on: [xyz]`\"\n\n## Missing Features\n- **Package authorization**: \"not implemented in Gitea Actions now\"\n- **Problem Matchers**: \"ignored by Gitea Actions now\"\n- **Error annotations**: \"ignored by Gitea Actions now\"\n- **Expressions**: \"only `always()` is supported\"\n- **GitHub-only scopes unsupported**: \"statuses, checks, deployments, id-token, security-events, and pages are not supported\"\n\n## Not Documented\nThe page does not address:\n- Whether `actions/github-script` is supported\n- Octokit/GitHub API compatibility\n- Service containers or `container:` jobs\n- Artifact upload/download support\n- Specific trigger events (check_run, pull_request_review, issues, workflow_dispatch)\n\nThe documentation states action resolution defaults to GitHub when using short syntax like `uses: actions/checkout@v4`.",
+            "durationMs": 4471,
+            "url": "https://docs.gitea.com/usage/actions/comparison"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_012rk9tdYVgTV9u6wnKs8djf",
+            "type": "tool_result",
+            "content": "# Gitea Actions vs GitHub Actions Support\n\nBased on the documentation provided, here's what's explicitly covered:\n\n## Supported Features\nThe page does not specify which trigger events are supported. It mentions schedule events work with non-standard syntax (\"@yearly, @monthly, @weekly, @daily, @hourly\") but doesn't list other event triggers.\n\n## Unsupported Workflow Syntax\n- `jobs.<job_id>.timeout-minutes` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.continue-on-error` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.environment` – \"ignored by Gitea Actions now\"\n- Complex `runs-on` – \"only supports `runs-on: xyz` or `runs-on: [xyz]`\"\n\n## Missing Features\n- **Package authorization**: \"not implemented in Gitea Actions now\"\n- **Problem Matchers**: \"ignored by Gitea Actions now\"\n- **Error annotations**: \"ignored by Gitea Actions now\"\n- **Expressions**: \"only `always()` is supported\"\n- **GitHub-only scopes unsupported**: \"statuses, checks, deployments, id-token, security-events, and pages are not supported\"\n\n## Not Documented\nThe page does not address:\n- Whether `actions/github-script` is supported\n- Octokit/GitHub API compatibility\n- Service containers or `container:` jobs\n- Artifact upload/download support\n- Specific trigger events (check_run, pull_request_review, issues, workflow_dispatch)\n\nThe documentation states action resolution defaults to GitHub when using short syntax like `uses: actions/checkout@v4`."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "bytes": 41724,
+            "code": 200,
+            "codeText": "OK",
+            "result": "# Gitea Actions vs GitHub Actions Support\n\nBased on the documentation provided, here's what's explicitly covered:\n\n## Supported Features\nThe page does not specify which trigger events are supported. It mentions schedule events work with non-standard syntax (\"@yearly, @monthly, @weekly, @daily, @hourly\") but doesn't list other event triggers.\n\n## Unsupported Workflow Syntax\n- `jobs.<job_id>.timeout-minutes` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.continue-on-error` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.environment` – \"ignored by Gitea Actions now\"\n- Complex `runs-on` – \"only supports `runs-on: xyz` or `runs-on: [xyz]`\"\n\n## Missing Features\n- **Package authorization**: \"not implemented in Gitea Actions now\"\n- **Problem Matchers**: \"ignored by Gitea Actions now\"\n- **Error annotations**: \"ignored by Gitea Actions now\"\n- **Expressions**: \"only `always()` is supported\"\n- **GitHub-only scopes unsupported**: \"statuses, checks, deployments, id-token, security-events, and pages are not supported\"\n\n## Not Documented\nThe page does not address:\n- Whether `actions/github-script` is supported\n- Octokit/GitHub API compatibility\n- Service containers or `container:` jobs\n- Artifact upload/download support\n- Specific trigger events (check_run, pull_request_review, issues, workflow_dispatch)\n\nThe documentation states action resolution defaults to GitHub when using short syntax like `uses: actions/checkout@v4`.",
+            "durationMs": 4471,
+            "url": "https://docs.gitea.com/usage/actions/comparison"
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_012rk9tdYVgTV9u6wnKs8djf",
+            "type": "tool_result",
+            "content": "# Gitea Actions vs GitHub Actions Support\n\nBased on the documentation provided, here's what's explicitly covered:\n\n## Supported Features\nThe page does not specify which trigger events are supported. It mentions schedule events work with non-standard syntax (\"@yearly, @monthly, @weekly, @daily, @hourly\") but doesn't list other event triggers.\n\n## Unsupported Workflow Syntax\n- `jobs.<job_id>.timeout-minutes` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.continue-on-error` – \"ignored by Gitea Actions now\"\n- `jobs.<job_id>.environment` – \"ignored by Gitea Actions now\"\n- Complex `runs-on` – \"only supports `runs-on: xyz` or `runs-on: [xyz]`\"\n\n## Missing Features\n- **Package authorization**: \"not implemented in Gitea Actions now\"\n- **Problem Matchers**: \"ignored by Gitea Actions now\"\n- **Error annotations**: \"ignored by Gitea Actions now\"\n- **Expressions**: \"only `always()` is supported\"\n- **GitHub-only scopes unsupported**: \"statuses, checks, deployments, id-token, security-events, and pages are not supported\"\n\n## Not Documented\nThe page does not address:\n- Whether `actions/github-script` is supported\n- Octokit/GitHub API compatibility\n- Service containers or `container:` jobs\n- Artifact upload/download support\n- Specific trigger events (check_run, pull_request_review, issues, workflow_dispatch)\n\nThe documentation states action resolution defaults to GitHub when using short syntax like `uses: actions/checkout@v4`."
+          }
+        },
+        "raw_arguments": {
+          "url": "https://docs.gitea.com/usage/actions/comparison",
+          "prompt": "List exactly which GitHub Actions features Gitea Actions does and does NOT support. Specifically: which trigger events are supported (does it support check_run, pull_request_review, issues, schedule, workflow_dispatch?); is actions/github-script supported and does the GitHub API / octokit work against Gitea (which permission scopes are unsupported — statuses, checks, deployments, etc.); are service containers and container: jobs supported; are artifacts (upload-artifact/download-artifact) supported and which versions; how are uses: actions resolved (from github.com or a mirror). Quote specifics."
+        }
+      }
+    },
+    {
+      "step_id": 245,
+      "timestamp": "2026-06-08T10:21:22.218Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed WebSearch toolu_01D462BPMcqYvN4iwughvsG8",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01D462BPMcqYvN4iwughvsG8",
+          "function_name": "WebSearch",
+          "arguments": {
+            "query": "Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01D462BPMcqYvN4iwughvsG8",
+            "content": "Web search results for query: \"Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers\"\n\nLinks: [{\"title\":\"actions/upload-artifact: Mirror of https://github.com/actions/upload-artifact - upload-artifact - Gitea: Git with a cup of tea\",\"url\":\"https://gitea.com/actions/upload-artifact\"},{\"title\":\"Add artifacts v4 jwt to job message and accept it by ChristopherHX · Pull Request #28885 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/pull/28885\"},{\"title\":\"Support actions/upload-artifact@v4, actions/download-artifact@v4 · Issue #28853 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28853\"},{\"title\":\"Better solution to `actions/upload-artifact` v4 · Issue #35706 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/35706\"},{\"title\":\"actions/gitea-upload-artifact: mirror of https://github.com/christopherhx/gitea-upload-artifact - gitea-upload-artifact - Gitea: Git with a cup of tea\",\"url\":\"https://gitea.com/actions/gitea-upload-artifact\"},{\"title\":\"actions/upload-artifact - upload-artifact - PSI GIT Service\",\"url\":\"https://gitea.psi.ch/actions/upload-artifact\"},{\"title\":\"GitHub - cvdsoftware/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\",\"url\":\"https://github.com/cvdsoftware/gitea-upload-artifact\"},{\"title\":\"GitHub - ChristopherHX/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\",\"url\":\"https://github.com/ChristopherHX/gitea-upload-artifact\"},{\"title\":\"actions/upload-artifact@v4 is not available · Issue #31256 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/31256\"},{\"title\":\"Add API Support to Download Artifacts from Actions · Issue #32124 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/32124\"}]\n\nBased on the search results, here's what I found regarding Gitea Actions, upload-artifact v4 support, and ACTIONS_RUNTIME_TOKEN:\n\n## Key Findings:\n\n### ACTIONS_RUNTIME_TOKEN and v4 Support\nGitea allows act_runner / actions_runner to use jwt tokens for `ACTIONS_RUNTIME_TOKEN` that are compatible with actions/upload-artifact@v4. The official Artifact actions validate and extract the jwt claim scp to get the runid and jobid, and the old artifact backend also accepts the same token jwt.\n\n### v4 Artifact Features\nThe release of upload-artifact@v4 and download-artifact@v4 are major changes to the backend architecture of Artifacts with numerous performance and behavioral improvements. Uploads are significantly faster, upwards of 90% improvement in worst case scenarios.\n\n### Immutability\nArtifacts created by upload-artifact@v4 are immutable, and uploading to the same artifact via multiple jobs is not supported with v4.\n\n### GHES Compatibility Note\nupload-artifact@v4+ is not currently supported on GitHub Enterprise Server (GHES), and if you are on GHES, you must use v3.2.2 (Node 24) or v3.2.2-node20 (Node 20). However, Gitea supports actions/upload-artifact (and actions/download-artifact) v4.\n\nThere are community-maintained forks like a copy of the actions/upload-artifact@v4 that permits usage on Gitea, since it is detected as GHES by default and aborts.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\n\n[metadata] {\"query\": \"Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers\", \"results\": [{\"tool_use_id\": \"srvtoolu_01Q3kZPg3ASRfCzQgQTqyBy6\", \"content\": [{\"title\": \"actions/upload-artifact: Mirror of https://github.com/actions/upload-artifact - upload-artifact - Gitea: Git with a cup of tea\", \"url\": \"https://gitea.com/actions/upload-artifact\"}, {\"title\": \"Add artifacts v4 jwt to job message and accept it by ChristopherHX · Pull Request #28885 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/pull/28885\"}, {\"title\": \"Support actions/upload-artifact@v4, actions/download-artifact@v4 · Issue #28853 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/28853\"}, {\"title\": \"Better solution to `actions/upload-artifact` v4 · Issue #35706 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/35706\"}, {\"title\": \"actions/gitea-upload-artifact: mirror of https://github.com/christopherhx/gitea-upload-artifact - gitea-upload-artifact - Gitea: Git with a cup of tea\", \"url\": \"https://gitea.com/actions/gitea-upload-artifact\"}, {\"title\": \"actions/upload-artifact - upload-artifact - PSI GIT Service\", \"url\": \"https://gitea.psi.ch/actions/upload-artifact\"}, {\"title\": \"GitHub - cvdsoftware/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\", \"url\": \"https://github.com/cvdsoftware/gitea-upload-artifact\"}, {\"title\": \"GitHub - ChristopherHX/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\", \"url\": \"https://github.com/ChristopherHX/gitea-upload-artifact\"}, {\"title\": \"actions/upload-artifact@v4 is not available · Issue #31256 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/31256\"}, {\"title\": \"Add API Support to Download Artifacts from Actions · Issue #32124 · go-gitea/gitea\", \"url\": \"https://github.com/go-gitea/gitea/issues/32124\"}]}, \"Based on the search results, here's what I found regarding Gitea Actions, upload-artifact v4 support, and ACTIONS_RUNTIME_TOKEN:\\n\\n## Key Findings:\\n\\n### ACTIONS_RUNTIME_TOKEN and v4 Support\\nGitea allows act_runner / actions_runner to use jwt tokens for `ACTIONS_RUNTIME_TOKEN` that are compatible with actions/upload-artifact@v4. The official Artifact actions validate and extract the jwt claim scp to get the runid and jobid, and the old artifact backend also accepts the same token jwt.\\n\\n### v4 Artifact Features\\nThe release of upload-artifact@v4 and download-artifact@v4 are major changes to the backend architecture of Artifacts with numerous performance and behavioral improvements. Uploads are significantly faster, upwards of 90% improvement in worst case scenarios.\\n\\n### Immutability\\nArtifacts created by upload-artifact@v4 are immutable, and uploading to the same artifact via multiple jobs is not supported with v4.\\n\\n### GHES Compatibility Note\\nupload-artifact@v4+ is not currently supported on GitHub Enterprise Server (GHES), and if you are on GHES, you must use v3.2.2 (Node 24) or v3.2.2-node20 (Node 20). However, Gitea supports actions/upload-artifact (and actions/download-artifact) v4.\\n\\nThere are community-maintained forks like a copy of the actions/upload-artifact@v4 that permits usage on Gitea, since it is detected as GHES by default and aborts.\"], \"durationSeconds\": 7.674622042000293, \"searchCount\": 1}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 306110,
+        "completion_tokens": 907,
+        "cached_tokens": 306108,
+        "extra": {
+          "cache_creation_input_tokens": 4679,
+          "cache_read_input_tokens": 306108,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 4679,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 907,
+              "cache_read_input_tokens": 306108,
+              "cache_creation_input_tokens": 4679,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 4679
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false,
+        "tool_use_name": "WebSearch",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "query": "Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01Q3kZPg3ASRfCzQgQTqyBy6",
+                "content": [
+                  {
+                    "title": "actions/upload-artifact: Mirror of https://github.com/actions/upload-artifact - upload-artifact - Gitea: Git with a cup of tea",
+                    "url": "https://gitea.com/actions/upload-artifact"
+                  },
+                  {
+                    "title": "Add artifacts v4 jwt to job message and accept it by ChristopherHX · Pull Request #28885 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/pull/28885"
+                  },
+                  {
+                    "title": "Support actions/upload-artifact@v4, actions/download-artifact@v4 · Issue #28853 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/28853"
+                  },
+                  {
+                    "title": "Better solution to `actions/upload-artifact` v4 · Issue #35706 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/35706"
+                  },
+                  {
+                    "title": "actions/gitea-upload-artifact: mirror of https://github.com/christopherhx/gitea-upload-artifact - gitea-upload-artifact - Gitea: Git with a cup of tea",
+                    "url": "https://gitea.com/actions/gitea-upload-artifact"
+                  },
+                  {
+                    "title": "actions/upload-artifact - upload-artifact - PSI GIT Service",
+                    "url": "https://gitea.psi.ch/actions/upload-artifact"
+                  },
+                  {
+                    "title": "GitHub - cvdsoftware/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub",
+                    "url": "https://github.com/cvdsoftware/gitea-upload-artifact"
+                  },
+                  {
+                    "title": "GitHub - ChristopherHX/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub",
+                    "url": "https://github.com/ChristopherHX/gitea-upload-artifact"
+                  },
+                  {
+                    "title": "actions/upload-artifact@v4 is not available · Issue #31256 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/31256"
+                  },
+                  {
+                    "title": "Add API Support to Download Artifacts from Actions · Issue #32124 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/32124"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found regarding Gitea Actions, upload-artifact v4 support, and ACTIONS_RUNTIME_TOKEN:\n\n## Key Findings:\n\n### ACTIONS_RUNTIME_TOKEN and v4 Support\nGitea allows act_runner / actions_runner to use jwt tokens for `ACTIONS_RUNTIME_TOKEN` that are compatible with actions/upload-artifact@v4. The official Artifact actions validate and extract the jwt claim scp to get the runid and jobid, and the old artifact backend also accepts the same token jwt.\n\n### v4 Artifact Features\nThe release of upload-artifact@v4 and download-artifact@v4 are major changes to the backend architecture of Artifacts with numerous performance and behavioral improvements. Uploads are significantly faster, upwards of 90% improvement in worst case scenarios.\n\n### Immutability\nArtifacts created by upload-artifact@v4 are immutable, and uploading to the same artifact via multiple jobs is not supported with v4.\n\n### GHES Compatibility Note\nupload-artifact@v4+ is not currently supported on GitHub Enterprise Server (GHES), and if you are on GHES, you must use v3.2.2 (Node 24) or v3.2.2-node20 (Node 20). However, Gitea supports actions/upload-artifact (and actions/download-artifact) v4.\n\nThere are community-maintained forks like a copy of the actions/upload-artifact@v4 that permits usage on Gitea, since it is detected as GHES by default and aborts."
+            ],
+            "durationSeconds": 7.674622042000293,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01D462BPMcqYvN4iwughvsG8",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers\"\n\nLinks: [{\"title\":\"actions/upload-artifact: Mirror of https://github.com/actions/upload-artifact - upload-artifact - Gitea: Git with a cup of tea\",\"url\":\"https://gitea.com/actions/upload-artifact\"},{\"title\":\"Add artifacts v4 jwt to job message and accept it by ChristopherHX · Pull Request #28885 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/pull/28885\"},{\"title\":\"Support actions/upload-artifact@v4, actions/download-artifact@v4 · Issue #28853 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28853\"},{\"title\":\"Better solution to `actions/upload-artifact` v4 · Issue #35706 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/35706\"},{\"title\":\"actions/gitea-upload-artifact: mirror of https://github.com/christopherhx/gitea-upload-artifact - gitea-upload-artifact - Gitea: Git with a cup of tea\",\"url\":\"https://gitea.com/actions/gitea-upload-artifact\"},{\"title\":\"actions/upload-artifact - upload-artifact - PSI GIT Service\",\"url\":\"https://gitea.psi.ch/actions/upload-artifact\"},{\"title\":\"GitHub - cvdsoftware/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\",\"url\":\"https://github.com/cvdsoftware/gitea-upload-artifact\"},{\"title\":\"GitHub - ChristopherHX/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\",\"url\":\"https://github.com/ChristopherHX/gitea-upload-artifact\"},{\"title\":\"actions/upload-artifact@v4 is not available · Issue #31256 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/31256\"},{\"title\":\"Add API Support to Download Artifacts from Actions · Issue #32124 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/32124\"}]\n\nBased on the search results, here's what I found regarding Gitea Actions, upload-artifact v4 support, and ACTIONS_RUNTIME_TOKEN:\n\n## Key Findings:\n\n### ACTIONS_RUNTIME_TOKEN and v4 Support\nGitea allows act_runner / actions_runner to use jwt tokens for `ACTIONS_RUNTIME_TOKEN` that are compatible with actions/upload-artifact@v4. The official Artifact actions validate and extract the jwt claim scp to get the runid and jobid, and the old artifact backend also accepts the same token jwt.\n\n### v4 Artifact Features\nThe release of upload-artifact@v4 and download-artifact@v4 are major changes to the backend architecture of Artifacts with numerous performance and behavioral improvements. Uploads are significantly faster, upwards of 90% improvement in worst case scenarios.\n\n### Immutability\nArtifacts created by upload-artifact@v4 are immutable, and uploading to the same artifact via multiple jobs is not supported with v4.\n\n### GHES Compatibility Note\nupload-artifact@v4+ is not currently supported on GitHub Enterprise Server (GHES), and if you are on GHES, you must use v3.2.2 (Node 24) or v3.2.2-node20 (Node 20). However, Gitea supports actions/upload-artifact (and actions/download-artifact) v4.\n\nThere are community-maintained forks like a copy of the actions/upload-artifact@v4 that permits usage on Gitea, since it is detected as GHES by default and aborts.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "query": "Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers",
+            "results": [
+              {
+                "tool_use_id": "srvtoolu_01Q3kZPg3ASRfCzQgQTqyBy6",
+                "content": [
+                  {
+                    "title": "actions/upload-artifact: Mirror of https://github.com/actions/upload-artifact - upload-artifact - Gitea: Git with a cup of tea",
+                    "url": "https://gitea.com/actions/upload-artifact"
+                  },
+                  {
+                    "title": "Add artifacts v4 jwt to job message and accept it by ChristopherHX · Pull Request #28885 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/pull/28885"
+                  },
+                  {
+                    "title": "Support actions/upload-artifact@v4, actions/download-artifact@v4 · Issue #28853 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/28853"
+                  },
+                  {
+                    "title": "Better solution to `actions/upload-artifact` v4 · Issue #35706 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/35706"
+                  },
+                  {
+                    "title": "actions/gitea-upload-artifact: mirror of https://github.com/christopherhx/gitea-upload-artifact - gitea-upload-artifact - Gitea: Git with a cup of tea",
+                    "url": "https://gitea.com/actions/gitea-upload-artifact"
+                  },
+                  {
+                    "title": "actions/upload-artifact - upload-artifact - PSI GIT Service",
+                    "url": "https://gitea.psi.ch/actions/upload-artifact"
+                  },
+                  {
+                    "title": "GitHub - cvdsoftware/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub",
+                    "url": "https://github.com/cvdsoftware/gitea-upload-artifact"
+                  },
+                  {
+                    "title": "GitHub - ChristopherHX/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub",
+                    "url": "https://github.com/ChristopherHX/gitea-upload-artifact"
+                  },
+                  {
+                    "title": "actions/upload-artifact@v4 is not available · Issue #31256 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/31256"
+                  },
+                  {
+                    "title": "Add API Support to Download Artifacts from Actions · Issue #32124 · go-gitea/gitea",
+                    "url": "https://github.com/go-gitea/gitea/issues/32124"
+                  }
+                ]
+              },
+              "Based on the search results, here's what I found regarding Gitea Actions, upload-artifact v4 support, and ACTIONS_RUNTIME_TOKEN:\n\n## Key Findings:\n\n### ACTIONS_RUNTIME_TOKEN and v4 Support\nGitea allows act_runner / actions_runner to use jwt tokens for `ACTIONS_RUNTIME_TOKEN` that are compatible with actions/upload-artifact@v4. The official Artifact actions validate and extract the jwt claim scp to get the runid and jobid, and the old artifact backend also accepts the same token jwt.\n\n### v4 Artifact Features\nThe release of upload-artifact@v4 and download-artifact@v4 are major changes to the backend architecture of Artifacts with numerous performance and behavioral improvements. Uploads are significantly faster, upwards of 90% improvement in worst case scenarios.\n\n### Immutability\nArtifacts created by upload-artifact@v4 are immutable, and uploading to the same artifact via multiple jobs is not supported with v4.\n\n### GHES Compatibility Note\nupload-artifact@v4+ is not currently supported on GitHub Enterprise Server (GHES), and if you are on GHES, you must use v3.2.2 (Node 24) or v3.2.2-node20 (Node 20). However, Gitea supports actions/upload-artifact (and actions/download-artifact) v4.\n\nThere are community-maintained forks like a copy of the actions/upload-artifact@v4 that permits usage on Gitea, since it is detected as GHES by default and aborts."
+            ],
+            "durationSeconds": 7.674622042000293,
+            "searchCount": 1
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01D462BPMcqYvN4iwughvsG8",
+            "type": "tool_result",
+            "content": "Web search results for query: \"Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers\"\n\nLinks: [{\"title\":\"actions/upload-artifact: Mirror of https://github.com/actions/upload-artifact - upload-artifact - Gitea: Git with a cup of tea\",\"url\":\"https://gitea.com/actions/upload-artifact\"},{\"title\":\"Add artifacts v4 jwt to job message and accept it by ChristopherHX · Pull Request #28885 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/pull/28885\"},{\"title\":\"Support actions/upload-artifact@v4, actions/download-artifact@v4 · Issue #28853 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/28853\"},{\"title\":\"Better solution to `actions/upload-artifact` v4 · Issue #35706 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/35706\"},{\"title\":\"actions/gitea-upload-artifact: mirror of https://github.com/christopherhx/gitea-upload-artifact - gitea-upload-artifact - Gitea: Git with a cup of tea\",\"url\":\"https://gitea.com/actions/gitea-upload-artifact\"},{\"title\":\"actions/upload-artifact - upload-artifact - PSI GIT Service\",\"url\":\"https://gitea.psi.ch/actions/upload-artifact\"},{\"title\":\"GitHub - cvdsoftware/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\",\"url\":\"https://github.com/cvdsoftware/gitea-upload-artifact\"},{\"title\":\"GitHub - ChristopherHX/gitea-upload-artifact: version v4 of upload artifact without GHES no support check · GitHub\",\"url\":\"https://github.com/ChristopherHX/gitea-upload-artifact\"},{\"title\":\"actions/upload-artifact@v4 is not available · Issue #31256 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/31256\"},{\"title\":\"Add API Support to Download Artifacts from Actions · Issue #32124 · go-gitea/gitea\",\"url\":\"https://github.com/go-gitea/gitea/issues/32124\"}]\n\nBased on the search results, here's what I found regarding Gitea Actions, upload-artifact v4 support, and ACTIONS_RUNTIME_TOKEN:\n\n## Key Findings:\n\n### ACTIONS_RUNTIME_TOKEN and v4 Support\nGitea allows act_runner / actions_runner to use jwt tokens for `ACTIONS_RUNTIME_TOKEN` that are compatible with actions/upload-artifact@v4. The official Artifact actions validate and extract the jwt claim scp to get the runid and jobid, and the old artifact backend also accepts the same token jwt.\n\n### v4 Artifact Features\nThe release of upload-artifact@v4 and download-artifact@v4 are major changes to the backend architecture of Artifacts with numerous performance and behavioral improvements. Uploads are significantly faster, upwards of 90% improvement in worst case scenarios.\n\n### Immutability\nArtifacts created by upload-artifact@v4 are immutable, and uploading to the same artifact via multiple jobs is not supported with v4.\n\n### GHES Compatibility Note\nupload-artifact@v4+ is not currently supported on GitHub Enterprise Server (GHES), and if you are on GHES, you must use v3.2.2 (Node 24) or v3.2.2-node20 (Node 20). However, Gitea supports actions/upload-artifact (and actions/download-artifact) v4.\n\nThere are community-maintained forks like a copy of the actions/upload-artifact@v4 that permits usage on Gitea, since it is detected as GHES by default and aborts.\n\n\nREMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."
+          }
+        },
+        "raw_arguments": {
+          "query": "Gitea Actions upload-artifact v4 support version artifacts ACTIONS_RUNTIME_TOKEN service containers"
+        }
+      }
+    },
+    {
+      "step_id": 246,
+      "timestamp": "2026-06-08T10:22:28.663Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 310789,
+        "completion_tokens": 4826,
+        "cached_tokens": 310787,
+        "extra": {
+          "cache_creation_input_tokens": 2914,
+          "cache_read_input_tokens": 310787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2914,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 4826,
+              "cache_read_input_tokens": 310787,
+              "cache_creation_input_tokens": 2914,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2914
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 247,
+      "timestamp": "2026-06-08T10:22:46.231Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "核实完毕。先把方法说清楚:**本机没有 docker/act_runner/gitea,无法跑真实 workflow**——所以这不是\"在 Gitea 实例上跑出来的\",而是拿 lock.yml 的精确依赖逐项对照 **Gitea 官方文档 + go-gitea issue 跟踪器**的文档级核实。结论如下(每项附来源 + 破坏点 + 对策):\n\n## 逐项实测结果\n\n| lock.yml 依赖 | 用量 | Gitea/Forgejo 支持 | 破坏什么 / 对策 |\n|---|---|---|---|\n| **`actions/github-script`** | **24 次**(主依赖) | ✗ **不可靠**。Gitea API 非 octokit 路由兼容;`statuses/checks/deployments/id-token/security-events/pages` 这些 GitHub-only scope **明确不支持** | **最致命**。github-script 里的编排 + safe-output 施加(尤其碰 checks/statuses 的)在 Gitea 上跑不通。→ gtaw **不能照搬**,施加器必须用 Gitea `/api/v1` 原生脚本重写 |\n| **`if:` 表达式函数** | 大量(`!cancelled()`、`needs.X.result=='success'`) | ✗ **几乎全废**。Gitea 文档明写\"**Expressions: only `always()` is supported**\" | 多 job 的门控逻辑(detection→apply 的 `if: detection==success`)会失效。→ gtaw 生成的 job 图须改用 Gitea 能认的最小表达式,或把门控移进脚本里判断 |\n| **`check_run` 事件** | console `handle-complications.md` 用 | ✗ **不支持**(Gitea 无 Checks API,用 commit status 模型,且 checks scope 不支持) | 该类工作流无法以 check_run 触发。→ 改用 `pull_request`/`schedule` 轮询替代 |\n| **`schedule` cron** | stuck/scan 用 | ◐ **支持但有 bug**。仅默认分支可靠;PR 合并+自动删分支后会\"在已删分支上跑\"([#28157](https://github.com/go-gitea/gitea/issues/28157)、[#29574](https://github.com/go-gitea/gitea/issues/29574)) | 不可靠。→ 用 hive 式**外部调度**(systemd timer/cron 调 API)兜底,正是计划里已写的回退 |\n| **`upload/download-artifact`** | 各 4 次 | ◐ **v4 支持但官方 action 会把 Gitea 当 GHES 而中止**,须用社区 fork([ChristopherHX/gitea-upload-artifact](https://github.com/ChristopherHX/gitea-upload-artifact))或 v3 | job 间传 prompt/输出可行,但要换 artifact action;更稳的做法是**用 job `outputs` / 文件系统传**,少依赖 artifact |\n| **service / `container:`** | firewall、MCP gateway、node | ✓ **支持**(act_runner 用 docker backend 时) | 可用,前提是 runner 配 docker backend |\n| **`uses:` 钉 SHA** | checkout/setup-node 等 | ✓ 默认从 github.com 解析(或配镜像) | 须 runner 能访问 github.com 或配 `[actions].DEFAULT_ACTIONS_URL` 镜像 |\n| **`timeout-minutes` / `continue-on-error` / `environment`** | safe_outputs job 用 timeout 15 | ✗ **被 Gitea 忽略** | 仅\"无超时强制\",影响小 |\n| `issues` / `issue_comment` / `pull_request` / `workflow_dispatch` | B/C/A 用 | ✓ 支持 | 可用 |\n| `pull_request_review` | A 评审用 | ◐ 较新版本支持,须按目标版本核实 | 验证 runner/Gitea 版本 |\n\n## 这对计划意味着什么(关键收获)\n\n**这次核实直接证明了\"不能 port gh-aw 的 lock.yml\"——它的 github-script(24 次)、check_run、`cancelled()`/`success()` 表达式在 Gitea 上成片失效。** 也就是说 §二·补 选的**路线 2(用 opencode 重写 job 图)是对的**,而且约束更硬了:gtaw 生成的 Gitea lock 必须\n\n1. **零 `actions/github-script`**——施加器全用 Gitea `/api/v1` 原生脚本;\n2. **门控不靠表达式函数**——把 `if: detection==success` 这类逻辑落到脚本里判断(因为只有 `always()` 可用);\n3. **不用 `check_run` 触发**——改 `pull_request`/`schedule`;\n4. **artifact 换 fork 或改用文件/job outputs 传数据**;\n5. **schedule 一律配外部调度兜底**;\n6. **runner 必须 docker backend**(firewall/MCP 容器要它)。\n\n## 一句实话\n\n要做到你说的\"真·实测\"(在跑着的 Gitea 上验证每条),需要 docker + 一个 Gitea 实例 + act_runner + 一个 LLM key。本机都没有。**如果你愿意,我可以写一个最小沙盒脚本**(docker-compose 起 Gitea + 注册 act_runner + 推一个分别触发 github-script / check_run / schedule / artifact 的探针 workflow),你在有 docker 的机器上跑一遍就能把上面每个 ◐/✗ 坐实成真实日志。\n\n要不要我:(a) 把这张\"实测结果表 + 对计划的 6 条硬约束\"补进 `acmm-nongh.md`,(b) 另写那个最小沙盒探针脚本,还是两个都做?\n\n来源:[Gitea Actions 对比 GitHub](https://docs.gitea.com/usage/actions/comparison) · [github-script 兼容性讨论](https://docs.gitea.com/usage/actions/faq) · [schedule #28157](https://github.com/go-gitea/gitea/issues/28157) · [artifact v4 #28853](https://github.com/go-gitea/gitea/issues/28853) · [gitea-upload-artifact fork](https://github.com/ChristopherHX/gitea-upload-artifact)",
+      "metrics": {
+        "prompt_tokens": 310789,
+        "completion_tokens": 4826,
+        "cached_tokens": 310787,
+        "extra": {
+          "cache_creation_input_tokens": 2914,
+          "cache_read_input_tokens": 310787,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 2914,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 4826,
+              "cache_read_input_tokens": 310787,
+              "cache_creation_input_tokens": 2914,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 2914
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy/data/console",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 35246692,
-    "total_completion_tokens": 452518,
-    "total_cached_tokens": 35226652,
-    "total_steps": 229,
+    "total_prompt_tokens": 40427891,
+    "total_completion_tokens": 485806,
+    "total_cached_tokens": 40407301,
+    "total_steps": 247,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 1525585,
-      "total_cache_read_input_tokens": 35226652
+      "total_cache_creation_input_tokens": 1566905,
+      "total_cache_read_input_tokens": 40407301
     }
   }
 }
