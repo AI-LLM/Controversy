@@ -291,6 +291,30 @@ L6 的产物**主体在 hive**（参考实现）。console 侧只留两个把自
 
 结论：**git 历史能清楚还原 level 上升的顺序与加速度，但它呈现的是"基础设施持续叠加"的连续过程，而非论文那种台阶式的离散跃迁**。后者是事后为讲清模型而做的整理。
 
+### AI 署名的可追溯性：连"谁/什么模型写的"都被编码进 commit
+
+console 的 8804 个 commit 里能直接数出**用了哪些模型、哪个 agent**——因为有 [.github/workflows/ai-attribution.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/ai-attribution.yml) 在 CI 侧强制给每个 commit 打 `Co-Authored-By` / `Signed-off-by` 署名。这不是事后估算，是**机器强制的元数据**——本身又是 ACMM 核心论点（"把判断编码进 system artifacts"）的一个例子：连作者归属都沉淀成可查询的 commit trailer。
+
+**模型署名（按 commit 计，含首末日期）**：
+
+| 模型 | commits | 活跃期 |
+|---|---|---|
+| **Copilot**（执行层，路由到 GPT/Claude/Gemini） | 3452 | 2026-01-23 → 06-06（贯穿全程） |
+| **Claude Opus 4.5** | 1032 | 2026-01-16 → 03-06 |
+| **Claude Opus 4.6** | 399 | 2026-02-06 → 03-29 |
+| Claude Sonnet 4.6 | 21 | 2026-03-20 → 05-14 |
+| Claude Haiku 4.5 | 9 | 2026-05-11 → 05-19 |
+| Gemini / gpt-4.1 / DeepSeek-R1 | ~30 / 2 / 1 | 零星 |
+
+**hive 舰队各角色 agent 署名**（signed-off/co-authored）：hive bot 总 1266、reviewer 444、scanner 151、tester 112、architect 61、supervisor 3。（outreach/guardian/analyst/strategist 在本仓未留 commit 署名——未启用或主要在他仓活动。）
+
+**提交者**（谁把 commit 推上去）：Andy Anderson（人类维护者）~5232、**kubestellar-hive[bot]（L6 全自主舰队）2146**、Copilot ~382、github-actions[bot] ~356、dependabot 182。
+
+两个能与 level 演进对上的读法：
+
+1. **推理模型集中在前半程（建设期），执行器贯穿后半程（自主期）**。Claude Opus 4.5/4.6 的署名几乎全在 2026-01～03（L1–L4 的人驱动建设期）；进入 4 月后 Claude 署名骤减，**Copilot（到 6 月、3452 commits）接管后半程**——与 hive 的 `engine: copilot` 执行模型一致（reasoning 在前期密集，autonomous 期是 Copilot CLI 做执行器）。Opus 4.5→4.6 的接棒发生在 2 月中～3 月。
+2. **作者维度区分了"人在环"与"全自主"**：Andy 作者的 ~5232 commit 大多带 AI co-author（L1–L5 的人驱动 agent），而 `kubestellar-hive[bot]` 作为作者的 2146 commit 是**人不在键盘上的 L6 自主提交**——这条线把 L5（人批）与 L6（自主合并）在 commit 元数据里也划了出来。
+
 ## 信源
 
 - 论文：<https://arxiv.org/abs/2604.09388>（Andy Anderson, IBM Research，v2，含 Level 6 与 Hive）
