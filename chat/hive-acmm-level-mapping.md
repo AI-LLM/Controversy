@@ -108,7 +108,13 @@
 
     **这份文件具体怎么被"执行"？——基本不被任何程序执行。** 它是一份"给 AI / 人读的声明式护栏"，真正的强制由别处独立的硬编码机制兜底。三层拆开看：
 
-    1. **运行时没有任何消费者读它**。全仓库 grep `deny_write` / `require_review` / `auto_merge_eligible` 这三个 key，除 yaml 自身外**零命中**；引用文件名 `ai-boundaries.yaml` 的也只有同目录的 [policies/README.md](https://github.com/AI-LLM/console/blob/main/.github/policies/README.md)。仓库里**没有 OPA / Kyverno / conftest 之类策略引擎**去解释它（Console UI 里的 kyverno 卡片是产品功能，不是作用于本仓的策略机）。所以作为一个文件，它是文档，不是策略引擎。
+    1. **它在引用图里几乎是孤岛——agent 的入口指令文件根本不指向它**。把"谁指向谁"摊开（每条可点开核对）：
+       - **[CLAUDE.md](https://github.com/AI-LLM/console/blob/main/CLAUDE.md)（agent 每轮必读的入口）→ ✗ 零次**：全文 grep `policies` / `boundaries` / `governance` 命中数为 **0**。agent 的主指令文件**完全没提** policies。
+       - **[.github/policies/README.md:10-11](https://github.com/AI-LLM/console/blob/main/.github/policies/README.md#L10-L11) → ai-boundaries.yaml**：全仓**唯一**一处文本引用，且只是散文里的反引号文件名（"See `merge-policy.yaml` ... and `ai-boundaries.yaml` for AI agent guardrails"），不是可点链接。
+       - **谁指向这个 README？→ ✗ 无人**：grep `policies/README` 零命中，它本身是无人引用的孤儿文档。
+       - **唯一"看见" policies/ 的代码是 ACMM 自评分器**，且只匹配**目录是否存在**、不读内容：[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77)、[acmm.ts:714](https://github.com/AI-LLM/console/blob/main/web/src/lib/acmm/sources/acmm.ts#L714)、[acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185) 的 `policy-as-code` 检测 pattern 里列着 `".github/policies/"`。
+
+       结论：所谓"CLAUDE.md → README → ai-boundaries.yaml"的引用链**不存在**——CLAUDE.md 不在链上，README 又无人引用。`ai-boundaries.yaml` **没有任何程序性引用链通向它**，agent 只能靠列目录撞见。而它声明的 `deny_write` / `require_review` / `auto_merge_eligible` 三个 key，全仓 grep 除 yaml 自身外**零命中**——没有 OPA / Kyverno / conftest 解释器（Console UI 里的 kyverno 卡片是产品功能，不是作用于本仓的策略机）。
 
     2. **真正的"执行者"是 AI agent 自身——靠"读到即遵守"**。这正是 L5"代码库即操作手册"的运行模型：agent 每轮重读仓库（CLAUDE.md / policy / 这份 yaml）后自我设限。boundary 的强制 = agent 的自觉 + 一圈**各自独立重写**的 CI 兜底，没有任何环节以这份 yaml 为输入：
        - `deny_write`（workflows / deploy / .env）→ 实际由 GitHub 分支保护 + [submodule-guard.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/submodule-guard.yml)、[update-guard.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/update-guard.yml) 等 path 守卫各自挡；
