@@ -299,12 +299,19 @@ console 的 8804 个 commit 里能直接数出**用了哪些模型、哪个 agen
 
 | 模型 | commits | 活跃期 |
 |---|---|---|
-| **Copilot**（执行层，路由到 GPT/Claude/Gemini） | 3452 | 2026-01-23 → 06-06（贯穿全程） |
+| **Copilot**（执行层，默认底模 Claude Sonnet 4.6，见下） | 3452 | 2026-01-23 → 06-06（贯穿全程） |
 | **Claude Opus 4.5** | 1032 | 2026-01-16 → 03-06 |
 | **Claude Opus 4.6** | 399 | 2026-02-06 → 03-29 |
 | Claude Sonnet 4.6 | 21 | 2026-03-20 → 05-14 |
 | Claude Haiku 4.5 | 9 | 2026-05-11 → 05-19 |
 | Gemini / gpt-4.1 / DeepSeek-R1 | ~30 / 2 / 1 | 零星 |
+
+**"Copilot"署名背后是什么模型？** 要分两个：
+
+1. **代理化工作流里的 Copilot CLI（auto-triage/implement-fix/stuck-detection）默认钉死 Claude Sonnet 4.6**。编译产物里写死 `COPILOT_MODEL: ... || 'claude-sonnet-4.6'`（[auto-triage.lock.yml:738](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L738)、[:1212](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L1212)、[implement-fix.lock.yml:115](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.lock.yml#L115)），可被仓库变量覆盖。Copilot 在这里是执行 harness，底层路由到 Sonnet 4.6。AWF 防火墙的模型偏好序也印证（[auto-triage.lock.yml:714](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml#L714) 内嵌 JSON）：`agent: ["sonnet-6x"(=sonnet-4-5/4-6), "gpt-5.4", "gpt-5.3", "gemini-pro", ...]`——Sonnet 排第一。
+2. **托管的 `copilot-swe-agent[bot]`（那 3452 个 commit 的主力，`assign-to-agent` 写 PR 的那个）模型不在仓库内钉**——由 GitHub Copilot 后台设置决定，是托管服务；仓库只能通过上面那个 AWF 允许集间接约束（偏好同样是 Sonnet 4.5/4.6 → GPT-5.x → Gemini Pro）。
+
+所以"Copilot 路由到 GPT/Claude/Gemini"精确说是：**默认 Claude Sonnet 4.6，允许集含 GPT-5.x / Gemini-3.x**。
 
 **hive 舰队各角色 agent 署名**（signed-off/co-authored）：hive bot 总 1266、reviewer 444、scanner 151、tester 112、architect 61、supervisor 3。（outreach/guardian/analyst/strategist 在本仓未留 commit 署名——未启用或主要在他仓活动。）
 
