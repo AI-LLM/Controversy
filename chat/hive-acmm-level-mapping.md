@@ -146,6 +146,16 @@
 
 - **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是"self-improvement cycles" 的极端形态。
 
+**L5 三类产物"声明 vs 执行"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们"是否真被执行"截然不同——这是判断一个 L5 代码库成色的关键切面：
+
+| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |
+|---|---|---|---|---|
+| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **"写了不算"**——纯声明 |
+| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | "写了不算"，但规则别处**真拦**——是对真实强制的**镜像声明** |
+| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **"改了不算"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |
+
+三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出"声明"与"执行"**。差异点：policy yaml 的失效是"写了不算"，agentic workflow 的失效是"改了不算（直到重新编译）"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。
+
 **hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即"代码库操作手册"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。
 
 **判断（解读）**：L5↔L6 的唯一分界是"提议 vs 自动合并"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。

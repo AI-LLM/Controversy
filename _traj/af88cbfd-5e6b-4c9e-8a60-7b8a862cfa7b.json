@@ -11853,19 +11853,506 @@
         "cwd": "/Users/luwei/work/Controversy/data/console",
         "is_sidechain": false
       }
+    },
+    {
+      "step_id": 167,
+      "timestamp": "2026-06-08T09:05:33.322Z",
+      "source": "user",
+      "message": "对照表也加入hive-acmm-level-mapping.md",
+      "extra": {
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 168,
+      "timestamp": "2026-06-08T09:05:47.486Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 236458,
+        "completion_tokens": 500,
+        "cached_tokens": 236456,
+        "extra": {
+          "cache_creation_input_tokens": 22,
+          "cache_read_input_tokens": 236456,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 22,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 500,
+              "cache_read_input_tokens": 236456,
+              "cache_creation_input_tokens": 22,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 22
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 169,
+      "timestamp": "2026-06-08T09:05:47.487Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "对照表加在哪最合适——L5 这三项\"声明 vs 执行\"分析的收尾处。让我看一下 L5 段落的结构。",
+      "metrics": {
+        "prompt_tokens": 236458,
+        "completion_tokens": 500,
+        "cached_tokens": 236456,
+        "extra": {
+          "cache_creation_input_tokens": 22,
+          "cache_read_input_tokens": 236456,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 22,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 500,
+              "cache_read_input_tokens": 236456,
+              "cache_creation_input_tokens": 22,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 22
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 170,
+      "timestamp": "2026-06-08T09:05:49.213Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Bash toolu_01NZGJa3Mvi32ydzAtVrLSCx",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01NZGJa3Mvi32ydzAtVrLSCx",
+          "function_name": "Bash",
+          "arguments": {
+            "command": "cd /Users/luwei/work/Controversy && grep -n \"自指的成熟度反馈环\\|hive 的对应文件\\|L5↔L6 的唯一分界\" chat/hive-acmm-level-mapping.md | head",
+            "description": "Find L5 section tail"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01NZGJa3Mvi32ydzAtVrLSCx",
+            "content": "40:**hive 的对应文件**：按角色分文件的指令矩阵——[examples/kubestellar/agents/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents)（11 个 `*-CLAUDE.md`）、[examples/](https://github.com/AI-LLM/hive/tree/main/examples)（4 个 `*-policy.md`）、[examples/kubestellar/agents/reviewer-skills/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents/reviewer-skills) 等。\n71:**hive 的对应文件**：[bin/ga4-anomaly-detector.sh](https://github.com/AI-LLM/hive/blob/main/bin/ga4-anomaly-detector.sh)（7 天基线对比）、[bin/fetch-coverage.sh](https://github.com/AI-LLM/hive/blob/main/bin/fetch-coverage.sh)、[bin/issue-classifier.sh](https://github.com/AI-LLM/hive/blob/main/bin/issue-classifier.sh)、[dashboard/](https://github.com/AI-LLM/hive/tree/main/dashboard)。\n93:**hive 的对应文件**：[bin/run-pipeline.sh](https://github.com/AI-LLM/hive/blob/main/bin/run-pipeline.sh)（enumerator→classifier→gate→monitor 闭环）、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)（SURGE/BUSY/QUIET/IDLE 阈值触发自动响应）、worktree 并发（[examples/scanner-policy.md:32](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md#L32)）。\n147:- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n149:**hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。\n151:**判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。\n\n[stdout]\n40:**hive 的对应文件**：按角色分文件的指令矩阵——[examples/kubestellar/agents/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents)（11 个 `*-CLAUDE.md`）、[examples/](https://github.com/AI-LLM/hive/tree/main/examples)（4 个 `*-policy.md`）、[examples/kubestellar/agents/reviewer-skills/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents/reviewer-skills) 等。\n71:**hive 的对应文件**：[bin/ga4-anomaly-detector.sh](https://github.com/AI-LLM/hive/blob/main/bin/ga4-anomaly-detector.sh)（7 天基线对比）、[bin/fetch-coverage.sh](https://github.com/AI-LLM/hive/blob/main/bin/fetch-coverage.sh)、[bin/issue-classifier.sh](https://github.com/AI-LLM/hive/blob/main/bin/issue-classifier.sh)、[dashboard/](https://github.com/AI-LLM/hive/tree/main/dashboard)。\n93:**hive 的对应文件**：[bin/run-pipeline.sh](https://github.com/AI-LLM/hive/blob/main/bin/run-pipeline.sh)（enumerator→classifier→gate→monitor 闭环）、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)（SURGE/BUSY/QUIET/IDLE 阈值触发自动响应）、worktree 并发（[examples/scanner-policy.md:32](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md#L32)）。\n147:- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n149:**hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。\n151:**判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。\n[metadata] {\"noOutputExpected\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 236458,
+        "completion_tokens": 500,
+        "cached_tokens": 236456,
+        "extra": {
+          "cache_creation_input_tokens": 22,
+          "cache_read_input_tokens": 236456,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 22,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 500,
+              "cache_read_input_tokens": 236456,
+              "cache_creation_input_tokens": 22,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 22
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Bash",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "stdout": "40:**hive 的对应文件**：按角色分文件的指令矩阵——[examples/kubestellar/agents/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents)（11 个 `*-CLAUDE.md`）、[examples/](https://github.com/AI-LLM/hive/tree/main/examples)（4 个 `*-policy.md`）、[examples/kubestellar/agents/reviewer-skills/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents/reviewer-skills) 等。\n71:**hive 的对应文件**：[bin/ga4-anomaly-detector.sh](https://github.com/AI-LLM/hive/blob/main/bin/ga4-anomaly-detector.sh)（7 天基线对比）、[bin/fetch-coverage.sh](https://github.com/AI-LLM/hive/blob/main/bin/fetch-coverage.sh)、[bin/issue-classifier.sh](https://github.com/AI-LLM/hive/blob/main/bin/issue-classifier.sh)、[dashboard/](https://github.com/AI-LLM/hive/tree/main/dashboard)。\n93:**hive 的对应文件**：[bin/run-pipeline.sh](https://github.com/AI-LLM/hive/blob/main/bin/run-pipeline.sh)（enumerator→classifier→gate→monitor 闭环）、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)（SURGE/BUSY/QUIET/IDLE 阈值触发自动响应）、worktree 并发（[examples/scanner-policy.md:32](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md#L32)）。\n147:- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n149:**hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。\n151:**判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NZGJa3Mvi32ydzAtVrLSCx",
+            "type": "tool_result",
+            "content": "40:**hive 的对应文件**：按角色分文件的指令矩阵——[examples/kubestellar/agents/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents)（11 个 `*-CLAUDE.md`）、[examples/](https://github.com/AI-LLM/hive/tree/main/examples)（4 个 `*-policy.md`）、[examples/kubestellar/agents/reviewer-skills/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents/reviewer-skills) 等。\n71:**hive 的对应文件**：[bin/ga4-anomaly-detector.sh](https://github.com/AI-LLM/hive/blob/main/bin/ga4-anomaly-detector.sh)（7 天基线对比）、[bin/fetch-coverage.sh](https://github.com/AI-LLM/hive/blob/main/bin/fetch-coverage.sh)、[bin/issue-classifier.sh](https://github.com/AI-LLM/hive/blob/main/bin/issue-classifier.sh)、[dashboard/](https://github.com/AI-LLM/hive/tree/main/dashboard)。\n93:**hive 的对应文件**：[bin/run-pipeline.sh](https://github.com/AI-LLM/hive/blob/main/bin/run-pipeline.sh)（enumerator→classifier→gate→monitor 闭环）、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)（SURGE/BUSY/QUIET/IDLE 阈值触发自动响应）、worktree 并发（[examples/scanner-policy.md:32](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md#L32)）。\n147:- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n149:**hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。\n151:**判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。",
+            "is_error": false
+          }
+        },
+        "tool_result_is_error": false,
+        "metadata": {
+          "tool_use_result": {
+            "stdout": "40:**hive 的对应文件**：按角色分文件的指令矩阵——[examples/kubestellar/agents/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents)（11 个 `*-CLAUDE.md`）、[examples/](https://github.com/AI-LLM/hive/tree/main/examples)（4 个 `*-policy.md`）、[examples/kubestellar/agents/reviewer-skills/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents/reviewer-skills) 等。\n71:**hive 的对应文件**：[bin/ga4-anomaly-detector.sh](https://github.com/AI-LLM/hive/blob/main/bin/ga4-anomaly-detector.sh)（7 天基线对比）、[bin/fetch-coverage.sh](https://github.com/AI-LLM/hive/blob/main/bin/fetch-coverage.sh)、[bin/issue-classifier.sh](https://github.com/AI-LLM/hive/blob/main/bin/issue-classifier.sh)、[dashboard/](https://github.com/AI-LLM/hive/tree/main/dashboard)。\n93:**hive 的对应文件**：[bin/run-pipeline.sh](https://github.com/AI-LLM/hive/blob/main/bin/run-pipeline.sh)（enumerator→classifier→gate→monitor 闭环）、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)（SURGE/BUSY/QUIET/IDLE 阈值触发自动响应）、worktree 并发（[examples/scanner-policy.md:32](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md#L32)）。\n147:- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n149:**hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。\n151:**判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。",
+            "stderr": "",
+            "interrupted": false,
+            "isImage": false,
+            "noOutputExpected": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01NZGJa3Mvi32ydzAtVrLSCx",
+            "type": "tool_result",
+            "content": "40:**hive 的对应文件**：按角色分文件的指令矩阵——[examples/kubestellar/agents/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents)（11 个 `*-CLAUDE.md`）、[examples/](https://github.com/AI-LLM/hive/tree/main/examples)（4 个 `*-policy.md`）、[examples/kubestellar/agents/reviewer-skills/](https://github.com/AI-LLM/hive/tree/main/examples/kubestellar/agents/reviewer-skills) 等。\n71:**hive 的对应文件**：[bin/ga4-anomaly-detector.sh](https://github.com/AI-LLM/hive/blob/main/bin/ga4-anomaly-detector.sh)（7 天基线对比）、[bin/fetch-coverage.sh](https://github.com/AI-LLM/hive/blob/main/bin/fetch-coverage.sh)、[bin/issue-classifier.sh](https://github.com/AI-LLM/hive/blob/main/bin/issue-classifier.sh)、[dashboard/](https://github.com/AI-LLM/hive/tree/main/dashboard)。\n93:**hive 的对应文件**：[bin/run-pipeline.sh](https://github.com/AI-LLM/hive/blob/main/bin/run-pipeline.sh)（enumerator→classifier→gate→monitor 闭环）、[bin/kick-governor.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-governor.sh)（SURGE/BUSY/QUIET/IDLE 阈值触发自动响应）、worktree 并发（[examples/scanner-policy.md:32](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md#L32)）。\n147:- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n149:**hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。\n151:**判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。",
+            "is_error": false
+          }
+        },
+        "raw_arguments": {
+          "command": "cd /Users/luwei/work/Controversy && grep -n \"自指的成熟度反馈环\\|hive 的对应文件\\|L5↔L6 的唯一分界\" chat/hive-acmm-level-mapping.md | head",
+          "description": "Find L5 section tail"
+        }
+      }
+    },
+    {
+      "step_id": 171,
+      "timestamp": "2026-06-08T09:06:07.868Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "",
+      "metrics": {
+        "prompt_tokens": 236480,
+        "completion_tokens": 1764,
+        "cached_tokens": 236478,
+        "extra": {
+          "cache_creation_input_tokens": 1824,
+          "cache_read_input_tokens": 236478,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1824,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1764,
+              "cache_read_input_tokens": 236478,
+              "cache_creation_input_tokens": 1824,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1824
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 172,
+      "timestamp": "2026-06-08T09:06:07.868Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "I'll insert the three-way comparison table after the self-referential bullet (line 147), as a summary of the \"声明 vs 执行\" analysis that spans all three L5 artifacts.",
+      "metrics": {
+        "prompt_tokens": 236480,
+        "completion_tokens": 1764,
+        "cached_tokens": 236478,
+        "extra": {
+          "cache_creation_input_tokens": 1824,
+          "cache_read_input_tokens": 236478,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1824,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1764,
+              "cache_read_input_tokens": 236478,
+              "cache_creation_input_tokens": 1824,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1824
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
+    },
+    {
+      "step_id": 173,
+      "timestamp": "2026-06-08T09:06:14.506Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "Executed Edit toolu_01RN1h88B3N9WNqso5CkBvi8",
+      "tool_calls": [
+        {
+          "tool_call_id": "toolu_01RN1h88B3N9WNqso5CkBvi8",
+          "function_name": "Edit",
+          "arguments": {
+            "replace_all": false,
+            "file_path": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+            "old_string": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n",
+            "new_string": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n\n**L5 三类产物\"声明 vs 执行\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\"是否真被执行\"截然不同——这是判断一个 L5 代码库成色的关键切面：\n\n| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |\n|---|---|---|---|---|\n| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\"写了不算\"**——纯声明 |\n| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \"写了不算\"，但规则别处**真拦**——是对真实强制的**镜像声明** |\n| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\"改了不算\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |\n\n三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\"声明\"与\"执行\"**。差异点：policy yaml 的失效是\"写了不算\"，agentic workflow 的失效是\"改了不算（直到重新编译）\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。\n"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "toolu_01RN1h88B3N9WNqso5CkBvi8",
+            "content": "The file /Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md has been updated successfully. (file state is current in your context — no need to Read it back)\n\n[metadata] {\"filePath\": \"/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md\", \"oldString\": \"- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\\\"self-improvement cycles\\\" 的极端形态。\\n\", \"newString\": \"- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\\\"self-improvement cycles\\\" 的极端形态。\\n\\n**L5 三类产物\\\"声明 vs 执行\\\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\\\"是否真被执行\\\"截然不同——这是判断一个 L5 代码库成色的关键切面：\\n\\n| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |\\n|---|---|---|---|---|\\n| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\\\"写了不算\\\"**——纯声明 |\\n| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \\\"写了不算\\\"，但规则别处**真拦**——是对真实强制的**镜像声明** |\\n| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\\\"改了不算\\\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |\\n\\n三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\\\"声明\\\"与\\\"执行\\\"**。差异点：policy yaml 的失效是\\\"写了不算\\\"，agentic workflow 的失效是\\\"改了不算（直到重新编译）\\\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。\\n\", \"originalFile\": null, \"structuredPatch\": [{\"oldStart\": 146, \"oldLines\": 6, \"newStart\": 146, \"newLines\": 16, \"lines\": [\" \", \" - **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\\\"self-improvement cycles\\\" 的极端形态。\", \" \", \"+**L5 三类产物\\\"声明 vs 执行\\\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\\\"是否真被执行\\\"截然不同——这是判断一个 L5 代码库成色的关键切面：\", \"+\", \"+| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |\", \"+|---|---|---|---|---|\", \"+| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\\\"写了不算\\\"**——纯声明 |\", \"+| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \\\"写了不算\\\"，但规则别处**真拦**——是对真实强制的**镜像声明** |\", \"+| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\\\"改了不算\\\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |\", \"+\", \"+三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\\\"声明\\\"与\\\"执行\\\"**。差异点：policy yaml 的失效是\\\"写了不算\\\"，agentic workflow 的失效是\\\"改了不算（直到重新编译）\\\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。\", \"+\", \" **hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\\\"代码库操作手册\\\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。\", \" \", \" **判断（解读）**：L5↔L6 的唯一分界是\\\"提议 vs 自动合并\\\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。\"]}], \"userModified\": false, \"replaceAll\": false}"
+          }
+        ]
+      },
+      "metrics": {
+        "prompt_tokens": 236480,
+        "completion_tokens": 1764,
+        "cached_tokens": 236478,
+        "extra": {
+          "cache_creation_input_tokens": 1824,
+          "cache_read_input_tokens": 236478,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1824,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 1764,
+              "cache_read_input_tokens": 236478,
+              "cache_creation_input_tokens": 1824,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1824
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "tool_use",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false,
+        "tool_use_name": "Edit",
+        "tool_result_metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+            "oldString": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n",
+            "newString": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n\n**L5 三类产物\"声明 vs 执行\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\"是否真被执行\"截然不同——这是判断一个 L5 代码库成色的关键切面：\n\n| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |\n|---|---|---|---|---|\n| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\"写了不算\"**——纯声明 |\n| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \"写了不算\"，但规则别处**真拦**——是对真实强制的**镜像声明** |\n| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\"改了不算\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |\n\n三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\"声明\"与\"执行\"**。差异点：policy yaml 的失效是\"写了不算\"，agentic workflow 的失效是\"改了不算（直到重新编译）\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。\n",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 146,
+                "oldLines": 6,
+                "newStart": 146,
+                "newLines": 16,
+                "lines": [
+                  " ",
+                  " - **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。",
+                  " ",
+                  "+**L5 三类产物\"声明 vs 执行\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\"是否真被执行\"截然不同——这是判断一个 L5 代码库成色的关键切面：",
+                  "+",
+                  "+| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |",
+                  "+|---|---|---|---|---|",
+                  "+| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\"写了不算\"**——纯声明 |",
+                  "+| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \"写了不算\"，但规则别处**真拦**——是对真实强制的**镜像声明** |",
+                  "+| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\"改了不算\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |",
+                  "+",
+                  "+三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\"声明\"与\"执行\"**。差异点：policy yaml 的失效是\"写了不算\"，agentic workflow 的失效是\"改了不算（直到重新编译）\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。",
+                  "+",
+                  " **hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。",
+                  " ",
+                  " **判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01RN1h88B3N9WNqso5CkBvi8",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "metadata": {
+          "tool_use_result": {
+            "filePath": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+            "oldString": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n",
+            "newString": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n\n**L5 三类产物\"声明 vs 执行\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\"是否真被执行\"截然不同——这是判断一个 L5 代码库成色的关键切面：\n\n| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |\n|---|---|---|---|---|\n| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\"写了不算\"**——纯声明 |\n| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \"写了不算\"，但规则别处**真拦**——是对真实强制的**镜像声明** |\n| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\"改了不算\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |\n\n三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\"声明\"与\"执行\"**。差异点：policy yaml 的失效是\"写了不算\"，agentic workflow 的失效是\"改了不算（直到重新编译）\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。\n",
+            "originalFile": null,
+            "structuredPatch": [
+              {
+                "oldStart": 146,
+                "oldLines": 6,
+                "newStart": 146,
+                "newLines": 16,
+                "lines": [
+                  " ",
+                  " - **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。",
+                  " ",
+                  "+**L5 三类产物\"声明 vs 执行\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\"是否真被执行\"截然不同——这是判断一个 L5 代码库成色的关键切面：",
+                  "+",
+                  "+| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |",
+                  "+|---|---|---|---|---|",
+                  "+| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\"写了不算\"**——纯声明 |",
+                  "+| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \"写了不算\"，但规则别处**真拦**——是对真实强制的**镜像声明** |",
+                  "+| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\"改了不算\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |",
+                  "+",
+                  "+三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\"声明\"与\"执行\"**。差异点：policy yaml 的失效是\"写了不算\"，agentic workflow 的失效是\"改了不算（直到重新编译）\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。",
+                  "+",
+                  " **hive 的对应文件**：[examples/scanner-policy.md](https://github.com/AI-LLM/hive/blob/main/examples/scanner-policy.md)（整篇即\"代码库操作手册\"）、[examples/kubestellar/fix-loop-skill.md](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/fix-loop-skill.md)、[bin/supervisor.sh](https://github.com/AI-LLM/hive/blob/main/bin/supervisor.sh)、[bin/kick-outcome-tracker.sh](https://github.com/AI-LLM/hive/blob/main/bin/kick-outcome-tracker.sh)、多仓配置 [examples/kubestellar/hive-project.yaml](https://github.com/AI-LLM/hive/blob/main/examples/kubestellar/hive-project.yaml)。",
+                  " ",
+                  " **判断（解读）**：L5↔L6 的唯一分界是\"提议 vs 自动合并\"。在 console 里这条线就写在 ai-boundaries.yaml 的 `auto_merge_eligible` 和 merge-policy.yaml 的 `auto_merge: false`——谁能自动合、谁必须人批，是配置项。console 自身停在 L5（人批关键合并），由 hive 把它推到 L6（自动合并 merge-eligible 的 PR）。"
+                ]
+              }
+            ],
+            "userModified": false,
+            "replaceAll": false
+          },
+          "raw_tool_result": {
+            "tool_use_id": "toolu_01RN1h88B3N9WNqso5CkBvi8",
+            "type": "tool_result",
+            "content": "The file /Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md has been updated successfully. (file state is current in your context — no need to Read it back)"
+          }
+        },
+        "raw_arguments": {
+          "replace_all": false,
+          "file_path": "/Users/luwei/work/Controversy/chat/hive-acmm-level-mapping.md",
+          "old_string": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n",
+          "new_string": "- **自指的成熟度反馈环（system analyzes itself）**：[.github/workflows/acmm-level-monitor.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/acmm-level-monitor.yml)（每天检测自身 ACMM level）+ [.github/workflows/accm-history-update.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/accm-history-update.yml)（更新历史）——代码库分析自己的成熟度并据此开 issue，是\"self-improvement cycles\" 的极端形态。\n\n**L5 三类产物\"声明 vs 执行\"对照**：上面三块（两份 policy yaml + 一套 agentic workflow）都被论文当作 L5 治理产物展示，但它们\"是否真被执行\"截然不同——这是判断一个 L5 代码库成色的关键切面：\n\n| 产物 | 文件是否真实 | 是否真被执行 | 执行机制 | 失效模式 |\n|---|---|---|---|---|\n| [ai-boundaries.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/ai-boundaries.yaml) | ✓ | ✗ 零运行时消费者 | 无（部分参数如 `max_files:10` 全仓无人读） | **\"写了不算\"**——纯声明 |\n| [merge-policy.yaml](https://github.com/AI-LLM/console/blob/main/.github/policies/merge-policy.yaml) | ✓ | ✗ yaml 本身没人 parse | 规则**另由**一等机制兜底（[copilot-dco.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/copilot-dco.yml)、CI required-checks、分支保护、CLAUDE.md hard-stop） | \"写了不算\"，但规则别处**真拦**——是对真实强制的**镜像声明** |\n| **agentic `.md`**（[auto-triage](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.md) / [implement-fix](https://github.com/AI-LLM/console/blob/main/.github/workflows/implement-fix.md) / [stuck-detection](https://github.com/AI-LLM/console/blob/main/.github/workflows/stuck-detection.md)） | ✓ | **✓ 编译成 [.lock.yml](https://github.com/AI-LLM/console/blob/main/.github/workflows/auto-triage.lock.yml) 真跑** | gh-aw：`gh aw compile` → GitHub Actions 在防火墙容器跑 agent，safe-outputs + 零权限 token 硬性收口 | **\"改了不算\"**——跑的是编译产物 `.lock.yml`，改 `.md` 不重编译则行为不变 |\n\n三者共同点：都凭 `.github/policies/` 或对应路径**存在**就被 ACMM 自评分器给 L5 分（[criteria.ts:77](https://github.com/AI-LLM/console/blob/main/web/netlify/functions/acmm-scan/criteria.ts#L77) / [acmm_scan.go:185](https://github.com/AI-LLM/console/blob/main/pkg/api/handlers/acmm_scan.go#L185)），而扫描器**区分不出\"声明\"与\"执行\"**。差异点：policy yaml 的失效是\"写了不算\"，agentic workflow 的失效是\"改了不算（直到重新编译）\"——前者根本没有执行路径，后者有完整执行路径、只是源与产物可能漂移。\n"
+        }
+      }
+    },
+    {
+      "step_id": 174,
+      "timestamp": "2026-06-08T09:06:28.885Z",
+      "source": "agent",
+      "model_name": "claude-opus-4-8",
+      "message": "已把三方对照表加进文档,放在 L5 console 三类产物枚举之后、\"hive 的对应文件\"之前——正是这三块\"声明 vs 执行\"分析的收尾处。\n\n表格列了五列(产物 / 文件是否真实 / 是否真被执行 / 执行机制 / 失效模式),每个条目都带 GitHub 链接,并在表下补了一句共同点与差异点:\n\n- **共同点**:三者都凭路径**存在**就被 ACMM 自评分器给 L5 分,而扫描器区分不出\"声明\"与\"执行\"。\n- **差异点**:policy yaml 的失效是\"写了不算\"(根本没执行路径),agentic workflow 的失效是\"改了不算\"(有完整执行路径,只是源 `.md` 与产物 `.lock.yml` 可能漂移)。\n\n这张表把前面几轮的发现收成了一个可一眼对比的切面——也契合 Controversy 库的取向:论文把这三块平铺成 L5 治理产物,但它们的真实成色其实差了一个量级。",
+      "metrics": {
+        "prompt_tokens": 238433,
+        "completion_tokens": 365,
+        "cached_tokens": 238302,
+        "extra": {
+          "cache_creation_input_tokens": 1828,
+          "cache_read_input_tokens": 238302,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 1828,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 131,
+              "output_tokens": 365,
+              "cache_read_input_tokens": 238302,
+              "cache_creation_input_tokens": 1828,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 1828
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        }
+      },
+      "extra": {
+        "stop_reason": "end_turn",
+        "cwd": "/Users/luwei/work/Controversy",
+        "is_sidechain": false
+      }
     }
   ],
   "final_metrics": {
-    "total_prompt_tokens": 20549112,
-    "total_completion_tokens": 334749,
-    "total_cached_tokens": 20531097,
-    "total_steps": 166,
+    "total_prompt_tokens": 22206359,
+    "total_completion_tokens": 341906,
+    "total_cached_tokens": 22188201,
+    "total_steps": 174,
     "extra": {
       "service_tiers": [
         "standard"
       ],
-      "total_cache_creation_input_tokens": 909262,
-      "total_cache_read_input_tokens": 20531097
+      "total_cache_creation_input_tokens": 916628,
+      "total_cache_read_input_tokens": 22188201
     }
   }
 }
