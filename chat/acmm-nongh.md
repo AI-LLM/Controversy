@@ -68,6 +68,34 @@
 
 也就是说：**编译器/施加器/API 层走路线 2 自建，防火墙/MCP 路由走"直接复用 gh-aw 开源件"**——混合最省力。
 
+### 二·补2、Gitea/Forgejo 实测：lock.yml 依赖逐项核实（决定 gtaw 的硬约束）
+
+把 `auto-triage.lock.yml` 的精确依赖逐项对照 Gitea 官方文档 + go-gitea issue 跟踪器。**口径：这是文档级核实（Gitea docs + issue tracker），不是在跑着的 Gitea 实例上跑出来的——本机无 docker/act_runner/gitea，起不了运行沙盒。** 标 ◐/✗ 的项若要坐实成真实日志，需另起最小沙盒探针（见 §七风险 6）。
+
+| lock.yml 依赖 | 用量 | Gitea/Forgejo 支持 | 破坏什么 / 对策 |
+|---|---|---|---|
+| **`actions/github-script`** | **24 次**（主依赖） | ✗ **不可靠**。Gitea API 非 octokit 路由兼容；`statuses/checks/deployments/id-token/security-events/pages` 等 GitHub-only scope **明确不支持** | **最致命**：github-script 里的编排 + safe-output 施加（尤其碰 checks/statuses 的）跑不通 → gtaw 施加器必须用 Gitea `/api/v1` 原生脚本重写 |
+| **`if:` 表达式函数** | 大量（`!cancelled()`、`needs.X.result=='success'`） | ✗ **几乎全废**。Gitea 文档明写"**Expressions: only `always()` is supported**" | detection→apply 的 `if: detection==success` 门控会失效 → 门控逻辑落到脚本里判断 |
+| **`check_run` 事件** | console `handle-complications.md` | ✗ **不支持**（Gitea 无 Checks API，用 commit status；checks scope 不支持） | 该类工作流无法以 check_run 触发 → 改 `pull_request`/`schedule` 轮询 |
+| **`schedule` cron** | stuck/scan | ◐ **支持但有 bug**：仅默认分支可靠，PR 合并+自动删分支后会在已删分支上跑（[#28157](https://github.com/go-gitea/gitea/issues/28157)、[#29574](https://github.com/go-gitea/gitea/issues/29574)） | 不可靠 → hive 式外部调度（systemd timer/cron 调 API）兜底 |
+| **`upload/download-artifact`** | 各 4 次 | ◐ **v4 支持但官方 action 把 Gitea 当 GHES 而中止**，须社区 fork（[gitea-upload-artifact](https://github.com/ChristopherHX/gitea-upload-artifact)）或 v3 | 换 fork，或更稳地**用 job `outputs`/文件系统传**数据、少依赖 artifact |
+| **service / `container:`** | firewall、MCP gateway、node | ✓ **支持**（act_runner 用 docker backend 时） | 可用，前提 runner 配 docker backend |
+| **`uses:` 钉 SHA** | checkout/setup-node 等 | ✓ 默认从 github.com 解析（或配镜像） | runner 须能访问 github.com 或配 `[actions].DEFAULT_ACTIONS_URL` 镜像 |
+| `timeout-minutes` / `continue-on-error` / `environment` | safe_outputs job 用 timeout 15 | ✗ **被 Gitea 忽略** | 仅"无超时强制"，影响小 |
+| `issues` / `issue_comment` / `pull_request` / `workflow_dispatch` | A/B/C | ✓ 支持 | 可用 |
+| `pull_request_review` | A 评审 | ◐ 较新版本支持，须按目标版本核实 | 验证 runner/Gitea 版本 |
+
+**这次核实直接证明"不能 port gh-aw 的 lock.yml"**——它的 github-script（24 次）、check_run、`cancelled()`/`success()` 表达式在 Gitea 上成片失效，从而**坐实了路线 2（用 opencode 重写 job 图）**。由此 gtaw 生成的 Gitea lock 必须遵守 **6 条硬约束**：
+
+1. **零 `actions/github-script`**——施加器全用 Gitea `/api/v1` 原生脚本；
+2. **门控不靠表达式函数**——`if: detection==success` 这类落到脚本里判断（只有 `always()` 可用）；
+3. **不用 `check_run` 触发**——改 `pull_request`/`schedule`；
+4. **artifact 换 fork 或改用文件 / job `outputs` 传数据**；
+5. **`schedule` 一律配外部调度兜底**；
+6. **runner 必须 docker backend**（firewall/MCP 容器要它）。
+
+来源：[Gitea Actions 对比 GitHub](https://docs.gitea.com/usage/actions/comparison)｜[github-script 兼容性 FAQ](https://docs.gitea.com/usage/actions/faq)｜[schedule #28157](https://github.com/go-gitea/gitea/issues/28157)｜[artifact v4 #28853](https://github.com/go-gitea/gitea/issues/28853)
+
 ---
 
 ## 三、编译器的输入：声明式源 schema（限定在 console 实际用到的子集）
@@ -171,6 +199,7 @@ conclusion
 3. **没有 Copilot 编码 agent**：`assign-to-agent` 在 gh-aw 是把活甩给 GitHub 托管的 Copilot；Gitea 版必须 opencode 自己写码（§六C）。质量不确定，建议先只对低风险类别（docs/lint/补测试）放开自动实现，复杂改动停在"提议+人批"（L5），稳了再到 L6。
 4. **威胁检测层要自己实现**。gh-aw 的 detection job 做净化（域名白名单、@提及上限、剥离注入引用）；编译器要生成等价的 detection job，否则只读 agent + apply 分离也防不住"提议本身被注入污染"。
 5. **opencode 是否支持"收集器/施加器"两段拆分要验证**。参考库的工具是直接调 API 的。把工具改成只写 jsonl、再在独立 job 施加，是本计划对 opencode 用法的关键假设；若 opencode 的 plugin 工具机制不便如此，退一步可在 agent job 内禁掉所有 Gitea 写 API（容器层 egress 只放只读端点），写操作全部留给 apply job 的纯脚本读 jsonl。
+6. **§二·补2 的 ◐/✗ 项仍是文档级核实，未经运行验证**。落地前应起一个最小沙盒坐实：docker-compose 拉 Gitea + 注册 act_runner + 推一个分别触发 `actions/github-script` / `check_run` / `schedule` / `upload-artifact` / 多 job `if:` 表达式的探针 workflow，看真实 run 日志。这一步把 6 条硬约束从"文档推断"升级为"实测确认"，是 Phase 0 的前置。
 
 ---
 
